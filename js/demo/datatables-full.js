@@ -6,7 +6,7 @@ $(document).ready(function () {
         .appendTo('#dataTableFull thead');
  
     var table = $('#dataTableFull').DataTable({
-        "pageLength": 100,
+        "pageLength": 10,
         orderCellsTop: true,
         fixedHeader: true,
         initComplete: function () {
