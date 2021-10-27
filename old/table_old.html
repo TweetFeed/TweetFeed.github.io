@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>TweetFeed</title>
+	<!-- Custom fonts for this template -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="css/table.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			
+			<!-- Top bar end -->
+			<div id="content">
+				<!-- Topbar -->
+				<!-- End of Topbar -->
+				<!-- Begin Page Content -->
+				<div id="presentation">
+					<br><br>
+					<h1>TweetFeed</h1>
+					<h2><em>Hunting IOCs</em></h2>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card">
+							<div class="card-header text-center">
+								<span class="card-text" style="font-size:28px;text-align: center;">Today</span>
+								<br>
+								<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button"><i class="fas fa-download"></i> today.csv</a></span>
+							</div>
+							<div class="card-block">
+								<div class="card-body align-items-center d-flex justify-content-center">
+									<br>
+									<table class="d-flex" style="border: none;font-family: 'Open Sans', sans-serif;">
+										<tr>
+											<td style="padding: 4px;">URLs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">Domains</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">IPs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">SHA256</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">MD5</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+									</table>
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+					</div> <!-- col end -->
+					<div class="col">
+						<div class="card">
+							<div class="card-header text-center">
+								<span class="card-text" style="font-size:28px;text-align: center;">Last 7 days</span>
+								<br>
+								<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button"><i class="fas fa-download"></i> week.csv</a></span>
+							</div>
+							<div class="card-block">
+								<div class="card-body align-items-center d-flex justify-content-center">
+									<br>
+									<table class="d-flex" style="border: none;font-family: 'Open Sans', sans-serif;">
+										<tr>
+											<td style="padding: 4px;">URLs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">Domains</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">IPs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">SHA256</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">MD5</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+									</table>
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+					</div> <!-- col end -->
+					<div class="col">
+						<div class="card">
+							<div class="card-header text-center">
+								<span class="card-text" style="font-size:28px;text-align: center;">Last 30 days</span>
+								<br>
+								<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button"><i class="fas fa-download"></i> month.csv</a></span>
+							</div>
+							<div class="card-block">
+								<div class="card-body align-items-center d-flex justify-content-center">
+									<br>
+									<table class="d-flex" style="border: none;font-family: 'Open Sans', sans-serif;">
+										<tr>
+											<td style="padding: 4px;">URLs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">Domains</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">IPs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">SHA256</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">MD5</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+									</table>
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+					</div> <!-- col end -->
+					<div class="col">
+						<div class="card">
+							<div class="card-header text-center">
+								<span class="card-text" style="font-size:28px;text-align: center;">Last 365 days</span>
+								<br>
+								<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button"><i class="fas fa-download"></i> year.csv</a></span>
+							</div>
+							<div class="card-block">
+								<div class="card-body align-items-center d-flex justify-content-center">
+									<br>
+									<table class="d-flex" style="border: none;font-family: 'Open Sans', sans-serif;">
+										<tr>
+											<td style="padding: 4px;">URLs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">Domains</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">IPs</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">SHA256</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+										<tr>
+											<td style="padding: 4px;">MD5</td>
+											<td style="padding: 4px;">100</td>
+										</tr>
+									</table>
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+					</div> <!-- col end -->
+				</div> <!-- row end -->
+				<hr style="border: 1px solid black;">
+				<div class="container-fluid">
+					<!-- Page Heading -->
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<!-- Table presentation (custom) -->
+							<div class="container-fluid rounded">
+								<div class="row">
+									<div class="col align-self-start">
+										<!-- <button class="btn btn-primary autorefresh">Disable Auto Refresh</button> -->
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+											<label class="custom-control-label" for="customSwitch1">Autorefresh</label>
+										</div>
+										<progress value="0" max="5" id="progressBar"></progress>
+									</div>
+									<div class="col align-self-end" style="padding-right: 0;">
+										<button style="background-color: #4682B4;border-color: black;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle"><i class="fas fa-download"></i> Export</button>
+									</div>
+								</div>
+							</div>
+							<!-- End Table presentation (custom) -->
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<colgroup>
+										<col span="1" style="width: 15%;">
+										<col span="1" style="width: 10%;">
+										<col span="1" style="width: 8%;">
+										<col span="1" style="width: 27%;">
+										<col span="1" style="width: 10%;">
+										<col span="1" style="width: 30%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>User</th>
+											<th>Type</th>
+											<th>Value</th>
+											<th>Tags</th>
+											<th>Source</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	$(function() {
+		let autorefresh = 1;
+		$('#customSwitch1').click(function() {
+			if (autorefresh) {
+				// Disabled
+				autorefresh = 0;
+				$(this).text('Enable Auto Refresh');
+
+				clearInterval(timerAux);
+			} else {
+				// Enabled
+				autorefresh = 1;
+				$(this).text('Disable Auto Refresh');
+				progressBar();
+
+				timerAux = setInterval(timerCycle, 6000);
+			}
+		})
+
+		let table = $('#dataTable').DataTable();
+		loadData();
+		progressBar();
+
+		var timerAux = setInterval(timerCycle, 6000);
+
+		function timerCycle() {
+			if (autorefresh) {
+				loadData();
+				progressBar();
+			}
+		}
+
+		function progressBar() {
+			var timeleft = 5;
+			var downloadTimer = setInterval(function() {
+				if (timeleft <= 0) {
+					clearInterval(downloadTimer);
+				}
+				if (autorefresh == 0) {
+					timeleft = 5;
+					clearInterval(downloadTimer);
+					document.getElementById("progressBar").value = 0;
+				} else {
+					document.getElementById("progressBar").value = 5 - timeleft;
+				}
+				timeleft -= 1;
+			}, 1000);
+		}
+
+		function loadData() {
+			table.clear();
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+				table.rows.add(csvJSON(response)).draw();
+			})
+		}
+
+		function csvJSON(csv) {
+
+			var lines = csv.split("\n");
+
+			var result = [];
+
+			// NOTE: If your columns contain commas in their values, you'll need
+			// to deal with those before doing the next step 
+			// (you might convert them to &&& or something, then covert them back later)
+			// jsfiddle showing the issue https://jsfiddle.net/
+			var headers = ['date', 'user', 'type', 'value', 'tags', 'source'];
+			//for (var i = lines.length - 1; i >= 0; i--) {
+			for (var i = 0; i < lines.length; i++) {
+				var obj = [];
+				var currentline = lines[i].split(",");
+				if (currentline.length > 1) {
+					for (var j = 0; j < currentline.length; j++) {
+						//                            obj[headers[j]] = currentline[j];
+						obj.push(currentline[j]);
+					}
+					result.push(obj);
+				}
+
+			}
+
+			//return result; //JavaScript object
+			console.log(result)
+			return result;
+		}
+	})
+	</script>
+	<script>
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+
+		// CSV file
+		csvFile = new Blob([csv], { type: "text/csv" });
+
+		// Download link
+		downloadLink = document.createElement("a");
+
+		// File name
+		downloadLink.download = filename;
+
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+
+		// Hide download link
+		downloadLink.style.display = "none";
+
+		// Add the link to DOM
+		document.body.appendChild(downloadLink);
+
+		// Click download link
+		downloadLink.click();
+	}
+
+	function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+
+		for (var i = 2; i < rows.length; i++) {
+			var row = [],
+				cols = rows[i].querySelectorAll("td, th");
+
+			for (var j = 0; j < cols.length; j++)
+				row.push(cols[j].innerText);
+
+			csv.push(row.join(","));
+		}
+
+		// Download CSV file
+		downloadCSV(csv.join("\n"), filename);
+	}
+	</script>
+</body>
+
+</html>

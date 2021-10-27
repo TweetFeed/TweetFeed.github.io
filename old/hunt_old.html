@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<title>TweetFeed</title>
+	<!-- Custom fonts for this template -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="css/table.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href="css/tooltip.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<style>
+		.url{
+                background-color: #c8f6fd; 
+            }
+            .domain{
+                background-color: #a0dde6;  /* #34e3a4 */
+            }
+            .ip{
+                background-color: #34e3a4; 
+            }            
+            .sha256{
+                background-color: #EAC56E; 
+            }
+            .md5{
+                background-color: #ead18f; /* #ead18f */
+            }
+            @-webkit-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-moz-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-o-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .highlight td{
+                -webkit-animation: fadein 2s; /* Safari 4+ */
+                -moz-animation:    fadein 2s; /* Fx 5+ */
+                -o-animation:      fadein 2s; /* Opera 12+ */
+                animation:         fadein 2s; /* IE 10+ */
+            }
+        </style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+	<script>
+	hljs.highlightAll();
+	</script>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="/"><i class="fas fa-fish"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+								&nbsp&nbsp&nbsp&nbsp<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background-color: #343A40;">
+								<a class="dropdown-item" href="/statistics/"><i class="fas fa-chart-area"></i> Statistics</a>
+								<a class="dropdown-item" href="/protect/"><i class="fas fa-shield-alt"></i> Protect</a>
+								<a class="dropdown-item" href="https://twitter.com/phishunt_io" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+								<a class="dropdown-item" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+								<a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content">
+				<div id="presentationSecondary">
+					<br><br>
+					<h1><i class="fas fa-shield-alt" style="font-size: 50px;"></i> Hunt</h1>
+					<h2><em>Hunt IOCs in different environments</em></h2>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<ol>
+					<li><a href="hunt.html#microsoft">Microsoft</a></li>
+					<li><a href="feeds.html#todayFeed">Week</a></li>
+					<li><a href="feeds.html#monthFeed">Month</a></li>
+					<li><a href="feeds.html#yearFeed">Year</a></li>
+				</ol>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<h1>Microsoft</h1>
+				<div class="card shadow mb-4">
+					<div class="card-header text-center">
+						Search SHA256 hashes with yearly tweets feed
+						<button class="btn btn-primary shadow-none" onclick="codeClipboard('Query1')" style="background-color: #4682B4;border-color: black;" id="buttonQuery1"><span id="textQuery1">Copy query</span></button>
+						<button class="btn btn-primary shadow-none" onclick="changeURL('Query1')" style="background-color: #4682B4;border-color: black;" id="buttonQuery1"><span id="textQuery1">Change URL</span></button>
+					</div>
+					<div class="card-block">
+						<div class="card-body">
+							<pre><code style="font-size: 14px;" id="Query1">let MaxAge = ago(30d);
+let SHA256_whitelist = pack_array(
+'XXX' // Some SHA256 hash you want to whitelist.
+);
+let TweetFeed = materialize (
+    (externaldata(report:string)
+    [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"]
+    with (format = "txt"))
+    | extend report = parse_csv(report)
+    | extend Type = tostring(report[2])
+    | where Type == 'sha256'
+    | extend SHA256 = tostring(report[3])
+    | where SHA256 !in(SHA256_whitelist)
+    | extend Tag = tostring(report[4])
+    | extend Tweet = tostring(report[5])
+    | project SHA256, Tag, Tweet 
+);
+union (
+    TweetFeed
+    | join (
+        DeviceProcessEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+), (
+    TweetFeed
+    | join (
+        DeviceFileEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+), ( 
+    TweetFeed
+    | join (
+        DeviceImageLoadEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code></pre>
+						</div> <!-- card-body -->
+					</div> <!-- card-block -->
+				</div> <!-- card -->
+				<hr style="border: 1px solid black;" id="weekFeed"> <!-- DIVIDER -->
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-example1-tab" data-toggle="tab" href="#nav-example1" role="tab" aria-controls="nav-example1" aria-selected="true" style="color:black;font-size: 16px;">SHA256 hashes</a>
+						<a class="nav-item nav-link" id="nav-example2-tab" data-toggle="tab" href="#nav-example2" role="tab" aria-controls="nav-example2" aria-selected="false" style="color:black;font-size: 16px;">IP addresses</a>
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-example1" role="tabpanel" aria-labelledby="nav-example1-tab">
+						<pre style="border: 1px solid black;"><code style="font-size: 14px;">let MaxAge = ago(30d);
+let SHA256_whitelist = pack_array(
+'XXX' // Some SHA256 hash you want to whitelist.
+);
+let TweetFeed = materialize (
+    (externaldata(report:string)
+    [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"]
+    with (format = "txt"))
+    | extend report = parse_csv(report)
+    | extend Type = tostring(report[2])
+    | where Type == 'sha256'
+    | extend SHA256 = tostring(report[3])
+    | where SHA256 !in(SHA256_whitelist)
+    | extend Tag = tostring(report[4])
+    | extend Tweet = tostring(report[5])
+    | project SHA256, Tag, Tweet 
+);
+union (
+    TweetFeed
+    | join (
+        DeviceProcessEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+), (
+    TweetFeed
+    | join (
+        DeviceFileEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+), ( 
+    TweetFeed
+    | join (
+        DeviceImageLoadEvents
+        | where Timestamp > MaxAge
+    ) on SHA256
+) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code></pre>
+					</div>
+					<div class="tab-pane fade" id="nav-example2" role="tabpanel" aria-labelledby="nav-example2-tab">
+						<pre style="border: 1px solid black;"><code style="font-size: 14px;">let MaxAge = ago(30d);
+let IPaddress_whitelist = pack_array(
+'XXX' // Some IP address you want to whitelist.
+);
+let TweetFeed = materialize (
+    (externaldata(report:string)
+    [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"]
+    with (format = "txt"))
+    | extend report = parse_csv(report)
+    | extend Type = tostring(report[2])
+    | where Type == 'ip'
+    | extend RemoteIP = tostring(report[3])
+    | where RemoteIP !in(IPaddress_whitelist)
+    | extend Tag = tostring(report[4])
+    | extend Tweet = tostring(report[5])
+    | project RemoteIP, Tag, Tweet 
+);
+union (
+TweetFeed
+    | join (
+        DeviceNetworkEvents
+    | where Timestamp > MaxAge
+    ) on RemoteIP
+) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code></pre>
+					</div>
+				</div>
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
+		<!-- End of Page Wrapper -->
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top" style="background: #1DA1F2;">
+			<i class="fas fa-angle-up"></i>
+		</a>
+		<!-- Logout Modal-->
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+		<!-- Page level plugins -->
+		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<!-- Export -->
+		<script src="js/demo/datatables-demo.js"></script>
+		<!-- Page level custom scripts -->
+		<script type="text/javascript" src="js/date.js"></script>
+		<script>
+		function codeClipboard(id) {
+			/* Get the text field */
+			var text = $("#" + id).text()
+
+			/* Copy the text inside the text field */
+			navigator.clipboard.writeText(text);
+
+			$("#textQuery1").text("Copied!");
+			$("#buttonQuery1").css("background-color", "green");
+			setTimeout(
+				function() {
+					$("#textQuery1").text("Copy code");
+					$("#buttonQuery1").css("background-color", "#4682B4");
+				}, 1000);
+		}
+
+		function changeURL(id) {
+			$("#" + id).fadeOut(400, function() {
+				$(this).html("https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv").fadeIn(400);
+			});
+		}
+		</script>
+</body>
+
+</html>

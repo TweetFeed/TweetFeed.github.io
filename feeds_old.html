@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<title>TweetFeed</title>
+	<!-- Custom fonts for this template -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="css/table.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href="css/tooltip.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<!-- Microsoft -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		.url{
+                background-color: #c8f6fd; 
+            }
+            .domain{
+                background-color: #a0dde6;  /* #34e3a4 */
+            }
+            .ip{
+                background-color: #34e3a4; 
+            }            
+            .sha256{
+                background-color: #EAC56E; 
+            }
+            .md5{
+                background-color: #ead18f; /* #ead18f */
+            }
+            @-webkit-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-moz-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-o-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .highlight td{
+                -webkit-animation: fadein 2s; /* Safari 4+ */
+                -moz-animation:    fadein 2s; /* Fx 5+ */
+                -o-animation:      fadein 2s; /* Opera 12+ */
+                animation:         fadein 2s; /* IE 10+ */
+            }
+        </style>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+						</li>						
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="/"><i class="fas fa-fish"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+								&nbsp&nbsp&nbsp&nbsp<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background-color: #343A40;">
+								<a class="dropdown-item" href="/statistics/"><i class="fas fa-chart-area"></i> Statistics</a>
+								<a class="dropdown-item" href="/protect/"><i class="fas fa-shield-alt"></i> Protect</a>
+								<a class="dropdown-item" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+								<a class="dropdown-item" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+								<a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content">
+				<div id="presentationSecondary">
+					<br><br><br>
+					<h1><i class="fas fa-rss" style="font-size: 36px;"></i> Feeds</h1>
+					<h2><em>Feeds from today, last week, last month and last year</em></h2>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button"><i class="fas fa-download"></i> Today (.csv)</a>&nbsp;&nbsp;&nbsp;<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="feeds.html#todayFeed" role="button"><i class="fas fa-chart-pie"></i> </a></span></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button"><i class="fas fa-download"></i> Week (.csv)</a>&nbsp;&nbsp;&nbsp;<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="feeds.html#weekFeed" role="button"><i class="fas fa-chart-pie"></i> </a></span></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button"><i class="fas fa-download"></i> Month (.csv)</a>&nbsp;&nbsp;&nbsp;<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="feeds.html#monthFeed" role="button"><i class="fas fa-chart-pie"></i> </a></span></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Year</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button"><i class="fas fa-download"></i> Year (.csv)</a>&nbsp;&nbsp;&nbsp;<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="feeds.html#yearFeed" role="button"><i class="fas fa-chart-pie"></i> </a></span></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<hr style="border: 1px solid black;" id="todayFeed"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button"><i class="fas fa-download"></i> Today (.csv)</a></p>
+							</div>
+							<div class="card-block">
+								<div class="card-body text-center">
+									<div class="container">
+										<div class="row h-100 align-items-center">
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span> <i class="fas fa-link"></i> URLs</span>
+												<span class="today-url"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-globe"></i> Domains</span>
+												<span class="today-domain"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-map-marker-alt"></i> IPs</span>
+												<span class="today-ip"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> SHA256</span>
+												<span class="today-sha256"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> MD5</span>
+												<span class="today-md5"></span>
+											</div>
+										</div> <!-- row -->
+										<div class="row today">
+										</div> <!-- row 2 -->
+									</div> <!-- container -->
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+						<!-- Area Chart -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary text-center">Today Line Chart</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-area">
+									<canvas id="todayLineChart"></canvas>
+								</div>
+								<hr>
+							</div>
+						</div> <!-- Card -->
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<div class="row">
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Today types</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="todayPieChartType"></canvas>
+									</div>
+									<div class="mt-4 text-center small todayPieChartTypeHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Today tags</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="todayPieChartTag"></canvas>
+									</div>
+									<div class="mt-4 text-center small todayPieChartTagHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+				<hr style="border: 1px solid black;" id="weekFeed"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button"><i class="fas fa-download"></i> Week (.csv)</a></p>
+							</div>
+							<div class="card-block">
+								<div class="card-body text-center">
+									<div class="container">
+										<div class="row h-100 align-items-center">
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<i class="fas fa-link"></i> URLs
+												<span class="week-url"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-globe"></i> Domains</span>
+												<span class="week-domain"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-map-marker-alt"></i> IPs</span>
+												<span class="week-ip"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> SHA256</span>
+												<span class="week-sha256"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> MD5</span>
+												<span class="week-md5"></span>
+											</div>
+										</div> <!-- row -->
+										<div class="row today">
+										</div> <!-- row 2 -->
+									</div> <!-- container -->
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+						<!-- Area Chart -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary text-center">Weekly Line Chart</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-area">
+									<canvas id="weekLineChart"></canvas>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<div class="row">
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Weekly types</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="weekPieChartType"></canvas>
+									</div>
+									<div class="mt-4 text-center small weekPieChartTypeHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Weekly tags</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="weekPieChartTag"></canvas>
+									</div>
+									<div class="mt-4 text-center small weekPieChartTagHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+				<hr style="border: 1px solid black;" id="monthFeed"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button"><i class="fas fa-download"></i> Month (.csv)</a></p>
+							</div>
+							<div class="card-block">
+								<div class="card-body text-center">
+									<div class="container">
+										<div class="row h-100 align-items-center">
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-link"></i> URLs</span>
+												<span class="month-url"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-globe"></i> Domains</span>
+												<span class="month-domain"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-map-marker-alt"></i> IPs</span>
+												<span class="month-ip"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> SHA256</span>
+												<span class="month-sha256"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> MD5</span>
+												<span class="month-md5"></span>
+											</div>
+										</div> <!-- row -->
+										<div class="row today">
+										</div> <!-- row 2 -->
+									</div> <!-- container -->
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+						<!-- Area Chart -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary text-center">Monthly Line Chart</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-area">
+									<canvas id="monthLineChart"></canvas>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<div class="row">
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Monthly types</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="monthPieChartType"></canvas>
+									</div>
+									<div class="mt-4 text-center small monthPieChartTypeHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Monthly tags</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="monthPieChartTag"></canvas>
+									</div>
+									<div class="mt-4 text-center small monthPieChartTagHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+				<hr style="border: 1px solid black;" id="yearFeed"> <!-- DIVIDER -->
+				<div class="row">
+					<div class="col">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Year</span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearFrom">.</em></span>
+								<br>
+								<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearTo">.</em></span>
+								<br><br>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button"><i class="fas fa-download"></i> Year (.csv)</a></p>
+							</div>
+							<div class="card-block">
+								<div class="card-body text-center">
+									<div class="container">
+										<div class="row h-100 align-items-center">
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-link"></i> URLs</span>
+												<span class="year-url"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-globe"></i> Domains</span>
+												<span class="year-domain"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-map-marker-alt"></i> IPs</span>
+												<span class="year-ip"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> SHA256</span>
+												<span class="year-sha256"></span>
+											</div>
+											<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<span><i class="fas fa-file-alt"></i> MD5</span>
+												<span class="year-md5"></span>
+											</div>
+										</div> <!-- row -->
+										<div class="row today">
+										</div> <!-- row 2 -->
+									</div> <!-- container -->
+								</div> <!-- card-body -->
+							</div> <!-- card-block -->
+						</div> <!-- card -->
+						<!-- Area Chart -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary text-center">Yearly Line Chart</h6>
+							</div>
+							<div class="card-body">
+								<div class="chart-area">
+									<canvas id="yearLineChart"></canvas>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<div class="row">
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Yearly types</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="yearPieChartType"></canvas>
+									</div>
+									<div class="mt-4 text-center small yearPieChartTypeHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col d-flex align-items-stretch">
+						<!-- Donut Chart -->
+						<div class="col-xl-12 col-lg-12">
+							<div class="card shadow mb-4 h-100">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Yearly tags</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="yearPieChartTag"></canvas>
+									</div>
+									<div class="mt-4 text-center small yearPieChartTagHtml"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white" >
+				<div class="container-fluid py-1" style="color: black;">
+					<div class="row">
+						<div class="col-md-4 text-left"><span class="text-decoration-none">A project by Daniel López</span></div>
+						<div class="col-md-4 text-center"></div>
+						<div class="col-md-4 text-right">20211011</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbspTwitter</a></div>
+						<div class="col-md-4 text-center"></div>
+						<div class="col-md-4 text-right">© 2021 TweetFeed</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
+						<div class="col-md-4 text-center">Site hosted at <a class="text-decoration-none" href="/tos/"><i class="fab fa-github"></i> GitHub</a></div>
+						<div class="col-md-4 text-right">Made with ❤ in Andalucía, Spain&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
+		<!-- End of Page Wrapper -->
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top" style="background: #1DA1F2;">
+			<i class="fas fa-angle-up"></i>
+		</a>
+		<!-- Logout Modal-->
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+		<!-- Page level plugins -->
+		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<!-- Export -->
+		<script src="js/demo/datatables-demo.js"></script>
+		<!-- Page level custom scripts -->
+		<script type="text/javascript" src="js/date.js"></script>
+		<script src="vendor/chart.js/Chart.min.js"></script>
+		<script>
+		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+		Chart.defaults.global.defaultFontColor = '#858796';
+		$(function() {
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+				let data = csvJSON(response);
+				var last_date = data.at(-1)[0];
+				var first_date = data.at(1)[0];
+				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				$(".lastDateTodayFrom").text("From: " + date2);
+				$(".lastDateTodayTo").text("To: " + date1);
+
+				countTypes('today', data);
+				countTags('today', data);
+				prepareTodayGraph(data);
+			})
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
+				let data = csvJSON(response);
+				var last_date = data.at(-1)[0];
+				var first_date = data.at(1)[0];
+				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				$(".lastDateWeekFrom").text("From: " + date2);
+				$(".lastDateWeekTo").text("To: " + date1);
+
+				countTypes('week', data);
+				countTags('week', data);
+				prepareWeekGraph(data);
+			})
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
+				let data = csvJSON(response);
+				var last_date = data.at(-1)[0];
+				var first_date = data.at(1)[0];
+				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				$(".lastDateMonthFrom").text("From: " + date2);
+				$(".lastDateMonthTo").text("To: " + date1);
+
+				countTypes('month', data);
+				countTags('month', data);
+				prepareMonthGraph(data);
+			})
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
+				let data = csvJSON(response);
+				var last_date = data.at(-1)[0];
+				var first_date = data.at(1)[0];
+				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				$(".lastDateYearFrom").text("From: " + date2);
+				$(".lastDateYearTo").text("To: " + date1);
+
+				countTypes('year', data);
+				countTags('year', data);
+				prepareYearGraph(data);
+			})
+		})
+
+		function prepareTodayGraph(jsonArr) {
+			let hours = [],
+				count = [];
+			for (var i = 0; i < jsonArr.length; i++) {
+				var d = new Date(jsonArr[i][0]);
+				var n = d.getHours();
+				hours.push(n);
+			}
+			hours.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+
+			hours = [];
+			for (var i = 0; i < count.length; i++) {
+				let string = '';
+				if (i < 10) {
+					string = '0' + i + ':00';
+				} else {
+					string = i + ':00';
+				}
+				hours.push(string)
+			}
+
+			drawLineChart('todayLineChart', hours, count);
+		}
+
+		function prepareWeekGraph(jsonArr) {
+			let keys = [];
+			let values = [];
+			let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			let daysName = [],
+				count = [],
+				monthData = [];
+			for (var i = 0; i < jsonArr.length; i++) {
+				let d = new Date(jsonArr[i][0]);
+				let dayName = days[d.getDay()];
+
+				let day = d.getDate();
+				let month = (d.getMonth() + 1);
+				if (day < 10) {
+					day = '0' + day;
+				}
+				if (month < 10) {
+					month = '0' + month;
+				}
+				monthData.push(day + '/' + month);
+
+				daysName.push(dayName + " (" + day + '/' + month + ")");
+			}
+			daysName.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+
+			for (var key in count) {
+				if (count.hasOwnProperty(key)) {
+					keys.push(key);
+					values.push(count[key]);
+				}
+			}
+
+			drawLineChart('weekLineChart', keys, values);
+		}
+
+		function prepareMonthGraph(jsonArr) {
+			let keys = [];
+			let values = [];
+			let count = [];
+			let monthData = [];
+			jsonArr = jsonArr.sort();
+			for (var i = 0; i < jsonArr.length; i++) {
+				let d = new Date(jsonArr[i][0]);
+				let day = d.getDate();
+				let month = (d.getMonth() + 1);
+				if (day < 10) {
+					day = '0' + day;
+				}
+				if (month < 10) {
+					month = '0' + month;
+				}
+				monthData.push(day + '/' + month);
+			}
+			monthData.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+			for (var key in count) {
+				if (count.hasOwnProperty(key)) {
+					keys.push(key);
+					values.push(count[key]);
+				}
+			}
+			drawLineChart('monthLineChart', keys, values);
+		}
+
+		function prepareYearGraph(jsonArr) {
+			let monthKey = ["January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December"
+			];
+			let monthsValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			for (var i = 0; i < jsonArr.length; i++) {
+				let d = new Date(jsonArr[i][0]);
+				monthsValues[d.getMonth()]++;
+			}
+			drawLineChart('yearLineChart', monthKey, monthsValues);
+		}
+
+		function countTypes(divAccess, jsonArr) {
+			let keys = [];
+			let values = [];
+			let type = { 'url': 0, 'domain': 0, 'ip': 0, 'sha256': 0, 'md5': 0 };
+			for (var i = 0; i < jsonArr.length; i++) {
+				type[jsonArr[i][2]]++;
+			}
+			for (const [key, value] of Object.entries(type)) {
+				$('.' + divAccess + '-' + key).text(value);
+				if (key == "domain") {
+					keys.push(capitalize(key));
+				} else {
+					keys.push(key.toUpperCase());
+				}
+
+				values.push(value);
+			}
+			drawPieChart(divAccess + 'PieChartType', keys, values);
+
+		}
+
+		function capitalize(s) {
+			return s[0].toUpperCase() + s.slice(1);
+		}
+
+		function countTags(divAccess, jsonArr) {
+			let tags = [],
+				count = [];
+			let keys = [];
+			let values = [];
+			for (var i = 0; i < jsonArr.length; i++) {
+				if (jsonArr[i][4].trim() != "") {
+					let newArr = jsonArr[i][4].split(" ");
+					for (var j = 0; j < newArr.length; j++) {
+						tags.push(newArr[j]);
+					}
+				}
+			}
+
+			tags.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+
+			var tuples = [];
+
+			for (var key in count)
+				tuples.push([key, count[key]]);
+
+			tuples.sort(function(a, b) {
+				a = a[1];
+				b = b[1];
+
+				return a > b ? -1 : (a < b ? 1 : 0);
+			});
+			for (var i = 0; i < tuples.length; i++) {
+				keys.push(tuples[i][0]);
+				values.push(tuples[i][1]);
+			}
+
+			drawPieChart(divAccess + 'PieChartTag', keys, values)
+		}
+
+
+		function drawPieChart(id, label, data) {
+			var colorsTag = {
+				"#phishing": "#FF9933",
+				"#scam": "#665500",
+				"#malware": "#FF2A00",
+				"#ransomware": "#802A00",
+				"#banker": "#E6EFA0",
+				"#AgentTesla": "#273285",
+				"#Alienbot": "#7DA554",
+				"#BazarLoader": "#6A0A61",
+				"#CobaltStrike": "#0c8ccd",
+				"#Dridex": "#008040",
+				"#FluBot": "#1734C0",
+				"#Formbook": "#99D7D1",
+				"#GootLoader": "#7EF181",
+				"#GuLoader": "#2F60F1",
+				"#Hancitor": "#3BCC76",
+				"#IceID": "#9209A1",
+				"#Lazarus": "#B2E4AD",
+				"#Lokibot": "#7315BF",
+				"#ProxyShell": "#EB91E1",
+				"#Qakbot": "#3ADA20",
+				"#Raccoon": "#88177F",
+				"#RedLine": "#2F5CF1",
+				"#Remcos": "#B02699",
+				"#SquirrelWaffle": "#CE9734",
+				"#Trickbot": "#616A11",
+				"#Ursnif": "#2E4E42",
+				"#XLoader": "#FBABF4",
+				"#ZLoader": "#B87677"
+			};
+
+			var colorsType = {
+				"URL": "#0026E6", 
+				"Domain": "#3399FF",
+				"IP": "#02bf0f",
+				"SHA256": "#FFC34D",
+				"MD5": "#ffc591"
+			};
+
+			var darker = -0.6;
+			let colors = [];
+			let hoverColors = [];
+			let tmp_color = []
+
+			for (var i = 0; i < label.length; i++) {
+
+				if (id.endsWith("Type")) {
+					if (label[i] in colorsType) {
+						tmp_color = colorsType[label[i]];
+						colors.push(tmp_color);
+						hoverColors.push(pSBC(darker, tmp_color));
+					} else {
+						tmp_color = getRandomColor()
+						colors.push(tmp_color);
+						hoverColors.push(pSBC(darker, tmp_color));
+					}
+
+				} else if (id.endsWith("Tag")) {
+					if (label[i] in colorsTag) {
+						tmp_color = colorsTag[label[i]];
+						colors.push(tmp_color);
+						hoverColors.push(pSBC(darker, tmp_color));
+					} else {
+						tmp_color = getRandomColor()
+						colors.push(tmp_color);
+						hoverColors.push(pSBC(darker, tmp_color));
+					}
+
+				}
+			}
+
+			let html = '';
+			for (var i = 0; i < label.length; i++) {
+
+				html += '<span class="mr-2">' +
+					'<i class="fas fa-circle" style="color: ' + colors[i] + ';"></i> ' + label[i] +
+					'</span>';
+			}
+			$('.' + id + 'Html').html(html);
+			var ctx = document.getElementById(id);
+			var myPieChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: {
+					labels: label,
+					datasets: [{
+						data: data,
+						backgroundColor: colors,
+						hoverBackgroundColor: hoverColors,
+						hoverBorderColor: "rgba(234, 236, 244, 1)",
+					}],
+				},
+				options: {
+					maintainAspectRatio: false,
+					tooltips: {
+						backgroundColor: "rgb(255,255,255)",
+						bodyFontColor: "#858796",
+						borderColor: '#dddfeb',
+						borderWidth: 1,
+						xPadding: 15,
+						yPadding: 15,
+						displayColors: false,
+						caretPadding: 10,
+					},
+					legend: {
+						display: false
+					},
+					cutoutPercentage: 80,
+				},
+			});
+
+		}
+
+		function getRandomColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+			for (var i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		}
+
+		function drawLineChart(id, label, data) {
+			var ctx = document.getElementById(id);
+			var myLineChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: label,
+					datasets: [{
+						label: "Counts",
+						lineTension: 0.3,
+						backgroundColor: "rgba(78, 115, 223, 0.05)",
+						borderColor: "rgba(78, 115, 223, 1)",
+						pointRadius: 3,
+						pointBackgroundColor: "rgba(78, 115, 223, 1)",
+						pointBorderColor: "rgba(78, 115, 223, 1)",
+						pointHoverRadius: 3,
+						pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+						pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+						pointHitRadius: 10,
+						pointBorderWidth: 2,
+						data: data,
+					}],
+				},
+				options: {
+					maintainAspectRatio: false,
+					layout: {
+						padding: {
+							left: 10,
+							right: 25,
+							top: 25,
+							bottom: 0
+						}
+					},
+					scales: {
+						xAxes: [{
+							gridLines: {
+								display: false,
+								drawBorder: false
+							},
+						}],
+						yAxes: [{
+							ticks: {
+								suggestedMin: 0,
+								maxTicksLimit: 5,
+								padding: 10,
+								autoSkip: true,
+								// Include a dollar sign in the ticks
+								callback: function(value, index, values) {
+									return value;
+								}
+							},
+							gridLines: {
+								color: "rgb(234, 236, 244)",
+								zeroLineColor: "rgb(234, 236, 244)",
+								drawBorder: false,
+								borderDash: [2],
+								zeroLineBorderDash: [2]
+							}
+						}],
+					},
+					legend: {
+						display: false
+					},
+					tooltips: {
+						backgroundColor: "rgb(255,255,255)",
+						bodyFontColor: "#858796",
+						titleMarginBottom: 10,
+						titleFontColor: '#6e707e',
+						titleFontSize: 14,
+						borderColor: '#dddfeb',
+						borderWidth: 1,
+						xPadding: 15,
+						yPadding: 15,
+						displayColors: false,
+						intersect: false,
+						mode: 'index',
+						caretPadding: 10,
+						callbacks: {
+							label: function(tooltipItem, chart) {
+								var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+								return datasetLabel + ': ' + tooltipItem.yLabel;
+							}
+						}
+					}
+				}
+			});
+		}
+
+		function csvJSON(csv) {
+
+			var lines = csv.split("\n");
+			var result = [];
+			//for (var i = lines.length - 1; i >= 0; i--) {
+			for (var i = 0; i < lines.length; i++) {
+				var obj = [];
+				var currentline = lines[i].split(",");
+				if (currentline.length > 1) {
+					for (var j = 0; j < currentline.length; j++) {
+						obj.push(currentline[j]);
+					}
+					result.push(obj);
+				}
+
+			}
+			return result;
+		}
+		</script>
+		<script>
+		function downloadCSV(csv, filename) {
+			var csvFile;
+			var downloadLink;
+			// CSV file
+			csvFile = new Blob([csv], { type: "text/csv" });
+			// Download link
+			downloadLink = document.createElement("a");
+			// File name
+			downloadLink.download = filename;
+			// Create a link to the file
+			downloadLink.href = window.URL.createObjectURL(csvFile);
+			// Hide download link
+			downloadLink.style.display = "none";
+			// Add the link to DOM
+			document.body.appendChild(downloadLink);
+			// Click download link
+			downloadLink.click();
+		}
+
+		function exportTableToCSV(filename) {
+			var csv = [];
+			var rows = document.querySelectorAll("table tr");
+			for (var i = 2; i < rows.length; i++) {
+				var row = [],
+					cols = rows[i].querySelectorAll("td, th");
+				for (var j = 0; j < cols.length; j++)
+					row.push(cols[j].innerText);
+				csv.push(row.join(","));
+			}
+
+			// Download CSV file
+			downloadCSV(csv.join("\n"), filename);
+		}
+		</script>
+		<script>
+		function addData(chart, label, data) {
+			chart.data.labels.push(label);
+			chart.data.datasets.forEach((dataset) => {
+				dataset.data.push(data);
+			});
+			chart.update();
+		}
+
+		function removeData(chart) {
+			chart.data.labels.pop();
+			chart.data.datasets.forEach((dataset) => {
+				dataset.data.pop();
+			});
+			chart.update();
+		}
+		</script>
+		<script>
+		// Version 4.0
+		const pSBC = (p, c0, c1, l) => {
+			let r, g, b, P, f, t, h, i = parseInt,
+				m = Math.round,
+				a = typeof(c1) == "string";
+			if (typeof(p) != "number" || p < -1 || p > 1 || typeof(c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+			if (!this.pSBCr) this.pSBCr = (d) => {
+				let n = d.length,
+					x = {};
+				if (n > 9) {
+					[r, g, b, a] = d = d.split(","), n = d.length;
+					if (n < 3 || n > 4) return null;
+					x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1
+				} else {
+					if (n == 8 || n == 6 || n < 4) return null;
+					if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
+					d = i(d.slice(1), 16);
+					if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+					else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1
+				}
+				return x
+			};
+			h = c0.length > 9, h = a ? c1.length > 9 ? true : c1 == "c" ? !h : false : h, f = this.pSBCr(c0), P = p < 0, t = c1 && c1 != "c" ? this.pSBCr(c1) : P ? { r: 0, g: 0, b: 0, a: -1 } : { r: 255, g: 255, b: 255, a: -1 }, p = P ? p * -1 : p, P = 1 - p;
+			if (!f || !t) return null;
+			if (l) r = m(P * f.r + p * t.r), g = m(P * f.g + p * t.g), b = m(P * f.b + p * t.b);
+			else r = m((P * f.r ** 2 + p * t.r ** 2) ** 0.5), g = m((P * f.g ** 2 + p * t.g ** 2) ** 0.5), b = m((P * f.b ** 2 + p * t.b ** 2) ** 0.5);
+			a = f.a, t = t.a, f = a >= 0 || t >= 0, a = f ? a < 0 ? t : t < 0 ? a : a * P + t * p : 0;
+			if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
+			else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2)
+		}
+		</script>
+</body>
+
+</html>

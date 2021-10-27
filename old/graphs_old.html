@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<title>TweetFeed</title>
+	<!-- Custom fonts for this template -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="css/table.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<style>
+		.url{
+                background-color: #c8f6fd; 
+            }
+            .domain{
+                background-color: #a0dde6;  /* #34e3a4 */
+            }
+            .ip{
+                background-color: #34e3a4; 
+            }            
+            .sha256{
+                background-color: #EAC56E; 
+            }
+            .md5{
+                background-color: #ead18f; /* #ead18f */
+            }
+            @-webkit-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-moz-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-o-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .highlight td{
+                -webkit-animation: fadein 2s; /* Safari 4+ */
+                -moz-animation:    fadein 2s; /* Fx 5+ */
+                -o-animation:      fadein 2s; /* Opera 12+ */
+                animation:         fadein 2s; /* IE 10+ */
+            }
+        </style>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/newregistration/"><i class="fas fa-search"></i> Search in tools</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="/"><i class="fas fa-fish"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+								&nbsp&nbsp&nbsp&nbsp<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background-color: #343A40;">
+								<a class="dropdown-item" href="/statistics/"><i class="fas fa-chart-area"></i> Statistics</a>
+								<a class="dropdown-item" href="/protect/"><i class="fas fa-shield-alt"></i> Protect</a>
+								<a class="dropdown-item" href="https://twitter.com/phishunt_io" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+								<a class="dropdown-item" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+								<a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content">
+				<div class="container-fluid">
+					<!-- Page Heading -->
+					<br>
+					<h1 class="h3 mb-2 text-gray-800" style="font-size:38px;">Charts</h1>
+					<!-- Content Row -->
+					<div class="col align-self-start">
+						<!-- <button class="btn btn-primary autorefresh">Disable Auto Refresh</button> -->
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+							<label class="custom-control-label" for="customSwitch1">Autorefresh</label>
+						</div>
+						<progress value="0" max="5" id="progressBar"></progress>
+					</div>
+					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<div class="row">
+						<div class="col-8 d-flex align-items-stretch">
+							<div class="card shadow mb-4">
+								<div class="card-header text-center">
+									<span class="card-text" style="font-size:28px;text-align: center;">Feed from today</span>
+									<br>
+									<span class="card-text" style="font-size:16px;text-align: center;"><em id="lastDate">.</em></span>
+									<br><br>
+									<span style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button"><i class="fas fa-download"></i> Today (.csv)</a></span>
+								</div>
+								<div class="card-block" style="height:100%">
+									<div class="card-body align-items-center d-flex justify-content-center" style="height:100%">
+										<br>
+										<table class="today text-left" style="border: none;font-size: 20px;font-family: 'Open Sans', sans-serif;width: 50%;height: 100%;">
+										</table>
+									</div> <!-- card-body -->
+								</div> <!-- card-block -->
+							</div> <!-- card -->
+						</div> <!-- class="col-sm-6" -->
+						<div class="col-4">
+							<!-- Donut Chart -->
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">IOCs graph from today</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="todayPieChart"></canvas>
+									</div>
+									<div class="mt-4 text-center small">
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #c8f6fd;"></i> URL
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #a0dde6;"></i> Domain
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #34e3a4;"></i> IP
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #EAC56E;"></i> SHA256
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #ead18f;"></i> MD5
+										</span>
+									</div>
+									<hr>
+									Data obtained since 00:00 UTC
+								</div>
+							</div><!-- End Donut chart-->
+						</div> <!-- class="col-sm-6" -->
+					</div> <!-- row -->
+					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<div class="row">
+						<div class="col-xl-8 col-lg-7">
+							<!-- Area Chart -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-area">
+										<canvas id="myAreaChart"></canvas>
+									</div>
+									<hr>
+									Styling for the area chart can be found in the
+									<code>/js/demo/chart-area-demo.js</code> file.
+								</div>
+							</div>
+							<!-- Bar Chart -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+								</div>
+								<div class="card-body">
+									<div class="chart-bar">
+										<canvas id="myBarChart"></canvas>
+									</div>
+									<hr>
+									Styling for the bar chart can be found in the
+									<code>/js/demo/chart-bar-demo.js</code> file.
+								</div>
+							</div>
+						</div>
+						<!-- Donut Chart -->
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4">
+										<canvas id="myPieChart"></canvas>
+									</div>
+									<div class="mt-4 text-center small">
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #c8f6fd;"></i> URL
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #a0dde6;"></i> Domain
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #34e3a4;"></i> IP
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #EAC56E;"></i> SHA256
+										</span>
+										<span class="mr-2">
+											<i class="fas fa-circle" style="color: #ead18f;"></i> MD5
+										</span>
+									</div>
+									<hr>
+									Styling for the donut chart can be found in the
+									<code>/js/demo/chart-pie-demo.js</code> file.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2020</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	$(function() {
+		let autorefresh = 1;
+		let init = 1;
+		let flag_new = 0;
+		$('#customSwitch1').click(function() {
+			if (autorefresh) {
+				// Disabled
+				autorefresh = 0;
+				$(this).text('Enable Auto Refresh');
+				clearInterval(timerAux);
+			} else {
+				// Enabled
+				autorefresh = 1;
+				$(this).text('Disable Auto Refresh');
+				init = 1;
+				p_type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
+				progressBar();
+				loadData();
+
+				table.rows().every(function() {
+
+					$(this.node()).addClass('newRow');
+				});
+				animationNew();
+				timerAux = setInterval(timerCycle, 6000);
+			}
+		})
+
+		let table = $('#dataTable').DataTable();
+		loadData();
+		progressBar();
+		var timerAux = setInterval(timerCycle, 6000);
+
+		function timerCycle() {
+			if (autorefresh) {
+				loadData();
+				progressBar();
+			}
+		}
+
+		function animation() {
+			//$('.today', '.col').animate({
+			//    opacity: 'toggle'
+			//});
+
+			$('.today', '.col').hide();
+			$('.today', '.col').fadeIn(1000, "linear");
+		}
+
+		function animationNew() {
+			//$('.newRow').animate({
+			//    opacity: 'toggle'
+			//}, "linear");
+			$('.newRow').hide();
+			$('.newRow').fadeIn(1000, "linear");
+		}
+
+		function updateCharts(type) {
+			removeData(myBarChart);
+			removeData(myBarChart);
+			removeData(myBarChart);
+			removeData(myBarChart);
+			removeData(myBarChart);
+			addData(myBarChart, "URLs", type['url']);
+			addData(myBarChart, "Domains", type['domain']);
+			addData(myBarChart, "IPs", type['ip']);
+			addData(myBarChart, "SHA256", type['sha256']);
+			addData(myBarChart, "MD5", type['md5']);
+
+			removeData(todayPieChart);
+			removeData(todayPieChart);
+			removeData(todayPieChart);
+			removeData(todayPieChart);
+			removeData(todayPieChart);
+
+			addData(todayPieChart, "URLs", type['url']);
+			addData(todayPieChart, "Domains", type['domain']);
+			addData(todayPieChart, "IPs", type['ip']);
+			addData(todayPieChart, "SHA256", type['sha256']);
+			addData(todayPieChart, "MD5", type['md5']);
+		}
+
+		function progressBar() {
+			var timeleft = 5;
+			var downloadTimer = setInterval(function() {
+				if (timeleft <= 0) {
+					clearInterval(downloadTimer);
+				}
+				if (autorefresh == 0) {
+					timeleft = 5;
+					clearInterval(downloadTimer);
+					document.getElementById("progressBar").value = 0;
+				} else {
+					document.getElementById("progressBar").value = 5 - timeleft;
+				}
+				timeleft -= 1;
+			}, 1000);
+		}
+		var loaddatacall = 0;
+		var olddate = '';
+
+		function loadData() {
+			if (init) {
+				animation();
+			}
+			$.ajax({
+				type: 'GET',
+				context: document.body,
+				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				success: function(response) {
+					var data = csvJSON(response);
+					var last_date = data.at(-1)[0];
+					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
+
+					$("#lastDate").text("Last update: " + date1);
+
+					if (loaddatacall > 0) {
+
+						for (var i = data.length - 20; i < data.length; i++) {
+							if (olddate < data[i][0]) {
+								console.log('old:' + olddate + '------- New:' + data[i][0]);
+								var type = data[i][2];
+
+								var user = data[i][1];
+								data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>'
+
+								var value = data[i][3];
+								// data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
+
+								var tweet_url = data[i][5];
+								data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+
+								// Add VT
+
+								if (value.startsWith("http://")) {
+									value = value.replace("http://", "");
+								} else if (value.startsWith("https://")) {
+									value = value.replace("https://", "");
+								}
+								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+
+								var node = table.row.add(data[i]).draw().node();
+								$(node).addClass('highlight');
+								$(node).addClass('newRow');
+								$(node).addClass(type);
+								flag_new = 1;
+							}
+
+						}
+
+						if (flag_new && init == 0) {
+							animation(); // Animate card-box
+							animationNew(); // Animate new rows added
+						}
+
+						setTimeout(function() {
+							// Here entry always
+							$('tr').removeClass('highlight');
+							$('tr').removeClass('newRow');
+							flag_new = 0;
+						}, 1000);
+					} else {
+
+						for (var i = 0; i < data.length; i++) {
+							// Add VT
+							var value = data[i][3];
+
+							if (value.startsWith("http://")) {
+								value = value.replace("http://", "");
+							} else if (value.startsWith("https://")) {
+								value = value.replace("https://", "");
+							}
+
+							data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+						}
+
+						table.rows.add(data).order([0, 'desc']).draw();
+						table.rows().every(function() {
+
+							$(this.node()).addClass('newRow');
+
+							var col = $(this.node()).find('td').eq(2).text().trim();
+							$(this.node()).toggleClass(col);
+
+							var user = $(this.node()).find('td').eq(1).text().trim();
+							$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
+
+							var value = $(this.node()).find('td').eq(3).text().trim();
+							// $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
+
+							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
+							$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+
+						})
+						animationNew();
+					}
+					olddate = data[data.length - 1][0];
+					countTypes('.today', data);
+					loaddatacall++;
+				},
+				cache: false
+			});
+			//                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function (response) {
+			//                                                        })
+			init = 0;
+			loaddatacall++;
+		}
+
+
+		var p_type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
+
+		function countTypes(className, jsonArr) {
+			var type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
+			for (var i = 0; i < jsonArr.length; i++) {
+				type[jsonArr[i][2]]++;
+			}
+
+			var myvar = '<tbody><tr>' +
+				'<td style="padding: 8px;"><i class="fas fa-link"></i> URLs</td>' +
+				'<td style="padding: 8px;text-align: center">' + type['url'] + '</td>' +
+				'</tr>' +
+				'<tr>' +
+				'<td style="padding: 8px;"><i class="fas fa-globe"></i> Domains</td>' +
+				'<td style="padding: 8px;text-align: center">' + type['domain'] + '</td>' +
+				'</tr>' +
+				'<tr>' +
+				'<td style="padding: 8px;"><i class="fas fa-map-marker-alt"></i> IPs</td>' +
+				'<td style="padding: 8px;text-align: center">' + type['ip'] + '</td>' +
+				'</tr>' +
+				'<tr>' +
+				'<td style="padding: 8px;"><i class="fas fa-file-alt"></i> SHA256</td>' +
+				'<td style="padding: 8px;text-align: center">' + type['sha256'] + '</td>' +
+				'</tr>' +
+				'<tr>' +
+				'<td style="padding: 8px;"><i class="fas fa-file-alt"></i> MD5</td>' +
+				'<td style="padding: 8px;text-align: center">' + type['md5'] + '</td>' +
+				'</tr></tbody>';
+
+			/*var myvar = '<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['url'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['domain'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['ip'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['sha256'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['md5'] + '</b></h5>' +
+				'</div>'*/
+			$(className).html(myvar);
+
+			if (JSON.stringify(p_type) !== JSON.stringify(type)) {
+				updateCharts(type);
+			}
+
+			p_type = type;
+		}
+
+		function csvJSON(csv) {
+
+			var lines = csv.split("\n");
+			var result = [];
+			//for (var i = lines.length - 1; i >= 0; i--) {
+			for (var i = 0; i < lines.length; i++) {
+				var obj = [];
+				var currentline = lines[i].split(",");
+				if (currentline.length > 1) {
+					for (var j = 0; j < currentline.length; j++) {
+						obj.push(currentline[j]);
+					}
+					result.push(obj);
+				}
+
+			}
+			return result;
+		}
+	})
+	</script>
+	<script>
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+		// CSV file
+		csvFile = new Blob([csv], { type: "text/csv" });
+		// Download link
+		downloadLink = document.createElement("a");
+		// File name
+		downloadLink.download = filename;
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+		// Hide download link
+		downloadLink.style.display = "none";
+		// Add the link to DOM
+		document.body.appendChild(downloadLink);
+		// Click download link
+		downloadLink.click();
+	}
+
+	function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+		for (var i = 2; i < rows.length; i++) {
+			var row = [],
+				cols = rows[i].querySelectorAll("td, th");
+			for (var j = 0; j < cols.length; j++)
+				row.push(cols[j].innerText);
+			csv.push(row.join(","));
+		}
+
+		// Download CSV file
+		downloadCSV(csv.join("\n"), filename);
+	}
+	</script>
+	<script type="text/javascript" src="js/date.js"></script>
+	<script>
+	$(".nav a").on("click", function() {
+		$(".nav").find(".active").removeClass("active");
+		$(this).parent().addClass("active");
+	});
+	</script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
+	<script src="js/demo/chart-bar-demo.js"></script>
+	<script src="js/demo/todayPieChart.js"></script>
+	<script>
+	function addData(chart, label, data) {
+		chart.data.labels.push(label);
+		chart.data.datasets.forEach((dataset) => {
+			dataset.data.push(data);
+		});
+		chart.update();
+	}
+
+	function removeData(chart) {
+		chart.data.labels.pop();
+		chart.data.datasets.forEach((dataset) => {
+			dataset.data.pop();
+		});
+		chart.update();
+	}
+	</script>
+</body>
+
+</html>

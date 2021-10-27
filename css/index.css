@@ -1,0 +1,99 @@
+#content {
+    min-height: calc(100vh - 170px);
+    /* 80px header + 40px footer = 120px  */
+    width: 72%;
+    margin-left: 14%;
+    margin-right: 14%;
+}
+
+#presentation {
+    text-align: center;
+}
+
+#presentation h1 {
+    font-size: 69px;
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-family: 'Alegreya Sans SC', sans-serif;
+    /*font-weight: bold;*/
+    font-weight: 800;
+    color: #1DA1F2;
+}
+
+#presentation h2 {
+    font-size: 18px;
+}
+
+#presentationSecondary {
+    text-align: left;
+}
+
+#presentationSecondary h1 {
+    font-size: 42px;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 800;
+    color: #1DA1F2;
+}
+
+#presentationSecondary h2 {
+    font-size: 16px;
+
+}
+
+.cardTitle {
+    font-size: 36px;
+    text-align: center;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 600;
+    color: #1DA1F2;
+}
+
+.navbar-nav li a {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+}
+
+.active:not([role=tab]) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: white;
+}
+
+.navbar-nav li a:hover:not(.active) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #8ec9ee;
+}
+
+/* Todos */
+.nav-pills li a {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    font-weight: 500;
+    background: #cad2e8;
+}
+
+/* Hover */
+.nav-pills li a:hover:not(.active) {
+    color: black !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #e1e6f2;
+}
+
+/* El activo */
+.nav-link.active:not([href$="html"]):not([href$="/"]):not(.border-bottom-0) {
+    color: white !important;
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    border-radius: 50px;
+    background: #1DA1F2;
+}
