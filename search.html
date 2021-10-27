@@ -158,13 +158,12 @@
 							<div class="container-fluid rounded">
 								<div class="row">
 									<div class="col align-self-center">
-										
 									</div>
 									<div class="col-md-auto align-self-center">
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank">week.csv</a></em></span>
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
-										<button style="background-color: #4682B4;border-color: black;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle"><i class="fas fa-download"></i> Export only filtered</button>
+										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle"><i class="fas fa-download"></i> Export filtered</button>
 									</div>
 								</div>
 							</div>
@@ -200,11 +199,10 @@
 				</div>
 				<!-- /.container-fluid -->
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
-			<footer class="sticky-footer bg-white" >
+			<footer class="sticky-footer bg-white">
 				<div class="container-fluid py-1" style="color: black;">
 					<div class="row">
 						<div class="col-md-4 text-left"><span class="text-decoration-none">By Daniel López</span></div>
@@ -359,7 +357,7 @@
 									value = value.replace("https://", "");
 								}
 
-								value=value.split("/")[0]
+								value = value.split("/")[0]
 
 								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
@@ -395,7 +393,7 @@
 								value = value.replace("https://", "");
 							}
 
-							value=value.split("/")[0]
+							value = value.split("/")[0]
 
 							data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 						}
@@ -537,7 +535,28 @@
 		}
 
 		// Download CSV file
-		downloadCSV(csv.join("\n"), filename);
+		var dateNowUTC = new Date(Date.now());
+		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
+		let d = new Date(Date.now());
+		let day = d.getDate();
+		let month = (d.getMonth() + 1);
+		let h = addZero(d.getHours());
+		let m = addZero(d.getMinutes());
+		let s = addZero(d.getSeconds());
+		let time = h + "" + m + "" + s;
+		if (day < 10) {
+			day = '0' + day;
+		}
+		if (month < 10) {
+			month = '0' + month;
+		}
+		dateNow = [dateNowUTC.getFullYear(), month, day].join('');
+		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
+	}
+
+	function addZero(i) {
+		if (i < 10) { i = "0" + i }
+		return i;
 	}
 	</script>
 	<script type="text/javascript" src="js/date.js"></script>
