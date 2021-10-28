@@ -2,423 +2,486 @@
 <html lang="en">
 
 <head>
-
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>SB Admin 2 - Blank</title>
-
-    <!-- Custom fonts for this template-->
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <title>Blank / TweetFeed</title>
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom CSS 0xDanielLopez -->
+    <link href="css/table.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/tooltip.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <!-- Microsoft -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .url{
+                background-color: #c8f6fd; 
+            }
+            .domain{
+                background-color: #a0dde6;  /* #34e3a4 */
+            }
+            .ip{
+                background-color: #34e3a4; 
+            }            
+            .sha256{
+                background-color: #EAC56E; 
+            }
+            .md5{
+                background-color: #ead18f; /* #ead18f */
+            }
+            @-webkit-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-moz-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-o-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .highlight td{
+                -webkit-animation: fadein 2s; /* Safari 4+ */
+                -moz-animation:    fadein 2s; /* Fx 5+ */
+                -o-animation:      fadein 2s; /* Opera 12+ */
+                animation:         fadein 2s; /* IE 10+ */
+            }
+        </style>
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                    aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item active" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
+            <!-- Top bar -->
+            <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="about.html"><i class="fas fa-question-circle"></i> About</a>
+                        </li>
+                    </ul>
                 </div>
-                <!-- /.container-fluid -->
-
+            </nav>
+            <nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;">
+                <div class="container-fluid">
+                    <ul class="navbar-nav">
+                        <li class="nav-item" style="font-size: 15px">
+                            <a id="logo" class="nav-link" href="/"><i class="fas fa-fish"></i> TweetFeed</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item dropdown " style="font-size: 15px;">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+                                &nbsp&nbsp&nbsp&nbsp<i class="fas fa-bars"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background-color: #343A40;">
+                                <a class="dropdown-item" href="/statistics/"><i class="fas fa-chart-area"></i> Statistics</a>
+                                <a class="dropdown-item" href="/protect/"><i class="fas fa-shield-alt"></i> Protect</a>
+                                <a class="dropdown-item" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a class="dropdown-item" href="/contact/"><i class="fas fa-envelope"></i> Contact</a>
+                                <a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- Top bar end -->
+            <div id="content">
+                <div id="presentationSecondary">
+                    <br><br><br>
+                    <h1><i class="fas fa-question-circle" style="font-size: 36px;"></i> Blank</h1>
+                    <h2><em>Blank page</em></h2>
+                </div>
+                <hr style="border: 1px solid black;"> <!-- DIVIDER -->
             </div>
             <!-- End of Main Content -->
-
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                <div class="container-fluid py-1" style="color: black;">
+                    <div class="row">
+                        <div class="col-md-4 text-left"><span class="text-decoration-none">By Daniel López</span></div>
+                        <div class="col-md-4 text-center"></div>
+                        <div class="col-md-4 text-right">20211011</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbspTwitter</a></div>
+                        <div class="col-md-4 text-center"></div>
+                        <div class="col-md-4 text-right">© 2021 TweetFeed</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
+                        <div class="col-md-4 text-center">Site hosted at <a class="text-decoration-none" href="/tos/"><i class="fab fa-github"></i> GitHub</a></div>
+                        <div class="col-md-4 text-right">Made with ❤ in Andalucía, Spain</div>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <!-- Logout Modal-->
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Export -->
+        <script src="js/demo/datatables-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script>
+        $(function() {
+            let autorefresh = 1;
+            let init = 1;
+            let flag_new = 0;
+            $('#customSwitch1').click(function() {
+                if (autorefresh) {
+                    // Disabled
+                    autorefresh = 0;
+                    $(this).text('Enable Auto Refresh');
+                    clearInterval(timerAux);
+                } else {
+                    // Enabled
+                    autorefresh = 1;
+                    $(this).text('Disable Auto Refresh');
+                    init = 1;
+                    progressBar();
+                    loadData();
 
-    </div>
-    <!-- End of Page Wrapper -->
+                    table.rows().every(function() {
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+                        $(this.node()).addClass('newRow');
+                    });
+                    animationNew();
+                    timerAux = setInterval(timerCycle, 6000);
+                }
+            })
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+            let table = $('#dataTable').DataTable();
+            loadData();
+            progressBar();
+            var timerAux = setInterval(timerCycle, 6000);
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            function timerCycle() {
+                if (autorefresh) {
+                    loadData();
+                    progressBar();
+                }
+            }
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            function animation() {
+                //$('.today', '.col').animate({
+                //    opacity: 'toggle'
+                //});
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+                $('.today', '.col').hide();
+                $('.today', '.col').fadeIn(1000, "linear");
+            }
 
+            function animationNew() {
+                //$('.newRow').animate({
+                //    opacity: 'toggle'
+                //}, "linear");
+                $('.newRow').hide();
+                $('.newRow').fadeIn(1000, "linear");
+            }
+
+            function progressBar() {
+                var timeleft = 5;
+                var downloadTimer = setInterval(function() {
+                    if (timeleft <= 0) {
+                        clearInterval(downloadTimer);
+                    }
+                    if (autorefresh == 0) {
+                        timeleft = 5;
+                        clearInterval(downloadTimer);
+                        document.getElementById("progressBar").value = 0;
+                    } else {
+                        document.getElementById("progressBar").value = 5 - timeleft;
+                    }
+                    timeleft -= 1;
+                }, 1000);
+            }
+            var loaddatacall = 0;
+            var olddate = '';
+
+            function loadData() {
+                if (init) {
+                    animation();
+                }
+                $.ajax({
+                    type: 'GET',
+                    context: document.body,
+                    url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+                    success: function(response) {
+                        var data = csvJSON(response);
+                        var last_date = data.at(-1)[0];
+                        var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
+
+                        $("#lastDate").text("Last update: " + date1);
+
+                        if (loaddatacall > 0) {
+
+                            for (var i = data.length - 20; i < data.length; i++) {
+                                if (olddate < data[i][0]) {
+                                    console.log('old:' + olddate + '------- New:' + data[i][0]);
+                                    var type = data[i][2];
+
+                                    var user = data[i][1];
+                                    data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>'
+
+                                    var value = data[i][3];
+                                    // data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
+
+                                    var tweet_url = data[i][5];
+                                    data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+
+                                    // Add VT
+
+                                    if (value.startsWith("http://")) {
+                                        value = value.replace("http://", "");
+                                    } else if (value.startsWith("https://")) {
+                                        value = value.replace("https://", "");
+                                    }
+                                    data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+
+                                    var node = table.row.add(data[i]).draw().node();
+                                    $(node).addClass('highlight');
+                                    $(node).addClass('newRow');
+                                    $(node).addClass(type);
+                                    flag_new = 1;
+                                }
+
+                            }
+
+                            if (flag_new && init == 0) {
+                                animation(); // Animate card-box
+                                animationNew(); // Animate new rows added
+                            }
+
+                            setTimeout(function() {
+                                // Here entry always
+                                $('tr').removeClass('highlight');
+                                $('tr').removeClass('newRow');
+                                flag_new = 0;
+                            }, 1000);
+                        } else {
+
+                            for (var i = 0; i < data.length; i++) {
+                                // Add VT
+                                var value = data[i][3];
+
+                                if (value.startsWith("http://")) {
+                                    value = value.replace("http://", "");
+                                } else if (value.startsWith("https://")) {
+                                    value = value.replace("https://", "");
+                                }
+
+                                data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+                            }
+
+                            table.rows.add(data).order([0, 'desc']).draw();
+                            table.rows().every(function() {
+
+                                $(this.node()).addClass('newRow');
+
+                                var col = $(this.node()).find('td').eq(2).text().trim();
+                                $(this.node()).toggleClass(col);
+
+                                var user = $(this.node()).find('td').eq(1).text().trim();
+                                $(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
+
+                                var value = $(this.node()).find('td').eq(3).text().trim();
+                                // $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
+
+                                var tweet_url = $(this.node()).find('td').eq(5).text().trim();
+                                $(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+
+                            })
+                            animationNew();
+                        }
+                        olddate = data[data.length - 1][0];
+                        countTypes('.today', data);
+                        loaddatacall++;
+                    },
+                    cache: false
+                });
+                //                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function (response) {
+                //                                                        })
+                init = 0;
+                loaddatacall++;
+            }
+
+            function countTypes(className, jsonArr) {
+                var type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
+                for (var i = 0; i < jsonArr.length; i++) {
+                    type[jsonArr[i][2]]++;
+                }
+
+                /*var myvar = '<tbody><tr>' +
+                    '<td style="padding: 4px;">URLs</td>' +
+                    '<td style="padding: 4px;" class="number-dynamic">' + type['url'] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="padding: 4px;">Domains</td>' +
+                    '<td style="padding: 4px;" class="number-dynamic">' + type['domain'] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="padding: 4px;">IPs</td>' +
+                    '<td style="padding: 4px;" class="number-dynamic">' + type['ip'] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="padding: 4px;">SHA256</td>' +
+                    '<td style="padding: 4px;" class="number-dynamic">' + type['sha256'] + '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                    '<td style="padding: 4px;">MD5</td>' +
+                    '<td style="padding: 4px;" class="number-dynamic">' + type['md5'] + '</td>' +
+                    '</tr></tbody>';*/
+
+                var myvar = '<div class="col">' +
+                    '<h5 style="text-align: center;font-size: 20px;"><b>' + type['url'] + '</b></h5>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<h5 style="text-align: center;font-size: 20px;"><b>' + type['domain'] + '</b></h5>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<h5 style="text-align: center;font-size: 20px;"><b>' + type['ip'] + '</b></h5>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<h5 style="text-align: center;font-size: 20px;"><b>' + type['sha256'] + '</b></h5>' +
+                    '</div>' +
+                    '<div class="col">' +
+                    '<h5 style="text-align: center;font-size: 20px;"><b>' + type['md5'] + '</b></h5>' +
+                    '</div>'
+                $(className).html(myvar);
+
+                let p_url = type['url'];
+                let p_domain = type['domain'];
+                let p_ip = type['ip'];
+                let p_sha256 = type['sha256'];
+                let p_md5 = type['md5'];
+            }
+
+            function csvJSON(csv) {
+
+                var lines = csv.split("\n");
+                var result = [];
+                //for (var i = lines.length - 1; i >= 0; i--) {
+                for (var i = 0; i < lines.length; i++) {
+                    var obj = [];
+                    var currentline = lines[i].split(",");
+                    if (currentline.length > 1) {
+                        for (var j = 0; j < currentline.length; j++) {
+                            obj.push(currentline[j]);
+                        }
+                        result.push(obj);
+                    }
+
+                }
+                return result;
+            }
+        })
+        </script>
+        <script>
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+            // CSV file
+            csvFile = new Blob([csv], { type: "text/csv" });
+            // Download link
+            downloadLink = document.createElement("a");
+            // File name
+            downloadLink.download = filename;
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            // Hide download link
+            downloadLink.style.display = "none";
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+            // Click download link
+            downloadLink.click();
+        }
+
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            for (var i = 2; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+                csv.push(row.join(","));
+            }
+
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+        </script>
+        <script type="text/javascript" src="js/date.js"></script>
+        <script>
+        $(".nav a").on("click", function() {
+            $(".nav").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+        });
+        </script>
 </body>
 
 </html>
