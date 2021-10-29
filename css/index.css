@@ -97,3 +97,10 @@
     border-radius: 50px;
     background: #1DA1F2;
 }
+
+/* #004080 */
+/* twitterLink */
+
+.fa-external-link-alt:hover {
+    color: #0b00ff !important;
+}

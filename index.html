@@ -128,7 +128,7 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
-								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>								
+								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
 								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
@@ -180,22 +180,22 @@
 								<table class="table table-borderless" id="dataTable" width="100%" cellspacing="0">
 									<colgroup>
 										<col span="1" style="width: 14%;"> <!-- Date -->
-										<col span="1" style="width: 14%;"> <!-- User -->
+										<col span="1" style="width: 13%;"> <!-- User -->
 										<col span="1" style="width: 8%;"> <!-- Type -->
 										<col span="1" style="width: 46%;"> <!-- Value -->
 										<col span="1" style="width: 10%;"> <!-- Tags -->
-										<col span="1" style="width: 5%;"> <!-- Source -->
-										<col span="1" style="width: 5%;"> <!-- VT -->
+										<col span="1" style="width: 6%;"> <!-- Source -->
+										<col span="1" style="width: 6%;"> <!-- VT -->
 									</colgroup>
 									<thead>
 										<tr>
 											<th>Date (UTC)</th>
-											<th>User</th>
+											<th>User <i class="far fa-question-circle fa-xs" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
 											<th>Type</th>
 											<th>Value</th>
 											<th>Tags</th>
-											<th><i style="color:#1DA1F2;" class="fab fa-twitter"></i></th>
-											<th><img id="virustotal" src="img/vt.png" alt="VirusTotal"></th>
+											<th><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-xs" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
+											<th><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="far fa-question-circle fa-xs" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
 								</table>
@@ -353,7 +353,7 @@
 								// data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
 
 								var tweet_url = data[i][5];
-								data[i][5] = '<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
 
 								// Add VT
 
@@ -420,7 +420,7 @@
 							// $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-							$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
 
 						})
 						animationNew();
@@ -567,6 +567,11 @@
 	}
 	</script>
 	<script type="text/javascript" src="js/date.js"></script>
+	<script>
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
 </body>
 
 </html>
