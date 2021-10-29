@@ -370,8 +370,15 @@
 					var first_date = data.at(1)[0];
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					$(".lastDateTodayFrom").text("From: " + date2);
-					$(".lastDateTodayTo").text("To: " + date1);
+					$(".lastDateTodayFrom").fadeOut(function() {
+						$(this).text("From: " + date2).fadeIn();
+					});
+					$(".lastDateTodayTo").fadeOut(function() {
+						$(this).text("To: " + date1).fadeIn();
+					});
+
+					//$(".lastDateTodayFrom").text("From: " + date2);
+					//$(".lastDateTodayTo").text("To: " + date1);
 
 					countTypes('today', data);
 					countTags('today', data);
@@ -383,8 +390,14 @@
 					var first_date = data.at(1)[0];
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					$(".lastDateWeekFrom").text("From: " + date2);
-					$(".lastDateWeekTo").text("To: " + date1);
+					$(".lastDateWeekFrom").fadeOut(function() {
+						$(this).text("From: " + date2).fadeIn();
+					});
+					$(".lastDateWeekTo").fadeOut(function() {
+						$(this).text("To: " + date1).fadeIn();
+					});
+					//$(".lastDateWeekFrom").text("From: " + date2);
+					//$(".lastDateWeekTo").text("To: " + date1);
 
 					countTypes('week', data);
 					countTags('week', data);
@@ -396,8 +409,14 @@
 					var first_date = data.at(1)[0];
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					$(".lastDateMonthFrom").text("From: " + date2);
-					$(".lastDateMonthTo").text("To: " + date1);
+					$(".lastDateMonthFrom").fadeOut(function() {
+						$(this).text("From: " + date2).fadeIn();
+					});
+					$(".lastDateMonthTo").fadeOut(function() {
+						$(this).text("To: " + date1).fadeIn();
+					});
+					//$(".lastDateMonthFrom").text("From: " + date2);
+					//$(".lastDateMonthTo").text("To: " + date1);
 
 					countTypes('month', data);
 					countTags('month', data);
@@ -409,8 +428,14 @@
 					var first_date = data.at(1)[0];
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					$(".lastDateYearFrom").text("From: " + date2);
-					$(".lastDateYearTo").text("To: " + date1);
+					$(".lastDateYearFrom").fadeOut(function() {
+						$(this).text("From: " + date2).fadeIn();
+					});
+					$(".lastDateYearTo").fadeOut(function() {
+						$(this).text("To: " + date1).fadeIn();
+					});
+					//$(".lastDateYearFrom").text("From: " + date2);
+					//$(".lastDateYearTo").text("To: " + date1);
 
 					countTypes('year', data);
 					countTags('year', data);
@@ -532,7 +557,10 @@
 				}
 				for (const [key, value] of Object.entries(type)) {
 					//$('.' + divAccess + '-' + key).text(value); // Add to cards
-					$('.' + divAccess + '-' + key).text(nFormatter(value, 0)); // Add to cards
+					//$('.' + divAccess + '-' + key).text(nFormatter(value, 0)); // Add to cards
+					$('.' + divAccess + '-' + key).fadeOut(function() {
+						$(this).text(nFormatter(value, 0)).fadeIn(1000);
+					});
 					if (key == "domain") {
 						keys.push(capitalize(key));
 					} else {
