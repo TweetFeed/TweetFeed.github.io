@@ -170,7 +170,7 @@
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
 										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle"><i class="fas fa-download"></i> Export filtered</button>
-									</div>
+									</div>&nbsp<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Format: [Date]_[Hour]_TweetFeed.csv"></i>
 								</div>
 							</div>
 							<!-- End Table presentation (custom) -->
@@ -189,11 +189,11 @@
 									</colgroup>
 									<thead>
 										<tr>
-											<th>Date (UTC)</th>
+											<th>Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
 											<th>User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
 											<th>Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
-											<th>Value</th>
-											<th>Tags</th>
+											<th>Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
+											<th>Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected Tag"></i></th>
 											<th><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
 											<th><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
