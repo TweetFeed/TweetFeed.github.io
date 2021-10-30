@@ -350,6 +350,12 @@
 								//data[i][1] = '<a target="_blank" class="btn btn-primary" style="color:white;font-size: 13px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 600;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>'
 
 								var value = data[i][3];
+								
+								// Add external link in URLs
+								//if (type == "url") {
+								//	data[i][3] = value + '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + value + '">' + value + ' <i class="fas fa-external-link-alt"></i></a>'
+								//}
+
 								// data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
 
 								var tweet_url = data[i][5];
@@ -417,7 +423,12 @@
 							//$(this.node()).find('td').eq(1).html('<a target="_blank" class="btn btn-primary" style="color:white;font-size: 12px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 600;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>');
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
-							// $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
+							var type = $(this.node()).find('td').eq(2).text().trim();
+
+							// Add external link in URLs
+							//if (type == "url") {
+							//	$(this.node()).find('td').eq(3).html(value + ' <a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + value + '"><i class="fas fa-external-link-alt fa-sm"></i></a>')
+							//}
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
