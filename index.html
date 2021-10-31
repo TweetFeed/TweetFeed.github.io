@@ -349,7 +349,7 @@
 								data[i][1] = '<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>';
 
 								var value = data[i][3];
-								data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy fa-lg"></i> ' + value;
+								data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value;
 
 								// Add external link in URLs
 								//if (type == "url") {
@@ -426,7 +426,7 @@
 							//	$(this.node()).find('td').eq(3).html(value + ' <a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + value + '"><i class="fas fa-external-link-alt fa-sm"></i></a>')
 							//}
 
-							$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy fa-lg"></i> ' + value);
+							$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value);
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
