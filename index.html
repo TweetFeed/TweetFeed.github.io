@@ -161,7 +161,7 @@
 										<!-- <button class="btn btn-primary autorefresh">Disable Auto Refresh</button> -->
 										<div class="custom-control custom-switch">
 											<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-											<label class="custom-control-label" for="customSwitch1">Autorefresh</label>
+											<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
 										</div>
 										<progress value="0" max="5" id="progressBar"></progress>
 									</div>
@@ -256,11 +256,13 @@
 			if (autorefresh) {
 				// Disabled
 				autorefresh = 0;
+				$("[for='customSwitch1']").css("color", "gray");
 				$(this).text('Enable Auto Refresh');
 				clearInterval(timerAux);
 			} else {
 				// Enabled
 				autorefresh = 1;
+				$("[for='customSwitch1']").css("color", "blue");
 				$(this).text('Disable Auto Refresh');
 				init = 1;
 				progressBar();
