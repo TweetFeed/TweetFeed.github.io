@@ -104,3 +104,7 @@
 .fa-external-link-alt:hover {
     color: #0b00ff !important;
 }
+
+.fa-copy:hover {
+    color: blue !important;
+}
