@@ -101,10 +101,14 @@
 /* #004080 */
 /* twitterLink */
 
-.fa-external-link-alt:hover {
-    color: #0b00ff !important;
+.twitterLink:hover {
+    color: blue !important;
 }
 
 .fa-copy:hover {
     color: blue !important;
+}
+
+[href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide"]:hover {
+    background-color: #007fff !important;
 }

@@ -357,7 +357,7 @@
 								//}
 
 								var tweet_url = data[i][5];
-								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
+								data[i][5] = '<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt twitterLink"></i></a>';
 
 								// Add VT
 
@@ -368,7 +368,7 @@
 								}
 								value = value.split("/")[0]
 
-								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt twitterLink"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -395,7 +395,6 @@
 						for (var i = 0; i < data.length; i++) {
 							// Add VT
 							var value = data[i][3];
-
 							if (value.startsWith("http://")) {
 								value = value.replace("http://", "");
 							} else if (value.startsWith("https://")) {
@@ -404,7 +403,7 @@
 
 							value = value.split("/")[0]
 
-							data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a style="text-decoration: none;color:#394eff;;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"></img> <i class="fas fa-external-link-alt twitterLink"></i></a>');
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
@@ -429,7 +428,7 @@
 							$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value);
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+							$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt twitterLink"></i></a>');
 
 						})
 						animationNew();
