@@ -99,10 +99,14 @@
 }
 
 /* #004080 */
-/* twitterLink */
+/* background: #00b8ff !important; */
 
-.twitterLink:hover {
-    color: blue !important;
+.twitterLink:hover {    
+    color: #005677 !important;
+}
+
+.buttonHover:hover{
+    background: #009ad6 !important;
 }
 
 .fa-copy:hover {

@@ -169,7 +169,7 @@
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em></span>
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
-										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle"><i class="fas fa-download"></i> Export filtered</button>
+										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle buttonHover"><i class="fas fa-download"></i> Export filtered</button>
 									</div>&nbsp<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Format: [Date]_[Hour]_TweetFeed.csv"></i>
 								</div>
 							</div>
@@ -357,7 +357,9 @@
 								//}
 
 								var tweet_url = data[i][5];
-								data[i][5] = '<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt twitterLink"></i></a>';
+								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
+
+								//data[i][5] = '<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
 								// Add VT
 
@@ -368,7 +370,9 @@
 								}
 								value = value.split("/")[0]
 
-								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt twitterLink"></i></a>');
+								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+
+								//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -403,7 +407,9 @@
 
 							value = value.split("/")[0]
 
-							data[i].push('<a style="text-decoration: none;color:#394eff;;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"></img> <i class="fas fa-external-link-alt twitterLink"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;color:#394eff;;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"></img> <i class="fas fa-external-link-alt"></i></a>');
+
+							//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
@@ -428,7 +434,9 @@
 							$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value);
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-							$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt twitterLink"></i></a>');
+							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
+
+							//$(this.node()).find('td').eq(5).html('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
 						})
 						animationNew();
