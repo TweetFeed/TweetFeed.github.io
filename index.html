@@ -169,31 +169,31 @@
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em></span>
 										<br><br>
 										<div class="container">
-											<div class="row h-100 align-items-center text-center">
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-													<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="top" title="URLs today"></i> URLs</span>
-													<span class="today-url" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
-												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-													<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="top" title="Domains today"></i> Domains</span>
-													<span class="today-domain" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
-												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="top" title="IPs today"></i> IPs</span>
-													<span class="today-ip" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
-												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-													<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="top" title="SHA256 hashes today"></i> SHA256</span>
-													<span class="today-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
-												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-													<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="top" title="MD5 hashes today"></i> MD5</span>
-													<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
-												</div>
-											</div> <!-- row -->
-											<div class="row today text-center">
-											</div> <!-- row 2 -->
-										</div> <!-- container -->
+												<div class="row h-100 align-items-center">
+													<div class="col h-100 d-flex flex-column" style="font-size: 16px;font-family: \'Rubik\', sans-serif">
+														<span><i class="fas fa-link" style="color: #0026E6;"></i> URLs</span>
+														<span class="today-url"></span>
+													</div>
+													<div class="col h-100 d-flex flex-column" style="font-size: 16px;font-family: \'Rubik\', sans-serif">
+														<span><i class="fas fa-globe" style="color: #3399FF"></i> Domains</span>
+														<span class="today-domain"></span>
+													</div>
+													<div class="col h-100 d-flex flex-column" style="font-size: 16px;font-family: \'Rubik\', sans-serif">
+														<span><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</span>
+														<span class="today-ip"></span>
+													</div>
+													<div class="col h-100 d-flex flex-column" style="font-size: 16px;font-family: \'Rubik\', sans-serif">
+														<span><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</span>
+														<span class="today-sha256"></span>
+													</div>
+													<div class="col h-100 d-flex flex-column" style="font-size: 16px;font-family: \'Rubik\', sans-serif">
+														<span><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</span>
+														<span class="today-md5"></span>
+													</div>
+												</div> <!-- row -->
+												<div class="row today">
+												</div> <!-- row 2 -->
+											</div> <!-- container -->
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
 										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle buttonHover"><i class="fas fa-download"></i> Export filtered</button>
@@ -509,19 +509,19 @@
 			    '</tr></tbody>';*/
 
 			var myvar = '<div class="col">' +
-				'<b style="font-size: 18px;">' + type['url'] + '</b>' +
+				'<span style="font-size: 18px;font-weight: 550;font-family: \'Rubik\', sans-serif">' + type['url'] + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['domain'] + '</b>' +
+				'<span style="font-size: 18px;font-weight: 550;font-family: \'Rubik\', sans-serif">' + type['domain'] + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['ip'] + '</b>' +
+				'<span style="font-size: 18px;font-weight: 550;font-family: \'Rubik\', sans-serif">' + type['ip'] + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['sha256'] + '</b>' +
+				'<span style="font-size: 18px;font-weight: 550;font-family: \'Rubik\', sans-serif">' + type['sha256'] + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['md5'] + '</b>' +
+				'<span style="font-size: 18px;font-weight: 550;font-family: \'Rubik\', sans-serif">' + type['md5'] + '</span>' +
 				'</div>'
 			$(className).html(myvar);
 
