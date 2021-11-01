@@ -160,8 +160,35 @@
 								<div class="row">
 									<div class="col align-self-center">
 									</div>
-									<div class="col-md-auto align-self-center">
+									<div class="col-6 align-self-center text-center">
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank">week.csv</a></em></span>
+										<br><br>
+										<div class="container">
+											<div class="row h-100 align-items-center text-center">
+												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+													<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="top" title="URLs week"></i> URLs</span>
+													<span class="week-url" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+													<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="top" title="Domains week"></i> Domains</span>
+													<span class="week-domain" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="top" title="IPs week"></i> IPs</span>
+													<span class="week-ip" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+													<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="top" title="SHA256 hashes week"></i> SHA256</span>
+													<span class="week-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+													<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="top" title="MD5 hashes week"></i> MD5</span>
+													<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
+												</div>
+											</div> <!-- row -->
+											<div class="row today text-center">
+											</div> <!-- row 2 -->
+										</div> <!-- container -->
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
 										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle buttonHover"><i class="fas fa-download"></i> Export filtered</button>
@@ -457,19 +484,19 @@
 			    '</tr></tbody>';*/
 
 			var myvar = '<div class="col">' +
-				'<b style="font-size: 20px;">' + type['url'] + '</b>' +
+				'<b style="font-size: 18px;">' + type['url'] + '</b>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 20px;">' + type['domain'] + '</b>' +
+				'<b style="font-size: 18px;">' + type['domain'] + '</b>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 20px;">' + type['ip'] + '</b>' +
+				'<b style="font-size: 18px;">' + type['ip'] + '</b>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 20px;">' + type['sha256'] + '</b>' +
+				'<b style="font-size: 18px;">' + type['sha256'] + '</b>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 20px;">' + type['md5'] + '</b>' +
+				'<b style="font-size: 18px;">' + type['md5'] + '</b>' +
 				'</div>'
 			$(className).html(myvar);
 
