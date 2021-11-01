@@ -179,7 +179,8 @@
 											<col span="1" style="width: 10%;"> <!-- Image -->
 											<col span="1" style="width: 15%;"> <!-- User -->
 											<col span="1" style="width: 10%;"> <!-- IOCs -->
-											<col span="1" style="width: 57%;"> <!-- Top Tags -->
+											<col span="1" style="width: 24%;"> <!-- Top Types -->
+											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
@@ -187,6 +188,7 @@
 												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted today"></i></th>
+												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
 												<th>Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
 											</tr>
 										</thead>
@@ -205,7 +207,8 @@
 											<col span="1" style="width: 10%;"> <!-- Image -->
 											<col span="1" style="width: 15%;"> <!-- User -->
 											<col span="1" style="width: 10%;"> <!-- IOCs -->
-											<col span="1" style="width: 57%;"> <!-- Top Tags -->
+											<col span="1" style="width: 24%;"> <!-- Top Types -->
+											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
@@ -213,6 +216,7 @@
 												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 7 days"></i></th>
+												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
 												<th>Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
 											</tr>
 										</thead>
@@ -231,7 +235,8 @@
 											<col span="1" style="width: 10%;"> <!-- Image -->
 											<col span="1" style="width: 15%;"> <!-- User -->
 											<col span="1" style="width: 10%;"> <!-- IOCs -->
-											<col span="1" style="width: 57%;"> <!-- Top Tags -->
+											<col span="1" style="width: 24%;"> <!-- Top Types -->
+											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
@@ -239,6 +244,7 @@
 												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 30 days"></i></th>
+												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
 												<th>Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
 											</tr>
 										</thead>
@@ -257,7 +263,8 @@
 											<col span="1" style="width: 10%;"> <!-- Image -->
 											<col span="1" style="width: 15%;"> <!-- User -->
 											<col span="1" style="width: 10%;"> <!-- IOCs -->
-											<col span="1" style="width: 57%;"> <!-- Top Tags -->
+											<col span="1" style="width: 24%;"> <!-- Top Types -->
+											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
@@ -265,6 +272,7 @@
 												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 365 days"></i></th>
+												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
 												<th>Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
 											</tr>
 										</thead>
@@ -441,8 +449,11 @@
 
 			//for (var i = 1; i <= 10; i++) {
 			for (var i = 1; i <= keys.length; i++) {
-				// Search most tag of each user
+				// Search most type of each user
 
+				var topTypes = countTypes(divAccess, jsonArr, keys[i - 1])
+
+				// Search most tag of each user
 				var topTags = countTags(divAccess, jsonArr, keys[i - 1])
 
 				if (topTags[0] == null) {
@@ -457,7 +468,7 @@
 					topTags[2] = "";
 				}
 
-				result.push([i, keys[i - 1], keys[i - 1], nFormatter(values[i - 1], 2), topTags.join(" ")]);
+				result.push([i, keys[i - 1], keys[i - 1], nFormatter(values[i - 1], 2), topTypes.join(" "), topTags.join(" ")]);
 
 			}
 
@@ -488,6 +499,44 @@
 			}
 
 			tags.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+
+			var tuples = [];
+
+			for (var key in count)
+				tuples.push([key, count[key]]);
+
+			tuples.sort(function(a, b) {
+				a = a[1];
+				b = b[1];
+
+				return a > b ? -1 : (a < b ? 1 : 0);
+			});
+			for (var i = 0; i < tuples.length; i++) {
+				keys.push(tuples[i][0]);
+				values.push(tuples[i][1]);
+			}
+
+			//return keys[0]
+			return [keys[0], keys[1], keys[2]]
+		}
+
+		function countTypes(divAccess, jsonArr, user) {
+			let types = [],
+				count = [];
+			let keys = [];
+			let values = [];
+			for (var i = 0; i < jsonArr.length; i++) {
+				if (jsonArr[i][2].trim() != "" && jsonArr[i][1] == user) {
+					let newArr = jsonArr[i][2].split(" ");
+					for (var j = 0; j < newArr.length; j++) {
+						types.push(newArr[j]);
+					}
+				}
+			}
+
+			types.forEach(function(i) {
 				count[i] = (count[i] || 0) + 1;
 			});
 
