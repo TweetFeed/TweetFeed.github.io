@@ -315,6 +315,10 @@
 			if (autorefresh) {
 				loadData();
 				progressBar();
+				
+				// Para checkear refresco
+				//$('.today').hide();
+				//$('.today').fadeIn(1000, "linear");
 			}
 		}
 
@@ -339,7 +343,7 @@
 		function progressBar() {
 			var i = 0;
 			var downloadTimer = setInterval(function() {
-				if (i >= 120) {
+				if (i >= 100) {
 					clearInterval(downloadTimer);
 				}
 				if (autorefresh == 0) {
