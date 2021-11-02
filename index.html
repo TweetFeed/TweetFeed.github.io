@@ -288,13 +288,11 @@
 				// Disabled
 				autorefresh = 0;
 				$("[for='customSwitch1']").css("color", "gray");
-				$(this).text('Enable Auto Refresh');
 				clearInterval(timerAux);
 			} else {
 				// Enabled
 				autorefresh = 1;
 				$("[for='customSwitch1']").css("color", "blue");
-				$(this).text('Disable Auto Refresh');
 				init = 1;
 				progressBar();
 				loadData();
@@ -304,7 +302,7 @@
 					$(this.node()).addClass('newRow');
 				});
 				animationNew();
-				timerAux = setInterval(timerCycle, 5000);
+				timerAux = setInterval(timerCycle, 6000);
 			}
 		})
 
@@ -341,7 +339,7 @@
 		function progressBar() {
 			var i = 0;
 			var downloadTimer = setInterval(function() {
-				if (i >= 100) {
+				if (i > 100) {
 					clearInterval(downloadTimer);
 				}
 				if (autorefresh == 0) {
