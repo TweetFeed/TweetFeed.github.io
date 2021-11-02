@@ -163,37 +163,41 @@
 											<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
 											<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
 										</div>
-										<progress value="0" max="5" id="progressBar"></progress>
+										<div class="progress" style="height: 10px;width: 50%;">
+											<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+												<span class="sr-only"></span>
+											</div>
+										</div>
 									</div>
 									<div class="col-6 align-self-center text-center">
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em></span>
 										<br><br>
 										<div class="container">
-												<div class="row h-100 align-items-center">
-													<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-														<span><i class="fas fa-link" style="color: #0026E6;"></i> URLs</span>
-														<span class="today-url"></span>
-													</div>
-													<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-														<span><i class="fas fa-globe" style="color: #3399FF"></i> Domains</span>
-														<span class="today-domain"></span>
-													</div>
-													<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-														<span><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</span>
-														<span class="today-ip"></span>
-													</div>
-													<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-														<span><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</span>
-														<span class="today-sha256"></span>
-													</div>
-													<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-														<span><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</span>
-														<span class="today-md5"></span>
-													</div>
-												</div> <!-- row -->
-												<div class="row today">
-												</div> <!-- row 2 -->
-											</div> <!-- container -->
+											<div class="row h-100 align-items-center">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+													<span><i class="fas fa-link" style="color: #0026E6;"></i> URLs</span>
+													<span class="today-url"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+													<span><i class="fas fa-globe" style="color: #3399FF"></i> Domains</span>
+													<span class="today-domain"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</span>
+													<span class="today-ip"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+													<span><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</span>
+													<span class="today-sha256"></span>
+												</div>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+													<span><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</span>
+													<span class="today-md5"></span>
+												</div>
+											</div> <!-- row -->
+											<div class="row today">
+											</div> <!-- row 2 -->
+										</div> <!-- container -->
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
 										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle buttonHover"><i class="fas fa-download"></i> Export filtered</button>
@@ -335,20 +339,22 @@
 		}
 
 		function progressBar() {
-			var timeleft = 5;
+			var i = 0;
 			var downloadTimer = setInterval(function() {
-				if (timeleft <= 0) {
+				if (i >= 100) {
 					clearInterval(downloadTimer);
 				}
 				if (autorefresh == 0) {
-					timeleft = 5;
+					i = 0;
 					clearInterval(downloadTimer);
-					document.getElementById("progressBar").value = 0;
+					//document.getElementById("progressBar").value = 0;
+					$('.progress-bar').css('width', i+'%');
 				} else {
-					document.getElementById("progressBar").value = 5 - timeleft;
+					//document.getElementById("progressBar").value = 5 - timeleft;
+					$('.progress-bar').css('width', i+'%');
 				}
-				timeleft -= 1;
-			}, 1000);
+				i = i + 1;
+			}, 50);
 		}
 		var loaddatacall = 0;
 		var olddate = '';
