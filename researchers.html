@@ -451,7 +451,25 @@
 			for (var i = 1; i <= keys.length; i++) {
 				// Search most type of each user
 
-				var topTypes = countTypes(divAccess, jsonArr, keys[i - 1])
+				var topTypesAux = countTypes(divAccess, jsonArr, keys[i - 1]);
+
+				// Remove undefined
+				var topTypesFiltered = topTypesAux.filter(function(x) {
+					return x !== undefined;
+				});
+
+				var topTypes = topTypesFiltered;
+				
+				//var topTypes = [];
+				// Capitalize types
+				//for (var j = 0; j < topTypesFiltered.length; j++) {
+				//	if (topTypesFiltered[j] == "domain") {
+				//		topTypes.push(capitalize(topTypesFiltered[j]));
+				//	} else if (topTypesFiltered[j] == "url" || topTypesFiltered[j] == "ip" || topTypesFiltered[j] == "sha256" || topTypesFiltered[j] == "md5") {
+				//		topTypes.push(topTypesFiltered[j].toUpperCase());
+				//	}
+				//}
+
 
 				// Search most tag of each user
 				var topTags = countTags(divAccess, jsonArr, keys[i - 1])
@@ -653,6 +671,11 @@
 		$(function() {
 			$('[data-toggle="tooltip"]').tooltip()
 		})
+		</script>
+		<script>
+		function capitalize(s) {
+			return s[0].toUpperCase() + s.slice(1);
+		}
 		</script>
 </body>
 
