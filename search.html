@@ -165,23 +165,23 @@
 										<br><br>
 										<div class="container">
 											<div class="row h-100 align-items-center text-center">
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="top" title="URLs week"></i> URLs</span>
 													<span class="week-url" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="top" title="Domains week"></i> Domains</span>
 													<span class="week-domain" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="top" title="IPs week"></i> IPs</span>
 													<span class="week-ip" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="top" title="SHA256 hashes week"></i> SHA256</span>
 													<span class="week-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="top" title="MD5 hashes week"></i> MD5</span>
 													<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
@@ -484,19 +484,19 @@
 			    '</tr></tbody>';*/
 
 			var myvar = '<div class="col">' +
-				'<b style="font-size: 18px;">' + type['url'] + '</b>' +
+				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['url'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['domain'] + '</b>' +
+				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['domain'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['ip'] + '</b>' +
+				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['ip'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['sha256'] + '</b>' +
+				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['sha256'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<b style="font-size: 18px;">' + type['md5'] + '</b>' +
+				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['md5'], 2) + '</span>' +
 				'</div>'
 			$(className).html(myvar);
 
@@ -610,6 +610,24 @@
 				$(aux).addClass("far fa-copy");
 				$(aux).css("color", "");
 			}, 1000);
+	}
+	</script>
+	<script>
+	function nFormatter(num, digits) {
+		const lookup = [
+			{ value: 1, symbol: "" },
+			{ value: 1e3, symbol: "k" },
+			{ value: 1e6, symbol: "M" },
+			{ value: 1e9, symbol: "G" },
+			{ value: 1e12, symbol: "T" },
+			{ value: 1e15, symbol: "P" },
+			{ value: 1e18, symbol: "E" }
+		];
+		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+		var item = lookup.slice().reverse().find(function(item) {
+			return num >= item.value;
+		});
+		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 	}
 	</script>
 </body>
