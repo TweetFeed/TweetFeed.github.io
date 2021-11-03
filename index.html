@@ -174,23 +174,23 @@
 										<br><br>
 										<div class="container">
 											<div class="row h-100 align-items-center">
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-link" style="color: #0026E6;"></i> URLs</span>
 													<span class="today-url"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-globe" style="color: #3399FF"></i> Domains</span>
 													<span class="today-domain"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</span>
 													<span class="today-ip"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</span>
 													<span class="today-sha256"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</span>
 													<span class="today-md5"></span>
 												</div>
@@ -315,7 +315,7 @@
 			if (autorefresh) {
 				loadData();
 				progressBar();
-				
+
 				// Para checkear refresco
 				//$('.today').hide();
 				//$('.today').fadeIn(1000, "linear");
@@ -350,10 +350,10 @@
 					i = 0;
 					clearInterval(downloadTimer);
 					//document.getElementById("progressBar").value = 0;
-					$('.progress-bar').css('width', i+'%');
+					$('.progress-bar').css('width', i + '%');
 				} else {
 					//document.getElementById("progressBar").value = 5 - timeleft;
-					$('.progress-bar').css('width', i+'%');
+					$('.progress-bar').css('width', i + '%');
 				}
 				i = i + 20;
 			}, 1000);
@@ -650,6 +650,11 @@
 				$(aux).addClass("far fa-copy");
 				$(aux).css("color", "");
 			}, 1000);
+	}
+	</script>
+	<script>
+	function filterColumn() {
+		$('[placeholder="Type "]').val($('[placeholder="Type "]').val() + 'test');
 	}
 	</script>
 </body>
