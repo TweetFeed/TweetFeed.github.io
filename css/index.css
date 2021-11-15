@@ -101,11 +101,15 @@
 /* #004080 */
 /* background: #00b8ff !important; */
 
-.twitterLink:hover {    
+.twitterLink:hover {
     color: #005677 !important;
 }
 
-.buttonHover:hover{
+.twitterUser:hover {
+    color: black !important;
+}
+
+.buttonHover:hover {
     background: #009ad6 !important;
 }
 
