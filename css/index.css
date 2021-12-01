@@ -1,4 +1,4 @@
-#content {
+#content,#contentMobile {
     min-height: calc(100vh - 170px);
     /* 80px header + 40px footer = 120px  */
     width: 72%;
@@ -6,11 +6,11 @@
     margin-right: 14%;
 }
 
-#presentation {
+#presentation,#presentationMobile {
     text-align: center;
 }
 
-#presentation h1 {
+#presentation h1,#presentationMobile h1 {
     font-size: 60px;
     /*font-family: 'Montserrat', sans-serif;*/
     font-family: 'Alegreya Sans SC', sans-serif;
@@ -19,7 +19,7 @@
     color: #1DA1F2;
 }
 
-#presentation h2 {
+#presentation h2,#presentationMobile h2 {
     font-size: 18px;
 }
 

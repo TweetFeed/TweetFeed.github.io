@@ -132,14 +132,73 @@
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
 								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
-								<a class="dropdown-item" href="/about/"><i class="fas fa-question-circle"></i> About</a>
+								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
 					</ul>
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content">
+			<div id="contentMobile" class="d-lg-none">
+				<div id="presentationMobile">
+					<br><br>
+					<h1>TweetFeed<sub style="font-size: 20px;">βeta</sub></h1>
+					<h2 style="font-size: 14px;"><em>Feeds of IOCs posted on Twitter</em>
+				</div>
+				<!-- Only mobile -->
+				<div style="font-size: 15px">
+					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
+					<br>
+					<div class="container" style="text-align: center;">
+						<div class="row h-100 align-items-center">
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<i class="fas fa-link" style="color: #0026E6;"></i><br>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<i class="fas fa-globe" style="color: #3399FF"></i><br>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<i class="fas fa-map-marker-alt" style="color: #02bf0f"></i><br>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<i class="fas fa-file-alt" style="color: #FFC34D;"></i><br>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<i class="fas fa-file-alt" style="color: #ffc591;"></i><br>
+							</div>
+						</div>
+						<div class="row h-100 align-items-center">
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<span>URLs</span>
+								<span class="today-url"></span>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<span>Domains</span>
+								<span class="today-domain"></span>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<span>IPs</span>
+								<span class="today-ip"></span>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<span>SHA256</span>
+								<span class="today-sha256"></span>
+							</div>
+							<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
+								<span>MD5</span>
+								<span class="today-md5"></span>
+							</div>
+						</div> <!-- row -->
+						<div class="row today">
+						</div> <!-- row 2 -->
+					</div> <!-- container -->
+					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<em>*For a better experience, visit us from a PC</em>
+				</div>
+				<!-- End mobile -->
+			</div>
+			<div id="content" class="d-none d-md-none d-lg-block">
 				<!-- Topbar (center)-->
 				<!-- End of Topbar -->
 				<!-- Begin Page Content -->
@@ -172,7 +231,7 @@
 									<div class="col-6 align-self-center text-center">
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span>
 										<br><br>
-										<div class="container">
+										<div class="container" style="text-align: center;">
 											<div class="row h-100 align-items-center">
 												<div class="col h-100 d-flex flex-column" style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;">
 													<span><i class="fas fa-link" style="color: #0026E6;"></i> URLs</span>
@@ -206,7 +265,7 @@
 							</div>
 							<!-- End Table presentation (custom) -->
 						</div>
-						<div class="card-body d-none d-md-block">
+						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-borderless" id="dataTable" width="100%" cellspacing="0" style="border:none;">
 									<colgroup>
@@ -233,9 +292,9 @@
 							</div> <!-- table-responsive -->
 						</div> <!-- Card body -->
 					</div><!-- Card -->
+					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				</div>
 				<!-- /.container-fluid -->
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
