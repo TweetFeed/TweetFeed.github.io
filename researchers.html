@@ -171,6 +171,9 @@
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="pills-today" role="tabpanel" aria-labelledby="pills-today-tab">
 						<div class="card shadow mb-4">
+							<div id="loadingToday" style="text-align: center;">
+								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table display compact" id="dataTableUsersToday" width="100%" cellspacing="0" style="border:none;">
@@ -199,6 +202,9 @@
 					</div>
 					<div class="tab-pane fade" id="pills-week" role="tabpanel" aria-labelledby="pills-ip-tab">
 						<div class="card shadow mb-4">
+							<div id="loadingWeek" style="text-align: center;">
+								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table display compact" id="dataTableUsersWeek" width="100%" cellspacing="0" style="border:none;">
@@ -227,6 +233,9 @@
 					</div>
 					<div class="tab-pane fade" id="pills-month" role="tabpanel" aria-labelledby="pills-sha256-tab">
 						<div class="card shadow mb-4">
+							<div id="loadingMonth" style="text-align: center;">
+								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table display compact" id="dataTableUsersMonth" width="100%" cellspacing="0" style="border:none;">
@@ -255,6 +264,9 @@
 					</div>
 					<div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-md5-tab">
 						<div class="card shadow mb-4">
+							<div id="loadingYear" style="text-align: center;">
+								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+							</div>
 							<div class="card-body">
 								<div class="table-responsive">
 									<table class="table display compact" id="dataTableUsersYear" width="100%" cellspacing="0" style="border:none;">
@@ -348,6 +360,9 @@
 					$(this).text("To: " + date1).fadeIn(2000);
 				});
 
+				$("#lastDateToday").show();
+				$("#loadingToday").hide();
+
 				//$(".lastDateTodayFrom").text("From: " + date2);
 				//$(".lastDateTodayTo").text("To: " + date1);
 
@@ -365,6 +380,10 @@
 				$(".lastDateWeekTo").fadeOut(function() {
 					$(this).text("To: " + date1).fadeIn(2000);
 				});
+
+				$("#lastDateWeek").show();
+				$("#loadingWeek").hide();
+
 				//$(".lastDateWeekFrom").text("From: " + date2);
 				//$(".lastDateWeekTo").text("To: " + date1);
 
@@ -383,6 +402,10 @@
 				$(".lastDateMonthTo").fadeOut(function() {
 					$(this).text("To: " + date1).fadeIn(2000);
 				});
+
+				$("#lastDateMonth").show();
+				$("#loadingMonth").hide();
+
 				//$(".lastDateMonthFrom").text("From: " + date2);
 				//$(".lastDateMonthTo").text("To: " + date1);
 
@@ -401,8 +424,14 @@
 				$(".lastDateYearTo").fadeOut(function() {
 					$(this).text("To: " + date1).fadeIn(2000);
 				});
+
+				$("#lastDateYear").show();
+				$("#loadingYear").hide();
+
 				//$(".lastDateYearFrom").text("From: " + date2);
 				//$(".lastDateYearTo").text("To: " + date1);
+
+
 
 				countUsers(tableUsersYear, data);
 
@@ -459,7 +488,7 @@
 				});
 
 				var topTypes = topTypesFiltered;
-				
+
 				//var topTypes = [];
 				// Capitalize types
 				//for (var j = 0; j < topTypesFiltered.length; j++) {
