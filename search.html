@@ -163,6 +163,15 @@
 									<div class="col-6 align-self-center text-center">
 										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Last 7 days"></i></span>
 										<br><br>
+										<div id="lastDateWeek" style="display:none">
+											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom"></em></span>
+											<br>
+											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo"></em></span>
+										</div>
+										<div id="loadingWeek" class="text-center">
+											<img src="img/loading.svg" alt="Loading">
+										</div>
+										<br>
 										<div class="container">
 											<div class="row h-100 align-items-center text-center">
 												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
@@ -357,9 +366,18 @@
 				success: function(response) {
 					var data = csvJSON(response);
 					var last_date = data.at(-1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
+					var first_date = data.at(1)[0];
+					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					$(".lastDateWeekFrom").fadeOut(function() {
+						$(this).text("From: " + date2).fadeIn(2000);
+					});
+					$(".lastDateWeekTo").fadeOut(function() {
+						$(this).text("To: " + date1).fadeIn(2000);
+					});
 
-					$("#lastDate").text("Last update: " + date1);
+					$("#lastDateWeek").show();
+					$("#loadingWeek").hide();
 
 					if (loaddatacall > 0) {
 
@@ -499,6 +517,8 @@
 				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['md5'], 2) + '</span>' +
 				'</div>'
 			$(className).html(myvar);
+
+			$("#loadingWeek").hide();
 
 			let p_url = type['url'];
 			let p_domain = type['domain'];
