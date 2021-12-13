@@ -268,8 +268,18 @@
 										</div> <!-- container -->
 									</div>
 									<div class="col align-self-center" style="padding-right: 0;">
-										<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary float-right align-middle buttonHover"><i class="fas fa-download"></i> Export filtered</button>
-									</div>&nbsp<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
+										<div class="row float-right">
+											<span>
+												<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportTableToCSV('TweetFeed.csv')" type="button" class="btn btn-primary align-middle buttonHover"><i class="fas fa-download"></i> Export table</button>
+												<i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i></span>
+										</div> <!-- row 1 (Export table) -->
+										<br><br>
+										<div class="row float-right">
+											<span class="text-right">
+												<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary align-middle buttonHover"><i class="fas fa-download"></i> Export values only</button>
+												<i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i></span>
+										</div> <!-- row 2 (Export values) -->
+									</div>
 								</div>
 							</div>
 							<!-- End Table presentation (custom) -->
@@ -689,6 +699,37 @@
 					row.push(cols[j].querySelector("a").getAttribute("href"));
 				}
 			csv.push(row.join(","));
+		}
+
+		// Download CSV file
+		var dateNowUTC = new Date(Date.now());
+		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
+		let d = new Date(Date.now());
+		let day = d.getDate();
+		let month = (d.getMonth() + 1);
+		let h = addZero(d.getHours());
+		let m = addZero(d.getMinutes());
+		let s = addZero(d.getSeconds());
+		let time = h + "" + m + "" + s;
+		if (day < 10) {
+			day = '0' + day;
+		}
+		if (month < 10) {
+			month = '0' + month;
+		}
+		dateNow = [dateNowUTC.getFullYear(), month, day].join('');
+		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
+	}
+
+	function exportValuesToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+		for (var i = 2; i < rows.length; i++) {
+			var row = [];
+			var cols = rows[i].querySelectorAll("td, th");
+			var value = cols[3].innerText.replace(/\s+/g, '');
+
+			csv.push(value);
 		}
 
 		// Download CSV file
