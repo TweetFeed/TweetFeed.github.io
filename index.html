@@ -558,8 +558,6 @@
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
 
-							//$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value);
-
 							// Add external link in URLs
 							if (type == "url") {
 								$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <a style="color:blue;" target="_blank" href="' + value + '">' + value + '</a>')
@@ -571,8 +569,6 @@
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
-
-							//$(this.node()).find('td').eq(5).html('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
 						})
 						animationNew();
