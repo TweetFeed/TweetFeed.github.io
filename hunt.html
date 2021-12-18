@@ -159,7 +159,7 @@
 				<h1 style="color: #737373;font-weight: 600;">Bash commands examples</h1>
 				<!-- -->
 				<br>
-				<h5><b>1. Get raw IOCs by type (url / domain / ip / sha256 / md5)</b></h5>
+				<h5><b>1. Get raw IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				Example:
@@ -172,7 +172,7 @@ url4
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>2. Get raw IOCs by tag (phishing / malware / CobaltStrike / Log4Shell / ...)</b> <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
+				<h5><b>2. Get raw IOCs by tag</b> (phishing / malware / CobaltStrike / Log4Shell / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, 'tolower($5) ~ "<span style="color:gray;"><b>{tag}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				Example:
@@ -186,7 +186,7 @@ sha256
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>3. Search IOCs in a file (e.g. log files)</b></h5>
+				<h5><b>3. Search IOCs in a file</b> (e.g. log files)</h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 | while read line; do grep "$line" <span style="color:gray;"><b>{File}</b></span>;done</pre>
 				Example:
