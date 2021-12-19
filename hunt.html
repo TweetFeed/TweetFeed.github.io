@@ -166,7 +166,7 @@
 				</div>
 				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting suspicious urls from today:</span>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting suspicious URLs from today:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery3" class="far fa-clipboard"></i></button>
 				</div>
 				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "url"' | cut -d, -f4 > suspicious_urls.dat</pre>
