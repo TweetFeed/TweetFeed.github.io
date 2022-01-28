@@ -30,7 +30,7 @@
 	<!-- Microsoft -->
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style>
-	.url {
+		.url {
 		background-color: #c8f6fd;
 	}
 
@@ -184,6 +184,16 @@
 					<h2><em>Query: "recommend hack instagram is:reply"</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+					<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
+				</div>
+				<div class="progress" style="height: 10px;width: 50%;">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+						<span class="sr-only"></span>
+					</div>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<div id="loadingScambots" class="text-center">
 					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 				</div>
@@ -233,41 +243,110 @@
 		<!-- Page level custom scripts -->
 		<script>
 		$(function() {
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/archive/main/scambots.dat', function(response) {
+			let autorefresh = 1;
+			let init = 1;
+			let flag_new = 0;
+			loadData();
+			progressBar();
+			var timerAux = setInterval(timerCycle, 6000);
+			let p_lines = new Array();
 
-				var lines = response.split("\n");
-
-				count_row = 0;
-				count_column = 0;
-				n_cols = 4;
-
-				for (var i = 0; i < lines.length; i++) {
-
-
-					if (i % n_cols === 0) {
-						count_row++
-						myvar_row = '<div class="row row_' + count_row + '">' +
-							'</div> <!-- row -->'
-
-
-						$('.hola').append(myvar_row);
-					}
-					var myvar_col = '<div class="col-3">' +
-						'<blockquote class="twitter-tweet">' +
-						'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
-						'</blockquote>' +
-						'</div>'
-
-					count_column++
-					$('.row_' + count_row).append(myvar_col);
-
-					if (i === lines.length - 1) {
-						$(".container.hola").show();
-						$("#loadingScambots").hide();
-					}
+			$('#customSwitch1').click(function() {
+				if (autorefresh) {
+					// Disabled
+					autorefresh = 0;
+					$("[for='customSwitch1']").css("color", "gray");
+					clearInterval(timerAux);
+				} else {
+					// Enabled
+					autorefresh = 1;
+					$("[for='customSwitch1']").css("color", "blue");
+					init = 1;
+					progressBar();
+					loadData();
+					timerAux = setInterval(timerCycle, 6000);
 				}
-
 			})
+
+			function timerCycle() {
+				if (autorefresh) {
+					loadData();
+					progressBar();
+				}
+			}
+
+			function progressBar() {
+				var i = 0;
+				var downloadTimer = setInterval(function() {
+					if (i >= 100) {
+						clearInterval(downloadTimer);
+					}
+					if (autorefresh == 0) {
+						i = 0;
+						clearInterval(downloadTimer);
+						//document.getElementById("progressBar").value = 0;
+						$('.progress-bar').css('width', i + '%');
+					} else {
+						//document.getElementById("progressBar").value = 5 - timeleft;
+						$('.progress-bar').css('width', i + '%');
+					}
+					i = i + 20;
+				}, 1000);
+			}
+
+			function animation() {
+				$('.container.hola').hide();
+				$('.container.hola').fadeIn(1000, "linear");
+			}
+
+			function loadData() {
+				$.get('https://raw.githubusercontent.com/0xDanielLopez/archive/main/scambots.dat', function(response) {
+
+					var lines = response.split("\n");
+					
+					comp_lines = lines.toString();
+					comp_p_lines = p_lines.toString();
+
+					if (comp_lines !== comp_p_lines || init == 1) {
+
+						count_row = 0;
+						count_column = 0;
+						n_cols = 4;
+
+						for (var i = 0; i < lines.length; i++) {
+
+							if (i % n_cols === 0) {
+								count_row++
+								myvar_row = '<div class="row row_' + count_row + '">' +
+									'</div> <!-- row -->'
+
+
+								$('.hola').append(myvar_row);
+							}
+							var myvar_col = '<div class="col-3">' +
+								'<blockquote class="twitter-tweet">' +
+								'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
+								'</blockquote>' +
+								'</div>'
+
+							count_column++
+							$('.row_' + count_row).append(myvar_col);
+
+							if (i === lines.length - 1) {
+								animation();
+								$("#loadingScambots").hide();
+							}
+						}
+
+						p_lines = [...lines];
+
+						if (init) {
+							init = 0;
+						}
+					}
+
+				})
+			}
 		})
 		</script>
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
