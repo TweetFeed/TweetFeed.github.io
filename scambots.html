@@ -184,6 +184,9 @@
 					<h2><em>Query: "recommend hack instagram is:reply"</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div id="loadingScambots" class="text-center">
+					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+				</div>
 				<div class="container hola">
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
@@ -257,6 +260,11 @@
 
 					count_column++
 					$('.row_' + count_row).append(myvar_col);
+
+					if (i === lines.length - 1) {
+						$(".container.hola").show();
+						$("#loadingScambots").hide();
+					}
 				}
 
 			})
