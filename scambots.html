@@ -303,11 +303,13 @@
 				$.get('https://raw.githubusercontent.com/0xDanielLopez/archive/main/scambots.dat', function(response) {
 
 					var lines = response.split("\n");
-					
+
 					comp_lines = lines.toString();
 					comp_p_lines = p_lines.toString();
 
 					if (comp_lines !== comp_p_lines || init == 1) {
+
+						$( ".hola" ).empty();
 
 						count_row = 0;
 						count_column = 0;
