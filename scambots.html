@@ -245,7 +245,6 @@
 		$(function() {
 			let autorefresh = 1;
 			let init = 1;
-			let flag_new = 0;
 			loadData();
 			progressBar();
 			var timerAux = setInterval(timerCycle, 6000);
@@ -322,7 +321,6 @@
 								myvar_row = '<div class="row row_' + count_row + '">' +
 									'</div> <!-- row -->'
 
-
 								$('.hola').append(myvar_row);
 							}
 							var myvar_col = '<div class="col-3">' +
@@ -341,6 +339,7 @@
 						}
 
 						p_lines = [...lines];
+						twttr.widgets.load()
 
 						if (init) {
 							init = 0;
