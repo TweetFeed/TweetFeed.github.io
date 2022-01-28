@@ -184,7 +184,10 @@
 					<h2><em>Last verified accounts that replied to Elon</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<div class="container hola">
+				<div id="loadingElon" class="text-center">
+					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+				</div>
+				<div class="container hola" style="display:none">
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 			</div>
@@ -248,7 +251,7 @@
 
 
 						$('.hola').append(myvar_row);
-						console.log(myvar_row)
+
 					}
 					var myvar_col = '<div class="col-3">' +
 						'<blockquote class="twitter-tweet">' +
@@ -259,12 +262,15 @@
 					count_column++
 					$('.row_' + count_row).append(myvar_col);
 
-					console.log(myvar_row)
-					console.log(myvar_col)
+					if (i === lines.length-1) {
+						$(".container.hola").show();
+						$("#loadingElon").hide();
+					}
 
 				}
 
 			})
+
 		})
 		</script>
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
