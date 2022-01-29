@@ -576,8 +576,8 @@
 
 					let lines = [];
 
-					if (data.length > 40) {
-						var auxFor = data.length - 40
+					if (data.length > 20) {
+						var auxFor = data.length - 20
 					} else {
 						var auxFor = 0
 					}
@@ -693,6 +693,7 @@
 							init = 0;
 						}
 						countTypes('check', data.slice(auxFor, data.length));
+						countTags('check', data.slice(auxFor, data.length));
 						let total = data.length - auxFor
 						$('#check-all').text("(" + total + ")");
 					}
@@ -727,6 +728,46 @@
 					type[jsonArr[i][2]]++;
 				}
 				for (const [key, value] of Object.entries(type)) {
+					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
+				}
+			}
+			function countTags(divAccess, jsonArr) {
+				let tags = [],
+					count = [];
+				let keys = [];
+				let values = [];
+				for (var i = 0; i < jsonArr.length; i++) {
+					if (jsonArr[i][4].trim() != "") {
+						let newArr = jsonArr[i][4].split(" ");
+						for (var j = 0; j < newArr.length; j++) {
+							tags.push(newArr[j]);
+						}
+					}
+				}
+
+				tags.forEach(function(i) {
+					count[i] = (count[i] || 0) + 1;
+				});
+
+				var tuples = [];
+
+				for (var key in count)
+					tuples.push([key, count[key]]);
+
+				tuples.sort(function(a, b) {
+					a = a[1];
+					b = b[1];
+
+					return a > b ? -1 : (a < b ? 1 : 0);
+				});
+				for (var i = 0; i < tuples.length; i++) {
+
+					key = tuples[i][0].replace('#', '');
+					value = tuples[i][1]
+
+					keys.push(key);
+					values.push(value);
+
 					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
 				}
 			}
