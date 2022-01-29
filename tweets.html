@@ -556,8 +556,8 @@
 
 					let lines = [];
 
-					if (data.length > 40) {
-						var auxFor = data.length - 40
+					if (data.length > 20) {
+						var auxFor = data.length - 20
 					} else {
 						var auxFor = 0
 					}
@@ -688,13 +688,7 @@
 					type[jsonArr[i][2]]++;
 				}
 				for (const [key, value] of Object.entries(type)) {
-					//$('.' + divAccess + '-' + key).text(value); // Add to cards
-					//$('.' + divAccess + '-' + key).text(nFormatter(value, 0)); // Add to cards
-					//$('#' + divAccess + '-' + key).fadeOut(function() {
-					//	$(this).text("(" + nFormatter(value, 0) + ")").fadeIn(500);
-					//});
 					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
-
 				}
 
 			}
