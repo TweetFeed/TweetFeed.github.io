@@ -193,7 +193,30 @@
 						<span class="sr-only"></span>
 					</div>
 				</div>
-				<br><br>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="container" style="height:100px;width: 25%;">
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checkurl" name="url" value="something">
+						<label class="form-check-label" for="checkurl">URL</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something">
+						<label class="form-check-label" for="checkdomain">Domain</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something">
+						<label class="form-check-label" for="checkip">IP</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something">
+						<label class="form-check-label" for="checksha256">SHA256</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something">
+						<label class="form-check-label" for="checkmd5">MD5</label>
+					</div>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<div id="loadingTweets" class="text-center">
 					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 				</div>
@@ -267,6 +290,10 @@
 				}
 			})
 
+			$('#checkurl,#checkip').change(function() {
+				loadData();
+			});
+
 			function timerCycle() {
 				if (autorefresh) {
 					loadData();
@@ -309,11 +336,25 @@
 
 					let lines = [];
 
-					for (var i = data.length - 40; i < data.length; i++) {
+					if (data.length > 40) {
+						var auxFor = data.length - 40
+					} else {
+						var auxFor = 0
+					}
 
+					//for (var i = data.length - 40; i < data.length; i++) {
+					for (var i = auxFor; i < data.length; i++) {
+
+						var type = data[i][2];
 						var tweet_url = data[i][5];
 
-						lines.push(tweet_url.split("/").at(-1))
+						let isChecked = $('#check' + type)[0].checked
+
+						console.log(isChecked)
+						if (isChecked) {
+							lines.push(tweet_url.split("/").at(-1))
+						}
+
 					}
 
 					comp_lines = lines.toString();
