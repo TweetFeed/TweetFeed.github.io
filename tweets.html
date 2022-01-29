@@ -574,6 +574,8 @@
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 
+					var seen_tweets = []; // seen tweet_urls
+ 
 					let lines = [];
 
 					if (data.length > 40) {
@@ -588,6 +590,10 @@
 						var type = data[i][2];
 						var tags = []
 						var tweet_url = data[i][5];
+
+						if (seen_tweets.includes(tweet_url)) {
+							continue;
+						}
 
 						if (data[i][4].trim() != "") {
 							let newArr = data[i][4].split(" ");
@@ -646,6 +652,7 @@
 						//if (isCheckedType && isCheckedTag) {
 						if (isCheckedType && isCheckedTag) {
 							lines.push(tweet_url.split("/").at(-1))
+							seen_tweets.push(tweet_url)
 						}
 					}
 
