@@ -181,7 +181,7 @@
 				<div id="presentationSecondary">
 					<br><br><br>
 					<h1><i class="fas fa-question-circle" style="font-size: 36px;"></i> Real Time Dashboard (beta)</h1>
-					<h2><em>Shows last 40 Tweets with IOCs inside</em></h2>
+					<h2><em>Shows last Tweets with IOCs inside (last 40 lines from TweetFeed)</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<div class="custom-control custom-switch">
@@ -569,6 +569,7 @@
 				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
 
 					var data = csvJSON(response);
+					var data_filtered = [];
 					var last_date = data.at(-1)[0];
 					var first_date = data.at(1)[0];
 					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
@@ -649,10 +650,12 @@
 
 						}
 
+						seen_tweets.push(tweet_url)
+						data_filtered.push(data[i])
+
 						//if (isCheckedType && isCheckedTag) {
 						if (isCheckedType && isCheckedTag) {
-							lines.push(tweet_url.split("/").at(-1))
-							seen_tweets.push(tweet_url)
+							lines.push(tweet_url.split("/").at(-1))							
 						}
 					}
 
@@ -699,10 +702,10 @@
 						if (init) {
 							init = 0;
 						}
-						countTypes('check', data.slice(auxFor, data.length));
-						countTags('check', data.slice(auxFor, data.length));
+						countTypes('check', data_filtered);
+						countTags('check', data_filtered);
 						let total = data.length - auxFor
-						$('#check-all').text("(" + total + ")");
+						$('#check-all').text("(" + data_filtered.length + ")");
 					}
 
 				})
