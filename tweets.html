@@ -577,8 +577,6 @@
 							}
 						}
 
-						console.log("Tags: " + tags)
-
 						let isCheckedType = $('#checkType' + type)[0].checked
 						let isCheckedTag = false;
 
@@ -657,7 +655,8 @@
 							init = 0;
 						}
 						countTypes('check', data.slice(auxFor, data.length));
-						$('#check-all').text("(" + lines.length + ")");
+						let total= data.length-auxFor
+						$('#check-all').text("(" + total + ")");
 					}
 
 				})
