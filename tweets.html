@@ -194,30 +194,45 @@
 					</div>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<div class="container" style="height:150px;width: 25%;">
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checkall" name="all" value="something">
-						<label class="form-check-label" for="checkall">Select all</label>
+				<h3>Filters</h3>
+				<div class="row">
+					<div class="col-3">
+						<div class="card shadow mb-4" style="border: 1px solid black;">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Types</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Filter by Type"></i>
+							</div>
+							<div class="card-body">
+								<div class="container">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checkall" name="all" value="something" checked>
+										<label class="form-check-label" for="checkall">Select all</label>
+									</div>
+									<br>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checkurl" name="url" value="something" checked>
+										<label class="form-check-label" for="checkurl">URL</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something" checked>
+										<label class="form-check-label" for="checkdomain">Domain</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something" checked>
+										<label class="form-check-label" for="checkip">IP</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something" checked>
+										<label class="form-check-label" for="checksha256">SHA256</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something" checked>
+										<label class="form-check-label" for="checkmd5">MD5</label>
+									</div>
+								</div> <!-- container -->
+							</div>
+						</div>
 					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checkurl" name="url" value="something">
-						<label class="form-check-label" for="checkurl">URL</label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something">
-						<label class="form-check-label" for="checkdomain">Domain</label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something">
-						<label class="form-check-label" for="checkip">IP</label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something">
-						<label class="form-check-label" for="checksha256">SHA256</label>
-					</div>
-					<div class="form-check">
-						<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something">
-						<label class="form-check-label" for="checkmd5">MD5</label>
+					<div class="col-6">
 					</div>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
@@ -298,7 +313,7 @@
 				loadData();
 			});
 			$('#checkall').change(function() {
-				$("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+				$("input[type=checkbox][id^=check]").prop('checked', $(this).prop('checked'));
 			});
 
 			function timerCycle() {
@@ -432,6 +447,11 @@
 		</script>
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/date.js"></script>
+		<script>
+		$(function() {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+		</script>
 </body>
 
 </html>
