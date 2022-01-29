@@ -202,37 +202,36 @@
 								<span class="card-text cardTitle">Types</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Filter by Type"></i>
 							</div>
 							<div class="card-body">
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkall" name="all" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkall">Select all&nbsp&nbsp</label>
-									</div>
-									<br>
-									<div class="form-check">
-										<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkurl" name="url" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkurl"><i class="fas fa-link" style="color: #0026E6;"></i> URLs</label>
-										<span id="check-url"></span>										 
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkdomain"><i class="fas fa-globe" style="color: #3399FF"></i> Domains</label>
-										<span id="check-domain"></span>							
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkip"><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</label>
-										<span id="check-ip"></span>								
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checksha256"><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</label>
-										<span id="check-sha256"></span>									
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something" checked>
-										<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkmd5"><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</label>
-										<span id="check-md5"></span>
-									</div>
-
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="checkall" name="all" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkall">Select all&nbsp&nbsp</label>
+								</div>
+								<br>
+								<div class="form-check">
+									<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkurl" name="url" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkurl"><i class="fas fa-link" style="color: #0026E6;"></i> URLs</label>
+									<span id="check-url"></span>
+								</div>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkdomain"><i class="fas fa-globe" style="color: #3399FF"></i> Domains</label>
+									<span id="check-domain"></span>
+								</div>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkip"><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</label>
+									<span id="check-ip"></span>
+								</div>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checksha256"><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</label>
+									<span id="check-sha256"></span>
+								</div>
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkmd5"><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</label>
+									<span id="check-md5"></span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -376,12 +375,13 @@
 
 						let isChecked = $('#check' + type)[0].checked
 
-						console.log(isChecked)
 						if (isChecked) {
 							lines.push(tweet_url.split("/").at(-1))
 						}
 
 					}
+
+					lines=lines.reverse();
 
 					comp_lines = lines.toString();
 					comp_p_lines = p_lines.toString();
