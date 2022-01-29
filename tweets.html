@@ -197,45 +197,237 @@
 				<h3>Filters</h3>
 				<div class="row">
 					<div class="col-3">
-						<div class="card shadow mb-4" style="border: 1px solid black;">
+						<div class="card shadow mb-4 h-100" style="border: 1px solid black;">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Types</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Filter by Type"></i>
 							</div>
 							<div class="card-body">
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input" id="checkall" name="all" value="something" checked>
-									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkall">Select all&nbsp&nbsp</label>
+									<input type="checkbox" class="form-check-input" id="checkallTypes" name="all" value="something" checked>
+									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkallTypes">Select all&nbsp&nbsp</label>
 								</div>
 								<br>
 								<div class="form-check">
-									<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkurl" name="url" value="something" checked>
+									<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTypeurl" name="url" value="something" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkurl"><i class="fas fa-link" style="color: #0026E6;"></i> URLs</label>
 									<span id="check-url"></span>
 								</div>
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input" id="checkdomain" name="domain" value="something" checked>
+									<input type="checkbox" class="form-check-input" id="checkTypedomain" name="domain" value="something" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkdomain"><i class="fas fa-globe" style="color: #3399FF"></i> Domains</label>
 									<span id="check-domain"></span>
 								</div>
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input" id="checkip" name="ip" value="something" checked>
+									<input type="checkbox" class="form-check-input" id="checkTypeip" name="ip" value="something" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkip"><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</label>
 									<span id="check-ip"></span>
 								</div>
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input" id="checksha256" name="sha256" value="something" checked>
+									<input type="checkbox" class="form-check-input" id="checkTypesha256" name="sha256" value="something" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checksha256"><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</label>
 									<span id="check-sha256"></span>
 								</div>
 								<div class="form-check">
-									<input type="checkbox" class="form-check-input" id="checkmd5" name="md5" value="something" checked>
+									<input type="checkbox" class="form-check-input" id="checkTypemd5" name="md5" value="something" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkmd5"><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</label>
 									<span id="check-md5"></span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6">
+					<div class="col-9">
+						<div class="card shadow mb-4 h-100" style="border: 1px solid black;">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Tags</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Filter by Tags"></i>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-3">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkallTags" name="all" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkallTags">Select all</label>
+										</div>
+									</div> <!-- col --->
+									<div class="col-3">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagnotag" name="notag" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkTagnotag">With no tags</label>
+										</div>
+									</div> <!-- col --->
+								</div>
+								<br>
+								<div class="row">
+									<div class="col-3">
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagphishing" name="phishing" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkphishing">#phishing</label>
+											<span id="check-phishing"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagscam" name="scam" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkscam">#scam</label>
+											<span id="check-scam"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagmalware" name="malware" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkmalware">#malware</label>
+											<span id="check-malware"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagransomware" name="ransomware" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkransomware">#ransomware</label>
+											<span id="check-ransomware"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagbanker" name="domain" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkbanker">#banker</label>
+											<span id="check-banker"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagAgentTesla" name="AgentTesla" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkAgentTesla">#AgentTesla</label>
+											<span id="check-AgentTesla"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagAlienbot" name="Alienbot" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkAlienbot">#Alienbot</label>
+											<span id="check-Alienbot"></span>
+										</div>
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input" id="checkTagBazarLoader" name="BazarLoader" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkBazarLoader">#BazarLoader</label>
+											<span id="check-BazarLoader"></span>
+										</div>
+									</div> <!-- col -->
+									<div class="col-3">
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagCobaltStrike" name="CobaltStrike" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkCobaltStrike">#CobaltStrike</label>
+											<span id="check-CobaltStrike"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagDridex" name="Dridex" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkDridex">#Dridex</label>
+											<span id="check-Dridex"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagEmotet" name="Emotet" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkEmotet">#Emotet</label>
+											<span id="check-Emotet"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagFluBot" name="FluBot" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkFluBot">#FluBot</label>
+											<span id="check-FluBot"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagFormbook" name="Formbook" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkFormbook">#Formbook</label>
+											<span id="check-Formbook"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagGootLoader" name="GootLoader" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkGootLoader">#GootLoader</label>
+											<span id="check-GootLoader"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagGuLoader" name="GuLoader" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkGuLoader">#GuLoader</label>
+											<span id="check-GuLoader"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagHancitor" name="Hancitor" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkHancitor">#Hancitor</label>
+											<span id="check-Hancitor"></span>
+										</div>
+									</div> <!-- col -->
+									<div class="col-3">
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagIceID" name="IceID" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkIceID">#IceID</label>
+											<span id="check-IceID"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagLazarus" name="Lazarus" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkLazarus">#Lazarus</label>
+											<span id="check-Lazarus"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagLokibot" name="Lokibot" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkLokibot">#Lokibot</label>
+											<span id="check-Lokibot"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTaglog4j" name="log4j" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checklog4j">#log4j</label>
+											<span id="check-log4j"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagLog4shell" name="Log4shell" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkLog4shell">#Log4shell</label>
+											<span id="check-Log4shell"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagProxyShell" name="ProxyShell" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkProxyShell">#ProxyShell</label>
+											<span id="check-ProxyShell"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagQakbot" name="Qakbot" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkQakbot">#Qakbot</label>
+											<span id="check-Qakbot"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagRaccoon" name="Raccoon" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkRaccoon">#Raccoon</label>
+											<span id="check-Raccoon"></span>
+										</div>
+									</div> <!-- col -->
+									<div class="col-3">
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagRedLine" name="RedLine" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkRedLine">#RedLine</label>
+											<span id="check-RedLine"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagRemcos" name="Remcos" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkRemcos">#Remcos</label>
+											<span id="check-Remcos"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagSquirrelWaffle" name="SquirrelWaffle" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkSquirrelWaffle">#SquirrelWaffle</label>
+											<span id="check-SquirrelWaffle"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagTrickbot" name="Trickbot" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkTrickbot">#Trickbot</label>
+											<span id="check-Trickbot"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagUrsnif" name="Ursnif" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkUrsnif">#Ursnif</label>
+											<span id="check-Ursnif"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagWhisperGate" name="WhisperGate" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkWhisperGate">#WhisperGate</label>
+											<span id="check-WhisperGate"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagXLoader" name="XLoader" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkXLoader">#XLoader</label>
+											<span id="check-XLoader"></span>
+										</div>
+										<div class="form-check">
+											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagZLoader" name="ZLoader" value="something" checked>
+											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkZLoader">#ZLoader</label>
+											<span id="check-ZLoader"></span>
+										</div>
+									</div> <!-- col -->
+								</div> <!-- row -->
+							</div>
+						</div>
 					</div>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
@@ -312,11 +504,14 @@
 				}
 			})
 
-			$('#checkurl,#checkdomain,#checkip,#checksha256,#checkmd5').change(function() {
+			$('[id^=check]').change(function() {
 				loadData();
 			});
-			$('#checkall').change(function() {
-				$("input[type=checkbox][id^=check]").prop('checked', $(this).prop('checked'));
+			$('#checkallTypes').change(function() {
+				$("input[type=checkbox][id^=checkType]").prop('checked', $(this).prop('checked'));
+			});
+			$('#checkallTags').change(function() {
+				$("input[type=checkbox][id^=checkTag]").prop('checked', $(this).prop('checked'));
 			});
 
 			function timerCycle() {
@@ -371,17 +566,53 @@
 					for (var i = auxFor; i < data.length; i++) {
 
 						var type = data[i][2];
+						var tags = []
 						var tweet_url = data[i][5];
 
-						let isChecked = $('#check' + type)[0].checked
-
-						if (isChecked) {
-							lines.push(tweet_url.split("/").at(-1))
+						if (data[i][4].trim() != "") {
+							let newArr = data[i][4].split(" ");
+							for (var j = 0; j < newArr.length; j++) {
+								tags.push(newArr[j]);
+							}
 						}
 
+						console.log("Tags: " + tags)
+
+						let isCheckedType = $('#checkType' + type)[0].checked
+						let isCheckedTag = false;
+
+						// Example:
+						// tags: ["phishing","scam"]
+
+						if (tags.length === 0) {
+
+							isCheckedTag = $('#checkTagnotag')[0].checked
+
+
+						} else if (tags.length === 1) {
+
+							tag = tags[0].replace('#', '');
+							isCheckedTag = $('#checkTag' + tag)[0].checked
+
+						} else if (tags.length > 1) {
+
+
+							for (var i = 0; i < tags.length; i++) {
+								tag = tags[i].replace('#', '');
+								isCheckedTag = $('#checkTag' + tag)[0].checked
+
+								if (isCheckedTag) {
+									break;
+								}
+							}
+						}
+
+						if (isCheckedType && isCheckedTag) {
+							lines.push(tweet_url.split("/").at(-1))
+						}
 					}
 
-					lines=lines.reverse();
+					lines = lines.reverse();
 
 					comp_lines = lines.toString();
 					comp_p_lines = p_lines.toString();
@@ -424,7 +655,7 @@
 						if (init) {
 							init = 0;
 						}
-						countTypes('check', data);
+						countTypes('check', data.slice(auxFor, data.length));
 					}
 
 				})
