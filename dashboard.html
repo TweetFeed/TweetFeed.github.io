@@ -778,6 +778,7 @@
 					keys.push(key);
 					values.push(value);
 
+					$('#' + divAccess + '-' + key).empty();
 					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
 				}
 			}
