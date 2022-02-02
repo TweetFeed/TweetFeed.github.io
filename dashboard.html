@@ -195,6 +195,18 @@
 				</div>
 				<!-- <hr style="border: 1px solid black;"> -->
 				<br>
+				<div>
+					<p>
+						Show last:
+						<select class="form-select">
+							<option value="10" selected>10</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+						lines from TweetFeed
+					</p>
+				</div>
+				<hr style="border: 1px solid black;">
 				<div class="row">
 					<div class="col-3">
 						<div class="card shadow mb-4 h-100" style="border: 1px solid black;">
@@ -206,6 +218,7 @@
 									<input type="checkbox" class="form-check-input" id="checkallTypes" name="allTypes" value="allTypes" checked>
 									<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkallTypes">Select all</label>
 									<span style="font-size: 12px;font-family: \'Rubik\', sans-serif;color:grey;" id="check-all"></span>
+									
 								</div>
 								<br>
 								<div class="form-check">
@@ -262,7 +275,7 @@
 										<div class="form-check">
 											<input type="checkbox" class="form-check-input" id="checkTagphishing" name="phishing" value="phishing" checked>
 											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkphishing">#phishing</label>
-											<span style="font-size: 12px;font-family: \'Rubik\', sans-serif;color:grey;" id="check-phishing"></span>									
+											<span style="font-size: 12px;font-family: \'Rubik\', sans-serif;color:grey;" id="check-phishing"></span>
 										</div>
 										<div class="form-check">
 											<input type="checkbox" class="form-check-input" id="checkTagscam" name="scam" value="scam" checked>
@@ -304,7 +317,6 @@
 										<div class="form-check">
 											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagCobaltStrike" name="CobaltStrike" value="CobaltStrike" checked>
 											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkCobaltStrike">#CobaltStrike <span style="font-size: 12px;font-family: \'Rubik\', sans-serif;color:grey;" id="check-CobaltStrike"></span></label>
-											
 										</div>
 										<div class="form-check">
 											<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagDridex" name="Dridex" value="Dridex" checked>
@@ -506,7 +518,7 @@
 				}
 			})
 
-			$('[id^=checkType],[id^=checkTag]').change(function() {
+			$('[id^=checkType],[id^=checkTag],.form-select').change(function() {
 				checkedItems();
 				loadData();
 			});
@@ -576,11 +588,13 @@
 					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
 
 					var seen_tweets = []; // seen tweet_urls
- 
+
 					let lines = [];
 
-					if (data.length > 100) {
-						var auxFor = data.length - 100
+					var n_rows = $(".form-select option:selected").val();
+
+					if (data.length > n_rows) {
+						var auxFor = data.length - n_rows
 					} else {
 						var auxFor = 0
 					}
@@ -655,7 +669,7 @@
 
 						//if (isCheckedType && isCheckedTag) {
 						if (isCheckedType && isCheckedTag) {
-							lines.push(tweet_url.split("/").at(-1))							
+							lines.push(tweet_url.split("/").at(-1))
 						}
 					}
 
@@ -741,6 +755,7 @@
 					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
 				}
 			}
+
 			function countTags(divAccess, jsonArr) {
 				let tags = [],
 					count = [];
