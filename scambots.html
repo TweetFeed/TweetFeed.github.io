@@ -181,7 +181,7 @@
 				<div id="presentationSecondary">
 					<br><br><br>
 					<h1><i class="fas fa-question-circle" style="font-size: 36px;"></i> ScamBots (beta)</h1>
-					<h2><em>Scambots on Twitter</em></h2>
+					<h2><em>Possible bot accounts spreading scams on Twitter</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<div class="custom-control custom-switch">
@@ -193,13 +193,14 @@
 						<span class="sr-only"></span>
 					</div>
 				</div>
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<br>
+				<!-- <hr style="border: 1px solid black;">  DIVIDER -->
 				<div id="loadingScambots" class="text-center">
 					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 				</div>
-				<div class="container hola">
+				<div class="hola alert alert-secondary shadow" style="border: 1px solid black;">
 				</div>
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<!-- <hr style="border: 1px solid black;">  DIVIDER -->
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
@@ -294,8 +295,8 @@
 			}
 
 			function animation() {
-				$('.container.hola').hide();
-				$('.container.hola').fadeIn(1000, "linear");
+				$('.hola').hide();
+				$('.hola').fadeIn(1000, "linear");
 			}
 
 			function loadData() {

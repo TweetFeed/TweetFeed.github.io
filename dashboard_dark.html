@@ -149,6 +149,12 @@
 						<li class="nav-item">
 							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 						</li>
+						<li class="nav-item d-flex align-items-center">
+							<div class="custom-control custom-switch">
+								<input type="checkbox" class="custom-control-input" id="switchDarkMode" checked>
+								<label style="color:white;" class="custom-control-label" for="switchDarkMode"><i class="fas fa-moon"></i></label>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</nav>
@@ -184,11 +190,11 @@
 					<h2><em>Shows Tweets with IOCs inside</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Control panel <button style="border: 1px solid black;" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#filters">Show / Hide</button>
-				</h3>
+				<h2 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Control panel <button style="border: 1px solid black;" type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#filters">Show / Hide</button>
+				</h2>
 				<!-- ------------------------------- -->
 				<div id="filters" class="collapse show">
-					<div class="alert alert-secondary" style="border: 1px solid black;">
+					<div class="alert alert-secondary">
 						<div class="custom-control custom-switch">
 							<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
 							<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
@@ -453,7 +459,7 @@
 				<div id="loadingTweets" class="text-center">
 					<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 				</div>
-				<div class="hola alert alert-secondary shadow" style="border: 1px solid black;">
+				<div class="hola alert alert-secondary" style="width:100%">
 				</div>
 				<!-- <hr style="border: 1px solid black;">  DIVIDER -->
 			</div>
@@ -501,6 +507,7 @@
 		$(function() {
 			let autorefresh = 1;
 			let init = 1;
+			let flag_dark = 1;
 			checkedItems();
 			loadData();
 			progressBar();
@@ -521,6 +528,20 @@
 					progressBar();
 					loadData();
 					timerAux = setInterval(timerCycle, 6000);
+				}
+			})
+
+			$('#switchDarkMode').click(function() {
+
+				if (flag_dark) {
+					flag_dark = 0;
+					$('#content-wrapper').css('background-color', '#424242');
+					$("[for='switchDarkMode']").css("color", "black");
+
+				} else {
+					flag_dark = 1;
+					$('#content-wrapper').css('background-color', 'white');
+					$("[for='switchDarkMode']").css("color", "white");
 				}
 			})
 
