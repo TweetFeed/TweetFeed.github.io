@@ -20,7 +20,7 @@
 	<!-- Custom styles for this page -->
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="css/table.css" rel="stylesheet">
+	<!-- <link href="css/table.css" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)--> 
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -218,7 +218,7 @@
 									<div class="card-header text-center">
 										<span class="card-text cardTitle">Types</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Filter by Type"></i>
 									</div>
-									<div class="card-body text-left">
+									<div class="card-body">
 										<div class="form-check">
 											<input type="checkbox" class="form-check-input" id="checkallTypes" name="allTypes" value="allTypes" checked>
 											<label style="font-size: 14px;font-family: \'Rubik\', sans-serif;color:black;" class="form-check-label" for="checkallTypes">Select all*</label>
@@ -253,7 +253,6 @@
 										<br><br>
 										<em style="font-size: 12px;">* Some tweets may contain more than 1 IOC. That's why the number of tweets is less than the number of lines selected.</em>
 									</div>
-
 								</div>
 							</div>
 							<div class="col-9">
