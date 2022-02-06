@@ -869,6 +869,7 @@
 	function exportValuesToCSV(filename) {
 		var csv = [];
 
+		seen_values_rev=[...seen_values.reverse()];
 		for (var i = 0; i < seen_values.length; i++) {
 			csv.push(seen_values[i]);
 		}
