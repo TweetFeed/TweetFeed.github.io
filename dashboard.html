@@ -690,8 +690,12 @@
 					}
 
 					seen_tweets.push(tweet_url)
-					seen_values.push(value)
+					
 					data_filtered.push(data[i])
+
+					if (isCheckedType && isCheckedTag) {
+						seen_values.push(value)
+					}
 
 					//if (isCheckedType && isCheckedTag) {
 					if (isCheckedType && isCheckedTag) {
