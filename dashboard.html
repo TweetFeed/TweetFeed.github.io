@@ -205,6 +205,9 @@
 					<div class="p-2">
 						<button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"><i class="fas fa-cog"></i> Options</button>
 					</div>
+					<div class="p-2">
+						<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary align-middle buttonHover"><i class="fas fa-download"></i> Export IOCs</button>
+					</div>
 				</div>
 				<!-- ------------------------------- -->
 				<div id="filters" class="collapse">
@@ -492,365 +495,424 @@
 			</footer>
 			<!-- End of Footer -->
 		</div>
-		<!-- End of Content Wrapper -->
-		<!-- End of Page Wrapper -->
-		<!-- Scroll to Top Button-->
-		<!-- Logout Modal-->
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Export -->
-		<script src="js/demo/datatables-demo.js"></script>
-		<!-- Page level custom scripts -->
-		<script>
-		$(function() {
-			let autorefresh = 1;
-			let init = 1;
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	$(function() {
+		let autorefresh = 1;
+		let init = 1;
+		checkedItems();
+		loadData();
+		progressBar();
+		var timerAux = setInterval(timerCycle, 6000);
+		let p_lines = new Array();
+
+		$('#customSwitch1').click(function() {
+			if (autorefresh) {
+				// Disabled
+				autorefresh = 0;
+				$("[for='customSwitch1']").css("color", "gray");
+				clearInterval(timerAux);
+			} else {
+				// Enabled
+				autorefresh = 1;
+				$("[for='customSwitch1']").css("color", "blue");
+				init = 1;
+				progressBar();
+				loadData();
+				timerAux = setInterval(timerCycle, 6000);
+			}
+		})
+
+		$('[id^=checkType],[id^=checkTag],.form-select').change(function() {
 			checkedItems();
 			loadData();
-			progressBar();
-			var timerAux = setInterval(timerCycle, 6000);
-			let p_lines = new Array();
+		});
 
-			$('#customSwitch1').click(function() {
-				if (autorefresh) {
-					// Disabled
-					autorefresh = 0;
-					$("[for='customSwitch1']").css("color", "gray");
-					clearInterval(timerAux);
+		$('#checkallTypes').change(function() {
+			$("input[type=checkbox][id^=checkType]").prop('checked', $(this).prop('checked'));
+			checkedItems();
+			loadData();
+		});
+		$('#checkallTags').change(function() {
+			$("input[type=checkbox][id^=checkTag]").prop('checked', $(this).prop('checked'));
+			checkedItems();
+			loadData();
+		});
+
+		function timerCycle() {
+			if (autorefresh) {
+				loadData();
+				progressBar();
+			}
+		}
+
+		function checkedItems() {
+
+			checkedTypes = $('input[id^="checkType"]:checked').map(function() {
+				return $(this).val();
+			}).get(); // <----
+
+			checkedTags = $('input[id^="checkTag"]:checked').map(function() {
+				return $(this).val();
+			}).get(); // <----
+		}
+
+		function progressBar() {
+			var i = 0;
+			var downloadTimer = setInterval(function() {
+				if (i >= 100) {
+					clearInterval(downloadTimer);
+				}
+				if (autorefresh == 0) {
+					i = 0;
+					clearInterval(downloadTimer);
+					//document.getElementById("progressBar").value = 0;
+					$('.progress-bar').css('width', i + '%');
 				} else {
-					// Enabled
-					autorefresh = 1;
-					$("[for='customSwitch1']").css("color", "blue");
-					init = 1;
-					progressBar();
-					loadData();
-					timerAux = setInterval(timerCycle, 6000);
+					//document.getElementById("progressBar").value = 5 - timeleft;
+					$('.progress-bar').css('width', i + '%');
 				}
-			})
+				i = i + 20;
+			}, 1000);
+		}
 
-			$('[id^=checkType],[id^=checkTag],.form-select').change(function() {
-				checkedItems();
-				loadData();
-			});
+		function animation() {
+			$('.hola').hide();
+			$('.hola').fadeIn(1000, "linear");
+		}
 
-			$('#checkallTypes').change(function() {
-				$("input[type=checkbox][id^=checkType]").prop('checked', $(this).prop('checked'));
-				checkedItems();
-				loadData();
-			});
-			$('#checkallTags').change(function() {
-				$("input[type=checkbox][id^=checkTag]").prop('checked', $(this).prop('checked'));
-				checkedItems();
-				loadData();
-			});
+		function loadData() {
 
-			function timerCycle() {
-				if (autorefresh) {
-					loadData();
-					progressBar();
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+
+				var data = csvJSON(response);
+				var data_filtered = [];
+				var last_date = data.at(-1)[0];
+				var first_date = data.at(1)[0];
+				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+
+				var seen_tweets = []; // seen tweet_urls
+				seen_values = []; // seen values
+
+
+				let lines = [];
+
+				var n_rows = $(".form-select option:selected").val();
+
+				if (data.length > n_rows) {
+					var auxFor = data.length - n_rows
+				} else {
+					var auxFor = 0
 				}
-			}
 
-			function checkedItems() {
+				//for (var i = data.length - 40; i < data.length; i++) {
+				for (var i = auxFor; i < data.length; i++) {
 
-				checkedTypes = $('input[id^="checkType"]:checked').map(function() {
-					return $(this).val();
-				}).get(); // <----
+					var type = data[i][2];
+					var tags = []
+					var tweet_url = data[i][5];
+					var value = data[i][3];
 
-				checkedTags = $('input[id^="checkTag"]:checked').map(function() {
-					return $(this).val();
-				}).get(); // <----
-			}
-
-			function progressBar() {
-				var i = 0;
-				var downloadTimer = setInterval(function() {
-					if (i >= 100) {
-						clearInterval(downloadTimer);
-					}
-					if (autorefresh == 0) {
-						i = 0;
-						clearInterval(downloadTimer);
-						//document.getElementById("progressBar").value = 0;
-						$('.progress-bar').css('width', i + '%');
-					} else {
-						//document.getElementById("progressBar").value = 5 - timeleft;
-						$('.progress-bar').css('width', i + '%');
-					}
-					i = i + 20;
-				}, 1000);
-			}
-
-			function animation() {
-				$('.hola').hide();
-				$('.hola').fadeIn(1000, "linear");
-			}
-
-			function loadData() {
-
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
-
-					var data = csvJSON(response);
-					var data_filtered = [];
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-
-					var seen_tweets = []; // seen tweet_urls
-
-					let lines = [];
-
-					var n_rows = $(".form-select option:selected").val();
-
-					if (data.length > n_rows) {
-						var auxFor = data.length - n_rows
-					} else {
-						var auxFor = 0
+					if (seen_tweets.includes(tweet_url)) {
+						continue;
 					}
 
-					//for (var i = data.length - 40; i < data.length; i++) {
-					for (var i = auxFor; i < data.length; i++) {
-
-						var type = data[i][2];
-						var tags = []
-						var tweet_url = data[i][5];
-
-						if (seen_tweets.includes(tweet_url)) {
-							continue;
-						}
-
-						if (data[i][4].trim() != "") {
-							let newArr = data[i][4].split(" ");
-							for (var j = 0; j < newArr.length; j++) {
-								tags.push(newArr[j]);
-							}
-						}
-
-						let isCheckedType = $('#checkType' + type)[0].checked
-						let isCheckedTag = false;
-
-						// Example:
-						// tags: ["phishing","scam"]
-
-						if (tags.length === 0) {
-
-							if (checkedTags.includes("notag")) {
-								isCheckedTag = true;
-							}
-
-						} else if (tags.length === 1) {
-
-							tag = tags[0].replace('#', '');
-
-							//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-							if (checkedTags.includes(tag)) {
-								isCheckedTag = true;
-							}
-
-						} else if (tags.length >= 1) {
-
-							tag0 = tags[0].replace('#', '');
-							tag1 = tags[1].replace('#', '');
-
-							//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-							if (checkedTags.includes(tag0) || checkedTags.includes(tag1)) {
-								isCheckedTag = true;
-							}
-
-						} else if (tags.length >= 2) {
-
-							tag0 = tags[0].replace('#', '');
-							tag1 = tags[1].replace('#', '');
-							tag2 = tags[2].replace('#', '');
-
-							//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-							if (checkedTags.includes(tag0) || checkedTags.includes(tag1) || checkedTags.includes(tag2)) {
-								isCheckedTag = true;
-							}
-
-						}
-
-						seen_tweets.push(tweet_url)
-						data_filtered.push(data[i])
-
-						//if (isCheckedType && isCheckedTag) {
-						if (isCheckedType && isCheckedTag) {
-							lines.push(tweet_url.split("/").at(-1))
-						}
-					}
-
-					lines = lines.reverse();
-
-					comp_lines = lines.toString();
-					comp_p_lines = p_lines.toString();
-
-					if (comp_lines !== comp_p_lines || init == 1) {
-
-						$(".hola").empty();
-
-						count_row = 0;
-						count_column = 0;
-						n_cols = 4;
-
-						for (var i = 0; i < lines.length; i++) {
-
-							if (i % n_cols === 0) {
-								count_row++
-								myvar_row = '<div class="row row_' + count_row + '">' +
-									'</div> <!-- row -->'
-
-								$('.hola').append(myvar_row);
-							}
-							var myvar_col = '<div class="col-3">' +
-								'<blockquote class="twitter-tweet">' +
-								'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
-								'</blockquote>' +
-								'</div>'
-
-							count_column++
-							$('.row_' + count_row).append(myvar_col);
-
-							if (i === lines.length - 1) {
-								animation();
-								$("#loadingTweets").hide();
-							}
-						}
-
-						p_lines = [...lines];
-						twttr.widgets.load()
-
-						if (init) {
-							init = 0;
-						}
-
-						$('[id^="checkTag"]').empty();
-						countTypes('check', data_filtered);
-						countTags('checkTag', data_filtered);
-						let total = data.length - auxFor
-
-						$('#check-allTypes').empty();
-						$('#check-allTypes').text("(" + data_filtered.length + ")");
-						//$('#check-allTags').empty();
-						//$('#check-allTags').text("(" + data_filtered.length + ")");
-					}
-
-				})
-			}
-
-			function csvJSON(csv) {
-
-				var lines = csv.split("\n");
-				var result = [];
-				//for (var i = lines.length - 1; i >= 0; i--) {
-				for (var i = 0; i < lines.length; i++) {
-					var obj = [];
-					var currentline = lines[i].split(",");
-					if (currentline.length > 1) {
-						for (var j = 0; j < currentline.length; j++) {
-							obj.push(currentline[j]);
-						}
-						result.push(obj);
-					}
-
-				}
-				return result;
-			}
-
-			function countTypes(divAccess, jsonArr) {
-				let keys = [];
-				let values = [];
-				let type = { 'url': 0, 'domain': 0, 'ip': 0, 'sha256': 0, 'md5': 0 };
-				for (var i = 0; i < jsonArr.length; i++) {
-					type[jsonArr[i][2]]++;
-				}
-				for (const [key, value] of Object.entries(type)) {
-					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
-				}
-			}
-
-			function countTags(divAccess, jsonArr) {
-				let tags = [],
-					count = [];
-				let keys = [];
-				let values = [];
-				for (var i = 0; i < jsonArr.length; i++) {
-					if (jsonArr[i][4].trim() != "") {
-						let newArr = jsonArr[i][4].split(" ");
+					if (data[i][4].trim() != "") {
+						let newArr = data[i][4].split(" ");
 						for (var j = 0; j < newArr.length; j++) {
 							tags.push(newArr[j]);
 						}
-					} else {
-						tags.push('#notag');
+					}
+
+					let isCheckedType = $('#checkType' + type)[0].checked
+					let isCheckedTag = false;
+
+					// Example:
+					// tags: ["phishing","scam"]
+
+					if (tags.length === 0) {
+
+						if (checkedTags.includes("notag")) {
+							isCheckedTag = true;
+						}
+
+					} else if (tags.length === 1) {
+
+						tag = tags[0].replace('#', '');
+
+						//isCheckedTag = $('#checkTag' + tag)[0].checked
+
+						if (checkedTags.includes(tag)) {
+							isCheckedTag = true;
+						}
+
+					} else if (tags.length >= 1) {
+
+						tag0 = tags[0].replace('#', '');
+						tag1 = tags[1].replace('#', '');
+
+						//isCheckedTag = $('#checkTag' + tag)[0].checked
+
+						if (checkedTags.includes(tag0) || checkedTags.includes(tag1)) {
+							isCheckedTag = true;
+						}
+
+					} else if (tags.length >= 2) {
+
+						tag0 = tags[0].replace('#', '');
+						tag1 = tags[1].replace('#', '');
+						tag2 = tags[2].replace('#', '');
+
+						//isCheckedTag = $('#checkTag' + tag)[0].checked
+
+						if (checkedTags.includes(tag0) || checkedTags.includes(tag1) || checkedTags.includes(tag2)) {
+							isCheckedTag = true;
+						}
+
+					}
+
+					seen_tweets.push(tweet_url)
+					seen_values.push(value)
+					data_filtered.push(data[i])
+
+					//if (isCheckedType && isCheckedTag) {
+					if (isCheckedType && isCheckedTag) {
+						lines.push(tweet_url.split("/").at(-1))
 					}
 				}
 
-				tags.forEach(function(i) {
-					count[i] = (count[i] || 0) + 1;
-				});
+				lines = lines.reverse();
 
-				var tuples = [];
+				comp_lines = lines.toString();
+				comp_p_lines = p_lines.toString();
 
-				for (var key in count)
-					tuples.push([key, count[key]]);
+				if (comp_lines !== comp_p_lines || init == 1) {
 
-				tuples.sort(function(a, b) {
-					a = a[1];
-					b = b[1];
+					$(".hola").empty();
 
-					return a > b ? -1 : (a < b ? 1 : 0);
-				});
-				for (var i = 0; i < tuples.length; i++) {
+					count_row = 0;
+					count_column = 0;
+					n_cols = 4;
 
-					key = tuples[i][0].replace('#', '');
-					value = tuples[i][1]
+					for (var i = 0; i < lines.length; i++) {
 
-					keys.push(key);
-					values.push(value);
+						if (i % n_cols === 0) {
+							count_row++
+							myvar_row = '<div class="row row_' + count_row + '">' +
+								'</div> <!-- row -->'
 
-					$('#' + divAccess + '-' + key).empty();
-					$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
+							$('.hola').append(myvar_row);
+						}
+						var myvar_col = '<div class="col-3">' +
+							'<blockquote class="twitter-tweet">' +
+							'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
+							'</blockquote>' +
+							'</div>'
+
+						count_column++
+						$('.row_' + count_row).append(myvar_col);
+
+						if (i === lines.length - 1) {
+							animation();
+							$("#loadingTweets").hide();
+						}
+					}
+
+					p_lines = [...lines];
+					twttr.widgets.load()
+
+					if (init) {
+						init = 0;
+					}
+
+					$('[id^="checkTag"]').empty();
+					countTypes('check', data_filtered);
+					countTags('checkTag', data_filtered);
+					let total = data.length - auxFor
+
+					$('#check-allTypes').empty();
+					$('#check-allTypes').text("(" + data_filtered.length + ")");
+					//$('#check-allTags').empty();
+					//$('#check-allTags').text("(" + data_filtered.length + ")");
+				}
+
+			})
+		}
+
+		function csvJSON(csv) {
+
+			var lines = csv.split("\n");
+			var result = [];
+			//for (var i = lines.length - 1; i >= 0; i--) {
+			for (var i = 0; i < lines.length; i++) {
+				var obj = [];
+				var currentline = lines[i].split(",");
+				if (currentline.length > 1) {
+					for (var j = 0; j < currentline.length; j++) {
+						obj.push(currentline[j]);
+					}
+					result.push(obj);
 				}
 
 			}
-		})
-		</script>
-		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/date.js"></script>
-		<script>
-		$(function() {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
-		</script>
-		<script>
-		function nFormatter(num, digits) {
-			const lookup = [
-				{ value: 1, symbol: "" },
-				{ value: 1e3, symbol: "k" },
-				{ value: 1e6, symbol: "M" },
-				{ value: 1e9, symbol: "G" },
-				{ value: 1e12, symbol: "T" },
-				{ value: 1e15, symbol: "P" },
-				{ value: 1e18, symbol: "E" }
-			];
-			const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-			var item = lookup.slice().reverse().find(function(item) {
-				return num >= item.value;
-			});
-			return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+			return result;
 		}
-		</script>
+
+		function countTypes(divAccess, jsonArr) {
+			let keys = [];
+			let values = [];
+			let type = { 'url': 0, 'domain': 0, 'ip': 0, 'sha256': 0, 'md5': 0 };
+			for (var i = 0; i < jsonArr.length; i++) {
+				type[jsonArr[i][2]]++;
+			}
+			for (const [key, value] of Object.entries(type)) {
+				$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
+			}
+		}
+
+		function countTags(divAccess, jsonArr) {
+			let tags = [],
+				count = [];
+			let keys = [];
+			let values = [];
+			for (var i = 0; i < jsonArr.length; i++) {
+				if (jsonArr[i][4].trim() != "") {
+					let newArr = jsonArr[i][4].split(" ");
+					for (var j = 0; j < newArr.length; j++) {
+						tags.push(newArr[j]);
+					}
+				} else {
+					tags.push('#notag');
+				}
+			}
+
+			tags.forEach(function(i) {
+				count[i] = (count[i] || 0) + 1;
+			});
+
+			var tuples = [];
+
+			for (var key in count)
+				tuples.push([key, count[key]]);
+
+			tuples.sort(function(a, b) {
+				a = a[1];
+				b = b[1];
+
+				return a > b ? -1 : (a < b ? 1 : 0);
+			});
+			for (var i = 0; i < tuples.length; i++) {
+
+				key = tuples[i][0].replace('#', '');
+				value = tuples[i][1]
+
+				keys.push(key);
+				values.push(value);
+
+				$('#' + divAccess + '-' + key).empty();
+				$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
+			}
+
+		}
+
+
+	})
+	</script>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/date.js"></script>
+	<script>
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
+	<script>
+	function nFormatter(num, digits) {
+		const lookup = [
+			{ value: 1, symbol: "" },
+			{ value: 1e3, symbol: "k" },
+			{ value: 1e6, symbol: "M" },
+			{ value: 1e9, symbol: "G" },
+			{ value: 1e12, symbol: "T" },
+			{ value: 1e15, symbol: "P" },
+			{ value: 1e18, symbol: "E" }
+		];
+		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+		var item = lookup.slice().reverse().find(function(item) {
+			return num >= item.value;
+		});
+		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+	}
+	</script>
+	<script>
+	function exportValuesToCSV(filename) {
+		var csv = [];
+
+		for (var i = 0; i < seen_values.length; i++) {
+			csv.push(seen_values[i]);
+		}
+
+		// Download CSV file
+		var dateNowUTC = new Date(Date.now());
+		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
+		let d = new Date(Date.now());
+		let day = d.getDate();
+		let month = (d.getMonth() + 1);
+		let h = addZero(d.getHours());
+		let m = addZero(d.getMinutes());
+		let s = addZero(d.getSeconds());
+		let time = h + "" + m + "" + s;
+		if (day < 10) {
+			day = '0' + day;
+		}
+		if (month < 10) {
+			month = '0' + month;
+		}
+		dateNow = [dateNowUTC.getFullYear(), month, day].join('');
+		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
+	}
+
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+		// CSV file
+		csvFile = new Blob([csv], { type: "text/csv" });
+		// Download link
+		downloadLink = document.createElement("a");
+		// File name
+		downloadLink.download = filename;
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+		// Hide download link
+		downloadLink.style.display = "none";
+		// Add the link to DOM
+		document.body.appendChild(downloadLink);
+		// Click download link
+		downloadLink.click();
+	}
+
+	function addZero(i) {
+		if (i < 10) { i = "0" + i }
+		return i;
+	}
+	</script>
 </body>
 
 </html>
