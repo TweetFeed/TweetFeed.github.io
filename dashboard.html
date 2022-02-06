@@ -139,7 +139,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
-						</li>						
+						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item">
@@ -190,23 +190,26 @@
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<!-- <h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Options <button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"></h3> -->
-				<button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"><i class="fas fa-cog"></i> Options</button>
-				<br>
-				<!-- ------------------------------- -->
-				<div id="filters" class="collapse">
-					<br>
-					<div class="alert alert-secondary" style="border: 1px solid black;">
+				<div class="d-flex flex-row">
+					<div class="p-2">
+						<button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"><i class="fas fa-cog"></i> Options</button>
+					</div>
+					<div class="p-2">
 						<div class="custom-control custom-switch">
 							<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
 							<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
 						</div>
-						<div class="progress" style="height: 10px;width: 10%;">
+						<div class="progress" style="height: 10px;width: 100%;">
 							<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 								<span class="sr-only"></span>
 							</div>
 						</div>
+					</div>
+				</div>
+				<!-- ------------------------------- -->
+				<div id="filters" class="collapse">
+					<div class="alert alert-secondary" style="border: 1px solid black;">
 						<!-- ------------------------------- -->
-						<br>
 						<div>
 							<p>
 								Show last:
@@ -256,7 +259,7 @@
 											<input type="checkbox" class="form-check-input" id="checkTypemd5" name="md5" value="md5" checked>
 											<label class="form-check-label" for="checkmd5"><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</label>
 											<span id="check-md5"></span>
-										</div>									
+										</div>
 									</div>
 								</div>
 							</div>
@@ -731,7 +734,7 @@
 						if (init) {
 							init = 0;
 						}
-						
+
 						$('[id^="checkTag"]').empty();
 						countTypes('check', data_filtered);
 						countTags('checkTag', data_filtered);
