@@ -631,10 +631,6 @@
 					var tweet_url = data[i][5];
 					var value = data[i][3];
 
-					if (seen_tweets.includes(tweet_url)) {
-						continue;
-					}
-
 					if (data[i][4].trim() != "") {
 						let newArr = data[i][4].split(" ");
 						for (var j = 0; j < newArr.length; j++) {
@@ -689,13 +685,17 @@
 
 					}
 
-					seen_tweets.push(tweet_url)
-					
-					data_filtered.push(data[i])
-
 					if (isCheckedType && isCheckedTag) {
 						seen_values.push(value)
 					}
+
+					if (seen_tweets.includes(tweet_url)) {
+						continue;
+					}
+
+					seen_tweets.push(tweet_url)
+					
+					data_filtered.push(data[i])					
 
 					//if (isCheckedType && isCheckedTag) {
 					if (isCheckedType && isCheckedTag) {
@@ -753,7 +753,7 @@
 					let total = data.length - auxFor
 
 					$('#check-allTypes').empty();
-					$('#check-allTypes').text("(" + data_filtered.length + ")");
+					$('#check-allTypes').text("(" + data_filtered.length + " Tweets)");
 					//$('#check-allTags').empty();
 					//$('#check-allTags').text("(" + data_filtered.length + ")");
 				}
