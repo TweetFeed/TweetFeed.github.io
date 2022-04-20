@@ -105,6 +105,7 @@
 		/* IE 10+ */
 	}
 	</style>
+	<script defer data-domain="tweetfeed.live" src="https://plausible.io/js/plausible.js"></script>
 </head>
 
 <body id="page-top">
@@ -331,7 +332,7 @@
 													<input type="checkbox" class="form-check-input" id="checkTagAlienbot" name="Alienbot" value="Alienbot" checked>
 													<label class="form-check-label" for="checkAlienbot">#Alienbot</label>
 													<span id="checkTag-Alienbot"></span>
-												</div>												
+												</div>
 											</div> <!-- col -->
 											<div class="col-3">
 												<div class="form-check">
@@ -372,7 +373,7 @@
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagGuLoader" name="GuLoader" value="GuLoader" checked>
 													<label class="form-check-label" for="checkGuLoader">#GuLoader</label>
 													<span id="checkTag-GuLoader"></span>
-												</div>												
+												</div>
 											</div> <!-- col -->
 											<div class="col-3">
 												<div class="form-check">
@@ -414,14 +415,14 @@
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagProxyShell" name="ProxyShell" value="ProxyShell" checked>
 													<label class="form-check-label" for="checkProxyShell">#ProxyShell</label>
 													<span id="checkTag-ProxyShell"></span>
-												</div>																							
+												</div>
 											</div> <!-- col -->
 											<div class="col-3">
 												<div class="form-check">
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagQakbot" name="Qakbot" value="Qakbot" checked>
 													<label class="form-check-label" for="checkQakbot">#Qakbot</label>
 													<span id="checkTag-Qakbot"></span>
-												</div>	
+												</div>
 												<div class="form-check">
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagRaccoon" name="Raccoon" value="Raccoon" checked>
 													<label class="form-check-label" for="checkRaccoon">#Raccoon</label>
@@ -695,8 +696,8 @@
 					}
 
 					seen_tweets.push(tweet_url)
-					
-					data_filtered.push(data[i])					
+
+					data_filtered.push(data[i])
 
 					//if (isCheckedType && isCheckedTag) {
 					if (isCheckedType && isCheckedTag) {
@@ -870,7 +871,7 @@
 	function exportValuesToCSV(filename) {
 		var csv = [];
 
-		seen_values_rev=[...seen_values.reverse()];
+		seen_values_rev = [...seen_values.reverse()];
 		for (var i = 0; i < seen_values.length; i++) {
 			csv.push(seen_values[i]);
 		}
