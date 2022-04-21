@@ -179,7 +179,7 @@
 					<div class="tab-pane fade show active" id="pills-today" role="tabpanel" aria-labelledby="pills-today-tab">
 						<div class="card shadow mb-4" style="border: 1px solid black;">
 							<div id="loadingToday" style="text-align: center;">
-								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+								<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading icon">
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -210,7 +210,7 @@
 					<div class="tab-pane fade" id="pills-week" role="tabpanel" aria-labelledby="pills-ip-tab">
 						<div class="card shadow mb-4" style="border: 1px solid black;">
 							<div id="loadingWeek" style="text-align: center;">
-								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+								<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading icon">
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -241,7 +241,7 @@
 					<div class="tab-pane fade" id="pills-month" role="tabpanel" aria-labelledby="pills-sha256-tab">
 						<div class="card shadow mb-4" style="border: 1px solid black;">
 							<div id="loadingMonth" style="text-align: center;">
-								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+								<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading icon">
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -272,7 +272,7 @@
 					<div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-md5-tab">
 						<div class="card shadow mb-4" style="border: 1px solid black;">
 							<div id="loadingYear" style="text-align: center;">
-								<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+								<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading icon">
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -532,7 +532,7 @@
 				$(this.node()).find('td').eq(0).html('#' + number);
 
 				var user = $(this.node()).find('td').eq(2).text().trim();
-				$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '"><img src="pics/' + user + '.png" style="border-radius: 50%" width="40" height="40"></a>');
+				$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '"><img loading="lazy" src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="40" height="40"></a>');
 				//$(this.node()).find('td').eq(2).html('<a style="color: blue;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
 				$(this.node()).find('td').eq(2).html('<a target="_blank" class="btn btn-primary buttonHover" style="color:white;font-size: 13px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>');
 			})

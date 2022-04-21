@@ -252,7 +252,7 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo"></em></span>
 										</div>
 										<div id="loadingToday" class="text-center">
-											<img src="img/loading.svg" alt="Loading">
+											<img loading="lazy" src="img/loading.svg" alt="Loading icon">
 										</div>
 										<br>
 										<div class="container" style="text-align: center;">
@@ -319,7 +319,7 @@
 											<th>Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
 											<th>Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
 											<th><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
-											<th><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
+											<th><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
 								</table>
@@ -520,7 +520,7 @@
 								}
 								value = value.split("/")[0]
 
-								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
 								//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 
@@ -557,7 +557,7 @@
 
 							value = value.split("/")[0]
 
-							data[i].push('<a class="twitterLink" style="text-decoration: none;color:#394eff;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"></img> <i class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;color:#394eff;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"></img> <i class="fas fa-external-link-alt"></i></a>');
 
 							//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 						}
