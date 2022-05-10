@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="API endpoint to get IOCs shared by the community at Twitter">
+	<meta name="author" content="tweetfeed.live">
+	<meta name="keywords" content="api,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious" />
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	<title>API - TweetFeed</title>
+	<!-- Custom fonts for this template -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="css/table.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<link href="css/tooltip.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<!-- Microsoft -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+		.url{
+                background-color: #c8f6fd; 
+            }
+            .domain{
+                background-color: #a0dde6;  /* #34e3a4 */
+            }
+            .ip{
+                background-color: #34e3a4; 
+            }            
+            .sha256{
+                background-color: #EAC56E; 
+            }
+            .md5{
+                background-color: #ead18f; /* #ead18f */
+            }
+            @-webkit-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-moz-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @-o-keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes highlight {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .highlight td{
+                -webkit-animation: fadein 2s; /* Safari 4+ */
+                -moz-animation:    fadein 2s; /* Fx 5+ */
+                -o-animation:      fadein 2s; /* Opera 12+ */
+                animation:         fadein 2s; /* IE 10+ */
+            }
+        </style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+	<script>
+	hljs.highlightAll();
+	</script>
+	<script defer data-domain="tweetfeed.live" src="https://plausible.io/js/plausible.js"></script>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="api.html"><i class="fas fa-rss"></i> API <sup style="color: black;"><em><b>New</b></em></sup></a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="feedback.html"><i class="fas fa-comments"></i> Feedback</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> Other</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="other/spambots.html"><i class="fas fa-virus"></i> SpamBots</a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="/"><i class="fas fa-home"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle " href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+								&nbsp&nbsp&nbsp&nbsp<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
+								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content">
+				<div id="presentationSecondary">
+					<br><br><br>
+					<h1><i class="fas fa-shield-alt" style="font-size: 36px;"></i> API</h1>
+					<h2><em>API endpoint to get the info (limited to 20k results per search)</em></h2>
+				</div>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<!--<h1 style="color: #737373;font-weight: 600;">Bash commands</h1> -->
+				<h1 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h1>
+				<!-- -->
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Open and Free API to get IOCs shared by the community at Twitter</p>
+				<br>
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;font-size: 24px;" class="d-flex align-self-bottom"><b>Endpoint</b></span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command1','2')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery2"><span id="textQuery2">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span></pre>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;font-size: 24px;" class="d-flex align-self-bottom"><b>Example 1</b></span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/today/</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample1" role="button">Output example 1</a>
+				</div>
+				<br>
+				<pre id="collapseExample1" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
+[
+	{
+        "date": "2022-05-10 00:57:41",
+        "user": "ecarlesi",
+        "type": "url",
+        "value": "http://connect-mt.info",
+        "tags": [
+            "#phishing"
+        ],
+        "tweet": "https://twitter.com/ecarlesi/status/1523829594175979520"
+    },
+    {
+        "date": "2022-05-10 01:00:01",
+        "user": "dnstwist",
+        "type": "domain",
+        "value": "protonkail.com",
+        "tags": [
+            "#phishing"
+        ],
+        "tweet": "https://twitter.com/dnstwist/status/1523830184281055238"
+    },
+    {
+        "date": "2022-05-10 01:03:20",
+        "user": "AP_Zenmashi",
+        "type": "ip",
+        "value": "14.63.161.102",
+        "tags": [
+            "#phishing"
+        ],
+        "tweet": "https://twitter.com/AP_Zenmashi/status/1523831017571639296"
+    },
+    ...
+]
+				</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;font-size: 24px;" class="d-flex align-self-bottom"><b>Example 2</b></span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command3','4')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery4"><span id="textQuery4">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/week/url/phishing</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample2" role="button">Output example 2</a>
+				</div>
+				<br>
+				<pre id="collapseExample2" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
+[
+	{
+        "date": "2022-05-05 22:36:50",
+        "user": "ecarlesi",
+        "type": "url",
+        "value": "https://trustwealt.fun/de.html",
+        "tags": [
+            "#phishing"
+        ],
+        "tweet": "https://twitter.com/ecarlesi/status/1522344599167148032"
+    },
+    {
+        "date": "2022-05-05 22:54:25",
+        "user": "phishunt_io",
+        "type": "url",
+        "value": "https://netflix.williamdev.xyz/web/index.html",
+        "tags": [
+            "#phishing",
+            "#scam"
+        ],
+        "tweet": "https://twitter.com/phishunt_io/status/1522349023440654336"
+    },
+    {
+        "date": "2022-05-05 23:39:07",
+        "user": "KesaGataMe0",
+        "type": "url",
+        "value": "https://eknett.serveftp.com",
+        "tags": [
+            "#phishing"
+        ],
+        "tweet": "https://twitter.com/KesaGataMe0/status/1522360270924161024"
+    },
+    ...
+]
+				</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;font-size: 24px;" class="d-flex align-self-bottom"><b>Example 3</b></span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command4','5')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery5"><span id="textQuery5">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command4" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/week/@1ZRR4H/</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample3" role="button">Output example 3</a>
+				</div>
+				<br>
+				<pre id="collapseExample3" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
+[
+	{
+        "date": "2022-05-05 00:16:03",
+        "user": "1ZRR4H",
+        "type": "url",
+        "value": "https://medluminous.com/1psm1bi3pajr/fnh.png",
+        "tags": [],
+        "tweet": "https://twitter.com/1ZRR4H/status/1522007178239950849"
+    },
+    {
+        "date": "2022-05-05 00:16:03",
+        "user": "1ZRR4H",
+        "type": "url",
+        "value": "https://souq-in.com/12cb11n6/fnh.png",
+        "tags": [],
+        "tweet": "https://twitter.com/1ZRR4H/status/1522007178239950849"
+    },
+    {
+        "date": "2022-05-06 06:09:23",
+        "user": "1ZRR4H",
+        "type": "md5",
+        "value": "173c4085c23080d9fb19280cc507d28d",
+        "tags": [
+            "#ransomware"
+        ],
+        "tweet": "https://twitter.com/1ZRR4H/status/1522458483542704128"
+    },
+    ...
+]
+				</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;font-size: 24px;" class="d-flex align-self-bottom"><b>Example 4</b></span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command5','6')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery6"><span id="textQuery6">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command5" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/year/@malwrhunterteam/sha256</pre>
+				<!-- -->
+				<div class="d-flex justify-content-between">
+					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample4" role="button">Output example 4</a>
+				</div>
+				<br>
+				<pre id="collapseExample4" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
+[
+	{
+        "date": "2022-04-11 06:26:16",
+        "user": "malwrhunterteam",
+        "type": "sha256",
+        "value": "b1661f2f1d6dcc2169dbbd71a0b0938e7004529be8fa563c6779458b4948a7fd",
+        "tags": [],
+        "tweet": "https://twitter.com/malwrhunterteam/status/1513403038261784578"
+    },
+    {
+        "date": "2022-04-11 16:39:21",
+        "user": "malwrhunterteam",
+        "type": "sha256",
+        "value": "db08bd3296caa066c9977a9ed87a6198244315cee2f6d15ddc29de8c9272d670",
+        "tags": [],
+        "tweet": "https://twitter.com/malwrhunterteam/status/1513557324471967746"
+    },
+    {
+        "date": "2022-04-11 16:47:28",
+        "user": "malwrhunterteam",
+        "type": "sha256",
+        "value": "11240ec78f11a9f17cf5ccaf50cf7c484ccc7f6b3d0284c040b681029e255234",
+        "tags": [],
+        "tweet": "https://twitter.com/malwrhunterteam/status/1513559369488687108"
+    },
+    ...
+]
+				</pre>
+				<!-- -->
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<div class="table-responsive">
+					<table class="table display compact" width="100%" cellspacing="0" style="border:none;">
+						<colgroup>
+							<col span="1" style="width: 20%;"> <!-- Key -->
+							<col span="1" style="width: 20%;"> <!-- Required -->
+							<col span="1" style="width: 60%;"> <!-- Values -->
+						</colgroup>
+						<thead>
+							<tr>
+								<th><b>Key</b></th>
+								<th><b>Required?</b></th>
+								<th><b>Possible values</b></th>
+							</tr>
+						</thead>
+						<tr>
+							<td><b>time</b></td>
+							<td><b>Required</b></td>
+							<td>
+								<p>today <em style="color: grey;">(Today starting 00:00 UTC)</em></p>
+								<p>week <em style="color: grey;">(Last 7 days)</em></p>
+								<p>month <em style="color: grey;">(Last 30 days)</em></p>
+								<p>year <em style="color: grey;">(Last 365 days)</em></p>
+							</td>
+						</tr>
+						<tr>
+							<td><b>filter1</b></td>
+							<td>Optional</td>
+							<td>
+								<p>User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em></p>
+								<p>Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em></p>
+								<p>Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em></p>
+							</td>
+						</tr>
+						<tr>
+							<td><b>filter2</b></td>
+							<td>Optional</td>
+							<td>
+								<p>User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em></p>
+								<p>Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em></p>
+								<p>Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em></p>
+							</td>
+						</tr>
+					</table>
+				</div> <!-- table-responsive -->
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container-fluid py-1" style="color: black;">
+					<div class="row">
+						<div class="col-md-4 text-left"><span class="text-decoration-none">By Daniel López</span></div>
+						<div class="col-md-4 text-center"></div>
+						<div class="col-md-4 text-right">20211011</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbspTwitter</a></div>
+						<div class="col-md-4 text-center"></div>
+						<div class="col-md-4 text-right">TweetFeed</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
+						<div class="col-md-4 text-center">All credits to the infosec Community sharing knowledge at Twitter</div>
+						<div class="col-md-4 text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
+		<!-- End of Page Wrapper -->
+		<!-- Scroll to Top Button-->
+		<!-- Logout Modal-->
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+		<!-- Page level plugins -->
+		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<!-- Export -->
+		<script src="js/demo/datatables-demo.js"></script>
+		<!-- Page level custom scripts -->
+		<script type="text/javascript" src="js/date.js"></script>
+		<script>
+		function codeClipboard() {
+			/* Get the text field */
+			var text = $(".tab-pane.active code").text()
+
+			var queryTextButton = $("#textQuery1").text()
+
+			/* Copy the text inside the text field */
+			navigator.clipboard.writeText(text);
+
+			$("#iconQuery1").removeClass("far fa-clipboard");
+			$("#iconQuery1").addClass("fas fa-check");
+			$("#textQuery1").text("Copied! ");
+			$("#buttonQuery1").css("background-color", "green");
+			setTimeout(
+				function() {
+					$("#iconQuery1").removeClass("fas fa-check");
+					$("#iconQuery1").addClass("far fa-clipboard");
+					$("#textQuery1").text(queryTextButton);
+					$("#buttonQuery1").css("background-color", "#4682B4");
+				}, 1000);
+		}
+
+		function changeCopyButton(number) {
+			$("#textQuery1").text("Copy #" + number + " to clipboard ");
+		}
+		</script>
+		<script>
+		$(function() {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+		</script>
+		<script>
+		function commandClipboard(element, number) {
+			/* Get the text field */
+			var text = $(element).text()
+
+			var queryTextButton = $("#textQuery" + number).text()
+
+			/* Copy the text inside the text field */
+			navigator.clipboard.writeText(text);
+
+			$("#iconQuery" + number).removeClass("far fa-clipboard");
+			$("#iconQuery" + number).addClass("fas fa-check");
+			$("#textQuery" + number).text("Copied! ");
+			$("#buttonQuery" + number).css("background-color", "green");
+			setTimeout(
+				function() {
+					$("#iconQuery" + number).removeClass("fas fa-check");
+					$("#iconQuery" + number).addClass("far fa-clipboard");
+					$("#textQuery" + number).text(queryTextButton);
+					$("#buttonQuery" + number).css("background-color", "#4682B4");
+				}, 1000);
+		}
+		</script>
+</body>
+
+</html>
