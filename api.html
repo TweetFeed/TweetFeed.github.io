@@ -111,7 +111,7 @@
 							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search in database</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" href="api.html"><i class="fas fa-rss"></i> API <sup style="color: black;"><em><b>New</b></em></sup></a>
+							<a class="nav-link active" href="api.html"><i class="fas fa-rss"></i> API <sup style="color: black;"><em><b>Beta</b></em></sup></a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -166,190 +166,71 @@
 				<div id="presentationSecondary">
 					<br><br><br>
 					<h1><i class="fas fa-rss" style="font-size: 36px;"></i> API</h1>
-					<h2><em>TweetFeed.live API (limited to 20k results per search)</em></h2>
+					<h2><em>TweetFeed.live API (limited to 10k results per search)</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<!--<h1 style="color: #737373;font-weight: 600;">Bash commands</h1> -->
-				<h1 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h1>
+				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h3>
 				<!-- -->
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Open and Free API to get IOCs shared by the community at Twitter.</p>
-				<hr> <!-- DIVIDER -->
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Endpoint</b></span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command1','2')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery2"><span id="textQuery2">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span></pre>
-				<hr> <!-- DIVIDER -->
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 1</b></span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/today/</pre>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;"><b>Open and Free</b> API to get IOCs shared by the community at Twitter.</p>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i onclick="copyClipboard('https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}')" class="far fa-copy"></i></pre>
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Some examples</h3>
 				<!-- -->
-				<div class="d-flex justify-content-between">
-					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample1" role="button">Output example 1</a>
-				</div>
+				<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 1: IOCs posted today</b></span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today')" class="far fa-copy"></i></pre>
+				<!-- -->
 				<br>
-				<pre id="collapseExample1" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 2: URLs posted today with phishing tag</b></span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today/phishing/url')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<br>
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 3: IPs posted in the last 365 days with CobaltStrike tag</b></span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/year/cobaltstrike/ip <i onclick="copyClipboard('https://api.tweetfeed.live/v1/year/cobaltstrike/sha256')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<br>
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 4: SHA256 hashes posted by <a style="font-size: 16px;color: #00acee;" target="_blank" href="https://twitter.com/malwrhunterteam">@malwrhunterteam</a> in the last month</b></span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/week/@malwrhunterteam/sha256 <i onclick="copyClipboard('https://api.tweetfeed.live/v1/week/@malwrhunterteam/sha256')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Output example</h3>
+				<pre style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="p-2">
 [
 	{
-        "date": "2022-05-10 00:57:41",
-        "user": "ecarlesi",
-        "type": "url",
-        "value": "http://connect-mt.info",
-        "tags": [
-            "#phishing"
-        ],
-        "tweet": "https://twitter.com/ecarlesi/status/1523829594175979520"
-    },
-    {
-        "date": "2022-05-10 01:00:01",
-        "user": "dnstwist",
-        "type": "domain",
-        "value": "protonkail.com",
-        "tags": [
-            "#phishing"
-        ],
-        "tweet": "https://twitter.com/dnstwist/status/1523830184281055238"
-    },
-    {
-        "date": "2022-05-10 01:03:20",
-        "user": "AP_Zenmashi",
+        "date": "2022-05-11 19:39:06",
+        "user": "Unit42_Intel",
         "type": "ip",
-        "value": "14.63.161.102",
+        "value": "138.124.183.147",
         "tags": [
-            "#phishing"
+            "#CobaltStrike",
+            "#IcedID"
         ],
-        "tweet": "https://twitter.com/AP_Zenmashi/status/1523831017571639296"
+        "tweet": "https://twitter.com/Unit42_Intel/status/1524474195471745028"
     },
-    ...
-]
-				</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 2</b></span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command3','4')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery4"><span id="textQuery4">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/week/url/phishing</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample2" role="button">Output example 2</a>
-				</div>
-				<br>
-				<pre id="collapseExample2" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
-[
-	{
-        "date": "2022-05-05 22:36:50",
+    {
+        "date": "2022-05-11 19:43:48",
+        "user": "GootLoaderSites",
+        "type": "url",
+        "value": "https://www.kipperfamily.co.uk/forum.php",
+        "tags": [
+            "#GootLoader"
+        ],
+        "tweet": "https://twitter.com/GootLoaderSites/status/1524475379997675522"
+    },
+    {
+        "date": "2022-05-11 20:00:44",
         "user": "ecarlesi",
         "type": "url",
-        "value": "https://trustwealt.fun/de.html",
+        "value": "https://tinpan.top/bancocuscatlan/",
         "tags": [
             "#phishing"
         ],
-        "tweet": "https://twitter.com/ecarlesi/status/1522344599167148032"
-    },
-    {
-        "date": "2022-05-05 22:54:25",
-        "user": "phishunt_io",
-        "type": "url",
-        "value": "https://netflix.williamdev.xyz/web/index.html",
-        "tags": [
-            "#phishing",
-            "#scam"
-        ],
-        "tweet": "https://twitter.com/phishunt_io/status/1522349023440654336"
-    },
-    {
-        "date": "2022-05-05 23:39:07",
-        "user": "KesaGataMe0",
-        "type": "url",
-        "value": "https://eknett.serveftp.com",
-        "tags": [
-            "#phishing"
-        ],
-        "tweet": "https://twitter.com/KesaGataMe0/status/1522360270924161024"
-    },
-    ...
-]
-				</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 3</b></span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command4','5')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery5"><span id="textQuery5">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command4" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/week/@1ZRR4H/</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample3" role="button">Output example 3</a>
-				</div>
-				<br>
-				<pre id="collapseExample3" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
-[
-	{
-        "date": "2022-05-05 00:16:03",
-        "user": "1ZRR4H",
-        "type": "url",
-        "value": "https://medluminous.com/1psm1bi3pajr/fnh.png",
-        "tags": [],
-        "tweet": "https://twitter.com/1ZRR4H/status/1522007178239950849"
-    },
-    {
-        "date": "2022-05-05 00:16:03",
-        "user": "1ZRR4H",
-        "type": "url",
-        "value": "https://souq-in.com/12cb11n6/fnh.png",
-        "tags": [],
-        "tweet": "https://twitter.com/1ZRR4H/status/1522007178239950849"
-    },
-    {
-        "date": "2022-05-06 06:09:23",
-        "user": "1ZRR4H",
-        "type": "md5",
-        "value": "173c4085c23080d9fb19280cc507d28d",
-        "tags": [
-            "#ransomware"
-        ],
-        "tweet": "https://twitter.com/1ZRR4H/status/1522458483542704128"
-    },
-    ...
-]
-				</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;font-size: 18px;" class="d-flex align-self-bottom"><b>Example 4</b></span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command5','6')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery6"><span id="textQuery6">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command5" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/year/@malwrhunterteam/sha256</pre>
-				<!-- -->
-				<div class="d-flex justify-content-between">
-					<a style="align-self: flex-end;font-size: 14px;" class="btn btn-success d-flex align-self-bottom" data-toggle="collapse" href="#collapseExample4" role="button">Output example 4</a>
-				</div>
-				<br>
-				<pre id="collapseExample4" style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="collapse p-2">
-[
-	{
-        "date": "2022-04-11 06:26:16",
-        "user": "malwrhunterteam",
-        "type": "sha256",
-        "value": "b1661f2f1d6dcc2169dbbd71a0b0938e7004529be8fa563c6779458b4948a7fd",
-        "tags": [],
-        "tweet": "https://twitter.com/malwrhunterteam/status/1513403038261784578"
-    },
-    {
-        "date": "2022-04-11 16:39:21",
-        "user": "malwrhunterteam",
-        "type": "sha256",
-        "value": "db08bd3296caa066c9977a9ed87a6198244315cee2f6d15ddc29de8c9272d670",
-        "tags": [],
-        "tweet": "https://twitter.com/malwrhunterteam/status/1513557324471967746"
-    },
-    {
-        "date": "2022-04-11 16:47:28",
-        "user": "malwrhunterteam",
-        "type": "sha256",
-        "value": "11240ec78f11a9f17cf5ccaf50cf7c484ccc7f6b3d0284c040b681029e255234",
-        "tags": [],
-        "tweet": "https://twitter.com/malwrhunterteam/status/1513559369488687108"
+        "tweet": "https://twitter.com/ecarlesi/status/1524479640584466432"
     },
     ...
 ]
@@ -494,6 +375,25 @@
 					$("#iconQuery" + number).addClass("far fa-clipboard");
 					$("#textQuery" + number).text(queryTextButton);
 					$("#buttonQuery" + number).css("background-color", "#4682B4");
+				}, 1000);
+		}
+		</script>
+		<script>
+		function copyClipboard(value) {
+			/* Get the text field */
+			navigator.clipboard.writeText(value);
+
+			//onclick="copyClipboard(\'' + value + '\')"
+			var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
+
+			$(aux).removeClass("far fa-copy");
+			$(aux).addClass("fas fa-check");
+			$(aux).css("color", "green");
+			setTimeout(
+				function() {
+					$(aux).removeClass("fas fa-check");
+					$(aux).addClass("far fa-copy");
+					$(aux).css("color", "");
 				}, 1000);
 		}
 		</script>
