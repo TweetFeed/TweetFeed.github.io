@@ -176,6 +176,58 @@
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i onclick="copyClipboard('https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered" width="100%" cellspacing="0" style="border:none;">
+						<colgroup>
+							<col span="1" style="width: 20%;"> <!-- Key -->
+							<col span="1" style="width: 20%;"> <!-- Required -->
+							<col span="1" style="width: 60%;"> <!-- Values -->
+						</colgroup>
+						<thead>
+							<tr>
+								<th><b>Key</b></th>
+								<th><b>Required?</b></th>
+								<th><b>Possible values</b></th>
+							</tr>
+						</thead>
+						<tr>
+							<td><b>time</b></td>
+							<td><b>Required</b></td>
+							<td>
+								today <em style="color: grey;">(Today starting 00:00 UTC)</em>
+								<br>
+								week <em style="color: grey;">(Last 7 days)</em>
+								<br>
+								month <em style="color: grey;">(Last 30 days)</em>
+								<br>
+								year <em style="color: grey;">(Last 365 days)</em>
+							</td>
+						</tr>
+						<tr>
+							<td><b>filter1</b></td>
+							<td>Optional</td>
+							<td>
+								User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em>
+								<br>
+								Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em>
+								<br>
+								Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em>
+							</td>
+						</tr>
+						<tr>
+							<td><b>filter2</b></td>
+							<td>Optional</td>
+							<td>
+								User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em>
+								<br>
+								Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em>
+								<br>
+								Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em>
+							</td>
+						</tr>
+					</table>
+				</div> <!-- table-responsive -->
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Some examples</h3>
 				<!-- -->
@@ -236,51 +288,6 @@
 ]
 				</pre>
 				<!-- -->
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<div class="table-responsive">
-					<table class="table display compact" width="100%" cellspacing="0" style="border:none;">
-						<colgroup>
-							<col span="1" style="width: 20%;"> <!-- Key -->
-							<col span="1" style="width: 20%;"> <!-- Required -->
-							<col span="1" style="width: 60%;"> <!-- Values -->
-						</colgroup>
-						<thead>
-							<tr>
-								<th><b>Key</b></th>
-								<th><b>Required?</b></th>
-								<th><b>Possible values</b></th>
-							</tr>
-						</thead>
-						<tr>
-							<td><b>time</b></td>
-							<td><b>Required</b></td>
-							<td>
-								<p>today <em style="color: grey;">(Today starting 00:00 UTC)</em></p>
-								<p>week <em style="color: grey;">(Last 7 days)</em></p>
-								<p>month <em style="color: grey;">(Last 30 days)</em></p>
-								<p>year <em style="color: grey;">(Last 365 days)</em></p>
-							</td>
-						</tr>
-						<tr>
-							<td><b>filter1</b></td>
-							<td>Optional</td>
-							<td>
-								<p>User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em></p>
-								<p>Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em></p>
-								<p>Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em></p>
-							</td>
-						</tr>
-						<tr>
-							<td><b>filter2</b></td>
-							<td>Optional</td>
-							<td>
-								<p>User <em style="color: grey;">(@malwrhunterteam / @1ZRR4H / @BushidoToken ...)</em></p>
-								<p>Type <em style="color: grey;">(url / domain / ip / sha256 / md5)</em></p>
-								<p>Tag <em style="color: grey;">(phishing / ransomware / CobaltStrike ...)</em></p>
-							</td>
-						</tr>
-					</table>
-				</div> <!-- table-responsive -->
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
