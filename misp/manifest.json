@@ -1,4 +1,27 @@
 {
+    "64a18d1c-8a4a-40d7-9b1c-44ca75346d3f": {
+        "info": "TweetFeed IOCs - 2022-05-10",
+        "published": "true",
+        "date": "2022-05-10",
+        "threat_level_id": "1",
+        "analysis": "1",
+        "distribution": "3",
+        "uuid": "64a18d1c-8a4a-40d7-9b1c-44ca75346d3f",
+        "Tag": [
+            {
+                "colour": "#1DA1F2",
+                "name": "TweetFeed"
+            },
+            {
+                "colour": "#004646",
+                "name": "type:OSINT"
+            },
+            {
+                "colour": "#fffff",
+                "name": "tlp:white"
+            }
+        ]
+    },
     "1e175849-2d05-4f67-8b5c-2b5837b9d26b": {
         "info": "TweetFeed IOCs - 2022-05-11",
         "published": "true",
