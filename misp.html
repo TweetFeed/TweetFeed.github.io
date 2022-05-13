@@ -1,33 +1,37 @@
-<!DOCTYPE html>
 <html>
 <body>
+  <script>
+  (async () => {
+    const response = await fetch('https://api.github.com/repos/TweetFeed/TweetFeed.github.io/contents/misp/');
+    const data = await response.json();
 
-<h2>Access a JavaScript Object</h2>
-<p id="demo"></p>
+    let htmlString = '<head><title>Index of /misp</title></head><body><h1>Index of /misp</h1><ul>';
 
-<script>
-(async () => {
-        const response = await fetch('https://api.github.com/repos/TweetFeed/TweetFeed.github.io/contents/misp/');
-        const data = await response.json();
+    for (let file of data) {
+      if (file.name != "index.html") {
 
-        let htmlString = '<head><title>Index of /misp</title></head><body><h1>Index of /misp</h1><ul>';
-        
-        for (let file of data) {
-          if (file.name != "index.html" &&  file.name != "manifest.json"){
-            
-            const response_row = await fetch('https://tweetfeed.live/' + file.path);
-            const data_row = await response_row.json();
-            console.log(data_row.Event.date)
-            
-            htmlString += `<li><a href="${file.path}">${file.name}</a> | ${data_row.Event.date} | ${nFormatter(file.size,2)} </li>`;
-          }
+        const response_row = await fetch('https://tweetfeed.live/' + file.path);
+        const data_row = await response_row.json();
+
+        if (file.name != "manifest.json") {
+          htmlString += `<li><a href="${file.path}">${file.name}</a> | ${data_row.Event.date} | ${nFormatter(file.size,2)} </li>`;
+
+        } else {
+          var today = new Date();
+          var dd = String(today.getDate()).padStart(2, '0');
+          var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          var yyyy = today.getFullYear();
+          today = yyyy + '-' + mm + '-' + dd;
+          htmlString += `<li><a href="${file.path}">${file.name}</a> | ${today} | ${nFormatter(file.size,2)} </li>`;
         }
+      }
+    }
 
-        htmlString += '</ul></body>';
-        document.getElementsByTagName('body')[0].innerHTML = htmlString;
-      })()
-</script>
-<script>
+    htmlString += '</ul></body>';
+    document.getElementsByTagName('body')[0].innerHTML = htmlString;
+  })()
+  </script>
+  <script>
   function nFormatter(num, digits) {
     const lookup = [
       { value: 1, symbol: "" },
@@ -46,10 +50,11 @@
   }
   </script>
   <script>
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
   </script>
 
-</body>
+  <body>
+
 </html>
