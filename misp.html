@@ -8,9 +8,9 @@
         let htmlString = '<head><title>Index of /misp</title></head><body><h1>Index of /misp</h1><ul>';
         
         for (let file of data) {
-          if (${file.name} != "index.html"){
+          if (file.name != "index.html"){
             htmlString += `<li><a href="${file.path}">${file.name}</a></li>`;
-          }          
+          }
         }
 
         htmlString += '</ul></body>';
