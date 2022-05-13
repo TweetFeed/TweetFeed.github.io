@@ -1,0 +1,48 @@
+{
+    "1e175849-2d05-4f67-8b5c-2b5837b9d26b": {
+        "info": "TweetFeed IOCs - 2022-05-11",
+        "published": "true",
+        "date": "2022-05-11",
+        "threat_level_id": "1",
+        "analysis": "1",
+        "distribution": "3",
+        "uuid": "1e175849-2d05-4f67-8b5c-2b5837b9d26b",
+        "Tag": [
+            {
+                "colour": "#1DA1F2",
+                "name": "TweetFeed"
+            },
+            {
+                "colour": "#004646",
+                "name": "type:OSINT"
+            },
+            {
+                "colour": "#fffff",
+                "name": "tlp:white"
+            }
+        ]
+    },
+    "13add7cb-f36d-4996-873e-c794db69d39f": {
+        "info": "TweetFeed IOCs - 2022-05-12",
+        "published": "true",
+        "date": "2022-05-12",
+        "threat_level_id": "1",
+        "analysis": "1",
+        "distribution": "3",
+        "uuid": "13add7cb-f36d-4996-873e-c794db69d39f",
+        "Tag": [
+            {
+                "colour": "#1DA1F2",
+                "name": "TweetFeed"
+            },
+            {
+                "colour": "#004646",
+                "name": "type:OSINT"
+            },
+            {
+                "colour": "#fffff",
+                "name": "tlp:white"
+            }
+        ]
+    }
+}
