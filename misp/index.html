@@ -5,16 +5,17 @@
     const response = await fetch('https://api.github.com/repos/TweetFeed/TweetFeed.github.io/contents/misp/');
     const data = await response.json();
 
-    let htmlString = '<head><title>Index of /misp</title></head><body><h1>Index of /misp/</h1><ul>';
+    let htmlString = '<head><title>Index of /misp/</title></head><body><h1>Index of /misp/</h1><ul>';
 
     for (let file of data) {
-      if (file.name != "index.html") {
 
+      if (file.name != "index.html") {
+        
         const response_row = await fetch('https://tweetfeed.live/' + file.path);
         const data_row = await response_row.json();
 
         if (file.name != "manifest.json") {
-          htmlString += `<li><a href="${file.path}">${file.name}</a> | ${data_row.Event.date} | ${nFormatter(file.size,2)} </li>`;
+          htmlString += `<li><a href="https://tweetfeed.live/${file.path}">${file.name}</a> | ${data_row.Event.date} | ${nFormatter(file.size,2)} </li>`;
 
         } else {
           var today = new Date();
@@ -22,7 +23,7 @@
           var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
           var yyyy = today.getFullYear();
           today = yyyy + '-' + mm + '-' + dd;
-          htmlString += `<li><a href="${file.path}">${file.name}</a> | ${today} | ${nFormatter(file.size,2)} </li>`;
+          htmlString += `<li><a href="https://tweetfeed.live/${file.path}">${file.name}</a> | ${today} | ${nFormatter(file.size,2)} </li>`;
         }
       }
     }
