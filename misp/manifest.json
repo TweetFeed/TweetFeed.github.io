@@ -138,8 +138,6 @@
                 "name": "tlp:white"
             }
         ]
-<<<<<<< HEAD
-=======
     },
     "db6ad0c2-a7e5-4a21-811b-ebb894ee18f8": {
         "info": "TweetFeed IOCs - 2022-05-16",
@@ -196,6 +194,5 @@
                 "name": "tlp:white"
             }
         ]
->>>>>>> 541ecf868deb818199c73f1a93fb9926de98c658
     }
 }
