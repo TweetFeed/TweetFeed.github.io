@@ -74,7 +74,6 @@
 	<script>
 	hljs.highlightAll();
 	</script>
-	<script defer data-domain="tweetfeed.live" src="https://plausible.io/js/plausible.js"></script>
 </head>
 
 <body id="page-top">
@@ -317,98 +316,118 @@
 			</footer>
 			<!-- End of Footer -->
 		</div>
-		<!-- End of Content Wrapper -->
-		<!-- End of Page Wrapper -->
-		<!-- Scroll to Top Button-->
-		<!-- Logout Modal-->
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Export -->
-		<script src="js/demo/datatables-demo.js"></script>
-		<!-- Page level custom scripts -->
-		<script type="text/javascript" src="js/date.js"></script>
-		<script>
-		function codeClipboard() {
-			/* Get the text field */
-			var text = $(".tab-pane.active code").text()
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script type="text/javascript" src="js/date.js"></script>
+	<script>
+	function codeClipboard() {
+		/* Get the text field */
+		var text = $(".tab-pane.active code").text()
 
-			var queryTextButton = $("#textQuery1").text()
+		var queryTextButton = $("#textQuery1").text()
 
-			/* Copy the text inside the text field */
-			navigator.clipboard.writeText(text);
+		/* Copy the text inside the text field */
+		navigator.clipboard.writeText(text);
 
-			$("#iconQuery1").removeClass("far fa-clipboard");
-			$("#iconQuery1").addClass("fas fa-check");
-			$("#textQuery1").text("Copied! ");
-			$("#buttonQuery1").css("background-color", "green");
-			setTimeout(
-				function() {
-					$("#iconQuery1").removeClass("fas fa-check");
-					$("#iconQuery1").addClass("far fa-clipboard");
-					$("#textQuery1").text(queryTextButton);
-					$("#buttonQuery1").css("background-color", "#4682B4");
-				}, 1000);
-		}
+		$("#iconQuery1").removeClass("far fa-clipboard");
+		$("#iconQuery1").addClass("fas fa-check");
+		$("#textQuery1").text("Copied! ");
+		$("#buttonQuery1").css("background-color", "green");
+		setTimeout(
+			function() {
+				$("#iconQuery1").removeClass("fas fa-check");
+				$("#iconQuery1").addClass("far fa-clipboard");
+				$("#textQuery1").text(queryTextButton);
+				$("#buttonQuery1").css("background-color", "#4682B4");
+			}, 1000);
+	}
 
-		function changeCopyButton(number) {
-			$("#textQuery1").text("Copy #" + number + " to clipboard ");
-		}
-		</script>
-		<script>
-		$(function() {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
-		</script>
-		<script>
-		function commandClipboard(element, number) {
-			/* Get the text field */
-			var text = $(element).text()
+	function changeCopyButton(number) {
+		$("#textQuery1").text("Copy #" + number + " to clipboard ");
+	}
+	</script>
+	<script>
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
+	<script>
+	function commandClipboard(element, number) {
+		/* Get the text field */
+		var text = $(element).text()
 
-			var queryTextButton = $("#textQuery" + number).text()
+		var queryTextButton = $("#textQuery" + number).text()
 
-			/* Copy the text inside the text field */
-			navigator.clipboard.writeText(text);
+		/* Copy the text inside the text field */
+		navigator.clipboard.writeText(text);
 
-			$("#iconQuery" + number).removeClass("far fa-clipboard");
-			$("#iconQuery" + number).addClass("fas fa-check");
-			$("#textQuery" + number).text("Copied! ");
-			$("#buttonQuery" + number).css("background-color", "green");
-			setTimeout(
-				function() {
-					$("#iconQuery" + number).removeClass("fas fa-check");
-					$("#iconQuery" + number).addClass("far fa-clipboard");
-					$("#textQuery" + number).text(queryTextButton);
-					$("#buttonQuery" + number).css("background-color", "#4682B4");
-				}, 1000);
-		}
-		</script>
-		<script>
-		function copyClipboard(value) {
-			/* Get the text field */
-			navigator.clipboard.writeText(value);
+		$("#iconQuery" + number).removeClass("far fa-clipboard");
+		$("#iconQuery" + number).addClass("fas fa-check");
+		$("#textQuery" + number).text("Copied! ");
+		$("#buttonQuery" + number).css("background-color", "green");
+		setTimeout(
+			function() {
+				$("#iconQuery" + number).removeClass("fas fa-check");
+				$("#iconQuery" + number).addClass("far fa-clipboard");
+				$("#textQuery" + number).text(queryTextButton);
+				$("#buttonQuery" + number).css("background-color", "#4682B4");
+			}, 1000);
+	}
+	</script>
+	<script>
+	function copyClipboard(value) {
+		/* Get the text field */
+		navigator.clipboard.writeText(value);
 
-			//onclick="copyClipboard(\'' + value + '\')"
-			var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
+		//onclick="copyClipboard(\'' + value + '\')"
+		var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
 
-			$(aux).removeClass("far fa-copy");
-			$(aux).addClass("fas fa-check");
-			$(aux).css("color", "green");
-			setTimeout(
-				function() {
-					$(aux).removeClass("fas fa-check");
-					$(aux).addClass("far fa-copy");
-					$(aux).css("color", "");
-				}, 1000);
-		}
-		</script>
+		$(aux).removeClass("far fa-copy");
+		$(aux).addClass("fas fa-check");
+		$(aux).css("color", "green");
+		setTimeout(
+			function() {
+				$(aux).removeClass("fas fa-check");
+				$(aux).addClass("far fa-copy");
+				$(aux).css("color", "");
+			}, 1000);
+	}
+	</script>
+	<!-- Matomo -->
+	<script>
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_paq.push(['setTrackerUrl', u + 'matomo.php']);
+		_paq.push(['setSiteId', '1']);
+		var d = document,
+			g = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parentNode.insertBefore(g, s);
+	})();
+	</script>
+	<!-- End Matomo Code -->
 </body>
 
 </html>

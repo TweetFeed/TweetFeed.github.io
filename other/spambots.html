@@ -104,7 +104,6 @@
 		/* IE 10+ */
 	}
 	</style>
-	<script defer data-domain="tweetfeed.live" src="https://plausible.io/js/plausible.js"></script>
 </head>
 
 <body id="page-top">
@@ -240,133 +239,153 @@
 			</footer>
 			<!-- End of Footer -->
 		</div>
-		<!-- End of Content Wrapper -->
-		<!-- End of Page Wrapper -->
-		<!-- Scroll to Top Button-->
-		<!-- Logout Modal-->
-		<!-- Bootstrap core JavaScript-->
-		<script src="../vendor/jquery/jquery.min.js"></script>
-		<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-		<!-- Custom scripts for all pages-->
-		<script src="../js/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Export -->
-		<script src="../js/demo/datatables-demo.js"></script>
-		<!-- Page level custom scripts -->
-		<script>
-		$(function() {
-			let autorefresh = 1;
-			let init = 1;
-			loadData();
-			progressBar();
-			var timerAux = setInterval(timerCycle, 6000);
-			let p_lines = new Array();
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="../js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="../js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	$(function() {
+		let autorefresh = 1;
+		let init = 1;
+		loadData();
+		progressBar();
+		var timerAux = setInterval(timerCycle, 6000);
+		let p_lines = new Array();
 
-			$('#customSwitch1').click(function() {
-				if (autorefresh) {
-					// Disabled
-					autorefresh = 0;
-					$("[for='customSwitch1']").css("color", "gray");
-					clearInterval(timerAux);
-				} else {
-					// Enabled
-					autorefresh = 1;
-					$("[for='customSwitch1']").css("color", "blue");
-					init = 1;
-					progressBar();
-					loadData();
-					timerAux = setInterval(timerCycle, 6000);
-				}
-			})
-
-			function timerCycle() {
-				if (autorefresh) {
-					loadData();
-					progressBar();
-				}
-			}
-
-			function progressBar() {
-				var i = 0;
-				var downloadTimer = setInterval(function() {
-					if (i >= 100) {
-						clearInterval(downloadTimer);
-					}
-					if (autorefresh == 0) {
-						i = 0;
-						clearInterval(downloadTimer);
-						//document.getElementById("progressBar").value = 0;
-						$('.progress-bar').css('width', i + '%');
-					} else {
-						//document.getElementById("progressBar").value = 5 - timeleft;
-						$('.progress-bar').css('width', i + '%');
-					}
-					i = i + 20;
-				}, 1000);
-			}
-
-			function animation() {
-				$('.hola').hide();
-				$('.hola').fadeIn(1000, "linear");
-			}
-
-			function loadData() {
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/archive/main/scambots.dat', function(response) {
-
-					var lines = response.split("\n");
-
-					comp_lines = lines.toString();
-					comp_p_lines = p_lines.toString();
-
-					if (comp_lines !== comp_p_lines || init == 1) {
-
-						$( ".hola" ).empty();
-
-						count_row = 0;
-						count_column = 0;
-						n_cols = 4;
-
-						for (var i = 0; i < lines.length; i++) {
-
-							if (i % n_cols === 0) {
-								count_row++
-								myvar_row = '<div class="row row_' + count_row + '">' +
-									'</div> <!-- row -->'
-
-								$('.hola').append(myvar_row);
-							}
-							var myvar_col = '<div class="col-3">' +
-								'<blockquote class="twitter-tweet">' +
-								'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
-								'</blockquote>' +
-								'</div>'
-
-							count_column++
-							$('.row_' + count_row).append(myvar_col);
-
-							if (i === lines.length - 1) {
-								animation();
-								$("#loadingSpambots").hide();
-							}
-						}
-
-						p_lines = [...lines];
-						twttr.widgets.load()
-
-						if (init) {
-							init = 0;
-						}
-					}
-
-				})
+		$('#customSwitch1').click(function() {
+			if (autorefresh) {
+				// Disabled
+				autorefresh = 0;
+				$("[for='customSwitch1']").css("color", "gray");
+				clearInterval(timerAux);
+			} else {
+				// Enabled
+				autorefresh = 1;
+				$("[for='customSwitch1']").css("color", "blue");
+				init = 1;
+				progressBar();
+				loadData();
+				timerAux = setInterval(timerCycle, 6000);
 			}
 		})
-		</script>
-		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+		function timerCycle() {
+			if (autorefresh) {
+				loadData();
+				progressBar();
+			}
+		}
+
+		function progressBar() {
+			var i = 0;
+			var downloadTimer = setInterval(function() {
+				if (i >= 100) {
+					clearInterval(downloadTimer);
+				}
+				if (autorefresh == 0) {
+					i = 0;
+					clearInterval(downloadTimer);
+					//document.getElementById("progressBar").value = 0;
+					$('.progress-bar').css('width', i + '%');
+				} else {
+					//document.getElementById("progressBar").value = 5 - timeleft;
+					$('.progress-bar').css('width', i + '%');
+				}
+				i = i + 20;
+			}, 1000);
+		}
+
+		function animation() {
+			$('.hola').hide();
+			$('.hola').fadeIn(1000, "linear");
+		}
+
+		function loadData() {
+			$.get('https://raw.githubusercontent.com/0xDanielLopez/archive/main/scambots.dat', function(response) {
+
+				var lines = response.split("\n");
+
+				comp_lines = lines.toString();
+				comp_p_lines = p_lines.toString();
+
+				if (comp_lines !== comp_p_lines || init == 1) {
+
+					$(".hola").empty();
+
+					count_row = 0;
+					count_column = 0;
+					n_cols = 4;
+
+					for (var i = 0; i < lines.length; i++) {
+
+						if (i % n_cols === 0) {
+							count_row++
+							myvar_row = '<div class="row row_' + count_row + '">' +
+								'</div> <!-- row -->'
+
+							$('.hola').append(myvar_row);
+						}
+						var myvar_col = '<div class="col-3">' +
+							'<blockquote class="twitter-tweet">' +
+							'<a href="https://twitter.com/xxx/status/' + lines[i] + '"></a>' +
+							'</blockquote>' +
+							'</div>'
+
+						count_column++
+						$('.row_' + count_row).append(myvar_col);
+
+						if (i === lines.length - 1) {
+							animation();
+							$("#loadingSpambots").hide();
+						}
+					}
+
+					p_lines = [...lines];
+					twttr.widgets.load()
+
+					if (init) {
+						init = 0;
+					}
+				}
+
+			})
+		}
+	})
+	</script>
+	<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	<!-- Matomo -->
+	<script>
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_paq.push(['setTrackerUrl', u + 'matomo.php']);
+		_paq.push(['setSiteId', '1']);
+		var d = document,
+			g = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parentNode.insertBefore(g, s);
+	})();
+	</script>
+	<!-- End Matomo Code -->
 </body>
 
 </html>

@@ -77,7 +77,6 @@
 				transition: opacity 300ms linear !important;
 			}
         </style>
-	<script defer data-domain="tweetfeed.live" src="https://plausible.io/js/plausible.js"></script>
 </head>
 
 <body id="page-top">
@@ -337,393 +336,413 @@
 			</footer>
 			<!-- End of Footer -->
 		</div>
-		<!-- End of Content Wrapper -->
-		<!-- End of Page Wrapper -->
-		<!-- Scroll to Top Button-->
-		<!-- Logout Modal-->
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Export -->
-		<script src="js/demo/datatables-demo.js"></script>
-		<!-- Page level custom scripts -->
-		<script type="text/javascript" src="js/date.js"></script>
-		<script src="vendor/chart.js/Chart.min.js"></script>
-		<script>
-		let tableUsersToday = $('#dataTableUsersToday').DataTable();
-		let tableUsersWeek = $('#dataTableUsersWeek').DataTable();
-		let tableUsersMonth = $('#dataTableUsersMonth').DataTable();
-		let tableUsersYear = $('#dataTableUsersYear').DataTable();
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script type="text/javascript" src="js/date.js"></script>
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<script>
+	let tableUsersToday = $('#dataTableUsersToday').DataTable();
+	let tableUsersWeek = $('#dataTableUsersWeek').DataTable();
+	let tableUsersMonth = $('#dataTableUsersMonth').DataTable();
+	let tableUsersYear = $('#dataTableUsersYear').DataTable();
 
-		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-		Chart.defaults.global.defaultFontColor = '#858796';
-		$(function() {
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
-				let data = csvJSON(response);
-				var last_date = data.at(-1)[0];
-				var first_date = data.at(1)[0];
-				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				$(".lastDateTodayFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateTodayTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
+	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+	Chart.defaults.global.defaultFontColor = '#858796';
+	$(function() {
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+			let data = csvJSON(response);
+			var last_date = data.at(-1)[0];
+			var first_date = data.at(1)[0];
+			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			$(".lastDateTodayFrom").fadeOut(function() {
+				$(this).text("From: " + date2).fadeIn(2000);
+			});
+			$(".lastDateTodayTo").fadeOut(function() {
+				$(this).text("To: " + date1).fadeIn(2000);
+			});
 
-				$("#lastDateToday").show();
-				$("#loadingToday").hide();
+			$("#lastDateToday").show();
+			$("#loadingToday").hide();
 
-				//$(".lastDateTodayFrom").text("From: " + date2);
-				//$(".lastDateTodayTo").text("To: " + date1);
+			//$(".lastDateTodayFrom").text("From: " + date2);
+			//$(".lastDateTodayTo").text("To: " + date1);
 
-				countUsers(tableUsersToday, data);
-			})
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
-				let data = csvJSON(response);
-				var last_date = data.at(-1)[0];
-				var first_date = data.at(1)[0];
-				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				$(".lastDateWeekFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateWeekTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
-
-				$("#lastDateWeek").show();
-				$("#loadingWeek").hide();
-
-				//$(".lastDateWeekFrom").text("From: " + date2);
-				//$(".lastDateWeekTo").text("To: " + date1);
-
-				countUsers(tableUsersWeek, data);
-
-			})
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
-				let data = csvJSON(response);
-				var last_date = data.at(-1)[0];
-				var first_date = data.at(1)[0];
-				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				$(".lastDateMonthFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateMonthTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
-
-				$("#lastDateMonth").show();
-				$("#loadingMonth").hide();
-
-				//$(".lastDateMonthFrom").text("From: " + date2);
-				//$(".lastDateMonthTo").text("To: " + date1);
-
-				countUsers(tableUsersMonth, data);
-
-			})
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
-				let data = csvJSON(response);
-				var last_date = data.at(-1)[0];
-				var first_date = data.at(1)[0];
-				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				$(".lastDateYearFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateYearTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
-
-				$("#lastDateYear").show();
-				$("#loadingYear").hide();
-
-				//$(".lastDateYearFrom").text("From: " + date2);
-				//$(".lastDateYearTo").text("To: " + date1);
-
-
-
-				countUsers(tableUsersYear, data);
-
-			})
+			countUsers(tableUsersToday, data);
 		})
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
+			let data = csvJSON(response);
+			var last_date = data.at(-1)[0];
+			var first_date = data.at(1)[0];
+			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			$(".lastDateWeekFrom").fadeOut(function() {
+				$(this).text("From: " + date2).fadeIn(2000);
+			});
+			$(".lastDateWeekTo").fadeOut(function() {
+				$(this).text("To: " + date1).fadeIn(2000);
+			});
+
+			$("#lastDateWeek").show();
+			$("#loadingWeek").hide();
+
+			//$(".lastDateWeekFrom").text("From: " + date2);
+			//$(".lastDateWeekTo").text("To: " + date1);
+
+			countUsers(tableUsersWeek, data);
+
+		})
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
+			let data = csvJSON(response);
+			var last_date = data.at(-1)[0];
+			var first_date = data.at(1)[0];
+			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			$(".lastDateMonthFrom").fadeOut(function() {
+				$(this).text("From: " + date2).fadeIn(2000);
+			});
+			$(".lastDateMonthTo").fadeOut(function() {
+				$(this).text("To: " + date1).fadeIn(2000);
+			});
+
+			$("#lastDateMonth").show();
+			$("#loadingMonth").hide();
+
+			//$(".lastDateMonthFrom").text("From: " + date2);
+			//$(".lastDateMonthTo").text("To: " + date1);
+
+			countUsers(tableUsersMonth, data);
+
+		})
+		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
+			let data = csvJSON(response);
+			var last_date = data.at(-1)[0];
+			var first_date = data.at(1)[0];
+			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			$(".lastDateYearFrom").fadeOut(function() {
+				$(this).text("From: " + date2).fadeIn(2000);
+			});
+			$(".lastDateYearTo").fadeOut(function() {
+				$(this).text("To: " + date1).fadeIn(2000);
+			});
+
+			$("#lastDateYear").show();
+			$("#loadingYear").hide();
+
+			//$(".lastDateYearFrom").text("From: " + date2);
+			//$(".lastDateYearTo").text("To: " + date1);
 
 
-		function countUsers(divAccess, jsonArr) {
-			let users = [],
-				count = [];
-			let keys = [];
-			let values = [];
-			for (var i = 0; i < jsonArr.length; i++) {
-				if (jsonArr[i][1].trim() != "") {
-					let newArr = jsonArr[i][1].split(" ");
-					for (var j = 0; j < newArr.length; j++) {
-						users.push(newArr[j]);
-					}
+
+			countUsers(tableUsersYear, data);
+
+		})
+	})
+
+
+	function countUsers(divAccess, jsonArr) {
+		let users = [],
+			count = [];
+		let keys = [];
+		let values = [];
+		for (var i = 0; i < jsonArr.length; i++) {
+			if (jsonArr[i][1].trim() != "") {
+				let newArr = jsonArr[i][1].split(" ");
+				for (var j = 0; j < newArr.length; j++) {
+					users.push(newArr[j]);
 				}
 			}
+		}
 
-			users.forEach(function(i) {
-				count[i] = (count[i] || 0) + 1;
+		users.forEach(function(i) {
+			count[i] = (count[i] || 0) + 1;
+		});
+
+		var tuples = [];
+
+		for (var key in count)
+			tuples.push([key, count[key]]);
+
+		tuples.sort(function(a, b) {
+			a = a[1];
+			b = b[1];
+
+			return a > b ? -1 : (a < b ? 1 : 0);
+		});
+		for (var i = 0; i < tuples.length; i++) {
+			keys.push(tuples[i][0]);
+			values.push(tuples[i][1]);
+		}
+
+		var result = [];
+		var obj = [];
+
+		//for (var i = 1; i <= 10; i++) {
+		for (var i = 1; i <= keys.length; i++) {
+			// Search most type of each user
+
+			var topTypesAux = countTypes(divAccess, jsonArr, keys[i - 1]);
+
+			// Remove undefined
+			var topTypesFiltered = topTypesAux.filter(function(x) {
+				return x !== undefined;
 			});
 
-			var tuples = [];
+			var topTypes = topTypesFiltered;
 
-			for (var key in count)
-				tuples.push([key, count[key]]);
+			//var topTypes = [];
+			// Capitalize types
+			//for (var j = 0; j < topTypesFiltered.length; j++) {
+			//	if (topTypesFiltered[j] == "domain") {
+			//		topTypes.push(capitalize(topTypesFiltered[j]));
+			//	} else if (topTypesFiltered[j] == "url" || topTypesFiltered[j] == "ip" || topTypesFiltered[j] == "sha256" || topTypesFiltered[j] == "md5") {
+			//		topTypes.push(topTypesFiltered[j].toUpperCase());
+			//	}
+			//}
 
-			tuples.sort(function(a, b) {
-				a = a[1];
-				b = b[1];
 
-				return a > b ? -1 : (a < b ? 1 : 0);
-			});
-			for (var i = 0; i < tuples.length; i++) {
-				keys.push(tuples[i][0]);
-				values.push(tuples[i][1]);
+			// Search most tag of each user
+			var topTags = countTags(divAccess, jsonArr, keys[i - 1])
+
+			if (topTags[0] == null) {
+				topTags[0] = "";
 			}
 
-			var result = [];
+			if (topTags[1] == null) {
+				topTags[1] = "";
+			}
+
+			if (topTags[2] == null) {
+				topTags[2] = "";
+			}
+
+			result.push([i, keys[i - 1], keys[i - 1], nFormatter(values[i - 1], 2), topTypes.join(" "), topTags.join(" ")]);
+
+		}
+
+		divAccess.rows.add(result).order([0, 'asc']).draw();
+		divAccess.rows().every(function() {
+			var number = $(this.node()).find('td').eq(0).text().trim();
+			$(this.node()).find('td').eq(0).html('#' + number);
+
+			var user = $(this.node()).find('td').eq(2).text().trim();
+			$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '"><img loading="lazy" src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="40" height="40"></a>');
+			//$(this.node()).find('td').eq(2).html('<a style="color: blue;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
+			$(this.node()).find('td').eq(2).html('<a target="_blank" class="btn btn-primary buttonHover" style="color:white;font-size: 13px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>');
+		})
+	}
+
+	function countTags(divAccess, jsonArr, user) {
+		let tags = [],
+			count = [];
+		let keys = [];
+		let values = [];
+		for (var i = 0; i < jsonArr.length; i++) {
+			if (jsonArr[i][4].trim() != "" && jsonArr[i][1] == user) {
+				let newArr = jsonArr[i][4].split(" ");
+				for (var j = 0; j < newArr.length; j++) {
+					tags.push(newArr[j]);
+				}
+			}
+		}
+
+		tags.forEach(function(i) {
+			count[i] = (count[i] || 0) + 1;
+		});
+
+		var tuples = [];
+
+		for (var key in count)
+			tuples.push([key, count[key]]);
+
+		tuples.sort(function(a, b) {
+			a = a[1];
+			b = b[1];
+
+			return a > b ? -1 : (a < b ? 1 : 0);
+		});
+		for (var i = 0; i < tuples.length; i++) {
+			keys.push(tuples[i][0]);
+			values.push(tuples[i][1]);
+		}
+
+		//return keys[0]
+		return [keys[0], keys[1], keys[2]]
+	}
+
+	function countTypes(divAccess, jsonArr, user) {
+		let types = [],
+			count = [];
+		let keys = [];
+		let values = [];
+		for (var i = 0; i < jsonArr.length; i++) {
+			if (jsonArr[i][2].trim() != "" && jsonArr[i][1] == user) {
+				let newArr = jsonArr[i][2].split(" ");
+				for (var j = 0; j < newArr.length; j++) {
+					types.push(newArr[j]);
+				}
+			}
+		}
+
+		types.forEach(function(i) {
+			count[i] = (count[i] || 0) + 1;
+		});
+
+		var tuples = [];
+
+		for (var key in count)
+			tuples.push([key, count[key]]);
+
+		tuples.sort(function(a, b) {
+			a = a[1];
+			b = b[1];
+
+			return a > b ? -1 : (a < b ? 1 : 0);
+		});
+		for (var i = 0; i < tuples.length; i++) {
+			keys.push(tuples[i][0]);
+			values.push(tuples[i][1]);
+		}
+
+		//return keys[0]
+		return [keys[0], keys[1], keys[2]]
+	}
+
+	function csvJSON(csv) {
+
+		var lines = csv.split("\n");
+		var result = [];
+		//for (var i = lines.length - 1; i >= 0; i--) {
+		for (var i = 0; i < lines.length; i++) {
 			var obj = [];
-
-			//for (var i = 1; i <= 10; i++) {
-			for (var i = 1; i <= keys.length; i++) {
-				// Search most type of each user
-
-				var topTypesAux = countTypes(divAccess, jsonArr, keys[i - 1]);
-
-				// Remove undefined
-				var topTypesFiltered = topTypesAux.filter(function(x) {
-					return x !== undefined;
-				});
-
-				var topTypes = topTypesFiltered;
-
-				//var topTypes = [];
-				// Capitalize types
-				//for (var j = 0; j < topTypesFiltered.length; j++) {
-				//	if (topTypesFiltered[j] == "domain") {
-				//		topTypes.push(capitalize(topTypesFiltered[j]));
-				//	} else if (topTypesFiltered[j] == "url" || topTypesFiltered[j] == "ip" || topTypesFiltered[j] == "sha256" || topTypesFiltered[j] == "md5") {
-				//		topTypes.push(topTypesFiltered[j].toUpperCase());
-				//	}
-				//}
-
-
-				// Search most tag of each user
-				var topTags = countTags(divAccess, jsonArr, keys[i - 1])
-
-				if (topTags[0] == null) {
-					topTags[0] = "";
+			var currentline = lines[i].split(",");
+			if (currentline.length > 1) {
+				for (var j = 0; j < currentline.length; j++) {
+					obj.push(currentline[j]);
 				}
-
-				if (topTags[1] == null) {
-					topTags[1] = "";
-				}
-
-				if (topTags[2] == null) {
-					topTags[2] = "";
-				}
-
-				result.push([i, keys[i - 1], keys[i - 1], nFormatter(values[i - 1], 2), topTypes.join(" "), topTags.join(" ")]);
-
+				result.push(obj);
 			}
 
-			divAccess.rows.add(result).order([0, 'asc']).draw();
-			divAccess.rows().every(function() {
-				var number = $(this.node()).find('td').eq(0).text().trim();
-				$(this.node()).find('td').eq(0).html('#' + number);
+		}
+		return result;
+	}
+	</script>
+	<script>
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+		// CSV file
+		csvFile = new Blob([csv], { type: "text/csv" });
+		// Download link
+		downloadLink = document.createElement("a");
+		// File name
+		downloadLink.download = filename;
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+		// Hide download link
+		downloadLink.style.display = "none";
+		// Add the link to DOM
+		document.body.appendChild(downloadLink);
+		// Click download link
+		downloadLink.click();
+	}
 
-				var user = $(this.node()).find('td').eq(2).text().trim();
-				$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '"><img loading="lazy" src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="40" height="40"></a>');
-				//$(this.node()).find('td').eq(2).html('<a style="color: blue;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
-				$(this.node()).find('td').eq(2).html('<a target="_blank" class="btn btn-primary buttonHover" style="color:white;font-size: 13px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>');
-			})
+	function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+		for (var i = 2; i < rows.length; i++) {
+			var row = [],
+				cols = rows[i].querySelectorAll("td, th");
+			for (var j = 0; j < cols.length; j++)
+				row.push(cols[j].innerText);
+			csv.push(row.join(","));
 		}
 
-		function countTags(divAccess, jsonArr, user) {
-			let tags = [],
-				count = [];
-			let keys = [];
-			let values = [];
-			for (var i = 0; i < jsonArr.length; i++) {
-				if (jsonArr[i][4].trim() != "" && jsonArr[i][1] == user) {
-					let newArr = jsonArr[i][4].split(" ");
-					for (var j = 0; j < newArr.length; j++) {
-						tags.push(newArr[j]);
-					}
-				}
-			}
+		// Download CSV file
+		downloadCSV(csv.join("\n"), filename);
+	}
+	</script>
+	<script>
+	function addData(chart, label, data) {
+		chart.data.labels.push(label);
+		chart.data.datasets.forEach((dataset) => {
+			dataset.data.push(data);
+		});
+		chart.update();
+	}
 
-			tags.forEach(function(i) {
-				count[i] = (count[i] || 0) + 1;
-			});
-
-			var tuples = [];
-
-			for (var key in count)
-				tuples.push([key, count[key]]);
-
-			tuples.sort(function(a, b) {
-				a = a[1];
-				b = b[1];
-
-				return a > b ? -1 : (a < b ? 1 : 0);
-			});
-			for (var i = 0; i < tuples.length; i++) {
-				keys.push(tuples[i][0]);
-				values.push(tuples[i][1]);
-			}
-
-			//return keys[0]
-			return [keys[0], keys[1], keys[2]]
-		}
-
-		function countTypes(divAccess, jsonArr, user) {
-			let types = [],
-				count = [];
-			let keys = [];
-			let values = [];
-			for (var i = 0; i < jsonArr.length; i++) {
-				if (jsonArr[i][2].trim() != "" && jsonArr[i][1] == user) {
-					let newArr = jsonArr[i][2].split(" ");
-					for (var j = 0; j < newArr.length; j++) {
-						types.push(newArr[j]);
-					}
-				}
-			}
-
-			types.forEach(function(i) {
-				count[i] = (count[i] || 0) + 1;
-			});
-
-			var tuples = [];
-
-			for (var key in count)
-				tuples.push([key, count[key]]);
-
-			tuples.sort(function(a, b) {
-				a = a[1];
-				b = b[1];
-
-				return a > b ? -1 : (a < b ? 1 : 0);
-			});
-			for (var i = 0; i < tuples.length; i++) {
-				keys.push(tuples[i][0]);
-				values.push(tuples[i][1]);
-			}
-
-			//return keys[0]
-			return [keys[0], keys[1], keys[2]]
-		}
-
-		function csvJSON(csv) {
-
-			var lines = csv.split("\n");
-			var result = [];
-			//for (var i = lines.length - 1; i >= 0; i--) {
-			for (var i = 0; i < lines.length; i++) {
-				var obj = [];
-				var currentline = lines[i].split(",");
-				if (currentline.length > 1) {
-					for (var j = 0; j < currentline.length; j++) {
-						obj.push(currentline[j]);
-					}
-					result.push(obj);
-				}
-
-			}
-			return result;
-		}
-		</script>
-		<script>
-		function downloadCSV(csv, filename) {
-			var csvFile;
-			var downloadLink;
-			// CSV file
-			csvFile = new Blob([csv], { type: "text/csv" });
-			// Download link
-			downloadLink = document.createElement("a");
-			// File name
-			downloadLink.download = filename;
-			// Create a link to the file
-			downloadLink.href = window.URL.createObjectURL(csvFile);
-			// Hide download link
-			downloadLink.style.display = "none";
-			// Add the link to DOM
-			document.body.appendChild(downloadLink);
-			// Click download link
-			downloadLink.click();
-		}
-
-		function exportTableToCSV(filename) {
-			var csv = [];
-			var rows = document.querySelectorAll("table tr");
-			for (var i = 2; i < rows.length; i++) {
-				var row = [],
-					cols = rows[i].querySelectorAll("td, th");
-				for (var j = 0; j < cols.length; j++)
-					row.push(cols[j].innerText);
-				csv.push(row.join(","));
-			}
-
-			// Download CSV file
-			downloadCSV(csv.join("\n"), filename);
-		}
-		</script>
-		<script>
-		function addData(chart, label, data) {
-			chart.data.labels.push(label);
-			chart.data.datasets.forEach((dataset) => {
-				dataset.data.push(data);
-			});
-			chart.update();
-		}
-
-		function removeData(chart) {
-			chart.data.labels.pop();
-			chart.data.datasets.forEach((dataset) => {
-				dataset.data.pop();
-			});
-			chart.update();
-		}
-		</script>
-		<script>
-		function nFormatter(num, digits) {
-			const lookup = [
-				{ value: 1, symbol: "" },
-				{ value: 1e3, symbol: "k" },
-				{ value: 1e6, symbol: "M" },
-				{ value: 1e9, symbol: "G" },
-				{ value: 1e12, symbol: "T" },
-				{ value: 1e15, symbol: "P" },
-				{ value: 1e18, symbol: "E" }
-			];
-			const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-			var item = lookup.slice().reverse().find(function(item) {
-				return num >= item.value;
-			});
-			return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-		}
-		</script>
-		<script>
-		$(function() {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
-		</script>
-		<script>
-		function capitalize(s) {
-			return s[0].toUpperCase() + s.slice(1);
-		}
-		</script>
+	function removeData(chart) {
+		chart.data.labels.pop();
+		chart.data.datasets.forEach((dataset) => {
+			dataset.data.pop();
+		});
+		chart.update();
+	}
+	</script>
+	<script>
+	function nFormatter(num, digits) {
+		const lookup = [
+			{ value: 1, symbol: "" },
+			{ value: 1e3, symbol: "k" },
+			{ value: 1e6, symbol: "M" },
+			{ value: 1e9, symbol: "G" },
+			{ value: 1e12, symbol: "T" },
+			{ value: 1e15, symbol: "P" },
+			{ value: 1e18, symbol: "E" }
+		];
+		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+		var item = lookup.slice().reverse().find(function(item) {
+			return num >= item.value;
+		});
+		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+	}
+	</script>
+	<script>
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
+	<script>
+	function capitalize(s) {
+		return s[0].toUpperCase() + s.slice(1);
+	}
+	</script>
+	<!-- Matomo -->
+	<script>
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_paq.push(['setTrackerUrl', u + 'matomo.php']);
+		_paq.push(['setSiteId', '1']);
+		var d = document,
+			g = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parentNode.insertBefore(g, s);
+	})();
+	</script>
+	<!-- End Matomo Code -->
 </body>
 
 </html>
