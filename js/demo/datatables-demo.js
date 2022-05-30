@@ -16,6 +16,7 @@ $(document).ready(function() {
     } );
  
     var table = $('#dataTable').DataTable( {
+        "pageLength": 10,
         orderCellsTop: true,
         fixedHeader: true
     } );
