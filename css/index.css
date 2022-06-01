@@ -105,6 +105,10 @@
     color: #005677 !important;
 }
 
+.valueLink:hover {
+    color: blue !important;
+}
+
 .twitterUser:hover {
     color: black !important;
 }
