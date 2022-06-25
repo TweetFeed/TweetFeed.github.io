@@ -563,6 +563,13 @@
 
 								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
+								// Abuse.ch
+								//if (type == "sha256") {
+								//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>' + '<br><a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://bazaar.abuse.ch/sample/' + value + '"><img loading="lazy" id="abuse_ch" src="img/abuse_ch.png" alt="abuse_ch logo"> <i style="color: #00465B;" class="fas fa-external-link-alt"></i></a>');
+								//} else {
+								//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								//}
+
 								//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
@@ -598,9 +605,16 @@
 
 							value = value.split("/")[0]
 
-							data[i].push('<a class="twitterLink" style="text-decoration: none;color:#394eff;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"></img> <i class="fas fa-external-link-alt"></i></a>');
+							var type = data[i][2];
 
-							//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+
+							// Abuse.ch
+							//if (type == "sha256") {
+							//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>' + '<br><a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://bazaar.abuse.ch/sample/' + value + '"><img loading="lazy" id="abuse_ch" src="img/abuse_ch.png" alt="abuse_ch logo"> <i style="color: #00465B;" class="fas fa-external-link-alt"></i></a>');
+							//} else {
+							//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+							//}
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();

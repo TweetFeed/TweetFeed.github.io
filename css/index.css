@@ -1,9 +1,9 @@
 #content,#contentMobile {
     min-height: calc(100vh - 170px);
     /* 80px header + 40px footer = 120px  */
-    width: 72%;
-    margin-left: 14%;
-    margin-right: 14%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 #presentation,#presentationMobile {
