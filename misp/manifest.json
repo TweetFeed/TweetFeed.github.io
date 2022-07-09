@@ -1622,5 +1622,33 @@
                 "name": "tlp:white"
             }
         ]
+    },
+    "914cff2d-fad3-493f-bb26-5a1d3dd2b6fc": {
+        "info": "TweetFeed IOCs - 2022-07-08",
+        "timestamp": 1657238602,
+        "published": true,
+        "date": "2022-07-08",
+        "threat_level_id": "1",
+        "analysis": "1",
+        "distribution": "3",
+        "uuid": "914cff2d-fad3-493f-bb26-5a1d3dd2b6fc",
+        "Orgc": {
+            "name": "TweetFeed",
+            "uuid": "64a18d1c-8a4a-41d7-9c1c-44ca11116d3f"
+        },
+        "Tag": [
+            {
+                "colour": "#1DA1F2",
+                "name": "TweetFeed"
+            },
+            {
+                "colour": "#004646",
+                "name": "type:OSINT"
+            },
+            {
+                "colour": "#fffff",
+                "name": "tlp:white"
+            }
+        ]
     }
 }
