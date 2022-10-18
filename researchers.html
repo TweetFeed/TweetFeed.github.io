@@ -182,9 +182,9 @@
 					<li class="nav-item">
 						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-month-tab" data-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="false">Month</a>
 					</li>
-					<li class="nav-item">
+					<!--<li class="nav-item">
 						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-year-tab" data-toggle="pill" href="#pills-year" role="tab" aria-controls="pills-year" aria-selected="false">Year</a>
-					</li>
+					</li> -->
 				</ul>
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="pills-today" role="tabpanel" aria-labelledby="pills-today-tab">
@@ -431,6 +431,7 @@
 			countUsers(tableUsersMonth, data);
 
 		})
+		/*
 		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
 			let data = csvJSON(response);
 			var last_date = data.at(-1)[0];
@@ -450,11 +451,9 @@
 			//$(".lastDateYearFrom").text("From: " + date2);
 			//$(".lastDateYearTo").text("To: " + date1);
 
-
-
 			countUsers(tableUsersYear, data);
 
-		})
+		})*/
 	})
 
 
