@@ -656,12 +656,12 @@
 							if (pic.naturalWidth > 0 && pic.naturalHeight > 0) {
 								//console.log('Image exists and has been loaded');
 
-								$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
+								$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
 
 							} else {
 								//console.log('Image does not exist or could not be loaded');
 
-								$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="pics/default.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
+								$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img src="pics/default.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
 							}
 
 							
