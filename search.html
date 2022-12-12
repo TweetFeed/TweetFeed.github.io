@@ -495,7 +495,7 @@
 								//}
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value;
+								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
 
 								var tweet_url = data[i][5];
 								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
@@ -594,7 +594,7 @@
 							//}
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value)
+							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>')
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
