@@ -543,12 +543,6 @@
 									//console.log('Image does not exist or could not be loaded');
 									pic.src = 'pics/default.png';
 								};
-
-								if (img.naturalWidth > 0) {
-								  pic.src = 'pics/' + user + '.png';
-								} else {
-								  cic.src = 'pics/default.png';
-								}
 								
 								data[i][1] = '<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>';
 
