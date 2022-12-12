@@ -197,16 +197,14 @@
 									<table class="table display compact" id="dataTableUsersToday" width="100%" cellspacing="0" style="border:none;">
 										<colgroup>
 											<col span="1" style="width: 8%;"> <!-- Number -->
-											<col span="1" style="width: 10%;"> <!-- Image -->
-											<col span="1" style="width: 15%;"> <!-- User -->
-											<col span="1" style="width: 10%;"> <!-- IOCs -->
+											<col span="1" style="width: 20%;"> <!-- User -->
+											<col span="1" style="width: 15%;"> <!-- IOCs -->
 											<col span="1" style="width: 24%;"> <!-- Top Types -->
 											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
 												<th>Number</th>
-												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted today"></i></th>
 												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
@@ -228,16 +226,14 @@
 									<table class="table display compact" id="dataTableUsersWeek" width="100%" cellspacing="0" style="border:none;">
 										<colgroup>
 											<col span="1" style="width: 8%;"> <!-- Number -->
-											<col span="1" style="width: 10%;"> <!-- Image -->
-											<col span="1" style="width: 15%;"> <!-- User -->
-											<col span="1" style="width: 10%;"> <!-- IOCs -->
+											<col span="1" style="width: 20%;"> <!-- User -->
+											<col span="1" style="width: 15%;"> <!-- IOCs -->
 											<col span="1" style="width: 24%;"> <!-- Top Types -->
 											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
 												<th>Number</th>
-												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 7 days"></i></th>
 												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
@@ -259,16 +255,14 @@
 									<table class="table display compact" id="dataTableUsersMonth" width="100%" cellspacing="0" style="border:none;">
 										<colgroup>
 											<col span="1" style="width: 8%;"> <!-- Number -->
-											<col span="1" style="width: 10%;"> <!-- Image -->
-											<col span="1" style="width: 15%;"> <!-- User -->
-											<col span="1" style="width: 10%;"> <!-- IOCs -->
+											<col span="1" style="width: 20%;"> <!-- User -->
+											<col span="1" style="width: 15%;"> <!-- IOCs -->
 											<col span="1" style="width: 24%;"> <!-- Top Types -->
 											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
 												<th>Number</th>
-												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 30 days"></i></th>
 												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
@@ -290,16 +284,14 @@
 									<table class="table display compact" id="dataTableUsersYear" width="100%" cellspacing="0" style="border:none;">
 										<colgroup>
 											<col span="1" style="width: 8%;"> <!-- Number -->
-											<col span="1" style="width: 10%;"> <!-- Image -->
-											<col span="1" style="width: 15%;"> <!-- User -->
-											<col span="1" style="width: 10%;"> <!-- IOCs -->
+											<col span="1" style="width: 20%;"> <!-- User -->
+											<col span="1" style="width: 15%;"> <!-- IOCs -->
 											<col span="1" style="width: 24%;"> <!-- Top Types -->
 											<col span="1" style="width: 23%;"> <!-- Top Tags -->
 										</colgroup>
 										<thead>
 											<tr>
 												<th>Number</th>
-												<th>Image</th>
 												<th>User</th>
 												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 365 days"></i></th>
 												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
@@ -533,7 +525,7 @@
 				topTags[2] = "";
 			}
 
-			result.push([i, keys[i - 1], keys[i - 1], nFormatter(values[i - 1], 2), topTypes.join(" "), topTags.join(" ")]);
+			result.push([i, keys[i - 1], nFormatter(values[i - 1], 2), topTypes.join(" "), topTags.join(" ")]);
 
 		}
 
@@ -542,10 +534,22 @@
 			var number = $(this.node()).find('td').eq(0).text().trim();
 			$(this.node()).find('td').eq(0).html('#' + number);
 
-			var user = $(this.node()).find('td').eq(2).text().trim();
-			$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;color: blue;" target="_blank" href="https://twitter.com/' + user + '"><img loading="lazy" src="pics/' + user + '.png" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="40" height="40"></a>');
+			var user = $(this.node()).find('td').eq(1).text().trim();
+
+			var pic = new Image();
+			pic.src = 'pics/' + user + '.png';
+
+			pic.onload = function() {
+				//console.log('Image exists and has been loaded');
+				pic.src = 'pics/' + user + '.png';
+			};
+
+			pic.onerror = function() {
+				//console.log('Image does not exist or could not be loaded');
+				pic.src = 'pics/default.png';
+			};
 			//$(this.node()).find('td').eq(2).html('<a style="color: blue;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
-			$(this.node()).find('td').eq(2).html('<a target="_blank" class="btn btn-primary buttonHover" style="color:white;font-size: 13px;background-color: #00acee;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://twitter.com/' + user + '"><i class="fab fa-twitter"></i> <span class="pb-2 align-middle">' + user + '</span></a>');
+			$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img src="' + pic.src + '" alt="Go to ' + user + ' Twitter profile" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
 		})
 	}
 
