@@ -124,3 +124,7 @@
 [href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide"]:hover {
     background-color: #007fff !important;
 }
+
+.btn:hover {
+  background-image: linear-gradient(rgb(0 0 0/15%) 0 0);
+}
