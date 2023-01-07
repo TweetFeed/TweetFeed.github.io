@@ -309,7 +309,7 @@ let TweetFeed = materialize (
     | where Type == 'ip'
     | extend RemoteIP = tostring(report[3])
     | where RemoteIP !in(IPaddress_whitelist)
-    | where not(ipv4_is_private(TweetFeedIP))
+    | where not(ipv4_is_private(RemoteIP))
     | extend Tag = tostring(report[4])
     | extend Tweet = tostring(report[5])
     | project RemoteIP, Tag, Tweet 
