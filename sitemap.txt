@@ -1,6 +1,12 @@
 https://tweetfeed.live/
 https://tweetfeed.live/dashboard.html
 https://tweetfeed.live/feeds.html
+https://tweetfeed.live/hunt.html
 https://tweetfeed.live/graphs.html
 https://tweetfeed.live/researchers.html
+https://tweetfeed.live/search.html
 https://tweetfeed.live/api.html
+https://tweetfeed.live/feedback.html
+https://tweetfeed.live/about.html
+https://tweetfeed.live/changelog.html
+https://tweetfeed.live/spambots.html
