@@ -420,3 +420,65 @@
 2023-01-29 11:29:51,drb_ra,domain,devcloudpro.com,#CobaltStrike,https://twitter.com/drb_ra/status/1619659081869819904
 2023-01-29 11:29:51,drb_ra,ip,194.165.16.64,#CobaltStrike,https://twitter.com/drb_ra/status/1619659081869819904
 2023-01-29 11:29:54,ecarlesi,md5,f50e79b436e7ab17d070ca3dc45b9817,#phishing,https://twitter.com/ecarlesi/status/1619659094679339008
+2023-01-29 11:34:25,noladefense,url,https://www.935252y.com/jp,#phishing #scam,https://twitter.com/noladefense/status/1619660229641117697
+2023-01-29 11:34:25,noladefense,ip,104.129.5.195,#phishing #scam,https://twitter.com/noladefense/status/1619660229641117697
+2023-01-29 11:35:37,ecarlesi,url,https://koinmatrixtrade.com/len.zip,#phishing,https://twitter.com/ecarlesi/status/1619660533749121024
+2023-01-29 11:35:50,ecarlesi,url,https://corinjcbob.com,#phishing,https://twitter.com/ecarlesi/status/1619660587675312129
+2023-01-29 11:39:06,AtomSpam,url,http://privada-bancosantander.com/,#phishing,https://twitter.com/AtomSpam/status/1619661410371358720
+2023-01-29 11:40:09,ecarlesi,url,http://15393.org/,#malware,https://twitter.com/ecarlesi/status/1619661675388338177
+2023-01-29 11:40:44,ecarlesi,url,https://15393.org:8443/index.html?sharename=15393.org,#malware,https://twitter.com/ecarlesi/status/1619661821169881088
+2023-01-29 11:44:49,ecarlesi,url,http://abonnements-facture-be-net.com,#phishing,https://twitter.com/ecarlesi/status/1619662846211530752
+2023-01-29 11:47:21,ecarlesi,url,http://15346.org/,#malware,https://twitter.com/ecarlesi/status/1619663485205454849
+2023-01-29 11:49:05,AtomSpam,url,https://colombiaphp.bancophp.repl.co/,#phishing,https://twitter.com/AtomSpam/status/1619663920850927616
+2023-01-29 11:49:57,quicksandphish,url,http://dcald-caredi.com,#phishing,https://twitter.com/quicksandphish/status/1619664140318183425
+2023-01-29 11:50:11,ecarlesi,url,https://15346.org:8443/index.html?sharename=15346.org,#malware,https://twitter.com/ecarlesi/status/1619664198178332673
+2023-01-29 11:50:56,quicksandphish,url,https://dcald-careo.com/auth/cgi/anidlogin,#phishing,https://twitter.com/quicksandphish/status/1619664388146995200
+2023-01-29 11:51:56,quicksandphish,url,http://dcald-caredi.com/auth/cgi/anidlogin,#phishing,https://twitter.com/quicksandphish/status/1619664638333054980
+2023-01-29 11:55:32,ecarlesi,url,https://segundaviaminhafatura.com,#phishing,https://twitter.com/ecarlesi/status/1619665543702761472
+2023-01-29 12:00:31,Merlax_,url,http://188.121.116.157/,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,url,http://51.77.193.20/eliteseguros/autorizar.php,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,188.121.116.157,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,54.221.142.212,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,51.77.193.20,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,52.67.94.240,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,89.223.88.138,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,149.56.91.172,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,177.73.101.138,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:00:31,Merlax_,ip,186.249.213.39,#malware,https://twitter.com/Merlax_/status/1619666797879255041
+2023-01-29 12:02:39,RedPacketSec,md5,da627411e7e85229355ed325520a7d4e,#malware,https://twitter.com/RedPacketSec/status/1619667337006796802
+2023-01-29 12:02:40,RedPacketSec,md5,bfe6ee8069f6e7c572382a97fd16d104,#malware,https://twitter.com/RedPacketSec/status/1619667338021715968
+2023-01-29 12:02:40,RedPacketSec,md5,5e887fdac8a3cac0b047a737043789a8,#malware,https://twitter.com/RedPacketSec/status/1619667339040915457
+2023-01-29 12:02:40,RedPacketSec,md5,360ef53ce1b09b03998bf2ab743f7dc7,#malware,https://twitter.com/RedPacketSec/status/1619667340081217536
+2023-01-29 12:02:40,RedPacketSec,md5,f6d4d4b428393d0d8b55165c2a9076dd,#malware,https://twitter.com/RedPacketSec/status/1619667341100335104
+2023-01-29 12:02:40,RedPacketSec,md5,4b51df4028f1d801c45f07daa07d9c90,#malware,https://twitter.com/RedPacketSec/status/1619667342031552516
+2023-01-29 12:02:41,RedPacketSec,md5,d16e82ba2c319750e888f763d98a3a8c,#malware,https://twitter.com/RedPacketSec/status/1619667343101009922
+2023-01-29 12:02:41,RedPacketSec,md5,45f3f9b201644ddadf6204497c9adb49,#malware,https://twitter.com/RedPacketSec/status/1619667344036429828
+2023-01-29 12:02:41,RedPacketSec,md5,84afdad4a70a6122c3f157100a197db7,#malware,https://twitter.com/RedPacketSec/status/1619667344971661313
+2023-01-29 12:02:41,RedPacketSec,md5,fee7c379f3a555c5c821e872ec384a91,#malware #ransomware,https://twitter.com/RedPacketSec/status/1619667345986682880
+2023-01-29 12:02:42,RedPacketSec,md5,fc50e05b611db89a9c7eb359e68ebc5f,#malware,https://twitter.com/RedPacketSec/status/1619667346917924865
+2023-01-29 12:02:42,RedPacketSec,md5,a3dd84a411b7edddae84278455400dd5,#malware,https://twitter.com/RedPacketSec/status/1619667347848978435
+2023-01-29 12:06:29,noladefense,url,http://www.luyenthinguyentriphuong.vn/csss/linkedinhardxxx/900/,#phishing #scam,https://twitter.com/noladefense/status/1619668300987830273
+2023-01-29 12:06:29,noladefense,ip,42.112.21.207,#phishing #scam,https://twitter.com/noladefense/status/1619668300987830273
+2023-01-29 12:06:35,noladefense,url,https://round-waterfall-0a28onedrive.x1769803359.workers.dev/?sso_reload=true,#phishing #scam,https://twitter.com/noladefense/status/1619668325298016259
+2023-01-29 12:06:57,ecarlesi,url,https://eire-365onlinehelp.com/,#phishing,https://twitter.com/ecarlesi/status/1619668417275133954
+2023-01-29 12:09:06,AtomSpam,url,http://pralgox.com/chaseverification00000/home,#phishing,https://twitter.com/AtomSpam/status/1619668960261062656
+2023-01-29 12:09:23,ecarlesi,url,https://15328.org/,#malware,https://twitter.com/ecarlesi/status/1619669029911666689
+2023-01-29 12:09:24,ecarlesi,url,https://15324.org/,#malware,https://twitter.com/ecarlesi/status/1619669034756149249
+2023-01-29 12:09:24,ecarlesi,url,https://15321.org:8443/index.html?sharename=15321.org,#malware,https://twitter.com/ecarlesi/status/1619669035020320768
+2023-01-29 12:10:09,ecarlesi,url,https://15330.org/,#malware,https://twitter.com/ecarlesi/status/1619669223478886401
+2023-01-29 12:11:28,ecarlesi,url,https://15320.org/,#malware,https://twitter.com/ecarlesi/status/1619669555898466304
+2023-01-29 12:11:59,ecarlesi,url,https://15322.org:8443/index.html?sharename=15322.org,#malware,https://twitter.com/ecarlesi/status/1619669684130922497
+2023-01-29 12:12:52,ecarlesi,url,https://15318.org:8443/index.html?sharename=15318.org,#malware,https://twitter.com/ecarlesi/status/1619669906982592514
+2023-01-29 12:13:10,ecarlesi,url,https://15330.org:8443/index.html?sharename=15330.org,#malware,https://twitter.com/ecarlesi/status/1619669983591600169
+2023-01-29 12:13:10,ecarlesi,url,https://15323.org:8443/index.html?sharename=15323.org,#malware,https://twitter.com/ecarlesi/status/1619669984015171585
+2023-01-29 12:13:14,ecarlesi,url,https://15320.org:8443/index.html?sharename=15320.org,#malware,https://twitter.com/ecarlesi/status/1619669997810335744
+2023-01-29 12:13:17,ecarlesi,url,https://15332.org/,#malware,https://twitter.com/ecarlesi/status/1619670013291413506
+2023-01-29 12:17:16,ecarlesi,url,https://15338.org:8443/index.html?sharename=15338.org,#malware,https://twitter.com/ecarlesi/status/1619671015428345861
+2023-01-29 12:18:45,ecarlesi,url,https://15348.org/,#malware,https://twitter.com/ecarlesi/status/1619671388285177858
+2023-01-29 12:19:03,AtomSpam,url,https://om-120.github.io/netflix,#phishing,https://twitter.com/AtomSpam/status/1619671464923336704
+2023-01-29 12:19:56,ecarlesi,url,https://15334.org/,#malware,https://twitter.com/ecarlesi/status/1619671686596669440
+2023-01-29 12:19:57,quicksandphish,url,https://dcald-careo.com,#phishing,https://twitter.com/quicksandphish/status/1619671688396025857
+2023-01-29 12:21:04,ecarlesi,url,https://15348.org:8443/index.html?sharename=15348.org,#malware,https://twitter.com/ecarlesi/status/1619671970450374656
+2023-01-29 12:22:38,ecarlesi,url,http://peaksitconsultants.com/peaks.zip,#phishing,https://twitter.com/ecarlesi/status/1619672362948988930
+2023-01-29 12:23:05,AtomSpam,url,https://suyash2711.github.io/netflix_clone,#phishing,https://twitter.com/AtomSpam/status/1619672476367159297
+2023-01-29 12:23:37,ecarlesi,url,http://15370.org/,#malware,https://twitter.com/ecarlesi/status/1619672612900319233
