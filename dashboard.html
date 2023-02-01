@@ -33,7 +33,7 @@
 	<!-- Fonts -->
 	<link href="css/fonts.css" rel="stylesheet">
 	<style>
-	.url {
+		.url {
 		background-color: #c8f6fd;
 	}
 
@@ -368,7 +368,7 @@
 													<input type="checkbox" class="form-check-input" id="checkTagBazarLoader" name="BazarLoader" value="BazarLoader" checked>
 													<label class="form-check-label" for="checkBazarLoader">#BazarLoader</label>
 													<span id="checkTag-BazarLoader"></span>
-												</div>												
+												</div>
 												<div class="form-check">
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagCobaltStrike" name="CobaltStrike" value="CobaltStrike" checked>
 													<label class="form-check-label" for="checkCobaltStrike">#CobaltStrike <span id="checkTag-CobaltStrike"></span></label>
@@ -391,14 +391,14 @@
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagFormbook" name="Formbook" value="Formbook" checked>
 													<label class="form-check-label" for="checkFormbook">#Formbook</label>
 													<span id="checkTag-Formbook"></span>
-												</div>											
+												</div>
 											</div> <!-- col -->
 											<div class="col-3">
 												<div class="form-check">
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagGootLoader" name="GootLoader" value="GootLoader" checked>
 													<label class="form-check-label" for="checkGootLoader">#GootLoader</label>
 													<span id="checkTag-GootLoader"></span>
-												</div>	
+												</div>
 												<div class="form-check">
 													<input style="border: 1px solid black;" type="checkbox" class="form-check-input" id="checkTagGuLoader" name="GuLoader" value="GuLoader" checked>
 													<label class="form-check-label" for="checkGuLoader">#GuLoader</label>
@@ -509,7 +509,7 @@
 					<div class="row">
 						<div class="col text-left d-none d-lg-block"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
 						<div class="col text-center">
-								<a style="font-size: 12px;padding:5px;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+							<a style="font-size: 12px;padding:5px;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
 							</span></div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
@@ -942,17 +942,21 @@
 	</script>
 	<!-- Matomo -->
 	<script>
-	  var _paq = window._paq = window._paq || [];
-	  /* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
-	  _paq.push(['traCkpageview']);
-	  _paq.push(['enAblelinktracking']);
-	  (function() {
-	    var u="https://tweetfeedlive.matomo.cloud/";
-	    _Paq.pusH(['settrackerurl', u+'matomo.php']);
-	    _paq.push(['setsiteid', '1']);
-	    var d=document, g=d.createelement('script'), s=d.getelEmEntSbytagname('script')[0];
-	    g.async=true; g.src='//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js'; s.parenTnode.inserTbefore(g,s);
-	  })();
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
+	_paq.push(['traCkpageview']);
+	_paq.push(['enAblelinktracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_Paq.pusH(['settrackerurl', u + 'matomo.php']);
+		_paq.push(['setsiteid', '1']);
+		var d = document,
+			g = d.createelement('script'),
+			s = d.getelEmEntSbytagname('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parenTnode.inserTbefore(g, s);
+	})();
 	</script>
 	<!-- enD matomO code -->
 </body>
