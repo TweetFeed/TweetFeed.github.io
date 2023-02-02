@@ -72,16 +72,17 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 	<script>
-		hljs.highlightAll();
+	hljs.highlightAll();
 	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GXN611CPK7"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
+	window.dataLayer = window.dataLayer || [];
 
-  		gtag('config', 'G-GXN611CPK7');
+	function gtag() { dataLayer.push(arguments); }
+	gtag('js', new Date());
+
+	gtag('config', 'G-GXN611CPK7');
 	</script>
 </head>
 
@@ -107,7 +108,10 @@
 							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+							<a class="nav-link active" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
@@ -117,9 +121,6 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -161,7 +162,7 @@
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
-								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+								<a class="dropdown-item" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
@@ -174,7 +175,7 @@
 				<div id="presentationSecondary">
 					<br><br><br>
 					<h1><i class="fas fa-code" style="font-size: 36px;"></i> API</h1>
-					<h2><em>TweetFeed.live API (limited to 10k results per search)</em></h2>
+					<h2><em>TweetFeed.live API <span style="font-size: 12px;">(limited to 10k results per search)</span></em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<!--<h1 style="color: #737373;font-weight: 600;">Bash commands</h1> -->
@@ -239,22 +240,22 @@
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Some examples</h3>
 				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 1: IOCs posted today</b></span>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 1</b>: IOCs posted today</span>
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today')" class="far fa-copy"></i></pre>
 				<!-- -->
 				<br>
 				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 2: URLs posted today with phishing tag</b></span>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 2</b>: URLs posted today with phishing tag</span>
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today/phishing/url')" class="far fa-copy"></i></pre>
 				<!-- -->
 				<br>
 				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 3: IPs posted in the last 7 days with CobaltStrike tag</b></span>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i onclick="copyClipboard('https://api.tweetfeed.live/v1/week/cobaltstrike/ip')" class="far fa-copy"></i></pre>
 				<!-- -->
 				<br>
 				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 4: SHA256 hashes posted by <a style="font-size: 16px;" target="_blank" href="https://twitter.com/malwrhunterteam">@malwrhunterteam</a> in the last month</b></span>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="d-flex align-self-bottom"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://twitter.com/malwrhunterteam">&nbsp@malwrhunterteam&nbsp</a> in the last month</span>
 				<!-- #00acee -->
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i onclick="copyClipboard('https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256')" class="far fa-copy"></i></pre>
 				<!-- -->
@@ -319,7 +320,7 @@
 					<div class="row">
 						<div class="col text-left d-none d-lg-block"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
 						<div class="col text-center">
-								<a style="font-size: 12px;padding:5px;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
 							</span></div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
@@ -422,17 +423,21 @@
 	</script>
 	<!-- Matomo -->
 	<script>
-	  var _paq = window._paq = window._paq || [];
-	  /* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
-	  _paq.push(['traCkpageview']);
-	  _paq.push(['enAblelinktracking']);
-	  (function() {
-	    var u="https://tweetfeedlive.matomo.cloud/";
-	    _Paq.pusH(['settrackerurl', u+'matomo.php']);
-	    _paq.push(['setsiteid', '1']);
-	    var d=document, g=d.createelement('script'), s=d.getelEmEntSbytagname('script')[0];
-	    g.async=true; g.src='//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js'; s.parenTnode.inserTbefore(g,s);
-	  })();
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
+	_paq.push(['traCkpageview']);
+	_paq.push(['enAblelinktracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_Paq.pusH(['settrackerurl', u + 'matomo.php']);
+		_paq.push(['setsiteid', '1']);
+		var d = document,
+			g = d.createelement('script'),
+			s = d.getelEmEntSbytagname('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parenTnode.inserTbefore(g, s);
+	})();
 	</script>
 	<!-- enD matomO code -->
 </body>

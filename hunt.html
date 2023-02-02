@@ -77,11 +77,12 @@
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GXN611CPK7"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
+	window.dataLayer = window.dataLayer || [];
 
-  		gtag('config', 'G-GXN611CPK7');
+	function gtag() { dataLayer.push(arguments); }
+	gtag('js', new Date());
+
+	gtag('config', 'G-GXN611CPK7');
 	</script>
 </head>
 
@@ -106,8 +107,11 @@
 						<li class="nav-item">
 							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
@@ -117,9 +121,6 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -161,7 +162,7 @@
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
-								<a class="dropdown-item" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+								<a class="dropdown-item" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List</a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
@@ -173,31 +174,23 @@
 			<div id="content">
 				<div id="presentationSecondary">
 					<br><br><br>
-					<h1><i class="fas fa-shield-alt" style="font-size: 36px;"></i> Hunt</h1>
+					<h1><i class="fas fa-bullseye" style="font-size: 36px;"></i> Hunt</h1>
 					<h2><em>Hunt IOCs in different environments</em></h2>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+
+				
 				<ol style="font-size: 16px;">
-					<li><a href="hunt.html#bash" style="font-family: 'Segoe UI', Arial, sans-serif;color: #0000EE;font-weight: 600;">Bash commands</a></li>
-					<li><a href="hunt.html#microsoftHunt" style="font-family: 'Segoe UI', Arial, sans-serif;color: #0000EE;font-weight: 600;">Microsoft Defender for Endpoint (MDE)</a></li>
+					<li><a href="hunt.html#bash" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Get IOCs using Bash & API</a></li>
+					<li><a href="hunt.html#microsoftHunt" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Hunting with Microsoft Defender for Endpoint (MDE)</a></li>
 				</ol>
 				<hr style="border: 1px solid black;" id="bash"> <!-- DIVIDER -->
-				<!--<h1 style="color: #737373;font-weight: 600;">Bash commands</h1> -->
-				<h1 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Bash commands</h1>
+				<h3 style="color:#1DA1F2;font-family: 'Rubik', sans-serif;">1. Get IOCs using Bash & API</h3>
 				<!-- -->
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Some bash commands to get IOCs directly from Tweets.</p>
-				<br>
-				<h5><b>1. Get IOCs by type</b> (url / domain / ip / sha256 / md5)</h5>
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command:</span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command1','2')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery2"><span id="textQuery2">Copy to clipboard </span><i id="iconQuery2" class="far fa-clipboard"></i></button>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Example - getting suspicious URLs from today:</span>
 				</div>
-				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{Feed}</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>{type}</b></span>") | .value' <span style="color:gray;"><b>> {Output File}</b></span></pre>
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting suspicious URLs from today:</span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command2','3')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery3"><span id="textQuery3">Copy to clipboard </span><i id="iconQuery3" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/today | jq -r '.[] | select(.type == "url") | .value' > suspicious_urls.dat</pre>
+				<pre id="command1" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>today</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>url</b></span>") | .value' > suspicious_urls.dat <i onclick="copyClipboard('#command1')" class="far fa-copy"></i></pre>
 				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>url1
 url2
@@ -206,17 +199,11 @@ url4
 ...</em></pre>
 				<!-- -->
 				<br>
-				<h5><b>2. Get IOCs by type and tag</b> (phishing / malware / CobaltStrike / ...) <i style="font-size: 14px;" class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="All tags can be seen at 'About' section"></i></h5>
+
 				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command:</span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command3','4')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery4"><span id="textQuery4">Copy to clipboard </span><i id="iconQuery4" class="far fa-clipboard"></i></button>
+					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Example - getting IPs related to CobaltStrike from this week:</span>
 				</div>
-				<pre id="command3" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{Feed}</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>{type}</b></span>") | select(.tags[] | contains("<span style="color:gray;"><b>{tag}</b></span>")) | .value' <span style="color:gray;"><b>> {Output File}</b></span></pre>
-				<div class="d-flex justify-content-between">
-					<span style="align-self: flex-end;" class="d-flex align-self-bottom">Command example - getting all IOCs related to CobaltStrike from today:</span>
-					<button class="btn btn-primary shadow-none" onclick="commandClipboard('#command4','5')" style="font-size: 12px;background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" id="buttonQuery5"><span id="textQuery5">Copy to clipboard </span><i id="iconQuery5" class="far fa-clipboard"></i></button>
-				</div>
-				<pre id="command4" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/today | jq -r '.[] | select(.type == "ip") | select(.tags[] | contains("CobaltStrike")) | .value' > iocs_CS.dat</pre>
+				<pre id="command2" style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">curl -s https://api.tweetfeed.live/v1/<span style="color:gray;"><b>week</b></span> | jq -r '.[] | select(.type == "<span style="color:gray;"><b>ip</b></span>") | select(.tags[] | contains("<span style="color:gray;"><b>CobaltStrike</b></span>")) | .value' > iocs_CS.dat <i onclick="copyClipboard('#command2')" class="far fa-copy"></i></pre>
 				Output example:
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2"><em>ip1
 ip2
@@ -226,9 +213,8 @@ ip4
 				<hr style="border: 1px solid black;" id="microsoftHunt"> <!-- DIVIDER -->
 				<!--<h1 style="font-family: 'Segoe UI', Arial, sans-serif;color: #737373;font-weight: 600;">Microsoft Defender for Endpoint (MDE) <a style="background-color: 
 #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h1> -->
-				<h1 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Microsoft Defender for Endpoint (MDE) <a style="background-color: 
-#00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h1>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Just examples, modify them as you wish.</p>
+				<h3 style="color:#1DA1F2;font-family: 'Rubik', sans-serif;">2. Hunting with Microsoft Defender for Endpoint (MDE) <a style="background-color: 
+#00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button">More info <i class="fas fa-external-link-alt"></i></a></h3>
 				<br>
 				<div class="row">
 					<div class="col">
@@ -394,7 +380,7 @@ union (
 					<div class="row">
 						<div class="col text-left d-none d-lg-block"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
 						<div class="col text-center">
-								<a style="font-size: 12px;padding:5px;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
 							</span></div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
@@ -454,41 +440,42 @@ union (
 	})
 	</script>
 	<script>
-	function commandClipboard(element, number) {
+	function copyClipboard(value) {
 		/* Get the text field */
-		var text = $(element).text()
-
-		var queryTextButton = $("#textQuery" + number).text()
-
-		/* Copy the text inside the text field */
+		var text = $(value).text()
 		navigator.clipboard.writeText(text);
 
-		$("#iconQuery" + number).removeClass("far fa-clipboard");
-		$("#iconQuery" + number).addClass("fas fa-check");
-		$("#textQuery" + number).text("Copied! ");
-		$("#buttonQuery" + number).css("background-color", "green");
+		//onclick="copyClipboard(\'' + value + '\')"
+		var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
+
+		$(aux).removeClass("far fa-copy");
+		$(aux).addClass("fas fa-check");
+		$(aux).css("color", "green");
 		setTimeout(
 			function() {
-				$("#iconQuery" + number).removeClass("fas fa-check");
-				$("#iconQuery" + number).addClass("far fa-clipboard");
-				$("#textQuery" + number).text(queryTextButton);
-				$("#buttonQuery" + number).css("background-color", "#4682B4");
+				$(aux).removeClass("fas fa-check");
+				$(aux).addClass("far fa-copy");
+				$(aux).css("color", "");
 			}, 1000);
 	}
 	</script>
 	<!-- Matomo -->
 	<script>
-	  var _paq = window._paq = window._paq || [];
-	  /* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
-	  _paq.push(['traCkpageview']);
-	  _paq.push(['enAblelinktracking']);
-	  (function() {
-	    var u="https://tweetfeedlive.matomo.cloud/";
-	    _Paq.pusH(['settrackerurl', u+'matomo.php']);
-	    _paq.push(['setsiteid', '1']);
-	    var d=document, g=d.createelement('script'), s=d.getelEmEntSbytagname('script')[0];
-	    g.async=true; g.src='//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js'; s.parenTnode.inserTbefore(g,s);
-	  })();
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setcuStomdimension" should be called before "tRackPageview" */
+	_paq.push(['traCkpageview']);
+	_paq.push(['enAblelinktracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_Paq.pusH(['settrackerurl', u + 'matomo.php']);
+		_paq.push(['setsiteid', '1']);
+		var d = document,
+			g = d.createelement('script'),
+			s = d.getelEmEntSbytagname('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parenTnode.inserTbefore(g, s);
+	})();
 	</script>
 	<!-- enD matomO code -->
 </body>

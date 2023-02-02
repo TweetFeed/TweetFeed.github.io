@@ -85,9 +85,9 @@
 
   		gtag('config', 'G-GXN611CPK7');
 	</script>
-		<!-- Matomo -->
+	<!-- Matomo -->
 	<script>
-	  var _paq = window._paq = window._paq || [];
+		var _paq = window._paq = window._paq || [];
 	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
 	  _paq.push(['trackPageView']);
 	  _paq.push(['enableLinkTracking']);
@@ -124,7 +124,10 @@
 							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="hunt.html"><i class="fas fa-shield-alt"></i> Hunt</a>
+							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
@@ -134,9 +137,6 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
@@ -383,7 +383,7 @@
 					<div class="row">
 						<div class="col text-left d-none d-lg-block"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbspLinkedIn</a></span></div>
 						<div class="col text-center">
-								<a style="font-size: 12px;padding:5px;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
 							</span></div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
@@ -550,7 +550,7 @@
 
 								var pic = new Image();
 								pic.src = 'pics/' + user + '.png';
-								
+
 								data[i][1] = '<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>';
 
 								var value = data[i][3];
@@ -661,7 +661,7 @@
 							pic.src = 'pics/' + user + '.png';
 
 							$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
-							
+
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
