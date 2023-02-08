@@ -4,7 +4,7 @@ label {
 	color:black;
 }
 
-span {
+span[id^='check'] {
 	font-size: 12px;
 	font-family: 'Rubik', sans-serif;
 	color:grey;

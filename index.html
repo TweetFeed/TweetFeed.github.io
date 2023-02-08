@@ -381,7 +381,7 @@
 						<div class="col text-left d-none d-lg-block"><span class="text-decoration-none">By <a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank">Daniel López</a></span></div>
 						<div class="col text-center">
 							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
-							</div>
+						</div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
 				</div>
@@ -551,25 +551,6 @@
 								data[i][1] = '<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>';
 
 								var value = data[i][3];
-								//data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value;
-
-								// Add external link in URLs
-								//if (type == "url") {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <a rel="ugc nofollow" style="color:blue;" target="_blank" href="' + value + '">' + value + '</a>'
-								//} else if (type == "domain") {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <a rel="ugc nofollow" style="color:blue;" target="_blank" href="http://' + value + '">' + value + '</a>'
-								//} else {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value;
-								//}
-
-								// Add external link in URLs (v2: avoid clicking directly in the link)
-								//if (type == "url" || type == "ip") {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + ' <a rel="ugc nofollow" class="valueLink" target="_blank" href="' + value + '"> <i class="fas fa-external-link-alt"></i></a>'
-								//} else if (type == "domain" || type == "ip") {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + ' <a rel="ugc nofollow" class="valueLink" target="_blank" href="http://' + value + '"> <i class="fas fa-external-link-alt"></i></a>'
-								//} else {
-								//	data[i][3] = '<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value;
-								//}
 
 								// Add external link in URLs (v3: no direct access)
 								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
@@ -577,8 +558,6 @@
 
 								var tweet_url = data[i][5];
 								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
-
-								//data[i][5] = '<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
 								// Add VT
 								if (value.startsWith("http://")) {
@@ -589,15 +568,6 @@
 								value = value.split("/")[0]
 
 								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
-
-								// Abuse.ch
-								//if (type == "sha256") {
-								//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>' + '<br><a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://bazaar.abuse.ch/sample/' + value + '"><img loading="lazy" id="abuse_ch" src="img/abuse_ch.png" alt="abuse_ch logo"> <i style="color: #00465B;" class="fas fa-external-link-alt"></i></a>');
-								//} else {
-								//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
-								//}
-
-								//data[i].push('<a target="_blank" class="btn btn-primary twitterLink" style="color:white;font-size: 13px;background-color: #0098d2;border: 1px solid black;font-family: \'Rubik\', sans-serif;font-weight: 400;" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vtWhite.png" alt="VirusTotal"> <i style="color: white;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -635,13 +605,6 @@
 							var type = data[i][2];
 
 							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
-
-							// Abuse.ch
-							//if (type == "sha256") {
-							//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>' + '<br><a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://bazaar.abuse.ch/sample/' + value + '"><img loading="lazy" id="abuse_ch" src="img/abuse_ch.png" alt="abuse_ch logo"> <i style="color: #00465B;" class="fas fa-external-link-alt"></i></a>');
-							//} else {
-							//	data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
-							//}
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
@@ -659,27 +622,8 @@
 
 							$(this.node()).find('td').eq(1).html('<a class="twitterUser" style="text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '"><button style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;font-size:12px;" type="button" class="btn btn-primary btn-sm rounded"><img loading="lazy" src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22"> ' + user + '</button></a>');
 
-
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
-
-							// Add external link in URLs
-							//if (type == "url") {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <a rel="ugc nofollow" style="color:blue;" target="_blank" href="' + value + '">' + value + '</a>')
-							//} else if (type == "domain") {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <a rel="ugc nofollow" style="color:blue;" target="_blank" href="http://' + value + '">' + value + '</a>')
-							//} else {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value);
-							//}
-
-							// Add external link in URLs (v2: avoid clicking directly in the link)
-							//if (type == "url") {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <b>' + value + '</b> <a class="valueLink" rel="ugc nofollow" style="color:#62a6ec;" target="_blank" href="' + value + '"> <i class="fas fa-external-link-alt"></i> </a>')
-							//} else if (type == "domain" || type == "ip") {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <b>' + value + '</b> <a class="valueLink" rel="ugc nofollow" style="color:#62a6ec;" target="_blank" href="http://' + value + '"> <i class="fas fa-external-link-alt"></i></a>')
-							//} else {
-							//	$(this.node()).find('td').eq(3).html('<i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> <b>' + value + '</b>');
-							//}
 
 							// Add external link in URLs (v3: no direct access)
 							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>')
@@ -706,27 +650,6 @@
 			for (var i = 0; i < jsonArr.length; i++) {
 				type[jsonArr[i][2]]++;
 			}
-
-			/*var myvar = '<tbody><tr>' +
-			    '<td style="padding: 4px;">URLs</td>' +
-			    '<td style="padding: 4px;" class="number-dynamic">' + type['url'] + '</td>' +
-			    '</tr>' +
-			    '<tr>' +
-			    '<td style="padding: 4px;">Domains</td>' +
-			    '<td style="padding: 4px;" class="number-dynamic">' + type['domain'] + '</td>' +
-			    '</tr>' +
-			    '<tr>' +
-			    '<td style="padding: 4px;">IPs</td>' +
-			    '<td style="padding: 4px;" class="number-dynamic">' + type['ip'] + '</td>' +
-			    '</tr>' +
-			    '<tr>' +
-			    '<td style="padding: 4px;">SHA256</td>' +
-			    '<td style="padding: 4px;" class="number-dynamic">' + type['sha256'] + '</td>' +
-			    '</tr>' +
-			    '<tr>' +
-			    '<td style="padding: 4px;">MD5</td>' +
-			    '<td style="padding: 4px;" class="number-dynamic">' + type['md5'] + '</td>' +
-			    '</tr></tbody>';*/
 
 			var myvar = '<div class="col">' +
 				'<span style="font-size: 16px;font-weight: 550;font-family: \'Rubik\', sans-serif;color:black;">' + type['url'] + '</span>' +
