@@ -17,6 +17,8 @@
 	<meta name="twitter:url" content="https://tweetfeed.live/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.jpg">
 	<meta name="twitter:creator" content="@0xDanielLopez">
+	<!-- Preconnect -->
+	<link rel="preconnect" href="//fonts.googleapis.com">
 	<!-- Custom fonts for this template -->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -76,25 +78,30 @@
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GXN611CPK7"></script>
 	<script>
-		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
+	window.dataLayer = window.dataLayer || [];
 
-  		gtag('config', 'G-GXN611CPK7');
+	function gtag() { dataLayer.push(arguments); }
+	gtag('js', new Date());
+
+	gtag('config', 'G-GXN611CPK7');
 	</script>
 	<!-- Matomo -->
 	<script>
-		var _paq = window._paq = window._paq || [];
-	  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
-	  (function() {
-	    var u="https://tweetfeedlive.matomo.cloud/";
-	    _paq.push(['setTrackerUrl', u+'matomo.php']);
-	    _paq.push(['setSiteId', '1']);
-	    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-	    g.async=true; g.src='//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
-	  })();
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_paq.push(['setTrackerUrl', u + 'matomo.php']);
+		_paq.push(['setSiteId', '1']);
+		var d = document,
+			g = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parentNode.insertBefore(g, s);
+	})();
 	</script>
 	<!-- End Matomo Code -->
 	<script type="application/ld+json">
