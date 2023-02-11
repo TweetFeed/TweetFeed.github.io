@@ -28,44 +28,80 @@
 	<!-- Microsoft -->
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<style>
-		.url{
-            background-color: #c8f6fd; 
-        }
-        .domain{
-            background-color: #a0dde6;  /* #34e3a4 */
-        }
-        .ip{
-            background-color: #34e3a4; 
-        }            
-        .sha256{
-            background-color: #ffc591; /*Red:  #EAC56E*/
-        }
-        .md5{
-            background-color: #FFCC99; /* #ead18f */
-        }
-        @-webkit-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-moz-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-o-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .highlight td{
-            -webkit-animation: fadein 2s; /* Safari 4+ */
-            -moz-animation:    fadein 2s; /* Fx 5+ */
-            -o-animation:      fadein 2s; /* Opera 12+ */
-            animation:         fadein 2s; /* IE 10+ */
-        }
-    </style>
+	.url {
+		background-color: #c8f6fd;
+	}
+
+	.domain {
+		background-color: #a0dde6;
+		/* #34e3a4 */
+	}
+
+	.ip {
+		background-color: #34e3a4;
+	}
+
+	.sha256 {
+		background-color: #ffc591;
+		/*Red:  #EAC56E*/
+	}
+
+	.md5 {
+		background-color: #FFCC99;
+		/* #ead18f */
+	}
+
+	@-webkit-keyframes highlight {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	@-moz-keyframes highlight {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	@-o-keyframes highlight {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes highlight {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 1;
+		}
+	}
+
+	.highlight td {
+		-webkit-animation: fadein 2s;
+		/* Safari 4+ */
+		-moz-animation: fadein 2s;
+		/* Fx 5+ */
+		-o-animation: fadein 2s;
+		/* Opera 12+ */
+		animation: fadein 2s;
+		/* IE 10+ */
+	}
+	</style>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GXN611CPK7"></script>
 	<script>
@@ -299,338 +335,339 @@
 			</footer>
 			<!-- End of Footer -->
 		</div>
-		<!-- End of Content Wrapper -->
-		<!-- End of Page Wrapper -->
-		<!-- Scroll to Top Button-->
-		<!-- Logout Modal-->
-		<!-- Bootstrap core JavaScript-->
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-		<!-- Core plugin JavaScript-->
-		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-		<!-- Custom scripts for all pages-->
-		<script src="js/sb-admin-2.min.js"></script>
-		<!-- Page level plugins -->
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<!-- Export -->
-		<script src="js/demo/datatables-demo.js"></script>
-		<!-- Page level custom scripts -->
-		<script>
-		$(function() {
-			let autorefresh = 1;
-			let init = 1;
-			let flag_new = 0;
-			$('#customSwitch1').click(function() {
-				if (autorefresh) {
-					// Disabled
-					autorefresh = 0;
-					$(this).text('Enable Auto Refresh');
-					clearInterval(timerAux);
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	$(function() {
+		let autorefresh = 1;
+		let init = 1;
+		let flag_new = 0;
+		$('#customSwitch1').click(function() {
+			if (autorefresh) {
+				// Disabled
+				autorefresh = 0;
+				$(this).text('Enable Auto Refresh');
+				clearInterval(timerAux);
+			} else {
+				// Enabled
+				autorefresh = 1;
+				$(this).text('Disable Auto Refresh');
+				init = 1;
+				progressBar();
+				loadData();
+
+				table.rows().every(function() {
+
+					$(this.node()).addClass('newRow');
+				});
+				animationNew();
+				timerAux = setInterval(timerCycle, 6000);
+			}
+		})
+
+		let table = $('#dataTable').DataTable();
+		loadData();
+		progressBar();
+		var timerAux = setInterval(timerCycle, 6000);
+
+		function timerCycle() {
+			if (autorefresh) {
+				loadData();
+				progressBar();
+			}
+		}
+
+		function animation() {
+			//$('.today', '.col').animate({
+			//    opacity: 'toggle'
+			//});
+
+			$('.today', '.col').hide();
+			$('.today', '.col').fadeIn(1000, "linear");
+		}
+
+		function animationNew() {
+			//$('.newRow').animate({
+			//    opacity: 'toggle'
+			//}, "linear");
+			$('.newRow').hide();
+			$('.newRow').fadeIn(1000, "linear");
+		}
+
+		function progressBar() {
+			var timeleft = 5;
+			var downloadTimer = setInterval(function() {
+				if (timeleft <= 0) {
+					clearInterval(downloadTimer);
+				}
+				if (autorefresh == 0) {
+					timeleft = 5;
+					clearInterval(downloadTimer);
+					document.getElementById("progressBar").value = 0;
 				} else {
-					// Enabled
-					autorefresh = 1;
-					$(this).text('Disable Auto Refresh');
-					init = 1;
-					progressBar();
-					loadData();
-
-					table.rows().every(function() {
-
-						$(this.node()).addClass('newRow');
-					});
-					animationNew();
-					timerAux = setInterval(timerCycle, 6000);
+					document.getElementById("progressBar").value = 5 - timeleft;
 				}
-			})
+				timeleft -= 1;
+			}, 1000);
+		}
+		var loaddatacall = 0;
+		var olddate = '';
 
-			let table = $('#dataTable').DataTable();
-			loadData();
-			progressBar();
-			var timerAux = setInterval(timerCycle, 6000);
-
-			function timerCycle() {
-				if (autorefresh) {
-					loadData();
-					progressBar();
-				}
+		function loadData() {
+			if (init) {
+				animation();
 			}
+			$.ajax({
+				type: 'GET',
+				context: document.body,
+				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				success: function(response) {
+					var data = csvJSON(response);
+					var last_date = data.at(-1)[0];
+					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
 
-			function animation() {
-				//$('.today', '.col').animate({
-				//    opacity: 'toggle'
-				//});
+					$("#lastDate").text("Last update: " + date1);
 
-				$('.today', '.col').hide();
-				$('.today', '.col').fadeIn(1000, "linear");
-			}
+					if (loaddatacall > 0) {
 
-			function animationNew() {
-				//$('.newRow').animate({
-				//    opacity: 'toggle'
-				//}, "linear");
-				$('.newRow').hide();
-				$('.newRow').fadeIn(1000, "linear");
-			}
+						for (var i = data.length - 20; i < data.length; i++) {
+							if (olddate < data[i][0]) {
+								console.log('old:' + olddate + '------- New:' + data[i][0]);
+								var type = data[i][2];
 
-			function progressBar() {
-				var timeleft = 5;
-				var downloadTimer = setInterval(function() {
-					if (timeleft <= 0) {
-						clearInterval(downloadTimer);
-					}
-					if (autorefresh == 0) {
-						timeleft = 5;
-						clearInterval(downloadTimer);
-						document.getElementById("progressBar").value = 0;
-					} else {
-						document.getElementById("progressBar").value = 5 - timeleft;
-					}
-					timeleft -= 1;
-				}, 1000);
-			}
-			var loaddatacall = 0;
-			var olddate = '';
+								var user = data[i][1];
+								data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>'
 
-			function loadData() {
-				if (init) {
-					animation();
-				}
-				$.ajax({
-					type: 'GET',
-					context: document.body,
-					url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
-					success: function(response) {
-						var data = csvJSON(response);
-						var last_date = data.at(-1)[0];
-						var date1 = Date.parse(last_date).toString("MMMM dS, yyyy (HH:mm:ss) UTC");
-
-						$("#lastDate").text("Last update: " + date1);
-
-						if (loaddatacall > 0) {
-
-							for (var i = data.length - 20; i < data.length; i++) {
-								if (olddate < data[i][0]) {
-									console.log('old:' + olddate + '------- New:' + data[i][0]);
-									var type = data[i][2];
-
-									var user = data[i][1];
-									data[i][1] = '<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>'
-
-									var value = data[i][3];
-									// data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
-
-									var tweet_url = data[i][5];
-									data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
-
-									// Add VT
-
-									if (value.startsWith("http://")) {
-										value = value.replace("http://", "");
-									} else if (value.startsWith("https://")) {
-										value = value.replace("https://", "");
-									}
-									data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
-
-									var node = table.row.add(data[i]).draw().node();
-									$(node).addClass('highlight');
-									$(node).addClass('newRow');
-									$(node).addClass(type);
-									flag_new = 1;
-								}
-
-							}
-
-							if (flag_new && init == 0) {
-								animation(); // Animate card-box
-								animationNew(); // Animate new rows added
-							}
-
-							setTimeout(function() {
-								// Here entry always
-								$('tr').removeClass('highlight');
-								$('tr').removeClass('newRow');
-								flag_new = 0;
-							}, 1000);
-						} else {
-
-							for (var i = 0; i < data.length; i++) {
-								// Add VT
 								var value = data[i][3];
+								// data[i][3] = '<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>'
+
+								var tweet_url = data[i][5];
+								data[i][5] = '<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>'
+
+								// Add VT
 
 								if (value.startsWith("http://")) {
 									value = value.replace("http://", "");
 								} else if (value.startsWith("https://")) {
 									value = value.replace("https://", "");
 								}
-
 								data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+
+								var node = table.row.add(data[i]).draw().node();
+								$(node).addClass('highlight');
+								$(node).addClass('newRow');
+								$(node).addClass(type);
+								flag_new = 1;
 							}
 
-							table.rows.add(data).order([0, 'desc']).draw();
-							table.rows().every(function() {
-
-								$(this.node()).addClass('newRow');
-
-								var col = $(this.node()).find('td').eq(2).text().trim();
-								$(this.node()).toggleClass(col);
-
-								var user = $(this.node()).find('td').eq(1).text().trim();
-								$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
-
-								var value = $(this.node()).find('td').eq(3).text().trim();
-								// $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
-
-								var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-								$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
-
-							})
-							animationNew();
 						}
-						olddate = data[data.length - 1][0];
-						countTypes('.today', data);
-						loaddatacall++;
-					},
-					cache: false
-				});
-				//                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function (response) {
-				//                                                        })
-				init = 0;
-				loaddatacall++;
-			}
 
-			function countTypes(className, jsonArr) {
-				var type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
-				for (var i = 0; i < jsonArr.length; i++) {
-					type[jsonArr[i][2]]++;
-				}
-
-				/*var myvar = '<tbody><tr>' +
-				    '<td style="padding: 4px;">URLs</td>' +
-				    '<td style="padding: 4px;" class="number-dynamic">' + type['url'] + '</td>' +
-				    '</tr>' +
-				    '<tr>' +
-				    '<td style="padding: 4px;">Domains</td>' +
-				    '<td style="padding: 4px;" class="number-dynamic">' + type['domain'] + '</td>' +
-				    '</tr>' +
-				    '<tr>' +
-				    '<td style="padding: 4px;">IPs</td>' +
-				    '<td style="padding: 4px;" class="number-dynamic">' + type['ip'] + '</td>' +
-				    '</tr>' +
-				    '<tr>' +
-				    '<td style="padding: 4px;">SHA256</td>' +
-				    '<td style="padding: 4px;" class="number-dynamic">' + type['sha256'] + '</td>' +
-				    '</tr>' +
-				    '<tr>' +
-				    '<td style="padding: 4px;">MD5</td>' +
-				    '<td style="padding: 4px;" class="number-dynamic">' + type['md5'] + '</td>' +
-				    '</tr></tbody>';*/
-
-				var myvar = '<div class="col">' +
-					'<h5 style="text-align: center;font-size: 20px;"><b>' + type['url'] + '</b></h5>' +
-					'</div>' +
-					'<div class="col">' +
-					'<h5 style="text-align: center;font-size: 20px;"><b>' + type['domain'] + '</b></h5>' +
-					'</div>' +
-					'<div class="col">' +
-					'<h5 style="text-align: center;font-size: 20px;"><b>' + type['ip'] + '</b></h5>' +
-					'</div>' +
-					'<div class="col">' +
-					'<h5 style="text-align: center;font-size: 20px;"><b>' + type['sha256'] + '</b></h5>' +
-					'</div>' +
-					'<div class="col">' +
-					'<h5 style="text-align: center;font-size: 20px;"><b>' + type['md5'] + '</b></h5>' +
-					'</div>'
-				$(className).html(myvar);
-
-				let p_url = type['url'];
-				let p_domain = type['domain'];
-				let p_ip = type['ip'];
-				let p_sha256 = type['sha256'];
-				let p_md5 = type['md5'];
-			}
-
-			function csvJSON(csv) {
-
-				var lines = csv.split("\n");
-				var result = [];
-				//for (var i = lines.length - 1; i >= 0; i--) {
-				for (var i = 0; i < lines.length; i++) {
-					var obj = [];
-					var currentline = lines[i].split(",");
-					if (currentline.length > 1) {
-						for (var j = 0; j < currentline.length; j++) {
-							obj.push(currentline[j]);
+						if (flag_new && init == 0) {
+							animation(); // Animate card-box
+							animationNew(); // Animate new rows added
 						}
-						result.push(obj);
+
+						setTimeout(function() {
+							// Here entry always
+							$('tr').removeClass('highlight');
+							$('tr').removeClass('newRow');
+							flag_new = 0;
+						}, 1000);
+					} else {
+
+						for (var i = 0; i < data.length; i++) {
+							// Add VT
+							var value = data[i][3];
+
+							if (value.startsWith("http://")) {
+								value = value.replace("http://", "");
+							} else if (value.startsWith("https://")) {
+								value = value.replace("https://", "");
+							}
+
+							data[i].push('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img id="virustotal" src="img/vt.png" alt="VirusTotal"> <i class="fas fa-external-link-alt"></i></a>');
+						}
+
+						table.rows.add(data).order([0, 'desc']).draw();
+						table.rows().every(function() {
+
+							$(this.node()).addClass('newRow');
+
+							var col = $(this.node()).find('td').eq(2).text().trim();
+							$(this.node()).toggleClass(col);
+
+							var user = $(this.node()).find('td').eq(1).text().trim();
+							$(this.node()).find('td').eq(1).html('<a style="text-decoration: none;" target="_blank" href="https://twitter.com/' + user + '">' + user + '</a>');
+
+							var value = $(this.node()).find('td').eq(3).text().trim();
+							// $(this.node()).find('td').eq(3).html('<a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '">' + value + '</a>');
+
+							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
+							$(this.node()).find('td').eq(5).html('<a style="text-decoration: none;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a> <a style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"></a>');
+
+						})
+						animationNew();
 					}
+					olddate = data[data.length - 1][0];
+					countTypes('.today', data);
+					loaddatacall++;
+				},
+				cache: false
+			});
+			//                                                        $.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function (response) {
+			//                                                        })
+			init = 0;
+			loaddatacall++;
+		}
 
+		function countTypes(className, jsonArr) {
+			var type = { 'sha256': 0, 'ip': 0, 'url': 0, 'domain': 0, 'md5': 0 };
+			for (var i = 0; i < jsonArr.length; i++) {
+				type[jsonArr[i][2]]++;
+			}
+
+			/*var myvar = '<tbody><tr>' +
+			    '<td style="padding: 4px;">URLs</td>' +
+			    '<td style="padding: 4px;" class="number-dynamic">' + type['url'] + '</td>' +
+			    '</tr>' +
+			    '<tr>' +
+			    '<td style="padding: 4px;">Domains</td>' +
+			    '<td style="padding: 4px;" class="number-dynamic">' + type['domain'] + '</td>' +
+			    '</tr>' +
+			    '<tr>' +
+			    '<td style="padding: 4px;">IPs</td>' +
+			    '<td style="padding: 4px;" class="number-dynamic">' + type['ip'] + '</td>' +
+			    '</tr>' +
+			    '<tr>' +
+			    '<td style="padding: 4px;">SHA256</td>' +
+			    '<td style="padding: 4px;" class="number-dynamic">' + type['sha256'] + '</td>' +
+			    '</tr>' +
+			    '<tr>' +
+			    '<td style="padding: 4px;">MD5</td>' +
+			    '<td style="padding: 4px;" class="number-dynamic">' + type['md5'] + '</td>' +
+			    '</tr></tbody>';*/
+
+			var myvar = '<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['url'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['domain'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['ip'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['sha256'] + '</b></h5>' +
+				'</div>' +
+				'<div class="col">' +
+				'<h5 style="text-align: center;font-size: 20px;"><b>' + type['md5'] + '</b></h5>' +
+				'</div>'
+			$(className).html(myvar);
+
+			let p_url = type['url'];
+			let p_domain = type['domain'];
+			let p_ip = type['ip'];
+			let p_sha256 = type['sha256'];
+			let p_md5 = type['md5'];
+		}
+
+		function csvJSON(csv) {
+
+			var lines = csv.split("\n");
+			var result = [];
+			//for (var i = lines.length - 1; i >= 0; i--) {
+			for (var i = 0; i < lines.length; i++) {
+				var obj = [];
+				var currentline = lines[i].split(",");
+				if (currentline.length > 1) {
+					for (var j = 0; j < currentline.length; j++) {
+						obj.push(currentline[j]);
+					}
+					result.push(obj);
 				}
-				return result;
+
 			}
-		})
-		</script>
-		<script>
-		function downloadCSV(csv, filename) {
-			var csvFile;
-			var downloadLink;
-			// CSV file
-			csvFile = new Blob([csv], { type: "text/csv" });
-			// Download link
-			downloadLink = document.createElement("a");
-			// File name
-			downloadLink.download = filename;
-			// Create a link to the file
-			downloadLink.href = window.URL.createObjectURL(csvFile);
-			// Hide download link
-			downloadLink.style.display = "none";
-			// Add the link to DOM
-			document.body.appendChild(downloadLink);
-			// Click download link
-			downloadLink.click();
+			return result;
+		}
+	})
+	</script>
+	<script>
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+		// CSV file
+		csvFile = new Blob([csv], { type: "text/csv" });
+		// Download link
+		downloadLink = document.createElement("a");
+		// File name
+		downloadLink.download = filename;
+		// Create a link to the file
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+		// Hide download link
+		downloadLink.style.display = "none";
+		// Add the link to DOM
+		document.body.appendChild(downloadLink);
+		// Click download link
+		downloadLink.click();
+	}
+
+	function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+		for (var i = 2; i < rows.length; i++) {
+			var row = [],
+				cols = rows[i].querySelectorAll("td, th");
+			for (var j = 0; j < cols.length; j++)
+				row.push(cols[j].innerText);
+			csv.push(row.join(","));
 		}
 
-		function exportTableToCSV(filename) {
-			var csv = [];
-			var rows = document.querySelectorAll("table tr");
-			for (var i = 2; i < rows.length; i++) {
-				var row = [],
-					cols = rows[i].querySelectorAll("td, th");
-				for (var j = 0; j < cols.length; j++)
-					row.push(cols[j].innerText);
-				csv.push(row.join(","));
-			}
-
-			// Download CSV file
-			downloadCSV(csv.join("\n"), filename);
-		}
-		</script>
-		<script src="js/date.js"></script>
-		<script>
-		$(".nav a").on("click", function() {
-			$(".nav").find(".active").removeClass("active");
-			$(this).parent().addClass("active");
-		});
-		</script>
-		<!-- Matomo -->
-		<script>
-		var _paq = window._paq = window._paq || [];
-		/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-		_paq.push(['trackPageView']);
-		_paq.push(['enableLinkTracking']);
-		(function() {
-			var u = "https://tweetfeedlive.matomo.cloud/";
-			_paq.push(['setTrackerUrl', u + 'matomo.php']);
-			_paq.push(['setSiteId', '1']);
-			var d = document,
-				g = d.createElement('script'),
-				s = d.getElementsByTagName('script')[0];
-			g.async = true;
-			g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
-			s.parentNode.insertBefore(g, s);
-		})();
-		</script>
-		<!-- End Matomo Code -->
+		// Download CSV file
+		downloadCSV(csv.join("\n"), filename);
+	}
+	</script>
+	<script src="js/date.js"></script>
+	<script>
+	$(".nav a").on("click", function() {
+		$(".nav").find(".active").removeClass("active");
+		$(this).parent().addClass("active");
+	});
+	</script>
+	<!-- Matomo -->
+	<script>
+	var _paq = window._paq = window._paq || [];
+	/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+	_paq.push(['trackPageView']);
+	_paq.push(['enableLinkTracking']);
+	(function() {
+		var u = "https://tweetfeedlive.matomo.cloud/";
+		_paq.push(['setTrackerUrl', u + 'matomo.php']);
+		_paq.push(['setSiteId', '1']);
+		var d = document,
+			g = d.createElement('script'),
+			s = d.getElementsByTagName('script')[0];
+		g.async = true;
+		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js';
+		s.parentNode.insertBefore(g, s);
+	})();
+	</script>
+	<!-- End Matomo Code -->
 </body>
 
 </html>
