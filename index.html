@@ -367,7 +367,7 @@
 											<th>Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
 											<th>Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
 											<th><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
-											<th><img loading="lazy" src="img/vt.png" alt="VirusTotal logo"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
+											<th><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
 								</table>
@@ -590,7 +590,7 @@
 									value = encodeURIComponent(value);
 								}
 
-								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -632,7 +632,7 @@
 								value = encodeURIComponent(value);
 							}
 
-							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" id="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
