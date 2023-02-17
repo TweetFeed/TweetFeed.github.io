@@ -28,7 +28,7 @@ input {
     background: red;
 }
 
-#virustotal {
+.virustotal {
   width: 16px;
   height: auto;
 }
