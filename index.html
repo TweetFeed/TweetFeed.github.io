@@ -648,7 +648,7 @@
 							var pic = new Image();
 							pic.src = 'pics/' + user + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="" style="border-radius: 50%" width="22" height="22">&nbsp;' + user + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="" width="22" height="22">&nbsp;' + user + '</a>');
 
 							var type = $(this.node()).find('td').eq(2).text().trim();
 							var value = $(this.node()).find('td').eq(3).text().trim();
