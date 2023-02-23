@@ -1,7 +1,5 @@
 table {
-  border: 1px solid black;
   table-layout: fixed;
-  width: 100px;
 }
 
 .table tr,
@@ -9,9 +7,63 @@ table {
   text-align: center;
   width: 10px;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 0.8vw;
   font-family: 'Rubik', sans-serif;
   color: #474747;
+}
+
+.twitterUser {
+  font-size: 0.8vw;
+}
+
+.table td.tableTags {
+  font-size: 0.72vw;
+}
+
+/* Styles for screens that are 992px or smaller */
+@media (max-width: 992px) {
+
+  table {
+    table-layout: width:95%;
+  }
+
+  .table tr,
+  .table td {
+    text-align: center;
+    width: 10px;
+    vertical-align: middle;
+    font-size: 2vw;
+    font-family: 'Rubik', sans-serif;
+    color: #474747;
+  }
+
+  .twitterUser {
+    font-size: 1.6vw;
+  }
+
+  .col-sm-double {
+    flex-basis: 66.66667%;
+    max-width: 66.66667%;
+  }
+
+  .col-sm-half {
+    flex-basis: 33.33333%;
+    max-width: 33.33333%;
+  }
+
+  .col-sm-tweet {
+    flex-basis: 15.33333%;
+    max-width: 15.33333%;
+  }
+
+  .tableTags {
+    font-size: 2vw;
+  }
+
+  .page-link {
+    font-size: 1.5vw;
+  }
+
 }
 
 input {
@@ -20,12 +72,12 @@ input {
   width: 105%;
 }
 
-.green { 
-    background: green;
+.green {
+  background: green;
 }
 
 .red {
-    background: red;
+  background: red;
 }
 
 .virustotal {

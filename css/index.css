@@ -120,9 +120,6 @@ html, body {
     color: blue !important;
 }
 
-.twitterUser:hover {
-    color: black !important;
-}
 
 .buttonHover:hover {
     background: #009ad6 !important;
