@@ -13,8 +13,29 @@ table {
 }
 
 .twitterUser {
-  font-size: 0.8vw;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Rubik", sans-serif;
+  font-size: 0.65vw;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: #1DA1F2;
+  border: 2px solid black;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  max-width: 140px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
 }
+
+.twitterUser:hover {
+  background-color: #0d8ecf;
+  border-color: #0d8ecf;
+}
+
 
 .table td.tableTags {
   font-size: 0.72vw;
