@@ -10,7 +10,7 @@ html, body {
 }
 
 #content,#contentMobile {
-    min-height: calc(100vh - 170px);
+    /* min-height: calc(100vh - 170px);  */
     /* 80px header + 40px footer = 120px  */
     width: 80%;
     margin-left: 10%;
