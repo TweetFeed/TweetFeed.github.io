@@ -16,7 +16,7 @@ table {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.65vw;
   font-weight: 600;
   color: #fff;
@@ -40,7 +40,10 @@ table {
   border-radius: 50%;
   border: 1px solid grey;
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  width: 22px;
+  height: 22px;
 }
+
 
 
 .table td.tableTags {
@@ -89,6 +92,11 @@ table {
 
   .page-link {
     font-size: 1.5vw;
+  }
+
+  .twitterUser img {
+    width: 10%;
+    height: auto;
   }
 
 }
