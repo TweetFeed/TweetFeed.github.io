@@ -72,8 +72,6 @@ table th:nth-child(7) {
   height: 22px;
 }
 
-
-
 .table td.tableTags {
   font-size: 0.72vw;
 }
@@ -83,6 +81,26 @@ table th:nth-child(7) {
 
   table {
     table-layout: width:95%;
+  }
+
+  table th:nth-child(1),
+  table th:nth-child(3),
+  table th:nth-child(5),
+  table th:nth-child(7) {
+    width: 0%;
+    visibility: hidden;
+  }
+
+  table th:nth-child(2) {
+    width: 30%;
+  }
+  
+  table th:nth-child(4) {
+    width: 60%;
+  }
+  
+  table th:nth-child(6) {
+    width: 10%;
   }
 
   .table tr,
@@ -97,21 +115,6 @@ table th:nth-child(7) {
 
   .twitterUser {
     font-size: 1.8vw;
-  }
-
-  .col-sm-double {
-    flex-basis: 66.66667%;
-    max-width: 66.66667%;
-  }
-
-  .col-sm-half {
-    flex-basis: 33.33333%;
-    max-width: 33.33333%;
-  }
-
-  .col-sm-tweet {
-    flex-basis: 15.33333%;
-    max-width: 15.33333%;
   }
 
   .tableTags {
