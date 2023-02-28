@@ -623,7 +623,8 @@
 								value = encodeURIComponent(value);
 								value = encodeURIComponent(value);
 							}
-
+							var value = data[i][3];
+							
 							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 						}
 
