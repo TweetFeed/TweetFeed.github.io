@@ -21,7 +21,7 @@ html, body {
     text-align: center;
 }
 
-#presentation h1,#presentationMobile h1 {
+.toph1 {
     font-size: 60px;
     /*font-family: 'Montserrat', sans-serif;*/
     font-family: 'Alegreya Sans SC', sans-serif;
