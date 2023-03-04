@@ -354,7 +354,7 @@
 									<thead>
 										<tr>
 											<th class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
-											<th class="col-sm-4 col-sm-half text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
+											<th class="d-none d-lg-table-cell text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
 											<th class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
 											<th class="col-sm-7 col-sm-double text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
 											<th class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
@@ -390,7 +390,7 @@
 					<div class="row">
 						<div class="col text-left d-none d-md-block"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener"><i class="fab fa-twitter"></i>&nbsp;Follow me on Twitter!</a></div>
 						<div class="col text-center">
-							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2;border:1px solid black;" href="https://tweetfeed.live/changelog.html" class="btn btn-info"><b>Changelog</b></a>
 						</div>
 						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
 					</div>
@@ -583,6 +583,7 @@
 								// Only show: User (1), Value (3) and Twitter (5)
 								// Hide: Date (0), Type (2), Tags (4) and VT (6)
 								$(node).find('td:eq(0)').addClass('d-none d-lg-table-cell');
+								$(node).find('td:eq(1)').addClass('d-none d-lg-table-cell');
 								$(node).find('td:eq(2)').addClass('d-none d-lg-table-cell');
 								$(node).find('td:eq(4)').addClass('d-none d-lg-table-cell tableTags');
 								$(node).find('td:eq(6)').addClass('d-none d-lg-table-cell');
@@ -655,6 +656,7 @@
 							// Only show: User (1), Value (3) and Twitter (5)
 							// Hide: Date (0), Type (2), Tags (4) and VT (6)
 							$(this.node()).find('td').eq(0).addClass('d-none d-lg-table-cell');
+							$(this.node()).find('td').eq(1).addClass('d-none d-lg-table-cell');
 							$(this.node()).find('td').eq(2).addClass('d-none d-lg-table-cell');
 							$(this.node()).find('td').eq(4).addClass('d-none d-lg-table-cell tableTags');
 							$(this.node()).find('td').eq(6).addClass('d-none d-lg-table-cell');
