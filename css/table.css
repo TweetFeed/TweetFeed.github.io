@@ -103,6 +103,18 @@ table th:nth-child(7) {
     width: 10%;
   }
 
+  .tableResearchers table th:nth-child(1) {
+    width: 10%;
+  }
+
+  .tableResearchers table th:nth-child(2) {
+    width: 80%;
+  }
+
+  .tableResearchers table th:nth-child(3) {
+    width: 10%;
+  }
+
 
   .table tr,
   .table td {
