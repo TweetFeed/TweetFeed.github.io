@@ -366,7 +366,7 @@
 											<th class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
 											<th class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
 											<th class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
-											<th class="text-nowrap"><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
+											<th class="d-none d-lg-table-cell text-nowrap"><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
 											<th class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
@@ -568,7 +568,7 @@
 								var pic = new Image();
 								pic.src = 'pics/' + user + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="">&nbsp;' + user + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>';
 
 								// Add external link in URLs (v3: no direct access)
 								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
@@ -593,6 +593,7 @@
 								$(node).find('td:eq(0)').addClass('d-none d-lg-table-cell');
 								$(node).find('td:eq(2)').addClass('d-none d-lg-table-cell');
 								$(node).find('td:eq(4)').addClass('d-none d-lg-table-cell tableTags');
+								$(node).find('td:eq(5)').addClass('d-none d-lg-table-cell');
 								$(node).find('td:eq(6)').addClass('d-none d-lg-table-cell');
 
 								flag_new = 1;
@@ -648,7 +649,7 @@
 							var pic = new Image();
 							pic.src = 'pics/' + user + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="">&nbsp;' + user + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>');
 
 							var type = $(this.node()).find('td').eq(2).text().trim();
 							var value = $(this.node()).find('td').eq(3).text().trim();
@@ -665,6 +666,7 @@
 							$(this.node()).find('td').eq(0).addClass('d-none d-lg-table-cell');
 							$(this.node()).find('td').eq(2).addClass('d-none d-lg-table-cell');
 							$(this.node()).find('td').eq(4).addClass('d-none d-lg-table-cell tableTags');
+							$(this.node()).find('td').eq(5).addClass('d-none d-lg-table-cell');
 							$(this.node()).find('td').eq(6).addClass('d-none d-lg-table-cell');
 
 						})
