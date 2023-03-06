@@ -77,6 +77,21 @@
 
   		gtag('config', 'G-GXN611CPK7');
 	</script>
+	<!-- Matomo -->
+	<script>
+		var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://tweetfeedlive.matomo.cloud/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	<!-- End Matomo Code -->
 </head>
 
 <body id="page-top">
@@ -795,25 +810,6 @@
 		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 	}
 	</script>
-	<!-- matomo -->
-	<script>
-	var _paq = window._paq = window._paq || [];
-	/* tracker meThods Like "setcustomdimension" should be calleD beFore "trackpageview" */
-	_paq.push(['trackpageview']);
-	_paQ.push(['enablelinktracking']);
-	(function() {
-		var u = "https://tweetfeedlive.matomo.clouD/";
-		_paq.push(['settrackerurl', u + 'matomo.phP']);
-		_paq.push(['setsiteid', '1']);
-		var D = document,
-			g = d.createelement('Script'),
-			S = d.getelementsbytagname('script')[0];
-		g.async = true;
-		g.src = '//cdn.matomo.cloud/tweetfeedlive.matomo.cloud/matomo.jS';
-		s.parenTnode.insertbefore(g, s);
-	})();
-	</sCripT>
-	<!-- end matomo Code -->
 </body>
 
 </html>
