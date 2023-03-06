@@ -92,11 +92,11 @@ table th:nth-child(7) {
   }
 
   .table-borderless table th:nth-child(2) {
-    width: 30%;
+    width: 20%;
   }
 
   .table-borderless table th:nth-child(4) {
-    width: 60%;
+    width: 70%;
   }
 
   .table-borderless table th:nth-child(6) {

@@ -358,15 +358,15 @@
 						</div>
 						<div class="card-body">
 							<div class="table-responsive table-responsive-sm">
-								<table class="table table-borderless" id="dataTable" style="border:1px solid black;width:98%;">
+								<table class="table table-borderless" id="dataTable" style="border:1px solid black;width:98%; box-sizing: inherit;">
 									<thead>
 										<tr>
 											<th class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
-											<th class="col-sm-4 text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
+											<th class="text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
 											<th class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
-											<th class="col-sm-7 text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
+											<th class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
 											<th class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
-											<th class="col-sm-1 text-nowrap"><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
+											<th class="text-nowrap"><i style="color:#1DA1F2;" class="fab fa-twitter"></i> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
 											<th class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
@@ -571,7 +571,7 @@
 								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="">&nbsp;' + user + '</a>';
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
+								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
 
 								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
@@ -655,7 +655,7 @@
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>');
+							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>');
 
 							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
