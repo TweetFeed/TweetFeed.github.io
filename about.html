@@ -231,75 +231,28 @@
 					<p style="font-size: 14px;"><em>TweetFeed</em></p>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<ul style="font-size: 16px;">
-					<li><a href="about.html#aboutTweetFeed" style="color: #0000EE;font-family: \'Rubik\', sans-serif;">About TweetFeed</a></li>
-					<li><a href="about.html#howItWorks" style="color: #0000EE;font-family: \'Rubik\', sans-serif;">How it works?</a></li>
-					<li><a href="about.html#disclaimer" style="color: #0000EE;font-family: \'Rubik\', sans-serif;">Disclaimer</a></li>
-					<!-- <li><a href="about.html#similarSites" style="color: #0000EE;font-family: \'Rubik\', sans-serif;">Similar sites</a></li> -->
-				</ul>
-				<hr style="border: 1px solid black;" id="aboutTweetFeed"> <!-- DIVIDER -->
-				<h2 style="color: #737373;font-weight: 550;">About TweetFeed</h2>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Twitter is a place where many infosec folks / researchers share <b>Indicators of Compromise (IOCs)</b>, detections tips and other useful cybersec info.<br><br>With this idea in mind and my limited knowledge in Frontend I created this website to make more accessible the data being collected at <a style="color: #0000EE;" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank">TweetFeed</a> GitHub repository. </p>
-				<hr style="border: 1px solid black;" id="howItWorks"> <!-- DIVIDER -->
-				<h2 style="color: #737373;font-weight: 550;">How it works?</h2>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Search Indicators of Compromise in tweets that contain certain tags or that are posted by certain <em>infosec</em> people.</p>
+				<p style="color: #737373; font-size: 16px; font-family: 'Rubik', sans-serif;">
+					Twitter / 𝕏 is a place where many <b>infosec researchers share Indicators of Compromise (IOCs)</b>, detections tips and other useful cybersec info.
+					<br>
+					<span style="display: block; margin-top: 15px;">With this idea in mind I created this website to <b>make more accessible</b> the data being shared.</span>
+				</p>
 				<br>
-				<div class="row">
-					<div class="col">
-						<div class="card shadow mb-4">
-							<div class="card-header text-center" style="color: #737373;font-size: 20px;"><b>Tags being searched</b></div>
-							<div class="card-block">
-								<div class="card-body">
-									<pre><code style="font-size: 14px;">- #phishing
-- #phishing
-- #scam
-- #malware
-- #maldoc
-- #ransomware
-- #banker
-- #AgentTesla
-- #Alienbot
-- #Asyncrat
-- #Batloader
-- #BazarLoader
-- #CobaltStrike
-- #Dcrat
-- #Emotet
-- #Follina
-- #Formbook
-- #GootLoader
-- #GuLoader
-- #IcedID
-- #Lazarus
-- #Lokibot
-- #log4j
-- #Log4shell
-- #Njrat
-- #Qakbot
-- #Raccoon
-- #RedLine
-- #Remcos
-- #RaspberryRobin
-- #Spring4Shell
-- #SocGholish
-- #Ursnif</code></pre>
-								</div> <!-- card-body -->
-							</div> <!-- card-block -->
-						</div> <!-- card -->
-					</div> <!-- col -->
-					<div class="col">
-						<div class="card shadow mb-4">
-							<div class="card-header text-center" style="color: #737373;font-size: 20px;"><b>List of infosec people</b></div>
-							<div class="card-block">
-								<div class="card-body text-center">
-									<a style="background-color: #00a1f1;border-color: black;font-size: 16px;font-family: \'Rubik\', sans-serif;" class="btn btn-primary btn-sm  buttonHover" href="https://twitter.com/i/lists/1423693426437001224" target="_blank" role="button"><i class="fab fa-twitter"></i> TweetFeed list <i class="fas fa-external-link-alt"></i></a>
-								</div> <!-- card-body -->
-							</div> <!-- card-block -->
-						</div> <!-- card -->
-					</div> <!-- col -->
-				</div> <!-- row -->
-				<hr style="border: 1px solid black;" id="disclaimer"> <!-- DIVIDER -->
-				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
+				<h2 style="color: #737373;font-weight: 550;">FAQ</h2>
+				<ul style="color: #737373; font-size: 16px; font-family: 'Rubik', sans-serif;">
+					<li style="margin-bottom: 20px;"><b>How does TweetFeed work?</b>
+						<ul class="fa-ul">
+							<li><i class="fa-li fa fa-check"></i>TweetFeed searches Indicators of Compromise in tweets that contain <b>specific tags</b> or that are <b>posted by some infosec folks.</b></li>
+						</ul>
+					</li>
+					<li style="margin-bottom: 20px;"><b>Who is behind TweetFeed?</b>
+						<ul class="fa-ul">
+							<li><i class="fa-li fa fa-check"></i>I'm <a style="text-decoration:none;color:blue;" href="https://0xdaniellopez.github.io/CV/" target="_blank">Daniel López</a>. A <b>Security Engineer</b> with over 6 years of experience working in Security Operations Centers (SOC).</li>
+							<li><i class="fa-li fa fa-check"></i>Also -in my spare time- I enjoy coding, building projects, and researching threats and that's why I created TweetFeed.</li>
+							<li><i class="fa-li fa fa-check"></i>BUT, I only created this website. The valuable data (i.e. IOCs) is shared by <b>the whole infosec community.</b></li>
+						</ul>
+					</li>
+				</ul>
+				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 13px;font-family: 'Rubik', sans-serif;">
 					<h4 style="color: #737373;font-weight: 550;">Disclaimer</h4>
 					<p>Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.</p>
 					<p>Also please note that all the data is collected from Twitter and sorted/served here as it is on best effort.</p>
