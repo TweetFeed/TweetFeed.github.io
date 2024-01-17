@@ -240,10 +240,27 @@
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h3>
 				<!-- -->
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;"><b>Open and Free</b> API to get IOCs shared by the community at Twitter.</p>
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<br>
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
 				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i onclick="copyClipboard('https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}')" class="far fa-copy"></i></pre>
 				<!-- -->
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 1</b>: IOCs posted today</span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 2</b>: URLs posted today with phishing tag</span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today/phishing/url')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i onclick="copyClipboard('https://api.tweetfeed.live/v1/week/cobaltstrike/ip')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://twitter.com/malwrhunterteam">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
+				<!-- #00acee -->
+				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i onclick="copyClipboard('https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256')" class="far fa-copy"></i></pre>
+				<!-- -->
+				<br>
+				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Details</h3>
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered" style="border:none;width:100%;">
 						<colgroup>
@@ -289,7 +306,6 @@
 						<tr>
 							<td><b>filter2</b></td>
 							<td>Optional</td>
-							<span style="color: grey;">Can be an specific user, type or tag.</span>
 							<td>
 								<span class="mb-2" style="color: black;">Can be an specific user, type or tag.</span>
 								<br><br>
@@ -302,29 +318,7 @@
 						</tr>
 					</table>
 				</div> <!-- table-responsive -->
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Some examples</h3>
-				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 1</b>: IOCs posted today</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today')" class="far fa-copy"></i></pre>
-				<!-- -->
 				<br>
-				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 2</b>: URLs posted today with phishing tag</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i onclick="copyClipboard('https://api.tweetfeed.live/v1/today/phishing/url')" class="far fa-copy"></i></pre>
-				<!-- -->
-				<br>
-				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i onclick="copyClipboard('https://api.tweetfeed.live/v1/week/cobaltstrike/ip')" class="far fa-copy"></i></pre>
-				<!-- -->
-				<br>
-				<!-- -->
-				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://twitter.com/malwrhunterteam">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
-				<!-- #00acee -->
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i onclick="copyClipboard('https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256')" class="far fa-copy"></i></pre>
-				<!-- -->
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Output example</h3>
 				<pre style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="p-2">
 [
