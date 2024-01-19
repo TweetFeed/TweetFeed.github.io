@@ -237,30 +237,15 @@ body {
     border-radius: 10px;
     padding: 10px;
     background-color: #15202B;
-    /* Custom background color */
     color: #fff;
-    /* Text color */
-    text-decoration: none;
-    /* Remove underline */
     display: block;
-    /* Make the anchor block-level */
+    height: 200px; /* Fixed height */
+    overflow: auto; /* Handle overflow */
 }
 
 .tweet-container:hover {
     background-color: #1A394B;
-    /* Slightly lighter background on hover */
     color: #fff;
-    /* Maintain the same text color on hover */
-    text-decoration: none;
-    /* Prevent underline on hover */
-}
-
-.tweet-container a,
-.tweet-container a:hover {
-    color: #fff;
-    /* Set the text color to white */
-    text-decoration: none;
-    /* Remove underline */
 }
 
 .tweet-avatar img {
@@ -278,19 +263,15 @@ body {
 
 .tweet-author {
     margin-top: 10px;
-    /* Space between avatar and author */
 }
 
 .tweet-body {
     font-size: 0.9em;
-    /* Smaller text size */
     margin-top: 10px;
 }
 
 .tweet-divider {
     border-top: 1px solid rgba(255, 255, 255, 0.6);
-    /* Subtle white horizontal line */
     margin: 10px 0;
 }
-
 /* =========== END Tweets ======== */
