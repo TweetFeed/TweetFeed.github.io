@@ -239,7 +239,7 @@ body {
     background-color: #15202B;
     color: #fff;
     display: block;
-    height: 200px; /* Fixed height */
+    height: 220px; /* Fixed height */
     overflow: auto; /* Handle overflow */
 }
 
