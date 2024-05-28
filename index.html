@@ -224,7 +224,7 @@
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
 					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
+					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/202405/20240524.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
 					<br>
 					<div class="container" style="text-align: center;">
 						<div class="row h-100 align-items-center">
@@ -317,7 +317,7 @@
 										</div>
 									</div>
 									<div class="col-6 align-self-center text-center">
-										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span>
+										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/202405/20240524.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span>
 										<br><br>
 										<div id="lastDateToday" style="display:none">
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom"></em></span>
@@ -585,7 +585,8 @@
 			$.ajax({
 				type: 'GET',
 				context: document.body,
-				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				// url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/202405/20240524.csv',
 				success: function(response) {
 					var data = csvJSON(response);
 					var last_date = data.at(-1)[0];
