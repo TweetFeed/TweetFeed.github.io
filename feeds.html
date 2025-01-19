@@ -248,6 +248,9 @@
 					<p style="font-size: 14px;"><em>Full feeds from today, last week, last month and last year</em></p>
 				</div>
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-bottom: 20px;">
+					&nbsp&nbsp&nbspCSV Feeds
+				</h3>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-12">
 						<div class="card shadow mb-4">
@@ -430,6 +433,35 @@
 						</div> <!-- card -->
 					</div> <!-- class="col-sm-6" -->
 				</div> <!-- row -->
+				<!-- <hr style="border: 1px solid black;"> <hr> between CSV and RSS feeds -->
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">
+					&nbsp&nbsp&nbspRSS Feed
+				</h3>
+				<div class="d-flex justify-content-start">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center" style="border: 1px solid black;">
+								<span class="card-text cardTitle">RSS Feed</span> 
+								<i class="far fa-question-circle fa-sm align-self-center" 
+									data-toggle="tooltip" 
+									data-placement="right" 
+									title="Download the RSS feed of IOCs"></i>
+								<br>
+								<hr>
+								<p style="font-size: 20px;">
+									<a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" 
+									   class="btn btn-primary buttonHover" 
+									   href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml" 
+									   target="_blank" 
+									   role="button">
+									   <i class="fas fa-rss"></i> RSS Feed (.xml)
+									</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+											
 				<hr style="border: 1px solid black;">
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
@@ -437,8 +469,8 @@
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
-			<footer class="d-none d-lg-block" style="border-top:1px solid gray;background-color:#f2f2f2;position: absolute; bottom: 0;width: 100%;">
-				<div class="container-fluid py-1" style="color: black;font-family: \'Rubik\', sans-serif;font-size: 16px;">
+			<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
+				<div class="container-fluid py-1" style="color: black; font-family: 'Rubik', sans-serif; font-size: 16px;">
 					<div class="row">
 						<div class="col text-left"></div>
 						<div class="col text-center">By the community, for the community</div>
