@@ -714,6 +714,7 @@
 		loadData();
 		progressBar();
 		var timerAux = setInterval(timerCycle, 6000);
+		TweetFeed.trackInterval(timerAux);
 		let p_lines = new Array();
 
 		$('#customSwitch1').click(function() {
@@ -730,6 +731,7 @@
 				progressBar();
 				loadData();
 				timerAux = setInterval(timerCycle, 6000);
+				TweetFeed.trackInterval(timerAux);
 			}
 		})
 

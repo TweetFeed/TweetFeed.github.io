@@ -256,12 +256,14 @@
 					});
 					animationNew();
 					timerAux = setInterval(timerCycle, 6000);
+					TweetFeed.trackInterval(timerAux);
 				}
 			})
 
 			let table = $('#dataTable').DataTable();
 			loadData();
 			var timerAux = setInterval(timerCycle, 6000);
+			TweetFeed.trackInterval(timerAux);
 
 			function timerCycle() {
 				if (autorefresh) {

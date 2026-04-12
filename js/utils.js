@@ -17,11 +17,6 @@
       .replace(/'/g, '&#39;');
   }
 
-  function escapeAttr(str) {
-    // Same as escapeHtml but with extra guard against attribute-breaking chars
-    return escapeHtml(str);
-  }
-
   // ─── CSV parser (RFC 4180 compliant) ───────────────────────────────────────
   // Handles quoted fields, commas inside quoted fields, escaped quotes (""),
   // CRLF/LF line endings. Returns array of arrays (rows of fields).
@@ -97,7 +92,7 @@
 
   // ─── Copy to clipboard (safe, via data-copy attr + event delegation) ───────
   // HTML should use: <i class="tf-copy" data-copy="VALUE">...</i>
-  // VALUE must be HTML-escaped by the caller with escapeAttr()
+  // VALUE must be HTML-escaped by the caller with escapeHtml()
   function copyToClipboard(text, $trigger) {
     var done = function(success) {
       if ($trigger && $trigger.length && success) {
@@ -304,7 +299,6 @@
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
-    escapeAttr: escapeAttr,
     parseCSV: parseCSV,
     csvJSON: parseCSV,            // legacy alias (drop-in replacement)
     copyToClipboard: copyToClipboard,

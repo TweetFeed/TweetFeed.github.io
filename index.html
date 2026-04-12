@@ -481,6 +481,7 @@
 				});
 				animationNew();
 				timerAux = setInterval(timerCycle, 6000);
+				TweetFeed.trackInterval(timerAux);
 			}
 		})
 
@@ -488,6 +489,7 @@
 		loadData();
 		progressBar();
 		var timerAux = setInterval(timerCycle, 6000);
+		TweetFeed.trackInterval(timerAux);
 
 		function timerCycle() {
 			if (autorefresh) {
