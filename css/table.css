@@ -35,7 +35,7 @@ table th:nth-child(7) {
   text-align: center;
   width: 10px;
   vertical-align: middle;
-  font-size: 0.8vw;
+  font-size: clamp(0.75rem, 0.8vw, 1rem);
   font-family: 'Rubik', sans-serif;
   color: #474747;
 }
@@ -45,7 +45,7 @@ table th:nth-child(7) {
   justify-content: center;
   align-items: center;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 0.65vw;
+  font-size: clamp(0.625rem, 0.65vw, 0.875rem);
   font-weight: 600;
   color: #fff;
   text-decoration: none;
@@ -73,22 +73,22 @@ table th:nth-child(7) {
 }
 
 .table td.tableTags {
-  font-size: 0.72vw;
+  font-size: clamp(0.6875rem, 0.72vw, 0.9375rem);
 }
 
 /* Styles for screens that are 992px or smaller */
 @media (max-width: 992px) {
 
   table {
-    table-layout: width:95%;
+    table-layout: auto;
+    width: 95%;
   }
 
   .table-borderless table th:nth-child(1),
   .table-borderless table th:nth-child(3),
   .table-borderless table th:nth-child(5),
   .table-borderless table th:nth-child(7) {
-    width: 0%;
-    visibility: hidden;
+    display: none;
   }
 
   .table-borderless table th:nth-child(2) {
@@ -121,21 +121,21 @@ table th:nth-child(7) {
     text-align: center;
     width: 10px;
     vertical-align: middle;
-    font-size: 3vw;
+    font-size: clamp(0.8125rem, 3vw, 1.125rem);
     font-family: 'Rubik', sans-serif;
     color: #474747;
   }
 
   .twitterUser {
-    font-size: 2vw;
+    font-size: clamp(0.6875rem, 2vw, 1rem);
   }
 
   .tableTags {
-    font-size: 2vw;
+    font-size: clamp(0.6875rem, 2vw, 1rem);
   }
 
   .page-link {
-    font-size: 1.5vw;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
   }
 
   .twitterUser img {

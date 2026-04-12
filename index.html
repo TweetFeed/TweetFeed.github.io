@@ -4,7 +4,7 @@
 <head>
 	<!-- 100% privacy-first analytics -->
 	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,26 +14,30 @@
 	<link rel="canonical" href="https://tweetfeed.live">
 	<title>Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="Feeds with IOCs shared by infosec community - TweetFeed.live">
-	<meta name="twitter:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
-	<meta name="twitter:url" content="https://tweetfeed.live/">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed">
+	<meta name="twitter:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
+	<meta name="twitter:url" content="https://tweetfeed.live">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
 	<meta property="og:url" content="https://tweetfeed.live">
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="TweetFeed website">
-	<meta property="og:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
+	<meta property="og:title" content="Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed">
+	<meta property="og:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- URL canonica -->
-	<link rel="canonical" href="https://tweetfeed.live">
+	
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<!-- Custom styles for this template -->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
@@ -42,52 +46,10 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="css/tweetfeed.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-	<!-- Microsoft -->
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<style>
-		.url{
-            background-color: #c8f6fd; 
-        }
-        .domain{
-            background-color: #a0dde6;  /* #34e3a4 */
-        }
-        .ip{
-            background-color: #34e3a4; 
-        }            
-        .sha256{
-            background-color: #ffc591; /*Red:  #EAC56E*/
-        }
-        .md5{
-            background-color: #FFCC99; /* #ead18f */
-        }
-        @-webkit-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-moz-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-o-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .highlight td{
-            -webkit-animation: fadein 2s; /* Safari 4+ */
-            -moz-animation:    fadein 2s; /* Fx 5+ */
-            -o-animation:      fadein 2s; /* Opera 12+ */
-            animation:         fadein 2s; /* IE 10+ */
-        }
-    </style>
-	<script type="application/ld+json">
+<script type="application/ld+json">
 	{
 		"@context": "https://schema.org/",
 		"@type": "Organization",
@@ -96,6 +58,33 @@
 		"logo": "https://tweetfeed.live/img/TweetFeed_card.png",
 		"keywords": "feed,phishing,scam,malware,twitter,osint,ioc,threat",
 		"slogan": "Feeds of Indicators Of Compromise shared at Twitter"
+	}
+	</script>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://x.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
 	}
 	</script>
 </head>
@@ -113,53 +102,43 @@
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
-							<a class="nav-link active" style="font-size: 1vw;" href="/"><i class="fas fa-home"></i> Home</a>
+							<a class="nav-link active" href="/"><i class="fas fa-home"></i> Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
+							<a class="nav-link" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="search.html"><i class="fas fa-search"></i> Search</a>
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feedback.html"><i class="fas fa-comments"></i> Feedback</a>
+							<a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item" id="phishunt-link">
+							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="about.html"><i class="fas fa-question-circle"></i> About</a>
-						</li>
-						<!--<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://phishunt.io/" target="_blank"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
-						</li>-->
-						<!--<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" style="font-size: 1vw;" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> Other</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="other/spambots.html"><i class="fas fa-virus"></i> SpamBots</a>
-								<a class="dropdown-item" href="https://phishunt.io/" target="_blank"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
-							</div>
-						</li>-->
 					</ul>
 				</div>
 			</nav>
@@ -179,7 +158,8 @@
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
-								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
@@ -193,7 +173,7 @@
 					<p class="toph1">TweetFeed</p>
 					<p style="font-size: 14px;"><em>Feeds of Indicators Of Compromise (IOCs) shared at Twitter / 𝕏.</em></p>
 					<hr>
-					<div class="alert" role="alert" style="color: #737373;font-size: 3vw;font-family: 'Rubik', sans-serif;">
+					<div class="alert" role="alert" style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community at Twitter.
 						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
@@ -201,7 +181,7 @@
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
 					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
-					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
+					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" rel="noopener noreferrer">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
 					<br>
 					<div class="container" style="text-align: center;">
 						<div class="row h-100 align-items-center">
@@ -258,20 +238,17 @@
 					<br><br><br><br>
 					<h1 class="toph1">TweetFeed</h1>
 					<h2 style="font-size: 16px;"><em>Feeds of Indicators Of Compromise (IOCs) shared at Twitter / 𝕏.</em></h2>
-					<div class="alert" role="alert" style="color: #737373;font-size: 1vw;font-family: 'Rubik', sans-serif;">
+					<div class="alert" role="alert" style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community at Twitter.
 						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
-					<span class="badge badge-info" style="font-size: 0.8vw;font-family: 'Rubik', sans-serif; color: #333;">
+					<span class="badge badge-info" style="font-size: 14px;font-family: 'Rubik', sans-serif; color: #333;">
 						🎉 After some months halted, TweetFeed is back again! 🎉
 					</span>
 					<br><br>
 					<span class="info-span">
-						<i class="fas fa-info-circle"></i> Want to integrate TweetFeed with OpenCTI? <a class="info-link" href="https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/tweetfeed" target="_blank">Now you can!</a>
+						<i class="fas fa-info-circle"></i> Want to integrate TweetFeed with OpenCTI? <a class="info-link" href="https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/tweetfeed" target="_blank" rel="noopener noreferrer">Now you can!</a>
 					</span>
-					<!--<span class="badge badge-danger" style="font-size: 0.8vw;font-family: 'Rubik', sans-serif; color: #333;">
-						<i class="fas fa-info-circle"></i> Due to <a style="color:#E0E0E0;" href="https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api#item0" target="_blank"> the changes</a> in Twitter / 𝕏 API, <a style="color:#E0E0E0;" href="https://twitter.com/0xDanielLopez/status/1683754819561947137" target="_blank"> TweetFeed will be halted for now.</a>
-					</span>-->
 				</div>
 				<div class="container-fluid">
 					<!-- Page Heading -->
@@ -294,7 +271,7 @@
 										</div>
 									</div>
 									<div class="col-6 align-self-center text-center">
-										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span>
+										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" rel="noopener noreferrer">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span>
 										<br><br>
 										<div id="lastDateToday" style="display:none">
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom"></em></span>
@@ -376,38 +353,38 @@
 						</div>
 						<div class="row justify-content-center">
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank">
-									<img src="img/logo_opencti.png" alt="OpenCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_opencti.png" alt="OpenCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://medium.com/@s.lontzetidis/integrating-tweetfeed-into-misp-using-python-e0a94e01fec2" target="_blank">
-									<img src="img/logo_misp.png" alt="MISP Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://medium.com/@s.lontzetidis/integrating-tweetfeed-into-misp-using-python-e0a94e01fec2" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_misp.png" alt="MISP Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/debugactiveprocess/TweetFeed2Splunk?tab=readme-ov-file" target="_blank">
-									<img src="img/logo_splunk.png" alt="Splunk Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://github.com/debugactiveprocess/TweetFeed2Splunk?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_splunk.png" alt="Splunk Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/fastfire/deepdarkCTI" target="_blank">
-									<img src="img/logo_deepdark.png" alt="deepdarkCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://github.com/fastfire/deepdarkCTI" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_deepdark.png" alt="deepdarkCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://www.urlvoid.com" target="_blank">
-									<img src="img/logo_urlvoid.png" alt="urlvoid Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://www.urlvoid.com" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_urlvoid.png" alt="urlvoid Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/intelowlproject/IntelOwl" target="_blank">
-									<img src="img/logo_intelowl.png" alt="IntelOwl Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://github.com/intelowlproject/IntelOwl" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_intelowl.png" alt="IntelOwl Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/alan7s/TweetFeed2QRadar" target="_blank">
-									<img src="img/logo_qradar.png" alt="QRadar Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+								<a href="https://github.com/alan7s/TweetFeed2QRadar" target="_blank" rel="noopener noreferrer">
+									<img loading="lazy" src="img/logo_qradar.png" alt="QRadar Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
 								</a>
 							</div>
 						</div>
@@ -423,43 +400,36 @@
 			<!-- End of Main Content -->
 			<!-- Footer -->
 			<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
-				<div class="container-fluid py-1" style="color: black; font-family: 'Rubik', sans-serif; font-size: 16px;">
-					<div class="row">
-						<div class="col text-left"></div>
-						<div class="col text-center">By the community, for the community</div>
-						<div class="col text-right"></div>
-					</div>
-					<div class="row">
-						<div class="col text-left">By Daniel López</div>
-						<div class="col text-center">&nbsp;&nbsp;&nbsp;</div>
-						<div class="col text-right">© 2026 TweetFeed</div>
-					</div>
-					<div class="row">
-						<div class="col text-left d-none d-md-block"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener"><i class="fab fa-twitter"></i>&nbsp;Follow me on 𝕏!</a></div>
-						<div class="col text-center">
-							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2;border:1px solid black;" href="/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+				<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+					<div class="row align-items-center">
+						<div class="col-md-4 text-left">
+							By Daniel López
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 						</div>
-						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+						</div>
+						<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
 					</div>
 				</div>
 			</footer>
 			<!-- MOBILE -->
-			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 10px;">
-				<div class="container-fluid py-1" style="color: black;">
+			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+				<div class="container-fluid py-2" style="color: black;">
 					<div class="row">
-						<div class="col text-left"><span class="text-decoration-none">By Daniel López</span></div>
-						<div class="col text-center"></div>
-						<div class="col text-right">2026</div>
-					</div>
-					<div class="row">
-						<div class="col text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbsp;Twitter</a></div>
-						<div class="col text-center"></div>
-						<div class="col text-right">TweetFeed</div>
-					</div>
-					<div class="row">
-						<div class="col-3 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a></span></div>
-						<div class="col-1 text-center"></div>
-						<div class="col-8 text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+						<div class="col text-center">
+							By Daniel López
+							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+							&nbsp;·&nbsp; © 2026 TweetFeed.live
+						</div>
 					</div>
 				</div>
 			</footer>
@@ -482,6 +452,9 @@
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -520,48 +493,38 @@
 			if (autorefresh) {
 				loadData();
 				progressBar();
-
-				// Para checkear refresco
-				//$('.today').hide();
-				//$('.today').fadeIn(1000, "linear");
 			}
 		}
 
 		function animation() {
-			//$('.today', '.col').animate({
-			//    opacity: 'toggle'
-			//});
-
 			$('.today').hide();
 			$('.today').fadeIn(1000, "linear");
 		}
 
 		function animationNew() {
-			//$('.newRow').animate({
-			//    opacity: 'toggle'
-			//, "linear");
-
 			$('.newRow').hide();
 			$('.newRow').fadeIn(1000, "linear");
 		}
 
+		var _progressInterval = null;
 		function progressBar() {
+			if (_progressInterval) clearInterval(_progressInterval);
 			var i = 0;
-			var downloadTimer = setInterval(function() {
+			_progressInterval = setInterval(function() {
 				if (i >= 100) {
-					clearInterval(downloadTimer);
+					clearInterval(_progressInterval);
+					_progressInterval = null;
 				}
 				if (autorefresh == 0) {
 					i = 0;
-					clearInterval(downloadTimer);
-					//document.getElementById("progressBar").value = 0;
+					clearInterval(_progressInterval);
+					_progressInterval = null;
 					$('.progress-bar').css('width', i + '%');
 				} else {
-					//document.getElementById("progressBar").value = 5 - timeleft;
 					$('.progress-bar').css('width', i + '%');
 				}
 				i = i + 20;
-			}, 1000);
+			}, 1200);
 		}
 		var loaddatacall = 0;
 		var olddate = '';
@@ -573,13 +536,14 @@
 			$.ajax({
 				type: 'GET',
 				context: document.body,
-				url: 'https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv',
+				url: TweetFeed.dataUrl('today.csv'),
 				success: function(response) {
 					var data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					if (data.length < 2) return;
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 
 					if (init || olddate != last_date) {
 						$(".lastDateTodayFrom").fadeOut(function() {
@@ -595,31 +559,29 @@
 
 					if (loaddatacall > 0) {
 
-						for (var i = data.length - 20; i < data.length; i++) {
+						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
-								//console.log('old:' + olddate + '------- New:' + data[i][0]);
 
 								var user = data[i][1];
 								var type = data[i][2];
 								var value = data[i][3];
 								var tweet_url = data[i][5];
 
-								var pic = new Image();
-								pic.src = 'pics/' + user + '.png';
+								var picSrc = 'pics/' + user + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>';
+								// XSS-safe: escape value in both attribute (data-copy) and text (HTML)
+								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>';
 
-								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
+								data[i][5] = '<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>';
 
 								if (type == "url") {
 									value = encodeURIComponent(value);
-									value = encodeURIComponent(value);
 								}
 
-								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -661,10 +623,9 @@
 
 							if (type == "url") {
 								value = encodeURIComponent(value);
-								value = encodeURIComponent(value);
 							}
 
-							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
@@ -684,20 +645,18 @@
 							var type = $(this.node()).find('td').eq(2).text().trim();
 							$(this.node()).toggleClass(type);
 
+							var picSrc = 'pics/' + user + '.png';
 
-							var pic = new Image();
-							pic.src = 'pics/' + user + '.png';
-
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + user + '" role="button"><img loading="lazy" src="' + pic.src + '" alt="Profile pic of ' + user + '">&nbsp;' + user + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://twitter.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var type = $(this.node()).find('td').eq(2).text().trim();
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i onclick="copyClipboard(\'' + value + '\')" class="far fa-copy"></i> ' + value + '</span>');
+							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>');
 
-							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + tweet_url + '"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
+							$(this.node()).find('td').eq(5).html('<a class="twitterLink" style="text-decoration: none;color:#1DA1F2;" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer"><i class="fab fa-twitter"></i> <i class="fas fa-external-link-alt"></i></a>');
 
 							// For Mobile
 							// Only show: User (1), Value (3) and Twitter (5)
@@ -716,10 +675,13 @@
 					countTypes('.today', data);
 					loaddatacall++;
 				},
+				error: function(xhr, status, err) {
+					console.error('[TweetFeed] loadData failed:', status, err);
+					$("#loadingToday").html('<p class="text-danger" style="padding:1em;">⚠️ Could not load data from GitHub. Retrying next cycle...</p>');
+				},
 				cache: false
 			});
 			init = 0;
-			loaddatacall++;
 		}
 
 		function countTypes(className, jsonArr) {
@@ -745,53 +707,10 @@
 				'</div>'
 			$(className).html(myvar);
 
-			let p_url = type['url'];
-			let p_domain = type['domain'];
-			let p_ip = type['ip'];
-			let p_sha256 = type['sha256'];
-			let p_md5 = type['md5'];
-		}
-
-		function csvJSON(csv) {
-
-			var lines = csv.split("\n");
-			var result = [];
-			//for (var i = lines.length - 1; i >= 0; i--) {
-			for (var i = 0; i < lines.length; i++) {
-				var obj = [];
-				var currentline = lines[i].split(",");
-				if (currentline.length > 1) {
-					for (var j = 0; j < currentline.length; j++) {
-						obj.push(currentline[j]);
-					}
-					result.push(obj);
-				}
-
-			}
-			return result;
 		}
 	})
 	</script>
 	<script>
-	function downloadCSV(csv, filename) {
-		var csvFile;
-		var downloadLink;
-		// CSV file
-		csvFile = new Blob([csv], { type: "text/csv" });
-		// Download link
-		downloadLink = document.createElement("a");
-		// File name
-		downloadLink.download = filename;
-		// Create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-		// Hide download link
-		downloadLink.style.display = "none";
-		// Add the link to DOM
-		document.body.appendChild(downloadLink);
-		// Click download link
-		downloadLink.click();
-	}
-
 	function exportTableToCSV(filename) {
 		var csv = [];
 		var rows = document.querySelectorAll("table tr");
@@ -816,7 +735,6 @@
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());
-		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
 		let d = new Date(Date.now());
 		let day = d.getDate();
 		let month = (d.getMonth() + 1);
@@ -847,7 +765,6 @@
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());
-		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
 		let d = new Date(Date.now());
 		let day = d.getDate();
 		let month = (d.getMonth() + 1);
@@ -865,36 +782,13 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
-	function addZero(i) {
-		if (i < 10) { i = "0" + i }
-		return i;
-	}
 	</script>
-	<script src="js/date.js"></script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
 	</script>
-	<script>
-	function copyClipboard(value) {
-		/* Get the text field */
-		navigator.clipboard.writeText(value);
-
-		//onclick="copyClipboard(\'' + value + '\')"
-		var aux = 'i[onclick="copyClipboard(\'' + value + '\')"]';
-
-		$(aux).removeClass("far fa-copy");
-		$(aux).addClass("fas fa-check");
-		$(aux).css("color", "green");
-		setTimeout(
-			function() {
-				$(aux).removeClass("fas fa-check");
-				$(aux).addClass("far fa-copy");
-				$(aux).css("color", "");
-			}, 1000);
-	}
-	</script>
+	<!-- copyClipboard now provided by js/utils.js (event delegation on .tf-copy) -->
 </body>
 
 </html>

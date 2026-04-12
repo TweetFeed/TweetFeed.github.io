@@ -6,7 +6,6 @@ https://tweetfeed.live/graphs.html
 https://tweetfeed.live/researchers.html
 https://tweetfeed.live/search.html
 https://tweetfeed.live/api.html
-https://tweetfeed.live/feedback.html
 https://tweetfeed.live/about.html
 https://tweetfeed.live/changelog.html
-https://tweetfeed.live/spambots.html
+https://tweetfeed.live/tos.html

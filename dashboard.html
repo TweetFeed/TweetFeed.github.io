@@ -4,33 +4,38 @@
 <head>
 	<!-- 100% privacy-first analytics -->
 	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="View the latest Indicators of Compromise (IOCs) in an easy-to-navigate grid format on the TweetFeed Dashboard, showcasing real-time updates from the infosec community.">
+	<meta name="description" content="Real-time IOC dashboard with embedded tweets. Filter by IOC type, malware tag and date. See what the infosec community is sharing right now.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
-	<title>Dashboard with Tweets - TweetFeed</title>
+	<link rel="canonical" href="https://tweetfeed.live/dashboard.html">
+	<title>IOC Dashboard - Live Threat Intelligence from Twitter/X - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="Feeds with IOCs shared by infosec community - TweetFeed.live">
-	<meta name="twitter:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
-	<meta name="twitter:url" content="https://tweetfeed.live/">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Filter IOC feeds by type, tag, and date - TweetFeed">
+	<meta name="twitter:description" content="Interactive dashboard to filter the TweetFeed IOC feeds by IOC type, tag, and date range.">
+	<meta name="twitter:url" content="https://tweetfeed.live/dashboard.html">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
-	<meta property="og:url" content="https://tweetfeed.live">
+	<meta property="og:url" content="https://tweetfeed.live/dashboard.html">
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="TweetFeed website">
-	<meta property="og:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
+	<meta property="og:title" content="Filter IOC feeds by type, tag, and date - TweetFeed">
+	<meta property="og:description" content="Interactive dashboard to filter the TweetFeed IOC feeds by IOC type, tag, and date range.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<!-- Custom styles for this template -->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
@@ -39,88 +44,38 @@
 	<!-- <link href="css/table.css" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="css/tweetfeed.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-	<!-- Microsoft -->
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<!-- Fonts -->
 	<link href="css/fonts.css" rel="stylesheet">
-	<style>
-		.url {
-		background-color: #c8f6fd;
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://x.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
 	}
-
-	.domain {
-		background-color: #a0dde6;
-		/* #34e3a4 */
-	}
-
-	.ip {
-		background-color: #34e3a4;
-	}
-
-	.sha256 {
-		background-color: #EAC56E;
-	}
-
-	.md5 {
-		background-color: #ead18f;
-		/* #ead18f */
-	}
-
-	@-webkit-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
 		}
 	}
-
-	@-moz-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	@-o-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	@keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	.highlight td {
-		-webkit-animation: fadein 2s;
-		/* Safari 4+ */
-		-moz-animation: fadein 2s;
-		/* Fx 5+ */
-		-o-animation: fadein 2s;
-		/* Opera 12+ */
-		animation: fadein 2s;
-		/* IE 10+ */
-	}
-	</style>
+	</script>
 </head>
 
 <body id="page-top">
@@ -136,50 +91,43 @@
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="/"><i class="fas fa-home"></i> Home</a>
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" style="font-size: 1vw;" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
+							<a class="nav-link active" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+							<a class="nav-link" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="search.html"><i class="fas fa-search"></i> Search</a>
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feedback.html"><i class="fas fa-comments"></i> Feedback</a>
+							<a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item" id="phishunt-link">
+							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="about.html"><i class="fas fa-question-circle"></i> About</a>
-						</li>
-						<!--<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" style="font-size: 1vw;" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> Other</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="other/spambots.html"><i class="fas fa-virus"></i> SpamBots</a>
-								<a class="dropdown-item" href="https://phishunt.io/" target="_blank"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
-							</div>
-						</li>-->
 					</ul>
 				</div>
 			</nav>
@@ -199,7 +147,8 @@
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
-								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
@@ -214,8 +163,8 @@
 					<h2><em>Tweets with IOCs inside</em></h2>
 					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				</div>
-				<div class="d-block d-md-none text-center">
-					Only avaiable in desktop version
+				<div class="d-block d-md-none text-center" style="padding: 2rem 1rem;">
+					Dashboard is optimized for larger screens. Some features may be limited on mobile.
 				</div>
 				<div class="d-none d-md-block">
 					<!-- Body in dashboard -->
@@ -488,6 +437,201 @@
 													</div>
 												</div> <!-- col -->
 											</div> <!-- row -->
+											<br>
+											<div class="row">
+												<div class="col-3">
+													<small class="text-muted" style="font-weight:bold;">Ransomware (2024-25)</small>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagLockBit" name="LockBit" value="LockBit" checked>
+													<label class="form-check-label" for="checkTagLockBit">#LockBit</label>
+													<span id="checkTag-LockBit"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagBlackBasta" name="BlackBasta" value="BlackBasta" checked>
+													<label class="form-check-label" for="checkTagBlackBasta">#BlackBasta</label>
+													<span id="checkTag-BlackBasta"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagRansomHub" name="RansomHub" value="RansomHub" checked>
+													<label class="form-check-label" for="checkTagRansomHub">#RansomHub</label>
+													<span id="checkTag-RansomHub"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagClop" name="Clop" value="Clop" checked>
+													<label class="form-check-label" for="checkTagClop">#Clop</label>
+													<span id="checkTag-Clop"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagHuntersInternational" name="HuntersInternational" value="HuntersInternational" checked>
+													<label class="form-check-label" for="checkTagHuntersInternational">#HuntersInternational</label>
+													<span id="checkTag-HuntersInternational"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagINCRansom" name="INCRansom" value="INCRansom" checked>
+													<label class="form-check-label" for="checkTagINCRansom">#INCRansom</label>
+													<span id="checkTag-INCRansom"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagPlayRansomware" name="PlayRansomware" value="PlayRansomware" checked>
+													<label class="form-check-label" for="checkTagPlayRansomware">#PlayRansomware</label>
+													<span id="checkTag-PlayRansomware"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagMedusaRansomware" name="MedusaRansomware" value="MedusaRansomware" checked>
+													<label class="form-check-label" for="checkTagMedusaRansomware">#MedusaRansomware</label>
+													<span id="checkTag-MedusaRansomware"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagCactusRansomware" name="CactusRansomware" value="CactusRansomware" checked>
+													<label class="form-check-label" for="checkTagCactusRansomware">#CactusRansomware</label>
+													<span id="checkTag-CactusRansomware"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagAkiraRansomware" name="AkiraRansomware" value="AkiraRansomware" checked>
+													<label class="form-check-label" for="checkTagAkiraRansomware">#AkiraRansomware</label>
+													<span id="checkTag-AkiraRansomware"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagQilinRansomware" name="QilinRansomware" value="QilinRansomware" checked>
+													<label class="form-check-label" for="checkTagQilinRansomware">#QilinRansomware</label>
+													<span id="checkTag-QilinRansomware"></span>
+												</div>
+												</div> <!-- col -->
+												<div class="col-3">
+													<small class="text-muted" style="font-weight:bold;">Stealers + Loaders</small>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagVidar" name="Vidar" value="Vidar" checked>
+													<label class="form-check-label" for="checkTagVidar">#Vidar</label>
+													<span id="checkTag-Vidar"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagStealC" name="StealC" value="StealC" checked>
+													<label class="form-check-label" for="checkTagStealC">#StealC</label>
+													<span id="checkTag-StealC"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagACRStealer" name="ACRStealer" value="ACRStealer" checked>
+													<label class="form-check-label" for="checkTagACRStealer">#ACRStealer</label>
+													<span id="checkTag-ACRStealer"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagRisePro" name="RisePro" value="RisePro" checked>
+													<label class="form-check-label" for="checkTagRisePro">#RisePro</label>
+													<span id="checkTag-RisePro"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagMetaStealer" name="MetaStealer" value="MetaStealer" checked>
+													<label class="form-check-label" for="checkTagMetaStealer">#MetaStealer</label>
+													<span id="checkTag-MetaStealer"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagDarkGate" name="DarkGate" value="DarkGate" checked>
+													<label class="form-check-label" for="checkTagDarkGate">#DarkGate</label>
+													<span id="checkTag-DarkGate"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagLatrodectus" name="Latrodectus" value="Latrodectus" checked>
+													<label class="form-check-label" for="checkTagLatrodectus">#Latrodectus</label>
+													<span id="checkTag-Latrodectus"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagBumbleBee" name="BumbleBee" value="BumbleBee" checked>
+													<label class="form-check-label" for="checkTagBumbleBee">#BumbleBee</label>
+													<span id="checkTag-BumbleBee"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagWarmCookie" name="WarmCookie" value="WarmCookie" checked>
+													<label class="form-check-label" for="checkTagWarmCookie">#WarmCookie</label>
+													<span id="checkTag-WarmCookie"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagPikaBot" name="PikaBot" value="PikaBot" checked>
+													<label class="form-check-label" for="checkTagPikaBot">#PikaBot</label>
+													<span id="checkTag-PikaBot"></span>
+												</div>
+												</div> <!-- col -->
+												<div class="col-3">
+													<small class="text-muted" style="font-weight:bold;">APT groups</small>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagVoltTyphoon" name="VoltTyphoon" value="VoltTyphoon" checked>
+													<label class="form-check-label" for="checkTagVoltTyphoon">#VoltTyphoon</label>
+													<span id="checkTag-VoltTyphoon"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagSaltTyphoon" name="SaltTyphoon" value="SaltTyphoon" checked>
+													<label class="form-check-label" for="checkTagSaltTyphoon">#SaltTyphoon</label>
+													<span id="checkTag-SaltTyphoon"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagAPT29" name="APT29" value="APT29" checked>
+													<label class="form-check-label" for="checkTagAPT29">#APT29</label>
+													<span id="checkTag-APT29"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagMidnightBlizzard" name="MidnightBlizzard" value="MidnightBlizzard" checked>
+													<label class="form-check-label" for="checkTagMidnightBlizzard">#MidnightBlizzard</label>
+													<span id="checkTag-MidnightBlizzard"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagAPT28" name="APT28" value="APT28" checked>
+													<label class="form-check-label" for="checkTagAPT28">#APT28</label>
+													<span id="checkTag-APT28"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagFancyBear" name="FancyBear" value="FancyBear" checked>
+													<label class="form-check-label" for="checkTagFancyBear">#FancyBear</label>
+													<span id="checkTag-FancyBear"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagCozyBear" name="CozyBear" value="CozyBear" checked>
+													<label class="form-check-label" for="checkTagCozyBear">#CozyBear</label>
+													<span id="checkTag-CozyBear"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagScatteredSpider" name="ScatteredSpider" value="ScatteredSpider" checked>
+													<label class="form-check-label" for="checkTagScatteredSpider">#ScatteredSpider</label>
+													<span id="checkTag-ScatteredSpider"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagAPT41" name="APT41" value="APT41" checked>
+													<label class="form-check-label" for="checkTagAPT41">#APT41</label>
+													<span id="checkTag-APT41"></span>
+												</div>
+												</div> <!-- col -->
+												<div class="col-3">
+													<small class="text-muted" style="font-weight:bold;">Techniques + Mobile</small>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagClickFix" name="ClickFix" value="ClickFix" checked>
+													<label class="form-check-label" for="checkTagClickFix">#ClickFix</label>
+													<span id="checkTag-ClickFix"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagquishing" name="quishing" value="quishing" checked>
+													<label class="form-check-label" for="checkTagquishing">#quishing</label>
+													<span id="checkTag-quishing"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagRaaS" name="RaaS" value="RaaS" checked>
+													<label class="form-check-label" for="checkTagRaaS">#RaaS</label>
+													<span id="checkTag-RaaS"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagcryptodrainer" name="cryptodrainer" value="cryptodrainer" checked>
+													<label class="form-check-label" for="checkTagcryptodrainer">#cryptodrainer</label>
+													<span id="checkTag-cryptodrainer"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagAnatsa" name="Anatsa" value="Anatsa" checked>
+													<label class="form-check-label" for="checkTagAnatsa">#Anatsa</label>
+													<span id="checkTag-Anatsa"></span>
+												</div>
+												<div class="form-check">
+													<input type="checkbox" class="form-check-input" id="checkTagBrokewell" name="Brokewell" value="Brokewell" checked>
+													<label class="form-check-label" for="checkTagBrokewell">#Brokewell</label>
+													<span id="checkTag-Brokewell"></span>
+												</div>
+												</div> <!-- col -->
+											</div> <!-- row -->
 										</div>
 									</div>
 								</div>
@@ -496,7 +640,7 @@
 					</div>
 					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 					<div id="loadingTweets" class="text-center">
-						<img style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
+						<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 					</div>
 					<div class="tweetsclass alert alert-secondary shadow" style="border: 1px solid black;">
 					</div>
@@ -506,43 +650,36 @@
 			<!-- End of Main Content -->
 			<!-- Footer -->
 			<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
-				<div class="container-fluid py-1" style="color: black; font-family: 'Rubik', sans-serif; font-size: 16px;">
-					<div class="row">
-						<div class="col text-left"></div>
-						<div class="col text-center">By the community, for the community</div>
-						<div class="col text-right"></div>
-					</div>
-					<div class="row">
-						<div class="col text-left">By Daniel López</div>
-						<div class="col text-center">&nbsp;&nbsp;&nbsp;</div>
-						<div class="col text-right">© 2026 TweetFeed</div>
-					</div>
-					<div class="row">
-						<div class="col text-left d-none d-md-block"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener"><i class="fab fa-twitter"></i>&nbsp;Follow me on 𝕏!</a></div>
-						<div class="col text-center">
-							<a style="font-size: 12px;padding:5px;background-color: #1DA1F2;border:1px solid black;" href="/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+				<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+					<div class="row align-items-center">
+						<div class="col-md-4 text-left">
+							By Daniel López
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 						</div>
-						<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+						</div>
+						<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
 					</div>
 				</div>
 			</footer>
 			<!-- MOBILE -->
-			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 10px;">
-				<div class="container-fluid py-1" style="color: black;">
+			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+				<div class="container-fluid py-2" style="color: black;">
 					<div class="row">
-						<div class="col text-left"><span class="text-decoration-none">By Daniel López</span></div>
-						<div class="col text-center"></div>
-						<div class="col text-right">2026</div>
-					</div>
-					<div class="row">
-						<div class="col text-left"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank"><i class="fab fa-twitter"></i>&nbsp;Twitter</a></div>
-						<div class="col text-center"></div>
-						<div class="col text-right">TweetFeed</div>
-					</div>
-					<div class="row">
-						<div class="col-3 text-left"><span class="text-decoration-none"><a class="text-decoration-none" href="https://www.linkedin.com/in/0xDanielLopez/" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a></span></div>
-						<div class="col-1 text-center"></div>
-						<div class="col-8 text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+						<div class="col text-center">
+							By Daniel López
+							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+							&nbsp;·&nbsp; © 2026 TweetFeed.live
+						</div>
 					</div>
 				</div>
 			</footer>
@@ -565,6 +702,9 @@
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -653,18 +793,17 @@
 
 		function loadData() {
 
-			$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+			$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 
 				var data = csvJSON(response);
 				var data_filtered = [];
-				var last_date = data.at(-1)[0];
-				var first_date = data.at(1)[0];
-				var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-				var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+				var last_date = data[data.length - 1][0];
+				var first_date = data[1][0];
+				var date1 = formatDateLong(last_date);
+				var date2 = formatDateLong(first_date);
 
 				var seen_tweets = []; // seen tweet_urls
 				seen_values = []; // seen values
-
 
 				let lines = [];
 
@@ -752,7 +891,7 @@
 
 					//if (isCheckedType && isCheckedTag) {
 					if (isCheckedType && isCheckedTag) {
-						lines.push(tweet_url.split("/").at(-1))
+						var parts = tweet_url.split("/"); lines.push(parts[parts.length - 1])
 					}
 				}
 
@@ -794,7 +933,7 @@
 					}
 
 					p_lines = [...lines];
-					twttr.widgets.load()
+					if (typeof twttr !== 'undefined' && twttr.widgets) { twttr.widgets.load(); }
 
 					if (init) {
 						init = 0;
@@ -812,25 +951,6 @@
 				}
 
 			})
-		}
-
-		function csvJSON(csv) {
-
-			var lines = csv.split("\n");
-			var result = [];
-			//for (var i = lines.length - 1; i >= 0; i--) {
-			for (var i = 0; i < lines.length; i++) {
-				var obj = [];
-				var currentline = lines[i].split(",");
-				if (currentline.length > 1) {
-					for (var j = 0; j < currentline.length; j++) {
-						obj.push(currentline[j]);
-					}
-					result.push(obj);
-				}
-
-			}
-			return result;
 		}
 
 		function countTypes(divAccess, jsonArr) {
@@ -890,11 +1010,9 @@
 
 		}
 
-
 	})
 	</script>
 	<script async src="https://platform.twitter.com/widgets.js"></script>
-	<script src="js/date.js"></script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
@@ -929,7 +1047,6 @@
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());
-		//dateNowUTC = dateNowUTC.toString("YYYYMMDD_HH:mm:ss");
 		let d = new Date(Date.now());
 		let day = d.getDate();
 		let month = (d.getMonth() + 1);
@@ -947,29 +1064,6 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
-	function downloadCSV(csv, filename) {
-		var csvFile;
-		var downloadLink;
-		// CSV file
-		csvFile = new Blob([csv], { type: "text/csv" });
-		// Download link
-		downloadLink = document.createElement("a");
-		// File name
-		downloadLink.download = filename;
-		// Create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-		// Hide download link
-		downloadLink.style.display = "none";
-		// Add the link to DOM
-		document.body.appendChild(downloadLink);
-		// Click download link
-		downloadLink.click();
-	}
-
-	function addZero(i) {
-		if (i < 10) { i = "0" + i }
-		return i;
-	}
 	</script>
 </body>
 

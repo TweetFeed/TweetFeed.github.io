@@ -1,34 +1,20 @@
 {
-    "title": "SB Admin 2",
-    "name": "startbootstrap-sb-admin-2",
-    "version": "4.1.4",
-    "scripts": {
-        "start": "node_modules/.bin/gulp watch"
-    },
-    "description": "An open source Bootstrap 4 admin theme.",
+    "title": "TweetFeed",
+    "name": "tweetfeed-frontend",
+    "version": "1.0.0",
+    "description": "TweetFeed - IOC feeds from the cybersecurity community on Twitter/X",
     "keywords": [
-        "css",
-        "sass",
-        "html",
-        "responsive",
-        "theme",
-        "template",
-        "admin",
-        "app"
+        "ioc",
+        "threat-intelligence",
+        "cybersecurity",
+        "twitter"
     ],
-    "homepage": "https://startbootstrap.com/theme/sb-admin-2",
-    "bugs": {
-        "url": "https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues",
-        "email": "feedback@startbootstrap.com"
-    },
+    "homepage": "https://tweetfeed.live",
     "license": "MIT",
-    "author": "Start Bootstrap",
-    "contributors": [
-        "David Miller (https://davidmiller.io/)"
-    ],
+    "author": "Daniel Lopez",
     "repository": {
         "type": "git",
-        "url": "https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git"
+        "url": "https://github.com/TweetFeed/TweetFeed.github.io.git"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "5.15.3",

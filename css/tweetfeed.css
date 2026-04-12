@@ -1,0 +1,16 @@
+/* IOC type row colors */
+.url { background-color: #c8f6fd; }
+.domain { background-color: #a0dde6; }
+.ip { background-color: #34e3a4; }
+.sha256 { background-color: #ffc591; }
+.md5 { background-color: #FFCC99; }
+
+/* Row highlight animation */
+@keyframes highlight {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.highlight td {
+  animation: fadein 2s;
+}

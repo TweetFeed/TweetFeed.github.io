@@ -14,7 +14,7 @@
 	<meta http-equiv='pragma' content='no-cache'>
 	<title>Graphs - TweetFeed</title>
 	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -30,54 +30,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Microsoft -->
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<style>
-		.url{
-            background-color: #c8f6fd; 
-        }
-        .domain{
-            background-color: #a0dde6;  /* #34e3a4 */
-        }
-        .ip{
-            background-color: #34e3a4; 
-        }            
-        .sha256{
-            background-color: #ffc591; /*Red:  #EAC56E*/
-        }
-        .md5{
-            background-color: #FFCC99; /* #ead18f */
-        }
-        @-webkit-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-moz-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @-o-keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes highlight {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .highlight td{
-            -webkit-animation: fadein 2s; /* Safari 4+ */
-            -moz-animation:    fadein 2s; /* Fx 5+ */
-            -o-animation:      fadein 2s; /* Opera 12+ */
-            animation:         fadein 2s; /* IE 10+ */
-        }
-    </style>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-GXN611CPK7"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-  		function gtag(){dataLayer.push(arguments);}
-  		gtag('js', new Date());
-
-  		gtag('config', 'G-GXN611CPK7');
-	</script>
+	<link href="css/tweetfeed.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -890,7 +843,8 @@
 			<!-- Export -->
 			<script src="js/demo/datatables-demo.js"></script>
 			<!-- Page level custom scripts -->
-			<script type="text/javascript" src="js/date.js"></script>
+			<script src="js/config.js"></script>
+			<script src="js/utils.js"></script>
 			<script src="vendor/chart.js/Chart.min.js"></script>
 			<script>
 			let tableTypesToday = $('#dataTableTypesToday').DataTable();
@@ -905,12 +859,12 @@
 			Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 			Chart.defaults.global.defaultFontColor = '#858796';
 			$(function() {
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+				$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 					let data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 					$(".lastDateTodayFrom").fadeOut(function() {
 						$(this).text("From: " + date2).fadeIn(2000);
 					});
@@ -928,12 +882,12 @@
 					countTags('today', data);
 					prepareTodayGraph(data);
 				})
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
+				$.get(TweetFeed.dataUrl('week.csv'), function(response) {
 					let data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 					$(".lastDateWeekFrom").fadeOut(function() {
 						$(this).text("From: " + date2).fadeIn(2000);
 					});
@@ -950,12 +904,12 @@
 					countTags('week', data);
 					prepareWeekGraph(data);
 				})
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
+				$.get(TweetFeed.dataUrl('month.csv'), function(response) {
 					let data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 					$(".lastDateMonthFrom").fadeOut(function() {
 						$(this).text("From: " + date2).fadeIn(2000);
 					});
@@ -972,12 +926,12 @@
 					countTags('month', data);
 					prepareMonthGraph(data);
 				})
-				$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
+				$.get(TweetFeed.dataUrl('year.csv'), function(response) {
 					let data = csvJSON(response);
-					var last_date = data.at(-1)[0];
-					var first_date = data.at(1)[0];
-					var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-					var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+					var last_date = data[data.length - 1][0];
+					var first_date = data[1][0];
+					var date1 = formatDateLong(last_date);
+					var date2 = formatDateLong(first_date);
 					$(".lastDateYearFrom").fadeOut(function() {
 						$(this).text("From: " + date2).fadeIn(2000);
 					});
@@ -1436,24 +1390,6 @@
 				});
 			}
 
-			function csvJSON(csv) {
-
-				var lines = csv.split("\n");
-				var result = [];
-				//for (var i = lines.length - 1; i >= 0; i--) {
-				for (var i = 0; i < lines.length; i++) {
-					var obj = [];
-					var currentline = lines[i].split(",");
-					if (currentline.length > 1) {
-						for (var j = 0; j < currentline.length; j++) {
-							obj.push(currentline[j]);
-						}
-						result.push(obj);
-					}
-
-				}
-				return result;
-			}
 			</script>
 			<script>
 			function downloadCSV(csv, filename) {

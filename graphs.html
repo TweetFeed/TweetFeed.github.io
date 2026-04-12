@@ -4,33 +4,38 @@
 <head>
 	<!-- 100% privacy-first analytics -->
 	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Graphs and statistics about Indicators of Compromise shared at Twitter">
+	<meta name="description" content="Live charts and statistics on IOCs shared by the infosec community. Track malware families, phishing campaigns and C2 infrastructure trends over time.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="statistics,graphs,twitter,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
-	<title>Graphs and statistics about IOCs shared at Twitter - TweetFeed</title>
+	<link rel="canonical" href="https://tweetfeed.live/graphs.html">
+	<title>IOC Statistics and Trends - Malware, Phishing, C2 - TweetFeed</title>
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:title" content="Feeds with IOCs shared by infosec community - TweetFeed.live">
-	<meta name="twitter:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
-	<meta name="twitter:url" content="https://tweetfeed.live/">
-	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card.png">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Statistics and graphs for IOC feeds - TweetFeed">
+	<meta name="twitter:description" content="Charts and statistics about IOCs collected by TweetFeed: type distribution, top tags, time series.">
+	<meta name="twitter:url" content="https://tweetfeed.live/graphs.html">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<!-- Facebook -->
-	<meta property="og:url" content="https://tweetfeed.live">
+	<meta property="og:url" content="https://tweetfeed.live/graphs.html">
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="TweetFeed website">
-	<meta property="og:description" content="TweetFeed collects Indicators Of Compromise (IOCs) shared at 𝕏/Twitter.">
+	<meta property="og:title" content="Statistics and graphs for IOC feeds - TweetFeed">
+	<meta property="og:description" content="Charts and statistics about IOCs collected by TweetFeed: type distribution, top tags, time series.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
-	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<!-- Custom styles for this template -->
 	<link href="css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
@@ -39,87 +44,36 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+	<link href="css/tweetfeed.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-	<!-- Microsoft -->
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<style>
-	.url {
-		background-color: #c8f6fd;
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"sameAs": [
+			"https://x.com/0xDanielLopez",
+			"https://github.com/0xDanielLopez/TweetFeed"
+		]
 	}
-
-	.domain {
-		background-color: #a0dde6;
-		/* #34e3a4 */
-	}
-
-	.ip {
-		background-color: #34e3a4;
-	}
-
-	.sha256 {
-		background-color: #ffc591;
-		/*Red:  #EAC56E*/
-	}
-
-	.md5 {
-		background-color: #FFCC99;
-		/* #ead18f */
-	}
-
-	@-webkit-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"query-input": "required name=search_term_string"
 		}
 	}
-
-	@-moz-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	@-o-keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	@keyframes highlight {
-		from {
-			opacity: 0;
-		}
-
-		to {
-			opacity: 1;
-		}
-	}
-
-	.highlight td {
-		-webkit-animation: fadein 2s;
-		/* Safari 4+ */
-		-moz-animation: fadein 2s;
-		/* Fx 5+ */
-		-o-animation: fadein 2s;
-		/* Opera 12+ */
-		animation: fadein 2s;
-		/* IE 10+ */
-	}
-	</style>
+	</script>
 </head>
 
 <body id="page-top">
@@ -135,50 +89,43 @@
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="/"><i class="fas fa-home"></i> Home</a>
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
+							<a class="nav-link" href="dashboard.html"><i class="fas fa-th"></i> Dashboard</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
+							<a class="nav-link" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+							<a class="nav-link" href="api.html"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
+							<a class="nav-link" href="hunt.html"><i class="fas fa-bullseye"></i> Hunt</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" style="font-size: 1vw;" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
+							<a class="nav-link active" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
+							<a class="nav-link" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="search.html"><i class="fas fa-search"></i> Search</a>
+							<a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="feedback.html"><i class="fas fa-comments"></i> Feedback</a>
+							<a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item" id="phishunt-link">
+							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank"><i class="fab fa-github"></i> GitHub <sup><i class="fas fa-external-link-alt"></i></sup></a>
+							<a class="nav-link" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" style="font-size: 1vw;" href="about.html"><i class="fas fa-question-circle"></i> About</a>
-						</li>
-						<!--<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" style="font-size: 1vw;" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false"> Other</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="other/spambots.html"><i class="fas fa-virus"></i> SpamBots</a>
-								<a class="dropdown-item" href="https://phishunt.io/" target="_blank"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
-							</div>
-						</li>-->
 					</ul>
 				</div>
 			</nav>
@@ -198,7 +145,8 @@
 								<a class="dropdown-item" href="feeds.html"><i class="fas fa-rss"></i> Feeds</a>
 								<a class="dropdown-item" href="graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a>
 								<a class="dropdown-item" href="researchers.html"><i class="fas fa-users"></i> Researchers</a>
-								<a class="dropdown-item" href="https://twitter.com/i/lists/1423693426437001224" target="_blank"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
 								<a class="dropdown-item" href="about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
@@ -220,7 +168,7 @@
 				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
 				<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
 					<li class="nav-item">
-						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link active" id="pills-today-tab" data-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today</a>
+						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-today-tab" data-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today</a>
 					</li>
 					<li class="nav-item">
 						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-week-tab" data-toggle="pill" href="#pills-week" role="tab" aria-controls="pills-week" aria-selected="false">Week</a>
@@ -246,10 +194,10 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo"></em></span>
 										</div>
 										<div id="loadingToday">
-											<img src="img/loading.svg" alt="Loading">
+											<img loading="lazy" src="img/loading.svg" alt="Loading">
 										</div>
 										<br><br>
-										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button"><i class="fas fa-download"></i> Today (.csv)</a></p>
+										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.csv)</a></p>
 									</div>
 									<div class="card-block">
 										<div class="card-body text-center">
@@ -417,10 +365,10 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo"></em></span>
 										</div>
 										<div id="loadingWeek">
-											<img src="img/loading.svg" alt="Loading">
+											<img loading="lazy" src="img/loading.svg" alt="Loading">
 										</div>
 										<br><br>
-										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button"><i class="fas fa-download"></i> Week (.csv)</a></p>
+										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.csv)</a></p>
 									</div>
 									<div class="card-block">
 										<div class="card-body text-center">
@@ -587,10 +535,10 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthTo"></em></span>
 										</div>
 										<div id="loadingMonth">
-											<img src="img/loading.svg" alt="Loading">
+											<img loading="lazy" src="img/loading.svg" alt="Loading">
 										</div>
 										<br><br>
-										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button"><i class="fas fa-download"></i> Month (.csv)</a></p>
+										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.csv)</a></p>
 									</div>
 									<div class="card-block">
 										<div class="card-body text-center">
@@ -757,10 +705,10 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearTo"></em></span>
 										</div>
 										<div id="loadingYear">
-											<img src="img/loading.svg" alt="Loading">
+											<img loading="lazy" src="img/loading.svg" alt="Loading">
 										</div>
 										<br><br>
-										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button"><i class="fas fa-download"></i> Year (.csv)</a></p>
+										<p style="font-size: 20px;"><a style="background-color: #4682B4;border-color: black;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Year (.csv)</a></p>
 									</div>
 									<div class="card-block">
 										<div class="card-body text-center">
@@ -922,23 +870,35 @@
 	<!-- End of Main Content -->
 	<!-- Footer -->
 	<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
-		<div class="container-fluid py-1" style="color: black; font-family: 'Rubik', sans-serif; font-size: 16px;">
-			<div class="row">
-				<div class="col text-left"></div>
-				<div class="col text-center">By the community, for the community</div>
-				<div class="col text-right"></div>
-			</div>
-			<div class="row">
-				<div class="col text-left">By Daniel López</div>
-				<div class="col text-center">&nbsp;</div>
-				<div class="col text-right">© 2026 TweetFeed</div>
-			</div>
-			<div class="row">
-				<div class="col text-left d-none d-lg-block"><a class="text-decoration-none" href="https://twitter.com/0xDanielLopez" target="_blank" rel="noopener"><i class="fab fa-twitter"></i>&nbsp;Follow me on 𝕏!</a></div>
-				<div class="col text-center">
-					<a style="font-size: 12px;padding:5px;background-color: #1DA1F2;border:1px solid black;" href="/changelog.html" class="btn btn-info"><b>Changelog</b></a>
+		<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+			<div class="row align-items-center">
+				<div class="col-md-4 text-left">
+					By Daniel López
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 				</div>
-				<div class="col text-right">Made with <span>❤</span> in Andalucía, Spain</div>
+				<div class="col-md-4 text-center">
+					<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+				</div>
+				<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
+			</div>
+		</div>
+	</footer>
+	<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+		<div class="container-fluid py-2" style="color: black;">
+			<div class="row">
+				<div class="col text-center">
+					By Daniel López
+					&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+					<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="tos.html">Terms of Service</a>
+					&nbsp;·&nbsp; © 2026 TweetFeed.live
+				</div>
 			</div>
 		</div>
 	</footer>
@@ -959,8 +919,10 @@
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="js/config.js"></script>
+	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
-	<script src="js/date.js"></script>
 	<script src="vendor/chart.js/Chart.min.js"></script>
 	<script>
 	let tableTypesToday = $('#dataTableTypesToday').DataTable();
@@ -975,12 +937,12 @@
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv', function(response) {
+		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 			let data = csvJSON(response);
-			var last_date = data.at(-1)[0];
-			var first_date = data.at(1)[0];
-			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var last_date = data[data.length - 1][0];
+			var first_date = data[1][0];
+			var date1 = formatDateLong(last_date);
+			var date2 = formatDateLong(first_date);
 			$(".lastDateTodayFrom").fadeOut(function() {
 				$(this).text("From: " + date2).fadeIn(2000);
 			});
@@ -998,12 +960,12 @@
 			countTags('today', data);
 			prepareTodayGraph(data);
 		})
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv', function(response) {
+		$.get(TweetFeed.dataUrl('week.csv'), function(response) {
 			let data = csvJSON(response);
-			var last_date = data.at(-1)[0];
-			var first_date = data.at(1)[0];
-			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var last_date = data[data.length - 1][0];
+			var first_date = data[1][0];
+			var date1 = formatDateLong(last_date);
+			var date2 = formatDateLong(first_date);
 			$(".lastDateWeekFrom").fadeOut(function() {
 				$(this).text("From: " + date2).fadeIn(2000);
 			});
@@ -1020,12 +982,12 @@
 			countTags('week', data);
 			prepareWeekGraph(data);
 		})
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv', function(response) {
+		$.get(TweetFeed.dataUrl('month.csv'), function(response) {
 			let data = csvJSON(response);
-			var last_date = data.at(-1)[0];
-			var first_date = data.at(1)[0];
-			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var last_date = data[data.length - 1][0];
+			var first_date = data[1][0];
+			var date1 = formatDateLong(last_date);
+			var date2 = formatDateLong(first_date);
 			$(".lastDateMonthFrom").fadeOut(function() {
 				$(this).text("From: " + date2).fadeIn(2000);
 			});
@@ -1042,12 +1004,12 @@
 			countTags('month', data);
 			prepareMonthGraph(data);
 		})
-		$.get('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv', function(response) {
+		$.get(TweetFeed.dataUrl('year.csv'), function(response) {
 			let data = csvJSON(response);
-			var last_date = data.at(-1)[0];
-			var first_date = data.at(1)[0];
-			var date1 = Date.parse(last_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
-			var date2 = Date.parse(first_date).toString("MMMM dS, yyyy HH:mm:ss UTC");
+			var last_date = data[data.length - 1][0];
+			var first_date = data[1][0];
+			var date1 = formatDateLong(last_date);
+			var date2 = formatDateLong(first_date);
 			$(".lastDateYearFrom").fadeOut(function() {
 				$(this).text("From: " + date2).fadeIn(2000);
 			});
@@ -1291,7 +1253,6 @@
 		}
 	}
 
-
 	function drawPieChart(id, label, data) {
 		var colorsTag = {
 			"#phishing": "#FF9933",
@@ -1324,7 +1285,7 @@
 			"#ProxyShell": "#EB91E1",
 			"#Qakbot": "#3ADA20",
 			"#Raccoon": "#88177F",
-			"RaspberryRobin": "##228B22",
+			"RaspberryRobin": "#228B22",
 			"#RedLine": "#2F5CF1",
 			"#Remcos": "#B02699",
 			"#SocGholish": "#B02699",
@@ -1332,7 +1293,43 @@
 			"#Ursnif": "#2E4E42",
 			"#WhisperGate": "#2E4A42",
 			"#XLoader": "#FBABF4",
-			"#ZLoader": "#B87677"
+			"#ZLoader": "#B87677",
+			"#LockBit": "#288A30",
+			"#BlackBasta": "#AA213D",
+			"#RansomHub": "#1871CD",
+			"#Clop": "#A7C539",
+			"#HuntersInternational": "#CC3FD9",
+			"#INCRansom": "#A0624C",
+			"#PlayRansomware": "#3B9BBF",
+			"#MedusaRansomware": "#D4995E",
+			"#CactusRansomware": "#7E48C4",
+			"#AkiraRansomware": "#4F9968",
+			"#QilinRansomware": "#B84477",
+			"#Vidar": "#4A8BB8",
+			"#StealC": "#B77B3A",
+			"#ACRStealer": "#6B449E",
+			"#RisePro": "#598D3F",
+			"#MetaStealer": "#C54E8A",
+			"#DarkGate": "#3F7894",
+			"#Latrodectus": "#B2653E",
+			"#BumbleBee": "#7F5AA5",
+			"#WarmCookie": "#4D8355",
+			"#PikaBot": "#C06670",
+			"#VoltTyphoon": "#4378B2",
+			"#SaltTyphoon": "#8F6E2D",
+			"#APT29": "#5D9B68",
+			"#MidnightBlizzard": "#9A3F9E",
+			"#APT28": "#A84A47",
+			"#FancyBear": "#3E8299",
+			"#CozyBear": "#AB7534",
+			"#ScatteredSpider": "#6E4FB1",
+			"#APT41": "#4F8F43",
+			"#ClickFix": "#BD6B41",
+			"#quishing": "#3B8088",
+			"#RaaS": "#9D4E8F",
+			"#cryptodrainer": "#5B7E9E",
+			"#Anatsa": "#9B5F2B",
+			"#Brokewell": "#6A4B9C"
 		};
 
 		var colorsType = {
@@ -1510,60 +1507,6 @@
 				}
 			}
 		});
-	}
-
-	function csvJSON(csv) {
-
-		var lines = csv.split("\n");
-		var result = [];
-		//for (var i = lines.length - 1; i >= 0; i--) {
-		for (var i = 0; i < lines.length; i++) {
-			var obj = [];
-			var currentline = lines[i].split(",");
-			if (currentline.length > 1) {
-				for (var j = 0; j < currentline.length; j++) {
-					obj.push(currentline[j]);
-				}
-				result.push(obj);
-			}
-
-		}
-		return result;
-	}
-	</script>
-	<script>
-	function downloadCSV(csv, filename) {
-		var csvFile;
-		var downloadLink;
-		// CSV file
-		csvFile = new Blob([csv], { type: "text/csv" });
-		// Download link
-		downloadLink = document.createElement("a");
-		// File name
-		downloadLink.download = filename;
-		// Create a link to the file
-		downloadLink.href = window.URL.createObjectURL(csvFile);
-		// Hide download link
-		downloadLink.style.display = "none";
-		// Add the link to DOM
-		document.body.appendChild(downloadLink);
-		// Click download link
-		downloadLink.click();
-	}
-
-	function exportTableToCSV(filename) {
-		var csv = [];
-		var rows = document.querySelectorAll("table tr");
-		for (var i = 2; i < rows.length; i++) {
-			var row = [],
-				cols = rows[i].querySelectorAll("td, th");
-			for (var j = 0; j < cols.length; j++)
-				row.push(cols[j].innerText);
-			csv.push(row.join(","));
-		}
-
-		// Download CSV file
-		downloadCSV(csv.join("\n"), filename);
 	}
 	</script>
 	<script>
