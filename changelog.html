@@ -69,9 +69,34 @@
 		"url": "https://tweetfeed.live/",
 		"potentialAction": {
 			"@type": "SearchAction",
-			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"target": {
+				"@type": "EntryPoint",
+				"urlTemplate": "https://tweetfeed.live/search.html?q={search_term_string}"
+			},
 			"query-input": "required name=search_term_string"
 		}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "ItemList",
+		"name": "TweetFeed changelog",
+		"description": "Release notes for the TweetFeed IOC feed project: new features, new tags tracked, bug fixes.",
+		"url": "https://tweetfeed.live/changelog.html",
+		"itemListOrder": "https://schema.org/ItemListOrderDescending",
+		"itemListElement": [
+			{"@type": "ListItem", "position": 1,  "item": {"@type": "BlogPosting", "headline": "Fenix x2",          "datePublished": "2024-12-21", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 2,  "item": {"@type": "BlogPosting", "headline": "Stop",              "datePublished": "2024-05-24", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 3,  "item": {"@type": "BlogPosting", "headline": "Fenix",             "datePublished": "2024-01-15", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 4,  "item": {"@type": "BlogPosting", "headline": "Frontend refresh",  "datePublished": "2023-06-17", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 5,  "item": {"@type": "BlogPosting", "headline": "OpenCTI connector", "datePublished": "2023-06-16", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 6,  "item": {"@type": "BlogPosting", "headline": "Frontend mobile",   "datePublished": "2023-03-04", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 7,  "item": {"@type": "BlogPosting", "headline": "Added new tags",    "datePublished": "2023-01-15", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 8,  "item": {"@type": "BlogPosting", "headline": "#Spring4Shell tag", "datePublished": "2022-04-01", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 9,  "item": {"@type": "BlogPosting", "headline": "Dashboard section", "datePublished": "2022-02-07", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 10, "item": {"@type": "BlogPosting", "headline": "#log4j / #Log4Shell tags", "datePublished": "2021-12-12", "url": "https://tweetfeed.live/changelog.html", "author": {"@type": "Person", "name": "Daniel Lopez"}}}
+		]
 	}
 	</script>
 </head>
@@ -262,6 +287,9 @@
 							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 						</div>
 						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
@@ -276,6 +304,9 @@
 						<div class="col text-center">
 							By Daniel López
 							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>

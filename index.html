@@ -49,42 +49,40 @@
 	<link href="css/tweetfeed.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-	{
-		"@context": "https://schema.org/",
-		"@type": "Organization",
-		"name": "TweetFeed",
-		"url": "https://tweetfeed.live/",
-		"logo": "https://tweetfeed.live/img/TweetFeed_card.png",
-		"keywords": "feed,phishing,scam,malware,twitter,osint,ioc,threat",
-		"slogan": "Feeds of Indicators Of Compromise shared at Twitter"
-	}
-	</script>
-	<!-- Structured data -->
+<!-- Structured data -->
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"@type": "Organization",
-		"name": "TweetFeed",
-		"url": "https://tweetfeed.live/",
-		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
-		"sameAs": [
-			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+		"@graph": [
+			{
+				"@type": "Organization",
+				"@id": "https://tweetfeed.live/#organization",
+				"name": "TweetFeed",
+				"url": "https://tweetfeed.live/",
+				"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+				"description": "Feeds of Indicators of Compromise shared on Twitter/X by the infosec community",
+				"keywords": "feed,phishing,scam,malware,twitter,osint,ioc,threat",
+				"sameAs": [
+					"https://x.com/0xDanielLopez",
+					"https://github.com/0xDanielLopez/TweetFeed"
+				]
+			},
+			{
+				"@type": "WebSite",
+				"@id": "https://tweetfeed.live/#website",
+				"name": "TweetFeed",
+				"url": "https://tweetfeed.live/",
+				"publisher": {"@id": "https://tweetfeed.live/#organization"},
+				"potentialAction": {
+					"@type": "SearchAction",
+					"target": {
+						"@type": "EntryPoint",
+						"urlTemplate": "https://tweetfeed.live/search.html?q={search_term_string}"
+					},
+					"query-input": "required name=search_term_string"
+				}
+			}
 		]
-	}
-	</script>
-	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "TweetFeed",
-		"url": "https://tweetfeed.live/",
-		"potentialAction": {
-			"@type": "SearchAction",
-			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
-			"query-input": "required name=search_term_string"
-		}
 	}
 	</script>
 </head>
@@ -407,6 +405,9 @@
 							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 						</div>
 						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
@@ -422,6 +423,9 @@
 						<div class="col text-center">
 							By Daniel López
 							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>

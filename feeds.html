@@ -69,9 +69,54 @@
 		"url": "https://tweetfeed.live/",
 		"potentialAction": {
 			"@type": "SearchAction",
-			"target": "https://tweetfeed.live/search.html?q={search_term_string}",
+			"target": {
+				"@type": "EntryPoint",
+				"urlTemplate": "https://tweetfeed.live/search.html?q={search_term_string}"
+			},
 			"query-input": "required name=search_term_string"
 		}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Dataset",
+		"name": "TweetFeed IOC Dataset",
+		"alternateName": "TweetFeed",
+		"description": "Indicators of Compromise (URLs, domains, IPs, file hashes, cryptocurrency addresses, X/Twitter handles) harvested from Twitter/X by infosec researchers. Updated every 15 minutes. Open dataset published in CSV, JSON, TXT and RSS over windows of today, week, month and year.",
+		"url": "https://tweetfeed.live/feeds.html",
+		"sameAs": "https://github.com/0xDanielLopez/TweetFeed",
+		"keywords": ["IOC", "indicators of compromise", "threat intelligence", "phishing", "malware", "C2", "scam", "OSINT", "SOCMINT", "twitter feed", "ioc feed"],
+		"license": "https://creativecommons.org/publicdomain/zero/1.0/",
+		"isAccessibleForFree": true,
+		"creator": {
+			"@type": "Person",
+			"name": "Daniel Lopez",
+			"url": "https://x.com/0xDanielLopez"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "TweetFeed",
+			"url": "https://tweetfeed.live/",
+			"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png"
+		},
+		"temporalCoverage": "2021-01-01/..",
+		"spatialCoverage": {"@type": "Place", "name": "Worldwide"},
+		"variableMeasured": [
+			{"@type": "PropertyValue", "name": "date", "description": "Timestamp the IOC was shared on Twitter/X"},
+			{"@type": "PropertyValue", "name": "user", "description": "Twitter/X handle of the researcher who posted the IOC"},
+			{"@type": "PropertyValue", "name": "type", "description": "IOC type: url, domain, ip, md5, sha1, sha256, hashtag or wallet"},
+			{"@type": "PropertyValue", "name": "value", "description": "The indicator itself"},
+			{"@type": "PropertyValue", "name": "tags", "description": "Contextual tags such as #phishing, #malware, #CobaltStrike"}
+		],
+		"distribution": [
+			{"@type": "DataDownload", "name": "Today (CSV)",  "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"},
+			{"@type": "DataDownload", "name": "Today (JSON)", "encodingFormat": "application/json",    "contentUrl": "https://api.tweetfeed.live/v1/today"},
+			{"@type": "DataDownload", "name": "Week (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"},
+			{"@type": "DataDownload", "name": "Month (CSV)",  "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"},
+			{"@type": "DataDownload", "name": "Year (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"},
+			{"@type": "DataDownload", "name": "RSS",          "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"}
+		]
 	}
 	</script>
 </head>
@@ -398,6 +443,9 @@
 							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
 						</div>
 						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
@@ -412,6 +460,9 @@
 						<div class="col text-center">
 							By Daniel López
 							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="changelog.html">Changelog</a>
+
+							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="tos.html">Terms of Service</a>
