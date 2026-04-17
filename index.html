@@ -585,7 +585,7 @@
 									value = encodeURIComponent(value);
 								}
 
-								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+								data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
@@ -629,7 +629,7 @@
 								value = encodeURIComponent(value);
 							}
 
-							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
+							data[i].push('<a class="twitterLink" style="text-decoration: none;" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i style="color: #394eff;" class="fas fa-external-link-alt"></i></a>');
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
