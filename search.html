@@ -654,7 +654,7 @@
 		if (month < 10) {
 			month = '0' + month;
 		}
-		dateNow = [dateNowUTC.getFullYear(), month, day].join('');
+		var dateNow = [dateNowUTC.getFullYear(), month, day].join('');
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
@@ -684,7 +684,7 @@
 		if (month < 10) {
 			month = '0' + month;
 		}
-		dateNow = [dateNowUTC.getFullYear(), month, day].join('');
+		var dateNow = [dateNowUTC.getFullYear(), month, day].join('');
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 

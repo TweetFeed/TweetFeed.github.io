@@ -8,14 +8,14 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Access up-to-date feeds of Indicators of Compromise (IOCs) shared by the infosec community on 𝕏 / Twitter with TweetFeed. Effective for monitoring phishing, malware and online threats.">
+	<meta name="description" content="Feeds of Indicators of Compromise (IOCs) shared by the infosec community on Twitter/X. Free, updated every 15 minutes. Available as CSV, RSS and JSON.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="IOC feed, phishing, scam, malware, ransomware, Twitter IOCs, OSINT, threat intelligence, cybersecurity, real-time alerts, infosec community">
 	<link rel="canonical" href="https://tweetfeed.live">
-	<title>Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed</title>
+	<title>Free IOC Feeds from the Infosec Community - TweetFeed</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed">
+	<meta name="twitter:title" content="Free IOC Feeds from the Infosec Community - TweetFeed">
 	<meta name="twitter:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
 	<meta name="twitter:url" content="https://tweetfeed.live">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
@@ -23,7 +23,7 @@
 	<!-- Facebook -->
 	<meta property="og:url" content="https://tweetfeed.live">
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="Indicators Of Compromise (IOCs) shared by infosec community - TweetFeed">
+	<meta property="og:title" content="Free IOC Feeds from the Infosec Community - TweetFeed">
 	<meta property="og:description" content="Live feeds of IOCs (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
@@ -528,6 +528,7 @@
 				}
 				i = i + 20;
 			}, 1200);
+			TweetFeed.trackInterval(_progressInterval);
 		}
 		var loaddatacall = 0;
 		var olddate = '';
