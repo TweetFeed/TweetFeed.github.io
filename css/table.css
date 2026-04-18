@@ -153,6 +153,19 @@ table th:nth-child(7) {
 
 }
 
+/* CLS fix: reserve height for DataTable wrappers so async row rendering
+   doesn't shift layout on desktop (home/search/researchers had CLS 0.23-0.28).
+   Scoped via :has() to the 5 wrappers that actually cause CLS; api/graphs
+   use .table-responsive too but don't shift (CLS <0.03 each). Hidden tab
+   panes don't contribute because their parent is display:none. */
+.table-responsive:has(#dataTable),
+.table-responsive:has(#dataTableFull),
+.table-responsive:has(#dataTableUsersToday),
+.table-responsive:has(#dataTableUsersWeek),
+.table-responsive:has(#dataTableUsersMonth) {
+  min-height: 720px;
+}
+
 input {
   text-align: center;
   vertical-align: middle;
