@@ -31,6 +31,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tweetfeed.live/agents.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tweetfeed.live/graphs.html</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>hourly</changefreq>
