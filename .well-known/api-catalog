@@ -1,0 +1,16 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.tweetfeed.live/v1",
+      "service-doc": [
+        {"href": "https://tweetfeed.live/api.html", "type": "text/html"}
+      ],
+      "status": [
+        {"href": "https://api.tweetfeed.live/v1/today", "type": "application/json"}
+      ],
+      "license": [
+        {"href": "https://creativecommons.org/publicdomain/zero/1.0/"}
+      ]
+    }
+  ]
+}
