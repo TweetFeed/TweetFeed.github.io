@@ -143,6 +143,14 @@ table th:nth-child(7) {
     height: auto;
   }
 
+  /* IOC value cells: override inline nowrap/overflow so long URLs/hashes wrap
+     instead of expanding the column past the viewport */
+  .dataTable tbody td > span {
+    white-space: normal !important;
+    word-break: break-all !important;
+    overflow: visible !important;
+  }
+
 }
 
 input {
