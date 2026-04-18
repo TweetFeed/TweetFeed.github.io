@@ -1,0 +1,15 @@
+{
+  "serverInfo": {
+    "name": "tweetfeed-mcp",
+    "version": "0.1.0"
+  },
+  "endpoint": "https://mcp.tweetfeed.live/",
+  "transport": "http+json-rpc",
+  "protocolVersion": "2025-03-26",
+  "capabilities": {
+    "tools": {}
+  },
+  "description": "Query the TweetFeed public IOC feed (URLs, domains, IPs, SHA256/MD5 hashes shared by the infosec community on Twitter/X) via MCP. No auth, CC0 data, read-only.",
+  "documentation": "https://github.com/0xDanielLopez/tweetfeed-mcp",
+  "license": "CC0-1.0"
+}
