@@ -153,17 +153,20 @@ table th:nth-child(7) {
 
 }
 
-/* CLS fix: reserve height for DataTable wrappers so async row rendering
-   doesn't shift layout on desktop (home/search/researchers had CLS 0.23-0.28).
-   Scoped via :has() to the 5 wrappers that actually cause CLS; api/graphs
-   use .table-responsive too but don't shift (CLS <0.03 each). Hidden tab
-   panes don't contribute because their parent is display:none. */
-.table-responsive:has(#dataTable),
-.table-responsive:has(#dataTableFull),
-.table-responsive:has(#dataTableUsersToday),
-.table-responsive:has(#dataTableUsersWeek),
-.table-responsive:has(#dataTableUsersMonth) {
-  min-height: 720px;
+/* CLS fix: reserve height for the .card-body that wraps each DataTable so
+   async row rendering + font swap (Rubik, Alegreya Sans SC) don't shift
+   content on desktop (home/search/researchers had CLS 0.23-0.28). Targets
+   the card-body (outer shell) rather than just .table-responsive because
+   lighthouse attributes the shift to card-body and the outer container
+   absorbs font-swap reflow too. Scoped via :has() to the 5 tables that
+   actually shift; api/graphs don't (CLS <0.03). Hidden tab panes don't
+   contribute because their parent is display:none. */
+.card-body:has(#dataTable),
+.card-body:has(#dataTableFull),
+.card-body:has(#dataTableUsersToday),
+.card-body:has(#dataTableUsersWeek),
+.card-body:has(#dataTableUsersMonth) {
+  min-height: 820px;
 }
 
 input {
