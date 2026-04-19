@@ -98,10 +98,9 @@
       if ($trigger && $trigger.length && success) {
         // If the trigger is a FontAwesome copy icon, swap to a green checkmark briefly
         if ($trigger.hasClass('fa-copy') || $trigger.hasClass('far') || $trigger.hasClass('fas')) {
-          var origColor = $trigger.css('color');
           $trigger.removeClass('far fa-copy').addClass('fas fa-check').css('color', 'green');
           setTimeout(function() {
-            $trigger.removeClass('fas fa-check').addClass('far fa-copy').css('color', origColor || '');
+            $trigger.removeClass('fas fa-check').addClass('far fa-copy').css('color', '');
           }, 1000);
         } else {
           var $feedback = $('<span class="tf-copy-feedback" style="color:green;font-weight:bold;margin-left:4px;"> ✓</span>');
