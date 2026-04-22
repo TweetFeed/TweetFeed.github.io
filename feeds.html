@@ -526,7 +526,6 @@
 
 			countTypes('today', data);
 			countTags('today', data);
-			prepareTodayGraph(data);
 		})
 		$.get(TweetFeed.dataUrl('week.csv'), function(response) {
 			let data = csvJSON(response);
@@ -548,7 +547,6 @@
 
 			countTypes('week', data);
 			countTags('week', data);
-			prepareWeekGraph(data);
 		})
 		$.get(TweetFeed.dataUrl('month.csv'), function(response) {
 			let data = csvJSON(response);
@@ -570,7 +568,6 @@
 
 			countTypes('month', data);
 			countTags('month', data);
-			prepareMonthGraph(data);
 		})
 		$.get(TweetFeed.dataUrl('year.csv'), function(response) {
 			let data = csvJSON(response);
@@ -592,178 +589,8 @@
 
 			countTypes('year', data);
 			countTags('year', data);
-			prepareYearGraph(data);
 		})
 	})
-
-	function prepareTodayGraph(jsonArr) {
-		let hours = [],
-			count = [];
-		for (var i = 0; i < jsonArr.length; i++) {
-			var d = new Date(jsonArr[i][0]);
-			var n = d.getHours();
-			hours.push(n);
-		}
-		hours.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
-		});
-
-		hours = [];
-		for (var i = 0; i < count.length; i++) {
-			let string = '';
-			if (i < 10) {
-				string = '0' + i + ':00';
-			} else {
-				string = i + ':00';
-			}
-			hours.push(string)
-		}
-
-		drawLineChart('todayLineChart', hours, count);
-	}
-
-	function prepareWeekGraph(jsonArr) {
-		let keys = [];
-		let values = [];
-		let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-		let daysName = [],
-			count = [],
-			monthData = [];
-		for (var i = 0; i < jsonArr.length; i++) {
-			let d = new Date(jsonArr[i][0]);
-			let dayName = days[d.getDay()];
-
-			let day = d.getDate();
-			let month = (d.getMonth() + 1);
-			if (day < 10) {
-				day = '0' + day;
-			}
-			if (month < 10) {
-				month = '0' + month;
-			}
-			monthData.push(day + '/' + month);
-
-			daysName.push(dayName + " (" + day + '/' + month + ")");
-		}
-		daysName.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
-		});
-
-		for (var key in count) {
-			if (count.hasOwnProperty(key)) {
-				keys.push(key);
-				values.push(count[key]);
-			}
-		}
-
-		drawLineChart('weekLineChart', keys, values);
-	}
-
-	function prepareMonthGraph(jsonArr) {
-		let keys = [];
-		let values = [];
-		let count = [];
-		let monthData = [];
-		jsonArr = jsonArr.sort();
-		for (var i = 0; i < jsonArr.length; i++) {
-			let d = new Date(jsonArr[i][0]);
-			let day = d.getDate();
-			let month = (d.getMonth() + 1);
-			if (day < 10) {
-				day = '0' + day;
-			}
-			if (month < 10) {
-				month = '0' + month;
-			}
-			monthData.push(day + '/' + month);
-		}
-		monthData.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
-		});
-		for (var key in count) {
-			if (count.hasOwnProperty(key)) {
-				keys.push(key);
-				values.push(count[key]);
-			}
-		}
-		drawLineChart('monthLineChart', keys, values);
-	}
-
-	function prepareYearGraph(jsonArr) {
-		let monthKey = ["January", "February", "March", "April", "May", "June",
-			"July", "August", "September", "October", "November", "December"
-		];
-		let monthsValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		for (var i = 0; i < jsonArr.length; i++) {
-			let d = new Date(jsonArr[i][0]);
-			monthsValues[d.getMonth()]++;
-		}
-		drawLineChart('yearLineChart', monthKey, monthsValues);
-	}
-
-	function drawLineChart(id, label, data) {
-		var ctx = document.getElementById(id);
-		var myLineChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: label,
-				datasets: [{
-					label: "Counts",
-					lineTension: 0.3,
-					backgroundColor: "rgba(78, 115, 223, 0.05)",
-					borderColor: "rgba(78, 115, 223, 1)",
-					pointRadius: 3,
-					pointBackgroundColor: "rgba(78, 115, 223, 1)",
-					pointBorderColor: "rgba(78, 115, 223, 1)",
-					pointHoverRadius: 3,
-					pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-					pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-					pointHitRadius: 10,
-					pointBorderWidth: 2,
-					data: data,
-				}],
-			},
-			options: {
-				maintainAspectRatio: false,
-				layout: { padding: { left: 10, right: 25, top: 25, bottom: 0 } },
-				scales: {
-					xAxes: [{ gridLines: { display: false, drawBorder: false } }],
-					yAxes: [{
-						ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true },
-						gridLines: {
-							color: "rgb(234, 236, 244)",
-							zeroLineColor: "rgb(234, 236, 244)",
-							drawBorder: false,
-							borderDash: [2],
-							zeroLineBorderDash: [2]
-						}
-					}]
-				},
-				legend: { display: false },
-				tooltips: {
-					backgroundColor: "rgb(255,255,255)",
-					bodyFontColor: "#858796",
-					titleMarginBottom: 10,
-					titleFontColor: '#6e707e',
-					titleFontSize: 14,
-					borderColor: '#dddfeb',
-					borderWidth: 1,
-					xPadding: 15,
-					yPadding: 15,
-					displayColors: false,
-					intersect: false,
-					mode: 'index',
-					caretPadding: 10,
-					callbacks: {
-						label: function(tooltipItem, chart) {
-							var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-							return datasetLabel + ': ' + tooltipItem.yLabel;
-						}
-					}
-				}
-			}
-		});
-	}
 
 	function countTypes(divAccess, jsonArr) {
 		let keys = [];
