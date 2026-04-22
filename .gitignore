@@ -1,0 +1,12 @@
+# Build tooling - not deployed, kept locally for the dev toolchain only
+node_modules/
+
+# macOS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# sass/scss build output (if any local builds)
+.sass-cache/
