@@ -1285,6 +1285,21 @@
 		}
 	}
 
+	// Lazy-render a Chart.js instance once its target canvas enters the
+	// viewport (with a 200px preload margin). Keeps the expensive chart
+	// paint out of initial LCP + TBT on below-the-fold canvases.
+	function lazyChart(canvas, config) {
+		if (!canvas) return;
+		var render = function() { new Chart(canvas, config); };
+		if (!('IntersectionObserver' in window)) { render(); return; }
+		var obs = new IntersectionObserver(function(entries) {
+			for (var i = 0; i < entries.length; i++) {
+				if (entries[i].isIntersecting) { render(); obs.disconnect(); return; }
+			}
+		}, { rootMargin: '200px' });
+		obs.observe(canvas);
+	}
+
 	function drawPieChart(id, label, data) {
 		var colorsTag = {
 			"#phishing": "#FF9933",
@@ -1413,7 +1428,7 @@
 		}
 		$('.' + id + 'Html').html(html);
 		var ctx = document.getElementById(id);
-		var myPieChart = new Chart(ctx, {
+		lazyChart(ctx, {
 			type: 'doughnut',
 			data: {
 				labels: label,
@@ -1456,7 +1471,7 @@
 
 	function drawLineChart(id, label, data) {
 		var ctx = document.getElementById(id);
-		var myLineChart = new Chart(ctx, {
+		lazyChart(ctx, {
 			type: 'line',
 			data: {
 				labels: label,
