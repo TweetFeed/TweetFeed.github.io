@@ -369,6 +369,29 @@
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 				</div>
+				<section class="faq-section" style="padding: 1rem 0;font-family: 'Rubik', sans-serif;color: #444;">
+					<h2 style="font-size: 22px;color: #1DA1F2;margin-top: 1rem;">Frequently asked questions</h2>
+					<details style="margin-top: 1rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Does the TweetFeed API require authentication?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">No. The TweetFeed REST API is open and does not require an API key, OAuth token or registration.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I query IOCs by type?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Call <code>GET https://api.tweetfeed.live/v1/{time}/{type}</code> where <code>time</code> is <code>today</code>, <code>week</code>, <code>month</code> or <code>year</code> and <code>type</code> is <code>url</code>, <code>domain</code>, <code>ip</code>, <code>sha256</code> or <code>md5</code>. The response is JSON by default.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Can I filter by tag or malware family?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Yes. Chain a second filter: <code>GET /v1/{time}/{filter1}/{filter2}</code>. Filters can be an IOC type, a generic tag (phishing, malware) or a malware family (LockBit, RansomHub, and others).</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Is there a rate limit on the TweetFeed API?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">No hard rate limit for normal use. The API runs on Cloudflare Workers with edge caching; typical global volume is around 7 to 8 thousand requests per day.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Can I use the TweetFeed API commercially?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Yes. TweetFeed IOC data is released under CC0 1.0 (public domain), so the JSON and CSV feeds can be used in commercial products without attribution.</p>
+					</details>
+				</section>
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
