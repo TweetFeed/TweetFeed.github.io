@@ -85,6 +85,54 @@
 		]
 	}
 	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What is TweetFeed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "TweetFeed is a free, community-driven service that aggregates indicators of compromise (IOCs) — malicious URLs, domains, IPs and file hashes — shared publicly by infosec researchers on Twitter/X. The pipeline republishes fresh IOCs every 15 minutes as CSV, JSON, TXT, RSS and a REST API."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What kinds of IOCs does TweetFeed collect?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "URLs, domains, IPs, SHA-256 and MD5 file hashes associated with phishing, malware, ransomware, C2 infrastructure and other threats. The original tweet hashtags (for example #phishing, #CobaltStrike, #LockBit) are preserved for each IOC so you can filter by tag."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I download TweetFeed IOCs?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "CSV, JSON, TXT and RSS downloads are on the Feeds page. For programmatic access use the free REST API at api.tweetfeed.live. See the Threat Hunting page for MISP, OpenCTI, Splunk, Microsoft Sentinel KQL and QRadar integration examples."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Is TweetFeed free to use?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. TweetFeed is completely free. Data is released under CC0 1.0 (public domain) so it is safe to use in commercial products, and there is no registration, API key or rate limit for normal use."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Who contributes to TweetFeed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "TweetFeed scrapes around 95 public RSS feeds of infosec researchers on Twitter/X. The Researchers page lists the current contributors. Attribution is preserved: every IOC record includes the original tweet URL."
+				}
+			}
+		]
+	}
+	</script>
 </head>
 
 <body id="page-top">
