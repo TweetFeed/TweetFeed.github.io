@@ -503,6 +503,29 @@
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 				</div>
+				<section class="faq-section" style="padding: 1rem 0;font-family: 'Rubik', sans-serif;color: #444;">
+					<h2 style="font-size: 22px;color: #1DA1F2;margin-top: 1rem;">Frequently asked questions</h2>
+					<details style="margin-top: 1rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">What is an IOC feed?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Is TweetFeed free?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Yes. All TweetFeed IOC feeds and the REST API are free to download and use under a CC0 1.0 license. No registration or API key required.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How often are the IOC feeds updated?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Every 15 minutes. The pipeline scrapes around 95 Twitter/X RSS feeds, extracts new IOCs, deduplicates, and publishes refreshed CSV, JSON, TXT and RSS files to tweetfeed.live.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Which feed format should I choose?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">CSV for spreadsheets and SIEM import, JSON for programmatic use, TXT for plain lists (one IOC per line), and RSS for subscribing in a feed reader. The data is identical across all four formats.</p>
+					</details>
+					<details style="margin-top: 0.5rem;">
+						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
+						<p style="margin-top: 0.5rem;font-size: 15px;">Point the platform at the CSV URL (today, week, month or year) and schedule periodic refresh. The <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+					</details>
+				</section>
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
