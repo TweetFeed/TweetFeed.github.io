@@ -948,7 +948,9 @@
 
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
-	$(function() {
+	// Defer CSV fetches + chart renders to window.load so Chart.js + csvJSON
+	// don't compete with initial paint. PSI TBT 4630ms → target <300ms.
+	$(window).on('load', function() {
 		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 			let data = csvJSON(response);
 			var last_date = data[data.length - 1][0];

@@ -504,7 +504,10 @@
 	<script>
 	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
-	$(function() {
+	// Defer CSV fetches until after window.load so they don't block LCP/TBT.
+	// year.csv (~4MB / 123k rows) parsed via csvJSON blocks the main thread
+	// otherwise — PSI mobile LCP 15.5s → target <2.5s.
+	$(window).on('load', function() {
 		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 			let data = csvJSON(response);
 			var last_date = data[data.length - 1][0];
