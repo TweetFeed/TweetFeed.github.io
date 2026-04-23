@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Download TweetFeed IOC feeds as CSV, JSON, TXT or RSS. Fresh indicators of compromise harvested from Twitter/X across today, week, month and year windows.">
+	<meta name="description" content="Free IOC feeds updated every 15 min. Download URLs, domains, IPs and hashes from Twitter/X as CSV, JSON, TXT or RSS. Ready for MISP, Splunk and OpenCTI.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
 	<link rel="canonical" href="https://tweetfeed.live/feeds.html">
@@ -118,6 +118,54 @@
 			{"@type": "DataDownload", "name": "Month (CSV)",  "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"},
 			{"@type": "DataDownload", "name": "Year (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"},
 			{"@type": "DataDownload", "name": "RSS",          "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What is an IOC feed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Is TweetFeed free?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. All TweetFeed IOC feeds and the REST API are free to download and use under a CC0 1.0 license. No registration or API key required."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How often are the IOC feeds updated?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Every 15 minutes. The pipeline scrapes around 95 Twitter/X RSS feeds, extracts new IOCs, deduplicates, and publishes refreshed CSV, JSON, TXT and RSS files to tweetfeed.live."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Which feed format should I choose?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "CSV for spreadsheets and SIEM import, JSON for programmatic use, TXT for plain lists (one IOC per line), and RSS for subscribing in a feed reader. The data is identical across all four formats."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I import TweetFeed into MISP, OpenCTI or Splunk?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Point the platform at the CSV URL (today, week, month or year) and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+				}
+			}
 		]
 	}
 	</script>

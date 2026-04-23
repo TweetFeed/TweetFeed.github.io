@@ -81,6 +81,54 @@
 		}
 	}
 	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "Does the TweetFeed API require authentication?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "No. The TweetFeed REST API is open and does not require an API key, OAuth token or registration."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I query IOCs by type?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Call GET https://api.tweetfeed.live/v1/{time}/{type} where time is today, week, month or year and type is url, domain, ip, sha256 or md5. The response is JSON by default."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Can I filter by tag or malware family?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. Chain a second filter: GET /v1/{time}/{filter1}/{filter2}. Filters can be an IOC type, a generic tag (phishing, malware) or a malware family (LockBit, RansomHub, and others)."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Is there a rate limit on the TweetFeed API?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "No hard rate limit for normal use. The API runs on Cloudflare Workers with edge caching; typical global volume is around 7 to 8 thousand requests per day."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Can I use the TweetFeed API commercially?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. TweetFeed IOC data is released under CC0 1.0 (public domain), so the JSON and CSV feeds can be used in commercial products without attribution."
+				}
+			}
+		]
+	}
+	</script>
 </head>
 
 <body id="page-top">

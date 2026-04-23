@@ -81,6 +81,38 @@
 		}
 	}
 	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "How do I import TweetFeed IOCs into MISP?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Add the TweetFeed CSV feed URL (for example https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv) as a new Feed in MISP and enable auto-refresh. Exact feed configuration is shown on this page."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Can I query TweetFeed from Splunk?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. Use curl or Splunk's HTTP Event Collector to pull the TweetFeed API on a schedule, then match IOCs against your index data. Copy-paste query examples for Splunk SPL, Microsoft Sentinel KQL and QRadar AQL are provided on this page."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Does TweetFeed integrate with OpenCTI and IntelOwl?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. OpenCTI can ingest the CSV feeds via a Connector source. IntelOwl can query the REST API per analyzer run. Both configurations are documented with working examples on this page."
+				}
+			}
+		]
+	}
+	</script>
 </head>
 
 <body id="page-top">
