@@ -435,9 +435,15 @@
 		})
 
 		let table = $('#dataTableFull').DataTable();
-		loadData();
-		var timerAux = setInterval(timerCycle, 6000);
-		TweetFeed.trackInterval(timerAux);
+		var timerAux;
+		// Defer initial CSV fetch to window.load so the DataTable skeleton
+		// paints before the week.csv fetch+parse. PSI mobile baseline
+		// LCP 4.2s, TBT 1920ms.
+		$(window).on('load', function() {
+			loadData();
+			timerAux = setInterval(timerCycle, 6000);
+			TweetFeed.trackInterval(timerAux);
+		});
 
 		function timerCycle() {
 			if (autorefresh) {
