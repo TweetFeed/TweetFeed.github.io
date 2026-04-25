@@ -1036,29 +1036,72 @@
 			countTags('month', data);
 			prepareMonthGraph(data);
 		})
-		$.get(TweetFeed.dataUrl('year.csv'), function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
+		// Year window: use counts.json (~5 KB) instead of year.csv (~16 MB).
+		// Parsing year.csv on the main thread blocks LCP.
+		$.get(TweetFeed.dataUrl('counts.json'), function(counts) {
+			if (typeof counts === 'string') counts = JSON.parse(counts);
+			let yr = counts.windows.year;
 			$(".lastDateYearFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
+				$(this).text("From: " + formatDateLong(yr.first_date)).fadeIn(2000);
 			});
 			$(".lastDateYearTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
+				$(this).text("To: " + formatDateLong(yr.last_date)).fadeIn(2000);
 			});
-			//$(".lastDateYearFrom").text("From: " + date2);
-			//$(".lastDateYearTo").text("To: " + date1);
-
 			$("#lastDateYear").show();
 			$("#loadingYear").hide();
 
-			countTypes('year', data);
-			countTags('year', data);
-			prepareYearGraph(data);
+			countTypesFromObj('year', yr.types || {});
+			countTagsFromObj('year', yr.tags || {});
+			prepareYearGraphFromMonths(yr.months || new Array(12).fill(0));
 		})
 	})
+
+	// Helpers consuming pre-aggregated counts.json data (graphs.html year window)
+	function countTypesFromObj(divAccess, typesObj) {
+		let keys = [], values = [];
+		let canonical = ['url', 'domain', 'ip', 'sha256', 'md5'];
+		let type = {};
+		for (let k of canonical) type[k] = typesObj[k] || 0;
+		for (const [key, value] of Object.entries(type)) {
+			$('.' + divAccess + '-' + key).text(nFormatter(value, 2));
+			if (key == "domain") {
+				keys.push(capitalize(key));
+				values.push(value);
+			} else {
+				keys.push(key.toUpperCase());
+				values.push(value);
+			}
+		}
+		drawPieChart(divAccess + 'PieChartType', keys, values);
+		let result = keys.map((k, i) => [k, nFormatter(values[i], 2)]);
+		if (divAccess == "year") {
+			tableTypesYear.rows.add(result).draw();
+			$("#dataTableTypesYear tbody tr:last-child").insertBefore("#dataTableTypesYear tbody tr:nth-child(1)");
+			$("#dataTableTypesYear tbody tr:nth-child(4)").insertAfter("#dataTableTypesYear tbody tr:nth-child(5)");
+		}
+	}
+
+	function countTagsFromObj(divAccess, tagsObj) {
+		let tuples = Object.entries(tagsObj).sort(function(a, b) { return b[1] - a[1]; });
+		let keys = tuples.map(t => t[0]);
+		let values = tuples.map(t => t[1]);
+		drawPieChart(divAccess + 'PieChartTag', keys, values);
+		let result = keys.map((k, i) => [k, values[i]]);
+		if (divAccess == "year") {
+			tableTagsYear.rows.add(result).order([1, 'desc']).draw();
+			tableTagsYear.rows().every(function() {
+				var number = $(this.node()).find('td').eq(1).text().trim();
+				$(this.node()).find('td').eq(1).html(nFormatter(number, 2));
+			})
+		}
+	}
+
+	function prepareYearGraphFromMonths(monthsArr) {
+		let monthKey = ["January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December"
+		];
+		drawLineChart('yearLineChart', monthKey, monthsArr);
+	}
 
 	function prepareTodayGraph(jsonArr) {
 		let hours = [],
