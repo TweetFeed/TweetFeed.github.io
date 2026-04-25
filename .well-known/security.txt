@@ -1,0 +1,4 @@
+Contact: https://x.com/0xDanielLopez
+Expires: 2027-04-25T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://tweetfeed.live/.well-known/security.txt
