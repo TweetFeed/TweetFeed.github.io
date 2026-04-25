@@ -112,12 +112,17 @@
 			{"@type": "PropertyValue", "name": "tags", "description": "Contextual tags such as #phishing, #malware, #CobaltStrike"}
 		],
 		"distribution": [
-			{"@type": "DataDownload", "name": "Today (CSV)",  "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"},
-			{"@type": "DataDownload", "name": "Today (JSON)", "encodingFormat": "application/json",    "contentUrl": "https://api.tweetfeed.live/v1/today"},
-			{"@type": "DataDownload", "name": "Week (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"},
-			{"@type": "DataDownload", "name": "Month (CSV)",  "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"},
-			{"@type": "DataDownload", "name": "Year (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"},
-			{"@type": "DataDownload", "name": "RSS",          "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"}
+			{"@type": "DataDownload", "name": "Today (CSV)",       "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"},
+			{"@type": "DataDownload", "name": "Today (JSON)",      "encodingFormat": "application/json",    "contentUrl": "https://api.tweetfeed.live/v1/today"},
+			{"@type": "DataDownload", "name": "Week (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"},
+			{"@type": "DataDownload", "name": "Month (CSV)",       "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"},
+			{"@type": "DataDownload", "name": "Year (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"},
+			{"@type": "DataDownload", "name": "RSS",               "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"},
+			{"@type": "DataDownload", "name": "MISP Manifest",     "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json"},
+			{"@type": "DataDownload", "name": "MISP Event Today",  "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/a7506a4c-ef3f-5453-b5af-baf471c80bd4.json"},
+			{"@type": "DataDownload", "name": "MISP Event Week",   "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/7bd179fd-8d3a-5b8a-8830-dcf1e80b1d69.json"},
+			{"@type": "DataDownload", "name": "MISP Event Month",  "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/432a377f-0247-5d71-a51d-bcb7b6d79b7b.json"},
+			{"@type": "DataDownload", "name": "MISP Event Year",   "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json"}
 		]
 	}
 	</script>
@@ -163,7 +168,7 @@
 				"name": "How do I import TweetFeed into MISP, OpenCTI or Splunk?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Point the platform at the CSV URL (today, week, month or year) and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+					"text": "For MISP, point your instance at the manifest URL https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json under Sync Actions, Feeds, Add - it imports the 4 native MISP events (today/week/month/year) automatically. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
 				}
 			}
 		]
@@ -486,10 +491,10 @@
 								<br>
 								<hr>
 								<p style="font-size: 20px;">
-									<a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" 
-									   class="btn btn-primary buttonHover" 
-									   href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml" 
-									   target="_blank" 
+									<a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;"
+									   class="btn btn-primary buttonHover"
+									   href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml"
+									   target="_blank"
 									   role="button" rel="noopener noreferrer">
 									   <i class="fas fa-rss"></i> RSS Feed (.xml)
 									</a>
@@ -498,7 +503,56 @@
 						</div>
 					</div>
 				</div>
-											
+
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspMISP Feed
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Add the <a class="text-decoration-none" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> to your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
+				</p>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center" style="border: 1px solid black;">
+								<span class="card-text cardTitle">Today</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 24h IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/a7506a4c-ef3f-5453-b5af-baf471c80bd4.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center" style="border: 1px solid black;">
+								<span class="card-text cardTitle">Week</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 7-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/7bd179fd-8d3a-5b8a-8830-dcf1e80b1d69.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center" style="border: 1px solid black;">
+								<span class="card-text cardTitle">Month</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 31-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/432a377f-0247-5d71-a51d-bcb7b6d79b7b.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center" style="border: 1px solid black;">
+								<span class="card-text cardTitle">Year</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 365-day IOCs (large file)"></i>
+								<hr>
+								<p style="font-size: 20px;"><a style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;" class="btn btn-primary buttonHover" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Year (.json)</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<hr style="border: 1px solid black;">
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
@@ -523,7 +577,7 @@
 					</details>
 					<details style="margin-top: 0.5rem;">
 						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
-						<p style="margin-top: 0.5rem;font-size: 15px;">Point the platform at the CSV URL (today, week, month or year) and schedule periodic refresh. The <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+						<p style="margin-top: 0.5rem;font-size: 15px;">For <b>MISP</b>, point your instance at the manifest URL <code>https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json</code> under <em>Sync Actions &rarr; Feeds &rarr; Add</em>. It imports the 4 native MISP events (today/week/month/year) automatically with deterministic UUIDs for dedup across pulls. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
 					</details>
 				</section>
 			</div>
