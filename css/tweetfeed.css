@@ -148,13 +148,29 @@
 
 /* ─── Quick-win utility classes (Fase 2) ─────────────────────────── */
 
-/* Subtle horizontal divider replacing the legacy
-   <hr style="border: 1px solid black;"> pattern (~30 instances site-wide). */
+/* Heavy black-border aesthetic on the main boxed elements.
+   The TweetFeed look-and-feel relies on crisp 1 px solid black borders
+   on cards / dividers / toolbars / code blocks; don't soften this
+   without asking the user first (memory feedback_tweetfeed_black_borders).
+   Replacing the previously-inline borders with CSS rules keeps the
+   markup clean while preserving the intended visual identity. */
+.card {
+	border: 1px solid black;
+}
 hr.divider {
 	border: 0;
-	border-top: 1px solid #dee2e6;
+	border-top: 1px solid black;
 	margin: 1.25rem 0;
 }
+.dash-toolbar {
+	border: 1px solid black;
+}
+.code-block {
+	border: 1px solid black;
+	border-left: 3px solid #4682B4;
+}
+/* Tweet skeleton placeholder: keep the soft border (it lives inside a
+   card already; nesting two black borders looks heavy). */
 
 /* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...". */
 .section-heading {
