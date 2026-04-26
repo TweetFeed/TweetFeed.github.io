@@ -98,6 +98,90 @@
 		]
 	}
 	</script>
+	<style>
+	/* ─── Tweet skeleton (shown while createTweet promise pending) ─── */
+	.tweet-skeleton {
+		background: #fff;
+		border: 1px solid #e1e8ed;
+		border-radius: 12px;
+		padding: 14px 16px;
+		min-height: 220px;
+		position: relative;
+		overflow: hidden;
+	}
+	.tweet-skeleton::after {
+		content: "";
+		position: absolute;
+		top: 0; left: 0; right: 0; bottom: 0;
+		background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+		animation: tweet-shimmer 1.4s infinite;
+	}
+	@keyframes tweet-shimmer {
+		0%   { transform: translateX(-100%); }
+		100% { transform: translateX(100%); }
+	}
+	.tweet-skeleton .sk-row { background: #e6ecf0; border-radius: 6px; margin-bottom: 10px; }
+	.tweet-skeleton .sk-head { display: flex; align-items: center; margin-bottom: 14px; }
+	.tweet-skeleton .sk-avatar {
+		width: 44px; height: 44px;
+		border-radius: 50%;
+		background: #e6ecf0;
+		margin-right: 10px;
+		flex: 0 0 44px;
+	}
+	.tweet-skeleton .sk-meta { flex: 1; }
+	.tweet-skeleton .sk-meta .sk-row:nth-child(1) { width: 50%; height: 12px; margin-bottom: 6px; }
+	.tweet-skeleton .sk-meta .sk-row:nth-child(2) { width: 35%; height: 10px; margin-bottom: 0; }
+	.tweet-skeleton .sk-body .sk-row:nth-child(1) { width: 95%; height: 10px; }
+	.tweet-skeleton .sk-body .sk-row:nth-child(2) { width: 88%; height: 10px; }
+	.tweet-skeleton .sk-body .sk-row:nth-child(3) { width: 60%; height: 10px; margin-bottom: 14px; }
+	.tweet-skeleton .sk-foot { width: 40%; height: 10px; background: #e6ecf0; border-radius: 6px; }
+
+	/* ─── Toolbar: unified row of controls ─── */
+	.dash-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.75rem 1rem;
+		background: #f8f9fa;
+		border: 1px solid #e1e4e8;
+		border-radius: 8px;
+		margin-bottom: 1rem;
+	}
+	.dash-toolbar .toolbar-group { display: flex; align-items: center; gap: 0.5rem; }
+	.dash-toolbar .progress { flex: 1; min-width: 80px; max-width: 180px; height: 6px; margin: 0; }
+
+	/* ─── Empty state when filters return 0 tweets ─── */
+	#emptyState {
+		text-align: center;
+		padding: 3rem 1rem;
+		color: #6c757d;
+	}
+	#emptyState .empty-icon { font-size: 48px; opacity: 0.4; margin-bottom: 1rem; }
+	#emptyState .empty-message { font-size: 18px; margin-bottom: 0.5rem; font-family: 'Rubik', sans-serif; }
+	#emptyState .empty-hint { font-size: 14px; margin-bottom: 1.25rem; }
+
+	/* ─── Tag filter search box ─── */
+	.tag-search-wrap { position: relative; margin-bottom: 0.75rem; }
+	.tag-search-wrap .tag-search {
+		width: 100%;
+		padding: 0.4rem 0.6rem 0.4rem 2rem;
+		border: 1px solid #ced4da;
+		border-radius: 6px;
+		font-family: 'Rubik', sans-serif;
+		font-size: 14px;
+	}
+	.tag-search-wrap .tag-search-icon {
+		position: absolute;
+		left: 0.6rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: #6c757d;
+		font-size: 13px;
+	}
+	.form-check.tag-hidden { display: none; }
+	</style>
 </head>
 
 <body id="page-top">
@@ -195,24 +279,22 @@
 				<div class="d-none d-md-block">
 					<!-- Body in dashboard -->
 					<!-- <h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Options <button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"></h3> -->
-					<div class="d-flex flex-row">
-						<div class="p-2">
+					<div class="dash-toolbar">
+						<div class="toolbar-group">
 							<div class="custom-control custom-switch">
 								<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-								<label style="color:blue;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
+								<label style="color:blue;font-family:'Rubik',sans-serif;" class="custom-control-label" for="customSwitch1">Autorefresh</label>
 							</div>
-							<div class="progress" style="height: 10px;width: 100%;">
+							<div class="progress">
 								<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 									<span class="sr-only"></span>
 								</div>
 							</div>
 						</div>
-						<div class="p-2">
-							<button style="border: 1px solid black;" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"><i class="fas fa-cog"></i> Options</button>
-						</div>
-						<div class="p-2">
-							<button style="background-color: #4682B4;border-color: black;font-family: 'Rubik', sans-serif;" onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary align-middle buttonHover"><i class="fas fa-download"></i> Export IOCs to CSV</button>
-							<i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
+						<div class="toolbar-group">
+							<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters"><i class="fas fa-sliders-h"></i> Filters</button>
+							<button onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary btn-sm" style="background-color:#4682B4;border-color:#4682B4;font-family:'Rubik',sans-serif;"><i class="fas fa-download"></i> Export CSV</button>
+							<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 						</div>
 					</div>
 					<!-- ------------------------------- -->
@@ -278,6 +360,10 @@
 											<span class="card-text cardTitle">Tags</span>
 										</div>
 										<div class="card-body text-left">
+											<div class="tag-search-wrap">
+												<i class="fas fa-search tag-search-icon" aria-hidden="true"></i>
+												<input type="text" class="tag-search" placeholder="Filter tags by name…" aria-label="Filter tags by name">
+											</div>
 											<div class="row">
 												<div class="col-3">
 													<div class="form-check">
@@ -955,6 +1041,12 @@
 					<div id="loadingTweets" class="text-center">
 						<img loading="lazy" style="height: 60px;width:auto;" src="img/loading.svg" alt="Loading">
 					</div>
+					<div id="emptyState" style="display:none;">
+						<div class="empty-icon"><i class="far fa-folder-open"></i></div>
+						<div class="empty-message">No tweets match your filters</div>
+						<div class="empty-hint">Try selecting more types or tags above, or expand the time window.</div>
+						<button id="resetFilters" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-undo"></i> Reset filters</button>
+					</div>
 					<div class="tweetsclass alert alert-secondary shadow" style="border: 1px solid black;">
 					</div>
 					<!-- <hr style="border: 1px solid black;">  DIVIDER -->
@@ -1034,11 +1126,71 @@
 	// Stale targets (parents removed by an autorefresh-triggered .empty())
 	// are filtered out at flush time.
 	window.__tfPendingTweets = window.__tfPendingTweets || [];
+	// Build a fresh skeleton DOM tree (avoids innerHTML / XSS concerns; the
+	// shape is static markup with no user-controlled fields). Each call
+	// returns a brand-new node so callers can append safely.
+	function __tfBuildSkeleton() {
+		var sk = document.createElement('div');
+		sk.className = 'tweet-skeleton';
+		sk.setAttribute('aria-label', 'Loading tweet');
+		var head = document.createElement('div'); head.className = 'sk-head';
+		var avatar = document.createElement('div'); avatar.className = 'sk-avatar';
+		var meta = document.createElement('div'); meta.className = 'sk-meta';
+		var m1 = document.createElement('div'); m1.className = 'sk-row';
+		var m2 = document.createElement('div'); m2.className = 'sk-row';
+		meta.appendChild(m1); meta.appendChild(m2);
+		head.appendChild(avatar); head.appendChild(meta);
+		sk.appendChild(head);
+		var body = document.createElement('div'); body.className = 'sk-body';
+		for (var i = 0; i < 3; i++) {
+			var r = document.createElement('div'); r.className = 'sk-row';
+			body.appendChild(r);
+		}
+		sk.appendChild(body);
+		var foot = document.createElement('div'); foot.className = 'sk-foot';
+		sk.appendChild(foot);
+		return sk;
+	}
+	// Build a fallback "tweet unavailable" notice using DOM APIs so the
+	// statusId never reaches innerHTML. The link's href encodes the ID.
+	function __tfBuildUnavailable(statusId, reason) {
+		var box = document.createElement('div');
+		box.className = 'alert alert-light border';
+		box.style.fontSize = '13px';
+		box.appendChild(document.createTextNode(reason + ' '));
+		var a = document.createElement('a');
+		a.href = 'https://x.com/i/status/' + encodeURIComponent(statusId);
+		a.target = '_blank';
+		a.rel = 'noopener';
+		a.textContent = 'View on X';
+		box.appendChild(a);
+		return box;
+	}
+	function __tfClear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+	function __tfRenderInto(statusId, targetEl) {
+		__tfClear(targetEl);
+		targetEl.appendChild(__tfBuildSkeleton());
+		twttr.widgets.createTweet(statusId, targetEl, { conversation: 'none' })
+			.then(function(el) {
+				var sk = targetEl.querySelector('.tweet-skeleton');
+				if (sk) sk.remove();
+				if (!el) {
+					__tfClear(targetEl);
+					targetEl.appendChild(__tfBuildUnavailable(statusId, 'Tweet unavailable.'));
+				}
+			})
+			.catch(function(err) {
+				console.error('createTweet failed', statusId, err);
+				__tfClear(targetEl);
+				targetEl.appendChild(__tfBuildUnavailable(statusId, 'Tweet failed to load.'));
+			});
+	}
 	function renderTweet(statusId, targetEl) {
 		if (!targetEl) return;
+		__tfClear(targetEl);
+		targetEl.appendChild(__tfBuildSkeleton());
 		if (typeof twttr !== 'undefined' && twttr.widgets && twttr.widgets.createTweet) {
-			twttr.widgets.createTweet(statusId, targetEl, { conversation: 'none' })
-				.catch(function(err) { console.error('createTweet failed', statusId, err); });
+			__tfRenderInto(statusId, targetEl);
 		} else {
 			window.__tfPendingTweets.push({ statusId: statusId, targetEl: targetEl });
 		}
@@ -1049,8 +1201,7 @@
 		window.__tfPendingTweets = [];
 		pending.forEach(function(p) {
 			if (p.targetEl && document.body.contains(p.targetEl)) {
-				twttr.widgets.createTweet(p.statusId, p.targetEl, { conversation: 'none' })
-					.catch(function(err) { console.error('createTweet (flush) failed', p.statusId, err); });
+				__tfRenderInto(p.statusId, p.targetEl);
 			}
 		});
 	}
@@ -1098,6 +1249,28 @@
 			$("input[type=checkbox][id^=checkTag]").prop('checked', $(this).prop('checked'));
 			checkedItems();
 			loadData();
+		});
+
+		// Reset filters from the empty-state notice: re-check every type
+		// and tag, then refire loadData so tweets reappear immediately.
+		$('#resetFilters').click(function() {
+			$('#checkallTypes, #checkallTags').prop('checked', true);
+			$("input[type=checkbox][id^=checkType], input[type=checkbox][id^=checkTag]").prop('checked', true);
+			checkedItems();
+			loadData();
+		});
+
+		// Tag filter search: hide checkboxes whose label text doesn't match
+		// the query. Empty input restores all. Case-insensitive.
+		$(document).on('input', '.tag-search', function() {
+			var q = $(this).val().trim().toLowerCase();
+			$('input[id^="checkTag"]').each(function() {
+				var $cb = $(this);
+				var $wrap = $cb.closest('.form-check');
+				if ($cb.attr('id') === 'checkTagnotag') return; // always show
+				var label = ($wrap.find('label').text() || '').toLowerCase();
+				$wrap.toggleClass('tag-hidden', q !== '' && label.indexOf(q) === -1);
+			});
 		});
 
 		function timerCycle() {
@@ -1277,9 +1450,11 @@
 						// createTweet() with a status ID + target element is
 						// the documented programmatic API and renders
 						// reliably. Queue the call until widgets.js loads.
+						// Bootstrap 4 responsive classes: 1 col mobile,
+						// 2 cols ≥768 px, 3 cols ≥992 px, 4 cols ≥1200 px.
 						var statusId = lines[i];
 						var colId = 'tweet-col-' + statusId;
-						var myvar_col = '<div id="' + colId + '" class="col-3"></div>'
+						var myvar_col = '<div id="' + colId + '" class="tweet-col col-12 col-md-6 col-lg-4 col-xl-3"></div>'
 
 						count_column++
 						$('.row_' + count_row).append(myvar_col);
@@ -1292,6 +1467,18 @@
 					}
 
 					p_lines = [...lines];
+
+					// Empty-state toggle: when filters return zero unique
+					// tweets, hide the (empty) grid and show the helpful
+					// "no tweets match" notice instead of leaving a blank box.
+					if (lines.length === 0) {
+						$('.tweetsclass').hide();
+						$('#emptyState').show();
+						$('#loadingTweets').hide();
+					} else {
+						$('#emptyState').hide();
+						$('.tweetsclass').show();
+					}
 
 					if (init) {
 						init = 0;
