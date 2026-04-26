@@ -244,28 +244,28 @@
 					<p class="toph1"><i class="fas fa-code" style="font-size: 36px;"></i> TweetFeed API</p>
 					<p style="font-size: 14px;"><em>TweetFeed.live API <span style="font-size: 12px;">(limited to 10k results per search)</span></em></p>
 				</div>
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<hr class="divider"> <!-- DIVIDER -->
 					<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h3>
 				<!-- -->
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;"><b>Free</b> API to get IOCs shared by the community at Twitter.</p>
 				<br>
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
+				<pre style="color:black;font-size: 14px;background-color: #DEDEDE" class="p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 1</b>: IOCs posted today</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today"></i></pre>
+				<pre style="color:black;font-size: 14px;background-color: #DEDEDE" class="p-2">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 2</b>: URLs posted today with phishing tag</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url"></i></pre>
+				<pre style="color:black;font-size: 14px;background-color: #DEDEDE" class="p-2">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip"></i></pre>
+				<pre style="color:black;font-size: 14px;background-color: #DEDEDE" class="p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip"></i></pre>
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://x.com/malwrhunterteam" rel="noopener noreferrer">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
 				<!-- #00acee -->
-				<pre style="border: 1px solid black;color:black;font-size: 14px;background-color: #DEDEDE;" class="p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
+				<pre style="color:black;font-size: 14px;background-color: #DEDEDE" class="p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
 				<!-- -->
 				<br>
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Details</h3>
@@ -328,7 +328,7 @@
 				</div> <!-- table-responsive -->
 				<br>
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Output example</h3>
-				<pre style="border: 1px solid black;color:black;font-size: 12px;background-color: #DEDEDE;" class="p-2">
+				<pre style="color:black;font-size: 12px;background-color: #DEDEDE" class="p-2">
 [
 	{
         "date": "2022-05-11 19:39:06",
@@ -365,7 +365,7 @@
 ]
 				</pre>
 				<!-- -->
-				<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+				<hr class="divider"> <!-- DIVIDER -->
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 				</div>

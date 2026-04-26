@@ -230,7 +230,7 @@
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
-					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<hr class="divider"> <!-- DIVIDER -->
 					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" rel="noopener noreferrer">today.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
 					<br>
 					<div class="container" style="text-align: center;">
@@ -276,7 +276,7 @@
 						<div class="row today">
 						</div> <!-- row 2 -->
 					</div> <!-- container -->
-					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<!-- End mobile -->
 			</div>
@@ -300,7 +300,7 @@
 				<div class="container-fluid">
 					<!-- Page Heading -->
 					<!-- DataTales Example -->
-					<div class="card shadow mb-4" style="border: 1px solid black;">
+					<div class="card shadow mb-4">
 						<div class="card-header py-3 d-none d-lg-block">
 							<!-- Table presentation (custom) -->
 							<div class="container-fluid rounded">
@@ -401,37 +401,37 @@
 						<div class="row justify-content-center">
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_opencti.png" alt="OpenCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_opencti.png" alt="OpenCTI Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://medium.com/@s.lontzetidis/integrating-tweetfeed-into-misp-using-python-e0a94e01fec2" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_misp.png" alt="MISP Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_misp.png" alt="MISP Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://github.com/debugactiveprocess/TweetFeed2Splunk?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_splunk.png" alt="Splunk Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_splunk.png" alt="Splunk Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://github.com/fastfire/deepdarkCTI" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_deepdark.png" alt="deepdarkCTI Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_deepdark.png" alt="deepdarkCTI Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://www.urlvoid.com" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_urlvoid.png" alt="urlvoid Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_urlvoid.png" alt="urlvoid Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://github.com/intelowlproject/IntelOwl" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_intelowl.png" alt="IntelOwl Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_intelowl.png" alt="IntelOwl Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
 								<a href="https://github.com/alan7s/TweetFeed2QRadar" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_qradar.png" alt="QRadar Logo" width="150" height="46" style="border-radius: 10px; border: 1px solid black;">
+									<img loading="lazy" src="img/logo_qradar.png" alt="QRadar Logo" width="150" height="46" style="border-radius: 10px">
 								</a>
 							</div>
 						</div>
@@ -566,7 +566,7 @@
 			if (_progressInterval) clearInterval(_progressInterval);
 			var i = 0;
 			_progressInterval = setInterval(function() {
-				if (i >= 100) {
+				if (i>= 100) {
 					clearInterval(_progressInterval);
 					_progressInterval = null;
 				}
@@ -613,7 +613,7 @@
 					$("#lastDateToday").show();
 					$("#loadingToday").hide();
 
-					if (loaddatacall > 0) {
+					if (loaddatacall> 0) {
 
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {

@@ -188,7 +188,7 @@
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
-					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<hr class="divider"> <!-- DIVIDER -->
 					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
 					<br>
 					<div class="container" style="text-align: center;">
@@ -234,7 +234,7 @@
 						<div class="row today">
 						</div> <!-- row 2 -->
 					</div> <!-- container -->
-					<hr style="border: 1px solid black;"> <!-- DIVIDER -->
+					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<!-- End mobile -->
 			</div>
@@ -251,7 +251,7 @@
 				<div class="container-fluid">
 					<!-- Page Heading -->
 					<!-- DataTales Example -->
-					<div class="card shadow mb-4" style="border: 1px solid black;">
+					<div class="card shadow mb-4">
 						<div class="card-header py-3 d-none d-lg-block">
 							<!-- Table presentation (custom) -->
 							<div class="container-fluid rounded">
@@ -512,7 +512,7 @@
 					$("#lastDateWeek").show();
 					$("#loadingWeek").hide();
 
-					if (loaddatacall > 0) {
+					if (loaddatacall> 0) {
 
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
@@ -745,7 +745,7 @@
 		];
 		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
 		var item = lookup.slice().reverse().find(function(item) {
-			return num >= item.value;
+			return num>= item.value;
 		});
 		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 	}

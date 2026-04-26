@@ -250,7 +250,7 @@
 					<p class="toph1"><i class="fas fa-question-circle" style="font-size: 36px;"></i> About TweetFeed</p>
 					<p style="font-size: 14px;"><em>TweetFeed</em></p>
 				</div>
-				<hr style="border: 1px solid black;">
+				<hr class="divider">
 				<p class="about-section">
 					A free, community-driven project that collects <b>Indicators of Compromise (IOCs)</b> shared by security researchers on Twitter/X and makes them accessible via feeds, API and search.
 				</p>
@@ -272,7 +272,7 @@
 				</div>
 				<!-- Testimonials -->
 				<h2 class="section-heading"><i class="fab fa-twitter"></i> What people say</h2>
-				<div class="container" style="font-family: 'Rubik', sans-serif;">
+				<div class="container">
 					<div class="grid-container">
 						<a href="https://x.com/fr0gger_/status/1747771695803621852" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">
@@ -496,7 +496,7 @@
 
 					$("#lastDate").text("Last update: " + date1);
 
-					if (loaddatacall > 0) {
+					if (loaddatacall> 0) {
 
 						for (var i = data.length - 20; i < data.length; i++) {
 							if (olddate < data[i][0]) {
