@@ -1026,6 +1026,36 @@
 	<script src="js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
+	// Tweet rendering queue: loadData() may run before platform widgets.js
+	// has finished loading (the loader at the bottom of the page defers
+	// widgets.js to window.load + 1.5 s for LCP). renderTweet() either
+	// invokes createTweet immediately when twttr is ready, or queues the
+	// (statusId, targetEl) pair so the loader can flush it on twttr.ready.
+	// Stale targets (parents removed by an autorefresh-triggered .empty())
+	// are filtered out at flush time.
+	window.__tfPendingTweets = window.__tfPendingTweets || [];
+	function renderTweet(statusId, targetEl) {
+		if (!targetEl) return;
+		if (typeof twttr !== 'undefined' && twttr.widgets && twttr.widgets.createTweet) {
+			twttr.widgets.createTweet(statusId, targetEl, { conversation: 'none' })
+				.catch(function(err) { console.error('createTweet failed', statusId, err); });
+		} else {
+			window.__tfPendingTweets.push({ statusId: statusId, targetEl: targetEl });
+		}
+	}
+	function __tfFlushPendingTweets() {
+		if (typeof twttr === 'undefined' || !twttr.widgets) return;
+		var pending = window.__tfPendingTweets;
+		window.__tfPendingTweets = [];
+		pending.forEach(function(p) {
+			if (p.targetEl && document.body.contains(p.targetEl)) {
+				twttr.widgets.createTweet(p.statusId, p.targetEl, { conversation: 'none' })
+					.catch(function(err) { console.error('createTweet (flush) failed', p.statusId, err); });
+			}
+		});
+	}
+	</script>
+	<script>
 	$(function() {
 		let autorefresh = 1;
 		let init = 1;
@@ -1240,14 +1270,20 @@
 
 							$('.tweetsclass').append(myvar_row);
 						}
-						var myvar_col = '<div class="col-3">' +
-							'<blockquote class="twitter-tweet">' +
-							'<a href="https://x.com/xxx/status/' + lines[i] + '"></a>' +
-							'</blockquote>' +
-							'</div>'
+						// twttr.widgets.load() with the simplified
+						// <blockquote><a href=".../status/ID"></a></blockquote>
+						// pattern silently fails to render iframes (sets
+						// data-twitter-extracted but no embed appears).
+						// createTweet() with a status ID + target element is
+						// the documented programmatic API and renders
+						// reliably. Queue the call until widgets.js loads.
+						var statusId = lines[i];
+						var colId = 'tweet-col-' + statusId;
+						var myvar_col = '<div id="' + colId + '" class="col-3"></div>'
 
 						count_column++
 						$('.row_' + count_row).append(myvar_col);
+						renderTweet(statusId, document.getElementById(colId));
 
 						if (i === lines.length - 1) {
 							animation();
@@ -1256,7 +1292,6 @@
 					}
 
 					p_lines = [...lines];
-					if (typeof twttr !== 'undefined' && twttr.widgets) { twttr.widgets.load(); }
 
 					if (init) {
 						init = 0;
@@ -1339,11 +1374,20 @@
 	// Defer Twitter widgets.js until after window.load + 1.5s so the
 	// embedded-tweet iframes (~500x300 each, one per row) stop being the
 	// LCP candidate on this page. PSI baseline: perf 0.37, LCP 11.4s.
+	// Once widgets.js loads, twttr.ready() fires; we flush any pending
+	// renderTweet() calls that were queued before twttr was available.
 	window.addEventListener('load', function() {
 		setTimeout(function() {
 			var s = document.createElement('script');
 			s.src = 'https://platform.twitter.com/widgets.js';
 			s.async = true;
+			s.onload = function() {
+				if (typeof twttr !== 'undefined' && twttr.ready) {
+					twttr.ready(function() {
+						if (typeof __tfFlushPendingTweets === 'function') __tfFlushPendingTweets();
+					});
+				}
+			};
 			document.body.appendChild(s);
 		}, 1500);
 	});
