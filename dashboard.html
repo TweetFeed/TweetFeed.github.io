@@ -1032,7 +1032,7 @@
 		checkedItems();
 		loadData();
 		progressBar();
-		var timerAux = setInterval(timerCycle, 6000);
+		var timerAux = setInterval(timerCycle, 60000);
 		TweetFeed.trackInterval(timerAux);
 		let p_lines = new Array();
 
@@ -1049,7 +1049,7 @@
 				init = 1;
 				progressBar();
 				loadData();
-				timerAux = setInterval(timerCycle, 6000);
+				timerAux = setInterval(timerCycle, 60000);
 				TweetFeed.trackInterval(timerAux);
 			}
 		})
@@ -1090,6 +1090,10 @@
 
 		function progressBar() {
 			var i = 0;
+			// Autorefresh interval is 60 s (was 6 s; the 6 s setting raced
+			// Twitter widgets render and wiped tweets mid-conversion). The
+			// progress bar fills evenly across the 60 s window: 100 / 60 ≈
+			// 1.67 % per second.
 			var downloadTimer = setInterval(function() {
 				if (i >= 100) {
 					clearInterval(downloadTimer);
@@ -1097,13 +1101,11 @@
 				if (autorefresh == 0) {
 					i = 0;
 					clearInterval(downloadTimer);
-					//document.getElementById("progressBar").value = 0;
 					$('.progress-bar').css('width', i + '%');
 				} else {
-					//document.getElementById("progressBar").value = 5 - timeleft;
 					$('.progress-bar').css('width', i + '%');
 				}
-				i = i + 20;
+				i = i + (100 / 60);
 			}, 1000);
 		}
 
