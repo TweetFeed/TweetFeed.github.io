@@ -295,6 +295,30 @@
     });
   }
 
+  // ─── Lazy initialization on viewport intersection ──────────────────────────
+  // Mirrors the lazyChart() pattern in graphs.html for any expensive init
+  // (DataTables on search/researchers, etc.). Runs callback once when target
+  // enters the viewport with a rootMargin preload buffer. Falls back to
+  // immediate execution when IntersectionObserver isn't available.
+  function lazyInViewport(elementOrId, callback, rootMargin) {
+    var el = typeof elementOrId === 'string'
+      ? document.getElementById(elementOrId) : elementOrId;
+    if (!el || !('IntersectionObserver' in window)) { callback(); return; }
+    var done = false;
+    var obs = new IntersectionObserver(function(entries) {
+      if (done) return;
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          done = true;
+          obs.disconnect();
+          callback();
+          return;
+        }
+      }
+    }, { rootMargin: rootMargin || '300px' });
+    obs.observe(el);
+  }
+
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
@@ -311,6 +335,7 @@
     destroyDataTableIfExists: destroyDataTableIfExists,
     trackInterval: trackInterval,
     clearTrackedIntervals: clearTrackedIntervals,
+    lazyInViewport: lazyInViewport,
   };
 
   window.TweetFeed = window.TweetFeed || {};
