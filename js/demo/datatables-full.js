@@ -18,6 +18,23 @@ $(document).ready(function() {
     var table = $('#dataTableFull').DataTable( {
         "pageLength": 10,
         orderCellsTop: true,
-        fixedHeader: true
+        fixedHeader: true,
+        language: {
+            // Custom empty-state messaging matching the design-system .empty-state
+            // component (icon + headline + hint). Mirrors dashboard.html's
+            // #emptyState pattern.
+            emptyTable:
+                '<div class="empty-state">' +
+                '<div class="empty-icon"><i class="far fa-folder-open"></i></div>' +
+                '<div class="empty-message">Loading IOCs…</div>' +
+                '<div class="empty-hint">Fetching the last week of indicators.</div>' +
+                '</div>',
+            zeroRecords:
+                '<div class="empty-state">' +
+                '<div class="empty-icon"><i class="fas fa-search"></i></div>' +
+                '<div class="empty-message">No IOCs match your search</div>' +
+                '<div class="empty-hint">Try a broader query or remove a filter.</div>' +
+                '</div>'
+        }
     } );
 } );

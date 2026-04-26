@@ -423,7 +423,7 @@
 	<!-- TweetFeed shared utilities -->
 	<script src="js/config.js"></script>
 	<script src="js/utils.js"></script>
-	<script src="js/demo/datatables-full.js"></script>
+	<script src="js/demo/datatables-full.js?v=2"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -453,6 +453,11 @@
 			}
 		})
 
+		// DataTable instance is already created by js/demo/datatables-full.js
+		// (which runs at $(document).ready time, before this $(function(){...})
+		// block). The language.emptyTable / language.zeroRecords config
+		// also lives there so DataTables picks it up at the only init call.
+		// Calling DataTable() again here just returns the cached instance.
 		let table = $('#dataTableFull').DataTable();
 		var timerAux;
 		// Defer initial CSV fetch to window.load so the DataTable skeleton
