@@ -14,3 +14,165 @@
 .highlight td {
   animation: fadein 2s;
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   Design-system utilities (extracted from dashboard.html on 2026-04-26).
+   Loaded by every main page via the existing <link href="css/tweetfeed.css">.
+   These rules deliberately leave the SB Admin 2 vendor CSS untouched.
+   ───────────────────────────────────────────────────────────────────── */
+
+/* Tweet skeleton placeholder shown while createTweet promise pending.
+   Used directly on dashboard.html; the shimmer keyframe is reused by
+   .table-skeleton-row and .chart-skeleton below. */
+.tweet-skeleton {
+	background: #fff;
+	border: 1px solid #e1e8ed;
+	border-radius: 12px;
+	padding: 14px 16px;
+	min-height: 220px;
+	position: relative;
+	overflow: hidden;
+}
+.tweet-skeleton::after,
+.table-skeleton-row::after,
+.chart-skeleton::after {
+	content: "";
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+	animation: tf-shimmer 1.4s infinite;
+}
+@keyframes tf-shimmer {
+	0%   { transform: translateX(-100%); }
+	100% { transform: translateX(100%); }
+}
+.tweet-skeleton .sk-row { background: #e6ecf0; border-radius: 6px; margin-bottom: 10px; }
+.tweet-skeleton .sk-head { display: flex; align-items: center; margin-bottom: 14px; }
+.tweet-skeleton .sk-avatar {
+	width: 44px; height: 44px;
+	border-radius: 50%;
+	background: #e6ecf0;
+	margin-right: 10px;
+	flex: 0 0 44px;
+}
+.tweet-skeleton .sk-meta { flex: 1; }
+.tweet-skeleton .sk-meta .sk-row:nth-child(1) { width: 50%; height: 12px; margin-bottom: 6px; }
+.tweet-skeleton .sk-meta .sk-row:nth-child(2) { width: 35%; height: 10px; margin-bottom: 0; }
+.tweet-skeleton .sk-body .sk-row:nth-child(1) { width: 95%; height: 10px; }
+.tweet-skeleton .sk-body .sk-row:nth-child(2) { width: 88%; height: 10px; }
+.tweet-skeleton .sk-body .sk-row:nth-child(3) { width: 60%; height: 10px; margin-bottom: 14px; }
+.tweet-skeleton .sk-foot { width: 40%; height: 10px; background: #e6ecf0; border-radius: 6px; }
+
+/* Skeleton row injected into <tbody> of DataTables-managed tables
+   (search.html, researchers.html). DataTables empties tbody before its
+   first draw, so the skeleton naturally disappears once data arrives. */
+.table-skeleton-row {
+	position: relative;
+	overflow: hidden;
+}
+.table-skeleton-row td {
+	background: #f6f8fa;
+	height: 28px;
+	border-bottom: 1px solid #e1e4e8;
+}
+
+/* Skeleton overlay for Chart.js canvases (graphs.html, feeds.html).
+   Applied as a sibling element absolutely positioned over the canvas;
+   the script removes it on the first chart paint via animation.onComplete. */
+.chart-skeleton {
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: linear-gradient(180deg, #f6f8fa 0%, #e9ecef 100%);
+	border-radius: 8px;
+	overflow: hidden;
+}
+.chart-wrap { position: relative; }
+
+/* Tweet column wrapper (responsive 1/2/3/4 grid). 8 px padding so the
+   embedded iframes don't touch each other on the dashboard. */
+.tweet-col { padding: 8px; }
+.tweet-col > .twitter-tweet-rendered,
+.tweet-col > iframe { width: 100% !important; }
+
+/* Unified controls toolbar: one rounded row holding autorefresh switch,
+   progress bar, and action buttons. Replaces the legacy 3-card flex-row
+   pattern used pre-refresh on dashboard / index / search / feeds /
+   graphs / researchers. */
+.dash-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.75rem 1rem;
+	background: #f8f9fa;
+	border: 1px solid #e1e4e8;
+	border-radius: 8px;
+	margin-bottom: 1rem;
+}
+.dash-toolbar .toolbar-group { display: flex; align-items: center; gap: 0.5rem; }
+.dash-toolbar .progress { flex: 1; min-width: 80px; max-width: 180px; height: 6px; margin: 0; }
+
+/* Empty-state notice for "filters returned zero results" cases. */
+.empty-state,
+#emptyState {
+	text-align: center;
+	padding: 3rem 1rem;
+	color: #6c757d;
+}
+.empty-state .empty-icon,
+#emptyState .empty-icon { font-size: 48px; opacity: 0.4; margin-bottom: 1rem; }
+.empty-state .empty-message,
+#emptyState .empty-message { font-size: 18px; margin-bottom: 0.5rem; font-family: 'Rubik', sans-serif; }
+.empty-state .empty-hint,
+#emptyState .empty-hint { font-size: 14px; margin-bottom: 1.25rem; }
+
+/* In-place tag-name search above the dashboard's tag checkbox column. */
+.tag-search-wrap { position: relative; margin-bottom: 0.75rem; }
+.tag-search-wrap .tag-search {
+	width: 100%;
+	padding: 0.4rem 0.6rem 0.4rem 2rem;
+	border: 1px solid #ced4da;
+	border-radius: 6px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+}
+.tag-search-wrap .tag-search-icon {
+	position: absolute;
+	left: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #6c757d;
+	font-size: 13px;
+}
+.form-check.tag-hidden { display: none; }
+
+/* ─── Quick-win utility classes (Fase 2) ─────────────────────────── */
+
+/* Subtle horizontal divider replacing the legacy
+   <hr style="border: 1px solid black;"> pattern (~30 instances site-wide). */
+hr.divider {
+	border: 0;
+	border-top: 1px solid #dee2e6;
+	margin: 1.25rem 0;
+}
+
+/* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...". */
+.section-heading {
+	color: #1DA1F2;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	font-weight: 600;
+}
+
+/* Code/command block (used on hunt.html and api.html) replacing
+   the legacy black-bordered box. Keeps a left accent for visual rhythm
+   without the heavy 1px solid black look. */
+.code-block {
+	background: #f8f9fa;
+	border: 1px solid #e1e4e8;
+	border-left: 3px solid #4682B4;
+	border-radius: 6px;
+	padding: 0.75rem 1rem;
+	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+	font-size: 13px;
+	overflow-x: auto;
+}
