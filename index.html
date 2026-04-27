@@ -129,6 +129,22 @@
 					"@type": "Answer",
 					"text": "TweetFeed scrapes around 95 public RSS feeds of infosec researchers on Twitter/X. The Researchers page lists the current contributors. Attribution is preserved: every IOC record includes the original tweet URL."
 				}
+			},
+			{
+				"@type": "Question",
+				"name": "What are the types of IOCs in TweetFeed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "TweetFeed aggregates four primary IOC types: URLs (malicious links), domains (phishing/C2 servers), IP addresses (botnet/C2 infrastructure), and file hashes (malware signatures in MD5, SHA1, SHA256 format). Each IOC is tagged by type and threat category (malware, phishing, ransomware) and sourced from the researcher who posted it on Twitter/X."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I use IOC feeds in my security tools?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "TweetFeed feeds are compatible with SIEM tools (Splunk, ELK, Sumo Logic), threat intel platforms (MISP, OpenCTI), firewalls, and proxies. Download as CSV for quick import, JSON for REST API integration, or RSS for continuous ingestion. See the API documentation for real-time programmatic access."
+				}
 			}
 		]
 	}
