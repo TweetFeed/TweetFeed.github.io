@@ -53,13 +53,49 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
+		"@type": "AboutPage",
+		"url": "https://tweetfeed.live/about.html",
+		"name": "About TweetFeed",
+		"description": "About the TweetFeed project: real-time IOC aggregator for the infosec community, founded by Daniel López.",
+		"about": {"@id": "https://tweetfeed.live/#organization"},
+		"author": {"@id": "https://tweetfeed.live/#founder"},
+		"isPartOf": {"@id": "https://tweetfeed.live/#website"}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
 		"@type": "Organization",
 		"name": "TweetFeed",
 		"url": "https://tweetfeed.live/",
 		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
 		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about.html",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public threat-intelligence feeds and MCP servers for AI agents.",
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
 			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
 		]
 	}
 	</script>
@@ -337,7 +373,17 @@
 					</div>
 				</div>
 				<!-- Similar services -->
-				<h2 class="section-heading"><i class="fas fa-star"></i> Similar services</h2>
+				<h2 class="section-heading"><i class="fas fa-link"></i> Threat-intel ecosystem references</h2>
+<p style="color:#737373; font-size:0.95rem; margin:0 0 1rem;">Frameworks and resources that contextualize the data TweetFeed publishes:</p>
+<ul class="similar-list">
+	<li><a href="https://attack.mitre.org/" target="_blank" rel="noopener external">MITRE ATT&amp;CK</a><span>Adversary tactics and techniques framework. Useful for mapping IOC tags to known threat-actor behavior.</span></li>
+	<li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener external">NIST Cybersecurity Framework</a><span>Standard reference for organizing detection, response, and recovery — what TweetFeed feeds support.</span></li>
+	<li><a href="https://owasp.org/" target="_blank" rel="noopener external">OWASP</a><span>Web-application security project. Many phishing IOCs in the feed map to OWASP Top 10 attack patterns.</span></li>
+	<li><a href="https://abuse.ch/" target="_blank" rel="noopener external">abuse.ch</a><span>Sister projects (URLhaus, ThreatFox, MalwareBazaar) that complement TweetFeed with curated samples and binaries.</span></li>
+	<li><a href="https://www.misp-project.org/" target="_blank" rel="noopener external">MISP</a><span>Open-source threat-intel platform. TweetFeed publishes a MISP-compatible manifest at /misp/.</span></li>
+</ul>
+
+<h2 class="section-heading"><i class="fas fa-star"></i> Similar services</h2>
 				<ul class="similar-list about-section">
 					<li><a href="https://threatfox.abuse.ch/" target="_blank" rel="noopener noreferrer">ThreatFox</a> - <span>IOC sharing platform from abuse.ch</span></li>
 					<li><a href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener noreferrer">URLhaus</a> - <span>Malicious URL sharing from abuse.ch</span></li>

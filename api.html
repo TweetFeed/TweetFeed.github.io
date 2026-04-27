@@ -58,13 +58,58 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
+		"@type": "APIReference",
+		"name": "TweetFeed API v1",
+		"url": "https://tweetfeed.live/api.html",
+		"description": "Free REST API for the TweetFeed IOC aggregator. JSON output, no authentication, CC0-licensed data.",
+		"documentation": "https://tweetfeed.live/api.html",
+		"provider": {"@id": "https://tweetfeed.live/#organization"},
+		"author": {"@id": "https://tweetfeed.live/#founder"},
+		"license": "https://creativecommons.org/publicdomain/zero/1.0/",
+		"programmingModel": "REST",
+		"targetPlatform": "any HTTP client; CORS-open; JSON responses",
+		"proficiencyLevel": "Beginner",
+		"about": [
+			{"@type": "Thing", "name": "Threat intelligence API"},
+			{"@type": "Thing", "name": "Indicators of Compromise (IOCs)"},
+			{"@type": "Thing", "name": "OSINT feed"}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
 		"@type": "Organization",
 		"name": "TweetFeed",
 		"url": "https://tweetfeed.live/",
 		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
 		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about.html",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public threat-intelligence feeds and MCP servers for AI agents.",
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
 			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
 		]
 	}
 	</script>

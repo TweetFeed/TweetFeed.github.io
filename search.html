@@ -57,9 +57,33 @@
 		"name": "TweetFeed",
 		"url": "https://tweetfeed.live/",
 		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
 		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about.html",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public threat-intelligence feeds and MCP servers for AI agents.",
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
 			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
 		]
 	}
 	</script>
@@ -246,6 +270,7 @@
 					<br><br><br>
 					<p class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
 					<p><em>Make searches in Weekly Database</em></p>
+					<p style="color:#737373; font-size:15px; font-family:'Rubik', sans-serif; max-width:780px; margin:0 auto; line-height:1.6;">Search the last 7 days of indicators of compromise (URLs, domains, IPs, file hashes) shared by 90+ infosec researchers on Twitter/X. Match by exact value, partial substring, malware family tag, or researcher handle. Results are sourced from week.csv and updated every 15 minutes. Use it for incident response triage, threat intelligence enrichment, or SIEM rule validation.</p>
 					<br>
 				</div>
 				<div class="container-fluid">

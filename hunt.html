@@ -58,13 +58,60 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
+		"@type": "HowTo",
+		"name": "Hunt for IOCs from Twitter/X using TweetFeed",
+		"description": "Step-by-step queries for MISP, OpenCTI, Splunk SPL, Microsoft Defender (KQL) and QRadar AQL to ingest the TweetFeed IOC stream into your SIEM or threat-intel platform.",
+		"author": {"@id": "https://tweetfeed.live/#founder"},
+		"about": {"@id": "https://tweetfeed.live/#organization"},
+		"tool": [
+			{"@type": "HowToTool", "name": "MISP"},
+			{"@type": "HowToTool", "name": "OpenCTI"},
+			{"@type": "HowToTool", "name": "Splunk"},
+			{"@type": "HowToTool", "name": "Microsoft Defender (KQL)"},
+			{"@type": "HowToTool", "name": "IBM QRadar"}
+		],
+		"step": [
+			{"@type": "HowToStep", "name": "Pick the time window", "text": "Choose today, week, month or year depending on the staleness tolerance of your detection rules."},
+			{"@type": "HowToStep", "name": "Pick the IOC type", "text": "Filter by url, domain, ip, sha256 or md5 to match the column type expected by your SIEM."},
+			{"@type": "HowToStep", "name": "Configure the platform-specific connector", "text": "Use the ready-made MISP feed URL, OpenCTI connector config, Splunk Stream input, KQL externaldata() block, or QRadar Reference Set REST integration shown on the page."},
+			{"@type": "HowToStep", "name": "Schedule a refresh", "text": "Pull every 15 to 60 minutes (the underlying CSVs are updated every 15 min)."}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
 		"@type": "Organization",
 		"name": "TweetFeed",
 		"url": "https://tweetfeed.live/",
 		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
 		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about.html",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public threat-intelligence feeds and MCP servers for AI agents.",
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
 			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
 		]
 	}
 	</script>

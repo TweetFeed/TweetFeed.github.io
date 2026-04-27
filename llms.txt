@@ -1,0 +1,67 @@
+# TweetFeed
+
+> TweetFeed is a free, real-time IOC (Indicators of Compromise) aggregator that scrapes the infosec community on Twitter/X. Founded by Daniel López. CC0 1.0 Universal license on every data output (TXT/JSON/CSV/RSS feeds, public REST API, MCP server). Updated every 15 minutes; coverage starts 2021-01-01.
+
+## Feeds
+
+- [Today's IOCs (CSV)](https://tweetfeed.live/today.csv): 24h window, all IOC types.
+- [Past 7 days (CSV)](https://tweetfeed.live/week.csv): rolling 7d window.
+- [Past 30 days (CSV)](https://tweetfeed.live/month.csv): rolling 30d window.
+- [Past 365 days (CSV)](https://tweetfeed.live/year.csv): rolling year window.
+- [RSS feed](https://tweetfeed.live/rss.xml): syndication-friendly.
+- [MISP manifest](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json): MISP feed integration; 4 events (today/week/month/year).
+- [Browseable feed page](https://tweetfeed.live/feeds.html): HTML index with stats and download buttons.
+
+## API
+
+- [API documentation](https://tweetfeed.live/api.html): endpoints, examples, query syntax.
+- Base URL: `https://api.tweetfeed.live/`
+- Path pattern: `/v1/{time_window}` or `/v1/{time}/{filter1}` or `/v1/{time}/{filter1}/{filter2}`
+- Time windows: `today`, `week`, `month`, `year`
+- Filters: IOC type (`url`, `domain`, `ip`, `sha256`, `md5`), tag (e.g. `phishing`, `cobaltstrike`, `lockbit`), researcher handle (`@malwrhunterteam`)
+- No authentication. CORS open. JSON only.
+- Examples:
+    - `https://api.tweetfeed.live/v1/today` — all IOCs from the last 24h.
+    - `https://api.tweetfeed.live/v1/week/phishing/url` — phishing URLs from the last 7 days.
+    - `https://api.tweetfeed.live/v1/month/cobaltstrike` — Cobalt Strike IOCs from the last 30 days.
+    - `https://api.tweetfeed.live/v1/today/@malwrhunterteam/sha256` — SHA256 hashes from a specific researcher.
+
+## MCP integration (for AI agents)
+
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-03-26. Tool: `query_iocs`.
+- [/agents.html](https://tweetfeed.live/agents.html): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
+- [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest for the `tweetfeed-iocs` skill.
+- [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.
+- [MCP server card](https://tweetfeed.live/.well-known/mcp/server-card.json): SEP-1649 metadata.
+
+## IOC types covered
+
+- **URL**: full HTTP/HTTPS URLs flagged as malicious.
+- **Domain**: bare domain names (no scheme/path).
+- **IP**: IPv4 and IPv6 addresses associated with attacker infrastructure.
+- **SHA256**: file content hashes.
+- **MD5**: legacy file content hashes.
+
+## Tag taxonomy
+
+122+ malware family / tactic tags including:
+- Malware families: `cobaltstrike`, `lockbit`, `redline`, `qakbot`, `emotet`, etc.
+- Tactic categories: `phishing`, `ransomware`, `c2`, `infostealer`, `loader`, `rat`, etc.
+- Source signal tags: `osint`, `ioc`, `malware`.
+
+Full list rendered in `/dashboard.html` filter dropdown.
+
+## Researchers
+
+~95 vetted infosec researchers on Twitter/X feed into the aggregator. Coverage tilts toward English-speaking sources but includes multilingual contributors. See [/researchers.html](https://tweetfeed.live/researchers.html).
+
+## Use policy
+
+- **Reading / inference / live citation / training**: all allowed. CC0 1.0 means public-domain dedication; no attribution required.
+- **Rate limit**: none on read endpoints. Be reasonable.
+- **Robots.txt Content-Signal**: `ai-train=yes, search=yes, ai-input=yes` (intentional — the data is meant to be consumed).
+- **Contact**: feedback at [tweetfeed.featurebase.app](https://tweetfeed.featurebase.app/) or DM @0xDanielLopez on X.
+
+## Sister project
+
+- [phishunt.io](https://phishunt.io/) — same author, complementary phishing-detection feed.

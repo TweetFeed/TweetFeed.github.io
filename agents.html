@@ -62,9 +62,33 @@
 		"name": "TweetFeed",
 		"url": "https://tweetfeed.live/",
 		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
 		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about.html",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public threat-intelligence feeds and MCP servers for AI agents.",
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
 			"https://x.com/0xDanielLopez",
-			"https://github.com/0xDanielLopez/TweetFeed"
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
 		]
 	}
 	</script>
@@ -210,6 +234,7 @@
 					<p style="font-size: 14px;"><em>MCP, Agent Skills and API discovery <span style="font-size: 12px;">(free, CC0, no auth)</span></em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
+				<p style="color:#737373; font-size:16px; font-family:'Rubik', sans-serif; line-height:1.65; margin: 0 auto 1.5rem; max-width:780px;">TweetFeed exposes its IOC stream to AI agents through three open protocols. The <b>Model Context Protocol</b> server at <code style="color:#1DA1F2;">mcp.tweetfeed.live</code> is the easiest path for Claude Desktop, Cursor, Zed and any MCP-aware client. The <b>Agent Skills v0.2.0 manifest</b> at <code style="color:#1DA1F2;">/.well-known/agent-skills/index.json</code> documents the same surface in a tool-agnostic format. The plain <b>REST API</b> at <code style="color:#1DA1F2;">api.tweetfeed.live</code> works for any HTTP client, including custom code or n8n / Make.com / Zapier nodes. All three are CC0-licensed, no authentication, no rate limit for normal use, and respond with the same underlying IOC data — pick the integration style that matches your stack.</p>
 
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Option 1 &mdash; MCP server</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
