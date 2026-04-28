@@ -66,6 +66,51 @@
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
+  <!-- IOC-type landing pages (added 2026-04-28) -->
+  <url>
+    <loc>https://tweetfeed.live/malicious-urls.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tweetfeed.live/malicious-domains.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tweetfeed.live/malicious-ips.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tweetfeed.live/malicious-hashes-md5.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tweetfeed.live/malicious-hashes-sha256.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Pillar guide (added 2026-04-28) -->
+  <url>
+    <loc>https://tweetfeed.live/threat-intelligence-guide.html</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Per-tag landing pages (added 2026-04-28; auto-regenerated daily) -->
+  <url>
+    <loc>https://tweetfeed.live/tag/kimsuky/</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
 <url>
     <loc>https://tweetfeed.live/tos.html</loc>
     <lastmod>2026-04-23</lastmod>

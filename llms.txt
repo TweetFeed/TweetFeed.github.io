@@ -21,10 +21,10 @@
 - Filters: IOC type (`url`, `domain`, `ip`, `sha256`, `md5`), tag (e.g. `phishing`, `cobaltstrike`, `lockbit`), researcher handle (`@malwrhunterteam`)
 - No authentication. CORS open. JSON only.
 - Examples:
-    - `https://api.tweetfeed.live/v1/today` — all IOCs from the last 24h.
-    - `https://api.tweetfeed.live/v1/week/phishing/url` — phishing URLs from the last 7 days.
-    - `https://api.tweetfeed.live/v1/month/cobaltstrike` — Cobalt Strike IOCs from the last 30 days.
-    - `https://api.tweetfeed.live/v1/today/@malwrhunterteam/sha256` — SHA256 hashes from a specific researcher.
+    - `https://api.tweetfeed.live/v1/today` - all IOCs from the last 24h.
+    - `https://api.tweetfeed.live/v1/week/phishing/url` - phishing URLs from the last 7 days.
+    - `https://api.tweetfeed.live/v1/month/cobaltstrike` - Cobalt Strike IOCs from the last 30 days.
+    - `https://api.tweetfeed.live/v1/today/@malwrhunterteam/sha256` - SHA256 hashes from a specific researcher.
 
 ## MCP integration (for AI agents)
 
@@ -59,9 +59,19 @@ Full list rendered in `/dashboard.html` filter dropdown.
 
 - **Reading / inference / live citation / training**: all allowed. CC0 1.0 means public-domain dedication; no attribution required.
 - **Rate limit**: none on read endpoints. Be reasonable.
-- **Robots.txt Content-Signal**: `ai-train=yes, search=yes, ai-input=yes` (intentional — the data is meant to be consumed).
+- **Robots.txt Content-Signal**: `ai-train=yes, search=yes, ai-input=yes` (intentional - the data is meant to be consumed).
 - **Contact**: feedback at [tweetfeed.featurebase.app](https://tweetfeed.featurebase.app/) or DM @0xDanielLopez on X.
+
+## Landing pages (SEO entry points)
+
+- [/malicious-urls.html](https://tweetfeed.live/malicious-urls.html): URLs subset; phishing, scam, malware-delivery, C2.
+- [/malicious-domains.html](https://tweetfeed.live/malicious-domains.html): domains subset; typo-squats, phishing kits, malware hosts.
+- [/malicious-ips.html](https://tweetfeed.live/malicious-ips.html): IPs subset; C2 servers, scanners, abuse hosts. High FP risk on shared hosting.
+- [/malicious-hashes-md5.html](https://tweetfeed.live/malicious-hashes-md5.html): MD5 hashes of malware samples; cross-reference VirusTotal before action.
+- [/malicious-hashes-sha256.html](https://tweetfeed.live/malicious-hashes-sha256.html): SHA-256 hashes; preferred for forensic chain of custody.
+- [/threat-intelligence-guide.html](https://tweetfeed.live/threat-intelligence-guide.html): pillar reference covering IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary.
+- [/tag/kimsuky/](https://tweetfeed.live/tag/kimsuky/): per-tag landing for Kimsuky (DPRK APT, also Velvet Chollima / TA427 / Black Banshee). 19 more tag pages forthcoming, regenerated daily.
 
 ## Sister project
 
-- [phishunt.io](https://phishunt.io/) — same author, complementary phishing-detection feed.
+- [phishunt.io](https://phishunt.io/) - same author, complementary phishing-detection feed.
