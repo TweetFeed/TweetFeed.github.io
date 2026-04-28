@@ -234,9 +234,47 @@
 					<p style="font-size: 14px;"><em>MCP, Agent Skills and API discovery <span style="font-size: 12px;">(free, CC0, no auth)</span></em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
-				<p style="color:#737373; font-size:16px; font-family:'Rubik', sans-serif; line-height:1.65; margin: 0 auto 1.5rem; max-width:780px;">TweetFeed exposes its IOC stream to AI agents through three open protocols. The <b>Model Context Protocol</b> server at <code style="color:#1DA1F2;">mcp.tweetfeed.live</code> is the easiest path for Claude Desktop, Cursor, Zed and any MCP-aware client. The <b>Agent Skills v0.2.0 manifest</b> at <code style="color:#1DA1F2;">/.well-known/agent-skills/index.json</code> documents the same surface in a tool-agnostic format. The plain <b>REST API</b> at <code style="color:#1DA1F2;">api.tweetfeed.live</code> works for any HTTP client, including custom code or n8n / Make.com / Zapier nodes. All three are CC0-licensed, no authentication, no rate limit for normal use, and respond with the same underlying IOC data — pick the integration style that matches your stack.</p>
+				<div class="row" style="max-width: 980px; margin: 0 auto 1rem;">
+					<div class="col-md-4 mb-3">
+						<a href="#option-mcp" class="text-decoration-none" style="color:inherit;">
+							<div class="card h-100 p-3" style="background:#fff;">
+								<h4 style="color:#1DA1F2; font-family:'Segoe UI',Arial,sans-serif; font-weight:600; font-size:18px; margin-bottom:0.4rem;">MCP server</h4>
+								<code style="color:#1DA1F2; font-size:13px; background:transparent; padding:0;">mcp.tweetfeed.live</code>
+								<ul style="margin-top:0.6rem; margin-bottom:0; padding-left:1.2rem; font-size:14px; color:#737373; font-family:'Rubik',sans-serif;">
+									<li>Claude Desktop, Cursor, Zed</li>
+									<li>JSON-RPC 2.0 over HTTP</li>
+								</ul>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-4 mb-3">
+						<a href="#option-skills" class="text-decoration-none" style="color:inherit;">
+							<div class="card h-100 p-3" style="background:#fff;">
+								<h4 style="color:#1DA1F2; font-family:'Segoe UI',Arial,sans-serif; font-weight:600; font-size:18px; margin-bottom:0.4rem;">Agent Skills</h4>
+								<code style="color:#1DA1F2; font-size:13px; background:transparent; padding:0;">/.well-known/agent-skills/</code>
+								<ul style="margin-top:0.6rem; margin-bottom:0; padding-left:1.2rem; font-size:14px; color:#737373; font-family:'Rubik',sans-serif;">
+									<li>RFC v0.2.0 manifest</li>
+									<li>Tool-agnostic markdown</li>
+								</ul>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-4 mb-3">
+						<a href="#option-api" class="text-decoration-none" style="color:inherit;">
+							<div class="card h-100 p-3" style="background:#fff;">
+								<h4 style="color:#1DA1F2; font-family:'Segoe UI',Arial,sans-serif; font-weight:600; font-size:18px; margin-bottom:0.4rem;">REST API</h4>
+								<code style="color:#1DA1F2; font-size:13px; background:transparent; padding:0;">api.tweetfeed.live</code>
+								<ul style="margin-top:0.6rem; margin-bottom:0; padding-left:1.2rem; font-size:14px; color:#737373; font-family:'Rubik',sans-serif;">
+									<li>Any HTTP client, n8n, Make, Zapier</li>
+									<li>Same data, JSON output</li>
+								</ul>
+							</div>
+						</a>
+					</div>
+				</div>
+				<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; max-width:780px; margin:0 auto 1.5rem; text-align:center;">All three are CC0 1.0, no authentication, no rate limit for normal use. Same IOC data underneath.</p>
 
-				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Option 1 &mdash; MCP server</h3>
+				<h3 id="option-mcp" style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">MCP server</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Remote <b>Model Context Protocol</b> server at <code style="color:#1DA1F2;">https://mcp.tweetfeed.live/</code>
 					over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-03-26</code>). Works with Claude Desktop, Claude Code,
@@ -294,7 +332,7 @@
 				</p>
 				<br>
 
-				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Option 2 &mdash; Agent Skills</h3>
+				<h3 id="option-skills" style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Agent Skills</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					For agents that consume
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/cloudflare/agent-skills-discovery-rfc">Agent Skills Discovery (RFC v0.2.0)</a>
@@ -325,7 +363,7 @@
 				</p>
 				<br>
 
-				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Option 3 &mdash; Direct REST API</h3>
+				<h3 id="option-api" style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">REST API</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					No MCP or skills harness? Call the public REST API directly: no key, no auth, CORS-enabled, JSON responses. Full docs on the
 					<a href="api.html">API page</a>.
@@ -370,7 +408,7 @@
 							<td>MCP SEP-1649 draft</td>
 						</tr>
 						<tr>
-							<td><a href="robots.txt">robots.txt</a> &mdash; <code>Content-Signal</code></td>
+							<td><a href="robots.txt">robots.txt</a> &middot; <code>Content-Signal</code></td>
 							<td><code>text/plain</code></td>
 							<td><a target="_blank" rel="noopener noreferrer" href="https://contentsignals.org/">contentsignals.org</a></td>
 						</tr>
