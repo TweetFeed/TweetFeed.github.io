@@ -316,6 +316,35 @@
 								type, value, tags and tweet URL.
 							</td>
 						</tr>
+						<tr>
+							<td><code>check_url</code></td>
+							<td>
+								Check whether a URL or substring appears in the past 30 days of TweetFeed
+								(case-insensitive substring match against <code>type=url</code> IOCs).
+							</td>
+						</tr>
+						<tr>
+							<td><code>check_ip</code></td>
+							<td>
+								Check whether an IPv4 or IPv6 address appears in the past 30 days
+								(substring match against <code>type=ip</code> IOCs).
+							</td>
+						</tr>
+						<tr>
+							<td><code>check_hash</code></td>
+							<td>
+								Check whether a file hash appears in the past 30 days. Type auto-detected
+								from length (32 hex = MD5, 64 hex = SHA-256). Exact match, hex required.
+							</td>
+						</tr>
+						<tr>
+							<td><code>list_recent_iocs</code></td>
+							<td>
+								Delta-sync helper: returns IOCs added since a given <code>YYYY-MM-DD</code> date,
+								sorted newest first. Optional <code>type</code> and <code>tag</code> filters.
+								Source window is the past 30 days.
+							</td>
+						</tr>
 					</table>
 				</div>
 

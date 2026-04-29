@@ -1,15 +1,40 @@
 {
   "serverInfo": {
     "name": "tweetfeed-mcp",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "description": "MCP server exposing the public TweetFeed IOC feed (URLs, domains, IPs, MD5/SHA-256 hashes shared by the infosec community on Twitter/X) as agent tools."
   },
-  "endpoint": "https://mcp.tweetfeed.live/",
-  "transport": "http+json-rpc",
-  "protocolVersion": "2025-03-26",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://mcp.tweetfeed.live/"
+  },
   "capabilities": {
     "tools": {}
   },
-  "description": "Query the TweetFeed public IOC feed (URLs, domains, IPs, SHA256/MD5 hashes shared by the infosec community on Twitter/X) via MCP. No auth, CC0 data, read-only.",
-  "documentation": "https://github.com/0xDanielLopez/tweetfeed-mcp",
-  "license": "CC0-1.0"
+  "protocolVersion": "2025-03-26",
+  "license": "CC0-1.0 (data); MIT (server source)",
+  "source": "https://github.com/0xDanielLopez/tweetfeed-mcp",
+  "documentation": "https://tweetfeed.live/agents.html",
+  "tools": [
+    {
+      "name": "query_iocs",
+      "description": "Query the TweetFeed API for Indicators of Compromise (IOCs: URLs, domains, IPs, MD5/SHA256 hashes) shared by the infosec community on Twitter/X. Returns matching rows with date, researcher handle, type, value, tags, and tweet URL. Required: time (today/week/month). Optional: user, tag, type, limit."
+    },
+    {
+      "name": "check_url",
+      "description": "Check whether a URL (or substring) appears in the TweetFeed corpus over the past 30 days. Useful for confirming if an observed URL has been flagged by the public infosec Twitter/X community. Case-insensitive substring match."
+    },
+    {
+      "name": "check_ip",
+      "description": "Check whether an IP address appears in the TweetFeed corpus over the past 30 days. Useful for confirming if an observed IP has been flagged as attacker infrastructure (C2, scanner, phishing host). Substring match against the value field of type=ip IOCs."
+    },
+    {
+      "name": "check_hash",
+      "description": "Check whether a file hash (MD5 or SHA-256) appears in the TweetFeed corpus over the past 30 days. Hash type auto-detected from length (32 hex = MD5, 64 hex = SHA-256). Exact match on hex value, case-insensitive."
+    },
+    {
+      "name": "list_recent_iocs",
+      "description": "List TweetFeed IOCs added since a given date, useful for delta-syncing a blocklist or threat-intel pipeline. Required: since (YYYY-MM-DD). Optional: limit, type, tag. Source is the 30-day month window."
+    }
+  ]
 }
