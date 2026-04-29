@@ -104,6 +104,19 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <!-- Hub indexes (added 2026-04-29; replaces home chip-bar) -->
+  <url>
+    <loc>https://tweetfeed.live/tags/</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tweetfeed.live/ioc-types/</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <!-- Per-tag landing pages (initial 2026-04-28; bulk gen + auto-regen daily 2026-04-29) -->
   <url>
     <loc>https://tweetfeed.live/tag/kimsuky/</loc>

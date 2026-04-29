@@ -175,8 +175,62 @@ def main():
             skipped += 1
             print(f"  [skip] tag/{slug}: {type(e).__name__}: {e}", file=sys.stderr)
 
+    # Also write the /tags/ hub index.
+    try:
+        render_tags_index(tags, env, counts, today_str)
+        print("  [ok]   tags/")
+    except Exception as e:
+        print(f"  [skip] tags/: {type(e).__name__}: {e}", file=sys.stderr)
+
     print(f"\nWrote {written}/{len(tags)} tag pages ({skipped} skipped).")
     return 0 if written > 0 else 1
+
+
+CATEGORY_HEADINGS = {
+    "apt-group": ("APT groups", "Threat-actor clusters tracked by attribution analysts. Each page collates the IOCs the public infosec community on Twitter/X has linked to that cluster."),
+    "malware-family": ("Malware families &middot; C2 frameworks &middot; tools", "Specific malware identities (Cobalt Strike, AsyncRAT, NetSupportRAT, …) plus dual-use offensive tooling that surfaces in real-world intrusions."),
+    "ttp": ("Tactics, techniques and infra labels", "Broader categories: phishing, C2 infrastructure, ransomware, infostealer, scam, opendir and the umbrella malware / APT labels."),
+}
+
+
+def render_tags_index(tags, env, counts, today_str):
+    """Render /tags/index.html grouping all tag pages by category."""
+    by_cat = {}
+    for m in tags:
+        cat = m.get("category", "ttp")
+        slug = m["slug"]
+        year_count = counts["windows"]["year"]["tags"].get(slug, 0)
+        month_count = counts["windows"]["month"]["tags"].get(slug, 0)
+        by_cat.setdefault(cat, []).append({
+            "slug": slug,
+            "display_tag": m["display_tag"],
+            "subtitle": m["short_subtitle_mobile"],
+            "year_count": f"{year_count:,}",
+            "month_count": f"{month_count:,}",
+        })
+
+    # Order: apt-group, malware-family, ttp. Within each, order by year volume desc.
+    cat_order = ["apt-group", "malware-family", "ttp"]
+    categories = []
+    for cat_key in cat_order:
+        if cat_key not in by_cat:
+            continue
+        heading, blurb = CATEGORY_HEADINGS[cat_key]
+        rows = sorted(by_cat[cat_key], key=lambda r: -int(r["year_count"].replace(",", "")))
+        categories.append({"heading": heading, "blurb": blurb, "tags": rows})
+
+    tags_flat = sorted([m for m in tags], key=lambda m: m["slug"])
+
+    template = env.get_template("tags_index.html.j2")
+    html = template.render(
+        categories=categories,
+        tag_count=len(tags),
+        today_str=today_str,
+        tags_flat=tags_flat,
+    )
+    out_dir = REPO_ROOT / "tags"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "index.html").write_text(html, encoding="utf-8")
 
 
 if __name__ == "__main__":
