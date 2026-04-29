@@ -423,7 +423,7 @@
 	<script src="vendor/chart.js/Chart.min.js"></script>
 	<script>
 	// 'today' table inits synchronously (default-active tab, in initial
-	// viewport) — lazy-init here regressed CLS to 0.317 because the
+	// viewport) - lazy-init here regressed CLS to 0.317 because the
 	// DataTables wrapper injects after paint and shifts layout.
 	// 'week' and 'month' live on inactive Bootstrap pills (display:none
 	// at load), so IntersectionObserver never fires until the user

@@ -20,7 +20,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-# The 11 user-facing main pages — the ones that share nav, footer, analytics,
+# The 11 user-facing main pages - the ones that share nav, footer, analytics,
 # and canonical patterns. (CLAUDE.md still lists 12 including base.html, but
 # base.html was dropped in commit ddefac1 "drop stale base.html".) Excludes
 # 404.html, today.html, tos.html (no shared nav anchor) and the SB Admin 2

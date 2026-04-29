@@ -5,7 +5,7 @@ description: Query TweetFeed (tweetfeed.live) for security IOCs shared by the in
 
 # TweetFeed IOC Queries
 
-Public API at `https://api.tweetfeed.live/v1` — no auth, no API key, ~100k req/day free-tier headroom (actual usage ~7k/day as of 2026-04-18). Cloudflare Worker backed, JSON response. Use plain `curl`.
+Public API at `https://api.tweetfeed.live/v1` - no auth, no API key, ~100k req/day free-tier headroom (actual usage ~7k/day as of 2026-04-18). Cloudflare Worker backed, JSON response. Use plain `curl`.
 
 ## Route pattern
 
@@ -15,7 +15,7 @@ Public API at `https://api.tweetfeed.live/v1` — no auth, no API key, ~100k req
 
 - `time`: `today` · `week` · `month` · `year`
 - `filter1`, `filter2` (both optional, order-independent):
-  - `@username` — tweets by a specific handle (include the `@`)
+  - `@username` - tweets by a specific handle (include the `@`)
   - type: `url` · `domain` · `ip` · `sha256` · `md5`
   - tag: anything else (case-insensitive substring match against the tags column, e.g. `phishing`, `cobaltstrike`, `APT`, `Lockbit`)
 
@@ -77,13 +77,13 @@ For IP/hash exact match, use `select(.value == $v)`. For longer retention, query
 - **PascalCase for malware families** (avoid substring collisions): `#CobaltStrike`, `#AkiraRansomware`, `#PlayRansomware`, `#Lockbit3`, `#Kimsuky`
 - **lowercase for generic categories**: `#phishing`, `#scam`, `#ransomware`, `#malware`, `#C2`, `#credtheft`
 
-Filter values are case-insensitive — `cobaltstrike` matches both `#CobaltStrike` and `#cobaltstrike` in the data.
+Filter values are case-insensitive - `cobaltstrike` matches both `#CobaltStrike` and `#cobaltstrike` in the data.
 
 ## Gotchas
 
 - Response is a plain array, not `{data: [...]}`. Always use `jq '.[] | ...'`.
 - `@username` filter needs the literal `@` prefix in the URL (e.g. `/week/@malwrhunterteam`). The Worker strips it internally before matching.
-- Year endpoint does NOT go through the Worker — it 302s to raw GitHub. The Worker redirects because the year CSV exceeds the Worker CPU budget.
+- Year endpoint does NOT go through the Worker - it 302s to raw GitHub. The Worker redirects because the year CSV exceeds the Worker CPU budget.
 - Tag matching is substring: `apt` in filter matches `#APT28`, `#APT29`, `#ShadowAPT` etc. Use a more specific tag to disambiguate.
 - The feed refreshes every 15 min. `today` resets at 00:00 UTC (full wipe + rebuild from the day's tweets).
 

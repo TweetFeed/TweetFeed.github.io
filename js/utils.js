@@ -349,7 +349,7 @@
   window.number_format = numberFormat;
   window.formatDateLong = formatDateLong;
 
-  // Legacy downloadCSV(csvString, filename) — matches the inline signature
+  // Legacy downloadCSV(csvString, filename) - matches the inline signature
   // used by 9 pages before dedupe. Writes a pre-joined CSV string as a Blob.
   window.downloadCSV = function(csv, filename) {
     var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -364,7 +364,7 @@
     URL.revokeObjectURL(url);
   };
 
-  // Legacy exportTableToCSV(filename) — scrapes the first <table> on the
+  // Legacy exportTableToCSV(filename) - scrapes the first <table> on the
   // page starting at row index 2 (skipping header + DataTables filter row)
   // and downloads it. Used by 9 generic pages; index.html keeps its own
   // custom variant that does column skipping + URL extraction.

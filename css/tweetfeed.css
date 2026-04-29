@@ -165,7 +165,7 @@ hr.divider {
 .dash-toolbar {
 	border: 1px solid black;
 }
-/* Code/command block — heavy black border per
+/* Code/command block - heavy black border per
    feedback_tweetfeed_black_borders memory. Used on agents.html /
    api.html / hunt.html for MCP config snippets, curl commands, API
    examples. The blue left accent provides visual rhythm. */
@@ -188,7 +188,7 @@ hr.divider {
 	font-weight: 600;
 }
 
-/* TweetFeed brand button — replaces inline
+/* TweetFeed brand button - replaces inline
    style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;"
    that was repeated on ~30 download/export buttons across pages.
    Selectors use .btn.btn-tf (0,0,2,0 specificity) so we override

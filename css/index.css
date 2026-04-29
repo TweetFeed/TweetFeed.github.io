@@ -223,15 +223,15 @@ body {
 }
 /* =========== END Tweets ======== */
 
-/* phishunt.io cross-link — phishunt's dark navy text on TweetFeed's blue bar */
+/* phishunt.io cross-link - phishunt's dark navy text on TweetFeed's blue bar */
 #phishunt-link .nav-link { color: #0f172a !important; }
 #phishunt-link .nav-link:hover { color: #1e293b !important; }
 
-/* Copy-to-clipboard icons — prevent blue flash on click */
+/* Copy-to-clipboard icons - prevent blue flash on click */
 .tf-copy { cursor: pointer; color: inherit; }
 .tf-copy:active, .tf-copy:focus { color: inherit; outline: none; }
 
-/* Footer link colors — muted, not distracting */
+/* Footer link colors - muted, not distracting */
 footer a.text-decoration-none { color: #555 !important; }
 footer a.text-decoration-none:hover { color: #1DA1F2 !important; }
 

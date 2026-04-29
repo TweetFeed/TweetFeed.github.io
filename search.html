@@ -495,7 +495,7 @@
 		// Defer initial CSV fetch to window.load so the DataTable skeleton
 		// paints before the week.csv fetch+parse. PSI mobile baseline
 		// LCP 4.2s, TBT 1920ms.
-		// NOTE: do NOT lazy-init the DataTable() itself — verified 2026-04-26
+		// NOTE: do NOT lazy-init the DataTable() itself - verified 2026-04-26
 		// that lazy-on-viewport regresses CLS to 0.533 (DataTables wrapper
 		// injection shifts layout post-paint), net perf -0.18.
 		$(window).on('load', function() {
