@@ -1,0 +1,46 @@
+name: Regenerate tag landing pages
+
+# This workflow uses no untrusted input from issues / PRs / commits.
+# Safe to run scheduled and via manual dispatch.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # daily 06:00 UTC; counts.json on the data repo updates around 07:00 daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: regen-landing-pages
+  cancel-in-progress: false
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir requests jinja2 pyyaml
+
+      - name: Regenerate tag pages
+        run: python3 scripts/regen_tag_pages.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "tweetfeed-bot"
+          git config user.email "tweetfeed-bot@phishunt.io"
+          git add tag/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "regen tag landing pages: daily refresh"
+          git push

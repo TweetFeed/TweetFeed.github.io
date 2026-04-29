@@ -1,0 +1,960 @@
+# tag_metadata.yaml -- per-tag metadata for scripts/regen_tag_pages.py.
+#
+# Slug = URL segment, lowercase. display_tag = what appears in the hero
+# h1 ("#display_tag"). license_subject = proper-case noun used in prose.
+# Each related_tag entry has its own display + slug.
+#
+# Categories:
+#   apt-group       -- threat actor cluster
+#   malware-family  -- offensive tooling / RAT / loader / stealer / C2 framework
+#   ttp             -- generic technique / category / infra label
+#
+# faq_q1, faq_q2: tag-specific. faq_q3 (updates) and faq_q4 (license) are
+# templated by regen_tag_pages.py from license_subject.
+
+tags:
+
+  # ============================================================
+  # APT GROUPS
+  # ============================================================
+
+  - slug: kimsuky
+    display_tag: kimsuky
+    license_subject: "Kimsuky"
+    category: apt-group
+    short_subtitle: "DPRK-aligned APT (also tracked as Velvet Chollima, TA427, Black Banshee)"
+    short_subtitle_mobile: "DPRK-aligned APT (Velvet Chollima, TA427, Black Banshee)"
+    seo_title: "Kimsuky DPRK APT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Kimsuky (DPRK APT) IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs attributed to Kimsuky, also tracked as Velvet Chollima, TA427 and Black Banshee. CC0, no auth."
+    og_image_alt: "TweetFeed - Kimsuky DPRK APT IOC feed"
+    webpage_name: "Kimsuky (DPRK APT) IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) attributed to Kimsuky, a DPRK-aligned APT also tracked as Velvet Chollima, TA427 and Black Banshee."
+    meta_description: "IOCs (URLs, domains, IPs, hashes) attributed to Kimsuky, a DPRK-aligned APT also tracked as Velvet Chollima, TA427 and Black Banshee. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "kimsuky,velvet chollima,ta427,black banshee,dprk apt,north korea apt,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Kimsuky"
+      alternate_names: ["Velvet Chollima", "TA427", "Black Banshee"]
+      same_as:
+        - "https://attack.mitre.org/groups/G0094/"
+        - "https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-301a"
+    bullets:
+      - label: "Threat actor"
+        html: "DPRK-aligned APT active since at least 2012, also tracked as <em>Velvet Chollima</em> (CrowdStrike), <em>TA427</em> (Proofpoint) and <em>Black Banshee</em> (Mandiant)."
+      - label: "Targets"
+        html: "South Korean government, defense and academic organisations; expanded to think tanks and research institutions in the US, Japan and Europe."
+      - label: "Tactics"
+        html: "spear-phishing with weaponised HWP and PDF, custom backdoors (BabyShark, AppleSeed, GoldDragon), credential harvesting on legacy email portals, fake login pages."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/groups/G0094/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK G0094</a> &middot; <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-301a" target="_blank" rel="noopener noreferrer">CISA AA20-301A</a>.'
+    faq_q1:
+      q: "What is Kimsuky?"
+      a: "Kimsuky is a DPRK-aligned advanced persistent threat (APT) group active since at least 2012. It is also tracked under the names Velvet Chollima (CrowdStrike), TA427 (Proofpoint) and Black Banshee (Mandiant). Kimsuky targets South Korean government, defense and academic organisations, and has expanded to research institutions in the United States, Japan and Europe. The group is known for spear-phishing, weaponised HWP and PDF documents, and custom backdoors such as BabyShark, AppleSeed and GoldDragon."
+    faq_q2:
+      q: "Is Kimsuky the same as Lazarus?"
+      a: "No. Both Kimsuky and Lazarus are DPRK-aligned, but they are distinct clusters tracked by different attribution analysts and target different verticals. Lazarus focuses on financial gain (cryptocurrency exchanges, banks). Kimsuky focuses on intelligence collection (foreign policy, defense, academic). The #Lazarus tag on TweetFeed groups its own IOCs separately."
+    related_tags:
+      - {display: "DPRK", slug: "dprk"}
+      - {display: "APT", slug: "apt"}
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "Lazarus", slug: "lazarus"}
+
+  # ============================================================
+  # MALWARE FAMILIES
+  # ============================================================
+
+  - slug: cobaltstrike
+    display_tag: cobaltstrike
+    license_subject: "Cobalt Strike"
+    category: malware-family
+    short_subtitle: "Commercial adversary simulation framework, widely abused by APTs, ransomware operators and initial access brokers"
+    short_subtitle_mobile: "Adversary simulation tool abused by APTs and ransomware crews"
+    seo_title: "Cobalt Strike (Beacon) IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Cobalt Strike IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Cobalt Strike (S0154). Commercial adversary simulation framework abused by APTs and ransomware. CC0, no auth."
+    og_image_alt: "TweetFeed - Cobalt Strike IOC feed"
+    webpage_name: "Cobalt Strike IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Cobalt Strike (S0154), the commercial adversary simulation framework abused by APTs, ransomware operators and initial access brokers."
+    meta_description: "IOCs (URLs, domains, IPs, hashes) tagged Cobalt Strike (S0154), the commercial adversary simulation framework abused by APTs, ransomware operators and initial access brokers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "cobaltstrike,cobalt strike,beacon,red team,c2 framework,s0154,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Cobalt Strike"
+      alternate_names: ["Beacon", "CS"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S0154/"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.cobalt_strike"
+    bullets:
+      - label: "Type"
+        html: "commercial adversary simulation framework. Team Server + Beacon implant architecture, supports HTTP, HTTPS, DNS and named-pipe C2. Vendor: Fortra (formerly Strategic Cyber LLC)."
+      - label: "Abuse pattern"
+        html: "pirated and cracked copies dominate the wild. Routinely deployed by APTs (e.g., APT41, FIN7), ransomware affiliates (Conti, BlackCat, Akira) and initial access brokers as the second stage after phishing or exploit landing pages."
+      - label: "Detection signals"
+        html: "default Beacon profiles leak through HTTP URI patterns, named pipes, sleep jitter and process injection. Defenders watch for stager URIs, JA3/JA4 fingerprints and hardcoded watermarks; YARA covers known stomped DLL patterns."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S0154/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0154</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.cobalt_strike" target="_blank" rel="noopener noreferrer">Malpedia</a> &middot; <a href="https://www.cobaltstrike.com/" target="_blank" rel="noopener noreferrer">Vendor (Fortra)</a>.'
+    faq_q1:
+      q: "What is Cobalt Strike?"
+      a: "Cobalt Strike is a commercial adversary simulation and red-team framework developed by Fortra (formerly Strategic Cyber LLC). It pairs a Team Server with a Beacon implant that runs on a target machine, supporting HTTP, HTTPS, DNS and named-pipe C2. It is licensed for legitimate red-team engagements, but pirated and cracked copies dominate the wild and are routinely deployed by APTs, ransomware affiliates and initial access brokers as the second stage after phishing or exploit landing pages."
+    faq_q2:
+      q: "Is Cobalt Strike legal?"
+      a: "Possessing and operating an officially licensed Cobalt Strike copy for authorised red-team work is legal. Distributing, possessing or running cracked Cobalt Strike copies is not. The IOCs on this page are extracted from public threat-research tweets and tag servers that researchers have observed in real-world intrusions; vendor licensing status is not asserted for any specific IP, domain or hash."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "APT", slug: "apt"}
+      - {display: "ransomware", slug: "ransomware"}
+
+  # ============================================================
+  # TTPs
+  # ============================================================
+
+  - slug: phishing
+    display_tag: phishing
+    license_subject: "Phishing"
+    category: ttp
+    short_subtitle: "Phishing infrastructure (URLs, domains, IPs) extracted from public Twitter/X security researchers"
+    short_subtitle_mobile: "Phishing infrastructure observed by public Twitter/X researchers"
+    seo_title: "Phishing IOC Feed - URLs, Domains, IPs - TweetFeed"
+    twitter_title: "Phishing IOC feed - TweetFeed"
+    twitter_description: "Real-time phishing IOCs (URLs, domains, IPs) extracted from public Twitter/X researcher accounts. CC0, no auth."
+    og_image_alt: "TweetFeed - phishing IOC feed"
+    webpage_name: "Phishing IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged phishing - public phishing infrastructure observed by security researchers on Twitter/X."
+    meta_description: "IOCs (URLs, domains, IPs) tagged phishing - the TweetFeed feed of public phishing infrastructure observed by security researchers on Twitter/X. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "phishing,phishing ioc,phishing feed,phishing url,phishing domain,phishing ip,t1566,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Phishing"
+      alternate_names: ["Spearphishing", "Credential phishing"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1566/"
+        - "https://www.cisa.gov/topics/cyber-threats-and-advisories/phishing"
+    bullets:
+      - label: "Definition"
+        html: "social-engineering attack that impersonates a trusted brand, service or individual to steal credentials, deploy malware or commit fraud. Classified by MITRE ATT&amp;CK as T1566 with sub-techniques for spearphishing attachment, link and via-service."
+      - label: "Common variants"
+        html: "credential phishing (fake login pages), Business Email Compromise (BEC), smishing (SMS), vishing (voice), QR phishing (quishing), adversary-in-the-middle kits like Evilginx and Tycoon-2FA that bypass legacy MFA."
+      - label: "Detection"
+        html: "email header authentication (SPF, DKIM, DMARC), URL reputation, certificate transparency monitoring, content inspection for logo cloning and form-action mismatches, and user-reported phish boxes. Phishing-resistant MFA (FIDO2/WebAuthn) is the most effective preventative control."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1566/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1566</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/phishing" target="_blank" rel="noopener noreferrer">CISA Phishing</a> &middot; <a href="https://phishunt.io/" target="_blank" rel="noopener noreferrer">phishunt.io</a> (sister project, real-time phishing detection).'
+    faq_q1:
+      q: "What is phishing?"
+      a: "Phishing is a social-engineering attack in which an adversary impersonates a trusted brand, service or individual to trick the target into revealing credentials, deploying malware or transferring funds. The MITRE ATT&CK framework classifies it under T1566 (Phishing) with sub-techniques for spearphishing attachment (T1566.001), spearphishing link (T1566.002) and spearphishing via service (T1566.003). Common delivery vectors are email, SMS (smishing), instant message and voice (vishing)."
+    faq_q2:
+      q: "What kind of IOCs are tagged #phishing on TweetFeed?"
+      a: "URLs, domains and IPs hosting phishing kits or fake login pages, observed by public Twitter/X researchers. Hashes are rare for phishing because the payload is usually a hosted webpage, not a binary. Adjacent tags include #scam (financial scam infrastructure), #opendir (open directories that host phishing kits) and brand-specific tags when researchers attribute the kit to a known impersonation campaign."
+    related_tags:
+      - {display: "scam", slug: "scam"}
+      - {display: "opendir", slug: "opendir"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: c2
+    display_tag: c2
+    license_subject: "C2"
+    category: ttp
+    short_subtitle: "Command and Control infrastructure (URLs, IPs, domains) hosting attacker servers and beacons"
+    short_subtitle_mobile: "Command and Control servers (URLs, IPs, domains)"
+    seo_title: "C2 (Command and Control) IOC Feed - URLs, IPs, Domains - TweetFeed"
+    twitter_title: "C2 IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged C2 (Command and Control servers, listeners, redirectors) extracted from public Twitter/X researchers. CC0, no auth."
+    og_image_alt: "TweetFeed - C2 IOC feed"
+    webpage_name: "C2 (Command and Control) IOC feed"
+    webpage_description: "Real-time IOCs (URLs, IPs, domains) tagged C2 - Command and Control infrastructure (servers, listeners, redirectors) observed by public security researchers."
+    meta_description: "IOCs tagged C2 (Command and Control) - servers, listeners and redirectors observed by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "c2,command and control,c2 server,c2 ioc,beacon,listener,redirector,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Command and Control"
+      alternate_names: ["C2", "C&C", "CnC"]
+      same_as:
+        - "https://attack.mitre.org/tactics/TA0011/"
+    bullets:
+      - label: "Definition"
+        html: "infrastructure that an adversary uses to maintain a covert channel with compromised hosts. MITRE ATT&amp;CK tracks it as Tactic <code>TA0011 (Command and Control)</code>, with techniques covering application-layer protocols, encrypted channels, fast flux DNS, domain fronting and many others."
+      - label: "Common variants"
+        html: "Cobalt Strike Beacon, Sliver, Mythic, Havoc, Empire, plus bespoke implants. Infrastructure ranges from single-VPS HTTP listeners to complex chains with redirectors, fronting domains and CDN-hidden ingress."
+      - label: "Detection"
+        html: "DNS reputation, JA3/JA4 TLS fingerprinting, beacon-jitter analysis, sinkhole + traffic-analytics, certificate transparency for short-lived certs, and YARA on memory-resident agents."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/tactics/TA0011/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK TA0011</a> &middot; see also tag-specific pages for <a href="../cobaltstrike/" class="text-decoration-none">#cobaltstrike</a>, <a href="../sliver/" class="text-decoration-none">#sliver</a>, <a href="../mythic/" class="text-decoration-none">#mythic</a>, <a href="../havoc/" class="text-decoration-none">#havoc</a>.'
+    faq_q1:
+      q: "What is C2 (Command and Control)?"
+      a: "Command and Control is the channel adversaries use to communicate with compromised hosts during an intrusion. The MITRE ATT&CK framework groups all related techniques under tactic TA0011. C2 infrastructure can be a single VPS hosting an HTTP listener, or a long chain involving redirectors, fronting domains and CDN-hidden ingress to evade detection."
+    faq_q2:
+      q: "Which C2 frameworks generate the most IOCs on TweetFeed?"
+      a: "Cobalt Strike, Sliver, Mythic, Havoc and bespoke implants dominate the corpus. Each has its own dedicated tag on TweetFeed for finer filtering: see #cobaltstrike, #sliver, #mythic, #havoc. The #c2 umbrella tag is broader and includes everything researchers flag as C2 infrastructure regardless of framework."
+    related_tags:
+      - {display: "CobaltStrike", slug: "cobaltstrike"}
+      - {display: "Sliver", slug: "sliver"}
+      - {display: "Mythic", slug: "mythic"}
+      - {display: "Havoc", slug: "havoc"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: scam
+    display_tag: scam
+    license_subject: "Scam"
+    category: ttp
+    short_subtitle: "Fraud and scam infrastructure (fake stores, crypto scams, romance scams, fake giveaways) extracted from public researchers"
+    short_subtitle_mobile: "Fraud and scam infrastructure (fake stores, crypto, romance, giveaways)"
+    seo_title: "Scam IOC Feed - URLs, Domains, IPs - TweetFeed"
+    twitter_title: "Scam IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged scam (fake stores, crypto scams, romance scams, fake giveaways) from public Twitter/X researchers. CC0, no auth."
+    og_image_alt: "TweetFeed - scam IOC feed"
+    webpage_name: "Scam IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged scam - fraud and impersonation infrastructure observed by public security researchers."
+    meta_description: "IOCs tagged scam - fake stores, crypto scams, romance scams, fake giveaways and other fraud infrastructure observed by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "scam,fraud,fake store,crypto scam,romance scam,fake giveaway,impersonation,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Scam"
+      alternate_names: ["Fraud", "Impersonation scam"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1656/"
+        - "https://www.ftc.gov/business-guidance/privacy-security/scams"
+    bullets:
+      - label: "Definition"
+        html: "fraud infrastructure that does not necessarily steal credentials. Common types: fake e-commerce stores, fraudulent crypto-investment platforms, romance scams, fake giveaways, fake support hotlines, fake tech-support pop-ups."
+      - label: "Common variants"
+        html: "fake Trezor / Ledger reset pages, fake X/Twitter promotion bots, fake DEX phishing dApps, AI-generated celebrity-deepfake giveaways, fake government/tax-refund sites."
+      - label: "Detection"
+        html: "domain age + WHOIS lexical analysis, certificate transparency for impersonation, image-similarity matching against legitimate brand assets, and reverse-image search on profile pictures."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1656/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1656 (Impersonation)</a> &middot; <a href="https://www.ftc.gov/business-guidance/privacy-security/scams" target="_blank" rel="noopener noreferrer">FTC scam advisories</a>.'
+    faq_q1:
+      q: "What counts as a scam vs phishing?"
+      a: "Phishing typically aims to steal credentials or session tokens to take over an account. Scam covers a broader category of fraud where the attacker convinces the victim to part with money, crypto or sensitive data without necessarily compromising an account. The lines blur (many phishing kits are also scam infrastructure), so adjacent tags often co-occur on the same IOC."
+    faq_q2:
+      q: "What kinds of scams are most common in the feed?"
+      a: "Crypto-investment platforms, fake e-commerce stores, romance scams targeting Western dating-app users, fake X/Twitter giveaway bots, fake tax-refund sites, AI-generated deepfake celebrity-promo pages, and impersonation of legitimate exchanges (Binance, Coinbase) requesting wallet seeds."
+    related_tags:
+      - {display: "phishing", slug: "phishing"}
+      - {display: "opendir", slug: "opendir"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: malware
+    display_tag: malware
+    license_subject: "Malware"
+    category: ttp
+    short_subtitle: "Malware-hosting infrastructure (URLs, domains, IPs serving payloads) extracted from public security researchers"
+    short_subtitle_mobile: "Malware-hosting URLs, domains and IPs"
+    seo_title: "Malware IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Malware IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged malware (URLs, domains, IPs, hashes) from public Twitter/X security researchers. CC0, no auth."
+    og_image_alt: "TweetFeed - malware IOC feed"
+    webpage_name: "Malware IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged malware - infrastructure serving or distributing malware payloads observed by public researchers."
+    meta_description: "IOCs tagged malware - URLs, domains, IPs and hashes related to malware-hosting infrastructure observed by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "malware,malware ioc,malware hash,malware url,malware domain,malware ip,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Malware"
+      alternate_names: ["Malicious software"]
+      same_as:
+        - "https://attack.mitre.org/software/"
+    bullets:
+      - label: "Definition"
+        html: "umbrella tag for any IOC associated with a malware payload, regardless of family. URLs serving binaries, IPs hosting C2, hashes of binaries, and domains used for distribution all qualify. For family-specific filtering see the dedicated tags below."
+      - label: "Common families in the corpus"
+        html: "Cobalt Strike, Remcos, AsyncRAT, NetSupport RAT, Lumma stealer, NjRAT, Sliver, Mythic, Havoc, Deimos. Each has its own per-tag landing page."
+      - label: "Detection"
+        html: "YARA rules on hashes, sandboxing on samples, network-IDS rules for known C2 patterns, and feed-driven blocklists for URLs / domains / IPs. The TweetFeed CSV / JSON feeds are designed for this last use case."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Software</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/" target="_blank" rel="noopener noreferrer">Malpedia</a> &middot; <a href="../../malicious-urls.html" class="text-decoration-none">malicious-urls feed</a>.'
+    faq_q1:
+      q: "What is the difference between #malware and per-family tags like #CobaltStrike?"
+      a: "The #malware tag is broad and matches any IOC researchers flag as malware-related, regardless of family. Per-family tags like #CobaltStrike, #Remcos or #AsyncRAT are subsets that identify the specific malware. An IOC can carry both tags if researchers attribute it to a specific family, but many entries are tagged only with #malware when the family attribution is uncertain."
+    faq_q2:
+      q: "Which IOC types are most common in the malware feed?"
+      a: "URLs and IPs dominate (payload-hosting servers, C2 endpoints), with domains close behind. Hashes (MD5 and SHA-256) appear when researchers share specific binary samples. For pure-hash filtering, see the dedicated /malicious-hashes-md5.html and /malicious-hashes-sha256.html landing pages."
+    related_tags:
+      - {display: "CobaltStrike", slug: "cobaltstrike"}
+      - {display: "Remcos", slug: "remcos"}
+      - {display: "AsyncRAT", slug: "asyncrat"}
+      - {display: "Lumma", slug: "lumma"}
+      - {display: "C2", slug: "c2"}
+
+  - slug: apt
+    display_tag: apt
+    license_subject: "APT"
+    category: ttp
+    short_subtitle: "Advanced Persistent Threat infrastructure (URLs, domains, IPs, hashes) attributed to nation-state and criminal threat actors"
+    short_subtitle_mobile: "APT infrastructure (URLs, domains, IPs, hashes)"
+    seo_title: "APT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "APT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged APT (Advanced Persistent Threat) attributed to nation-state and criminal threat actors. CC0, no auth."
+    og_image_alt: "TweetFeed - APT IOC feed"
+    webpage_name: "APT (Advanced Persistent Threat) IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged APT - infrastructure attributed to advanced persistent threat actors by public researchers."
+    meta_description: "IOCs tagged APT (Advanced Persistent Threat) - infrastructure attributed to nation-state and criminal threat actors by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "apt,advanced persistent threat,nation state,threat actor,apt ioc,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Advanced Persistent Threat"
+      alternate_names: ["APT", "Nation-state actor"]
+      same_as:
+        - "https://attack.mitre.org/groups/"
+        - "https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors"
+    bullets:
+      - label: "Definition"
+        html: "umbrella tag for IOCs that researchers attribute to an Advanced Persistent Threat - typically a well-resourced, long-running adversary (nation-state-aligned or organised criminal) with mission-focused targeting and tradecraft."
+      - label: "Common attributed groups in corpus"
+        html: "Kimsuky, Lazarus, APT29, APT41, FIN7, MuddyWater, Konni, OilRig and similar. Each has its own per-tag page when volume justifies it; see #Kimsuky and #Lazarus."
+      - label: "Detection"
+        html: "behaviour-based detection (atypical lateral movement, persistence in unusual registry locations, custom protocols), threat-intel-fed blocklists, and YARA on signature-light variants. Entry-point indicators are usually phishing or supply-chain compromise."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Groups</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors" target="_blank" rel="noopener noreferrer">CISA APT advisories</a>.'
+    faq_q1:
+      q: "What is APT (Advanced Persistent Threat)?"
+      a: "An Advanced Persistent Threat is a sophisticated, long-running adversary - typically nation-state-aligned or a top-tier criminal organisation - that targets specific verticals or organisations with mission-focused tradecraft. The label originally distinguished targeted, persistent operations from opportunistic commodity malware. MITRE ATT&CK Groups page lists the most-tracked clusters."
+    faq_q2:
+      q: "Which APT groups produce the most IOCs in this feed?"
+      a: "DPRK-aligned activity (Kimsuky, Lazarus, plus generic DPRK-tagged operations) dominates volume due to active researcher coverage on Twitter/X. Russian-, Iranian- and Chinese-attributed activity also appears regularly. For per-group filtering see the dedicated pages: #Kimsuky, #Lazarus, #DPRK."
+    related_tags:
+      - {display: "Kimsuky", slug: "kimsuky"}
+      - {display: "Lazarus", slug: "lazarus"}
+      - {display: "DPRK", slug: "dprk"}
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: ransomware
+    display_tag: ransomware
+    license_subject: "Ransomware"
+    category: ttp
+    short_subtitle: "Ransomware infrastructure (URLs, domains, IPs, hashes) extracted from public security researchers"
+    short_subtitle_mobile: "Ransomware infrastructure (URLs, domains, IPs, hashes)"
+    seo_title: "Ransomware IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Ransomware IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged ransomware from public Twitter/X security researchers. CC0, no auth."
+    og_image_alt: "TweetFeed - ransomware IOC feed"
+    webpage_name: "Ransomware IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged ransomware - infrastructure linked to ransomware operators and affiliates."
+    meta_description: "IOCs tagged ransomware - URLs, domains, IPs and hashes linked to ransomware operators and affiliates observed by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "ransomware,ransomware ioc,ransomware feed,ransomware hash,ransomware c2,t1486,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Ransomware"
+      alternate_names: ["Crypto-locker", "Data-extortion malware"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1486/"
+        - "https://www.cisa.gov/stopransomware"
+    bullets:
+      - label: "Definition"
+        html: "malware that encrypts victim data and demands payment for decryption, typically combined with data-theft extortion (\"double extortion\"). Encryption itself maps to MITRE ATT&amp;CK T1486 (Data Encrypted for Impact)."
+      - label: "Common operators / families"
+        html: "LockBit, BlackCat (ALPHV), Akira, Play, Royal, Hive, Conti (legacy), Clop, BianLian. The #ransomware tag covers infrastructure linked to any of these (intrusion C2, data-leak sites, ESXi-targeting components)."
+      - label: "Detection"
+        html: "EDR rules on file-encryption velocity, OS-vendor anti-tamper protections, immutable backups + air-gapped restore, and infrastructure blocklists for the C2/staging URLs and IPs that precede the encryption phase."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1486/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1486</a> &middot; <a href="https://www.cisa.gov/stopransomware" target="_blank" rel="noopener noreferrer">CISA #StopRansomware</a> &middot; <a href="https://www.nomoreransom.org/" target="_blank" rel="noopener noreferrer">No More Ransom (decryptors)</a>.'
+    faq_q1:
+      q: "What is ransomware?"
+      a: "Ransomware is malware that encrypts a victim's data and demands payment - usually in cryptocurrency - for the decryption key. Modern operators add data-theft and public leaks (\"double extortion\") even if the victim restores from backups. Initial access is typically via phishing, exposed RDP, vulnerable VPN appliances or compromised credentials."
+    faq_q2:
+      q: "Which ransomware operators produce the most IOCs in this feed?"
+      a: "Volume tracks active researcher coverage rather than pure operator output, so high-profile crews (LockBit while active, BlackCat/ALPHV, Akira, Play) tend to dominate. Affiliate-driven RaaS programmes generate more diverse infrastructure than single-team operations, which produces more URLs/IPs to tag."
+    related_tags:
+      - {display: "CobaltStrike", slug: "cobaltstrike"}
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "stealer", slug: "stealer"}
+
+  - slug: stealer
+    display_tag: stealer
+    license_subject: "Stealer"
+    category: ttp
+    short_subtitle: "Infostealer infrastructure (URLs, domains, IPs, hashes) - panels, payloads and credential exfil endpoints"
+    short_subtitle_mobile: "Infostealer infrastructure (URLs, domains, IPs, hashes)"
+    seo_title: "Infostealer IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Infostealer (stealer) IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged stealer (infostealer panels, payloads and credential exfil endpoints). CC0, no auth."
+    og_image_alt: "TweetFeed - infostealer IOC feed"
+    webpage_name: "Infostealer IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged stealer - infostealer panels, payload-hosting and credential-exfil endpoints."
+    meta_description: "IOCs tagged stealer (infostealer) - panels, payloads and credential-exfil endpoints from public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "stealer,infostealer,credential theft,redline,lumma,vidar,raccoon,t1555,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Infostealer"
+      alternate_names: ["Stealer", "Credential stealer"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1555/"
+    bullets:
+      - label: "Definition"
+        html: "malware family class focused on harvesting credentials, browser cookies, crypto wallets, autofill data, FTP / SSH keys and other secrets, then exfiltrating to operator panels. MITRE ATT&amp;CK technique <code>T1555 (Credentials from Password Stores)</code> covers the credential-grab phase."
+      - label: "Common families"
+        html: "Lumma (LummaC2), RedLine, Vidar, Raccoon, MetaStealer, AgentTesla, FormBook (info-stealer mode), Stealc."
+      - label: "Detection"
+        html: "EDR rules on browser-DPAPI / SQLite reads, panel-URL blocklists, YARA on packed loaders, and credential-monitoring services that detect when stolen creds appear in marketplaces."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1555/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1555</a> &middot; per-family tags <a href="../lumma/" class="text-decoration-none">#Lumma</a>.'
+    faq_q1:
+      q: "What is an infostealer?"
+      a: "An infostealer is a class of malware focused on data theft rather than persistence or destruction. Once executed, it harvests credentials from browsers, cookies, crypto wallets, autofill data, FTP / SSH keys and similar secrets, then exfiltrates them to an operator-controlled panel. Stolen credentials are typically resold on criminal marketplaces."
+    faq_q2:
+      q: "How do credentials from stealers end up being used?"
+      a: "Operators bundle stolen credentials into \"logs\" sold on marketplaces. Buyers - often initial-access brokers or ransomware affiliates - replay the credentials against the victim's enterprise services (corporate email, VPNs, cloud consoles, single-sign-on). Successful re-use frequently leads to more serious downstream intrusions."
+    related_tags:
+      - {display: "Lumma", slug: "lumma"}
+      - {display: "malware", slug: "malware"}
+      - {display: "phishing", slug: "phishing"}
+      - {display: "C2", slug: "c2"}
+
+  - slug: opendir
+    display_tag: opendir
+    license_subject: "Opendir"
+    category: ttp
+    short_subtitle: "Open directories - publicly listable web roots hosting attacker payloads, kits and tools"
+    short_subtitle_mobile: "Open directories hosting attacker payloads"
+    seo_title: "Opendir IOC Feed - Public Attacker Directories - TweetFeed"
+    twitter_title: "Opendir IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged opendir - publicly listable directories hosting attacker payloads, phishing kits and tools. CC0, no auth."
+    og_image_alt: "TweetFeed - opendir IOC feed"
+    webpage_name: "Opendir IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains) tagged opendir - publicly listable directories hosting attacker payloads, kits and post-exploitation tools."
+    meta_description: "IOCs tagged opendir - publicly listable web directories hosting attacker payloads, phishing kits and post-exploitation tools, found by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "opendir,open directory,exposed directory,attacker infrastructure,phishing kit,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Open directory"
+      alternate_names: ["Opendir", "Exposed directory listing"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1190/"
+    bullets:
+      - label: "Definition"
+        html: "an HTTP server (often nginx / Apache / IIS) configured with directory autoindex enabled, exposing the contents of a folder. When the folder belongs to an attacker (staging server, kit drop, panel root) the listing reveals payloads, scripts and operator artefacts."
+      - label: "Why researchers track them"
+        html: "open directories are a high-yield source of fresh IOCs. A single opendir often hosts multiple loaders, second-stage payloads, exfiltrated-data archives and YARA-friendly scripts; researchers download, hash and tag each artefact in bulk."
+      - label: "Detection"
+        html: "for defenders, periodic scans of organisation egress for `Index of /` patterns; for hunters, services like ODIN by The DFIR Report, URLscan tag filters, and certificate-transparency-driven sweeps."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1190/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1190</a> &middot; <a href="https://thedfirreport.com/" target="_blank" rel="noopener noreferrer">The DFIR Report</a>.'
+    faq_q1:
+      q: "What is an opendir?"
+      a: "An opendir (open directory) is a web folder where directory autoindexing is enabled, exposing all files inside as a clickable listing. When attackers misconfigure their staging servers this way - which happens often - researchers can browse the listing, download every artefact and reverse-engineer the kit or payload set."
+    faq_q2:
+      q: "How do opendirs end up in this feed?"
+      a: "Public researchers post URLs to attacker opendirs they discover, tagged #opendir. The TweetFeed pipeline picks up these URLs (and the IPs/domains hosting them) and republishes them in CSV, JSON and RSS within 15 minutes. Many opendirs are short-lived: the operator notices the leak and locks down the directory or rotates infrastructure."
+    related_tags:
+      - {display: "phishing", slug: "phishing"}
+      - {display: "malware", slug: "malware"}
+      - {display: "scam", slug: "scam"}
+      - {display: "C2", slug: "c2"}
+
+  - slug: lazarus
+    display_tag: Lazarus
+    license_subject: "Lazarus"
+    category: apt-group
+    short_subtitle: "DPRK-aligned APT focused on financial gain (cryptocurrency exchanges, banks, defence contractors)"
+    short_subtitle_mobile: "DPRK-aligned APT focused on financial gain"
+    seo_title: "Lazarus DPRK APT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Lazarus (DPRK APT) IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs attributed to Lazarus, the DPRK-aligned APT focused on financial gain (G0032). CC0, no auth."
+    og_image_alt: "TweetFeed - Lazarus DPRK APT IOC feed"
+    webpage_name: "Lazarus (DPRK APT) IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) attributed to Lazarus (G0032), the DPRK-aligned APT focused on financial gain - cryptocurrency exchanges, banks and defence contractors."
+    meta_description: "IOCs attributed to Lazarus (G0032), the DPRK-aligned APT focused on financial gain - cryptocurrency exchanges, banks and defence contractors. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "lazarus,lazarus group,g0032,dprk apt,north korea apt,hidden cobra,zinc,diamond sleet,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "Lazarus Group"
+      alternate_names: ["Hidden Cobra", "ZINC", "Diamond Sleet", "TraderTraitor"]
+      same_as:
+        - "https://attack.mitre.org/groups/G0032/"
+        - "https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-239a"
+    bullets:
+      - label: "Threat actor"
+        html: "DPRK-aligned APT active since at least 2007, also tracked as <em>Hidden Cobra</em>, <em>ZINC</em>, <em>Diamond Sleet</em> (Microsoft) and <em>TraderTraitor</em>. MITRE ATT&amp;CK G0032."
+      - label: "Targets"
+        html: "cryptocurrency exchanges, decentralised-finance protocols, banks (SWIFT-targeted operations), defence contractors and aerospace. Notable operations: 2014 Sony Pictures, 2016 Bangladesh Bank SWIFT, 2017 WannaCry, 2022 Ronin / Harmony bridge thefts."
+      - label: "Tactics"
+        html: "spearphishing with weaponised LinkedIn lures, supply-chain compromise via npm and PyPI packages, custom backdoors (LightlessCan, MagicLine, Manuscrypt), DPRK-aligned RAT families (AppleJeus for macOS targets)."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/groups/G0032/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK G0032</a> &middot; <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-239a" target="_blank" rel="noopener noreferrer">CISA AA20-239A</a>.'
+    faq_q1:
+      q: "What is Lazarus?"
+      a: "Lazarus (also tracked as Hidden Cobra, ZINC, Diamond Sleet and TraderTraitor) is a DPRK-aligned advanced persistent threat group active since at least 2007. Lazarus is best known for financially motivated operations - cryptocurrency exchange thefts, SWIFT-targeted bank intrusions, the 2017 WannaCry outbreak - and for sophisticated long-running supply-chain attacks against defence contractors and aerospace targets. MITRE ATT&CK tracks the cluster as G0032."
+    faq_q2:
+      q: "Is Lazarus the same as Kimsuky?"
+      a: "No. Both are DPRK-aligned but they are distinct clusters with different objectives and tradecraft. Lazarus focuses on financial gain (cryptocurrency, banking, defence). Kimsuky focuses on intelligence collection (foreign policy, defence research, academia). Researchers track them as separate entities; the #Kimsuky tag on TweetFeed groups its own IOCs."
+    related_tags:
+      - {display: "DPRK", slug: "dprk"}
+      - {display: "APT", slug: "apt"}
+      - {display: "Kimsuky", slug: "kimsuky"}
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: dprk
+    display_tag: DPRK
+    license_subject: "DPRK"
+    category: apt-group
+    short_subtitle: "DPRK-aligned threat activity (Lazarus, Kimsuky and adjacent clusters) attributed to North Korean state operations"
+    short_subtitle_mobile: "DPRK-aligned threat activity (Lazarus, Kimsuky, adjacent)"
+    seo_title: "DPRK (North Korea) APT IOC Feed - TweetFeed"
+    twitter_title: "DPRK APT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs attributed to DPRK-aligned threat activity (Lazarus, Kimsuky, related clusters). CC0, no auth."
+    og_image_alt: "TweetFeed - DPRK APT IOC feed"
+    webpage_name: "DPRK (North Korea) APT IOC feed"
+    webpage_description: "Real-time IOCs attributed to DPRK-aligned threat activity - the umbrella tag covering Lazarus, Kimsuky, Andariel, BlueNoroff and adjacent North Korean state-aligned clusters."
+    meta_description: "IOCs attributed to DPRK-aligned threat activity - umbrella tag covering Lazarus, Kimsuky, Andariel, BlueNoroff and adjacent North Korean state-aligned clusters. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "dprk,north korea,north korea apt,lazarus,kimsuky,andariel,bluenoroff,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: Thing
+      name: "DPRK threat activity"
+      alternate_names: ["North Korea state-aligned activity"]
+      same_as:
+        - "https://attack.mitre.org/groups/G0032/"
+        - "https://attack.mitre.org/groups/G0094/"
+        - "https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors/north-korea"
+    bullets:
+      - label: "Scope"
+        html: "umbrella tag for DPRK-aligned threat clusters: <em>Lazarus</em> (financial), <em>Kimsuky</em> (intelligence), <em>Andariel</em> (financial + cyber espionage), <em>BlueNoroff</em> (Lazarus subcluster, crypto-focused), and emerging operators (Konni, ScarCruft / APT37 in some attribution schemes)."
+      - label: "Common objectives"
+        html: "cryptocurrency theft for sanctions evasion, intelligence collection on South Korea + adjacent geopolitical adversaries, supply-chain compromise of npm / PyPI / browser-extension ecosystems, defence-contractor reconnaissance."
+      - label: "Tactics"
+        html: "spearphishing with LinkedIn / Instagram lures, weaponised HWP / PDF documents, custom backdoors, DPRK-specific implants like AppleJeus (macOS), LightlessCan, Manuscrypt, BabyShark, GoldDragon."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/groups/G0032/" target="_blank" rel="noopener noreferrer">G0032 Lazarus</a> &middot; <a href="https://attack.mitre.org/groups/G0094/" target="_blank" rel="noopener noreferrer">G0094 Kimsuky</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors/north-korea" target="_blank" rel="noopener noreferrer">CISA North Korea</a>.'
+    faq_q1:
+      q: "What does the #DPRK tag cover?"
+      a: "The #DPRK tag is an umbrella for any IOC researchers attribute to North Korean state-aligned activity, regardless of specific cluster. Sub-tags exist for the most active clusters - #Kimsuky and #Lazarus - so a researcher can either filter broadly with #DPRK or narrow to one cluster. An IOC frequently carries both #DPRK and a cluster-specific tag."
+    faq_q2:
+      q: "Which DPRK clusters are most active in this feed?"
+      a: "Kimsuky dominates volume (intelligence-collection campaigns generate large numbers of phishing domains and credential-harvesting URLs). Lazarus contributes fewer IOCs but with higher per-IOC operational impact (cryptocurrency theft infrastructure, custom backdoors). BlueNoroff and Andariel appear more sporadically, often piggybacking on Lazarus operations."
+    related_tags:
+      - {display: "Kimsuky", slug: "kimsuky"}
+      - {display: "Lazarus", slug: "lazarus"}
+      - {display: "APT", slug: "apt"}
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+
+  # ============================================================
+  # MALWARE FAMILIES (continued)
+  # ============================================================
+
+  - slug: interactsh
+    display_tag: interactsh
+    license_subject: "Interactsh"
+    category: malware-family
+    short_subtitle: "ProjectDiscovery's OAST canary (out-of-band application security testing) - flagged when attackers use it for blind XSS, SSRF or RCE confirmation"
+    short_subtitle_mobile: "OAST canary used by attackers for blind XSS / SSRF / RCE detection"
+    seo_title: "Interactsh IOC Feed - OAST Callbacks - TweetFeed"
+    twitter_title: "Interactsh IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged interactsh - OAST canary callbacks observed by public researchers when attackers use the tool. CC0, no auth."
+    og_image_alt: "TweetFeed - Interactsh IOC feed"
+    webpage_name: "Interactsh IOC feed"
+    webpage_description: "Real-time IOCs tagged interactsh - ProjectDiscovery's OAST canary endpoints observed when attackers use the tool for blind XSS, SSRF or RCE confirmation."
+    meta_description: "IOCs tagged interactsh - ProjectDiscovery's OAST (out-of-band application security testing) canary endpoints flagged by researchers when attackers use the tool for blind XSS, SSRF or RCE confirmation. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "interactsh,oast,out of band,blind xss,ssrf,rce,projectdiscovery,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Interactsh"
+      alternate_names: ["ProjectDiscovery Interactsh"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://github.com/projectdiscovery/interactsh"
+    bullets:
+      - label: "Type"
+        html: "OAST (Out-of-band Application Security Testing) canary tool maintained by ProjectDiscovery. Issues unique callback URLs that record DNS / HTTP / SMTP requests, used for confirming blind vulnerabilities (blind XSS, SSRF, OOB RCE)."
+      - label: "Why IOCs appear"
+        html: "researchers tag URLs and IPs that hit interactsh as #interactsh when they observe attackers using the canary in real-world exploitation - typically as confirmation infrastructure paired with payloads against vulnerable web apps."
+      - label: "Detection signals"
+        html: "callback domains under <code>oast.live</code>, <code>oast.fun</code>, <code>oast.me</code>, <code>oast.online</code>, <code>oast.pro</code>, <code>oast.site</code>. Self-hosted instances may use custom domains; defenders can block the canonical ProjectDiscovery zones in egress filters when not legitimately used."
+      - label: "References"
+        html: '<a href="https://github.com/projectdiscovery/interactsh" target="_blank" rel="noopener noreferrer">projectdiscovery/interactsh on GitHub</a>.'
+    faq_q1:
+      q: "What is Interactsh?"
+      a: "Interactsh is an OAST (out-of-band application security testing) canary tool maintained by ProjectDiscovery. It issues unique callback URLs that record DNS, HTTP and SMTP requests directed at them, letting offensive security testers confirm blind vulnerabilities like blind XSS, SSRF and out-of-band RCE. The tool is open-source and free to self-host."
+    faq_q2:
+      q: "Why are interactsh URLs in a malicious-IOC feed?"
+      a: "Interactsh is dual-use. Researchers tag a URL as #interactsh when they observe an attacker - or commodity exploit tooling - using interactsh callbacks against a real production target. The URL is not malicious in itself, but its presence in a request log indicates active exploitation attempts and is useful as a detection signal."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+
+  - slug: remcos
+    display_tag: remcos
+    license_subject: "Remcos"
+    category: malware-family
+    short_subtitle: "Commercial Remote Access Tool widely abused in mass phishing campaigns"
+    short_subtitle_mobile: "Commercial RAT widely abused in mass phishing"
+    seo_title: "Remcos RAT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Remcos RAT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Remcos RAT (S0332) - commercial RAT abused in mass phishing campaigns. CC0, no auth."
+    og_image_alt: "TweetFeed - Remcos RAT IOC feed"
+    webpage_name: "Remcos RAT IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Remcos (S0332), the commercial Remote Access Tool widely abused in mass phishing campaigns."
+    meta_description: "IOCs tagged Remcos (S0332), the commercial Remote Access Tool by Breaking Security widely abused in mass phishing campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "remcos,remcos rat,breaking security,s0332,rat,remote access tool,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Remcos"
+      alternate_names: ["Remcos RAT", "Remote Control and Surveillance"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S0332/"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.remcos"
+    bullets:
+      - label: "Type"
+        html: "commercial Remote Access Tool (Remote Control and Surveillance) sold by Breaking Security. Marketed for legitimate remote administration, but pirated and cracked builds dominate the wild and feature heavily in financially-motivated phishing campaigns."
+      - label: "Abuse pattern"
+        html: "delivered as a second stage from invoice / shipping / DHL phishing emails. Common loaders are Office macro documents, ISO / IMG attachments and AutoIt-compiled droppers. Lat-am, EU and English-speaking SMB targets predominate."
+      - label: "Detection signals"
+        html: "default config strings (<code>RemcosClient</code>, <code>watchdog</code>), TCP C2 on non-standard ports (typically 2404 / 2700 / 8080), AutoIt loader signatures, registry persistence under <code>SOFTWARE\\Remcos</code>."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S0332/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0332</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.remcos" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is Remcos?"
+      a: "Remcos (Remote Control and Surveillance) is a commercial Remote Access Tool sold by Breaking Security. It is marketed for legitimate remote-administration use but pirated and cracked builds are widely abused in financially-motivated phishing campaigns. MITRE ATT&CK tracks it as S0332. Capabilities include keylogging, screen capture, file management, microphone and webcam access."
+    faq_q2:
+      q: "How is Remcos delivered in real campaigns?"
+      a: "Most commonly as a second stage from phishing emails - invoice, shipping, DHL or banking lures. The first-stage loader is typically a malicious Office macro, an ISO / IMG container or an AutoIt-compiled dropper. Latin American, European and English-speaking SMB users are the most frequently targeted demographics in current campaigns."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}
+
+  - slug: sliver
+    display_tag: Sliver
+    license_subject: "Sliver"
+    category: malware-family
+    short_subtitle: "Open-source C2 framework by BishopFox, increasingly abused as a Cobalt Strike alternative"
+    short_subtitle_mobile: "Open-source C2 framework abused as Cobalt Strike alternative"
+    seo_title: "Sliver C2 IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Sliver C2 IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Sliver (S1056), the open-source BishopFox C2 framework increasingly abused as a Cobalt Strike alternative. CC0, no auth."
+    og_image_alt: "TweetFeed - Sliver C2 IOC feed"
+    webpage_name: "Sliver C2 IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Sliver (S1056), the open-source C2 framework maintained by BishopFox."
+    meta_description: "IOCs tagged Sliver (S1056), the open-source BishopFox C2 framework increasingly abused as a Cobalt Strike alternative by APTs and ransomware affiliates. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "sliver,sliver c2,bishopfox,s1056,c2 framework,cobalt strike alternative,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Sliver"
+      alternate_names: ["Sliver C2"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S1056/"
+        - "https://github.com/BishopFox/sliver"
+    bullets:
+      - label: "Type"
+        html: "open-source cross-platform C2 framework written in Go, maintained by BishopFox. Supports HTTP(S), DNS, mTLS and WireGuard transports, multi-operator collaboration, dynamic shellcode generation and stagers comparable to Cobalt Strike."
+      - label: "Abuse pattern"
+        html: "increasingly used in real-world intrusions as a Cobalt Strike alternative, both by APTs (e.g., APT29-aligned tooling) and ransomware affiliates. Free + open-source nature lowers the barrier to entry."
+      - label: "Detection signals"
+        html: "default mTLS certificates, distinctive Go-compiled implant artefacts, JA3 / JA4 fingerprints for HTTPS listeners, DNS C2 patterns when DNS transport is used, and YARA on Go runtime + symbol patterns."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S1056/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S1056</a> &middot; <a href="https://github.com/BishopFox/sliver" target="_blank" rel="noopener noreferrer">BishopFox/sliver on GitHub</a>.'
+    faq_q1:
+      q: "What is Sliver?"
+      a: "Sliver is an open-source cross-platform C2 framework written in Go and maintained by BishopFox. It supports HTTP(S), DNS, mTLS and WireGuard transports, multi-operator collaboration, dynamic shellcode generation and stagers - capabilities comparable to commercial frameworks like Cobalt Strike. MITRE ATT&CK tracks it as S1056."
+    faq_q2:
+      q: "Is Sliver legitimate or malicious?"
+      a: "Sliver is a legitimate red-team tool and open-source security research framework. The IOCs on this page reflect real-world intrusions where researchers observed Sliver implants or listeners being used against production targets - often by APT-aligned actors or ransomware affiliates - not the upstream tool itself. Vendor licensing is not asserted; the IOCs are observed-in-the-wild, not pre-emptive blocklists."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "CobaltStrike", slug: "cobaltstrike"}
+      - {display: "APT", slug: "apt"}
+
+  - slug: netsupportrat
+    display_tag: NetSupportRAT
+    license_subject: "NetSupport RAT"
+    category: malware-family
+    short_subtitle: "Legitimate NetSupport Manager remote-administration tool abused as a Remote Access Trojan"
+    short_subtitle_mobile: "NetSupport Manager abused as RAT"
+    seo_title: "NetSupport RAT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "NetSupport RAT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged NetSupport RAT (S0480) - legitimate NetSupport Manager abused for unauthorised remote access. CC0, no auth."
+    og_image_alt: "TweetFeed - NetSupport RAT IOC feed"
+    webpage_name: "NetSupport RAT IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged NetSupport RAT (S0480) - the legitimate NetSupport Manager remote-administration tool abused for unauthorised access."
+    meta_description: "IOCs tagged NetSupport RAT (S0480) - legitimate NetSupport Manager remote-administration tool abused as a Remote Access Trojan in real-world intrusions. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "netsupport rat,netsupport manager,s0480,rat,remote admin tool,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "NetSupport RAT"
+      alternate_names: ["NetSupport Manager (abused)"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S0480/"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupport_manager"
+    bullets:
+      - label: "Type"
+        html: "legitimate commercial remote-administration tool (NetSupport Manager) by NetSupport Ltd, repurposed by attackers for unauthorised remote access. The original tool is widely deployed in education and IT-support contexts, which helps it blend in to defender telemetry."
+      - label: "Abuse pattern"
+        html: "delivered via SocGholish-style fake-browser-update lures, malvertising, and trojanised installers. Provides full RDP-like capabilities (screen, file, process, registry control) without the binary being immediately classified as malicious by default AV."
+      - label: "Detection signals"
+        html: "<code>client32.exe</code>, <code>presentationsettings.exe</code> and <code>nsm.lic</code> license file in unusual user-profile paths; gateway connections to <code>geo.netsupportsoftware.com</code> from non-IT user accounts; HTTP POSTs to <code>fastpath/Gateway32.aspx</code>."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S0480/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0480</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupport_manager" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is NetSupport RAT?"
+      a: "NetSupport RAT is the security-research label for unauthorised use of the legitimate NetSupport Manager remote-administration product. NetSupport Manager itself is sold by NetSupport Ltd for IT-support and education-sector use; attackers ship the same binary stack (client32.exe, gateway components, license files) as a Remote Access Trojan via fake browser updates, malvertising and trojanised installers. MITRE ATT&CK tracks it as S0480."
+    faq_q2:
+      q: "How does NetSupport RAT typically arrive on a victim system?"
+      a: "Most commonly via SocGholish-style fake-browser-update lures (a compromised site renders a Chrome / Firefox update prompt that drops the installer), malvertising on lookalike software-download sites, and trojanised installers for popular utilities. Once installed, the operator gets full screen / file / process / registry control."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}
+
+  - slug: asyncrat
+    display_tag: AsyncRAT
+    license_subject: "AsyncRAT"
+    category: malware-family
+    short_subtitle: "Open-source .NET Remote Access Trojan, common in Latin American and European mass-phishing campaigns"
+    short_subtitle_mobile: "Open-source .NET RAT, common in Latam + EU mass phishing"
+    seo_title: "AsyncRAT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "AsyncRAT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged AsyncRAT - open-source .NET RAT widely used in commodity phishing campaigns. CC0, no auth."
+    og_image_alt: "TweetFeed - AsyncRAT IOC feed"
+    webpage_name: "AsyncRAT IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged AsyncRAT - the open-source .NET Remote Access Trojan widely used in commodity phishing campaigns."
+    meta_description: "IOCs tagged AsyncRAT - open-source .NET Remote Access Trojan widely used in Latin American and European commodity phishing campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "asyncrat,async rat,dotnet rat,nyan,latam phishing,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "AsyncRAT"
+      alternate_names: ["Async RAT"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.asyncrat"
+        - "https://github.com/NYAN-x-CAT/AsyncRAT-C-Sharp"
+    bullets:
+      - label: "Type"
+        html: "open-source .NET Remote Access Trojan with a public GitHub source tree. Supports keylogging, screen capture, file management, password recovery, audio / video capture and remote shell."
+      - label: "Abuse pattern"
+        html: "extremely common in commodity Latin American and European mass-phishing campaigns. Forks (DcRat, VenomRAT) share core code and are often co-tagged. Delivery is typically via PDF / DOC / ISO email attachments and AutoIt or PowerShell loaders."
+      - label: "Detection signals"
+        html: "default certificate <code>AsyncRAT Server</code>, TCP C2 on ports 6606 / 7707 / 8808, .NET assembly metadata strings, Confuser / Confuser2 obfuscation patterns, registry persistence."
+      - label: "References"
+        html: '<a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.asyncrat" target="_blank" rel="noopener noreferrer">Malpedia</a> &middot; <a href="https://github.com/NYAN-x-CAT/AsyncRAT-C-Sharp" target="_blank" rel="noopener noreferrer">NYAN-x-CAT/AsyncRAT-C-Sharp</a>.'
+    faq_q1:
+      q: "What is AsyncRAT?"
+      a: "AsyncRAT is an open-source .NET Remote Access Trojan with a publicly available GitHub source tree. It supports keylogging, screen capture, file management, browser-password recovery, audio / video capture and remote shell. Its open nature makes it an extremely common base for commodity malware operators in Latin America and Europe; popular forks like DcRat and VenomRAT share most of the codebase."
+    faq_q2:
+      q: "How is AsyncRAT distinguished from its forks (DcRat, VenomRAT)?"
+      a: "All three share the same .NET core code base. Differentiation typically comes from network indicators (default ports, certificate strings) and added features in the forks - DcRat and VenomRAT include capabilities AsyncRAT does not. Researchers often co-tag IOCs when the family attribution is uncertain."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}
+
+  - slug: deimos
+    display_tag: deimos
+    license_subject: "Deimos"
+    category: malware-family
+    short_subtitle: "Open-source Go-based C2 framework with cross-platform implants (Windows, Linux, macOS)"
+    short_subtitle_mobile: "Open-source Go C2 framework, cross-platform implants"
+    seo_title: "Deimos C2 IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Deimos C2 IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Deimos C2 - open-source Go-based cross-platform C2 framework. CC0, no auth."
+    og_image_alt: "TweetFeed - Deimos C2 IOC feed"
+    webpage_name: "Deimos C2 IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Deimos - the open-source Go-based C2 framework with cross-platform implants."
+    meta_description: "IOCs tagged Deimos C2 - open-source Go-based C2 framework supporting Windows, Linux and macOS implants. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "deimos,deimos c2,deimosc2,go c2,golang c2,cross platform c2,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Deimos C2"
+      alternate_names: ["DeimosC2", "Deimos"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://github.com/DeimosC2/DeimosC2"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.deimosc2"
+    bullets:
+      - label: "Type"
+        html: "open-source Go-based C2 framework with a web UI, multi-operator support, and cross-platform implants (Windows, Linux, macOS). Designed for collaborative red-team engagements; lower profile than Cobalt Strike, Sliver or Mythic."
+      - label: "Abuse pattern"
+        html: "less common in mass campaigns than CobaltStrike or AsyncRAT. Appears in targeted intrusions where the operator wants a flexible, undocumented-by-default agent that blends in with legitimate Go binaries."
+      - label: "Detection signals"
+        html: "Go-compiled implant binaries with embedded HTTPS C2 strings, distinctive default certificate fingerprints, web-UI default ports on the listener side."
+      - label: "References"
+        html: '<a href="https://github.com/DeimosC2/DeimosC2" target="_blank" rel="noopener noreferrer">DeimosC2/DeimosC2 on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.deimosc2" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is Deimos C2?"
+      a: "Deimos C2 (also written DeimosC2) is an open-source Go-based command-and-control framework with a web UI, multi-operator support and cross-platform implants for Windows, Linux and macOS. It is designed for collaborative red-team engagements and has a lower public profile than its peers (Cobalt Strike, Sliver, Mythic), which makes it attractive to operators looking to avoid signatured tooling."
+    faq_q2:
+      q: "How does Deimos C2 compare to Sliver or Mythic?"
+      a: "All three are open-source post-CobaltStrike alternatives with cross-platform implants. Sliver has the largest user base and the most defender coverage. Mythic emphasises modularity (operators can plug in different agent and C2 profiles). Deimos is the smallest of the three but offers similar core capabilities and tends to slip past signatures that target the more popular frameworks."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "Sliver", slug: "sliver"}
+      - {display: "Mythic", slug: "mythic"}
+
+  - slug: lumma
+    display_tag: Lumma
+    license_subject: "Lumma"
+    category: malware-family
+    short_subtitle: "LummaC2 infostealer-as-a-service - browser credentials, crypto wallets, autofill data, MFA seeds"
+    short_subtitle_mobile: "LummaC2 infostealer (browser, crypto, autofill, MFA)"
+    seo_title: "Lumma Stealer IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Lumma stealer IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Lumma (S1138) - infostealer-as-a-service targeting browser credentials, crypto wallets and MFA seeds. CC0, no auth."
+    og_image_alt: "TweetFeed - Lumma stealer IOC feed"
+    webpage_name: "Lumma stealer IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Lumma (S1138) - the infostealer-as-a-service targeting browser credentials, crypto wallets and MFA seeds."
+    meta_description: "IOCs tagged Lumma (S1138), the infostealer-as-a-service targeting browser credentials, crypto wallets, autofill data and MFA seeds. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "lumma,lumma stealer,lummac2,infostealer,credential theft,crypto wallet stealer,s1138,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Lumma Stealer"
+      alternate_names: ["LummaC2", "Lumma"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S1138/"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.lumma"
+    bullets:
+      - label: "Type"
+        html: "infostealer-as-a-service marketed since 2022 on Russian-language criminal forums. Targets browser-stored credentials, cookies, crypto-wallet files (Metamask, Trust Wallet, Ledger Live), browser extensions, autofill data, FTP / SSH keys, and MFA-seed extensions."
+      - label: "Abuse pattern"
+        html: "monthly subscription pricing has made Lumma one of the highest-volume stealer families since 2024. Distributed via SEO-poisoned cracked software downloads, ClickFix-style fake-CAPTCHA loaders, and YouTube-comment-driven loaders."
+      - label: "Detection signals"
+        html: "browser-DPAPI and SQLite read patterns from non-browser processes, panel URLs on rotating short-lived domains, AES-encrypted exfil over HTTPS POST. Microsoft / EU + US LE coordinated takedowns repeatedly disrupt the panel infrastructure."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S1138/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S1138</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.lumma" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is Lumma stealer?"
+      a: "Lumma (LummaC2) is an infostealer-as-a-service marketed since 2022 on Russian-language criminal forums. It targets browser credentials, cookies, crypto-wallet files, browser extensions, autofill data, FTP / SSH keys and MFA-seed extensions, and exfiltrates them to operator panels. Monthly subscription pricing made it one of the highest-volume stealer families from 2024 onward. MITRE ATT&CK tracks it as S1138."
+    faq_q2:
+      q: "How is Lumma typically delivered?"
+      a: "SEO-poisoned cracked-software downloads and ClickFix-style fake-CAPTCHA pages are the most common delivery vectors. Operators buy ad placements that rank for popular pirated-software queries, then serve a loader that drops Lumma. YouTube-comment-driven loaders pointing at PasteBin scripts are also frequent."
+    related_tags:
+      - {display: "stealer", slug: "stealer"}
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}
+
+  - slug: mythic
+    display_tag: Mythic
+    license_subject: "Mythic"
+    category: malware-family
+    short_subtitle: "Open-source modular C2 framework by SpecterOps - pluggable agents and C2 profiles"
+    short_subtitle_mobile: "Open-source modular C2 by SpecterOps"
+    seo_title: "Mythic C2 IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Mythic C2 IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Mythic - SpecterOps's open-source modular C2 framework. CC0, no auth."
+    og_image_alt: "TweetFeed - Mythic C2 IOC feed"
+    webpage_name: "Mythic C2 IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Mythic - the open-source modular C2 framework maintained by SpecterOps."
+    meta_description: "IOCs tagged Mythic - the open-source modular C2 framework maintained by SpecterOps, with pluggable agents (Apollo, Athena, Poseidon, Apfell) and pluggable C2 profiles. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "mythic,mythic c2,specterops,apollo,athena,poseidon,c2 framework,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Mythic"
+      alternate_names: ["Mythic C2"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://github.com/its-a-feature/Mythic"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.mythic"
+    bullets:
+      - label: "Type"
+        html: "open-source modular C2 framework maintained by SpecterOps. Designed around pluggable agents (<em>Apollo</em>, <em>Athena</em>, <em>Poseidon</em>, <em>Apfell</em>, <em>Medusa</em>) and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS) so operators can mix and match for the engagement."
+      - label: "Abuse pattern"
+        html: "primarily a red-team / authorised-engagement tool, but the open-source nature means real-world intrusions occasionally surface (especially Apollo and Athena agents). Lower mass-volume than Sliver or Cobalt Strike but appears in higher-effort intrusions."
+      - label: "Detection signals"
+        html: "agent-specific YARA (Apollo .NET, Athena .NET, Poseidon Go, Apfell macOS), default mTLS certificates, distinctive web-UI ports on listeners. JA3 / JA4 fingerprints depend on the chosen C2 profile."
+      - label: "References"
+        html: '<a href="https://github.com/its-a-feature/Mythic" target="_blank" rel="noopener noreferrer">Mythic on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.mythic" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is Mythic?"
+      a: "Mythic is an open-source modular C2 framework maintained by SpecterOps. Unlike monolithic frameworks, Mythic is built around pluggable agents - Apollo (.NET, Windows), Athena (.NET, multi-platform), Poseidon (Go, multi-platform), Apfell (macOS), Medusa (Python) - and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS). Operators mix and match for each engagement."
+    faq_q2:
+      q: "Is Mythic primarily used legitimately or maliciously?"
+      a: "Primarily a red-team and authorised-engagement tool. The open-source nature means real-world intrusions occasionally surface - most often using the Apollo or Athena agents - but mass-volume in commodity malware is low. The IOCs on this page reflect Mythic infrastructure researchers have observed in real intrusions, not the upstream tool itself."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "Sliver", slug: "sliver"}
+      - {display: "Havoc", slug: "havoc"}
+
+  - slug: havoc
+    display_tag: Havoc
+    license_subject: "Havoc"
+    category: malware-family
+    short_subtitle: "Modern open-source C2 framework with strong tradecraft, increasingly observed in real-world intrusions"
+    short_subtitle_mobile: "Modern open-source C2, increasingly real-world abused"
+    seo_title: "Havoc C2 IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "Havoc C2 IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged Havoc - modern open-source C2 framework increasingly abused in real-world intrusions. CC0, no auth."
+    og_image_alt: "TweetFeed - Havoc C2 IOC feed"
+    webpage_name: "Havoc C2 IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Havoc - the modern open-source C2 framework by C5pider with strong evasion tradecraft."
+    meta_description: "IOCs tagged Havoc - the modern open-source C2 framework by C5pider with strong evasion tradecraft, increasingly observed in real-world intrusions as a Cobalt Strike alternative. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "havoc,havoc c2,c5pider,c2 framework,demon,cobalt strike alternative,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "Havoc"
+      alternate_names: ["Havoc C2", "Havoc Framework"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://github.com/HavocFramework/Havoc"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.havoc"
+    bullets:
+      - label: "Type"
+        html: "modern open-source C2 framework written in Go (server) + C++ (Demon agent), maintained by <em>C5pider</em>. Released in 2022 with a focus on tradecraft - sleep obfuscation, indirect syscalls, return-address spoofing, AMSI bypass and ETW patching out of the box."
+      - label: "Abuse pattern"
+        html: "increasingly observed in real-world intrusions through 2023-2026 as a Cobalt Strike alternative. Appears in both APT and ransomware-affiliate operations where the operator wants out-of-the-box evasion without writing it themselves."
+      - label: "Detection signals"
+        html: "Demon agent strings, distinctive HTTP listener defaults, JA3 / JA4 fingerprints, sleep-obfuscation memory patterns, in-memory PE loading via Go runtime."
+      - label: "References"
+        html: '<a href="https://github.com/HavocFramework/Havoc" target="_blank" rel="noopener noreferrer">HavocFramework/Havoc on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.havoc" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is Havoc?"
+      a: "Havoc is a modern open-source C2 framework written in Go (server side) and C++ (the Demon agent), maintained by C5pider since 2022. It targets the same niche as Cobalt Strike and Sliver but ships strong evasion tradecraft out of the box - sleep obfuscation, indirect syscalls, return-address spoofing, AMSI bypass and ETW patching - without operators having to add it themselves."
+    faq_q2:
+      q: "Why is Havoc popular among operators?"
+      a: "Three reasons: it is free and open-source (lowering the barrier compared to Cobalt Strike's licensing); it is modern and actively maintained (in contrast to abandoned alternatives); and it ships with strong evasion features by default. Together these make Havoc attractive to both APT-aligned operators and ransomware affiliates."
+    related_tags:
+      - {display: "C2", slug: "c2"}
+      - {display: "malware", slug: "malware"}
+      - {display: "CobaltStrike", slug: "cobaltstrike"}
+      - {display: "Sliver", slug: "sliver"}
+
+  - slug: njrat
+    display_tag: njRAT
+    license_subject: "njRAT"
+    category: malware-family
+    short_subtitle: "Long-running .NET commodity Remote Access Trojan, especially active in MENA-region campaigns"
+    short_subtitle_mobile: "Long-running .NET commodity RAT (especially MENA)"
+    seo_title: "njRAT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "njRAT IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged njRAT (S0385) - long-running .NET commodity RAT, especially active in MENA-region campaigns. CC0, no auth."
+    og_image_alt: "TweetFeed - njRAT IOC feed"
+    webpage_name: "njRAT IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged njRAT (S0385) - the long-running .NET commodity Remote Access Trojan also tracked as Bladabindi."
+    meta_description: "IOCs tagged njRAT (S0385) - the long-running .NET commodity Remote Access Trojan also tracked as Bladabindi, especially active in MENA-region campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_keywords: "njrat,bladabindi,s0385,dotnet rat,mena phishing,commodity rat,ioc feed,osint,threat intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "njRAT"
+      alternate_names: ["Bladabindi", "njrat"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://attack.mitre.org/software/S0385/"
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.njrat"
+    bullets:
+      - label: "Type"
+        html: "long-running .NET commodity Remote Access Trojan, also tracked as <em>Bladabindi</em>. Original builder leaked publicly years ago, which spawned dozens of forks and operator-tweaked variants. MITRE ATT&amp;CK S0385."
+      - label: "Abuse pattern"
+        html: "especially active in MENA-region campaigns (Arabic-language phishing, fake game-cheat lures, Discord-distributed loaders). Capabilities include keylogging, screen capture, file management, USB-spread persistence and remote shell."
+      - label: "Detection signals"
+        html: ".NET assembly with distinctive <code>Stub</code> + <code>OK</code> packets, TCP C2 on port 5552 (default) or operator-customised, registry persistence under <code>HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</code>, mutex strings starting with <code>Stub</code>."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/software/S0385/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0385</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.njrat" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is njRAT?"
+      a: "njRAT (also tracked as Bladabindi) is a long-running .NET commodity Remote Access Trojan. The original builder leaked publicly years ago, which spawned dozens of forks and operator-tweaked variants in the wild. It supports keylogging, screen capture, file management, USB-spread persistence and remote shell. MITRE ATT&CK tracks it as S0385."
+    faq_q2:
+      q: "Where does njRAT activity concentrate?"
+      a: "njRAT is especially active in MENA-region campaigns - Arabic-language phishing emails, fake game-cheat lures targeting young users, and Discord-distributed loaders are the most common vectors. The malware is also seen in opportunistic global campaigns where the operator wants a low-effort RAT with a wide feature set, but per-region telemetry usually weights heavily toward Middle East and North Africa."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}

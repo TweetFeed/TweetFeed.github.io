@@ -70,7 +70,11 @@ Full list rendered in `/dashboard.html` filter dropdown.
 - [/malicious-hashes-md5.html](https://tweetfeed.live/malicious-hashes-md5.html): MD5 hashes of malware samples; cross-reference VirusTotal before action.
 - [/malicious-hashes-sha256.html](https://tweetfeed.live/malicious-hashes-sha256.html): SHA-256 hashes; preferred for forensic chain of custody.
 - [/threat-intelligence-guide.html](https://tweetfeed.live/threat-intelligence-guide.html): pillar reference covering IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary.
-- [/tag/kimsuky/](https://tweetfeed.live/tag/kimsuky/): per-tag landing for Kimsuky (DPRK APT, also Velvet Chollima / TA427 / Black Banshee). 19 more tag pages forthcoming, regenerated daily.
+- Per-tag landing pages (22 total, all regenerated daily by GitHub Action):
+    - **APT groups**: [/tag/kimsuky/](https://tweetfeed.live/tag/kimsuky/) (G0094, DPRK), [/tag/lazarus/](https://tweetfeed.live/tag/lazarus/) (G0032, DPRK financial), [/tag/dprk/](https://tweetfeed.live/tag/dprk/) (umbrella), [/tag/apt/](https://tweetfeed.live/tag/apt/) (broad nation-state).
+    - **Malware families / C2 frameworks**: [/tag/cobaltstrike/](https://tweetfeed.live/tag/cobaltstrike/) (S0154), [/tag/sliver/](https://tweetfeed.live/tag/sliver/) (S1056), [/tag/mythic/](https://tweetfeed.live/tag/mythic/) (SpecterOps), [/tag/havoc/](https://tweetfeed.live/tag/havoc/) (C5pider), [/tag/deimos/](https://tweetfeed.live/tag/deimos/), [/tag/remcos/](https://tweetfeed.live/tag/remcos/) (S0332), [/tag/asyncrat/](https://tweetfeed.live/tag/asyncrat/), [/tag/njrat/](https://tweetfeed.live/tag/njrat/) (S0385), [/tag/netsupportrat/](https://tweetfeed.live/tag/netsupportrat/) (S0480), [/tag/lumma/](https://tweetfeed.live/tag/lumma/) (S1138 stealer), [/tag/interactsh/](https://tweetfeed.live/tag/interactsh/) (OAST canary).
+    - **TTPs**: [/tag/phishing/](https://tweetfeed.live/tag/phishing/) (T1566), [/tag/c2/](https://tweetfeed.live/tag/c2/) (TA0011), [/tag/ransomware/](https://tweetfeed.live/tag/ransomware/) (T1486), [/tag/malware/](https://tweetfeed.live/tag/malware/), [/tag/scam/](https://tweetfeed.live/tag/scam/), [/tag/stealer/](https://tweetfeed.live/tag/stealer/) (T1555), [/tag/opendir/](https://tweetfeed.live/tag/opendir/).
+    - Each page has baked counts (today/week/month/year), top-10 recent IOCs from `api.tweetfeed.live/v1/month/<tag>`, About bullets with MITRE / Malpedia / CISA references, FAQ accordion + FAQPage schema, and links to related tags.
 
 ## Sister project
 
