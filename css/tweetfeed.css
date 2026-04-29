@@ -165,9 +165,18 @@ hr.divider {
 .dash-toolbar {
 	border: 1px solid black;
 }
+/* Code/command block — heavy black border per
+   feedback_tweetfeed_black_borders memory. Used on agents.html /
+   api.html / hunt.html for MCP config snippets, curl commands, API
+   examples. The blue left accent provides visual rhythm. */
 .code-block {
+	background: #DEDEDE;
 	border: 1px solid black;
 	border-left: 3px solid #4682B4;
+	padding: 0.75rem 1rem;
+	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+	font-size: 13px;
+	overflow-x: auto;
 }
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
@@ -177,20 +186,6 @@ hr.divider {
 	color: #1DA1F2;
 	font-family: 'Segoe UI', Arial, sans-serif;
 	font-weight: 600;
-}
-
-/* Code/command block (used on hunt.html and api.html) replacing
-   the legacy black-bordered box. Keeps a left accent for visual rhythm
-   without the heavy 1px solid black look. */
-.code-block {
-	background: #f8f9fa;
-	border: 1px solid #e1e4e8;
-	border-left: 3px solid #4682B4;
-	border-radius: 6px;
-	padding: 0.75rem 1rem;
-	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-	font-size: 13px;
-	overflow-x: auto;
 }
 
 /* TweetFeed brand button — replaces inline
