@@ -1,3 +1,9 @@
+/* Sticky-footer support: make #wrapper fill viewport so #content-wrapper's
+   flex column (nav + #content with flex:1 + footer) pushes footer to bottom
+   on short pages like /ioc-types/. SB Admin 2 ships #content { flex:1 0 auto }
+   already; only the viewport-tall wrapper was missing. */
+#wrapper { min-height: 100vh; }
+
 /* IOC type row colors */
 .url { background-color: #c8f6fd; }
 .domain { background-color: #a0dde6; }
