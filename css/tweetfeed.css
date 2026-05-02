@@ -163,6 +163,14 @@
 .card {
 	border: 1px solid black;
 }
+/* Cards rendered with only a card-header (e.g. feeds.html download cards)
+   leave Bootstrap's default card-header border-bottom (#e3e6f0) drawn 1px
+   above the card's own black bottom border, which reads as a "cut" line
+   inside the card. Strip it when the header is the last child; cards that
+   pair card-header with card-body keep the separator. */
+.card > .card-header:last-child {
+	border-bottom: none;
+}
 hr.divider {
 	border: 0;
 	border-top: 1px solid black;
