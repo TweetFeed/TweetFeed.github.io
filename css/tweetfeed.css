@@ -349,18 +349,18 @@ button.btn.btn-tf {
 	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .tf-action:hover,
-.tf-action:focus {
+.tf-action:focus-visible {
 	text-decoration: none;
 	outline: none;
 }
 .tf-action.tf-action-tweet:hover,
-.tf-action.tf-action-tweet:focus {
+.tf-action.tf-action-tweet:focus-visible {
 	background: #1DA1F2;
 	border-color: #1DA1F2;
 	color: #fff;
 }
 .tf-action.tf-action-vt:hover,
-.tf-action.tf-action-vt:focus {
+.tf-action.tf-action-vt:focus-visible {
 	background: #394eff;
 	border-color: #394eff;
 }
@@ -371,7 +371,7 @@ button.btn.btn-tf {
 	transition: filter 0.15s ease;
 }
 .tf-action.tf-action-vt:hover img,
-.tf-action.tf-action-vt:focus img {
+.tf-action.tf-action-vt:focus-visible img {
 	filter: brightness(0) invert(1);
 }
 .tf-action i {
