@@ -164,12 +164,20 @@
 	border: 1px solid black;
 }
 /* Cards rendered with only a card-header (e.g. feeds.html download cards)
-   leave Bootstrap's default card-header border-bottom (#e3e6f0) drawn 1px
-   above the card's own black bottom border, which reads as a "cut" line
-   inside the card. Strip it when the header is the last child; cards that
-   pair card-header with card-body keep the separator. */
+   need two adjustments to render cleanly:
+   1. Bootstrap's default card-header border-bottom (#e3e6f0) drew 1px above
+      the card's own black bottom border, reading as a "cut" line inside
+      the card. Strip it when the header is :last-child.
+   2. card-header has border-radius "4.6px 4.6px 0 0" (sharp bottom corners)
+      from sb-admin-2. With card overflow:visible, the header's gray bg
+      paints past the card's rounded bottom corners and visually erases
+      the bottom corner of the black card border. Round the header's
+      bottom corners to match the top so the bg stays inside the card's
+      rounded border on every corner. */
 .card > .card-header:last-child {
 	border-bottom: none;
+	border-bottom-left-radius: calc(0.35rem - 1px);
+	border-bottom-right-radius: calc(0.35rem - 1px);
 }
 hr.divider {
 	border: 0;
