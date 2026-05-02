@@ -121,6 +121,46 @@
 		]
 	}
 	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What's in the search index?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same week.csv exposed at https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I match values in the TweetFeed search?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (such as #CobaltStrike or #phishing), and the researcher handle. The search is case-insensitive."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How fresh are TweetFeed search results?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "The pipeline refreshes every 15 minutes and republishes week.csv. Each row shows its UTC timestamp in the Date column."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What can I use TweetFeed search for?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Incident response triage, threat intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted."
+				}
+			}
+		]
+	}
+	</script>
 </head>
 
 <body id="page-top">
@@ -208,8 +248,8 @@
 			<div id="contentMobile" class="d-lg-none">
 				<div id="presentationMobile">
 					<br>
-					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
-					<h2 style="font-size: 14px;"><em>Search indicators of compromise from the last 7 days</em></h2>
+					<p class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
+					<p style="font-size: 14px;"><em>Search 7 days of IOCs from 90+ infosec researchers</em></p>
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
@@ -269,10 +309,9 @@
 				<!-- Begin Page Content -->
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
-					<p class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
-					<p><em>Make searches in Weekly Database</em></p>
-					<p style="color:#737373; font-size:15px; font-family:'Rubik', sans-serif; max-width:780px; margin:0 auto; line-height:1.6;">Search the last 7 days of indicators of compromise (URLs, domains, IPs, file hashes) shared by 90+ infosec researchers on Twitter/X. Match by exact value, partial substring, malware family tag, or researcher handle. Results are sourced from week.csv and updated every 15 minutes. Use it for incident response triage, threat intelligence enrichment, or SIEM rule validation.</p>
-					<br>
+					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
+					<h2><em>Search 7 days of IOCs from 90+ infosec researchers on Twitter/X</em></h2>
+					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<div class="container-fluid">
 					<!-- Page Heading -->
@@ -357,6 +396,26 @@
 							</div> <!-- table-responsive -->
 						</div>
 					</div>
+					<hr class="divider"> <!-- DIVIDER -->
+					<section class="faq-section" style="padding: 1rem 0;font-family: 'Rubik', sans-serif;color: #444;">
+						<h2 style="font-size: 22px;color: #1DA1F2;margin-top: 1rem;">Frequently asked questions</h2>
+						<details style="margin-top: 1rem;">
+							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">What's in the search index?</summary>
+							<p style="margin-top: 0.5rem;font-size: 15px;">The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same <code>week.csv</code> exposed at <a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</a>.</p>
+						</details>
+						<details style="margin-top: 0.5rem;">
+							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I match values?</summary>
+							<p style="margin-top: 0.5rem;font-size: 15px;">Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (e.g. <code>#CobaltStrike</code>, <code>#phishing</code>), and the researcher handle. The search is case-insensitive.</p>
+						</details>
+						<details style="margin-top: 0.5rem;">
+							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How fresh are results?</summary>
+							<p style="margin-top: 0.5rem;font-size: 15px;">The pipeline refreshes every 15 minutes and republishes <code>week.csv</code>. Each row shows its UTC timestamp in the Date column.</p>
+						</details>
+						<details style="margin-top: 0.5rem;">
+							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">What can I use this for?</summary>
+							<p style="margin-top: 0.5rem;font-size: 15px;">Incident response triage, threat intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted (see the disclaimer in the <a href="api.html">API page</a>).</p>
+						</details>
+					</section>
 				</div> <!-- /.container-fluid -->
 			</div>
 			<!-- End of Main Content -->
