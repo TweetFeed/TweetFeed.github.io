@@ -234,7 +234,6 @@ hr.divider {
 .faq-section details {
 	background: #fff;
 	border: 1px solid black;
-	border-left: 3px solid #4682B4;
 	margin: 0 0 0.5rem 0;
 	padding: 0.875rem 1.25rem;
 	transition: background-color 0.15s ease;

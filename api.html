@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=9" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -61,7 +61,7 @@
 		"@type": "APIReference",
 		"name": "TweetFeed API v1",
 		"url": "https://tweetfeed.live/api.html",
-		"description": "Free REST API for the TweetFeed IOC aggregator. JSON output, no authentication, CC0-licensed data.",
+		"description": "Free REST API for the TweetFeed IOC aggregator. JSON output, no authentication.",
 		"documentation": "https://tweetfeed.live/api.html",
 		"provider": {"@id": "https://tweetfeed.live/#organization"},
 		"author": {"@id": "https://tweetfeed.live/#founder"},
@@ -162,14 +162,6 @@
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "No hard rate limit for normal use. The API runs on Cloudflare Workers with edge caching; typical global volume is around 7 to 8 thousand requests per day."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "Can I use the TweetFeed API commercially?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Yes. TweetFeed IOC data is released under CC0 1.0 (public domain), so the JSON and CSV feeds can be used in commercial products without attribution."
 				}
 			}
 		]
@@ -432,10 +424,6 @@
 					<details>
 						<summary>Is there a rate limit on the TweetFeed API?</summary>
 						<p>No hard rate limit for normal use. The API runs on Cloudflare Workers with edge caching; typical global volume is around 7 to 8 thousand requests per day.</p>
-					</details>
-					<details>
-						<summary>Can I use the TweetFeed API commercially?</summary>
-						<p>Yes. TweetFeed IOC data is released under CC0 1.0 (public domain), so the JSON and CSV feeds can be used in commercial products without attribution.</p>
 					</details>
 				</section>
 			</div>
