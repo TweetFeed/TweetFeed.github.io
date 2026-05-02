@@ -45,7 +45,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=7" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -380,30 +380,28 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is a malicious URL feed?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">A malicious URL feed is a continuously updated list of links that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these feeds into SIEMs, firewalls and EDRs to block traffic and detect compromise. TweetFeed publishes the URLs spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Can I integrate this feed with my SIEM, MISP or firewall?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at <code>api.tweetfeed.live/v1/{time}/url</code> returns JSON for any HTTP client. The MISP manifest at <code>/misp/manifest.json</code> imports four native MISP events (today, week, month, year). The <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a> has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Are these URLs verified malicious?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking.</p>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+							<summary>What is a malicious URL feed?</summary>
+							<p>A malicious URL feed is a continuously updated list of links that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these feeds into SIEMs, firewalls and EDRs to block traffic and detect compromise. TweetFeed publishes the URLs spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
 						</details>
 						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this URL subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+							<summary>How is this list updated?</summary>
+							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
 						</details>
-					</div>
+						<details>
+							<summary>Can I integrate this feed with my SIEM, MISP or firewall?</summary>
+							<p>Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at <code>api.tweetfeed.live/v1/{time}/url</code> returns JSON for any HTTP client. The MISP manifest at <code>/misp/manifest.json</code> imports four native MISP events (today, week, month, year). The <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a> has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+						</details>
+						<details>
+							<summary>Are these URLs verified malicious?</summary>
+							<p>TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking.</p>
+						</details>
+						<details>
+							<summary>What is the license? Can I use this commercially?</summary>
+							<p>All TweetFeed IOC data, including this URL subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						</details>
 				</section>
 
 				<!-- ============================================================ -->

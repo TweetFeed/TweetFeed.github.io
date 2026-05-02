@@ -210,6 +210,106 @@ hr.divider {
 	font-weight: 600;
 }
 
+/* FAQ accordion - heavy black border + steel-blue left accent.
+   Each <details> stacks as its own card (matches .code-block visual
+   language). Replaces three legacy patterns: bare details/summary on a
+   flat list (api/feeds/hunt/search), a Bootstrap card+card-body wrapper
+   (malicious-* / threat-intelligence-guide), and the open-by-default list
+   on about.html. Custom +/- toggle replaces the browser-default ▶ marker.
+   Used on 11 pages; see /tmp/unify_faqs.py history. */
+.faq-section {
+	font-family: 'Rubik', sans-serif;
+	color: #444;
+	margin: 0;
+}
+.faq-section > .section-heading,
+.faq-section > h2,
+.faq-section > h3 {
+	font-size: 22px;
+	color: #1DA1F2;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	font-weight: 600;
+	margin: 0 0 1rem 0;
+}
+.faq-section details {
+	background: #fff;
+	border: 1px solid black;
+	border-left: 3px solid #4682B4;
+	margin: 0 0 0.5rem 0;
+	padding: 0.875rem 1.25rem;
+	transition: background-color 0.15s ease;
+}
+.faq-section details:last-of-type {
+	margin-bottom: 0;
+}
+.faq-section details[open] {
+	background: #f8f9fa;
+}
+.faq-section details > summary {
+	list-style: none;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+	color: #222;
+	padding-right: 2.25rem;
+	line-height: 1.4;
+	position: relative;
+}
+.faq-section details > summary::-webkit-details-marker { display: none; }
+.faq-section details > summary::marker { content: ''; }
+.faq-section details > summary::after {
+	content: '+';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 1.5rem;
+	height: 1.5rem;
+	line-height: 1.35rem;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: #4682B4;
+	border: 1px solid #4682B4;
+	border-radius: 3px;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.faq-section details[open] > summary::after {
+	content: '\2212'; /* MINUS SIGN, distinct from hyphen */
+	background: #4682B4;
+	color: #fff;
+}
+.faq-section details > summary:hover {
+	color: #1DA1F2;
+}
+.faq-section details > summary:hover::after {
+	background: #4682B4;
+	color: #fff;
+}
+.faq-section details > p {
+	margin: 0.875rem 0 0 0;
+	font-size: 15px;
+	line-height: 1.6;
+	color: #444;
+}
+.faq-section details > p code {
+	background: rgba(70, 130, 180, 0.08);
+	border: 1px solid rgba(70, 130, 180, 0.25);
+	border-radius: 3px;
+	padding: 1px 6px;
+	font-size: 13px;
+	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+	color: #4682B4;
+}
+.faq-section details > p a {
+	color: #4682B4;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.faq-section details > p a:hover {
+	color: #1DA1F2;
+}
+
 /* TweetFeed brand button - replaces inline
    style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;"
    that was repeated on ~30 download/export buttons across pages.

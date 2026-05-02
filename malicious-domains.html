@@ -45,7 +45,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=7" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -380,30 +380,28 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is a malicious domain feed?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">A malicious domain feed is a continuously updated list of fully-qualified domain names that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these into DNS firewalls, secure web gateways and EDRs to block traffic before resolution. TweetFeed publishes the domains spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts domains from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How do malicious domains differ from malicious URLs?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">A URL is a full link including path and query string (https://example.com/login.php?u=1). A domain is just the host portion (example.com). Domain blocks catch the entire domain regardless of path; URL blocks are more precise but miss other paths on the same host. Most SOCs block at the domain level for known-bad infrastructure and at the URL level for one-off phishing kits.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Are these domains verified malicious?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed is OSINT, not a sandbox. Domains are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur, especially for compromised legitimate domains hosting phishing kits temporarily. Cross-reference VirusTotal, urlscan.io or your sandbox before blocking outright.</p>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+							<summary>What is a malicious domain feed?</summary>
+							<p>A malicious domain feed is a continuously updated list of fully-qualified domain names that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these into DNS firewalls, secure web gateways and EDRs to block traffic before resolution. TweetFeed publishes the domains spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
 						</details>
 						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this domain subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+							<summary>How is this list updated?</summary>
+							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts domains from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
 						</details>
-					</div>
+						<details>
+							<summary>How do malicious domains differ from malicious URLs?</summary>
+							<p>A URL is a full link including path and query string (https://example.com/login.php?u=1). A domain is just the host portion (example.com). Domain blocks catch the entire domain regardless of path; URL blocks are more precise but miss other paths on the same host. Most SOCs block at the domain level for known-bad infrastructure and at the URL level for one-off phishing kits.</p>
+						</details>
+						<details>
+							<summary>Are these domains verified malicious?</summary>
+							<p>TweetFeed is OSINT, not a sandbox. Domains are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur, especially for compromised legitimate domains hosting phishing kits temporarily. Cross-reference VirusTotal, urlscan.io or your sandbox before blocking outright.</p>
+						</details>
+						<details>
+							<summary>What is the license? Can I use this commercially?</summary>
+							<p>All TweetFeed IOC data, including this domain subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						</details>
 				</section>
 
 				<!-- ============================================================ -->

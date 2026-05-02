@@ -45,7 +45,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=7" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -380,30 +380,28 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is an MD5 hash?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">MD5 is a cryptographic hash function that produces a 32-character hexadecimal fingerprint of a file. Identical files produce identical hashes, so MD5 is a fast way to identify a known sample without exchanging the binary. Antivirus signatures, sandbox reports and threat intelligence feeds commonly cite MD5 hashes alongside SHA-1 and SHA-256.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts 32-character hex MD5 hashes from tweets, deduplicates against the past year, tags them with malware family, and republishes the result in CSV, JSON and RSS.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Why MD5 if SHA-256 is more secure?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">MD5 is faster and shorter, which matters for large-scale endpoint scanning where every byte saved on signature storage adds up. Many legacy AV and IDS systems index by MD5. For high-confidence detection or when collision resistance matters (e.g. forensic chain of custody), SHA-256 is preferred. TweetFeed publishes both.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Are these hashes verified malicious?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed is OSINT, not a sandbox. Hashes are sourced from public posts by infosec researchers, then deduplicated and tagged. Most posts include sandbox links; cross-reference VirusTotal, MalwareBazaar or your own sandbox to confirm a sample's verdict and gather family attribution before action.</p>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+							<summary>What is an MD5 hash?</summary>
+							<p>MD5 is a cryptographic hash function that produces a 32-character hexadecimal fingerprint of a file. Identical files produce identical hashes, so MD5 is a fast way to identify a known sample without exchanging the binary. Antivirus signatures, sandbox reports and threat intelligence feeds commonly cite MD5 hashes alongside SHA-1 and SHA-256.</p>
 						</details>
 						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this MD5 hash subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+							<summary>How is this list updated?</summary>
+							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts 32-character hex MD5 hashes from tweets, deduplicates against the past year, tags them with malware family, and republishes the result in CSV, JSON and RSS.</p>
 						</details>
-					</div>
+						<details>
+							<summary>Why MD5 if SHA-256 is more secure?</summary>
+							<p>MD5 is faster and shorter, which matters for large-scale endpoint scanning where every byte saved on signature storage adds up. Many legacy AV and IDS systems index by MD5. For high-confidence detection or when collision resistance matters (e.g. forensic chain of custody), SHA-256 is preferred. TweetFeed publishes both.</p>
+						</details>
+						<details>
+							<summary>Are these hashes verified malicious?</summary>
+							<p>TweetFeed is OSINT, not a sandbox. Hashes are sourced from public posts by infosec researchers, then deduplicated and tagged. Most posts include sandbox links; cross-reference VirusTotal, MalwareBazaar or your own sandbox to confirm a sample's verdict and gather family attribution before action.</p>
+						</details>
+						<details>
+							<summary>What is the license? Can I use this commercially?</summary>
+							<p>All TweetFeed IOC data, including this MD5 hash subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						</details>
 				</section>
 
 				<!-- ============================================================ -->

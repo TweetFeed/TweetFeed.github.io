@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=7" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -397,23 +397,23 @@
 						</div>
 					</div>
 					<hr class="divider"> <!-- DIVIDER -->
-					<section class="faq-section" style="padding: 1rem 0;font-family: 'Rubik', sans-serif;color: #444;">
-						<h2 style="font-size: 22px;color: #1DA1F2;margin-top: 1rem;">Frequently asked questions</h2>
-						<details style="margin-top: 1rem;">
-							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">What's in the search index?</summary>
-							<p style="margin-top: 0.5rem;font-size: 15px;">The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same <code>week.csv</code> exposed at <a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</a>.</p>
+					<section class="faq-section">
+						<h3 class="section-heading">Frequently asked questions</h3>
+						<details>
+							<summary>What's in the search index?</summary>
+							<p>The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same <code>week.csv</code> exposed at <a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</a>.</p>
 						</details>
-						<details style="margin-top: 0.5rem;">
-							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I match values?</summary>
-							<p style="margin-top: 0.5rem;font-size: 15px;">Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (e.g. <code>#CobaltStrike</code>, <code>#phishing</code>), and the researcher handle. The search is case-insensitive.</p>
+						<details>
+							<summary>How do I match values?</summary>
+							<p>Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (e.g. <code>#CobaltStrike</code>, <code>#phishing</code>), and the researcher handle. The search is case-insensitive.</p>
 						</details>
-						<details style="margin-top: 0.5rem;">
-							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How fresh are results?</summary>
-							<p style="margin-top: 0.5rem;font-size: 15px;">The pipeline refreshes every 15 minutes and republishes <code>week.csv</code>. Each row shows its UTC timestamp in the Date column.</p>
+						<details>
+							<summary>How fresh are results?</summary>
+							<p>The pipeline refreshes every 15 minutes and republishes <code>week.csv</code>. Each row shows its UTC timestamp in the Date column.</p>
 						</details>
-						<details style="margin-top: 0.5rem;">
-							<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">What can I use this for?</summary>
-							<p style="margin-top: 0.5rem;font-size: 15px;">Incident response triage, threat intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted (see the disclaimer in the <a href="api.html">API page</a>).</p>
+						<details>
+							<summary>What can I use this for?</summary>
+							<p>Incident response triage, threat intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted (see the disclaimer in the <a href="api.html">API page</a>).</p>
 						</details>
 					</section>
 				</div> <!-- /.container-fluid -->

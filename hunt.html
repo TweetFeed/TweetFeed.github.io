@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=7" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=8" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -456,19 +456,19 @@ union (
 ) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code></pre>
 					</div>
 				</div> <!-- End nav -->
-				<section class="faq-section" style="padding: 1rem 0;font-family: 'Rubik', sans-serif;color: #444;">
-					<h2 style="font-size: 22px;color: #1DA1F2;margin-top: 1rem;">Frequently asked questions</h2>
-					<details style="margin-top: 1rem;">
-						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">How do I import TweetFeed IOCs into MISP?</summary>
-						<p style="margin-top: 0.5rem;font-size: 15px;">Add the TweetFeed CSV feed URL (for example <code>https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</code>) as a new Feed in MISP and enable auto-refresh. Exact feed configuration is shown on this page.</p>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>How do I import TweetFeed IOCs into MISP?</summary>
+						<p>Add the TweetFeed CSV feed URL (for example <code>https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</code>) as a new Feed in MISP and enable auto-refresh. Exact feed configuration is shown on this page.</p>
 					</details>
-					<details style="margin-top: 0.5rem;">
-						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Can I query TweetFeed from Splunk?</summary>
-						<p style="margin-top: 0.5rem;font-size: 15px;">Yes. Use <code>curl</code> or Splunk's HTTP Event Collector to pull the TweetFeed API on a schedule, then match IOCs against your index data. Copy-paste query examples for Splunk SPL, Microsoft Sentinel KQL and QRadar AQL are provided on this page.</p>
+					<details>
+						<summary>Can I query TweetFeed from Splunk?</summary>
+						<p>Yes. Use <code>curl</code> or Splunk's HTTP Event Collector to pull the TweetFeed API on a schedule, then match IOCs against your index data. Copy-paste query examples for Splunk SPL, Microsoft Sentinel KQL and QRadar AQL are provided on this page.</p>
 					</details>
-					<details style="margin-top: 0.5rem;">
-						<summary style="font-size: 16px;font-weight: bold;cursor: pointer;">Does TweetFeed integrate with OpenCTI and IntelOwl?</summary>
-						<p style="margin-top: 0.5rem;font-size: 15px;">Yes. OpenCTI can ingest the CSV feeds via a Connector source. IntelOwl can query the REST API per analyzer run. Both configurations are documented with working examples on this page.</p>
+					<details>
+						<summary>Does TweetFeed integrate with OpenCTI and IntelOwl?</summary>
+						<p>Yes. OpenCTI can ingest the CSV feeds via a Connector source. IntelOwl can query the REST API per analyzer run. Both configurations are documented with working examples on this page.</p>
 					</details>
 				</section>
 			</div>
