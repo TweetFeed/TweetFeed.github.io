@@ -329,3 +329,51 @@ button.btn.btn-tf {
 	border-color: #3a6f96;
 	color: #fff;
 }
+
+/* Per-row action buttons (Tweet, VirusTotal) inside the IOC DataTables
+   on index.html / search.html / dashboard.html / about.html / changelog.html.
+   Replaces the prior pattern of "icon + external-link arrow" per cell,
+   which read as a pair of muted tiny links and offered no real hit
+   target. Single 30x28 button, brand color on hover. */
+.tf-action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 28px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #6c757d;
+	text-decoration: none;
+	line-height: 1;
+	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.tf-action:hover,
+.tf-action:focus {
+	text-decoration: none;
+	outline: none;
+}
+.tf-action.tf-action-tweet:hover,
+.tf-action.tf-action-tweet:focus {
+	background: #1DA1F2;
+	border-color: #1DA1F2;
+	color: #fff;
+}
+.tf-action.tf-action-vt:hover,
+.tf-action.tf-action-vt:focus {
+	background: #394eff;
+	border-color: #394eff;
+}
+.tf-action img {
+	width: 16px;
+	height: auto;
+	display: block;
+	transition: filter 0.15s ease;
+}
+.tf-action.tf-action-vt:hover img,
+.tf-action.tf-action-vt:focus img {
+	filter: brightness(0) invert(1);
+}
+.tf-action i {
+	font-size: 14px;
+}
