@@ -190,11 +190,11 @@ hr.divider {
 /* Code/command block - heavy black border per
    feedback_tweetfeed_black_borders memory. Used on agents.html /
    api.html / hunt.html for MCP config snippets, curl commands, API
-   examples. The blue left accent provides visual rhythm. */
+   examples. Border is uniform on all four sides per user feedback
+   2026-05-02. */
 .code-block {
 	background: #DEDEDE;
 	border: 1px solid black;
-	border-left: 3px solid #4682B4;
 	padding: 0.75rem 1rem;
 	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 	font-size: 13px;
