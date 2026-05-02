@@ -339,8 +339,8 @@ button.btn.btn-tf {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 28px;
-	height: 26px;
+	width: 32px;
+	height: 30px;
 	border: 1px solid transparent;
 	border-radius: 4px;
 	color: #6c757d;
@@ -369,7 +369,7 @@ button.btn.btn-tf {
 	border-color: #394eff;
 }
 .tf-action img {
-	width: 16px;
+	width: 18px;
 	height: auto;
 	display: block;
 	transition: filter 0.15s ease;
@@ -378,5 +378,5 @@ button.btn.btn-tf {
 	filter: brightness(0) invert(1);
 }
 .tf-action i {
-	font-size: 15px;
+	font-size: 17px;
 }
