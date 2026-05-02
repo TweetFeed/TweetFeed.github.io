@@ -6,7 +6,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Page not found. Browse live IOC feeds, search threat data, or return to TweetFeed home.">
+    <link rel="canonical" href="https://tweetfeed.live/">
+    <meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tweetfeed.live/404.html">
+    <meta name="description" content="Page not found. Try the live IOC feeds, search the database, or return to the TweetFeed home page for the latest threat data from Twitter/X researchers.">
     <meta name="author" content="">
     <meta name="robots" content="noindex, follow">
     <meta http-equiv="cache-control" content="no-cache">
@@ -26,6 +30,17 @@
 	<link href="css/tweetfeed.css?v=11" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <!-- Structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://tweetfeed.live/"},
+            {"@type": "ListItem", "position": 2, "name": "Page not found", "item": "https://tweetfeed.live/404.html"}
+        ]
+    }
+    </script>
 </head>
 
 <body id="page-top">

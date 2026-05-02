@@ -148,11 +148,44 @@ def check_footers(pages: list[str]) -> list[str]:
     return failures
 
 
+def check_meta_description_length(pages: list[str]) -> list[str]:
+    """Meta description should be 80-160 chars (Google snippet limit ~155-160).
+    Shorter than 80 leaves SEO real estate on the table; longer than 160
+    truncates in SERPs.  Caught by audit 2026-05-02 — 7 pages over 160."""
+    desc_re = re.compile(r'<meta name="description" content="([^"]*)"')
+    failures: list[str] = []
+    for p in pages:
+        m = desc_re.search(read(p))
+        if not m:
+            failures.append(f"{p}: missing <meta name='description'>")
+            continue
+        n = len(m.group(1))
+        if n > 160:
+            failures.append(f"{p}: meta description too long ({n} chars; trim to <=160)")
+        elif n < 80:
+            failures.append(f"{p}: meta description too short ({n} chars; expand to >=80)")
+    return failures
+
+
+def check_single_h1(pages: list[str]) -> list[str]:
+    """Each page should have exactly one <h1>.  Multiple h1s dilute the page-
+    level topic signal; zero leaves the page without a primary heading."""
+    h1_re = re.compile(r'<h1\b', re.IGNORECASE)
+    failures: list[str] = []
+    for p in pages:
+        n = len(h1_re.findall(read(p)))
+        if n != 1:
+            failures.append(f"{p}: expected exactly 1 <h1>, found {n}")
+    return failures
+
+
 CHECKS = [
     ("Nav order (desktop + mobile dropdown)", check_nav_order),
     ("Canonical URLs", check_canonicals),
     ("Analytics scripts (anchor + Umami + Ahrefs)", check_analytics),
     ("Footer pattern (desktop + mobile)", check_footers),
+    ("Meta description length (80-160)", check_meta_description_length),
+    ("Single <h1> per page", check_single_h1),
 ]
 
 
