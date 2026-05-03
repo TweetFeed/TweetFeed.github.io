@@ -238,10 +238,11 @@ hr.divider {
 .cl-foot { color: #737373; font-size: 13px; margin: 0.75rem 0 0 0; }
 .cl-tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 0.5rem 0 0.75rem 0; }
 .cl-subhead { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: #1c1c1c; }
-/* feeds.html available-formats index: chip row anchored to each format
-   section. Border-black + steel-blue hover matches design language. */
-.feeds-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
-.feeds-toc-chip {
+/* In-page section TOC chip row (hunt.html, feeds.html). Black border +
+   steel-blue hover matches the heavy-box design language. .feeds-toc /
+   .feeds-toc-chip kept as aliases for cache-warm compatibility. */
+.page-toc, .feeds-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
+.page-toc-chip, .feeds-toc-chip {
 	display: inline-block;
 	padding: 4px 12px;
 	border: 1px solid black;
@@ -253,7 +254,7 @@ hr.divider {
 	text-decoration: none;
 	line-height: 1.5;
 }
-.feeds-toc-chip:hover { background: #4682B4; color: #fff; text-decoration: none; }
+.page-toc-chip:hover, .feeds-toc-chip:hover { background: #4682B4; color: #fff; text-decoration: none; }
 
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
