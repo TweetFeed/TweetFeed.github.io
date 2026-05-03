@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- 100% privacy-first analytics -->
+	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
+	<!-- Ahrefs Web Analytics (cookieless) -->
+	<script src="https://analytics.ahrefs.com/analytics.js" data-key="J59c6Ehci39jQWCQRIWuRw" async></script>
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Real-time IOC feeds from Twitter/X researchers. Malware URLs, phishing domains, ransomware IPs, hashes. CSV, JSON, RSS, API. Refresh: 15 min.">
+	<meta name="author" content="tweetfeed.live">
+	<meta name="keywords" content="feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
+	<link rel="canonical" href="https://tweetfeed.live/feeds/">
+	<title>Free IOC Feeds - Malware, Phishing & Ransomware (CSV/JSON/RSS) - TweetFeed</title>
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Download IOC feeds (CSV + RSS) - TweetFeed">
+	<meta name="twitter:description" content="Full feeds of IOCs for today, last week, month, and year. Free to download and use.">
+	<meta name="twitter:url" content="https://tweetfeed.live/feeds/">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta name="twitter:creator" content="@0xDanielLopez">
+	<!-- Facebook -->
+	<meta property="og:url" content="https://tweetfeed.live/feeds/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Download IOC feeds (CSV + RSS) - TweetFeed">
+	<meta property="og:description" content="Full feeds of IOCs for today, last week, month, and year. Free to download and use.">
+	<meta property="og:site_name" content="tweetfeed.live">
+	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
+	<!-- Preconnect -->
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+	<!-- Custom fonts for this template -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	<!-- Custom styles for this template -->
+	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom styles for this page -->
+	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="../css/table.css" rel="stylesheet">
+	<link href="../css/index.css" rel="stylesheet">
+	<link href="../css/tooltip.css" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=22" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://phishunt.featurebase.app/",
+			"https://www.wikidata.org/wiki/Q139589148"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about/",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public Threat Intelligence feeds and MCP servers for AI agents.",
+				"knowsAbout": [
+			"Threat Intelligence",
+			"Indicators of compromise",
+			"OSINT",
+			"Malware analysis",
+			"Phishing detection",
+			"Cybersecurity"
+		],
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
+			"https://x.com/0xDanielLopez",
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": {
+				"@type": "EntryPoint",
+				"urlTemplate": "https://tweetfeed.live/search/?q={search_term_string}"
+			},
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Dataset",
+		"name": "TweetFeed IOC Dataset",
+		"alternateName": "TweetFeed",
+		"description": "Indicators of Compromise (URLs, domains, IPs, file hashes, cryptocurrency addresses, X/Twitter handles) harvested from Twitter/X by infosec researchers. Updated every 15 minutes. Open dataset published in CSV, JSON, TXT and RSS over windows of today, week, month and year.",
+		"url": "https://tweetfeed.live/feeds/",
+		"sameAs": "https://github.com/0xDanielLopez/TweetFeed",
+		"keywords": ["IOC", "indicators of compromise", "Threat Intelligence", "phishing", "malware", "C2", "scam", "OSINT", "SOCMINT", "twitter feed", "ioc feed"],
+		"license": "https://creativecommons.org/publicdomain/zero/1.0/",
+		"isAccessibleForFree": true,
+		"creator": {
+			"@type": "Person",
+			"name": "Daniel Lopez",
+			"url": "https://x.com/0xDanielLopez"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "TweetFeed",
+			"url": "https://tweetfeed.live/",
+			"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png"
+		},
+		"temporalCoverage": "2021-01-01/..",
+		"spatialCoverage": {"@type": "Place", "name": "Worldwide"},
+		"variableMeasured": [
+			{"@type": "PropertyValue", "name": "date", "description": "Timestamp the IOC was shared on Twitter/X"},
+			{"@type": "PropertyValue", "name": "user", "description": "Twitter/X handle of the researcher who posted the IOC"},
+			{"@type": "PropertyValue", "name": "type", "description": "IOC type: url, domain, ip, md5, sha1, sha256, hashtag or wallet"},
+			{"@type": "PropertyValue", "name": "value", "description": "The indicator itself"},
+			{"@type": "PropertyValue", "name": "tags", "description": "Contextual tags such as #phishing, #malware, #CobaltStrike"}
+		],
+		"distribution": [
+			{"@type": "DataDownload", "name": "Today (CSV)",       "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"},
+			{"@type": "DataDownload", "name": "Today (JSON)",      "encodingFormat": "application/json",    "contentUrl": "https://api.tweetfeed.live/v1/today"},
+			{"@type": "DataDownload", "name": "Week (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"},
+			{"@type": "DataDownload", "name": "Month (CSV)",       "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv"},
+			{"@type": "DataDownload", "name": "Year (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"},
+			{"@type": "DataDownload", "name": "RSS",               "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"},
+			{"@type": "DataDownload", "name": "MISP Manifest",     "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json"},
+			{"@type": "DataDownload", "name": "MISP Event Today",  "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/a7506a4c-ef3f-5453-b5af-baf471c80bd4.json"},
+			{"@type": "DataDownload", "name": "MISP Event Week",   "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/7bd179fd-8d3a-5b8a-8830-dcf1e80b1d69.json"},
+			{"@type": "DataDownload", "name": "MISP Event Month",  "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/432a377f-0247-5d71-a51d-bcb7b6d79b7b.json"},
+			{"@type": "DataDownload", "name": "MISP Event Year",   "encodingFormat": "application/json",    "contentUrl": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json"}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{
+				"@type": "Question",
+				"name": "What is an IOC feed?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Is TweetFeed free?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. All TweetFeed IOC feeds and the REST API are free. No registration or API key required."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How often are the IOC feeds updated?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Every 15 minutes. The pipeline scrapes around 95 Twitter/X RSS feeds, extracts new IOCs, deduplicates, and publishes refreshed CSV, JSON, TXT and RSS files to tweetfeed.live."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Which feed format should I choose?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "CSV for spreadsheets and SIEM import, JSON for programmatic use, TXT for plain lists (one IOC per line), and RSS for subscribing in a feed reader. The data is identical across all four formats."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I import TweetFeed into MISP, OpenCTI or Splunk?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "For MISP, point your instance at the manifest URL https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json under Sync Actions, Feeds, Add - it imports the 4 native MISP events (today/week/month/year) automatically. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+				}
+			}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://tweetfeed.live/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Feeds",
+				"item": "https://tweetfeed.live/feeds/"
+			}
+		]
+	}
+	</script>
+</head>
+
+<body id="page-top">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="dashboard/"><i class="fas fa-th"></i> Dashboard</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link active" href="feeds/"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="api/"><i class="fas fa-code"></i> API</a> <!-- <sup style="color: blue;"><em><b>New!</b></em></sup></a> -->
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="hunt/"><i class="fas fa-bullseye"></i> Hunt</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="graphs/"><i class="fas fa-chart-pie"></i> Graphs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="researchers/"><i class="fas fa-users"></i> Researchers</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="search/"><i class="fas fa-search"></i> Search</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item" id="phishunt-link">
+							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="docs/"><i class="fas fa-book"></i> Docs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="about/"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="/"><i class="fas fa-home"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+								<a class="dropdown-item" href="agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+								<a class="dropdown-item" href="feeds/"><i class="fas fa-rss"></i> Feeds</a>
+								<a class="dropdown-item" href="graphs/"><i class="fas fa-chart-pie"></i> Graphs</a>
+								<a class="dropdown-item" href="researchers/"><i class="fas fa-users"></i> Researchers</a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="docs/"><i class="fas fa-book"></i> Docs</a>
+								<a class="dropdown-item" href="about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content">
+				<div id="presentationSecondary" class="d-none d-md-block">
+					<br><br><br>
+					<h1 class="toph1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</h1>
+					<h2><em>Free IOC Feeds (CSV, JSON, TXT, RSS) - phishing, malware, scam</em></h2>
+				</div>
+				<div id="presentationMobile" class="d-block d-md-none">
+					<br>
+					<p class="toph1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</p>
+					<p style="font-size: 14px;"><em>Full feeds from today, last week, last month and last year</em></p>
+				</div>
+				<hr class="divider"> <!-- DIVIDER -->
+				<nav class="page-toc" aria-label="Available formats">
+					<a class="page-toc-chip" href="#csv">CSV</a>
+					<a class="page-toc-chip" href="#rss">RSS</a>
+					<a class="page-toc-chip" href="#misp">MISP</a>
+					<a class="page-toc-chip" href="#stix">STIX 2.1</a>
+					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
+					<a class="page-toc-chip" href="#per-tag-rss">Per-tag RSS</a>
+				</nav>
+				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-bottom: 20px;">
+					&nbsp&nbsp&nbspCSV Feeds
+				</h3>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span><i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Today (Starting 00:00 UTC)"></i>
+								<br>
+								<div id="lastDateToday" style="display:none">
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom"></em></span>
+									<br>
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo"></em></span>
+								</div>
+								<div id="loadingToday" class="text-center">
+									<img loading="lazy" style="height: 20px;width:auto;" src="../img/loading.svg" alt="Loading" width="20" height="20">
+								</div>
+								<hr>
+								<div class="container">
+									<div class="row h-100 align-items-center">
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs today"></i></span>
+											<span class="today-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains today"></i></span>
+											<span class="today-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs today"></i></span>
+											<span class="today-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes today"></i></span>
+											<span class="today-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="right" title="MD5 hashes today"></i></span>
+											<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+									</div> <!-- row -->
+									<div class="row today">
+									</div> <!-- row 2 -->
+								</div> <!-- container -->
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.csv)</a></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 7 days"></i>
+								<br>
+								<div id="lastDateWeek" style="display:none">
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom"></em></span>
+									<br>
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo"></em></span>
+								</div>
+								<div id="loadingWeek" class="text-center">
+									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
+								</div>
+								<hr>
+								<div class="container">
+									<div class="row h-100 align-items-center">
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs week"></i></span>
+											<span class="week-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains week"></i></span>
+											<span class="week-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs week"></i></span>
+											<span class="week-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes week"></i></span>
+											<span class="week-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes week"></i></span>
+											<span class="week-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+									</div> <!-- row -->
+									<div class="row week">
+									</div> <!-- row 2 -->
+								</div> <!-- container -->
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.csv)</a></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 30 days"></i>
+								<br>
+								<div id="lastDateMonth" style="display:none">
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthFrom"></em></span>
+									<br>
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthTo"></em></span>
+								</div>
+								<div id="loadingMonth" class="text-center">
+									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
+								</div>
+								<hr>
+								<div class="container">
+									<div class="row h-100 align-items-center">
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs month"></i></span>
+											<span class="month-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains month"></i></span>
+											<span class="month-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs month"></i></span>
+											<span class="month-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes month"></i></span>
+											<span class="month-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes month"></i></span>
+											<span class="month-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+									</div> <!-- row -->
+									<div class="row month">
+									</div> <!-- row 2 -->
+								</div> <!-- container -->
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.csv)</a></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Year</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 365 days"></i>
+								<br>
+								<div id="lastDateYear" style="display:none">
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearFrom"></em></span>
+									<br>
+									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearTo"></em></span>
+								</div>
+								<div id="loadingYear" class="text-center">
+									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
+								</div>
+								<hr>
+								<div class="container">
+									<div class="row h-100 align-items-center">
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs year"></i></span>
+											<span class="year-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains year"></i></span>
+											<span class="year-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs year"></i></span>
+											<span class="year-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes year"></i></span>
+											<span class="year-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
+											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes year"></i></span>
+											<span class="year-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
+										</div>
+									</div> <!-- row -->
+									<div class="row year">
+									</div> <!-- row 2 -->
+								</div> <!-- container -->
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Year (.csv)</a></p>
+							</div>
+						</div> <!-- card -->
+					</div> <!-- class="col-sm-6" -->
+				</div> <!-- row -->
+				<!-- <hr class="divider"> <hr> between CSV and RSS feeds -->
+				<h3 id="rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">
+					&nbsp&nbsp&nbspRSS Feed
+				</h3>
+				<div class="d-flex justify-content-start">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">RSS Feed</span> 
+								<i class="far fa-question-circle fa-sm align-self-center" 
+									data-toggle="tooltip" 
+									data-placement="right" 
+									title="Download the RSS feed of IOCs"></i>
+								<br>
+								<hr>
+								<p style="font-size: 20px;">
+									<a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml" target="_blank" role="button" rel="noopener noreferrer">
+									   <i class="fas fa-rss"></i> RSS Feed (.xml)
+									</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h3 id="misp" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspMISP Feed
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Add the <a class="text-decoration-none" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> to your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
+				</p>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 24h IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/a7506a4c-ef3f-5453-b5af-baf471c80bd4.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 7-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/7bd179fd-8d3a-5b8a-8830-dcf1e80b1d69.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 31-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/432a377f-0247-5d71-a51d-bcb7b6d79b7b.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Year</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="MISP Event with last 365-day IOCs (large file)"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Year (.json)</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h3 id="stix" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspSTIX 2.1 Bundles
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Industry-standard STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms (TLP:CLEAR, deterministic UUIDs for cross-pull dedupe). Point your consumer at the <a class="text-decoration-none" href="https://tweetfeed.live/stix/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> and pull the windows you care about.
+				</p>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Manifest</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles + indicator counts"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Manifest (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 24h IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/today.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 7-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/week.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 31-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/month.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.json)</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
+					Year window omitted on purpose: the STIX schema is ~2.6x more verbose per IOC than MISP, putting year.json &gt;80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX consumption use the diff endpoint below.
+				</p>
+
+				<h3 id="diff" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspDiff endpoint (incremental sync)
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Fetch only IOCs added after a given timestamp. Replace <code>&lt;ISO8601&gt;</code> with the last sync time (use the Z form for unambiguous UTC). Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is &gt;365 days old.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"></i></pre>
+
+				<h3 id="per-tag-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspPer-tag RSS feeds
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					One RSS feed per active tag (a tag is "active" once it has &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose. Browse all available feeds from the <a class="text-decoration-none" href="tags/">Tag index</a>; each per-tag landing page also exposes the feed via <code>&lt;link rel="alternate"&gt;</code>.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml"></i></pre>
+
+				<hr class="divider">
+				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
+					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
+				</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is an IOC feed?</summary>
+						<p>An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS.</p>
+					</details>
+					<details>
+						<summary>Is TweetFeed free?</summary>
+						<p>Yes. All TweetFeed IOC feeds and the REST API are free. No registration or API key required.</p>
+					</details>
+					<details>
+						<summary>How often are the IOC feeds updated?</summary>
+						<p>Every 15 minutes. The pipeline scrapes around 95 Twitter/X RSS feeds, extracts new IOCs, deduplicates, and publishes refreshed CSV, JSON, TXT and RSS files to tweetfeed.live.</p>
+					</details>
+					<details>
+						<summary>Which feed format should I choose?</summary>
+						<p>CSV for spreadsheets and SIEM import, JSON for programmatic use, TXT for plain lists (one IOC per line), and RSS for subscribing in a feed reader. The data is identical across all four formats.</p>
+					</details>
+					<details>
+						<summary>How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
+						<p>For <b>MISP</b>, point your instance at the manifest URL <code>https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json</code> under <em>Sync Actions &rarr; Feeds &rarr; Add</em>. It imports the 4 native MISP events (today/week/month/year) automatically with deterministic UUIDs for dedup across pulls. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+					</details>
+				</section>
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
+				<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+					<div class="row align-items-center">
+						<div class="col-md-4 text-left">
+							By Daniel López
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+						</div>
+						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="changelog/">Changelog</a>
+
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos/">Terms of Service</a>
+						</div>
+						<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
+					</div>
+				</div>
+			</footer>
+			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+				<div class="container-fluid py-2" style="color: black;">
+					<div class="row">
+						<div class="col text-center">
+							By Daniel López
+							&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="changelog/">Changelog</a>
+
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="tos/">Terms of Service</a>
+							&nbsp;·&nbsp; © 2026 TweetFeed.live						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<!-- End of Footer -->
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<!-- Logout Modal-->
+	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="../js/sb-admin-2.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Export -->
+	<script src="../js/demo/datatables-demo.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="../js/config.js"></script>
+	<script src="../js/utils.js"></script>
+	<!-- Page level custom scripts -->
+	<script>
+	// Load precomputed counts.json for per-window totals (types, dates).
+	// Replaces 4 CSV fetches (including year.csv at ~4MB / 120k rows)
+	// that previously blocked the main thread during LCP. counts.json is
+	// typically ~500 bytes and generated by the backend pipeline.
+	$(window).on('load', function() {
+		$.getJSON(TweetFeed.dataUrl('counts.json'), function(counts) {
+			const TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
+			for (const period of ['Today', 'Week', 'Month', 'Year']) {
+				const key = period.toLowerCase();
+				const w = counts.windows[key];
+				if (!w) continue;
+				if (w.first_date) {
+					$(".lastDate" + period + "From").fadeOut(function() {
+						$(this).text("From: " + formatDateLong(w.first_date)).fadeIn(2000);
+					});
+					$(".lastDate" + period + "To").fadeOut(function() {
+						$(this).text("To: " + formatDateLong(w.last_date)).fadeIn(2000);
+					});
+					$("#lastDate" + period).show();
+				}
+				$("#loading" + period).hide();
+				for (const t of TYPES) {
+					const count = (w.types && w.types[t]) || 0;
+					$('.' + key + '-' + t).fadeOut(function() {
+						$(this).text(nFormatter(count, 0)).fadeIn(1000);
+					});
+				}
+			}
+		});
+	});
+	</script>
+	<script>
+	function nFormatter(num, digits) {
+		const lookup = [
+			{ value: 1, symbol: "" },
+			{ value: 1e3, symbol: "k" },
+			{ value: 1e6, symbol: "M" },
+			{ value: 1e9, symbol: "G" },
+			{ value: 1e12, symbol: "T" },
+			{ value: 1e15, symbol: "P" },
+			{ value: 1e18, symbol: "E" }
+		];
+		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+		var item = lookup.slice().reverse().find(function(item) {
+			return num>= item.value;
+		});
+		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+	}
+	</script>
+	<script>
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
+	})
+	</script>
+</body>
+
+</html>

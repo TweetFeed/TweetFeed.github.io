@@ -26,9 +26,9 @@ from pathlib import Path
 # 404.html, today.html, tos.html (no shared nav anchor) and the SB Admin 2
 # scaffolds + legacy joke pages.
 MAIN_PAGES = [
-    "about.html", "agents.html", "api.html", "changelog.html",
-    "dashboard.html", "feeds.html", "graphs.html", "hunt.html", "index.html",
-    "researchers.html", "search.html",
+    "about/index.html", "agents/index.html", "api/index.html", "changelog/index.html",
+    "dashboard/index.html", "feeds/index.html", "graphs/index.html", "hunt/index.html", "index.html",
+    "researchers/index.html", "search/index.html",
 ]
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -110,11 +110,13 @@ def check_canonicals(pages: list[str]) -> list[str]:
             failures.append(f"{p}: missing <link rel='canonical' href='...'>")
             continue
         # index.html canonical should be the bare domain (with or without trailing /).
-        # All others should end with /<filename>.
+        # Other main pages live at /<name>/index.html and the canonical should
+        # be /<name>/ (clean URL, no .html).
         if p == "index.html":
             ok = re.match(r"^https://tweetfeed\.live/?$", canonical)
         else:
-            ok = canonical.endswith(f"/{p}")
+            slug = p.split("/", 1)[0]
+            ok = canonical.endswith(f"/{slug}/")
         if not ok:
             failures.append(f"{p}: canonical points elsewhere: {canonical}")
     return failures
