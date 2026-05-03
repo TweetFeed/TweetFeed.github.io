@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=18" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=19" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -248,99 +248,127 @@
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 				<!-- ========================= START of Main Content ========================= -->
-				<div class="container" style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
-					<div class="row justify-content-center">
-						<div class="col-4">
-							<!-- <hr> ============================ -->
-							<!-- <hr> ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Agent-friendly bundle</span> - 3rd May, 2026</h5>
-							<ul class="list-unstyled mt-3">
-								Three new bulk data formats for SIEM, Threat Intelligence platforms and automation:
-								<li class="text-muted ml-3 mt-1"><i class="mdi mdi-circle-medium mr-2"></i><b>STIX 2.1 bundles</b> (today/week/month) at <a style="color:#1A0DAB;" href="https://tweetfeed.live/stix/manifest.json">/stix/manifest.json</a> - spec-compliant, TLP:CLEAR, deterministic UUIDs.</li>
-								<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>Diff endpoint</b> at <a style="color:#1A0DAB;" href="api.html">/v1/since/&lt;ISO8601&gt;</a> - incremental sync, returns only IOCs added after a given timestamp.</li>
-								<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>Per-tag RSS</b> at <a style="color:#1A0DAB;" href="https://tweetfeed.live/rss/tag/phishing.xml">/rss/tag/&lt;slug&gt;.xml</a> - subscribe to a single threat type without polling the firehose.</li>
-								Full docs on the <a style="color:#1A0DAB;" href="feeds.html">Feeds</a>, <a style="color:#1A0DAB;" href="api.html">API</a> and <a style="color:#1A0DAB;" href="agents.html">Agents</a> pages. The MCP server-card also lists the new endpoints under <code>dataEndpoints</code>.
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Fenix x2</span> - 21st Dec, 2024</h5>
-							<ul class="list-unstyled mt-3">
-								After few months paused, TweetFeed is back again!
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Stop</span> - 24th May, 2024</h5>
-							<ul class="list-unstyled mt-3">
-								TweetFeed stopped due to technical issues to retrieve info at Twitter/𝕏.
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Fenix</span> - 15th Jan, 2024</h5>
-							<ul class="list-unstyled mt-3">
-								TweetFeed alive again.
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Frontend</span> - 17th Jun, 2023</h5>
-							<ul class="list-unstyled mt-3">
-								Improved frontend and made it better for mobile devices (bootstrap ftw).
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> OpenCTI</span> - 16th Jun, 2023</h5>
-							<ul class="list-unstyled mt-3">
-								Created OpenCTI connector. [<a style="color:#1A0DAB;" href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">Tweet</a>]<br>
-								Thank you to <a style="color:#1A0DAB;" href="https://x.com/aaarghhh " target="_blank" rel="noopener noreferrer">@aaarghhh</a> for building it.
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Frontend</span> - 4th Mar, 2023</h5>
-							<ul class="list-unstyled mt-3">
-								Improved frontend and made it better for mobile devices (bootstrap ftw).
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Added new tags</span> - 15th Jan, 2023</h5>
-							Added new tags and removing old ones with less hits.
-							<ul class="list-unstyled mt-3">
-								<li>Added</li>
-								<ul class="list-unstyled">
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Asyncrat</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Batloader</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Dcrat</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Njrat</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#RaspberryRobin</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#SocGholish</b></li>
-								</ul>
-								<li>Removed</li>
-								<ul class="list-unstyled">
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Dridex</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#FluBot</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Hancitor</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#ProxyNotShell</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#ProxyShell</b></li>
-									<li class="text-muted ml-3"><i class="mdi mdi-circle-medium mr-2"></i><b>#Trickbot</b></li>
-								</ul>
-							</ul>
-							Thank you to <a style="color:#1A0DAB;" href="https://x.com/nosecurething" target="_blank" rel="noopener noreferrer">Matt Anderson</a> for the suggestion.
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Added new tag</span> - 1st Apr, 2022</h5>
-							<ul class="list-unstyled mt-3">
-								Added <b>#Spring4Shell</b>. [<a style="color:#1A0DAB;" href="https://x.com/0xDanielLopez/status/1509837988594921482" target="_blank" rel="noopener noreferrer">Tweet</a>]
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Dashboard</span> - 7th Feb, 2022</h5>
-							<ul class="list-unstyled mt-3">
-								Created <a style="color:#1A0DAB;" href="https://tweetfeed.live/dashboard.html" target="_blank" rel="noopener noreferrer">Dashboard</a> section.
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> Added new tags</span> - 12th Dec, 2021</h5>
-							<ul class="list-unstyled mt-3">
-								Added <b>#log4j</b> and <b>#Log4Shell</b>. [<a style="color:#1A0DAB;" href="https://x.com/0xDanielLopez/status/1470029308152487940" target="_blank" rel="noopener noreferrer">Tweet</a>]
-							</ul>
-							<hr> <!-- ============================ -->
-							<h5 class="mt-4"> <span class="p-2 bg-light shadow rounded text-success"> TweetFeeed creation</span> - 8th Aug, 2021</h5>
-							<ul class="list-unstyled mt-3">
-								First commit<br>
-								Thank you to <a style="color:#1A0DAB;" href="https://x.com/1ZRR4H" target="_blank" rel="noopener noreferrer">Germán Fernández</a> and <a style="color:#1A0DAB;" href="https://x.com/BushidoToken" target="_blank" rel="noopener noreferrer">Will</a> for the initial feedback about the project.
-							</ul>
+				<div class="container" style="max-width: 760px;">
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2026-05-03">2026-05-03</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
+							<h3 class="section-heading cl-title">Agent-friendly bundle</h3>
+							<div class="cl-body"><p>Three new bulk data formats for SIEM, Threat Intelligence platforms and automation:</p><ul class="cl-list"><li><b>STIX 2.1 bundles</b> (today/week/month) at <a href="https://tweetfeed.live/stix/manifest.json">/stix/manifest.json</a> - spec-compliant, TLP:CLEAR, deterministic UUIDs.</li><li><b>Diff endpoint</b> at <a href="api.html">/v1/since/&lt;ISO8601&gt;</a> - incremental sync, returns only IOCs added after a given timestamp.</li><li><b>Per-tag RSS</b> at <a href="https://tweetfeed.live/rss/tag/phishing.xml">/rss/tag/&lt;slug&gt;.xml</a> - subscribe to a single threat type without polling the firehose.</li></ul><p class="cl-foot">Full docs on the <a href="feeds.html">Feeds</a>, <a href="api.html">API</a> and <a href="agents.html">Agents</a> pages. The MCP server-card also lists the new endpoints under <code>dataEndpoints</code>.</p></div>
 						</div>
-						<!--end col-->
-					</div>
-					<!--end row-->
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2024-12-21">2024-12-21</time>
+								<span class="cl-tag cl-tag-status">Status</span>
+							</div>
+							<h3 class="section-heading cl-title">Fenix x2</h3>
+							<div class="cl-body"><p>After a few months paused, TweetFeed is back again.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2024-05-24">2024-05-24</time>
+								<span class="cl-tag cl-tag-status">Status</span>
+							</div>
+							<h3 class="section-heading cl-title">Stop</h3>
+							<div class="cl-body"><p>TweetFeed stopped due to technical issues retrieving info from Twitter/X.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2024-01-15">2024-01-15</time>
+								<span class="cl-tag cl-tag-status">Status</span>
+							</div>
+							<h3 class="section-heading cl-title">Fenix</h3>
+							<div class="cl-body"><p>TweetFeed alive again.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2023-06-17">2023-06-17</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
+							<h3 class="section-heading cl-title">Frontend refresh</h3>
+							<div class="cl-body"><p>Improved frontend, made it better for mobile devices (bootstrap ftw).</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2023-06-16">2023-06-16</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
+							<h3 class="section-heading cl-title">OpenCTI connector</h3>
+							<div class="cl-body"><p>Created OpenCTI connector. [<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">Tweet</a>]</p><p class="cl-foot">Thanks to <a href="https://x.com/aaarghhh" target="_blank" rel="noopener noreferrer">@aaarghhh</a> for building it.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2023-03-04">2023-03-04</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
+							<h3 class="section-heading cl-title">Frontend refresh</h3>
+							<div class="cl-body"><p>Improved frontend, made it better for mobile devices (bootstrap ftw).</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2023-01-15">2023-01-15</time>
+								<span class="cl-tag cl-tag-tags">Tags</span>
+							</div>
+							<h3 class="section-heading cl-title">Tag refresh</h3>
+							<div class="cl-body"><p>Added new tags and removed old ones with fewer hits.</p><div class="cl-tag-grid"><div><h4 class="cl-subhead">Added</h4><ul class="cl-list"><li><b>#Asyncrat</b></li><li><b>#Batloader</b></li><li><b>#Dcrat</b></li><li><b>#Njrat</b></li><li><b>#RaspberryRobin</b></li><li><b>#SocGholish</b></li></ul></div><div><h4 class="cl-subhead">Removed</h4><ul class="cl-list"><li><b>#Dridex</b></li><li><b>#FluBot</b></li><li><b>#Hancitor</b></li><li><b>#ProxyNotShell</b></li><li><b>#ProxyShell</b></li><li><b>#Trickbot</b></li></ul></div></div><p class="cl-foot">Thanks to <a href="https://x.com/nosecurething" target="_blank" rel="noopener noreferrer">Matt Anderson</a> for the suggestion.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2022-04-01">2022-04-01</time>
+								<span class="cl-tag cl-tag-tags">Tags</span>
+							</div>
+							<h3 class="section-heading cl-title">Spring4Shell tag</h3>
+							<div class="cl-body"><p>Added <b>#Spring4Shell</b>. [<a href="https://x.com/0xDanielLopez/status/1509837988594921482" target="_blank" rel="noopener noreferrer">Tweet</a>]</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2022-02-07">2022-02-07</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
+							<h3 class="section-heading cl-title">Dashboard</h3>
+							<div class="cl-body"><p>Created the <a href="dashboard.html">Dashboard</a> section.</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2021-12-12">2021-12-12</time>
+								<span class="cl-tag cl-tag-tags">Tags</span>
+							</div>
+							<h3 class="section-heading cl-title">Log4Shell tags</h3>
+							<div class="cl-body"><p>Added <b>#log4j</b> and <b>#Log4Shell</b>. [<a href="https://x.com/0xDanielLopez/status/1470029308152487940" target="_blank" rel="noopener noreferrer">Tweet</a>]</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2021-08-08">2021-08-08</time>
+								<span class="cl-tag cl-tag-launch">Launch</span>
+							</div>
+							<h3 class="section-heading cl-title">TweetFeed creation</h3>
+							<div class="cl-body"><p>First commit.</p><p class="cl-foot">Thanks to <a href="https://x.com/1ZRR4H" target="_blank" rel="noopener noreferrer">Germán Fernández</a> and <a href="https://x.com/BushidoToken" target="_blank" rel="noopener noreferrer">Will</a> for the initial feedback about the project.</p></div>
+						</div>
+					</article>
 				</div>
 				<!-- =========================END of Main Content ========================= -->
 			</div>

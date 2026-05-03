@@ -217,6 +217,27 @@ hr.divider {
 	line-height: 1;
 }
 .code-block .tf-copy.code-copy:hover { color: #000; background: #fff; }
+
+/* Changelog cards: one <article class="card cl-entry"> per entry, with a
+   coloured type tag + ISO date in the meta row. Reuses .card black border
+   and the IOC-type colour palette so type badges feel native. */
+.cl-entry { margin-bottom: 0.85rem; }
+.cl-meta { display: flex; align-items: center; gap: 0.6rem; font-size: 13px; margin-bottom: 0.55rem; }
+.cl-meta time { color: #555; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-weight: 500; }
+.cl-tag { padding: 1px 8px; border: 1px solid black; border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; background: #fff; color: #000; line-height: 1.5; }
+.cl-tag-launch  { background: #34e3a4; }
+.cl-tag-feature { background: #a0dde6; }
+.cl-tag-tags    { background: #ffc591; }
+.cl-tag-status  { background: #FFCC99; }
+.cl-title { font-size: 1.2rem; margin: 0 0 0.6rem 0; }
+.cl-body { color: #1c1c1c; font-size: 15px; line-height: 1.6; }
+.cl-body p { margin: 0 0 0.5rem 0; }
+.cl-body p:last-child { margin-bottom: 0; }
+.cl-list { padding-left: 1.2rem; margin: 0.4rem 0; line-height: 1.7; }
+.cl-list li + li { margin-top: 0.2rem; }
+.cl-foot { color: #737373; font-size: 13px; margin: 0.75rem 0 0 0; }
+.cl-tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 0.5rem 0 0.75rem 0; }
+.cl-subhead { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: #1c1c1c; }
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
 
