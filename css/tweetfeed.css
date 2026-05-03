@@ -199,7 +199,24 @@ hr.divider {
 	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 	font-size: 13px;
 	overflow-x: auto;
+	position: relative;
 }
+/* Corner-pinned copy icon for multi-line .code-block boxes (hunt.html
+   KQL tabs). Replaces a legacy big "Copy #N to clipboard" button that
+   sat outside the pre. */
+.code-block .tf-copy.code-copy {
+	position: absolute;
+	top: 0.4rem;
+	right: 0.5rem;
+	padding: 3px 7px;
+	font-size: 13px;
+	color: #555;
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid black;
+	border-radius: 3px;
+	line-height: 1;
+}
+.code-block .tf-copy.code-copy:hover { color: #000; background: #fff; }
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
 

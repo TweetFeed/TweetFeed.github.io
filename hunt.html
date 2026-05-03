@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=16" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=18" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -319,24 +319,17 @@ ip4
 				<h3 style="color:#1DA1F2;font-family: 'Rubik', sans-serif;">2. Hunting with Microsoft Defender for Endpoint (MDE) <a style="background-color: 
 #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide" target="_blank" role="button" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt"></i></a></h3>
 				<br>
-				<div class="row">
-					<div class="col">
-						<nav>
-							<div class="nav nav-tabs" id="nav-tab" role="tablist">
-								<a class="nav-item nav-link active border-bottom-0" id="nav-url-tab" data-toggle="tab" href="#nav-url" role="tab" aria-controls="nav-url" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif" onclick="changeCopyButton('1')"><b>#1</b> URLs & Domains</a>
-								<a class="nav-item nav-link border-bottom-0" id="nav-ip-tab" data-toggle="tab" href="#nav-ip" role="tab" aria-controls="nav-ip" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif" onclick="changeCopyButton('2')"><b>#2</b> IP addresses</a>
-								<a class="nav-item nav-link border-bottom-0" id="nav-sha256-tab" data-toggle="tab" href="#nav-sha256" role="tab" aria-controls="nav-sha256" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif" onclick="changeCopyButton('3')"><b>#3</b> SHA256</a>
-								<a class="nav-item nav-link border-bottom-0" id="nav-md5-tab" data-toggle="tab" href="#nav-md5" role="tab" aria-controls="nav-md5" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif" onclick="changeCopyButton('4')"><b>#4</b> MD5</a>
-							</div>
-						</nav>
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active border-bottom-0" id="nav-url-tab" data-toggle="tab" href="#nav-url" role="tab" aria-controls="nav-url" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> URLs & Domains</a>
+						<a class="nav-item nav-link border-bottom-0" id="nav-ip-tab" data-toggle="tab" href="#nav-ip" role="tab" aria-controls="nav-ip" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> IP addresses</a>
+						<a class="nav-item nav-link border-bottom-0" id="nav-sha256-tab" data-toggle="tab" href="#nav-sha256" role="tab" aria-controls="nav-sha256" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> SHA256</a>
+						<a class="nav-item nav-link border-bottom-0" id="nav-md5-tab" data-toggle="tab" href="#nav-md5" role="tab" aria-controls="nav-md5" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#4</b> MD5</a>
 					</div>
-					<div class="col align-self-center">
-						<button class="btn btn-primary shadow-none float-right btn-tf" onclick="codeClipboard()" id="buttonQuery1"><span id="textQuery1">Copy #1 to clipboard </span><i id="iconQuery1" class="far fa-clipboard"></i></button>
-					</div>
-				</div> <!-- End row -->
+				</nav>
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="nav-url" role="tabpanel" aria-labelledby="nav-url-tab">
-						<pre class="code-block p-2"><code>let MaxAge = ago(30d);
+						<pre id="nav-url-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
 let domain_whitelist = pack_array(
 'XXX' // Some URL/Domain you want to whitelist.
 );
@@ -359,10 +352,10 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp> MaxAge
     ) on RemoteUrl
-) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code></pre>
+) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-url-pre" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="nav-ip" role="tabpanel" aria-labelledby="nav-ip-tab">
-						<pre class="code-block p-2"><code>let MaxAge = ago(30d);
+						<pre id="nav-ip-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
 let IPaddress_whitelist = pack_array(
 'XXX' // Some IP address you want to whitelist.
 );
@@ -386,10 +379,10 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp> MaxAge
     ) on RemoteIP
-) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code></pre>
+) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-ip-pre" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="nav-sha256" role="tabpanel" aria-labelledby="nav-sha256-tab">
-						<pre class="code-block p-2"><code>let MaxAge = ago(30d);
+						<pre id="nav-sha256-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
 let SHA256_whitelist = pack_array(
 'XXX' // Some SHA256 hash to whitelist.
 );
@@ -424,10 +417,10 @@ union (
         DeviceImageLoadEvents
         | where Timestamp> MaxAge
     ) on SHA256
-) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-sha256-pre" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="nav-md5" role="tabpanel" aria-labelledby="nav-md5-tab">
-						<pre class="code-block p-2"><code>let MaxAge = ago(30d);
+						<pre id="nav-md5-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
 let MD5_whitelist = pack_array(
 'XXX' // Some MD5 hash to whitelist.
 );
@@ -462,7 +455,7 @@ union (
         DeviceImageLoadEvents
         | where Timestamp> MaxAge
     ) on MD5
-) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-md5-pre" title="Copy"></i></pre>
 					</div>
 				</div> <!-- End nav -->
 				<section class="faq-section">
@@ -542,34 +535,6 @@ union (
 	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
 	<script src="js/demo/datatables-demo.js"></script>
-	<!-- Page level custom scripts -->
-	<script>
-	function codeClipboard() {
-		/* Get the text field */
-		var text = $(".tab-pane.active code").text()
-
-		var queryTextButton = $("#textQuery1").text()
-
-		/* Copy the text inside the text field */
-		navigator.clipboard.writeText(text);
-
-		$("#iconQuery1").removeClass("far fa-clipboard");
-		$("#iconQuery1").addClass("fas fa-check");
-		$("#textQuery1").text("Copied! ");
-		$("#buttonQuery1").css("background-color", "green");
-		setTimeout(
-			function() {
-				$("#iconQuery1").removeClass("fas fa-check");
-				$("#iconQuery1").addClass("far fa-clipboard");
-				$("#textQuery1").text(queryTextButton);
-				$("#buttonQuery1").css("background-color", "#4682B4");
-			}, 1000);
-	}
-
-	function changeCopyButton(number) {
-		$("#textQuery1").text("Copy #" + number + " to clipboard ");
-	}
-	</script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
