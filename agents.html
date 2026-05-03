@@ -409,6 +409,38 @@
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/<b style="color:gray;">{time}</b>/<b style="color:gray;">{filter1}</b>/<b style="color:gray;">{filter2}</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
 				<br>
 
+				<h3 id="option-bulk" style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Bulk data formats</h3>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+					Static bundles for SIEM/Threat Intelligence platforms and incremental sync. All regenerated every 15 minutes from the same pipeline that feeds the API and MCP server.
+				</p>
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered" style="border:none;width:100%;">
+						<colgroup>
+							<col span="1" style="width: 40%;">
+							<col span="1" style="width: 60%;">
+						</colgroup>
+						<thead>
+							<tr>
+								<th><b>Endpoint</b></th>
+								<th><b>Purpose</b></th>
+							</tr>
+						</thead>
+						<tr>
+							<td><a href="https://tweetfeed.live/stix/manifest.json"><code>/stix/manifest.json</code></a></td>
+							<td>STIX 2.1 indicator bundles (today/week/month windows). Spec-compliant Bundle objects with TLP:CLEAR marking, per-IOC pattern types, deterministic UUIDs for cross-pull dedupe.</td>
+						</tr>
+						<tr>
+							<td><a href="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"><code>/v1/since/&lt;ISO8601&gt;</code></a></td>
+							<td>Diff endpoint: returns IOCs added after the given timestamp. Supports the same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as <code>/v1/&lt;time&gt;</code>. 410 if <code>since</code> is &gt;365d ago.</td>
+						</tr>
+						<tr>
+							<td><a href="https://tweetfeed.live/rss/tag/phishing.xml"><code>/rss/tag/&lt;slug&gt;.xml</code></a></td>
+							<td>One RSS feed per active tag (a tag is "active" with &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose.</td>
+						</tr>
+					</table>
+				</div>
+				<br>
+
 				<h3 style="color:#1DA1F2;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Discovery endpoints</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Crawlers and agents can discover every integration from a single
