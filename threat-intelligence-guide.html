@@ -267,7 +267,8 @@
 							<li><b>Action:</b> blocking, alerting or monitoring; routed to SIEM, firewall, EDR, MISP or SOAR.</li>
 							<li><b>Expiration:</b> aged out by per-type TTL. URLs after a few days, IPs after weeks, hashes effectively never.</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:14px; line-height:1.6; color:#737373; margin-bottom:0;">Without per-type TTL, a SIEM rule built on a 6-month-old URL list will alert on legitimate traffic to a domain that the original adversary lost months ago.</p>
+						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:14px; line-height:1.6; color:#737373; margin-bottom:0.85rem;">Without per-type TTL, a SIEM rule built on a 6-month-old URL list will alert on legitimate traffic to a domain that the original adversary lost months ago.</p>
+						<p style="font-family:'Rubik',sans-serif; font-size:14px; line-height:1.6; margin-bottom:0;">For per-type detail, see the <a href="ioc-types/" class="text-decoration-none"><b>5 IOC type hubs</b></a> covering format, prevalence and best use of URLs, domains, IPs, MD5 and SHA-256.</p>
 					</div>
 				</div>
 
@@ -343,8 +344,27 @@
 							<li><b>Strengths:</b> high recall, real-time signal, tagged with malware family and category for easy filtering.</li>
 							<li><b>Limitations:</b> lower precision than analyst-curated feeds; cross-reference VirusTotal, urlscan.io or your sandbox before automated blocking.</li>
 							<li><b>Best fit:</b> high-volume signal feed, complementary to commercial intelligence; primary feed for resource-constrained teams; teaching dataset for blue-team training.</li>
-							<li><b>Browse:</b> <a href="tags/" class="text-decoration-none">22 curated threat tags</a> (APT groups, malware families, TTPs) or <a href="ioc-types/" class="text-decoration-none">5 IOC types</a> (URLs, domains, IPs, MD5, SHA-256).</li>
 						</ul>
+						<div class="row mt-3">
+							<div class="col-md-6 mb-3">
+								<a href="tags/" class="text-decoration-none" style="color:inherit;">
+									<div class="card h-100 p-3" style="background:#fff; border:1px solid #1c1c1c;">
+										<span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by tag</span>
+										<h4 style="color:#1DA1F2; font-family:'Segoe UI',Arial,sans-serif; font-weight:600; font-size:17px; margin:0.3rem 0 0.4rem 0;">22 curated threat tags</h4>
+										<p style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">APT groups, malware families and TTPs. Each tag has a dedicated landing page with the live IOC stream and reference content.</p>
+									</div>
+								</a>
+							</div>
+							<div class="col-md-6 mb-3">
+								<a href="ioc-types/" class="text-decoration-none" style="color:inherit;">
+									<div class="card h-100 p-3" style="background:#fff; border:1px solid #1c1c1c;">
+										<span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by IOC type</span>
+										<h4 style="color:#1DA1F2; font-family:'Segoe UI',Arial,sans-serif; font-weight:600; font-size:17px; margin:0.3rem 0 0.4rem 0;">5 IOC types</h4>
+										<p style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">URLs, domains, IPs, MD5 and SHA-256. Per-type hubs covering format, half-life and best blocking use cases.</p>
+									</div>
+								</a>
+							</div>
+						</div>
 						<p style="font-family:'Rubik',sans-serif; color:#737373; font-size:14px; line-height:1.6; margin: 0.5rem 0 0 0;">Integration recipes for MISP, OpenCTI, Splunk, KQL and IntelOwl on the <a href="hunt.html" class="text-decoration-none">Threat Hunting page</a>.</p>
 					</div>
 				</div>
