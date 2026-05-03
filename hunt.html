@@ -10,15 +10,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: bash + jq, Splunk SPL, Microsoft Sentinel KQL, CrowdStrike Falcon, MISP, Suricata, Sigma templates.">
+	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,crowdstrike,sigma,suricata,misp,opencti,sentinel,wazuh,falcon,sentinelone,thehive,yara,stix">
+	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,suricata,pihole,misp,sigma">
 	<link rel="canonical" href="https://tweetfeed.live/hunt.html">
 	<title>Free IOC Threat Hunting Dashboard - Search Malware, Phishing, URLs</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta name="twitter:description" content="Ready-to-use threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender, CrowdStrike, MISP, Suricata, Sigma.">
+	<meta name="twitter:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
 	<meta name="twitter:url" content="https://tweetfeed.live/hunt.html">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/hunt.html">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta property="og:description" content="Ready-to-use threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender, CrowdStrike, MISP, Suricata, Sigma.">
+	<meta property="og:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -46,7 +46,7 @@
 	<link href="css/table.css" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=20" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=21" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -60,7 +60,7 @@
 		"@context": "https://schema.org",
 		"@type": "HowTo",
 		"name": "Hunt for IOCs from Twitter/X using TweetFeed",
-		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, CrowdStrike Falcon, SentinelOne, Wazuh, MISP feed install, Suricata rules, Pi-hole, TheHive, OpenCTI, Sigma rule templates, YARA generation and STIX 2.1 export.",
+		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, Suricata, Pi-hole, pfSense, MISP feed install and Sigma rule templates.",
 		"author": {"@id": "https://tweetfeed.live/#founder"},
 		"about": {"@id": "https://tweetfeed.live/#organization"},
 		"tool": [
@@ -68,22 +68,17 @@
 			{"@type": "HowToTool", "name": "Splunk"},
 			{"@type": "HowToTool", "name": "Microsoft Sentinel"},
 			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
-			{"@type": "HowToTool", "name": "CrowdStrike Falcon"},
-			{"@type": "HowToTool", "name": "SentinelOne"},
-			{"@type": "HowToTool", "name": "Wazuh"},
-			{"@type": "HowToTool", "name": "MISP"},
-			{"@type": "HowToTool", "name": "OpenCTI"},
-			{"@type": "HowToTool", "name": "TheHive"},
 			{"@type": "HowToTool", "name": "Suricata"},
 			{"@type": "HowToTool", "name": "Pi-hole"},
-			{"@type": "HowToTool", "name": "Sigma"},
-			{"@type": "HowToTool", "name": "YARA"}
+			{"@type": "HowToTool", "name": "pfSense"},
+			{"@type": "HowToTool", "name": "MISP"},
+			{"@type": "HowToTool", "name": "Sigma"}
 		],
 		"step": [
-			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, EDR/XDR, network and firewall, TIP and SOAR, or detection content."},
+			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, network and firewall, or detection content."},
 			{"@type": "HowToStep", "name": "Configure the connector or lookup", "text": "Each recipe includes the exact ingest pattern: REST API calls, CSV download, RSS feed, MISP feed URL, KQL externaldata() block or Splunk inputlookup."},
 			{"@type": "HowToStep", "name": "Schedule the refresh", "text": "TweetFeed CSVs and the API refresh every 15 minutes. Match your pull cadence to your detection latency tolerance."},
-			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause, Wazuh CDB list) so trusted assets stop firing alerts."},
+			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause) so trusted assets stop firing alerts."},
 			{"@type": "HowToStep", "name": "Pivot back to provenance", "text": "Every IOC carries the original tweet URL and researcher handle. Use the pivot recipes to verify before acting on any indicator."}
 		]
 	}
@@ -160,7 +155,7 @@
 			{
 				"@type": "Question",
 				"name": "Is there a rate limit on the API?",
-				"acceptedAnswer": {"@type": "Answer", "text": "api.tweetfeed.live runs as a Cloudflare Worker on the Free plan (100,000 requests per day). Real traffic sits around 7 to 8K per day, leaving roughly 300x headroom. There is no authentication or per-key throttling."}
+				"acceptedAnswer": {"@type": "Answer", "text": "api.tweetfeed.live runs as a Cloudflare Worker on the Free plan (100,000 requests per day). Real traffic sits around 7 to 8K per day, leaving roughly 300x headroom. There is no authentication or per-key throttling - please be reasonable."}
 			},
 			{
 				"@type": "Question",
@@ -179,11 +174,6 @@
 			},
 			{
 				"@type": "Question",
-				"name": "Why is there no authentication?",
-				"acceptedAnswer": {"@type": "Answer", "text": "TweetFeed is open data, side-project scope, CC0-licensed. Adding auth would gate adoption without solving any real abuse. The Cloudflare Worker absorbs spike traffic; if you need a private mirror just clone the GitHub repo."}
-			},
-			{
-				"@type": "Question",
 				"name": "Is there an MCP server for AI agents?",
 				"acceptedAnswer": {"@type": "Answer", "text": "Yes. mcp.tweetfeed.live exposes 5 tools: query_iocs, check_url, check_ip, check_hash and list_recent_iocs. See the Agents page for the config snippet."}
 			},
@@ -191,16 +181,6 @@
 				"@type": "Question",
 				"name": "How do I contribute new IOCs?",
 				"acceptedAnswer": {"@type": "Answer", "text": "Post the IOC on Twitter/X with one of the tracked hashtags (full list on the Feeds page) or get added to the curated TweetFeedList. The next cron tick picks it up automatically."}
-			},
-			{
-				"@type": "Question",
-				"name": "Is there a self-hosted or enterprise version?",
-				"acceptedAnswer": {"@type": "Answer", "text": "No SLA, no enterprise tier - this is a single-maintainer side project. Use TweetFeed as one source of many in your Threat Intelligence pipeline, never as the only source."}
-			},
-			{
-				"@type": "Question",
-				"name": "Does TweetFeed work in air-gapped environments?",
-				"acceptedAnswer": {"@type": "Answer", "text": "Yes. Clone the data repo (github.com/0xDanielLopez/TweetFeed) inside your perimeter and refresh on whatever cadence your egress policy allows. The CSV layout is documented and stable."}
 			}
 		]
 	}
@@ -311,59 +291,46 @@
 			</nav>
 			<!-- Top bar end -->
 			<div id="content">
+			<div class="docs-wrap">
+				<aside class="docs-sidebar" aria-label="Docs navigation">
+					<ul>
+					<li class="docs-nav-label">Overview</li>
+					<li><a href="docs/">Docs home</a></li>
+					<li class="docs-nav-label">Concepts</li>
+					<li><a href="threat-intelligence-guide.html">Threat Intelligence guide</a></li>
+					<li class="docs-nav-label">Browse the data</li>
+					<li><a href="tags/">Tag index</a></li>
+					<li><a href="ioc-types/">IOC types</a></li>
+					<li class="docs-nav-label">Integrate</li>
+					<li><a href="api.html">REST API</a></li>
+					<li><a href="agents.html">MCP and Agents</a></li>
+					<li><a href="hunt.html" class="active">Threat hunting</a></li>
+					<li class="docs-nav-label">Other</li>
+					<li><a href="feeds.html">Feeds</a></li>
+					<li><a href="changelog.html">Changelog</a></li>
+					<li><a href="about.html">About</a></li>
+					</ul>
+					</aside>
+							<main class="docs-content">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</h1>
-					<h2><em>Copy-paste recipes to hunt with TweetFeed IOCs in your terminal, SIEM, EDR, firewall and TIP</em></h2>
+					<h2><em>Copy-paste recipes to hunt with TweetFeed IOCs in your terminal, SIEM and firewall</em></h2>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</p>
-					<p style="font-size: 14px;"><em>Recipes for terminal, SIEM, EDR, firewall, TIP</em></p>
+					<p style="font-size: 14px;"><em>Recipes for terminal, SIEM, firewall</em></p>
 				</div>
 				<hr class="divider">
 				<ol style="font-size: 16px; columns: 16rem; column-gap: 2rem;">
 					<li><a href="hunt.html#quickstart" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Quick start - get raw IOCs</a></li>
 					<li><a href="hunt.html#terminal" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Terminal &amp; shell</a></li>
 					<li><a href="hunt.html#siem" style="font-family: 'Rubik', sans-serif;color: #0000EE;">SIEM playbooks</a></li>
-					<li><a href="hunt.html#edr" style="font-family: 'Rubik', sans-serif;color: #0000EE;">EDR / XDR</a></li>
 					<li><a href="hunt.html#network" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Network &amp; firewall</a></li>
-					<li><a href="hunt.html#tip" style="font-family: 'Rubik', sans-serif;color: #0000EE;">TIP &amp; SOAR</a></li>
 					<li><a href="hunt.html#detection" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Detection content</a></li>
 					<li><a href="hunt.html#faq" style="font-family: 'Rubik', sans-serif;color: #0000EE;">FAQ</a></li>
 				</ol>
-
-				<hr class="divider">
-				<h3 class="section-heading">What you can hunt</h3>
-				<p style="font-size: 14px;">TweetFeed publishes 5 IOC types from infosec community Twitter/X posts. Each record carries the original tweet URL and researcher handle for provenance.</p>
-				<div class="table-responsive">
-				<table class="table table-bordered" style="font-size: 14px; background: #fff;">
-					<colgroup>
-						<col style="width: 18%;">
-						<col style="width: 20.5%;">
-						<col style="width: 20.5%;">
-						<col style="width: 20.5%;">
-						<col style="width: 20.5%;">
-					</colgroup>
-					<thead>
-						<tr style="background: #f2f2f2;">
-							<th>IOC type</th>
-							<th>Block</th>
-							<th>Detect / alert</th>
-							<th>Enrich</th>
-							<th>Pivot retro</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr><th>URL</th><td>&#10003; <a href="hunt.html#net-squid">Squid</a></td><td>&#10003; <a href="hunt.html#siem-spl">Splunk proxy</a></td><td>&#10003; <a href="hunt.html#tip-misp">MISP feed</a></td><td>&#10003; <a href="hunt.html#siem-mde">MDE 30d</a></td></tr>
-						<tr><th>Domain</th><td>&#10003; <a href="hunt.html#net-pihole">Pi-hole</a> / <a href="hunt.html#net-suricata">Suricata</a></td><td>&#10003; <a href="hunt.html#det-sigma">Sigma rule</a></td><td>&#10003; <a href="hunt.html#tip">MISP / OpenCTI</a></td><td>&#10003; <a href="hunt.html#siem-sentinel">DNS log lookback</a></td></tr>
-						<tr><th>IP</th><td>&#10003; <a href="hunt.html#net-pfsense">pfSense alias</a></td><td>&#10003; <a href="hunt.html#siem">SIEM netflow</a></td><td>&#10003; <a href="hunt.html#term-4">whois enrich</a></td><td>&#10003; <a href="hunt.html#sentinel-secevent">SecurityEvent join</a></td></tr>
-						<tr><th>MD5</th><td>&#10003; <a href="hunt.html#cs-push">Falcon IOC API</a></td><td>&#10003; <a href="hunt.html#siem-mde">EDR file event</a></td><td>-</td><td>&#10003; <a href="hunt.html#siem-mde">DeviceFileEvents</a></td></tr>
-						<tr><th>SHA256</th><td>&#10003; <a href="hunt.html#cs-push">Falcon IOC API</a></td><td>&#10003; <a href="hunt.html#det-yara">YARA rule</a></td><td>-</td><td>&#10003; <a href="hunt.html#siem-mde">DeviceProcessEvents</a></td></tr>
-						<tr><th>Account (@handle)</th><td>-</td><td>&#10003; via tweet field</td><td>&#10003; <a href="hunt.html#term-3">researcher pivot</a></td><td>&#10003; via tweet field</td></tr>
-					</tbody>
-				</table>
-				</div>
 
 				<hr id="quickstart" class="divider">
 				<h3 class="section-heading">1. Quick start - get raw IOCs</h3>
@@ -399,53 +366,36 @@
 						<pre id="qs-csv-1" class="code-block p-2"><code class="language-bash">wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-csv-1" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Quick filter without jq:</p>
-						<pre id="qs-csv-2" class="code-block p-2"><code class="language-bash">awk -F, '$3=="\"ip\""' week.csv | cut -d, -f4</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-csv-2" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="qs-rss" role="tabpanel" aria-labelledby="qs-rss-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">RSS feed with the latest IOCs (refreshed every 15 min):</p>
 						<pre id="qs-rss-1" class="code-block p-2"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rss-1" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Python consumer using <code>feedparser</code>:</p>
-						<pre id="qs-rss-2" class="code-block p-2"><code class="language-python">import feedparser
-feed = feedparser.parse("https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml")
-for entry in feed.entries:
-    # entry.title is the raw IOC value
-    # entry.link is the source tweet URL
-    print(entry.title, entry.link)</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rss-2" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="qs-misp" role="tabpanel" aria-labelledby="qs-misp-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">TweetFeed publishes a MISP-format manifest with 4 Events (today / week / month / year). Add it as a feed:</p>
-						<p style="font-size: 14px;"><b>Sync Actions &rarr; Feeds &rarr; Add Feed</b>:</p>
+						<p style="font-size: 14px; margin-top: 1rem;">TweetFeed publishes a MISP-format manifest with 4 Events (today / week / month / year). In MISP, go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b>:</p>
 						<pre id="qs-misp-1" class="code-block p-2"><code class="language-text">URL:           https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json
 Source format: misp
 Provider:      TweetFeed
 Auto-pull:     yes
 Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-misp-1" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">More on MISP setup in section <a href="hunt.html#tip">6. TIP &amp; SOAR</a>.</p>
+						<p style="font-size: 14px; margin-top: 0.5rem;">Save, click <b>Fetch and store all feed data</b> to seed, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh.</p>
 					</div>
 				</div>
 
 				<hr id="terminal" class="divider">
 				<h3 class="section-heading">2. Terminal &amp; shell</h3>
-				<p style="font-size: 14px;">Six recipes you can paste into a shell right now. All return clean stdout suitable for piping into your tooling.</p>
+				<p style="font-size: 14px;">Four recipes you can paste into a shell right now. All return clean stdout suitable for piping into your tooling.</p>
 				<p style="font-size: 14px;"><b>2.1 Daily blocklist refresh</b> - cron-friendly, runs every 15 min and updates a flat file:</p>
 				<pre id="term-1" class="code-block p-2"><code class="language-bash">*/15 * * * * curl -sfL https://api.tweetfeed.live/v1/today/url \
   | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-1" title="Copy"></i></pre>
 				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.2 Slice by malware family tag</b> - only IPs tagged Cobalt Strike from this week:</p>
 				<pre id="term-2" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-2" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="term-3">2.3 Pivot from a researcher</b> - every IOC published this week by <code>@JAMESWT_MHT</code> (filter is client-side because the REST endpoint does not accept user as a path filter):</p>
-				<pre id="term-3-pre" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
-  | jq -r '.[] | select(.user=="JAMESWT_MHT") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-3-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="term-4">2.4 Whois ownership of all malicious IPs from today</b>:</p>
-				<pre id="term-4-pre" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/ip | jq -r '.[].value' \
-  | xargs -I{} sh -c 'echo "=== {} ==="; whois {} | grep -iE "orgname|country"'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-4-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.5 Resolve and cluster by IP</b> - find phishing domains sharing the same upstream infrastructure:</p>
-				<pre id="term-5" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/domain | jq -r '.[].value' \
-  | while read d; do printf "%s\t" "$d"; dig +short "$d" | head -1; done \
-  | sort -k2 | awk '$2!=""'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-5" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.6 IOC to source tweet</b> - every IOC carries provenance, useful before you alert on it:</p>
-				<pre id="term-6" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
-  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-6" title="Copy"></i></pre>
+				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.3 Pivot from a researcher</b> - every IOC published this week by <code>@malwrhunterteam</code> (filter is client-side because the REST endpoint does not accept user as a path filter):</p>
+				<pre id="term-3" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
+  | jq -r '.[] | select(.user=="malwrhunterteam") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-3" title="Copy"></i></pre>
+				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.4 IOC to source tweet</b> - every IOC carries provenance, useful before you alert on it:</p>
+				<pre id="term-4" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
+  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-4" title="Copy"></i></pre>
 
 				<hr id="siem" class="divider">
 				<h3 class="section-heading">3. SIEM playbooks</h3>
@@ -455,8 +405,6 @@ Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-cop
 						<a class="nav-item nav-link active border-bottom-0" id="siem-spl-tab" data-toggle="tab" href="#siem-spl" role="tab" aria-controls="siem-spl" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> Splunk SPL</a>
 						<a class="nav-item nav-link border-bottom-0" id="siem-sentinel-tab" data-toggle="tab" href="#siem-sentinel" role="tab" aria-controls="siem-sentinel" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> Sentinel KQL</a>
 						<a class="nav-item nav-link border-bottom-0" id="siem-mde-tab" data-toggle="tab" href="#siem-mde" role="tab" aria-controls="siem-mde" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> Defender (KQL)</a>
-						<a class="nav-item nav-link border-bottom-0" id="siem-elastic-tab" data-toggle="tab" href="#siem-elastic" role="tab" aria-controls="siem-elastic" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#4</b> Elastic</a>
-						<a class="nav-item nav-link border-bottom-0" id="siem-chronicle-tab" data-toggle="tab" href="#siem-chronicle" role="tab" aria-controls="siem-chronicle" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#5</b> Chronicle YARA-L</a>
 					</div>
 				</nav>
 				<div class="tab-content" id="siem-tabContent">
@@ -650,178 +598,34 @@ union (
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="siem-elastic" role="tabpanel" aria-labelledby="siem-elastic-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>3.6 Elastic enrich processor</b> - keep TweetFeed loaded as an enrich index for inline lookups:</p>
-						<pre id="elastic-enrich" class="code-block p-2"><code class="language-json">PUT _enrich/policy/tweetfeed_iocs
-{
-  "match": {
-    "indices": "tweetfeed-week-*",
-    "match_field": "value",
-    "enrich_fields": ["type", "tags", "user", "tweet"]
-  }
-}
-POST /_enrich/policy/tweetfeed_iocs/_execute</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-enrich" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="siem-chronicle" role="tabpanel" aria-labelledby="siem-chronicle-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>3.7 Chronicle YARA-L</b> - DNS lookup matching a reference list of TweetFeed domains:</p>
-						<pre id="chronicle-dns" class="code-block p-2"><code>rule tweetfeed_domain_lookup {
-  meta:
-    description = "DNS query to a TweetFeed-listed domain"
-    severity = "Medium"
-  events:
-    $dns.metadata.event_type = "NETWORK_DNS"
-    $dns.network.dns.questions.name = $domain
-  match:
-    $domain over 5m
-  condition:
-    $dns and $domain in %tweetfeed_domains
-}</code><i class="tf-copy code-copy far fa-copy" data-copy="#chronicle-dns" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><small>Populate <code>%tweetfeed_domains</code> reference list from <code>/v1/week/domain</code> on a 15-min cadence.</small></p>
-					</div>
-				</div>
-
-				<hr id="edr" class="divider">
-				<h3 class="section-heading">4. EDR / XDR</h3>
-				<p style="font-size: 14px;">Push TweetFeed IOCs into the EDR's IOC management plane, or hunt your endpoint telemetry for matches.</p>
-				<nav>
-					<div class="nav nav-tabs" id="edr-tab" role="tablist">
-						<a class="nav-item nav-link active border-bottom-0" id="edr-cs-tab" data-toggle="tab" href="#edr-cs" role="tab" aria-controls="edr-cs" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> CrowdStrike Falcon</a>
-						<a class="nav-item nav-link border-bottom-0" id="edr-s1-tab" data-toggle="tab" href="#edr-s1" role="tab" aria-controls="edr-s1" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> SentinelOne</a>
-						<a class="nav-item nav-link border-bottom-0" id="edr-wazuh-tab" data-toggle="tab" href="#edr-wazuh" role="tab" aria-controls="edr-wazuh" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> Wazuh</a>
-					</div>
-				</nav>
-				<div class="tab-content" id="edr-tabContent">
-					<div class="tab-pane fade show active" id="edr-cs" role="tabpanel" aria-labelledby="edr-cs-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b id="cs-push">4.1 Push hashes as IOCs</b> via the IOC Management API. Falcon's IOC API accepts md5, sha256, ipv4, ipv6 and domain types:</p>
-						<pre id="cs-push-pre" class="code-block p-2"><code class="language-bash">TOKEN=$(curl -sX POST "https://api.crowdstrike.com/oauth2/token" \
-  -d "client_id=$CS_ID&amp;client_secret=$CS_SECRET" | jq -r .access_token)
-
-curl -sL https://api.tweetfeed.live/v1/today/sha256 \
-  | jq '[.[] | {type:"sha256", value:.value, action:"detect",
-                platforms:["windows","mac","linux"],
-                source:"tweetfeed.live",
-                description:("tags: " + (.tags|join(",")))}]' \
-  | jq '{indicators: .}' \
-  | curl -sX POST "https://api.crowdstrike.com/iocs/entities/indicators/v1" \
-      -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-      -d @-</code><i class="tf-copy code-copy far fa-copy" data-copy="#cs-push-pre" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.2 Falcon Insight Search</b> - DNS lookups to TweetFeed domains in the last 7d (paste into the Falcon UI as an Event Search):</p>
-						<pre id="cs-dns" class="code-block p-2"><code>event_simpleName=DnsRequest
-| join domains_today=[
-    !curl https://api.tweetfeed.live/v1/today/domain | .[].value
-  ] DomainName
-| table @timestamp, ComputerName, DomainName, ContextProcessId</code><i class="tf-copy code-copy far fa-copy" data-copy="#cs-dns" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><small>Pattern shown above; in real Falcon LogScale you'll typically pre-stage the domain list in a lookup file or function.</small></p>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.3 Process executed a TweetFeed-flagged binary</b> (hash match):</p>
-						<pre id="cs-process" class="code-block p-2"><code>event_simpleName=ProcessRollup2 SHA256HashData IN [list_of_tweetfeed_sha256]
-| table @timestamp, ComputerName, FileName, CommandLine, ParentBaseFileName</code><i class="tf-copy code-copy far fa-copy" data-copy="#cs-process" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="edr-s1" role="tabpanel" aria-labelledby="edr-s1-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>4.4 Deep Visibility query</b> - file SHA256 matches TweetFeed hash list (paste into Singularity's Deep Visibility):</p>
-						<pre id="s1-dv" class="code-block p-2"><code>SrcProcSha256 IN ("hash1","hash2",...) OR TgtFileSha256 IN ("hash1","hash2",...)</code><i class="tf-copy code-copy far fa-copy" data-copy="#s1-dv" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.5 Bulk import via Singularity API</b>:</p>
-						<pre id="s1-import" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/sha256 \
-  | jq '[.[] | {value:.value, type:"SHA256", source:"TweetFeed",
-                description:("tags: " + (.tags|join(",")))}]' \
-  | jq '{data: ., filter: {tenant: true}}' \
-  | curl -sX POST "https://YOUR_MGMT.sentinelone.net/web/api/v2.1/threat-intelligence/iocs" \
-      -H "Authorization: ApiToken $S1_TOKEN" -H "Content-Type: application/json" \
-      -d @-</code><i class="tf-copy code-copy far fa-copy" data-copy="#s1-import" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="edr-wazuh" role="tabpanel" aria-labelledby="edr-wazuh-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>4.6 CDB list config</b> - refresh a CDB list from TweetFeed and reference it in a custom rule. Save the script and run via cron:</p>
-						<pre id="wazuh-cdb-refresh" class="code-block p-2"><code class="language-bash">#!/bin/bash
-curl -sfL https://api.tweetfeed.live/v1/today/domain \
-  | jq -r '.[].value + ":TweetFeed"' \
-  &gt; /var/ossec/etc/lists/tweetfeed-domains
-/var/ossec/bin/ossec-makelists
-systemctl restart wazuh-manager</code><i class="tf-copy code-copy far fa-copy" data-copy="#wazuh-cdb-refresh" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>Add to <code>/var/ossec/etc/rules/local_rules.xml</code></b>:</p>
-						<pre id="wazuh-rule" class="code-block p-2"><code class="language-xml">&lt;group name="tweetfeed,"&gt;
-  &lt;rule id="100100" level="10"&gt;
-    &lt;list field="dns_query" lookup="match_key"&gt;etc/lists/tweetfeed-domains&lt;/list&gt;
-    &lt;description&gt;TweetFeed-listed domain queried via DNS&lt;/description&gt;
-  &lt;/rule&gt;
-&lt;/group&gt;</code><i class="tf-copy code-copy far fa-copy" data-copy="#wazuh-rule" title="Copy"></i></pre>
-					</div>
 				</div>
 
 				<hr id="network" class="divider">
-				<h3 class="section-heading">5. Network &amp; firewall</h3>
+				<h3 class="section-heading">4. Network &amp; firewall</h3>
 				<p style="font-size: 14px;">Stop traffic to TweetFeed-listed indicators at the perimeter.</p>
-				<p style="font-size: 14px;"><b id="net-suricata">5.1 Suricata DNS rules generator</b> - emit one alert rule per malicious domain (assigns SIDs starting at 2,000,000 to avoid collision with ET rules):</p>
-				<pre id="net-suricata-pre" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/domain | jq -r '.[].value' \
+				<p style="font-size: 14px;"><b>4.1 Suricata DNS rules generator</b> - emit one alert rule per malicious domain (assigns SIDs starting at 2,000,000 to avoid collision with ET rules):</p>
+				<pre id="net-suricata" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/domain | jq -r '.[].value' \
   | awk 'BEGIN{n=2000000} {printf "alert dns any any -&gt; any any (msg:\"TweetFeed bad domain %s\"; dns_query; content:\"%s\"; nocase; sid:%d; rev:1;)\n", $1, $1, n+NR}' \
   &gt; /etc/suricata/rules/tweetfeed.rules
-suricatasc -c reload-rules</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-suricata-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="net-pihole">5.2 Pi-hole sinkhole</b> - script wrapper to keep <code>tweetfeed.list</code> in sync. Add it as a custom adlist in Pi-hole admin:</p>
-				<pre id="net-pihole-pre" class="code-block p-2"><code class="language-bash"># /usr/local/bin/refresh-tweetfeed-pihole.sh
+suricatasc -c reload-rules</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-suricata" title="Copy"></i></pre>
+				<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.2 Pi-hole sinkhole</b> - script wrapper to keep <code>tweetfeed.list</code> in sync. Add it as a custom adlist in Pi-hole admin:</p>
+				<pre id="net-pihole" class="code-block p-2"><code class="language-bash"># /usr/local/bin/refresh-tweetfeed-pihole.sh
 curl -sfL https://api.tweetfeed.live/v1/today/domain \
   | jq -r '.[].value' | sort -u \
   &gt; /etc/pihole/tweetfeed.list
-pihole -g  # regenerate gravity</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pihole-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="net-pfsense">5.3 pfSense / OPNsense alias</b> - host a pre-processed plain-text IP list on any internal HTTP server, then import as URL Table alias. <b>Firewall &rarr; Aliases &rarr; URL Table (IPs)</b>:</p>
-				<pre id="net-pfsense-pre" class="code-block p-2"><code class="language-bash">curl -sfL https://api.tweetfeed.live/v1/today/ip | jq -r '.[].value' &gt; /var/www/html/tweetfeed-ip.txt</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pfsense-pre" title="Copy"></i></pre>
+pihole -g  # regenerate gravity</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pihole" title="Copy"></i></pre>
+				<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.3 pfSense / OPNsense alias</b> - host a pre-processed plain-text IP list on any internal HTTP server, then import as URL Table alias. <b>Firewall &rarr; Aliases &rarr; URL Table (IPs)</b>:</p>
+				<pre id="net-pfsense" class="code-block p-2"><code class="language-bash">curl -sfL https://api.tweetfeed.live/v1/today/ip | jq -r '.[].value' &gt; /var/www/html/tweetfeed-ip.txt</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pfsense" title="Copy"></i></pre>
 				<pre id="net-pfsense-alias" class="code-block p-2"><code class="language-text">Name:           tweetfeed_ip_today
 Type:           URL Table (IPs)
 URL:            http://internal.example.com/tweetfeed-ip.txt
 Update Freq:    1 day</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pfsense-alias" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="net-squid">5.4 Squid proxy ACL</b> - block HTTP/HTTPS connections to TweetFeed-listed domains:</p>
-				<pre id="net-squid-pre" class="code-block p-2"><code class="language-bash">curl -sfL https://api.tweetfeed.live/v1/today/domain | jq -r '.[].value' &gt; /etc/squid/tweetfeed.txt
-echo 'acl tweetfeed_bad dstdomain "/etc/squid/tweetfeed.txt"' &gt;&gt; /etc/squid/squid.conf
-echo 'http_access deny tweetfeed_bad' &gt;&gt; /etc/squid/squid.conf
-squid -k reconfigure</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-squid-pre" title="Copy"></i></pre>
-
-				<hr id="tip" class="divider">
-				<h3 class="section-heading">6. TIP &amp; SOAR</h3>
-				<p style="font-size: 14px;">Ingest TweetFeed into your Threat Intelligence platform or pivot from cases.</p>
-				<p style="font-size: 14px;"><b id="tip-misp">6.1 MISP feed install</b> - TweetFeed publishes 4 MISP-format Events (today / week / month / year) regenerated every 15 min. <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b>:</p>
-				<pre id="tip-misp-pre" class="code-block p-2"><code class="language-text">URL:           https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json
-Source format: misp
-Provider:      TweetFeed
-Auto-pull:     yes
-Distribution:  Your organisation only (or as needed)
-Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" data-copy="#tip-misp-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;">After saving, click <b>Fetch and store all feed data</b> to seed the index, then enable <b>Cron Jobs &rarr; Feed Pull</b> for ongoing auto-refresh.</p>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>6.2 TheHive bulk observable import</b> - add today's IOCs to a case using thehive4py:</p>
-				<pre id="tip-thehive" class="code-block p-2"><code class="language-python">import requests
-from thehive4py import TheHiveApi
-from thehive4py.models import CaseObservable
-
-api = TheHiveApi("https://thehive.example.com", "$THEHIVE_API_KEY")
-case_id = "~12345"  # your case
-type_map = {"url":"url","domain":"domain","ip":"ip","md5":"hash","sha256":"hash"}
-
-iocs = requests.get("https://api.tweetfeed.live/v1/today").json()
-for ioc in iocs:
-    obs = CaseObservable(
-        dataType=type_map[ioc["type"]],
-        data=ioc["value"],
-        tags=["TweetFeed", *ioc["tags"]],
-        message=f"Source: {ioc['tweet']}",
-        tlp=2, ioc=True)
-    api.create_case_observable(case_id, obs)</code><i class="tf-copy code-copy far fa-copy" data-copy="#tip-thehive" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>6.3 OpenCTI external-import connector</b> - run a small connector that polls TweetFeed and creates Indicator + Report objects:</p>
-				<pre id="tip-opencti" class="code-block p-2"><code class="language-yaml"># docker-compose.yml fragment
-connector-tweetfeed:
-  image: opencti/connector-external-import:latest
-  environment:
-    - OPENCTI_URL=http://opencti:8080
-    - OPENCTI_TOKEN=$OPENCTI_ADMIN_TOKEN
-    - CONNECTOR_NAME=TweetFeed
-    - CONNECTOR_SCOPE=tweetfeed
-    - CONNECTOR_RUN_AND_TERMINATE=false
-    - CONNECTOR_LOG_LEVEL=info
-    # Custom env consumed by your import script:
-    - TWEETFEED_URL=https://api.tweetfeed.live/v1/today
-    - TWEETFEED_INTERVAL=900</code><i class="tf-copy code-copy far fa-copy" data-copy="#tip-opencti" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><small>The OpenCTI connector framework provides the scaffold; a working import script that maps the JSON shape to STIX SDOs is straightforward (see section 7.3 below).</small></p>
 
 				<hr id="detection" class="divider">
-				<h3 class="section-heading">7. Detection content</h3>
-				<p style="font-size: 14px;">Generate detection-as-code artifacts (Sigma, YARA, STIX) from the feed for your detection pipeline.</p>
-				<p style="font-size: 14px;"><b id="det-sigma">7.1 Sigma rule template</b> - DNS lookup to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> via your Sigma processing pipeline (e.g. sigmac with a lookup expansion):</p>
-				<pre id="det-sigma-pre" class="code-block p-2"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
+				<h3 class="section-heading">5. Detection content</h3>
+				<p style="font-size: 14px;">Generate a Sigma rule template that any modern SIEM can compile to its query language.</p>
+				<p style="font-size: 14px;"><b>5.1 Sigma rule template</b> - DNS lookup to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> via your Sigma processing pipeline (e.g. sigmac with a lookup expansion):</p>
+				<pre id="det-sigma" class="code-block p-2"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
 id: f1c0c0d0-1111-4444-9999-aaaaaaaaaaaa
 status: experimental
 description: Detects DNS lookups to domains published by TweetFeed within the last week
@@ -843,45 +647,7 @@ falsepositives:
 level: medium
 tags:
   - attack.command_and_control
-  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" data-copy="#det-sigma-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="det-yara">7.2 YARA rule</b> generated from the SHA256 feed (one rule per hash; collapse into a master rule with multiple <code>hash.sha256(...)</code> conditions if you want a single match):</p>
-				<pre id="det-yara-pre" class="code-block p-2"><code class="language-python">import requests
-iocs = requests.get("https://api.tweetfeed.live/v1/week/sha256").json()
-print('import "hash"\n')
-for ioc in iocs:
-    name = "tweetfeed_" + ioc["value"][:12]
-    tags = " ".join(t.lstrip("#") for t in ioc.get("tags", []))
-    print(f'rule {name} : tweetfeed {tags} {{')
-    print(f'  meta:')
-    print(f'    description = "TweetFeed sha256 ({tags})"')
-    print(f'    source = "{ioc["tweet"]}"')
-    print(f'  condition:')
-    print(f'    hash.sha256(0, filesize) == "{ioc["value"]}"')
-    print(f'}}\n')</code><i class="tf-copy code-copy far fa-copy" data-copy="#det-yara-pre" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b id="det-stix">7.3 STIX 2.1 export</b> - convert the JSON feed into Indicator SDOs and emit a Bundle:</p>
-				<pre id="det-stix-pre" class="code-block p-2"><code class="language-python">import requests
-from stix2 import Indicator, Bundle
-
-PATTERN = {
-  "url":    lambda v: f"[url:value = '{v}']",
-  "domain": lambda v: f"[domain-name:value = '{v}']",
-  "ip":     lambda v: f"[ipv4-addr:value = '{v}']",
-  "sha256": lambda v: f"[file:hashes.'SHA-256' = '{v}']",
-  "md5":    lambda v: f"[file:hashes.MD5 = '{v}']",
-}
-
-iocs = requests.get("https://api.tweetfeed.live/v1/today").json()
-indicators = [
-    Indicator(
-        name=ioc["value"],
-        pattern=PATTERN[ioc["type"]](ioc["value"]),
-        pattern_type="stix",
-        labels=ioc["tags"],
-        description=f"Source: {ioc['tweet']}",
-    )
-    for ioc in iocs if ioc["type"] in PATTERN
-]
-print(Bundle(objects=indicators).serialize(pretty=True))</code><i class="tf-copy code-copy far fa-copy" data-copy="#det-stix-pre" title="Copy"></i></pre>
+  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" data-copy="#det-sigma" title="Copy"></i></pre>
 
 				<hr id="faq" class="divider">
 				<section class="faq-section">
@@ -892,7 +658,7 @@ print(Bundle(objects=indicators).serialize(pretty=True))</code><i class="tf-copy
 					</details>
 					<details>
 						<summary>Is there a rate limit on the API?</summary>
-						<p><code>api.tweetfeed.live</code> runs as a Cloudflare Worker on the Free plan (100,000 requests per day). Real traffic sits around 7 to 8K per day, leaving roughly 300x headroom. There is no authentication or per-key throttling.</p>
+						<p><code>api.tweetfeed.live</code> runs as a Cloudflare Worker on the Free plan (100,000 requests per day). Real traffic sits around 7 to 8K per day, leaving roughly 300x headroom. There is no authentication or per-key throttling - please be reasonable.</p>
 					</details>
 					<details>
 						<summary>Can I use TweetFeed data commercially?</summary>
@@ -907,10 +673,6 @@ print(Bundle(objects=indicators).serialize(pretty=True))</code><i class="tf-copy
 						<p>TweetFeed publishes everything reasonably tagged and does not suppress noise. Use a client-side allowlist (the KQL and SPL recipes show the pattern) and report false positives via the public <a href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Featurebase board</a>.</p>
 					</details>
 					<details>
-						<summary>Why is there no authentication?</summary>
-						<p>TweetFeed is open data, side-project scope, CC0-licensed. Adding auth would gate adoption without solving any real abuse. The Cloudflare Worker absorbs spike traffic; if you need a private mirror just clone the GitHub repo.</p>
-					</details>
-					<details>
 						<summary>Is there an MCP server for AI agents?</summary>
 						<p>Yes. <code>mcp.tweetfeed.live</code> exposes 5 tools: <code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code> and <code>list_recent_iocs</code>. See the <a href="agents.html">Agents page</a> for the config snippet.</p>
 					</details>
@@ -918,18 +680,12 @@ print(Bundle(objects=indicators).serialize(pretty=True))</code><i class="tf-copy
 						<summary>How do I contribute new IOCs?</summary>
 						<p>Post the IOC on Twitter/X with one of the tracked hashtags (full list on the <a href="feeds.html">Feeds page</a>) or get added to the curated <a href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer">TweetFeedList</a>. The next cron tick picks it up automatically.</p>
 					</details>
-					<details>
-						<summary>Is there a self-hosted or enterprise version?</summary>
-						<p>No SLA, no enterprise tier - this is a single-maintainer side project. Use TweetFeed as one source of many in your Threat Intelligence pipeline, never as the only source.</p>
-					</details>
-					<details>
-						<summary>Does TweetFeed work in air-gapped environments?</summary>
-						<p>Yes. Clone the data repo (<a href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer">github.com/0xDanielLopez/TweetFeed</a>) inside your perimeter and refresh on whatever cadence your egress policy allows. The CSV layout is documented and stable.</p>
-					</details>
 				</section>
 			</div>
 			<!-- End of Main Content -->
 			<!-- Footer -->
+			</main>
+			</div>
 			<footer class="d-none d-md-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
 				<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
 					<div class="row align-items-center">

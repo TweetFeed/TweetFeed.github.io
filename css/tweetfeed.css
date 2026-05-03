@@ -479,3 +479,106 @@ button.btn.btn-tf {
 @media (prefers-reduced-motion: reduce) {
 	.tf-live-dot { animation: none; }
 }
+
+/* ── Docs site layout ─────────────────────────────────────────────────
+   Two-column layout: sticky left sidebar (220px) listing all docs pages,
+   main content on the right (max 800px). Active page is highlighted with
+   left-border accent + tinted background. Mobile (<992px) collapses the
+   sidebar into a chip-row above the content. */
+.docs-wrap {
+	display: flex;
+	max-width: 1180px;
+	margin: 0 auto;
+	padding: 24px 1.5rem 60px;
+	gap: 36px;
+}
+.docs-sidebar {
+	position: sticky;
+	top: 80px;
+	width: 220px;
+	flex-shrink: 0;
+	align-self: flex-start;
+	max-height: calc(100vh - 100px);
+	overflow-y: auto;
+	font-family: 'Rubik', sans-serif;
+}
+.docs-sidebar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.docs-sidebar .docs-nav-label {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #737373;
+	padding: 18px 12px 6px;
+	cursor: default;
+}
+.docs-sidebar .docs-nav-label:first-child { padding-top: 0; }
+.docs-sidebar a {
+	display: block;
+	padding: 5px 12px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #444;
+	text-decoration: none;
+	border-left: 2px solid transparent;
+	transition: color 0.15s, background 0.15s, border-color 0.15s;
+	line-height: 1.45;
+}
+.docs-sidebar a:hover {
+	color: #1c1c1c;
+	background: rgba(0,0,0,0.03);
+	text-decoration: none;
+}
+.docs-sidebar a.active {
+	color: #1DA1F2;
+	border-left-color: #1DA1F2;
+	font-weight: 600;
+	background: rgba(29,161,242,0.05);
+}
+.docs-content {
+	flex: 1;
+	min-width: 0;
+	max-width: 800px;
+}
+@media (max-width: 991px) {
+	.docs-wrap {
+		flex-direction: column;
+		padding: 12px 1rem 40px;
+		gap: 16px;
+	}
+	.docs-sidebar {
+		position: static;
+		top: auto;
+		width: 100%;
+		max-height: none;
+		overflow: visible;
+		padding: 8px 0 12px;
+		border-bottom: 1px solid #e0e0e0;
+	}
+	.docs-sidebar ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px 8px;
+		align-items: center;
+	}
+	.docs-sidebar .docs-nav-label {
+		flex-basis: 100%;
+		padding: 8px 0 2px;
+	}
+	.docs-sidebar a {
+		border: 1px solid #c0c0c0;
+		border-radius: 4px;
+		padding: 4px 10px;
+		font-size: 13px;
+		border-left-width: 1px;
+	}
+	.docs-sidebar a.active {
+		border-color: #1DA1F2;
+		border-left-width: 1px;
+	}
+	.docs-content { max-width: 100%; }
+}
