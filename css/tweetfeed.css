@@ -416,8 +416,8 @@ button.btn.btn-tf {
 	outline-offset: 2px;
 }
 .tf-action.tf-action-tweet:hover {
-	background: #1DA1F2;
-	border-color: #1DA1F2;
+	background: #000;
+	border-color: #000;
 	color: #fff;
 }
 .tf-action.tf-action-vt:hover {
