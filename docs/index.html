@@ -10,34 +10,34 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Index of TweetFeed IOC type landing pages: malicious URLs, domains, IPs, MD5 and SHA-256 hashes. Each is a per-type stream with stats, source distribution and FAQ.">
+	<meta name="description" content="Documentation hub for TweetFeed: Threat Intelligence guide, tag and IOC type indexes, REST API reference, MCP and agents setup, and threat hunting recipes.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="ioc types,malicious url feed,malicious domain feed,malicious ip feed,md5 feed,sha-256 feed,tweetfeed ioc reference">
-	<link rel="canonical" href="https://tweetfeed.live/ioc-types/">
-	<title>IOC types - TweetFeed</title>
+	<meta name="keywords" content="tweetfeed docs,documentation,threat intelligence,api docs,mcp docs,ioc types,tag index">
+	<link rel="canonical" href="https://tweetfeed.live/docs/">
+	<title>Docs - TweetFeed</title>
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="IOC types - TweetFeed">
-	<meta name="twitter:description" content="Index of the 5 IOC-type landing pages: URLs, domains, IPs, MD5, SHA-256.">
-	<meta name="twitter:url" content="https://tweetfeed.live/ioc-types/">
+	<meta name="twitter:title" content="Docs - TweetFeed">
+	<meta name="twitter:description" content="Documentation hub: TI guide, tag and IOC type indexes, API, MCP and hunting recipes.">
+	<meta name="twitter:url" content="https://tweetfeed.live/docs/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
-	<meta property="og:url" content="https://tweetfeed.live/ioc-types/">
+	<meta property="og:url" content="https://tweetfeed.live/docs/">
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="IOC types - TweetFeed">
-	<meta property="og:description" content="Index of the 5 IOC-type landing pages: URLs, domains, IPs, MD5, SHA-256.">
+	<meta property="og:title" content="Docs - TweetFeed">
+	<meta property="og:description" content="Documentation hub: TI guide, tag and IOC type indexes, API, MCP and hunting recipes.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="627">
 	<meta property="og:image:type" content="image/png">
-	<meta property="og:image:alt" content="TweetFeed - IOC types index">
+	<meta property="og:image:alt" content="TweetFeed - docs">
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="../css/table.css" rel="stylesheet">
 	<link href="../css/index.css" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=5" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=17" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<script type="application/ld+json">
@@ -62,21 +62,22 @@
 	{
 		"@context": "https://schema.org",
 		"@type": "CollectionPage",
-		"name": "IOC types",
-		"url": "https://tweetfeed.live/ioc-types/",
-		"description": "Index of the 5 IOC-type landing pages on TweetFeed: malicious URLs, domains, IPs, MD5, SHA-256.",
+		"name": "Docs",
+		"url": "https://tweetfeed.live/docs/",
+		"description": "Documentation hub for TweetFeed.",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
 		"inLanguage": "en",
 		"mainEntity": {
 			"@type": "ItemList",
-			"numberOfItems": 5,
+			"numberOfItems": 6,
 			"itemListOrder": "https://schema.org/ItemListOrderAscending",
 			"itemListElement": [
-				{"@type": "ListItem", "position": 1, "name": "Malicious URLs",  "url": "https://tweetfeed.live/malicious-urls.html"},
-				{"@type": "ListItem", "position": 2, "name": "Malicious domains", "url": "https://tweetfeed.live/malicious-domains.html"},
-				{"@type": "ListItem", "position": 3, "name": "Malicious IPs",   "url": "https://tweetfeed.live/malicious-ips.html"},
-				{"@type": "ListItem", "position": 4, "name": "Malicious MD5 hashes",   "url": "https://tweetfeed.live/malicious-hashes-md5.html"},
-				{"@type": "ListItem", "position": 5, "name": "Malicious SHA-256 hashes", "url": "https://tweetfeed.live/malicious-hashes-sha256.html"}
+				{"@type": "ListItem", "position": 1, "name": "Threat Intelligence Guide", "url": "https://tweetfeed.live/threat-intelligence-guide.html"},
+				{"@type": "ListItem", "position": 2, "name": "Tag index", "url": "https://tweetfeed.live/tags/"},
+				{"@type": "ListItem", "position": 3, "name": "IOC type hubs", "url": "https://tweetfeed.live/ioc-types/"},
+				{"@type": "ListItem", "position": 4, "name": "REST API reference", "url": "https://tweetfeed.live/api.html"},
+				{"@type": "ListItem", "position": 5, "name": "MCP and Agents", "url": "https://tweetfeed.live/agents.html"},
+				{"@type": "ListItem", "position": 6, "name": "Threat hunting recipes", "url": "https://tweetfeed.live/hunt.html"}
 			]
 		}
 	}
@@ -87,7 +88,7 @@
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://tweetfeed.live/"},
-			{"@type": "ListItem", "position": 2, "name": "IOC types", "item": "https://tweetfeed.live/ioc-types/"}
+			{"@type": "ListItem", "position": 2, "name": "Docs", "item": "https://tweetfeed.live/docs/"}
 		]
 	}
 	</script>
@@ -108,7 +109,7 @@
 						<li class="nav-item"><a class="nav-link" href="../graphs.html"><i class="fas fa-chart-pie"></i> Graphs</a></li>
 						<li class="nav-item"><a class="nav-link" href="../researchers.html"><i class="fas fa-users"></i> Researchers</a></li>
 						<li class="nav-item"><a class="nav-link" href="../search.html"><i class="fas fa-search"></i> Search</a></li>
-						<li class="nav-item"><a class="nav-link" href="../docs/"><i class="fas fa-book"></i> Docs</a></li>
+						<li class="nav-item"><a class="nav-link" href="./"><i class="fas fa-book"></i> Docs</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li class="nav-item"><a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <sup><i class="fas fa-external-link-alt"></i></sup></a></li>
@@ -133,7 +134,7 @@
 								<a class="dropdown-item" href="../researchers.html"><i class="fas fa-users"></i> Researchers</a>
 								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i> List <i class="fas fa-external-link-alt"></i></a>
 								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
-								<a class="dropdown-item" href="../docs/"><i class="fas fa-book"></i> Docs</a>
+								<a class="dropdown-item" href="./"><i class="fas fa-book"></i> Docs</a>
 								<a class="dropdown-item" href="../about.html"><i class="fas fa-question-circle"></i> About</a>
 							</div>
 						</li>
@@ -143,66 +144,88 @@
 			<div id="content">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
-					<p style="margin:0 0 0.5rem 0; font-family:'Rubik',sans-serif;"><a href="../docs/" class="text-decoration-none" style="color:#737373; font-size:13px;">&larr; Docs</a></p>
-					<h1 class="toph1"><i class="fas fa-stream" style="font-size: 36px;"></i> IOC types</h1>
-					<h2><em>Per-type landing pages: URLs, domains, IPs, MD5, SHA-256</em></h2>
+					<h1 class="toph1"><i class="fas fa-book" style="font-size: 36px;"></i> Docs</h1>
+					<h2><em>Everything you need to read, browse and integrate TweetFeed</em></h2>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
-					<p style="margin:0 0 0.5rem 0; font-family:'Rubik',sans-serif;"><a href="../docs/" class="text-decoration-none" style="color:#737373; font-size:13px;">&larr; Docs</a></p>
-					<p class="toph1"><i class="fas fa-stream" style="font-size: 36px;"></i> IOC types</p>
-					<p style="font-size: 14px;"><em>5 per-type landing pages</em></p>
+					<p class="toph1"><i class="fas fa-book" style="font-size: 36px;"></i> Docs</p>
+					<p style="font-size: 14px;"><em>Read, browse and integrate TweetFeed</em></p>
 				</div>
 				<hr class="divider">
 
-				<h3 class="section-heading">Per-type streams</h3>
+				<h3 class="section-heading">Concepts <span style="font-size:14px; color:#737373; font-weight:400;">&middot; 1</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Each landing page covers one IOC type, with stats by window (today / week / month / year), the active source distribution, and a FAQ. Use them as canonical link targets when linking out from your own writing.</p>
+						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Educational reference about Threat Intelligence as a discipline. Start here if you are new to IOCs, MITRE ATT&amp;CK or the OSINT-vs-commercial trade-off.</p>
+						<div class="row">
+							<div class="col-12" style="margin-bottom:0.7rem;">
+								<a href="../threat-intelligence-guide.html" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><i class="fas fa-book-reader" style="margin-right:0.4rem;"></i>Threat Intelligence Guide</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif;">~1,640 words &middot; 8 sections</span>
+									</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">IOC types and lifecycle, OSINT vs commercial feeds, MITRE ATT&amp;CK basics, common pitfalls, glossary and FAQ. Open educational reference, not a TweetFeed feature pitch.</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="section-heading">Browse the data <span style="font-size:14px; color:#737373; font-weight:400;">&middot; 2</span></h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Curated indexes for picking the right slice of the live feed. Each entry is its own landing page with stream + reference content.</p>
 						<div class="row">
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-urls.html" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">url</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious URLs</span>
+								<a href="../tags/" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><i class="fas fa-tags" style="margin-right:0.4rem;"></i>Tag index</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif;">22 tags</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by public Twitter/X researchers. Highest-volume IOC type on TweetFeed.</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">APT groups (Kimsuky, Lazarus, DPRK), malware families (Cobalt&nbsp;Strike, AsyncRAT, Lumma) and TTPs (phishing, ransomware, scam, opendir).</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-domains.html" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">domain</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious domains</span>
+								<a href="../ioc-types/" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><i class="fas fa-shapes" style="margin-right:0.4rem;"></i>IOC types</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif;">5 types</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names without scheme or path. Useful for DNS-level blocklists and CT-log correlation.</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">Per-type hubs: URLs, domains, IPs, MD5 and SHA-256. Each covers format, half-life and best blocking use case.</div>
 								</a>
 							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-ips.html" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">ip</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious IPs</span>
+						</div>
+					</div>
+				</div>
+
+				<h3 class="section-heading">Integrate <span style="font-size:14px; color:#737373; font-weight:400;">&middot; 3</span></h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Plug TweetFeed into your SOC, SIEM or AI agent. All endpoints free, no auth, CC0 data.</p>
+						<div class="row">
+							<div class="col-md-4 col-12" style="margin-bottom:0.7rem;">
+								<a href="../api.html" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2; height:100%;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><i class="fas fa-code" style="margin-right:0.4rem;"></i>REST API</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4 / IPv6 addresses linked to attacker infrastructure (C2, scanners, phishing hosts). High FP risk on shared hosting.</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">Public endpoints at <code style="font-size:12px;">api.tweetfeed.live</code>. Today / week / month / year windows; filter by type or tag; CSV, JSON, RSS.</div>
 								</a>
 							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-md5.html" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">md5</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">MD5 hashes</span>
+							<div class="col-md-4 col-12" style="margin-bottom:0.7rem;">
+								<a href="../agents.html" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2; height:100%;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" style="vertical-align:-1px; margin-right:0.4rem;"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>MCP and Agents</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes shared by researchers. Pivot through VirusTotal / Malpedia / Hybrid Analysis.</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">Model Context Protocol server at <code style="font-size:12px;">mcp.tweetfeed.live</code>. Copy-paste config snippets for Claude Desktop, Cursor and Zed; 5 JSON-RPC tools for IOC lookup.</div>
 								</a>
 							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-sha256.html" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span>
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">SHA-256 hashes</span>
+							<div class="col-md-4 col-12" style="margin-bottom:0.7rem;">
+								<a href="../hunt.html" class="text-decoration-none" style="display:block; padding:0.7rem 0.9rem; border:1px solid #1c1c1c; border-radius:0; background:#f2f2f2; height:100%;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem; flex-wrap:wrap;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c; font-size:16px;"><i class="fas fa-bullseye" style="margin-right:0.4rem;"></i>Threat hunting</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred over MD5 for forensic chain of custody and incident-response artefacts.</div>
+									<div style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.55; margin-top:0.3rem;">Integration recipes for MISP, OpenCTI, Splunk, KQL and IntelOwl. Cron-friendly examples for SOC pipelines.</div>
 								</a>
 							</div>
 						</div>
@@ -213,8 +236,9 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="margin-bottom:0; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
-							<a href="../tags/" class="text-decoration-none"><b>Tag index</b></a> &middot; 22 per-tag landing pages (APT groups, malware families, TTPs). <br>
-							<a href="../threat-intelligence-guide.html" class="text-decoration-none"><b>Threat Intelligence guide</b></a> &middot; ~1,640-word pillar covering IOC types, OSINT vs commercial, MITRE ATT&amp;CK basics, glossary.
+							<a href="../feeds.html" class="text-decoration-none"><b>Feeds</b></a> &middot; download the raw CSV / JSON / RSS / MISP files. <br>
+							<a href="../changelog.html" class="text-decoration-none"><b>Changelog</b></a> &middot; what shipped and when. <br>
+							<a href="../about.html" class="text-decoration-none"><b>About</b></a> &middot; project background, contact and Featurebase board.
 						</p>
 					</div>
 				</div>
@@ -238,7 +262,8 @@
 					<div class="row">
 						<div class="col text-center">
 							By Daniel López &nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
-							<a class="text-decoration-none" href="../changelog.html">Changelog</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../tos.html">Terms of Service</a> &nbsp;·&nbsp; © 2026 TweetFeed.live						</div>
+							<a class="text-decoration-none" href="../changelog.html">Changelog</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../tos.html">Terms of Service</a> &nbsp;·&nbsp; © 2026 TweetFeed.live
+						</div>
 					</div>
 				</div>
 			</footer>
