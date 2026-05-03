@@ -583,6 +583,74 @@
 					</div>
 				</div>
 
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspSTIX 2.1 Bundles
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Industry-standard STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms (TLP:CLEAR, deterministic UUIDs for cross-pull dedupe). Point your consumer at the <a class="text-decoration-none" href="https://tweetfeed.live/stix/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> and pull the windows you care about.
+				</p>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Manifest</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles + indicator counts"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Manifest (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Today</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 24h IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/today.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Week</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 7-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/week.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.json)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Month</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 31-day IOCs"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/month.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.json)</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
+					Year window omitted on purpose: the STIX schema is ~2.6x more verbose per IOC than MISP, putting year.json &gt;80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX consumption use the diff endpoint below.
+				</p>
+
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspDiff endpoint (incremental sync)
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Fetch only IOCs added after a given timestamp. Replace <code>&lt;ISO8601&gt;</code> with the last sync time (use the Z form for unambiguous UTC). Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is &gt;365 days old.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"></i></pre>
+
+				<h3 style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspPer-tag RSS feeds
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					One RSS feed per active tag (a tag is "active" once it has &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose. Browse all available feeds from the <a class="text-decoration-none" href="tags/">Tag index</a>; each per-tag landing page also exposes the feed via <code>&lt;link rel="alternate"&gt;</code>.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml"></i></pre>
+
 				<hr class="divider">
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
