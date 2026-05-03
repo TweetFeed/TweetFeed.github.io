@@ -86,7 +86,12 @@ def check_nav_order(pages: list[str]) -> list[str]:
         for p in missing:
             failures.append(f"{p}: missing {label} block")
 
-        present = {p: tuple(v) for p, v in per_page.items() if v is not None}
+        # Normalize href prefixes: index.html uses 'X/' (root-relative) while
+        # /<page>/index.html uses '../X/'. Same target. Strip leading ../ for
+        # comparison so the check is depth-agnostic.
+        def norm(href):
+            return href.lstrip('./')
+        present = {p: tuple(norm(h) for h in v) for p, v in per_page.items() if v is not None}
         if not present:
             continue
         baseline, count = Counter(present.values()).most_common(1)[0]
