@@ -10,15 +10,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
+	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, MISP feed and Sigma rule template.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,suricata,pihole,misp,sigma">
+	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,misp,sigma">
 	<link rel="canonical" href="https://tweetfeed.live/hunt.html">
 	<title>Free IOC Threat Hunting Dashboard - Search Malware, Phishing, URLs</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta name="twitter:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
+	<meta name="twitter:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, MISP, Sigma.">
 	<meta name="twitter:url" content="https://tweetfeed.live/hunt.html">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/hunt.html">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Threat hunting queries for IOC feeds - TweetFeed">
-	<meta property="og:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk, Sentinel KQL, Defender for Endpoint, Suricata, MISP, Sigma.">
+	<meta property="og:description" content="Threat hunting recipes against the TweetFeed API: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, MISP, Sigma.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -60,7 +60,7 @@
 		"@context": "https://schema.org",
 		"@type": "HowTo",
 		"name": "Hunt for IOCs from Twitter/X using TweetFeed",
-		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, Suricata, Pi-hole, pfSense, MISP feed install and Sigma rule templates.",
+		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, MISP feed install and Sigma rule templates.",
 		"author": {"@id": "https://tweetfeed.live/#founder"},
 		"about": {"@id": "https://tweetfeed.live/#organization"},
 		"tool": [
@@ -68,14 +68,11 @@
 			{"@type": "HowToTool", "name": "Splunk"},
 			{"@type": "HowToTool", "name": "Microsoft Sentinel"},
 			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
-			{"@type": "HowToTool", "name": "Suricata"},
-			{"@type": "HowToTool", "name": "Pi-hole"},
-			{"@type": "HowToTool", "name": "pfSense"},
 			{"@type": "HowToTool", "name": "MISP"},
 			{"@type": "HowToTool", "name": "Sigma"}
 		],
 		"step": [
-			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, network and firewall, or detection content."},
+			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, or detection content."},
 			{"@type": "HowToStep", "name": "Configure the connector or lookup", "text": "Each recipe includes the exact ingest pattern: REST API calls, CSV download, RSS feed, MISP feed URL, KQL externaldata() block or Splunk inputlookup."},
 			{"@type": "HowToStep", "name": "Schedule the refresh", "text": "TweetFeed CSVs and the API refresh every 15 minutes. Match your pull cadence to your detection latency tolerance."},
 			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause) so trusted assets stop firing alerts."},
@@ -306,7 +303,6 @@
 					<li><a href="hunt.html#quickstart" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Quick start - get raw IOCs</a></li>
 					<li><a href="hunt.html#terminal" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Terminal &amp; shell</a></li>
 					<li><a href="hunt.html#siem" style="font-family: 'Rubik', sans-serif;color: #0000EE;">SIEM playbooks</a></li>
-					<li><a href="hunt.html#network" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Network &amp; firewall</a></li>
 					<li><a href="hunt.html#detection" style="font-family: 'Rubik', sans-serif;color: #0000EE;">Detection content</a></li>
 					<li><a href="hunt.html#faq" style="font-family: 'Rubik', sans-serif;color: #0000EE;">FAQ</a></li>
 				</ol>
@@ -579,31 +575,10 @@ union (
 					</div>
 				</div>
 
-				<hr id="network" class="divider">
-				<h3 class="section-heading">4. Network &amp; firewall</h3>
-				<p style="font-size: 14px;">Stop traffic to TweetFeed-listed indicators at the perimeter.</p>
-				<p style="font-size: 14px;"><b>4.1 Suricata DNS rules generator</b> - emit one alert rule per malicious domain (assigns SIDs starting at 2,000,000 to avoid collision with ET rules):</p>
-				<pre id="net-suricata" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today/domain | jq -r '.[].value' \
-  | awk 'BEGIN{n=2000000} {printf "alert dns any any -&gt; any any (msg:\"TweetFeed bad domain %s\"; dns_query; content:\"%s\"; nocase; sid:%d; rev:1;)\n", $1, $1, n+NR}' \
-  &gt; /etc/suricata/rules/tweetfeed.rules
-suricatasc -c reload-rules</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-suricata" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.2 Pi-hole sinkhole</b> - script wrapper to keep <code>tweetfeed.list</code> in sync. Add it as a custom adlist in Pi-hole admin:</p>
-				<pre id="net-pihole" class="code-block p-2"><code class="language-bash"># /usr/local/bin/refresh-tweetfeed-pihole.sh
-curl -sfL https://api.tweetfeed.live/v1/today/domain \
-  | jq -r '.[].value' | sort -u \
-  &gt; /etc/pihole/tweetfeed.list
-pihole -g  # regenerate gravity</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pihole" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>4.3 pfSense / OPNsense alias</b> - host a pre-processed plain-text IP list on any internal HTTP server, then import as URL Table alias. <b>Firewall &rarr; Aliases &rarr; URL Table (IPs)</b>:</p>
-				<pre id="net-pfsense" class="code-block p-2"><code class="language-bash">curl -sfL https://api.tweetfeed.live/v1/today/ip | jq -r '.[].value' &gt; /var/www/html/tweetfeed-ip.txt</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pfsense" title="Copy"></i></pre>
-				<pre id="net-pfsense-alias" class="code-block p-2"><code class="language-text">Name:           tweetfeed_ip_today
-Type:           URL Table (IPs)
-URL:            http://internal.example.com/tweetfeed-ip.txt
-Update Freq:    1 day</code><i class="tf-copy code-copy far fa-copy" data-copy="#net-pfsense-alias" title="Copy"></i></pre>
-
 				<hr id="detection" class="divider">
-				<h3 class="section-heading">5. Detection content</h3>
+				<h3 class="section-heading">4. Detection content</h3>
 				<p style="font-size: 14px;">Generate a Sigma rule template that any modern SIEM can compile to its query language.</p>
-				<p style="font-size: 14px;"><b>5.1 Sigma rule template</b> - DNS lookup to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> via your Sigma processing pipeline (e.g. sigmac with a lookup expansion):</p>
+				<p style="font-size: 14px;"><b>4.1 Sigma rule template</b> - DNS lookup to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> via your Sigma processing pipeline (e.g. sigmac with a lookup expansion):</p>
 				<pre id="det-sigma" class="code-block p-2"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
 id: f1c0c0d0-1111-4444-9999-aaaaaaaaaaaa
 status: experimental
