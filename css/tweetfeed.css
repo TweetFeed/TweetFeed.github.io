@@ -380,3 +380,47 @@ button.btn.btn-tf {
 .tf-action i {
 	font-size: 17px;
 }
+
+/* "Live" indicator on home (replaces the old Bootstrap Autorefresh toggle +
+   progress bar). Pulse cycle is 6s to match index.html's autorefresh interval
+   - one ring per loadData() tick. aria-pressed reflects state for screen
+   readers and toggles the dot/label visual. Respects prefers-reduced-motion. */
+.tf-live {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: #fff;
+	border: 1px solid black;
+	padding: 6px 14px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #222;
+	cursor: pointer;
+	user-select: none;
+	transition: background-color .15s, color .15s;
+}
+.tf-live:hover { background: #f8f9fa; }
+.tf-live:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-live-dot {
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: #16a34a;
+	box-shadow: 0 0 0 0 rgba(22,163,74,.6);
+	animation: tf-live-pulse 6s ease-out infinite;
+}
+.tf-live[aria-pressed="false"] { color: #6b7280; }
+.tf-live[aria-pressed="false"] .tf-live-dot {
+	background: #94a3b8;
+	animation: none;
+	box-shadow: none;
+}
+@keyframes tf-live-pulse {
+	0%   { box-shadow: 0 0 0 0   rgba(22,163,74,.55); }
+	30%  { box-shadow: 0 0 0 9px rgba(22,163,74,0);   }
+	100% { box-shadow: 0 0 0 9px rgba(22,163,74,0);   }
+}
+@media (prefers-reduced-motion: reduce) {
+	.tf-live-dot { animation: none; }
+}
