@@ -34,7 +34,27 @@
     },
     {
       "name": "list_recent_iocs",
-      "description": "List TweetFeed IOCs added since a given date, useful for delta-syncing a blocklist or threat-intel pipeline. Required: since (YYYY-MM-DD). Optional: limit, type, tag. Source is the 30-day month window."
+      "description": "List TweetFeed IOCs added since a given date, useful for delta-syncing a blocklist or Threat Intelligence pipeline. Required: since (YYYY-MM-DD). Optional: limit, type, tag. Source is the 30-day month window."
+    }
+  ],
+  "dataEndpoints": [
+    {
+      "name": "stix_2_1_bundles",
+      "url": "https://tweetfeed.live/stix/manifest.json",
+      "format": "application/stix+json;version=2.1",
+      "description": "Static STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms. Manifest indexes today/week/month bundles, each a spec-compliant Bundle of Indicator objects with TLP:CLEAR marking. Regenerated every 15 minutes."
+    },
+    {
+      "name": "diff_endpoint",
+      "url": "https://api.tweetfeed.live/v1/since/{ISO8601}",
+      "format": "application/json",
+      "description": "Returns IOCs added after the given ISO 8601 timestamp. Same /{filter1}/{filter2} syntax as /v1/{window}. 410 if since > 365d ago, 400 on malformed ISO."
+    },
+    {
+      "name": "per_tag_rss",
+      "url": "https://tweetfeed.live/rss/tag/{slug}.xml",
+      "format": "application/rss+xml",
+      "description": "One RSS 2.0 feed per active tag (>=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose."
     }
   ]
 }
