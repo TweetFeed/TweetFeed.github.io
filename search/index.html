@@ -616,7 +616,7 @@
 								var type = data[i][2];
 
 								var user = data[i][1];
-								var picSrc = 'pics/' + user + '.png';
+								var picSrc = '../pics/' + user + '.png';
 
 								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
@@ -689,7 +689,7 @@
 
 							var user = $(this.node()).find('td').eq(1).text().trim();
 
-							var picSrc = 'pics/' + user + '.png';
+							var picSrc = '../pics/' + user + '.png';
 
 							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: "Rubik", sans-serif;text-decoration: none;color: blue;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
