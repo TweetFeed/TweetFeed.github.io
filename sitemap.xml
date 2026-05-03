@@ -256,4 +256,10 @@
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
+<url>
+    <loc>https://tweetfeed.live/docs/</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

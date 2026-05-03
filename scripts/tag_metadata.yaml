@@ -30,7 +30,7 @@ tags:
     og_image_alt: "TweetFeed - Kimsuky DPRK APT IOC feed"
     webpage_name: "Kimsuky (DPRK APT) IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) attributed to Kimsuky, a DPRK-aligned APT also tracked as Velvet Chollima, TA427 and Black Banshee."
-    meta_description: "IOCs (URLs, domains, IPs, hashes) attributed to Kimsuky, a DPRK-aligned APT also tracked as Velvet Chollima, TA427 and Black Banshee. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs attributed to Kimsuky (DPRK APT, also Velvet Chollima/TA427/Black Banshee). {year} hits last year. Updated every 15 min."
     meta_keywords: "kimsuky,velvet chollima,ta427,black banshee,dprk apt,north korea apt,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -77,7 +77,7 @@ tags:
     og_image_alt: "TweetFeed - Cobalt Strike IOC feed"
     webpage_name: "Cobalt Strike IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Cobalt Strike (S0154), the commercial adversary simulation framework abused by APTs, ransomware operators and initial access brokers."
-    meta_description: "IOCs (URLs, domains, IPs, hashes) tagged Cobalt Strike (S0154), the commercial adversary simulation framework abused by APTs, ransomware operators and initial access brokers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Cobalt Strike (S0154), commercial adversary simulation framework abused by APTs and ransomware ops. {year} hits last year. Updated every 15 min."
     meta_keywords: "cobaltstrike,cobalt strike,beacon,red team,c2 framework,s0154,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -124,7 +124,7 @@ tags:
     og_image_alt: "TweetFeed - phishing IOC feed"
     webpage_name: "Phishing IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged phishing - public phishing infrastructure observed by security researchers on Twitter/X."
-    meta_description: "IOCs (URLs, domains, IPs) tagged phishing - the TweetFeed feed of public phishing infrastructure observed by security researchers on Twitter/X. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged phishing: public phishing infrastructure observed by security researchers on Twitter/X. {year} hits last year. Updated every 15 min."
     meta_keywords: "phishing,phishing ioc,phishing feed,phishing url,phishing domain,phishing ip,t1566,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -165,7 +165,7 @@ tags:
     og_image_alt: "TweetFeed - C2 IOC feed"
     webpage_name: "C2 (Command and Control) IOC feed"
     webpage_description: "Real-time IOCs (URLs, IPs, domains) tagged C2 - Command and Control infrastructure (servers, listeners, redirectors) observed by public security researchers."
-    meta_description: "IOCs tagged C2 (Command and Control) - servers, listeners and redirectors observed by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged C2 (command and control): servers, listeners and redirectors from public Twitter/X researchers. {year} hits last year. Updated every 15 min."
     meta_keywords: "c2,command and control,c2 server,c2 ioc,beacon,listener,redirector,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -207,7 +207,7 @@ tags:
     og_image_alt: "TweetFeed - scam IOC feed"
     webpage_name: "Scam IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged scam - fraud and impersonation infrastructure observed by public security researchers."
-    meta_description: "IOCs tagged scam - fake stores, crypto scams, romance scams, fake giveaways and other fraud infrastructure observed by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged scam: fake stores, crypto/romance scams and other fraud infrastructure from Twitter/X researchers. {year} hits last year. Updated every 15 min."
     meta_keywords: "scam,fraud,fake store,crypto scam,romance scam,fake giveaway,impersonation,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -248,7 +248,7 @@ tags:
     og_image_alt: "TweetFeed - malware IOC feed"
     webpage_name: "Malware IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged malware - infrastructure serving or distributing malware payloads observed by public researchers."
-    meta_description: "IOCs tagged malware - URLs, domains, IPs and hashes related to malware-hosting infrastructure observed by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged malware: URLs, domains, IPs and hashes for malware-hosting infrastructure from Twitter/X researchers. {year} hits last year. Updated every 15 min."
     meta_keywords: "malware,malware ioc,malware hash,malware url,malware domain,malware ip,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -290,7 +290,7 @@ tags:
     og_image_alt: "TweetFeed - APT IOC feed"
     webpage_name: "APT (Advanced Persistent Threat) IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged APT - infrastructure attributed to advanced persistent threat actors by public researchers."
-    meta_description: "IOCs tagged APT (Advanced Persistent Threat) - infrastructure attributed to nation-state and criminal threat actors by public Twitter/X security researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged APT (advanced persistent threat): infrastructure attributed to nation-state and criminal threat actors. {year} hits last year. Updated every 15 min."
     meta_keywords: "apt,advanced persistent threat,nation state,threat actor,apt ioc,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -333,7 +333,7 @@ tags:
     og_image_alt: "TweetFeed - ransomware IOC feed"
     webpage_name: "Ransomware IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged ransomware - infrastructure linked to ransomware operators and affiliates."
-    meta_description: "IOCs tagged ransomware - URLs, domains, IPs and hashes linked to ransomware operators and affiliates observed by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged ransomware: URLs, domains, IPs and hashes linked to ransomware operators and affiliates. {year} hits last year. Updated every 15 min."
     meta_keywords: "ransomware,ransomware ioc,ransomware feed,ransomware hash,ransomware c2,t1486,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -375,7 +375,7 @@ tags:
     og_image_alt: "TweetFeed - infostealer IOC feed"
     webpage_name: "Infostealer IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged stealer - infostealer panels, payload-hosting and credential-exfil endpoints."
-    meta_description: "IOCs tagged stealer (infostealer) - panels, payloads and credential-exfil endpoints from public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged stealer (infostealer): panels, payloads and credential-exfil endpoints from Twitter/X researchers. {year} hits last year. Updated every 15 min."
     meta_keywords: "stealer,infostealer,credential theft,redline,lumma,vidar,raccoon,t1555,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -416,7 +416,7 @@ tags:
     og_image_alt: "TweetFeed - opendir IOC feed"
     webpage_name: "Opendir IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains) tagged opendir - publicly listable directories hosting attacker payloads, kits and post-exploitation tools."
-    meta_description: "IOCs tagged opendir - publicly listable web directories hosting attacker payloads, phishing kits and post-exploitation tools, found by public Twitter/X researchers. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged opendir: publicly listable web directories hosting attacker payloads, kits and post-exploit tools. {year} hits last year. Updated every 15 min."
     meta_keywords: "opendir,open directory,exposed directory,attacker infrastructure,phishing kit,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -457,7 +457,7 @@ tags:
     og_image_alt: "TweetFeed - Lazarus DPRK APT IOC feed"
     webpage_name: "Lazarus (DPRK APT) IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) attributed to Lazarus (G0032), the DPRK-aligned APT focused on financial gain - cryptocurrency exchanges, banks and defence contractors."
-    meta_description: "IOCs attributed to Lazarus (G0032), the DPRK-aligned APT focused on financial gain - cryptocurrency exchanges, banks and defence contractors. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs attributed to Lazarus (G0032), the DPRK-aligned APT focused on cryptocurrency exchanges, banks and defence. {year} hits last year. Updated every 15 min."
     meta_keywords: "lazarus,lazarus group,g0032,dprk apt,north korea apt,hidden cobra,zinc,diamond sleet,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -500,7 +500,7 @@ tags:
     og_image_alt: "TweetFeed - DPRK APT IOC feed"
     webpage_name: "DPRK (North Korea) APT IOC feed"
     webpage_description: "Real-time IOCs attributed to DPRK-aligned threat activity - the umbrella tag covering Lazarus, Kimsuky, Andariel, BlueNoroff and adjacent North Korean state-aligned clusters."
-    meta_description: "IOCs attributed to DPRK-aligned threat activity - umbrella tag covering Lazarus, Kimsuky, Andariel, BlueNoroff and adjacent North Korean state-aligned clusters. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs from DPRK-aligned threat activity: umbrella covering Lazarus, Kimsuky, Andariel and BlueNoroff. {year} hits last year. Updated every 15 min."
     meta_keywords: "dprk,north korea,north korea apt,lazarus,kimsuky,andariel,bluenoroff,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: Thing
@@ -548,7 +548,7 @@ tags:
     og_image_alt: "TweetFeed - Interactsh IOC feed"
     webpage_name: "Interactsh IOC feed"
     webpage_description: "Real-time IOCs tagged interactsh - ProjectDiscovery's OAST canary endpoints observed when attackers use the tool for blind XSS, SSRF or RCE confirmation."
-    meta_description: "IOCs tagged interactsh - ProjectDiscovery's OAST (out-of-band application security testing) canary endpoints flagged by researchers when attackers use the tool for blind XSS, SSRF or RCE confirmation. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged interactsh: ProjectDiscovery OAST canary endpoints used in blind XSS, SSRF and RCE testing. {year} hits last year. Updated every 15 min."
     meta_keywords: "interactsh,oast,out of band,blind xss,ssrf,rce,projectdiscovery,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -588,7 +588,7 @@ tags:
     og_image_alt: "TweetFeed - Remcos RAT IOC feed"
     webpage_name: "Remcos RAT IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Remcos (S0332), the commercial Remote Access Tool widely abused in mass phishing campaigns."
-    meta_description: "IOCs tagged Remcos (S0332), the commercial Remote Access Tool by Breaking Security widely abused in mass phishing campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Remcos (S0332), the commercial Remote Access Tool widely abused in mass phishing campaigns. {year} hits last year. Updated every 15 min."
     meta_keywords: "remcos,remcos rat,breaking security,s0332,rat,remote access tool,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -630,7 +630,7 @@ tags:
     og_image_alt: "TweetFeed - Sliver C2 IOC feed"
     webpage_name: "Sliver C2 IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Sliver (S1056), the open-source C2 framework maintained by BishopFox."
-    meta_description: "IOCs tagged Sliver (S1056), the open-source BishopFox C2 framework increasingly abused as a Cobalt Strike alternative by APTs and ransomware affiliates. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Sliver (S1056), the open-source BishopFox C2 framework abused as a Cobalt Strike alternative. {year} hits last year. Updated every 15 min."
     meta_keywords: "sliver,sliver c2,bishopfox,s1056,c2 framework,cobalt strike alternative,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -673,7 +673,7 @@ tags:
     og_image_alt: "TweetFeed - NetSupport RAT IOC feed"
     webpage_name: "NetSupport RAT IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged NetSupport RAT (S0480) - the legitimate NetSupport Manager remote-administration tool abused for unauthorised access."
-    meta_description: "IOCs tagged NetSupport RAT (S0480) - legitimate NetSupport Manager remote-administration tool abused as a Remote Access Trojan in real-world intrusions. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged NetSupport RAT (S0480): legitimate NetSupport Manager abused as a RAT in real-world intrusions. {year} hits last year. Updated every 15 min."
     meta_keywords: "netsupport rat,netsupport manager,s0480,rat,remote admin tool,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -715,7 +715,7 @@ tags:
     og_image_alt: "TweetFeed - AsyncRAT IOC feed"
     webpage_name: "AsyncRAT IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged AsyncRAT - the open-source .NET Remote Access Trojan widely used in commodity phishing campaigns."
-    meta_description: "IOCs tagged AsyncRAT - open-source .NET Remote Access Trojan widely used in Latin American and European commodity phishing campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged AsyncRAT: open-source .NET Remote Access Trojan used in commodity phishing campaigns. {year} hits last year. Updated every 15 min."
     meta_keywords: "asyncrat,async rat,dotnet rat,nyan,latam phishing,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -757,7 +757,7 @@ tags:
     og_image_alt: "TweetFeed - Deimos C2 IOC feed"
     webpage_name: "Deimos C2 IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Deimos - the open-source Go-based C2 framework with cross-platform implants."
-    meta_description: "IOCs tagged Deimos C2 - open-source Go-based C2 framework supporting Windows, Linux and macOS implants. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Deimos C2: open-source Go-based C2 framework supporting Windows, Linux and macOS implants. {year} hits last year. Updated every 15 min."
     meta_keywords: "deimos,deimos c2,deimosc2,go c2,golang c2,cross platform c2,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -800,7 +800,7 @@ tags:
     og_image_alt: "TweetFeed - Lumma stealer IOC feed"
     webpage_name: "Lumma stealer IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Lumma (S1138) - the infostealer-as-a-service targeting browser credentials, crypto wallets and MFA seeds."
-    meta_description: "IOCs tagged Lumma (S1138), the infostealer-as-a-service targeting browser credentials, crypto wallets, autofill data and MFA seeds. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Lumma (S1138), infostealer-as-a-service targeting browser credentials, crypto wallets and MFA seeds. {year} hits last year. Updated every 15 min."
     meta_keywords: "lumma,lumma stealer,lummac2,infostealer,credential theft,crypto wallet stealer,s1138,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -843,7 +843,7 @@ tags:
     og_image_alt: "TweetFeed - Mythic C2 IOC feed"
     webpage_name: "Mythic C2 IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Mythic - the open-source modular C2 framework maintained by SpecterOps."
-    meta_description: "IOCs tagged Mythic - the open-source modular C2 framework maintained by SpecterOps, with pluggable agents (Apollo, Athena, Poseidon, Apfell) and pluggable C2 profiles. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Mythic: open-source modular C2 framework by SpecterOps with pluggable agents (Apollo, Athena, Poseidon). {year} hits last year. Updated every 15 min."
     meta_keywords: "mythic,mythic c2,specterops,apollo,athena,poseidon,c2 framework,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -886,7 +886,7 @@ tags:
     og_image_alt: "TweetFeed - Havoc C2 IOC feed"
     webpage_name: "Havoc C2 IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged Havoc - the modern open-source C2 framework by C5pider with strong evasion tradecraft."
-    meta_description: "IOCs tagged Havoc - the modern open-source C2 framework by C5pider with strong evasion tradecraft, increasingly observed in real-world intrusions as a Cobalt Strike alternative. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged Havoc: modern open-source C2 framework by C5pider, used as a Cobalt Strike alternative. {year} hits last year. Updated every 15 min."
     meta_keywords: "havoc,havoc c2,c5pider,c2 framework,demon,cobalt strike alternative,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
@@ -929,7 +929,7 @@ tags:
     og_image_alt: "TweetFeed - njRAT IOC feed"
     webpage_name: "njRAT IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged njRAT (S0385) - the long-running .NET commodity Remote Access Trojan also tracked as Bladabindi."
-    meta_description: "IOCs tagged njRAT (S0385) - the long-running .NET commodity Remote Access Trojan also tracked as Bladabindi, especially active in MENA-region campaigns. {year} IOCs in the past year, refreshed every 15 minutes. CSV, JSON, RSS, API. CC0."
+    meta_description: "IOCs tagged njRAT (S0385): long-running .NET commodity RAT also tracked as Bladabindi, active in MENA campaigns. {year} hits last year. Updated every 15 min."
     meta_keywords: "njrat,bladabindi,s0385,dotnet rat,mena phishing,commodity rat,ioc feed,osint,Threat Intelligence"
     schema_about:
       type: SoftwareApplication
