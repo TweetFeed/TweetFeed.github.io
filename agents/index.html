@@ -355,6 +355,32 @@
 								Source window is the past 30 days.
 							</td>
 						</tr>
+						<tr>
+							<td><code>get_tag_info</code></td>
+							<td>
+								Bundle for a single tag: aggregate counts across <code>today</code> /
+								<code>week</code> / <code>month</code> / <code>year</code> from
+								<code>counts.json</code> plus the most recent IOCs. Saves the agent from
+								three separate calls to assemble a tag overview.
+							</td>
+						</tr>
+						<tr>
+							<td><code>get_trending</code></td>
+							<td>
+								Top tags + IOC-type distribution for a given window
+								(<code>today</code> / <code>week</code> / <code>month</code> / <code>year</code>),
+								read from <code>counts.json</code>. Useful for "what is the community
+								talking about right now" queries.
+							</td>
+						</tr>
+						<tr>
+							<td><code>enrich_ioc</code></td>
+							<td>
+								Auto-detects IOC type (URL / domain / IP / MD5 / SHA-256) from the value
+								and looks it up across the past 30 days. Saves the agent from picking the
+								right <code>check_*</code> tool when the type is uncertain.
+							</td>
+						</tr>
 					</table>
 				</div>
 

@@ -35,6 +35,18 @@
     {
       "name": "list_recent_iocs",
       "description": "List TweetFeed IOCs added since a given date, useful for delta-syncing a blocklist or Threat Intelligence pipeline. Required: since (YYYY-MM-DD). Optional: limit, type, tag. Source is the 30-day month window."
+    },
+    {
+      "name": "get_tag_info",
+      "description": "Bundle of TweetFeed activity for a single tag: aggregate counts across today/week/month/year windows plus the most recent IOCs. Saves the agent from making three separate calls to assemble a tag overview. Required: tag. Optional: limit."
+    },
+    {
+      "name": "get_trending",
+      "description": "Top tags and IOC-type distribution for a given window (today/week/month/year), computed from the live counts.json aggregate. Useful for 'what is the community talking about right now' queries. Required: window. Optional: limit."
+    },
+    {
+      "name": "enrich_ioc",
+      "description": "Look up an IOC value across the past 30 days of TweetFeed with auto-detected type (URL / domain / IP / MD5 / SHA-256). Saves the agent from picking the right check_X tool when the type is uncertain. Required: value."
     }
   ],
   "dataEndpoints": [
