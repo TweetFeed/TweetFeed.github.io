@@ -264,7 +264,7 @@ tags:
       - label: "Detection"
         html: "YARA rules on hashes, sandboxing on samples, network-IDS rules for known C2 patterns, and feed-driven blocklists for URLs / domains / IPs. The TweetFeed CSV / JSON feeds are designed for this last use case."
       - label: "References"
-        html: '<a href="https://attack.mitre.org/software/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Software</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/" target="_blank" rel="noopener noreferrer">Malpedia</a> &middot; <a href="../../malicious-urls.html" class="text-decoration-none">malicious-urls feed</a>.'
+        html: '<a href="https://attack.mitre.org/software/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Software</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/" target="_blank" rel="noopener noreferrer">Malpedia</a> &middot; <a href="../../malicious-urls/" class="text-decoration-none">malicious-urls feed</a>.'
     faq_q1:
       q: "What is the difference between #malware and per-family tags like #CobaltStrike?"
       a: "The #malware tag is broad and matches any IOC researchers flag as malware-related, regardless of family. Per-family tags like #CobaltStrike, #Remcos or #AsyncRAT are subsets that identify the specific malware. An IOC can carry both tags if researchers attribute it to a specific family, but many entries are tagged only with #malware when the family attribution is uncertain."
