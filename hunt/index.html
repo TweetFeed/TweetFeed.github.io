@@ -10,9 +10,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, MISP feed and Sigma rule template.">
+	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, Elastic Stack (Logstash + ES|QL + Watcher), MISP feed and Sigma rule template.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,misp,sigma">
+	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma">
 	<link rel="canonical" href="https://tweetfeed.live/hunt/">
 	<title>Free IOC Threat Hunting Dashboard - Search Malware, Phishing, URLs</title>
 	<!-- Twitter Card -->
@@ -68,6 +68,7 @@
 			{"@type": "HowToTool", "name": "Splunk"},
 			{"@type": "HowToTool", "name": "Microsoft Sentinel"},
 			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
+			{"@type": "HowToTool", "name": "Elastic Stack (Logstash + Elasticsearch + Kibana)"},
 			{"@type": "HowToTool", "name": "MISP"},
 			{"@type": "HowToTool", "name": "Sigma"}
 		],
@@ -380,6 +381,7 @@ Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-cop
 						<a class="nav-item nav-link active border-bottom-0" id="siem-spl-tab" data-toggle="tab" href="#siem-spl" role="tab" aria-controls="siem-spl" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> Splunk SPL</a>
 						<a class="nav-item nav-link border-bottom-0" id="siem-sentinel-tab" data-toggle="tab" href="#siem-sentinel" role="tab" aria-controls="siem-sentinel" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> Sentinel KQL</a>
 						<a class="nav-item nav-link border-bottom-0" id="siem-mde-tab" data-toggle="tab" href="#siem-mde" role="tab" aria-controls="siem-mde" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> Defender (KQL)</a>
+						<a class="nav-item nav-link border-bottom-0" id="siem-elastic-tab" data-toggle="tab" href="#siem-elastic" role="tab" aria-controls="siem-elastic" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#4</b> Elastic Stack</a>
 					</div>
 				</nav>
 				<div class="tab-content" id="siem-tabContent">
@@ -572,6 +574,75 @@ union (
 ) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-md5-pre" title="Copy"></i></pre>
 							</div>
 						</div>
+					</div>
+					<div class="tab-pane fade" id="siem-elastic" role="tabpanel" aria-labelledby="siem-elastic-tab">
+						<p style="font-size: 14px; margin-top: 1rem;">Ingest the TweetFeed CSV into an Elasticsearch index every 15 min, then run KQL or ES|QL against it from Kibana. The 3 recipes cover the most common joins.</p>
+						<a style="background-color: #00bfb3;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-overview.html" target="_blank" role="button" rel="noopener noreferrer">ES|QL reference <i class="fas fa-external-link-alt"></i></a>
+						<br><br>
+						<p style="font-size: 14px;"><b>3.6 Logstash pipeline</b> - pull <code>today.csv</code> every 15 min and index to <code>tweetfeed-iocs-*</code>:</p>
+						<pre id="elastic-logstash" class="code-block p-2"><code class="language-yaml">input {
+  http_poller {
+    urls =&gt; {
+      tweetfeed =&gt; "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"
+    }
+    schedule =&gt; { every =&gt; "15m" }
+    codec =&gt; plain
+  }
+}
+filter {
+  split { field =&gt; "message" }
+  csv {
+    columns =&gt; ["date","user","type","value","tags","tweet"]
+    skip_header =&gt; true
+    separator =&gt; ","
+  }
+  date { match =&gt; ["date","ISO8601"] target =&gt; "@timestamp" }
+  mutate { remove_field =&gt; ["message","event"] }
+}
+output {
+  elasticsearch {
+    hosts =&gt; ["https://es:9200"]
+    index =&gt; "tweetfeed-iocs-%{+YYYY.MM.dd}"
+    document_id =&gt; "%{type}-%{value}"
+    action =&gt; "update"
+    doc_as_upsert =&gt; true
+  }
+}</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-logstash" title="Copy"></i></pre>
+						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.7 ES|QL join</b> - DNS hits against TweetFeed domains in last 24h (Kibana Discover or Lens):</p>
+						<pre id="elastic-esql" class="code-block p-2"><code class="language-sql">FROM logs-network-dns-*
+| WHERE @timestamp &gt; NOW() - 24h
+| LOOKUP JOIN tweetfeed-iocs-* ON dns.question.name == value
+| WHERE type == "domain"
+| KEEP @timestamp, host.name, source.ip, dns.question.name, tags, tweet
+| SORT @timestamp DESC
+| LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-esql" title="Copy"></i></pre>
+						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.8 Watcher alert</b> - fire when any internal endpoint resolves a TweetFeed domain. Save under Stack Management &rarr; Watcher:</p>
+						<pre id="elastic-watcher" class="code-block p-2"><code class="language-json">{
+  "trigger": { "schedule": { "interval": "15m" } },
+  "input": {
+    "search": {
+      "request": {
+        "indices": ["logs-network-dns-*"],
+        "body": {
+          "query": {
+            "bool": {
+              "filter": [
+                {"range": {"@timestamp": {"gte": "now-15m"}}},
+                {"terms": {"dns.question.name": {"index": "tweetfeed-iocs-*", "id": "domain", "path": "value"}}}
+              ]
+            }
+          },
+          "size": 100
+        }
+      }
+    }
+  },
+  "condition": {"compare": {"ctx.payload.hits.total.value": {"gt": 0}}},
+  "actions": {
+    "log": {"logging": {"text": "TweetFeed DNS hit: {{ctx.payload.hits.total.value}} events"}}
+  }
+}</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-watcher" title="Copy"></i></pre>
+						<p style="font-size: 13.5px;color:#555;margin-top: 0.5rem;">For SIEM detection rules, the <code>tweetfeed-iocs-*</code> index becomes a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> — same data, alert-routable.</p>
 					</div>
 				</div>
 
