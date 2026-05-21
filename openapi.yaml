@@ -1,0 +1,276 @@
+openapi: 3.1.0
+info:
+  title: TweetFeed API
+  description: |
+    Public REST API for TweetFeed (https://tweetfeed.live), a real-time aggregator of
+    Indicators of Compromise (IOCs) - URLs, domains, IPs and file hashes - shared by
+    the infosec community on Twitter/X.
+
+    The dataset is refreshed every 15 minutes by scraping RSS feeds from a curated
+    list of ~95 security researchers plus security-related hashtags. Coverage starts
+    2021-01-01. All data is released under CC0 1.0 Universal (public domain
+    dedication) - no attribution required, no warranty.
+
+    All endpoints:
+    - Require no authentication.
+    - Set `Access-Control-Allow-Origin: *` (CORS open).
+    - Cache responses at the CF edge for 30 s (`Cache-Control: public, max-age=30`).
+    - Return JSON arrays (one object per IOC), one schema for every route.
+
+    For Threat Intelligence agent integrations there is also a Model Context Protocol
+    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 8 tools).
+  version: "1.0"
+  contact:
+    name: TweetFeed
+    url: https://tweetfeed.featurebase.app/
+  license:
+    name: CC0 1.0 Universal
+    url: https://creativecommons.org/publicdomain/zero/1.0/
+
+servers:
+  - url: https://api.tweetfeed.live
+    description: Production
+
+externalDocs:
+  description: API guide with copy-paste examples and FAQ.
+  url: https://tweetfeed.live/api/
+
+paths:
+  /v1/{time}:
+    get:
+      operationId: getIocsByWindow
+      summary: List IOCs in a time window
+      description: |
+        Returns all IOCs that landed in the chosen time window. The `today` window
+        is the last 24 h, `week` the last 7 d, `month` the last 30 d, `year` the
+        last 365 d.
+
+        Note: `year` returns `302` to the raw CSV on GitHub because the full year
+        dataset exceeds the 10 ms CPU budget of the underlying Cloudflare Worker
+        on the Free plan. Clients should follow redirects.
+      parameters:
+        - $ref: "#/components/parameters/Time"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+              example:
+                - date: "2026-05-21 09:13:00"
+                  user: "malwrhunterteam"
+                  type: "url"
+                  value: "http://example.malicious/path"
+                  tags: ["phishing", "scam"]
+        "302":
+          description: Only for `time=year`. Redirects to the raw CSV on GitHub.
+          headers:
+            Location:
+              schema:
+                type: string
+                example: https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv
+
+  /v1/{time}/{filter1}:
+    get:
+      operationId: getIocsByWindowFilter
+      summary: List IOCs in a window, filtered once
+      description: |
+        Same as `/v1/{time}` but filtered by one of:
+        - **IOC type** - `url`, `domain`, `ip`, `sha256`, `md5`
+        - **Tag** - e.g. `phishing`, `cobaltstrike`, `lockbit`, `ransomware` (full
+          taxonomy: 122+ tags, see https://tweetfeed.live/tags/)
+        - **Researcher handle** - must include the leading `@`, e.g.
+          `@malwrhunterteam`
+      parameters:
+        - $ref: "#/components/parameters/Time"
+        - $ref: "#/components/parameters/Filter1"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+
+  /v1/{time}/{filter1}/{filter2}:
+    get:
+      operationId: getIocsByWindowTwoFilters
+      summary: List IOCs in a window, two filters AND-ed
+      description: |
+        Two filters combined with AND semantics. Common patterns:
+        - **tag + type** - `/v1/week/phishing/url` (phishing URLs in last 7 d)
+        - **tag + tag** - `/v1/month/cobaltstrike/c2`
+        - **@user + type** - `/v1/today/@malwrhunterteam/sha256`
+      parameters:
+        - $ref: "#/components/parameters/Time"
+        - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/Filter2"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+
+  /v1/since/{datetime}:
+    get:
+      operationId: getIocsSince
+      summary: List IOCs added since an ISO 8601 datetime
+      description: |
+        Returns IOCs added after the given ISO 8601 timestamp. Designed for
+        delta-syncing a blocklist or Threat Intelligence pipeline without
+        re-pulling the full window.
+
+        Strict ISO 8601 required (`Z` UTC suffix or `+HH:MM` offset; ambiguous
+        local-time forms are rejected). Edge cases:
+        - Future timestamp - `200` with `[]` body.
+        - Timestamp older than 365 days - `410 Gone`.
+        - Malformed - `400`.
+      parameters:
+        - $ref: "#/components/parameters/DateTime"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+        "400":
+          description: Malformed ISO 8601 timestamp.
+        "410":
+          description: Timestamp older than the 365 day retention window.
+
+  /v1/since/{datetime}/{filter1}:
+    get:
+      operationId: getIocsSinceFilter
+      summary: List IOCs since a datetime, filtered once
+      parameters:
+        - $ref: "#/components/parameters/DateTime"
+        - $ref: "#/components/parameters/Filter1"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+
+  /v1/since/{datetime}/{filter1}/{filter2}:
+    get:
+      operationId: getIocsSinceTwoFilters
+      summary: List IOCs since a datetime, two filters AND-ed
+      parameters:
+        - $ref: "#/components/parameters/DateTime"
+        - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/Filter2"
+      responses:
+        "200":
+          description: JSON array of IOCs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ioc"
+
+components:
+  parameters:
+    Time:
+      name: time
+      in: path
+      required: true
+      description: Time window for the query.
+      schema:
+        type: string
+        enum: [today, week, month, year]
+
+    Filter1:
+      name: filter1
+      in: path
+      required: true
+      description: |
+        First filter. Accepts an IOC type (`url`, `domain`, `ip`, `sha256`, `md5`),
+        a tag (e.g. `phishing`, `cobaltstrike`), or a researcher handle prefixed
+        with `@` (e.g. `@malwrhunterteam`).
+      schema:
+        type: string
+      examples:
+        type:
+          value: url
+          summary: IOC type
+        tag:
+          value: phishing
+          summary: Tag
+        researcher:
+          value: "@malwrhunterteam"
+          summary: Researcher handle
+
+    Filter2:
+      name: filter2
+      in: path
+      required: true
+      description: Second filter, AND-ed with `filter1`. Same value space as `filter1`.
+      schema:
+        type: string
+
+    DateTime:
+      name: datetime
+      in: path
+      required: true
+      description: |
+        ISO 8601 datetime, strict form (must end in `Z` for UTC or include a
+        `+HH:MM` / `-HH:MM` offset). Ambiguous local-time forms are rejected.
+      schema:
+        type: string
+        format: date-time
+        example: "2026-05-01T00:00:00Z"
+
+  schemas:
+    Ioc:
+      type: object
+      required: [date, user, type, value, tags]
+      properties:
+        date:
+          type: string
+          description: |
+            Timestamp the IOC entered the TweetFeed pipeline, UTC, format
+            `YYYY-MM-DD HH:MM:SS`. This is the ingest time, not the original
+            tweet time.
+          example: "2026-05-21 09:13:00"
+        user:
+          type: string
+          description: Twitter/X handle of the reporting researcher (no leading `@`).
+          example: "malwrhunterteam"
+        type:
+          type: string
+          enum: [url, domain, ip, sha256, md5]
+          description: IOC type.
+        value:
+          type: string
+          description: |
+            The IOC value itself. URLs/domains are emitted refanged (the original
+            tweet may have defanged them with `[.]` or `hxxp` - the pipeline
+            normalises to refanged form on emit). File hashes are lowercase hex.
+          example: "http://example.malicious/path"
+        tags:
+          type: array
+          items:
+            type: string
+          description: |
+            Tag labels (typically include the IOC category - `phishing`, `malware`,
+            `ransomware`, etc. - plus malware-family or threat-actor labels when
+            applicable). Current taxonomy: 122+ tags. Full list at
+            https://tweetfeed.live/tags/.
+          example: ["phishing", "scam"]

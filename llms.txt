@@ -15,6 +15,7 @@
 ## API
 
 - [API documentation](https://tweetfeed.live/api.html): endpoints, examples, query syntax.
+- [OpenAPI 3.1 spec](https://tweetfeed.live/openapi.yaml): machine-readable schema covering every route, including `/v1/since/{ISO8601}` for delta sync.
 - Base URL: `https://api.tweetfeed.live/`
 - Path pattern: `/v1/{time_window}` or `/v1/{time}/{filter1}` or `/v1/{time}/{filter1}/{filter2}`
 - Time windows: `today`, `week`, `month`, `year`
