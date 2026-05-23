@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Copy-paste hunting recipes for TweetFeed IOCs: terminal, Splunk SPL, Sentinel KQL, Defender for Endpoint, Elastic Stack (Logstash + ES|QL + Watcher), MISP feed and Sigma rule template.">
+	<meta name="description" content="Copy-paste IOC hunting recipes from TweetFeed: terminal, Splunk SPL, Sentinel KQL, Defender, Elastic ES|QL, MISP feed, Sigma rule. Free, 15-min refresh.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma">
 	<link rel="canonical" href="https://tweetfeed.live/hunt/">
@@ -642,7 +642,7 @@ output {
     "log": {"logging": {"text": "TweetFeed DNS hit: {{ctx.payload.hits.total.value}} events"}}
   }
 }</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-watcher" title="Copy"></i></pre>
-						<p style="font-size: 13.5px;color:#555;margin-top: 0.5rem;">For SIEM detection rules, the <code>tweetfeed-iocs-*</code> index becomes a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> — same data, alert-routable.</p>
+						<p style="font-size: 13.5px;color:#555;margin-top: 0.5rem;">For SIEM detection rules, the <code>tweetfeed-iocs-*</code> index becomes a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
 					</div>
 				</div>
 

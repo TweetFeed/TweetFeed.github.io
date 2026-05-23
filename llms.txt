@@ -4,10 +4,10 @@
 
 ## Feeds
 
-- [Today's IOCs (CSV)](https://tweetfeed.live/today.csv): 24h window, all IOC types.
-- [Past 7 days (CSV)](https://tweetfeed.live/week.csv): rolling 7d window.
-- [Past 30 days (CSV)](https://tweetfeed.live/month.csv): rolling 30d window.
-- [Past 365 days (CSV)](https://tweetfeed.live/year.csv): rolling year window.
+- [Today's IOCs (CSV)](https://tweetfeed.live/feeds/today.csv): 24h window, all IOC types.
+- [Past 7 days (CSV)](https://tweetfeed.live/feeds/week.csv): rolling 7d window.
+- [Past 30 days (CSV)](https://tweetfeed.live/feeds/month.csv): rolling 30d window.
+- [Past 365 days (CSV)](https://tweetfeed.live/feeds/year.csv): rolling year window (302 redirect to raw GitHub).
 - [RSS feed](https://tweetfeed.live/rss.xml): syndication-friendly.
 - [MISP manifest](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json): MISP feed integration; 4 events (today/week/month/year).
 - [Browseable feed page](https://tweetfeed.live/feeds.html): HTML index with stats and download buttons.
@@ -45,7 +45,7 @@
 
 ## Tag taxonomy
 
-122+ malware family / tactic tags including:
+120+ malware family / tactic tags including:
 - Malware families: `cobaltstrike`, `lockbit`, `redline`, `qakbot`, `emotet`, etc.
 - Tactic categories: `phishing`, `ransomware`, `c2`, `infostealer`, `loader`, `rat`, etc.
 - Source signal tags: `osint`, `ioc`, `malware`.

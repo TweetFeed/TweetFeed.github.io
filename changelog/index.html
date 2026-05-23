@@ -272,7 +272,7 @@
 								<span class="cl-tag cl-tag-status">Fix</span>
 							</div>
 							<h3 class="section-heading cl-title">IOC quality pass</h3>
-							<div class="cl-body"><p>Structural fixes for false positives across every IOC type:</p><ul class="cl-list"><li><b>Quote attribution</b> &mdash; IOCs from quoted tweets now point to the original author, not the quoter.</li><li><b>Hash filter</b> &mdash; hex strings inside URL paths or subdomains (cloud bucket IDs, webinar IDs, phishing-kit session IDs) no longer leak as MD5/SHA256.</li><li><b>Research-host whitelist</b> &mdash; links to sample-sharing services no longer emit as URL or domain IOCs.</li><li><b>CDN IPs</b> &mdash; Anycast edges filtered; the domain is the actionable IOC, not the CDN frontend.</li></ul><p class="cl-foot">~10K historical false-positive rows cleaned.</p></div>
+							<div class="cl-body"><p>Structural fixes for false positives across every IOC type:</p><ul class="cl-list"><li><b>Quote attribution</b> - IOCs from quoted tweets now point to the original author, not the quoter.</li><li><b>Hash filter</b> - hex strings inside URL paths or subdomains (cloud bucket IDs, webinar IDs, phishing-kit session IDs) no longer leak as MD5/SHA256.</li><li><b>Research-host whitelist</b> - links to sample-sharing services no longer emit as URL or domain IOCs.</li><li><b>CDN IPs</b> - Anycast edges filtered; the domain is the actionable IOC, not the CDN frontend.</li></ul><p class="cl-foot">~10K historical false-positive rows cleaned.</p></div>
 						</div>
 					</article>
 					<article class="card cl-entry">
