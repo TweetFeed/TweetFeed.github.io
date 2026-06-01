@@ -213,7 +213,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item dropdown " style="font-size: 15px;">
-							<a class="nav-link dropdown-toggle" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
 								&nbsp;<i class="fas fa-bars"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
@@ -231,7 +231,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content">
+			<div id="content" role="main">
 				<div id="presentationSecondary">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-th" style="font-size: 36px;"></i> IOC Dashboard</h1>
@@ -1332,27 +1332,14 @@
 							isCheckedTag = true;
 						}
 
-					} else if (tags.length>= 1) {
+					} else {
 
-						tag0 = tags[0].replace('#', '');
-						tag1 = tags[1].replace('#', '');
-
-						//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-						if (checkedTags.includes(tag0) || checkedTags.includes(tag1)) {
-							isCheckedTag = true;
-						}
-
-					} else if (tags.length>= 2) {
-
-						tag0 = tags[0].replace('#', '');
-						tag1 = tags[1].replace('#', '');
-						tag2 = tags[2].replace('#', '');
-
-						//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-						if (checkedTags.includes(tag0) || checkedTags.includes(tag1) || checkedTags.includes(tag2)) {
-							isCheckedTag = true;
+						// 2+ tags: match if ANY of the IOC's tags is a checked filter
+						for (var ti = 0; ti < tags.length; ti++) {
+							if (checkedTags.includes(tags[ti].replace('#', ''))) {
+								isCheckedTag = true;
+								break;
+							}
 						}
 
 					}
