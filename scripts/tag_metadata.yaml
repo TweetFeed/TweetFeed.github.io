@@ -19,7 +19,7 @@ tags:
   # ============================================================
 
   - slug: kimsuky
-    display_tag: kimsuky
+    display_tag: Kimsuky
     license_subject: "Kimsuky"
     category: apt-group
     short_subtitle: "DPRK-aligned APT (also tracked as Velvet Chollima, TA427, Black Banshee)"
@@ -66,7 +66,7 @@ tags:
   # ============================================================
 
   - slug: cobaltstrike
-    display_tag: cobaltstrike
+    display_tag: CobaltStrike
     license_subject: "Cobalt Strike"
     category: malware-family
     short_subtitle: "Commercial adversary simulation framework, widely abused by APTs, ransomware operators and initial access brokers"
@@ -154,7 +154,7 @@ tags:
       - {display: "malware", slug: "malware"}
 
   - slug: c2
-    display_tag: c2
+    display_tag: C2
     license_subject: "C2"
     category: ttp
     short_subtitle: "Command and Control infrastructure (URLs, IPs, domains) hosting attacker servers and beacons"
@@ -279,7 +279,7 @@ tags:
       - {display: "C2", slug: "c2"}
 
   - slug: apt
-    display_tag: apt
+    display_tag: APT
     license_subject: "APT"
     category: ttp
     short_subtitle: "Advanced Persistent Threat infrastructure (URLs, domains, IPs, hashes) attributed to nation-state and criminal threat actors"
@@ -537,7 +537,7 @@ tags:
   # ============================================================
 
   - slug: interactsh
-    display_tag: interactsh
+    display_tag: Interactsh
     license_subject: "Interactsh"
     category: malware-family
     short_subtitle: "ProjectDiscovery's OAST canary (out-of-band application security testing) - flagged when attackers use it for blind XSS, SSRF or RCE confirmation"
@@ -577,7 +577,7 @@ tags:
       - {display: "malware", slug: "malware"}
 
   - slug: remcos
-    display_tag: remcos
+    display_tag: Remcos
     license_subject: "Remcos"
     category: malware-family
     short_subtitle: "Commercial Remote Access Tool widely abused in mass phishing campaigns"
@@ -746,7 +746,7 @@ tags:
       - {display: "phishing", slug: "phishing"}
 
   - slug: deimos
-    display_tag: deimos
+    display_tag: Deimos
     license_subject: "Deimos"
     category: malware-family
     short_subtitle: "Open-source Go-based C2 framework with cross-platform implants (Windows, Linux, macOS)"
