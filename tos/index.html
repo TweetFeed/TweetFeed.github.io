@@ -306,7 +306,7 @@
 				<b>Data processed:</b>
 				<ul style="margin:8px 0 0 20px;">
 				<li><b>IP address, User-Agent, request path, referer</b> - recorded in edge/server access logs for abuse prevention, troubleshooting, and rate limiting. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: short-lived, typically 30 days or less at the CDN/host level.</li>
-				<li><b>Aggregate traffic analytics</b> - collected via <a href="https://umami.is/" target="_blank" rel="noopener">Umami</a>, a cookieless analytics tool. No cookies, no localStorage, and no fingerprinting are used. IP addresses are hashed with a daily-rotating salt and never stored. Only aggregate page views, referrers, and coarse device/country information are retained. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
+				<li><b>Aggregate traffic analytics</b> - collected via <a href="https://umami.is/" target="_blank" rel="noopener">Umami</a> and <a href="https://ahrefs.com/web-analytics" target="_blank" rel="noopener">Ahrefs Web Analytics</a>, both cookieless analytics tools. No cookies, no localStorage, and no fingerprinting are used. IP addresses are hashed with a daily-rotating salt and never stored. Only aggregate page views, referrers, and coarse device/country information are retained. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
 				<li><b>Feedback content</b> - only if you post on the <a href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener">Featurebase feedback board</a> or send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a>. Used solely for correspondence about TweetFeed.</li>
 				<li><b>Public Twitter/X content</b> - the Service ingests publicly available tweets and extracts IOCs from them. It does not process private messages, protected accounts, or any non-public content. The author handle of a tweet is retained alongside its IOC strictly as provenance metadata.</li>
 				</ul>
@@ -327,6 +327,7 @@
 				<li><b>Cloudflare, Inc.</b> - DNS, CDN, DDoS protection, and the Cloudflare Worker that powers api.tweetfeed.live. Processes all incoming HTTP requests to the Service.</li>
 				<li><b>GitHub, Inc.</b> - hosts the static frontend at tweetfeed.live via GitHub Pages, and hosts the public data repository from which feeds are served.</li>
 				<li><b>Umami Software, Inc.</b> - cookieless web analytics (cloud.umami.is). Receives page URL, referrer, and hashed visitor signal; does not set cookies or store IP addresses.</li>
+				<li><b>Ahrefs Pte. Ltd.</b> - cookieless web analytics (analytics.ahrefs.com). Receives page URL and referrer; does not set cookies or store personal identifiers.</li>
 				<li><b>Featurebase (Useful Ltd.)</b> - hosts the public feedback board at tweetfeed.featurebase.app. Collects email and post content when you interact with the board.</li>
 				<li><b>Google LLC</b> - Google Fonts used for typography on the website.</li>
 				<li><b>Public CDN providers</b> - jsDelivr, Cloudflare CDN, and similar services deliver common JavaScript and CSS libraries (jQuery, Bootstrap, DataTables, FontAwesome).</li>
