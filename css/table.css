@@ -169,6 +169,20 @@ table th:nth-child(7) {
   min-height: 820px;
 }
 
+/* CLS (mobile): on narrow viewports the IOC value cells wrap (see the
+   max-width:992px block above), so the home table grows past the 820px
+   desktop reservation and the spinner->table swap shifts the page.
+   Reserve the typical wrapped height per phone tier (measured 2026-06-27
+   via Playwright: ~1001px at 390-576px, ~1138px at 360px). Scoped to the
+   home #dataTable - the other :has() tables above were not measured on
+   mobile, so they keep the 820px floor. */
+@media (max-width: 767.98px) {
+  .card-body:has(#dataTable) { min-height: 1010px; }
+}
+@media (max-width: 374.98px) {
+  .card-body:has(#dataTable) { min-height: 1150px; }
+}
+
 input {
   text-align: center;
   vertical-align: middle;
