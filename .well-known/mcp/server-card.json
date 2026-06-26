@@ -11,7 +11,7 @@
   "capabilities": {
     "tools": {}
   },
-  "protocolVersion": "2025-03-26",
+  "protocolVersion": "2025-11-25",
   "license": "CC0-1.0 (data); MIT (server source)",
   "source": "https://github.com/0xDanielLopez/tweetfeed-mcp",
   "documentation": "https://tweetfeed.live/agents/",

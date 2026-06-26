@@ -29,7 +29,7 @@
 
 ## MCP integration (for AI agents)
 
-- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-03-26. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type and look up the value).
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type and look up the value).
 - [/agents.html](https://tweetfeed.live/agents.html): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
 - [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest for the `tweetfeed-iocs` skill.
 - [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.
