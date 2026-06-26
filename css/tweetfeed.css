@@ -583,3 +583,10 @@ button.btn.btn-tf {
 	}
 	.docs-content { max-width: 100%; }
 }
+
+/* --- CLS: reserve the home listing-table area --- */
+/* The home table loads via AJAX behind a small spinner, then DataTables expands
+   it to 10 rows + length/search/info/pagination, which pushes the content below
+   it down. Reserving the area absorbs that swap so it does not shift the page on
+   first paint. Scoped to #presentation so only the home table is affected. */
+#presentation .card-body .table-responsive { min-height: 560px; }
