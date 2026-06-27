@@ -269,7 +269,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item dropdown " style="font-size: 15px;">
-							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
@@ -295,7 +295,7 @@
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
-					<p class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</p>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</p>
 					<p style="font-size: 14px;"><em>Recipes for terminal, SIEM, firewall</em></p>
 				</div>
 				<hr class="divider">
@@ -321,11 +321,11 @@
 				<div class="tab-content" id="qs-tabContent">
 					<div class="tab-pane fade show active" id="qs-rest" role="tabpanel" aria-labelledby="qs-rest-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">All IOCs from today as JSON:</p>
-						<pre id="qs-rest-1" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rest-1" title="Copy"></i></pre>
+						<pre id="qs-rest-1" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-1" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;">Filter by IOC type (<code>url</code>, <code>domain</code>, <code>ip</code>, <code>sha256</code>, <code>md5</code>):</p>
-						<pre id="qs-rest-2" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rest-2" title="Copy"></i></pre>
+						<pre id="qs-rest-2" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-2" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;">Combine type and tag (this week's CobaltStrike IPs):</p>
-						<pre id="qs-rest-3" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rest-3" title="Copy"></i></pre>
+						<pre id="qs-rest-3" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-3" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;">Response shape (one IOC per array element):</p>
 						<pre id="qs-rest-4" class="code-block p-2"><code class="language-json">{
   "date": "2026-05-03 06:07:00",
@@ -334,17 +334,17 @@
   "value": "evil.example.shop",
   "tags": ["#phishing"],
   "tweet": "https://x.com/PhishStats/status/..."
-}</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rest-4" title="Copy"></i></pre>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-4" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="qs-csv" role="tabpanel" aria-labelledby="qs-csv-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">CSVs cover four windows: <code>today</code>, <code>week</code>, <code>month</code>, <code>year</code>. Header: <code>date,user,type,value,tags,tweet</code>.</p>
 						<pre id="qs-csv-1" class="code-block p-2"><code class="language-bash">wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv
-wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-csv-1" title="Copy"></i></pre>
+wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-csv-1" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="qs-rss" role="tabpanel" aria-labelledby="qs-rss-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">RSS feed with the latest IOCs (refreshed every 15 min):</p>
-						<pre id="qs-rss-1" class="code-block p-2"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-rss-1" title="Copy"></i></pre>
+						<pre id="qs-rss-1" class="code-block p-2"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rss-1" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="qs-misp" role="tabpanel" aria-labelledby="qs-misp-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">TweetFeed publishes a MISP-format manifest with 4 Events (today / week / month / year). In MISP, go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b>:</p>
@@ -352,7 +352,7 @@ wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv<
 Source format: misp
 Provider:      TweetFeed
 Auto-pull:     yes
-Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" data-copy="#qs-misp-1" title="Copy"></i></pre>
+Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;">Save, click <b>Fetch and store all feed data</b> to seed, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh.</p>
 					</div>
 				</div>
@@ -362,15 +362,15 @@ Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-cop
 				<p style="font-size: 14px;">Four recipes you can paste into a shell right now. All return clean stdout suitable for piping into your tooling.</p>
 				<p style="font-size: 14px;"><b>2.1 Daily blocklist refresh</b> - cron-friendly, runs every 15 min and updates a flat file:</p>
 				<pre id="term-1" class="code-block p-2"><code class="language-bash">*/15 * * * * curl -sfL https://api.tweetfeed.live/v1/today/url \
-  | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-1" title="Copy"></i></pre>
+  | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-1" title="Copy"></i></pre>
 				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.2 Slice by malware family tag</b> - only IPs tagged Cobalt Strike from this week:</p>
-				<pre id="term-2" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-2" title="Copy"></i></pre>
+				<pre id="term-2" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-2" title="Copy"></i></pre>
 				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.3 Pivot from a researcher</b> - every IOC published this week by <code>@malwrhunterteam</code> (filter is client-side because the REST endpoint does not accept user as a path filter):</p>
 				<pre id="term-3" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
-  | jq -r '.[] | select(.user=="malwrhunterteam") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-3" title="Copy"></i></pre>
+  | jq -r '.[] | select(.user=="malwrhunterteam") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3" title="Copy"></i></pre>
 				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.4 IOC to source tweet</b> - every IOC carries provenance, useful before you alert on it:</p>
 				<pre id="term-4" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
-  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" data-copy="#term-4" title="Copy"></i></pre>
+  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-4" title="Copy"></i></pre>
 
 				<hr id="siem" class="divider">
 				<h3 class="section-heading">3. SIEM playbooks</h3>
@@ -391,19 +391,19 @@ search = | inputlookup append=t external_lookup tweetfeed_today.csv \
          | outputlookup tweetfeed_today.csv
 cron_schedule = */15 * * * *
 dispatch.earliest_time = -15m
-enableSched = 1</code><i class="tf-copy code-copy far fa-copy" data-copy="#spl-setup" title="Copy"></i></pre>
+enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-setup" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.1 Match outbound proxy logs vs TweetFeed URLs and domains</b>:</p>
 						<pre id="spl-proxy" class="code-block p-2"><code>index=proxy [
   | inputlookup tweetfeed_today.csv
   | where type IN ("url","domain")
   | rename value AS url
   | fields url
-] | stats count, values(tags), values(tweet) by src_ip, url</code><i class="tf-copy code-copy far fa-copy" data-copy="#spl-proxy" title="Copy"></i></pre>
+] | stats count, values(tags), values(tweet) by src_ip, url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-proxy" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.2 DNS query enrichment</b> - any DNS query that hits a TweetFeed domain in the last 7d:</p>
 						<pre id="spl-dns" class="code-block p-2"><code>index=dns sourcetype=dns:query [
   | inputlookup tweetfeed_week.csv
   | where type="domain" | rename value AS query | fields query
-] | table _time, src_ip, query, [tweetfeed.tags], [tweetfeed.tweet]</code><i class="tf-copy code-copy far fa-copy" data-copy="#spl-dns" title="Copy"></i></pre>
+] | table _time, src_ip, query, [tweetfeed.tags], [tweetfeed.tweet]</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-dns" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.3 Real-time alert</b> - save the previous query as a Notable Event with severity=medium and trigger immediately when count &gt; 0.</p>
 					</div>
 					<div class="tab-pane fade" id="siem-sentinel" role="tabpanel" aria-labelledby="siem-sentinel-tab">
@@ -417,7 +417,7 @@ DnsEvents
 | where TimeGenerated &gt; ago(24h)
 | where Name in (TweetFeedDomains | project Domain)
 | join kind=leftouter TweetFeedDomains on $left.Name == $right.Domain
-| project TimeGenerated, Computer, ClientIP, Name, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#sentinel-dns" title="Copy"></i></pre>
+| project TimeGenerated, Computer, ClientIP, Name, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-dns" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.5 SecurityEvent against TweetFeed IPs</b> - logon source pivot against week.csv:</p>
 						<pre id="sentinel-secevent" class="code-block p-2"><code>let TweetFeedIPs = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
   [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"]
@@ -428,7 +428,7 @@ SecurityEvent
 | where TimeGenerated &gt; ago(7d)
 | where IpAddress in (TweetFeedIPs | project IPAddress)
 | join kind=leftouter TweetFeedIPs on $left.IpAddress == $right.IPAddress
-| project TimeGenerated, Computer, Account, IpAddress, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#sentinel-secevent" title="Copy"></i></pre>
+| project TimeGenerated, Computer, Account, IpAddress, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-secevent" title="Copy"></i></pre>
 					</div>
 					<div class="tab-pane fade" id="siem-mde" role="tabpanel" aria-labelledby="siem-mde-tab">
 						<p style="font-size: 14px; margin-top: 1rem;">Defender for Endpoint advanced hunting (KQL). The 4 sub-tabs cover every IOC type. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness vs coverage trade-off.</p>
@@ -467,7 +467,7 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp&gt; MaxAge
     ) on RemoteUrl
-) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-url-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-url-pre" title="Copy"></i></pre>
 							</div>
 							<div class="tab-pane fade" id="mde-ip" role="tabpanel" aria-labelledby="mde-ip-subtab">
 								<pre id="nav-ip-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
@@ -494,7 +494,7 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp&gt; MaxAge
     ) on RemoteIP
-) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-ip-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-ip-pre" title="Copy"></i></pre>
 							</div>
 							<div class="tab-pane fade" id="mde-sha256" role="tabpanel" aria-labelledby="mde-sha256-subtab">
 								<pre id="nav-sha256-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
@@ -532,7 +532,7 @@ union (
         DeviceImageLoadEvents
         | where Timestamp&gt; MaxAge
     ) on SHA256
-) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-sha256-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-sha256-pre" title="Copy"></i></pre>
 							</div>
 							<div class="tab-pane fade" id="mde-md5" role="tabpanel" aria-labelledby="mde-md5-subtab">
 								<pre id="nav-md5-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
@@ -570,7 +570,7 @@ union (
         DeviceImageLoadEvents
         | where Timestamp&gt; MaxAge
     ) on MD5
-) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" data-copy="#nav-md5-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-md5-pre" title="Copy"></i></pre>
 							</div>
 						</div>
 					</div>
@@ -606,7 +606,7 @@ output {
     action =&gt; "update"
     doc_as_upsert =&gt; true
   }
-}</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-logstash" title="Copy"></i></pre>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-logstash" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.7 ES|QL join</b> - DNS hits against TweetFeed domains in last 24h (Kibana Discover or Lens):</p>
 						<pre id="elastic-esql" class="code-block p-2"><code class="language-sql">FROM logs-network-dns-*
 | WHERE @timestamp &gt; NOW() - 24h
@@ -614,7 +614,7 @@ output {
 | WHERE type == "domain"
 | KEEP @timestamp, host.name, source.ip, dns.question.name, tags, tweet
 | SORT @timestamp DESC
-| LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-esql" title="Copy"></i></pre>
+| LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-esql" title="Copy"></i></pre>
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.8 Watcher alert</b> - fire when any internal endpoint resolves a TweetFeed domain. Save under Stack Management &rarr; Watcher:</p>
 						<pre id="elastic-watcher" class="code-block p-2"><code class="language-json">{
   "trigger": { "schedule": { "interval": "15m" } },
@@ -640,7 +640,7 @@ output {
   "actions": {
     "log": {"logging": {"text": "TweetFeed DNS hit: {{ctx.payload.hits.total.value}} events"}}
   }
-}</code><i class="tf-copy code-copy far fa-copy" data-copy="#elastic-watcher" title="Copy"></i></pre>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-watcher" title="Copy"></i></pre>
 						<p style="font-size: 13.5px;color:#555;margin-top: 0.5rem;">For SIEM detection rules, the <code>tweetfeed-iocs-*</code> index becomes a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
 					</div>
 				</div>
@@ -671,7 +671,7 @@ falsepositives:
 level: medium
 tags:
   - attack.command_and_control
-  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" data-copy="#det-sigma" title="Copy"></i></pre>
+  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#det-sigma" title="Copy"></i></pre>
 
 				<hr id="faq" class="divider">
 				<section class="faq-section">

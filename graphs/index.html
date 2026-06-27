@@ -210,7 +210,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item dropdown " style="font-size: 15px;">
-							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
@@ -236,7 +236,7 @@
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
-					<p class="toph1"><i class="fas fa-chart-pie" style="font-size: 36px;"></i> IOC Statistics</p>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-chart-pie" style="font-size: 36px;"></i> IOC Statistics</p>
 					<p style="font-size: 14px;"><em>Graphs from today, last week, last month and last year</em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -316,7 +316,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-area">
-											<canvas id="todayLineChart"></canvas>
+											<canvas id="todayLineChart" role="img" aria-label="IOCs collected per hour today"></canvas>
 										</div>
 										<hr>
 										<em style="font-size: 16px;color: grey;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Times in UTC.</em>
@@ -487,7 +487,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-area">
-											<canvas id="weekLineChart"></canvas>
+											<canvas id="weekLineChart" role="img" aria-label="IOCs collected per day this week"></canvas>
 										</div>
 										<hr>
 									</div>
@@ -657,7 +657,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-area">
-											<canvas id="monthLineChart"></canvas>
+											<canvas id="monthLineChart" role="img" aria-label="IOCs collected per day this month"></canvas>
 										</div>
 										<hr>
 									</div>
@@ -827,7 +827,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-area">
-											<canvas id="yearLineChart"></canvas>
+											<canvas id="yearLineChart" role="img" aria-label="IOCs collected per month this year"></canvas>
 										</div>
 										<hr>
 									</div>

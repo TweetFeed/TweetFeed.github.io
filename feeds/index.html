@@ -293,7 +293,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item dropdown " style="font-size: 15px;">
-							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
@@ -319,7 +319,7 @@
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
-					<p class="toph1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</p>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</p>
 					<p style="font-size: 14px;"><em>Full feeds from today, last week, last month and last year</em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -545,7 +545,7 @@
 					&nbsp&nbsp&nbspMISP Feed
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Add the <a class="text-decoration-none" href="https://tweetfeed.live/misp/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> to your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
+					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Add the <a href="https://tweetfeed.live/misp/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> to your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
 				</p>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-12">
@@ -594,7 +594,7 @@
 					&nbsp&nbsp&nbspSTIX 2.1 Bundles
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Industry-standard STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms (TLP:CLEAR, deterministic UUIDs for cross-pull dedupe). Point your consumer at the <a class="text-decoration-none" href="https://tweetfeed.live/stix/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> and pull the windows you care about.
+					Industry-standard STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms (TLP:CLEAR, deterministic UUIDs for cross-pull dedupe). Point your consumer at the <a href="https://tweetfeed.live/stix/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> and pull the windows you care about.
 				</p>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-12">

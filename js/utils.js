@@ -285,6 +285,13 @@
       }
       copyToClipboard(text, $(this));
     });
+    // Keyboard activation (Enter/Space) for the focusable .tf-copy controls.
+    $(document).off('keydown.tfcopy').on('keydown.tfcopy', '.tf-copy', function(e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        $(this).trigger('click.tfcopy');
+      }
+    });
   }
   if (typeof $ !== 'undefined') {
     $(initCopyDelegation);

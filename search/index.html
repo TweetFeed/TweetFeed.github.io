@@ -235,7 +235,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item dropdown " style="font-size: 15px;">
-							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="outline: none;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="/" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
@@ -256,7 +256,7 @@
 			<div id="contentMobile" class="d-lg-none">
 				<div id="presentationMobile">
 					<br>
-					<p class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
 					<p style="font-size: 14px;"><em>Search 7 days of IOCs from 90+ infosec researchers</em></p>
 				</div>
 				<!-- Only mobile -->
@@ -637,7 +637,7 @@
 								var value = data[i][3];
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>';
+								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
 
 								var tweet_url = data[i][5];
 								data[i][5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
@@ -711,7 +711,7 @@
 							var type = $(this.node()).find('td').eq(2).text().trim();
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" title="Copy"></i> ' + escapeHtml(value) + '</span>')
+							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>')
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>');
