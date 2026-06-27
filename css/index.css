@@ -35,7 +35,7 @@ body {
     font-family: 'Alegreya Sans SC', sans-serif;
     /*font-weight: bold;*/
     font-weight: 800;
-    color: #1DA1F2;
+    color: #1178b3;
 }
 
 #presentation h2,
@@ -51,7 +51,7 @@ body {
     font-size: 42px;
     font-family: 'Alegreya Sans SC', sans-serif;
     font-weight: 800;
-    color: #1DA1F2;
+    color: #1178b3;
 }
 
 #presentationSecondary h2 {
@@ -64,7 +64,7 @@ body {
     text-align: center;
     font-family: 'Alegreya Sans SC', sans-serif;
     font-weight: 600;
-    color: #1DA1F2;
+    color: #1178b3;
 }
 
 .navbar-nav li a {

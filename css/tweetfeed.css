@@ -261,7 +261,7 @@ hr.divider {
 
 /* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...". */
 .section-heading {
-	color: #1DA1F2;
+	color: #1178b3;
 	font-family: 'Segoe UI', Arial, sans-serif;
 	font-weight: 600;
 }
@@ -282,7 +282,7 @@ hr.divider {
 .faq-section > h2,
 .faq-section > h3 {
 	font-size: 22px;
-	color: #1DA1F2;
+	color: #1178b3;
 	font-family: 'Segoe UI', Arial, sans-serif;
 	font-weight: 600;
 	margin: 0 0 1rem 0;
