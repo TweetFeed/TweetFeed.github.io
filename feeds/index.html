@@ -662,6 +662,44 @@
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 				</div>
+				<h3 class="section-heading">Browse by IOC type</h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Need only one indicator type? Each type has its own live feed page with stats, recent samples, formats and a FAQ.</p>
+						<div class="row">
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../malicious-urls/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">url</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious URLs</span></div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by Twitter/X researchers. Highest-volume IOC type.</div>
+								</a>
+							</div>
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../malicious-domains/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">domain</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious domains</span></div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names for DNS-level blocklists and CT-log correlation.</div>
+								</a>
+							</div>
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../malicious-ips/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">ip</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious IPs</span></div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4/IPv6 tied to attacker infrastructure (C2, scanners, phishing hosts).</div>
+								</a>
+							</div>
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../malicious-hashes-md5/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">md5</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">MD5 hashes</span></div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes; pivot through VirusTotal / Malpedia.</div>
+								</a>
+							</div>
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../malicious-hashes-sha256/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">SHA-256 hashes</span></div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred for IR artefacts and chain of custody.</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<section class="faq-section">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>

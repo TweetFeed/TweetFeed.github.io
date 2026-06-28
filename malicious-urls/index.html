@@ -177,6 +177,22 @@
 					"@type": "Answer",
 					"text": "TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking."
 				}
+			},
+			{
+				"@type": "Question",
+				"name": "Is the malicious URLs list free?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Yes. Every TweetFeed feed is free and released into the public domain under CC0 1.0, with no API key, sign-up or rate card. You can use it in commercial or personal projects; a link back is appreciated but not required."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I use these URLs to block threats?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives."
+				}
 			}
 		]
 	}
@@ -256,6 +272,11 @@
 					<li class="docs-nav-label">Browse the data</li>
 					<li><a href="../tags/">Tag index</a></li>
 					<li><a href="../ioc-types/" class="active">IOC types</a></li>
+					<li><a href="../malicious-urls/" style="padding-left:26px;font-size:13px;">Malicious URLs</a></li>
+					<li><a href="../malicious-domains/" style="padding-left:26px;font-size:13px;">Malicious domains</a></li>
+					<li><a href="../malicious-ips/" style="padding-left:26px;font-size:13px;">Malicious IPs</a></li>
+					<li><a href="../malicious-hashes-md5/" style="padding-left:26px;font-size:13px;">MD5 hashes</a></li>
+					<li><a href="../malicious-hashes-sha256/" style="padding-left:26px;font-size:13px;">SHA-256 hashes</a></li>
 					<li class="docs-nav-label">Other</li>
 					<li><a href="../changelog/">Changelog</a></li>
 					</ul>
@@ -397,6 +418,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
+				<h3 class="section-heading">Formats and how to use</h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<p style="margin-bottom:0.85rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious URLs are available in four formats:</p>
+						<div class="table-responsive">
+							<table class="table table-sm" style="margin-bottom:0.85rem; font-family:'Rubik',sans-serif; font-size:14px;">
+								<thead><tr><th>Format</th><th>Where</th><th>Best for</th></tr></thead>
+								<tbody>
+									<tr><td><b>JSON API</b></td><td><a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/&lt;window&gt;/url</code></a></td><td>SOAR / SIEM enrichment, scripts</td></tr>
+									<tr><td><b>CSV</b></td><td><a href="../feeds/" class="text-decoration-none">today / week / month / year .csv</a></td><td>bulk import, spreadsheets, blocklists</td></tr>
+									<tr><td><b>RSS</b></td><td><a href="https://tweetfeed.live/rss.xml" target="_blank" rel="noopener noreferrer"><code>rss.xml</code></a></td><td>watch new IOCs in a reader</td></tr>
+									<tr><td><b>MCP</b></td><td><a href="../agents/" class="text-decoration-none">mcp.tweetfeed.live</a></td><td>live lookups from AI agents / Claude</td></tr>
+								</tbody>
+							</table>
+						</div>
+						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+					</div>
+				</div>
 				<section class="faq-section">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
@@ -415,6 +454,14 @@
 							<summary>Are these URLs verified malicious?</summary>
 							<p>TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking.</p>
 						</details>
+					<details>
+						<summary>Is the malicious URLs list free?</summary>
+						<p>Yes. Every TweetFeed feed is free and released into the public domain under CC0 1.0, with no API key, sign-up or rate card. You can use it in commercial or personal projects; a link back is appreciated but not required.</p>
+					</details>
+					<details>
+						<summary>How do I use these URLs to block threats?</summary>
+						<p>Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->
