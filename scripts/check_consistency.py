@@ -143,13 +143,16 @@ def check_analytics(pages: list[str]) -> list[str]:
 
 def check_footers(pages: list[str]) -> list[str]:
     """Every page must have BOTH a desktop footer and a mobile sticky-footer."""
-    desktop_re = re.compile(r'<footer[^>]*\bd-none\b[^>]*\bd-md-block\b', re.DOTALL)
+    # Both footers gate on lg (992): desktop d-lg-block (>=992), mobile d-lg-none
+    # (<992). Was d-md-block until 2026-06-28; that overlapped both footers at
+    # 768-991px (tablet). Do not revert to d-md-block.
+    desktop_re = re.compile(r'<footer[^>]*\bd-none\b[^>]*\bd-lg-block\b', re.DOTALL)
     mobile_re = re.compile(r'<footer[^>]*\bsticky-footer\b[^>]*\bd-lg-none\b', re.DOTALL)
     failures: list[str] = []
     for p in pages:
         html = read(p)
         if not desktop_re.search(html):
-            failures.append(f"{p}: missing desktop <footer class='... d-none d-md-block'>")
+            failures.append(f"{p}: missing desktop <footer class='... d-none d-lg-block'>")
         if not mobile_re.search(html):
             failures.append(f"{p}: missing mobile <footer class='sticky-footer ... d-lg-none'>")
     return failures
