@@ -46,7 +46,7 @@
 	<link href="../css/table.css?v=1" rel="stylesheet">
 	<link href="../css/index.css" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=24" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=25" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
 	<!-- Structured data -->
@@ -320,7 +320,7 @@
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</p>
-					<p style="font-size: 14px;"><em>Full feeds from today, last week, last month and last year</em></p>
+					<p style="font-size: 14px;" role="heading" aria-level="2"><em>Full feeds from today, last week, last month and last year</em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 				<nav class="page-toc" aria-label="Available formats">
@@ -331,7 +331,7 @@
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
 					<a class="page-toc-chip" href="#per-tag-rss">Per-tag RSS</a>
 				</nav>
-				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-bottom: 20px;">
+				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-bottom: 20px;">
 					&nbsp&nbsp&nbspCSV Feeds
 				</h3>
 				<div class="row">
@@ -517,7 +517,7 @@
 					</div> <!-- class="col-sm-6" -->
 				</div> <!-- row -->
 				<!-- <hr class="divider"> <hr> between CSV and RSS feeds -->
-				<h3 id="rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">
+				<h3 id="rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">
 					&nbsp&nbsp&nbspRSS Feed
 				</h3>
 				<div class="d-flex justify-content-start">
@@ -541,7 +541,7 @@
 					</div>
 				</div>
 
-				<h3 id="misp" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+				<h3 id="misp" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspMISP Feed
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
@@ -590,7 +590,7 @@
 					</div>
 				</div>
 
-				<h3 id="stix" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+				<h3 id="stix" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspSTIX 2.1 Bundles
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
@@ -642,7 +642,7 @@
 					Year window omitted on purpose: the STIX schema is ~2.6x more verbose per IOC than MISP, putting year.json &gt;80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX consumption use the diff endpoint below.
 				</p>
 
-				<h3 id="diff" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+				<h3 id="diff" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspDiff endpoint (incremental sync)
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
@@ -650,7 +650,7 @@
 				</p>
 				<pre class="code-block p-2" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"></i></pre>
 
-				<h3 id="per-tag-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1DA1F2; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+				<h3 id="per-tag-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspPer-tag RSS feeds
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">

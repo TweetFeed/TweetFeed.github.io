@@ -583,3 +583,23 @@ button.btn.btn-tf {
 	}
 	.docs-content { max-width: 100%; }
 }
+
+/* ── Accessibility (WCAG AA) hardening, 2026-06-30 ──────────────────────
+   Lift muted-text + inline-link contrast to AA. Scoped to text colour and
+   link affordance only; the intentional 1px black borders and heavy-box
+   aesthetic are untouched (feedback_tweetfeed_black_borders). */
+
+/* sb-admin-2 ships body{color:#858796}, only 3.4:1 on the #f8f9fc content
+   background (fails AA). Darken the default body text to a still-muted grey
+   that clears 4.5:1 and reads cleaner on the coloured IOC-type rows too. */
+body { color: #6b6d7c; }
+
+/* Inline content links must not rely on colour alone (WCAG 1.4.1). Underline
+   links inside body copy + the footer reference row; nav, buttons, TOC chips
+   keep their own shape so are excluded. !important overrides Bootstrap's
+   .text-decoration-none utility on the reference-row / inline links. */
+#content p a:not(.btn):not(.page-toc-chip):not(.feeds-toc-chip),
+.reference-row a {
+	text-decoration: underline !important;
+	text-underline-offset: 2px;
+}

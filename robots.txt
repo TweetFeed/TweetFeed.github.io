@@ -3,9 +3,9 @@ Allow: /
 Disallow: /404.html
 
 # AI preferences (informative, draft-romm-aipref-contentsignals):
-#   ai-train=yes  — TweetFeed data is CC0; training is allowed.
-#   ai-input=yes  — designed to be consumed live by AI agents (see /agents/).
-#   search=yes    — index normally.
+#   ai-train=yes  - TweetFeed data is CC0; training is allowed.
+#   ai-input=yes  - designed to be consumed live by AI agents (see /agents/).
+#   search=yes    - index normally.
 # Comment form keeps strict robots.txt parsers (Lighthouse, lint tools)
 # happy without losing the explicit policy statement.
 

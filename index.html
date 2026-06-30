@@ -47,7 +47,7 @@
 	<link href="css/table.css?v=1" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=24" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=25" rel="stylesheet">
 	<style>
 		/* CLS fix: reserve the today-counts row height. countTypes() fills the
 		   empty .row.today with one line of bold counts after the today.csv
@@ -116,6 +116,22 @@
 					},
 					"query-input": "required name=search_term_string"
 				}
+			},
+			{
+				"@type": "Dataset",
+				"@id": "https://tweetfeed.live/#dataset",
+				"name": "TweetFeed IOC feed",
+				"description": "Indicators of Compromise (URLs, domains, IPs, SHA256/MD5 hashes) shared by the infosec community on Twitter/X, aggregated every 15 minutes.",
+				"url": "https://tweetfeed.live/",
+				"license": "https://creativecommons.org/publicdomain/zero/1.0/",
+				"isAccessibleForFree": true,
+				"creator": {"@id": "https://tweetfeed.live/#organization"},
+				"keywords": "IOC,phishing,malware,scam,threat intelligence,OSINT,CSV,JSON,RSS",
+				"distribution": [
+					{"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://tweetfeed.live/feeds/today.csv"},
+					{"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://api.tweetfeed.live/v1/today"},
+					{"@type": "DataDownload", "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"}
+				]
 			}
 		]
 	}
