@@ -32,6 +32,9 @@ MAIN_PAGES = [
 ]
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+# Only the prod repo (TweetFeed.github.io) carries a CNAME file; the stage
+# clone does not. Checks with opposite expectations per repo key off this.
+REPO_IS_PROD = (REPO_ROOT / "CNAME").is_file()
 
 
 def read(name: str) -> str:
@@ -199,6 +202,32 @@ CHECKS = [
 ]
 
 
+def all_html_pages() -> list[str]:
+    return sorted(
+        str(p.relative_to(REPO_ROOT))
+        for p in REPO_ROOT.rglob("*.html")
+        if not any(part in (".git", "node_modules") for part in p.parts)
+    )
+
+
+def check_noindex_polarity(pages: list[str]) -> list[str]:
+    """Stage pages must ALL carry a noindex meta (stage robots.txt allows
+    crawling, so the meta does the blocking); prod pages must NEVER carry one
+    (a stage->prod copy that leaks the meta would deindex the live site).
+    Repo role is detected via the CNAME file (only prod has one). 404.html is
+    exempt in prod: noindex on the 404 page is intentional there too."""
+    noindex_re = re.compile(r'<meta name="robots" content="noindex')
+    failures: list[str] = []
+    for p in pages:
+        has = bool(noindex_re.search(read(p)))
+        if REPO_IS_PROD:
+            if has and p != "404.html":
+                failures.append(f"{p}: noindex meta present in PROD (stage-only marker leaked?)")
+        elif not has:
+            failures.append(f"{p}: missing noindex meta (stage must not be indexable)")
+    return failures
+
+
 def landing_pages() -> list[str]:
     """tag/<slug>/index.html + hub pages + the j2 templates they render from.
     The 2026-06-28 d-md-block fix regressed the next morning because only the
@@ -238,6 +267,17 @@ def main() -> int:
         print(f"[PASS] Footer pattern (tag pages + hubs + templates): all {len(extra)} pages OK")
     else:
         print(f"[FAIL] Footer pattern (tag pages + hubs + templates): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    pages_all = all_html_pages()
+    role = "prod: must be absent" if REPO_IS_PROD else "stage: must be present"
+    failures = check_noindex_polarity(pages_all)
+    if not failures:
+        print(f"[PASS] Noindex polarity ({role}): all {len(pages_all)} pages OK")
+    else:
+        print(f"[FAIL] Noindex polarity ({role}): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)

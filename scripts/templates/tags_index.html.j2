@@ -10,6 +10,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	{%- if noindex %}
+	<meta name="robots" content="noindex, nofollow">
+	{%- endif %}
 	<meta name="description" content="Index of all {{ tag_count }} tag landing pages on TweetFeed - APT groups, malware families and TTPs. Each tag links to its IOC stream and curated reference content.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="tweetfeed tags,malware family tags,apt group tags,ttp tags,ioc taxonomy,tag index">

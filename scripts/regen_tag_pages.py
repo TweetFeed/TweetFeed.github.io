@@ -19,6 +19,10 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent
 TAG_DIR = REPO_ROOT / "tag"
+# Stage repo has no CNAME file; prod (tweetfeed.live) does. Stage output gets
+# a per-page noindex meta (robots.txt allows crawling there so the meta must
+# do the blocking; see check_consistency.check_noindex_polarity).
+IS_STAGE = not (REPO_ROOT / "CNAME").is_file()
 COUNTS_URL = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/counts.json"
 API_BASE = "https://api.tweetfeed.live/v1"
 SAMPLE_LIMIT = 10
@@ -140,6 +144,7 @@ def render_tag(m, env, counts, today_str):
         today_str=today_str,
         webpage_jsonld=build_webpage_jsonld(m),
         faq_jsonld=build_faq_jsonld(m),
+        noindex=IS_STAGE,
     )
 
 
@@ -227,6 +232,7 @@ def render_tags_index(tags, env, counts, today_str):
         tag_count=len(tags),
         today_str=today_str,
         tags_flat=tags_flat,
+        noindex=IS_STAGE,
     )
     out_dir = REPO_ROOT / "tags"
     out_dir.mkdir(parents=True, exist_ok=True)
