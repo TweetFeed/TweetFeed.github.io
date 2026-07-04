@@ -194,6 +194,14 @@
 					"text": "Import the domain list into your DNS firewall, secure web gateway or Pi-hole as a blocklist, or query the JSON API from your SOAR/SIEM to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives."
 				}
 			}
+			,{
+				"@type": "Question",
+				"name": "Where can I download a bad domains list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed."
+				}
+			}
 		]
 	}
 	</script>
@@ -442,6 +450,10 @@
 							<summary>What is a malicious domain feed?</summary>
 							<p>A malicious domain feed is a continuously updated list of fully-qualified domain names that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these into DNS firewalls, secure web gateways and EDRs to block traffic before resolution. TweetFeed publishes the domains spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
 						</details>
+</html><details>
+</html>	<summary>Where can I download a bad domains list?</summary>
+</html>	<p>Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed.</p>
+</html></details>
 						<details>
 							<summary>How is this list updated?</summary>
 							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts domains from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
