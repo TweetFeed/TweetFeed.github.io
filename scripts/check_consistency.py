@@ -199,6 +199,22 @@ CHECKS = [
 ]
 
 
+def landing_pages() -> list[str]:
+    """tag/<slug>/index.html + hub pages + the j2 templates they render from.
+    The 2026-06-28 d-md-block fix regressed the next morning because only the
+    rendered pages were patched, not the templates, and the daily regen
+    re-stamped the bug (caught by audit 2026-07-04)."""
+    pages = sorted(
+        str(p.relative_to(REPO_ROOT)) for p in (REPO_ROOT / "tag").glob("*/index.html")
+    )
+    pages += ["tags/index.html", "ioc-types/index.html"]
+    pages += sorted(
+        str(p.relative_to(REPO_ROOT))
+        for p in (REPO_ROOT / "scripts" / "templates").glob("*.j2")
+    )
+    return [p for p in pages if (REPO_ROOT / p).is_file()]
+
+
 def main() -> int:
     missing = [p for p in MAIN_PAGES if not (REPO_ROOT / p).is_file()]
     if missing:
@@ -215,6 +231,16 @@ def main() -> int:
             for f in failures:
                 print(f"  - {f}")
             total_failures += len(failures)
+
+    extra = landing_pages()
+    failures = check_footers(extra)
+    if not failures:
+        print(f"[PASS] Footer pattern (tag pages + hubs + templates): all {len(extra)} pages OK")
+    else:
+        print(f"[FAIL] Footer pattern (tag pages + hubs + templates): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
 
     print()
     if total_failures == 0:

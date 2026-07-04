@@ -33,6 +33,11 @@ jobs:
       - name: Regenerate tag pages
         run: python3 scripts/regen_tag_pages.py
 
+      # Fails the run (nothing gets pushed) if the regenerated pages break a
+      # site invariant, e.g. a footer-breakpoint regression baked into a template.
+      - name: Consistency gate
+        run: python3 scripts/check_consistency.py
+
       - name: Refresh sitemap lastmod (daily/hourly URLs)
         run: python3 scripts/bump_sitemap_lastmod.py
 
