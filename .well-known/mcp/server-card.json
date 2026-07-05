@@ -47,9 +47,19 @@
     {
       "name": "enrich_ioc",
       "description": "Look up an IOC value across the past 30 days of TweetFeed with auto-detected type (URL / domain / IP / MD5 / SHA-256). Saves the agent from picking the right check_X tool when the type is uncertain. Required: value."
+    },
+    {
+      "name": "get_campaigns",
+      "description": "List AI-clustered threat campaign groupings of the last 7 days of community IOCs. Each campaign groups related IOCs by shared infrastructure, tags, or targeted brand, with an AI-generated name and context. Optional: brand (substring match on targeted_brand), min_confidence (low/medium/high), limit (1-50, default 20). Returns trimmed campaigns with up to 5 sample IOCs each."
     }
   ],
   "dataEndpoints": [
+    {
+      "name": "campaigns",
+      "url": "https://api.tweetfeed.live/v1/campaigns",
+      "format": "application/json",
+      "description": "AI-clustered campaign groupings of the last 7 days of community IOCs. Deterministic pre-grouping (shared registered domain, URL path patterns, tags) plus AI naming/context; regenerated daily. `stale: true` means the daily refresh failed and this is the previous day's document."
+    },
     {
       "name": "stix_2_1_bundles",
       "url": "https://tweetfeed.live/stix/manifest.json",

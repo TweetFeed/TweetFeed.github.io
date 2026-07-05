@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- 100% privacy-first analytics -->
+	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
+	<!-- Ahrefs Web Analytics (cookieless) -->
+	<script src="https://analytics.ahrefs.com/analytics.js" data-key="J59c6Ehci39jQWCQRIWuRw" async></script>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Daily AI-clustered threat campaigns from TweetFeed IOCs: grouped infrastructure, confidence, targeted brand, tags, and source tweets.">
+	<meta name="author" content="tweetfeed.live">
+	<meta name="keywords" content="threat campaigns,ai threat clustering,ioc campaign tracking,malware campaign feed,phishing campaign feed,tweetfeed campaigns">
+	<link rel="canonical" href="https://tweetfeed.live/campaigns/">
+	<title>AI Campaigns - TweetFeed</title>
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="AI Campaigns - TweetFeed">
+	<meta name="twitter:description" content="AI-generated threat campaign clusters from the last 7 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta name="twitter:url" content="https://tweetfeed.live/campaigns/">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta name="twitter:creator" content="@0xDanielLopez">
+	<meta property="og:url" content="https://tweetfeed.live/campaigns/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="AI Campaigns - TweetFeed">
+	<meta property="og:description" content="AI-generated threat campaign clusters from the last 7 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta property="og:site_name" content="tweetfeed.live">
+	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - AI Campaigns">
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+	<link href="../css/table.css?v=1" rel="stylesheet">
+	<link href="../css/index.css" rel="stylesheet">
+	<link href="../css/tooltip.css" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=25" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://tweetfeed.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "CollectionPage",
+		"name": "AI Campaigns",
+		"url": "https://tweetfeed.live/campaigns/",
+		"description": "Daily AI-clustered threat campaigns from TweetFeed IOCs, refreshed each day from the last 7 days of community-reported indicators.",
+		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
+		"inLanguage": "en"
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://tweetfeed.live/"},
+			{"@type": "ListItem", "position": 2, "name": "AI Campaigns", "item": "https://tweetfeed.live/campaigns/"}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 7 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative."}},
+			{"@type": "Question", "name": "How is campaign confidence calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Confidence (high, medium, low) reflects how strongly related the underlying IOCs are. Shared registrable domains, matching tags and overlapping reporters raise confidence; loosely related indicators lower it. Treat low-confidence campaigns as a lead to verify, not a verdict."}},
+			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 7-day window of TweetFeed IOCs. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
+			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}}
+		]
+	}
+	</script>
+</head>
+
+<body id="page-top">
+	<style>
+		/* Page-specific rules for /campaigns/. Kept inline per the pattern
+		   already used on about/index.html and index.html rather than adding
+		   to the shared css/tweetfeed.css (avoids a site-wide ?v= bump for
+		   rules only this page uses). Confidence colours reuse two shades
+		   already established in the changelog palette (.cl-tag-launch,
+		   .cl-tag-tags); IOC-type colours reuse the exact url/domain/ip/md5/
+		   sha256 palette from ioc-types/feeds so the type badges feel native. */
+		.tfc-stale-banner {
+			background: #fff3cd;
+			border: 1px solid #f0ad4e;
+			color: #7a5b12;
+			padding: 0.75rem 1rem;
+			margin-bottom: 1rem;
+			font-family: 'Rubik', sans-serif;
+			font-size: 14px;
+			border-radius: 4px;
+		}
+		.tfc-generated-line {
+			color: #737373;
+			font-size: 13px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0;
+		}
+		.tfc-card-header {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem 0.6rem;
+			margin-bottom: 0.5rem;
+		}
+		.tfc-name {
+			font-family: 'Rubik', sans-serif;
+			font-weight: 700;
+			font-size: 17px;
+			color: #1c1c1c;
+			margin: 0;
+			flex: 1 1 auto;
+			min-width: 200px;
+		}
+		.tfc-badge {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			line-height: 1.6;
+			white-space: nowrap;
+		}
+		.tfc-badge-high { background: #34e3a4; color: #0b3d2e; }
+		.tfc-badge-medium { background: #ffc591; color: #5c3d12; }
+		.tfc-badge-low { background: #e2e3e5; color: #41464b; }
+		.tfc-brand-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+			white-space: nowrap;
+		}
+		.tfc-context {
+			color: #333;
+			font-size: 14.5px;
+			font-family: 'Rubik', sans-serif;
+			line-height: 1.6;
+			margin: 0 0 0.6rem 0;
+		}
+		.tfc-meta-line {
+			color: #737373;
+			font-size: 12.5px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.6rem 0;
+			line-height: 1.6;
+		}
+		.tfc-meta-line b { color: #1c1c1c; }
+		.tfc-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin: 0 0 0.7rem 0;
+		}
+		.tfc-tag-chip {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+		}
+		.tfc-iocs {
+			border-top: 1px solid #e1e4e8;
+			padding-top: 0.6rem;
+		}
+		.tfc-ioc-row {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 12.5px;
+			margin-bottom: 0.4rem;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfc-ioc-type {
+			font-size: 10px;
+			padding: 1px 6px;
+			border-radius: 3px;
+			font-weight: 600;
+			text-transform: uppercase;
+			flex-shrink: 0;
+		}
+		.tfc-ioc-value {
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 12px;
+			background: #f5f5f5;
+			padding: 1px 6px;
+			border-radius: 3px;
+			word-break: break-all;
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+		.tfc-ioc-row .tf-copy {
+			flex-shrink: 0;
+			cursor: pointer;
+			color: #555;
+		}
+		.tfc-ioc-row .tf-copy:hover { color: #000; }
+		.tfc-ioc-link {
+			flex-shrink: 0;
+			color: #1178b3;
+		}
+		.tfc-more-iocs {
+			font-size: 12px;
+			color: #737373;
+			margin-top: 0.2rem;
+		}
+	</style>
+	<div id="wrapper">
+		<div id="content-wrapper" class="d-flex flex-column">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item"><a class="nav-link" href="../"><i class="fas fa-home"></i> Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="../agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a></li>
+						<li class="nav-item"><a class="nav-link" href="../dashboard/"><i class="fas fa-th"></i> Dashboard</a></li>
+						<li class="nav-item"><a class="nav-link" href="../feeds/"><i class="fas fa-rss"></i> Feeds</a></li>
+						<li class="nav-item"><a class="nav-link" href="../api/"><i class="fas fa-code"></i> API</a></li>
+						<li class="nav-item"><a class="nav-link" href="../hunt/"><i class="fas fa-bullseye"></i> Hunt</a></li>
+						<li class="nav-item"><a class="nav-link" href="../graphs/"><i class="fas fa-chart-pie"></i> Graphs</a></li>
+						<li class="nav-item"><a class="nav-link" href="../researchers/"><i class="fas fa-users"></i> Researchers</a></li>
+						<li class="nav-item"><a class="nav-link" href="../search/"><i class="fas fa-search"></i> Search</a></li>					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item"><a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <sup><i class="fas fa-external-link-alt"></i></sup></a></li>
+						<li class="nav-item" id="phishunt-link"><a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a></li>
+						<li class="nav-item"><a class="nav-link" href="../docs/"><i class="fas fa-book"></i> Docs</a></li>
+						<li class="nav-item"><a class="nav-link" href="../about/"><i class="fas fa-question-circle"></i> About</a></li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px"><a id="logo" class="nav-link" href="../"><i class="fas fa-home"></i> TweetFeed</a></li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown" style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="../" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i></a>
+							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+								<a class="dropdown-item" href="../agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+								<a class="dropdown-item" href="../feeds/"><i class="fas fa-rss"></i> Feeds</a>
+								<a class="dropdown-item" href="../graphs/"><i class="fas fa-chart-pie"></i> Graphs</a>
+								<a class="dropdown-item" href="../researchers/"><i class="fas fa-users"></i> Researchers</a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="../docs/"><i class="fas fa-book"></i> Docs</a>
+								<a class="dropdown-item" href="../about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<div id="content">
+			<div class="docs-wrap">
+				<aside class="docs-sidebar" aria-label="Docs navigation">
+					<ul>
+					<li class="docs-nav-label">Overview</li>
+					<li><a href="../docs/">Docs home</a></li>
+					<li class="docs-nav-label">Concepts</li>
+					<li><a href="../threat-intelligence-guide/">Threat Intelligence guide</a></li>
+					<li class="docs-nav-label">Browse the data</li>
+					<li><a href="../tags/">Tag index</a></li>
+					<li><a href="../ioc-types/">IOC types</a></li>
+					<li><a href="../malicious-urls/" style="padding-left:26px;font-size:13px;">Malicious URLs</a></li>
+					<li><a href="../malicious-domains/" style="padding-left:26px;font-size:13px;">Malicious domains</a></li>
+					<li><a href="../malicious-ips/" style="padding-left:26px;font-size:13px;">Malicious IPs</a></li>
+					<li><a href="../malicious-hashes-md5/" style="padding-left:26px;font-size:13px;">MD5 hashes</a></li>
+					<li><a href="../malicious-hashes-sha256/" style="padding-left:26px;font-size:13px;">SHA-256 hashes</a></li>
+					<li><a href="../campaigns/" class="active">AI Campaigns</a></li>
+					<li class="docs-nav-label">Other</li>
+					<li><a href="../changelog/">Changelog</a></li>
+					</ul>
+					</aside>
+							<main class="docs-content">
+				<div id="presentationSecondary" class="d-none d-md-block">
+					<br><br><br>
+					<h1 class="toph1"><i class="fas fa-project-diagram" style="font-size: 36px;"></i> AI Campaigns</h1>
+					<h2><em>Related IOCs clustered into daily campaign narratives by AI</em></h2>
+				</div>
+				<div id="presentationMobile" class="d-block d-md-none">
+					<br>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-project-diagram" style="font-size: 36px;"></i> AI Campaigns</p>
+					<p style="font-size: 14px;"><em>Daily AI-clustered campaign narratives</em></p>
+				</div>
+				<hr class="divider">
+
+				<div class="card mb-3">
+					<div class="card-body">
+						<p style="margin-bottom:0.6rem; color:#333; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed clusters related IOCs shared over the last 7 days into campaign narratives using AI: shared infrastructure, malware family, TTPs and targeted brand are grouped together so you see the bigger picture instead of scrolling isolated indicators one by one.</p>
+						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 7 days of community IOCs.</p>
+					</div>
+				</div>
+
+				<div class="tfc-stale-banner" id="staleBanner" style="display:none;" role="alert"></div>
+
+				<div id="campaignsLoading" class="text-center" style="padding:2rem 0;">
+					<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading">
+				</div>
+
+				<div id="campaignsError" class="alert alert-danger" style="display:none;" role="alert">
+					<i class="fas fa-exclamation-circle"></i> Could not load campaign data right now. Please try again later.
+				</div>
+
+				<div class="empty-state" id="campaignsEmpty" style="display:none;">
+					<div class="empty-icon"><i class="far fa-folder-open"></i></div>
+					<div class="empty-message">No campaigns clustered right now</div>
+					<div class="empty-hint">Check back soon - campaigns are recomputed daily from the last 7 days of IOCs.</div>
+				</div>
+
+				<div id="campaignsList" style="display:none;"></div>
+
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is an AI campaign on TweetFeed?</summary>
+						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 7 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative.</p>
+					</details>
+					<details>
+						<summary>How is campaign confidence calculated?</summary>
+						<p>Confidence (high, medium, low) reflects how strongly related the underlying IOCs are. Shared registrable domains, matching tags and overlapping reporters raise confidence; loosely related indicators lower it. Treat low-confidence campaigns as a lead to verify, not a verdict.</p>
+					</details>
+					<details>
+						<summary>How often is the campaign data refreshed?</summary>
+						<p>Campaigns are recomputed daily from a rolling 7-day window of TweetFeed IOCs. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
+					</details>
+					<details>
+						<summary>Where does the underlying IOC data come from?</summary>
+						<p>The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed.</p>
+					</details>
+				</section>
+
+			</div>
+			</main>
+			</div>
+			<footer class="d-none d-lg-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
+				<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+					<div class="row align-items-center">
+						<div class="col-md-4 text-left">
+							By Daniel López &nbsp;·&nbsp; <a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+						</div>
+						<div class="col-md-4 text-center">
+							<a class="text-decoration-none" href="../changelog/">Changelog</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../tos/">Terms of Service</a>
+							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a></span>
+						</div>
+						<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
+					</div>
+				</div>
+			</footer>
+			<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+				<div class="container-fluid py-2" style="color: black;">
+					<div class="row">
+						<div class="col text-center">
+							By Daniel López &nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+							<a class="text-decoration-none" href="../changelog/">Changelog</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../tos/">Terms of Service</a>
+							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a></span> &nbsp;·&nbsp; © 2026 TweetFeed.live						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="../js/sb-admin-2.min.js"></script>
+	<script src="../js/utils.js"></script>
+	<!-- Page level custom script: fetches the live production campaigns API
+	     directly (NOT TweetFeed.dataUrl(), which points at the stage data
+	     repo CSVs - this endpoint is a separate, already-live prod service). -->
+	<script>
+	(function() {
+		'use strict';
+
+		var CAMPAIGNS_URL = 'https://api.tweetfeed.live/v1/campaigns';
+		var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
+		var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
+
+		function renderIocRow(ioc) {
+			var esc = TweetFeed.escapeHtml;
+			var type = ioc.type || '';
+			var bg = IOC_TYPE_COLORS[type] || '#737373';
+			var color = IOC_TYPE_DARK_TEXT[type] ? '#1c1c1c' : '#fff';
+			var value = ioc.value || '';
+			// Scheme guard: tweet URLs come from feed data; only http(s) may
+			// land in an href (escapeHtml alone would still let javascript:
+			// URLs through as valid link targets).
+			var tweetUrl = (typeof ioc.tweet === 'string' && /^https?:\/\//i.test(ioc.tweet)) ? ioc.tweet : '';
+			var tweetLink = tweetUrl
+				? '<a class="tfc-ioc-link" href="' + esc(tweetUrl) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
+				: '';
+			return (
+				'<div class="tfc-ioc-row">' +
+					'<span class="tfc-ioc-type" style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
+					'<code class="tfc-ioc-value">' + esc(value) + '</code>' +
+					'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
+					tweetLink +
+				'</div>'
+			);
+		}
+
+		function renderCampaignCard(c) {
+			var esc = TweetFeed.escapeHtml;
+			var conf = (c.confidence || 'low').toLowerCase();
+			if (['high', 'medium', 'low'].indexOf(conf) === -1) conf = 'low';
+
+			var brandChip = c.targeted_brand
+				? '<span class="tfc-brand-chip"><i class="fas fa-bullseye"></i> ' + esc(c.targeted_brand) + '</span>'
+				: '';
+
+			var types = c.types || {};
+			var typesStr = Object.keys(types).map(function(t) { return t + ' ' + types[t]; }).join(', ');
+
+			var tagsHtml = (c.tags || []).map(function(t) {
+				return '<span class="tfc-tag-chip">' + esc(t) + '</span>';
+			}).join('');
+
+			var reportersHtml = (c.reporters || []).map(function(r) {
+				return '@' + esc(r);
+			}).join(', ');
+
+			var iocs = c.iocs || [];
+			var shown = iocs.slice(0, 5);
+			var iocsHtml = shown.map(renderIocRow).join('');
+			var moreCount = iocs.length > shown.length ? (iocs.length - shown.length) : 0;
+
+			var metaBits = [];
+			metaBits.push('<b>' + esc(TweetFeed.numberFormat(c.ioc_count || 0)) + '</b> IOCs');
+			if (typesStr) metaBits.push(esc(typesStr));
+			metaBits.push(esc(c.first_seen || '?') + ' &ndash; ' + esc(c.last_seen || '?'));
+			if (reportersHtml) metaBits.push('reporters: ' + reportersHtml);
+
+			return (
+				'<div class="card mb-4"><div class="card-body">' +
+					'<div class="tfc-card-header">' +
+						'<h3 class="tfc-name">' + esc(c.name || 'Untitled campaign') + '</h3>' +
+						'<span class="tfc-badge tfc-badge-' + conf + '">' + esc(conf) + ' confidence</span>' +
+						brandChip +
+					'</div>' +
+					'<p class="tfc-context">' + esc(c.context || '') + '</p>' +
+					'<div class="tfc-meta-line">' + metaBits.join(' &middot; ') + '</div>' +
+					(tagsHtml ? '<div class="tfc-tags">' + tagsHtml + '</div>' : '') +
+					'<div class="tfc-iocs">' + iocsHtml +
+						(moreCount ? '<div class="tfc-more-iocs">+' + moreCount + ' more IOC' + (moreCount === 1 ? '' : 's') + ' in this campaign</div>' : '') +
+					'</div>' +
+				'</div></div>'
+			);
+		}
+
+		function renderCampaigns(data) {
+			$('#campaignsLoading').hide();
+
+			var campaigns = (data && data.campaigns) || [];
+			var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 7 days of community IOCs';
+			if (data && data.generated_at) {
+				genLine += ' &middot; last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(data.generated_at));
+			}
+			genLine += ' &middot; ' + campaigns.length + ' campaign' + (campaigns.length === 1 ? '' : 's');
+			$('#generatedLine').html(genLine);
+
+			if (data && data.stale) {
+				var since = data.stale_since ? TweetFeed.formatDateLong(data.stale_since) : 'unknown';
+				$('#staleBanner').html(
+					'<i class="fas fa-exclamation-triangle"></i> Campaign clustering data is stale (last successful run: ' +
+					TweetFeed.escapeHtml(since) +
+					'). Showing the most recent available snapshot.'
+				).show();
+			}
+
+			if (!campaigns.length) {
+				$('#campaignsEmpty').show();
+				return;
+			}
+
+			// Campaigns already arrive sorted by ioc_count desc from the API;
+			// render in that delivered order.
+			var html = campaigns.map(renderCampaignCard).join('');
+			$('#campaignsList').html(html).show();
+			// Copy buttons need no re-init: utils.js attaches document-level
+			// .tf-copy delegation once at page load.
+		}
+
+		function showError(msg) {
+			$('#campaignsLoading').hide();
+			$('#campaignsError').show();
+			console.error('[TweetFeed] campaigns fetch failed:', msg);
+		}
+
+		$(function() {
+			TweetFeed.safeGet(CAMPAIGNS_URL, {
+				success: renderCampaigns,
+				error: showError
+			});
+		});
+	})();
+	</script>
+</body>
+
+</html>

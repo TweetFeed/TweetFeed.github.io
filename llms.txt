@@ -27,9 +27,17 @@
     - `https://api.tweetfeed.live/v1/month/cobaltstrike` - Cobalt Strike IOCs from the last 30 days.
     - `https://api.tweetfeed.live/v1/today/@malwrhunterteam/sha256` - SHA256 hashes from a specific researcher.
 
+## Campaigns
+
+- [AI-clustered campaigns](https://tweetfeed.live/campaigns/): human page showing daily campaign groupings clustered from the last 7 days of community IOCs.
+- [Campaigns API](https://api.tweetfeed.live/v1/campaigns): JSON, CORS open, no auth, CC0. Returns `version`, `generated_at`, `window` (`week`), `stale`/`stale_since`, `campaign_count`, and a `campaigns` array. Each campaign has `id` (`tfc-<12hex>`), `name`, `context`, `confidence` (`high`/`medium`/`low`), `targeted_brand`, `first_seen`/`last_seen`, `ioc_count`, per-type `types` counts, `tags`, `reporters`, up to 25 sample `iocs` (same shape as the main feed), `member_cluster_ids`, and `anchors` (`registered_domains`, `url_path_patterns`, `tags` used for pre-grouping).
+- Clustering is two-stage: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, or a shared specific tag), then AI naming and context generation. The AI only names and describes clusters - it never adds or removes IOCs; every `iocs` entry is verbatim from the feed.
+- Regenerated daily. If a run fails, `stale` is `true` and `stale_since` holds the date of the last successful run; the document falls back to that previous snapshot instead of going empty.
+- MCP tool: `get_campaigns` (optional `brand`, `min_confidence`, `limit`).
+
 ## MCP integration (for AI agents)
 
-- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type and look up the value).
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type and look up the value), `get_campaigns` (cluster search by brand/confidence, trimmed sample IOCs).
 - [/agents.html](https://tweetfeed.live/agents.html): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
 - [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest for the `tweetfeed-iocs` skill.
 - [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.

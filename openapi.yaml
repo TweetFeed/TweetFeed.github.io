@@ -18,7 +18,7 @@ info:
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
-    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 8 tools).
+    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 9 tools).
   version: "1.0"
   contact:
     name: TweetFeed
@@ -185,6 +185,29 @@ paths:
                 items:
                   $ref: "#/components/schemas/Ioc"
 
+  /v1/campaigns:
+    get:
+      operationId: getCampaigns
+      summary: List AI-clustered threat campaigns
+      description: |
+        Returns AI-clustered campaign groupings of the last 7 days of community
+        IOCs. Clustering is two-stage: deterministic pre-grouping (shared
+        registered domain, cross-domain URL path patterns, or a shared specific
+        tag), followed by AI naming and context generation. The AI only names
+        and describes clusters - it never adds or removes IOCs; every IOC in a
+        campaign is verbatim from the feed.
+
+        Regenerated once a day. If a run fails, `stale` is `true` and the
+        document falls back to the previous day's snapshot (`stale_since`
+        holds the date of that last successful run).
+      responses:
+        "200":
+          description: Campaigns document.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignsDocument"
+
 components:
   parameters:
     Time:
@@ -274,3 +297,126 @@ components:
             applicable). Current taxonomy: 122+ tags. Full list at
             https://tweetfeed.live/tags/.
           example: ["phishing", "scam"]
+
+    CampaignsDocument:
+      type: object
+      required: [version, generated_at, window, stale, campaign_count, campaigns]
+      properties:
+        version:
+          type: integer
+          description: Schema version of the campaigns document. Currently `1`.
+          example: 1
+        generated_at:
+          type: string
+          format: date-time
+          description: UTC timestamp of the clustering run that produced this document.
+          example: "2026-07-05T19:36:35Z"
+        window:
+          type: string
+          enum: [week]
+          description: Source window for clustering - always the rolling last 7 days.
+        stale:
+          type: boolean
+          description: |
+            `true` if the daily clustering run failed and this document was
+            carried over from the previous successful run.
+        stale_since:
+          type: string
+          nullable: true
+          format: date
+          description: Date of the last successful run. Only set when `stale` is `true`, `null` otherwise.
+          example: null
+        campaign_count:
+          type: integer
+          description: Number of entries in `campaigns`.
+          example: 23
+        campaigns:
+          type: array
+          items:
+            $ref: "#/components/schemas/Campaign"
+
+    Campaign:
+      type: object
+      required:
+        [id, name, context, confidence, targeted_brand, first_seen, last_seen,
+         ioc_count, types, tags, reporters, iocs, member_cluster_ids, anchors]
+      properties:
+        id:
+          type: string
+          description: Stable campaign identifier - `tfc-` followed by 12 hex chars.
+          example: "tfc-6d1f6fb9260c"
+        name:
+          type: string
+          description: Short AI-generated campaign name.
+          example: "Multi-family RAT/stealer C2 on compromised and DDNS hosts"
+        context:
+          type: string
+          description: |
+            AI-generated paragraph describing the campaign's infrastructure,
+            malware families and delivery pattern. Describes the underlying
+            IOCs only - never introduces facts absent from the data.
+        confidence:
+          type: string
+          enum: [high, medium, low]
+          description: |
+            How strongly related the underlying IOCs are, based on shared
+            anchors (domains, path patterns, tags) and reporter overlap.
+        targeted_brand:
+          type: string
+          nullable: true
+          description: Brand or organization the campaign appears to target, when identifiable. `null` otherwise.
+        first_seen:
+          type: string
+          format: date
+          example: "2026-06-29"
+        last_seen:
+          type: string
+          format: date
+          example: "2026-07-05"
+        ioc_count:
+          type: integer
+          description: Total IOCs in the cluster (may exceed the `iocs` sample size).
+          example: 198
+        types:
+          type: object
+          description: Per-IOC-type counts across the cluster.
+          additionalProperties:
+            type: integer
+          example: {"domain": 53, "ip": 32, "md5": 17, "sha256": 15, "url": 81}
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags observed across the cluster's IOCs.
+        reporters:
+          type: array
+          items:
+            type: string
+          description: Twitter/X handles (no leading `@`) that reported IOCs in this cluster.
+        iocs:
+          type: array
+          maxItems: 25
+          items:
+            $ref: "#/components/schemas/Ioc"
+          description: Sample of up to 25 member IOCs, verbatim from the feed (same shape as `/v1/{time}`).
+        member_cluster_ids:
+          type: array
+          items:
+            type: string
+          description: IDs of the deterministic pre-grouping clusters merged into this campaign.
+        anchors:
+          type: object
+          description: Deterministic pre-grouping signals used before AI naming.
+          properties:
+            registered_domains:
+              type: array
+              items:
+                type: string
+            url_path_patterns:
+              type: array
+              items:
+                type: string
+            tags:
+              type: array
+              items:
+                type: string

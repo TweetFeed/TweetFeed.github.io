@@ -71,6 +71,20 @@ curl -s 'https://api.tweetfeed.live/v1/month' \
 
 For IP/hash exact match, use `select(.value == $v)`. For longer retention, query `year` via the raw CSV.
 
+## Campaign clusters
+
+For grouped threat activity instead of raw rows, use the separate campaigns endpoint (not part of the `/v1/{time}` route pattern above):
+
+```bash
+curl -s 'https://api.tweetfeed.live/v1/campaigns' | jq '.campaigns[] | {id, name, confidence, ioc_count}'
+```
+
+Each campaign clusters related IOCs from the last 7 days by shared infrastructure (registered domain, cross-domain URL path patterns) or tag, then an AI layer names and describes the cluster - it never adds or removes IOCs, every `iocs` entry is verbatim from the feed. Regenerated daily; `stale: true` plus `stale_since` means the last run failed and this is the previous day's document.
+
+MCP equivalent: `get_campaigns` tool, optional `brand` (substring match on `targeted_brand`), `min_confidence` (`low`/`medium`/`high`), `limit` (1-50, default 20).
+
+Human page: `https://tweetfeed.live/campaigns/`.
+
 ## Tag-family taxonomy
 
 119 tags in `tags.yaml` split by casing:

@@ -117,6 +117,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <!-- AI campaigns hub (added 2026-07-05) -->
+  <url>
+    <loc>https://tweetfeed.live/campaigns/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- Per-tag landing pages (initial 2026-04-28; bulk gen + auto-regen daily 2026-04-29) -->
   <url>
     <loc>https://tweetfeed.live/tag/kimsuky/</loc>

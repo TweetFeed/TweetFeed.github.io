@@ -321,6 +321,51 @@
 				<pre class="code-block p-2">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing"></i></pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
 				<br>
+				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Campaigns (AI-clustered)</h3>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Groups related IOCs from the last 7 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
+				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns"></i></pre>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
+				<pre class="code-block p-2" style="font-size: 12px;">{
+    "version": 1,
+    "generated_at": "2026-07-05T19:36:35Z",
+    "window": "week",
+    "stale": false,
+    "stale_since": null,
+    "campaign_count": 23,
+    "campaigns": [
+        {
+            "id": "tfc-6d1f6fb9260c",
+            "name": "Multi-family RAT/stealer C2 on compromised and DDNS hosts",
+            "context": "A broad malware distribution campaign delivering AsyncRAT and NjRAT payloads across compromised legitimate websites, newly registered domains, and dynamic DNS hostnames...",
+            "confidence": "high",
+            "targeted_brand": null,
+            "first_seen": "2026-06-29",
+            "last_seen": "2026-07-05",
+            "ioc_count": 198,
+            "types": { "domain": 53, "ip": 32, "md5": 17, "sha256": 15, "url": 81 },
+            "tags": ["#APT", "#AsyncRAT", "#C2", "#Njrat", "#RAT"],
+            "reporters": ["0xb1lal", "BlinkzSec"],
+            "iocs": [
+                {
+                    "date": "2026-07-05 18:00:00",
+                    "user": "phatomcandle",
+                    "type": "domain",
+                    "value": "vibranovax.click",
+                    "tags": ["#APT", "#malware"],
+                    "tweet": "https://x.com/phatomcandle/status/2073829278639325327"
+                }
+            ],
+            "member_cluster_ids": ["tfc-6d1f6fb9260c"],
+            "anchors": {
+                "registered_domains": ["vibranovax.click", "..."],
+                "url_path_patterns": ["/unicorn/aes.js", "..."],
+                "tags": ["#APT", "#C2"]
+            }
+        }
+    ]
+}</pre>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>stale: true</code> means the daily clustering run failed and this document is the previous day's snapshot (<code>stale_since</code> holds the date of the last successful run). Human page: <a href="../campaigns/">tweetfeed.live/campaigns/</a>.</p>
+				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Details</h3>
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered" style="border:none;width:100%;">
