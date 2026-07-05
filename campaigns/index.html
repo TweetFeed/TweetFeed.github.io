@@ -238,6 +238,59 @@
 			color: #737373;
 			margin-top: 0.2rem;
 		}
+		.tfc-anchor-link {
+			color: #9a9a9a;
+			font-size: 13px;
+			line-height: 1.6;
+		}
+		.tfc-anchor-link:hover { color: #1178b3; }
+		/* Confidence filter chips: reuse the exact tfc-badge-high/medium/low
+		   palette for the active state so chip colour == badge colour on the
+		   cards below; inactive chips drop to a muted grey outline so on/off
+		   reads unambiguously at a glance. Plain <button> + delegated click,
+		   no inline onclick. */
+		.tfc-filter-row {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem 0.6rem;
+			margin-bottom: 1rem;
+		}
+		.tfc-filter-label {
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			color: #555;
+		}
+		.tfc-filter-chip {
+			display: inline-block;
+			padding: 3px 12px;
+			border: 1px solid #9a9a9a;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			line-height: 1.6;
+			background: #fff;
+			color: #9a9a9a;
+			cursor: pointer;
+			opacity: 0.75;
+		}
+		.tfc-filter-chip:hover { opacity: 1; }
+		.tfc-filter-chip.active {
+			border-color: black;
+			opacity: 1;
+		}
+		.tfc-filter-chip.active.tfc-filter-chip-high { background: #34e3a4; color: #0b3d2e; }
+		.tfc-filter-chip.active.tfc-filter-chip-medium { background: #ffc591; color: #5c3d12; }
+		.tfc-filter-chip.active.tfc-filter-chip-low { background: #e2e3e5; color: #41464b; }
+		.tfc-filter-count {
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #737373;
+			margin-left: auto;
+		}
 	</style>
 	<div id="wrapper">
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -321,6 +374,7 @@
 					<div class="card-body">
 						<p style="margin-bottom:0.6rem; color:#333; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed clusters related IOCs shared over the last 7 days into campaign narratives using AI: shared infrastructure, malware family, TTPs and targeted brand are grouped together so you see the bigger picture instead of scrolling isolated indicators one by one.</p>
 						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 7 days of community IOCs.</p>
+						<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
 					</div>
 				</div>
 
@@ -338,6 +392,14 @@
 					<div class="empty-icon"><i class="far fa-folder-open"></i></div>
 					<div class="empty-message">No campaigns clustered right now</div>
 					<div class="empty-hint">Check back soon - campaigns are recomputed daily from the last 7 days of IOCs.</div>
+				</div>
+
+				<div class="tfc-filter-row" id="campaignsFilterRow" style="display:none;">
+					<span class="tfc-filter-label">Filter by confidence:</span>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-high active" data-confidence="high" aria-pressed="true">High</button>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-medium active" data-confidence="medium" aria-pressed="true">Medium</button>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-low active" data-confidence="low" aria-pressed="true">Low</button>
+					<span class="tfc-filter-count" id="campaignsFilterCount"></span>
 				</div>
 
 				<div id="campaignsList" style="display:none;"></div>
@@ -414,6 +476,12 @@
 		var CAMPAIGNS_URL = 'https://api.tweetfeed.live/v1/campaigns';
 		var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
 		var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
+		// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars,
+		// see tweetfeed-campaigns/campaigns/ids.py). Any id used as a DOM id
+		// or in a selector/hash comparison MUST pass this check first - it's
+		// the sanitizer, not TweetFeed.escapeHtml (which only protects HTML
+		// text/attribute context, not id/selector context).
+		var CAMPAIGN_ID_RE = /^tfc-[0-9a-f]{12}$/;
 
 		function renderIocRow(ioc) {
 			var esc = TweetFeed.escapeHtml;
@@ -443,6 +511,17 @@
 			var conf = (c.confidence || 'low').toLowerCase();
 			if (['high', 'medium', 'low'].indexOf(conf) === -1) conf = 'low';
 
+			// Deep-link id: validate against the fixed campaign-id shape before
+			// it ever touches a DOM id or an href fragment. A campaign whose id
+			// doesn't match (malformed API payload) simply renders without an
+			// id/anchor rather than risk an unsanitized id/selector.
+			var rawId = typeof c.id === 'string' ? c.id : '';
+			var validId = CAMPAIGN_ID_RE.test(rawId) ? rawId : '';
+			var idAttr = validId ? ' id="' + esc(validId) + '"' : '';
+			var anchorLink = validId
+				? '<a class="tfc-anchor-link" href="#' + esc(validId) + '" title="Direct link to this campaign" aria-label="Direct link to this campaign"><i class="fas fa-link"></i></a>'
+				: '';
+
 			var brandChip = c.targeted_brand
 				? '<span class="tfc-brand-chip"><i class="fas fa-bullseye"></i> ' + esc(c.targeted_brand) + '</span>'
 				: '';
@@ -470,11 +549,12 @@
 			if (reportersHtml) metaBits.push('reporters: ' + reportersHtml);
 
 			return (
-				'<div class="card mb-4"><div class="card-body">' +
+				'<div class="card mb-4" data-confidence="' + conf + '"' + idAttr + '><div class="card-body">' +
 					'<div class="tfc-card-header">' +
 						'<h3 class="tfc-name">' + esc(c.name || 'Untitled campaign') + '</h3>' +
 						'<span class="tfc-badge tfc-badge-' + conf + '">' + esc(conf) + ' confidence</span>' +
 						brandChip +
+						anchorLink +
 					'</div>' +
 					'<p class="tfc-context">' + esc(c.context || '') + '</p>' +
 					'<div class="tfc-meta-line">' + metaBits.join(' &middot; ') + '</div>' +
@@ -484,6 +564,40 @@
 					'</div>' +
 				'</div></div>'
 			);
+		}
+
+		// Confidence filter: client-side show/hide only, no re-fetch. Reads
+		// the current on/off state straight from the chip DOM (.active class)
+		// rather than tracking a parallel JS state object.
+		function applyConfidenceFilter() {
+			var activeConfidences = {};
+			$('.tfc-filter-chip').each(function() {
+				var $chip = $(this);
+				activeConfidences[$chip.data('confidence')] = $chip.hasClass('active');
+			});
+			var $cards = $('#campaignsList > .card');
+			var shown = 0;
+			$cards.each(function() {
+				var conf = $(this).attr('data-confidence') || 'low';
+				var visible = activeConfidences[conf] !== false;
+				$(this).toggle(visible);
+				if (visible) shown++;
+			});
+			$('#campaignsFilterCount').text(shown + ' shown');
+		}
+
+		// Deep-link scroll: only ever acts on a hash that passes the same
+		// fixed-shape check used to build the ids in the first place - a
+		// missing/junk/foreign hash is a silent no-op, never a DOM lookup on
+		// unsanitized input.
+		function scrollToHashCampaign() {
+			var hash = window.location.hash || '';
+			if (hash.charAt(0) === '#') hash = hash.slice(1);
+			if (!CAMPAIGN_ID_RE.test(hash)) return;
+			var el = document.getElementById(hash);
+			if (el && typeof el.scrollIntoView === 'function') {
+				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
 		}
 
 		function renderCampaigns(data) {
@@ -517,6 +631,10 @@
 			$('#campaignsList').html(html).show();
 			// Copy buttons need no re-init: utils.js attaches document-level
 			// .tf-copy delegation once at page load.
+
+			$('#campaignsFilterRow').show();
+			applyConfidenceFilter();
+			scrollToHashCampaign();
 		}
 
 		function showError(msg) {
@@ -529,6 +647,12 @@
 			TweetFeed.safeGet(CAMPAIGNS_URL, {
 				success: renderCampaigns,
 				error: showError
+			});
+
+			$(document).on('click', '.tfc-filter-chip', function() {
+				var $chip = $(this).toggleClass('active');
+				$chip.attr('aria-pressed', $chip.hasClass('active') ? 'true' : 'false');
+				applyConfidenceFilter();
 			});
 		});
 	})();
