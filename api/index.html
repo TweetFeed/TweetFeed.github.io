@@ -483,7 +483,7 @@
 					</details>
 					<details>
 						<summary>Does the year timeframe support type, tag or user filters?</summary>
-						<p>No. <code>GET /v1/year</code> (and any path under it) redirects to the full <code>year.csv</code> file - the last 365 days of IOCs as CSV. Use <code>today</code>, <code>week</code> or <code>month</code> for JSON responses with type, tag or user filtering.</p>
+						<p>No. <code>GET /v1/year</code> (and any path under it) returns an HTTP 302 redirect to the full <code>year.csv</code> file - the last 365 days of IOCs, unfiltered. Filter it client-side after downloading, or use <code>today</code>, <code>week</code> or <code>month</code> for JSON responses with type, tag or user filtering.</p>
 					</details>
 					<details>
 						<summary>Is there a rate limit on the TweetFeed API?</summary>
