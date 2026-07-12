@@ -46,7 +46,7 @@
     },
     {
       "name": "enrich_ioc",
-      "description": "Look up an IOC value across the past 30 days of TweetFeed with auto-detected type (URL / domain / IP / MD5 / SHA-256). Saves the agent from picking the right check_X tool when the type is uncertain. Required: value."
+      "description": "Look up an IOC value: exact lookup over the past 365 days (aggregated: first_seen, last_seen, count, reporters, tags) with a 30-day substring fallback, auto-detected type (URL / domain / IP / MD5 / SHA-256). Required: value."
     },
     {
       "name": "get_campaigns",
