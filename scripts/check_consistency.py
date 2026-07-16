@@ -168,6 +168,12 @@ def check_footers(pages: list[str]) -> list[str]:
             failures.append(f"{p}: missing desktop <footer class='... d-none d-lg-block'>")
         if not mobile_re.search(html):
             failures.append(f"{p}: missing mobile <footer class='sticky-footer ... d-lg-none'>")
+        # Exactly the two footers above. A third block slips past the regexes
+        # (changelog/search shipped a legacy 'bg-white d-lg-none' footer that
+        # rendered as a duplicate on mobile until 2026-07-17).
+        n = html.count("<footer")
+        if n != 2:
+            failures.append(f"{p}: expected exactly 2 <footer> blocks, found {n}")
     return failures
 
 
