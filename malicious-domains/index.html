@@ -202,6 +202,14 @@
 					"text": "Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed."
 				}
 			}
+			,{
+				"@type": "Question",
+				"name": "What is a bad domain list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "A bad domain list (also called a malicious domain blocklist) aggregates hostnames reported as phishing, scam or malware infrastructure by the Threat Intelligence community. TweetFeed publishes its own bad domains list for free, updated every 15 minutes in CSV, JSON and API formats. The data is released under CC0, so there is no key, sign-up or rate limit to use it."
+				}
+			}
 		]
 	}
 	</script>
@@ -451,10 +459,14 @@
 							<summary>What is a malicious domain feed?</summary>
 							<p>A malicious domain feed is a continuously updated list of fully-qualified domain names that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these into DNS firewalls, secure web gateways and EDRs to block traffic before resolution. TweetFeed publishes the domains spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
 						</details>
-</html><details>
-</html>	<summary>Where can I download a bad domains list?</summary>
-</html>	<p>Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed.</p>
-</html></details>
+						<details>
+							<summary>Where can I download a bad domains list?</summary>
+							<p>Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed.</p>
+						</details>
+						<details>
+							<summary>What is a bad domain list?</summary>
+							<p>A bad domain list (also called a malicious domain blocklist) aggregates hostnames reported as phishing, scam or malware infrastructure by the Threat Intelligence community. TweetFeed publishes its own bad domains list for free, updated every 15 minutes in CSV, JSON and API formats. The data is released under CC0, so there is no key, sign-up or rate limit to use it.</p>
+						</details>
 						<details>
 							<summary>How is this list updated?</summary>
 							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts domains from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
@@ -512,7 +524,9 @@
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
 							&nbsp;·&nbsp;
-							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a></span>
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../malicious-domains/">Bad domains list</a></span>
 						</div>
 						<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
 					</div>
@@ -533,7 +547,9 @@
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
 							&nbsp;·&nbsp;
-							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a></span>
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../malicious-domains/">Bad domains list</a></span>
 							&nbsp;·&nbsp; © 2026 TweetFeed.live						</div>
 					</div>
 				</div>

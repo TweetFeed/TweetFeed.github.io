@@ -20,15 +20,25 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-# The 11 user-facing main pages - the ones that share nav, footer, analytics,
-# and canonical patterns. (CLAUDE.md still lists 12 including base.html, but
-# base.html was dropped in commit ddefac1 "drop stale base.html".) Excludes
-# 404.html, today.html, tos.html (no shared nav anchor) and the SB Admin 2
-# scaffolds + legacy joke pages.
+# The 13 user-facing main pages - the ones that share nav, footer, analytics,
+# and canonical patterns, and get the full check suite below (nav order,
+# canonical, analytics, footer, meta-description length, single h1).
+# Excluded, verified via ls 2026-07-16 (the old comment's today.html/tos.html
+# flat-file stubs and SB Admin 2 scaffolds are long gone, removed 2026-05-11
+# and earlier - not the current reason for any exclusion below):
+#   - 404.html: its own template, no shared nav; only noindex polarity applies.
+#   - tag/<slug>/index.html, tags/index.html, ioc-types/index.html + the
+#     scripts/templates/*.j2 they're rendered from: checked separately by
+#     landing_pages() (footer pattern only, not the full suite here).
+#   - tos/index.html, threat-intelligence-guide/index.html and the
+#     malicious-{urls,domains,ips,hashes-md5,hashes-sha256}/index.html hub
+#     pages: DO carry the shared nav/footer/analytics but aren't wired into
+#     any check yet - a real coverage gap, not an intentional exclusion.
 MAIN_PAGES = [
-    "about/index.html", "agents/index.html", "api/index.html", "changelog/index.html",
-    "dashboard/index.html", "feeds/index.html", "graphs/index.html", "hunt/index.html", "index.html",
-    "researchers/index.html", "search/index.html",
+    "about/index.html", "agents/index.html", "api/index.html", "campaigns/index.html",
+    "changelog/index.html", "dashboard/index.html", "docs/index.html", "feeds/index.html",
+    "graphs/index.html", "hunt/index.html", "index.html", "researchers/index.html",
+    "search/index.html",
 ]
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

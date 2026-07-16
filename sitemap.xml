@@ -26,13 +26,13 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/api/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tweetfeed.live/agents/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/hunt/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-06-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -56,13 +56,13 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/about/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tweetfeed.live/changelog/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -100,7 +100,7 @@
   <!-- Pillar guide (added 2026-04-28) -->
   <url>
     <loc>https://tweetfeed.live/threat-intelligence-guide/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -113,7 +113,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/ioc-types/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -259,13 +259,13 @@
   </url>
 <url>
     <loc>https://tweetfeed.live/tos/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
 <url>
     <loc>https://tweetfeed.live/docs/</loc>
-    <lastmod>2026-06-07</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

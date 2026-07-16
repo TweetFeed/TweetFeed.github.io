@@ -21,6 +21,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history: bump_sitemap_lastmod.py derives non-daily lastmod from
+          # git log; with the default shallow clone it would silently keep the
+          # committed value forever.
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5

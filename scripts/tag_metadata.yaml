@@ -918,6 +918,10 @@ tags:
       - {display: "Sliver", slug: "sliver"}
 
   - slug: njrat
+    # display_tag diverge a proposito del canonical 'Njrat' (tags.yaml/CSV/checkbox
+    # value, 475+ rows historicas): njRAT es el casing de la comunidad. El matching
+    # es por value= exacto del canonical (worker case-insensitive), NO por display.
+    # NO renombrar el canonical: obligaria a retro-editar el historico en 2 repos.
     display_tag: njRAT
     license_subject: "njRAT"
     category: malware-family
