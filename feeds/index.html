@@ -154,7 +154,11 @@
 			{"@type": "DataDownload", "name": "MISP Event Today",  "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/a7506a4c-ef3f-5453-b5af-baf471c80bd4.json"},
 			{"@type": "DataDownload", "name": "MISP Event Week",   "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/7bd179fd-8d3a-5b8a-8830-dcf1e80b1d69.json"},
 			{"@type": "DataDownload", "name": "MISP Event Month",  "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/432a377f-0247-5d71-a51d-bcb7b6d79b7b.json"},
-			{"@type": "DataDownload", "name": "MISP Event Year",   "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json"}
+			{"@type": "DataDownload", "name": "MISP Event Year",   "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/2115c574-c7d1-5a63-97bb-b7c0f0fad70c.json"},
+			{"@type": "DataDownload", "name": "Blocklist - domains (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/domains.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - hosts (TXT)",   "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/hosts.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - adguard (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/adguard.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - ips (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"}
 		]
 	}
 	</script>
@@ -330,6 +334,7 @@
 					<a class="page-toc-chip" href="#stix">STIX 2.1</a>
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
 					<a class="page-toc-chip" href="#per-tag-rss">Per-tag RSS</a>
+					<a class="page-toc-chip" href="#blocklist">Blocklists</a>
 				</nav>
 				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-bottom: 20px;">
 					&nbsp&nbsp&nbspCSV Feeds
@@ -662,6 +667,52 @@
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 				</div>
+				<h3 id="blocklist" class="section-heading">Blocklists</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					Plain-text exports for direct use in Pi-hole, AdGuard Home, hosts files and firewalls - one indicator per line, 30-day window, rebuilt every 15 minutes. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk.
+				</p>
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Domains</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One domain per line, Pi-hole/dnsmasq style"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/domains.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Domains (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Hosts</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="0.0.0.0 hosts-file format"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/hosts.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Hosts (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">AdGuard</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="AdGuard Home ||domain^ syntax"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/adguard.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> AdGuard (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">IPs</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> IPs (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+				</div> <!-- row -->
 				<h3 class="section-heading">Browse by IOC type</h3>
 				<div class="card mb-4">
 					<div class="card-body">

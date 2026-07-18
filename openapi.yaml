@@ -208,6 +208,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/CampaignsDocument"
 
+  /v1/blocklist/{file}:
+    get:
+      operationId: getBlocklist
+      summary: Download a plain-text blocklist export
+      description: |
+        Ready-to-consume plain-text exports of the last 30 days, one indicator
+        per line, for direct use in Pi-hole, AdGuard Home, hosts files and
+        firewalls. This is a 1:1 mirror of the feed - no additional quality
+        gate beyond the standard pipeline. Community-reported IOCs, use at
+        your own risk.
+
+        Rebuilt every 15 minutes, but a file's content (and its `# Updated:`
+        header) only changes when its entries actually change.
+      parameters:
+        - $ref: "#/components/parameters/BlocklistFile"
+      responses:
+        "200":
+          description: |
+            Plain-text blocklist, starting with a comment header block. The
+            `# Updated:` line reflects the last time the entries actually
+            changed, not the last regeneration.
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: |
+                # TweetFeed blocklist - plain domain list (Pi-hole compatible)
+                # Window: 30 days
+                # Entries: 4399
+                # Updated: 2026-07-12T21:11:25Z
+                # License: CC0
+                # Community-reported IOCs. Use at your own risk.
+
+                008963466.weebly.com
+                06updatelive.xyz
+        "404":
+          description: Unknown file name (outside the allowlist below).
+
 components:
   parameters:
     Time:
@@ -259,6 +297,18 @@ components:
         type: string
         format: date-time
         example: "2026-05-01T00:00:00Z"
+
+    BlocklistFile:
+      name: file
+      in: path
+      required: true
+      description: |
+        Blocklist export to download. `domains.txt` / `hosts.txt` /
+        `adguard.txt` are the same domain-level dataset in three formats;
+        `ips.txt` is the IP-level dataset.
+      schema:
+        type: string
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt]
 
   schemas:
     Ioc:

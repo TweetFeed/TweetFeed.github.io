@@ -442,7 +442,7 @@
 								</tbody>
 							</table>
 						</div>
-						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Load the IP list into your firewall or IDS/IPS as a deny rule, or query the JSON API from your SIEM. IP feeds carry higher false-positive risk on shared hosting, so scope blocks carefully. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Load the IP list into your firewall or IDS/IPS as a deny rule - or pull the ready-made <a href="https://api.tweetfeed.live/v1/blocklist/ips.txt" target="_blank" rel="noopener noreferrer">ips.txt</a> export directly - or query the JSON API from your SIEM. IP feeds carry higher false-positive risk on shared hosting, so scope blocks carefully. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
 					</div>
 				</div>
 				<section class="faq-section">
@@ -451,10 +451,10 @@
 							<summary>What is a malicious IP feed?</summary>
 							<p>A malicious IP feed is a continuously updated list of IPv4 addresses observed in adversary infrastructure. Common categories include C2 servers, malware-delivery hosts, port scanners and brute-force sources. Security teams ingest these into firewalls, IDS/IPS and SIEM correlation rules. TweetFeed publishes the IPs spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
 						</details>
-</html><details>
-</html>	<summary>Where can I download this malicious IP list?</summary>
-</html>	<p>Straight from this page. The malicious IP list is published as CSV (one IP per row with date, source and tags), as JSON through the free API, and as an RSS feed. It refreshes every 15 minutes, covers today, week and month windows, and is CC0 licensed, so you can feed it to your firewall or SIEM without a key or sign-up.</p>
-</html></details>
+						<details>
+							<summary>Where can I download this malicious IP list?</summary>
+							<p>Straight from this page. The malicious IP list is published as CSV (one IP per row with date, source and tags), as JSON through the free API, and as an RSS feed. It refreshes every 15 minutes, covers today, week and month windows, and is CC0 licensed, so you can feed it to your firewall or SIEM without a key or sign-up.</p>
+						</details>
 						<details>
 							<summary>How is this list updated?</summary>
 							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts IPv4 addresses from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
