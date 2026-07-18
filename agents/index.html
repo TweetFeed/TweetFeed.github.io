@@ -466,6 +466,10 @@
 							<td>STIX 2.1 indicator bundles (today/week/month windows). Spec-compliant Bundle objects with TLP:CLEAR marking, per-IOC pattern types, deterministic UUIDs for cross-pull dedupe.</td>
 						</tr>
 						<tr>
+							<td><a href="https://api.tweetfeed.live/taxii2/"><code>/taxii2/</code></a></td>
+							<td>TAXII 2.1 server wrapping the same STIX 2.1 data: one collection, "TweetFeed IOCs (rolling 31 days)", read-only, no auth. For OpenCTI, ThreatQ, taxii2-client and other TIPs; poll incrementally with <code>added_after</code>.</td>
+						</tr>
+						<tr>
 							<td><a href="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"><code>/v1/since/&lt;ISO8601&gt;</code></a></td>
 							<td>Diff endpoint: returns IOCs added after the given timestamp. Supports the same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as <code>/v1/&lt;time&gt;</code>. 410 if <code>since</code> is &gt;365d ago.</td>
 						</tr>

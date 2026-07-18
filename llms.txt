@@ -17,6 +17,7 @@
 
 - [API documentation](https://tweetfeed.live/api.html): endpoints, examples, query syntax.
 - [OpenAPI 3.1 spec](https://tweetfeed.live/openapi.yaml): machine-readable schema covering every route, including `/v1/since/{ISO8601}` for delta sync.
+- [TAXII 2.1 server](https://api.tweetfeed.live/taxii2/): read-only discovery endpoint for OpenCTI, ThreatQ, taxii2-client and other TIPs. One collection, `b7dc78af-1d12-5059-898c-3f0e77636204` ("TweetFeed IOCs (rolling 31 days)"), no auth, CC0. Poll incrementally with `added_after` on `/objects/`.
 - Base URL: `https://api.tweetfeed.live/`
 - Path pattern: `/v1/{time_window}` or `/v1/{time}/{filter1}` or `/v1/{time}/{filter1}/{filter2}`
 - Time windows: `today`, `week`, `month`, `year`
