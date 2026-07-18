@@ -47,7 +47,7 @@
 	<link href="css/table.css?v=1" rel="stylesheet">
 	<link href="css/index.css" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=26" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=27" rel="stylesheet">
 	<style>
 		/* CLS fix: reserve the today-counts row height. countTypes() fills the
 		   empty .row.today with one line of bold counts after the today.csv
@@ -677,7 +677,7 @@
 
 								// Add external link in URLs (v3: no direct access)
 								// XSS-safe: escape value in both attribute (data-copy) and text (HTML)
-								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>';
+								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
 
 								data[i][5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
 
@@ -758,7 +758,7 @@
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>');
+							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>');
 
 							$(this.node()).find('td').eq(5).html('<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>');
 

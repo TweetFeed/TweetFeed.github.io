@@ -415,12 +415,6 @@ button.btn.btn-tf {
 	outline: 2px solid #4682B4;
 	outline-offset: 2px;
 }
-/* Copy icon + 365d-lookup magnifier render as an adjacent pair inside
-   value cells on every table page; without this they touch. */
-.tf-copy + .tf-action-lookup {
-	margin-left: 8px;
-	margin-right: 4px;
-}
 .tf-action.tf-action-tweet:hover {
 	background: #000;
 	border-color: #000;
