@@ -585,20 +585,20 @@
 			var types = daily.types || {};
 			var datasets = [
 				{ label: 'Total', data: daily.total || [], borderColor: '#4e73df', backgroundColor: 'rgba(78, 115, 223, 0.08)', pointRadius: 2, pointHoverRadius: 3, lineTension: 0.3, borderWidth: 2, hidden: false },
-				{ label: 'URL', data: types.url || [], borderColor: TYPE_COLORS.URL, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
-				{ label: 'Domain', data: types.domain || [], borderColor: TYPE_COLORS.Domain, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
-				{ label: 'IP', data: types.ip || [], borderColor: TYPE_COLORS.IP, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
-				{ label: 'SHA256', data: types.sha256 || [], borderColor: TYPE_COLORS.SHA256, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
-				{ label: 'MD5', data: types.md5 || [], borderColor: TYPE_COLORS.MD5, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true }
+				{ label: 'URL', data: types.url || [], borderColor: TYPE_COLORS.URL, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
+				{ label: 'Domain', data: types.domain || [], borderColor: TYPE_COLORS.Domain, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
+				{ label: 'IP', data: types.ip || [], borderColor: TYPE_COLORS.IP, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
+				{ label: 'SHA256', data: types.sha256 || [], borderColor: TYPE_COLORS.SHA256, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
+				{ label: 'MD5', data: types.md5 || [], borderColor: TYPE_COLORS.MD5, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false }
 			];
 			lazyChart(ctx, {
 				type: 'line',
-				data: { labels: daily.dates || [], datasets: datasets },
+				data: { labels: (daily.dates || []).map(fmtShortDate), datasets: datasets },
 				options: {
 					maintainAspectRatio: false,
 					layout: { padding: { left: 10, right: 25, top: 10, bottom: 0 } },
 					scales: {
-						xAxes: [{ gridLines: { display: false, drawBorder: false } }],
+						xAxes: [{ ticks: { autoSkip: true, maxTicksLimit: 8, maxRotation: 0, padding: 5 }, gridLines: { display: false, drawBorder: false } }],
 						yAxes: [{ ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true }, gridLines: { color: 'rgb(234, 236, 244)', zeroLineColor: 'rgb(234, 236, 244)', drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } }]
 					},
 					legend: { display: true, position: 'bottom', labels: { boxWidth: 12, padding: 12 } },
