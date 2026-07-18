@@ -390,11 +390,13 @@
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Unknown values return <code>200</code> with <code>found: false</code>. Values containing <code>/</code> or <code>?</code> must use the <code>?value=</code> query form.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Blocklists</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Ready-to-consume exports of the last 30 days for Pi-hole, AdGuard Home, hosts files and firewalls. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Ready-to-consume exports of the last 30 days for Pi-hole, AdGuard Home, hosts files, DNS resolvers (BIND, Unbound, PowerDNS Recursor) and dnsmasq, plus firewalls. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/domains.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/hosts.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/adguard.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/ips.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt"></i></pre>
+				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/rpz.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt"></i></pre>
+				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (header)</b></span>
 				<pre class="code-block p-2" style="font-size: 12px;"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days

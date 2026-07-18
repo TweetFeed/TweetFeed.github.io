@@ -305,10 +305,14 @@ components:
       description: |
         Blocklist export to download. `domains.txt` / `hosts.txt` /
         `adguard.txt` are the same domain-level dataset in three formats;
-        `ips.txt` is the IP-level dataset.
+        `ips.txt` is the IP-level dataset. `rpz.txt` is a DNS Response
+        Policy Zone (exact and wildcard `CNAME .` records, SOA serial =
+        the epoch of the last content change) for BIND, Unbound and
+        PowerDNS Recursor. `dnsmasq.txt` uses the `address=/<domain>/0.0.0.0`
+        format.
       schema:
         type: string
-        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt]
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt]
 
   schemas:
     Ioc:

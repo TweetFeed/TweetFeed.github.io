@@ -158,7 +158,9 @@
 			{"@type": "DataDownload", "name": "Blocklist - domains (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/domains.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - hosts (TXT)",   "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/hosts.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - adguard (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/adguard.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - ips (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - ips (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - rpz (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/rpz.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - dnsmasq (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"}
 		]
 	}
 	</script>
@@ -709,6 +711,26 @@
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
 								<hr>
 								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> IPs (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">RPZ</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="DNS Response Policy Zone for BIND, Unbound and PowerDNS Recursor"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/rpz.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> RPZ (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">dnsmasq</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> dnsmasq (.txt)</a></p>
 							</div>
 						</div>
 					</div>
