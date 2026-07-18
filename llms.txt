@@ -46,13 +46,14 @@
 
 ## AI IOC enrichment
 
-- Every 6h, an AI job annotates newly-published IOCs with per-IOC context generated from the source tweet: `summary` (<=160 chars), `family` (malware family or null), `threat_type`, `suggested_tags` (from the feed's tag vocabulary), `confidence` (0-1). The AI only describes - it never adds, removes, or alters IOC values or the canonical CSV feeds.
+- Every 6h, an AI job annotates newly-published IOCs with per-IOC context generated from the source tweet: `summary` (<=200 chars), `family` (malware family or null), `threat_type`, `suggested_tags` (from the feed's tag vocabulary), `confidence` (0-1). The AI only describes - it never adds, removes, or alters IOC values or the canonical CSV feeds.
 - Exposed as the optional `ai` field in [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com) responses (`/v1/ioc?value=<urlencoded-ioc>`, exact 365-day lookup) and inside the MCP `enrich_ioc` tool output.
+- IOC lookup records also carry an optional `related` field: other IOCs posted in the same source tweets as the looked-up value (sample, max 5); absent when there are none.
 - Raw sidecar: [enrichment.json](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json) (rolling 30 days, keyed by normalized IOC value, CC0).
 
 ## MCP integration (for AI agents)
 
-- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type, 365-day lookup + AI context when available), `get_campaigns` (cluster search by brand/confidence, trimmed sample IOCs).
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type, 365-day lookup + AI context when available), `get_campaigns` (cluster search by brand/confidence, trimmed sample IOCs), `get_trends` (community trends: 31-day daily series, top movers, TLD distribution, novelty).
 - [/agents.html](https://tweetfeed.live/agents.html): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
 - [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest for the `tweetfeed-iocs` skill.
 - [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.

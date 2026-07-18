@@ -18,7 +18,7 @@ info:
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
-    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 9 tools).
+    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 10 tools).
   version: "1.0"
   contact:
     name: TweetFeed
@@ -185,6 +185,48 @@ paths:
                 items:
                   $ref: "#/components/schemas/Ioc"
 
+  /v1/ioc:
+    get:
+      operationId: getIocByValue
+      summary: Exact-match lookup for a single IOC
+      description: |
+        Looks up one IOC value across the full 365-day retention window and
+        returns an exact match - not a substring search. Accepts defanged
+        input (`hxxp://`, `[.]`, etc.); the value is normalised (refanged)
+        server-side before the lookup, same as on ingest.
+
+        Also available as a path parameter: `/v1/ioc/{value}`.
+      parameters:
+        - $ref: "#/components/parameters/IocValueQuery"
+      responses:
+        "200":
+          description: |
+            Lookup result. `found: false` with an empty `records` array when
+            there is no match.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IocLookupResult"
+
+  /v1/ioc/{value}:
+    get:
+      operationId: getIocByValuePath
+      summary: Exact-match lookup for a single IOC (path form)
+      description: |
+        Same lookup as `/v1/ioc?value=...`, with the IOC value passed as a
+        path segment instead of a query parameter.
+      parameters:
+        - $ref: "#/components/parameters/IocValuePath"
+      responses:
+        "200":
+          description: |
+            Lookup result. `found: false` with an empty `records` array when
+            there is no match.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IocLookupResult"
+
   /v1/campaigns:
     get:
       operationId: getCampaigns
@@ -207,6 +249,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CampaignsDocument"
+
+  /v1/trends:
+    get:
+      operationId: getTrends
+      summary: Community IOC trend analytics
+      description: |
+        Returns the trends document: a rolling 31-day daily IOC volume series
+        (with a per-type breakdown), week-over-week top movers by tag, the
+        most-abused TLDs among malicious domains from the last 30 days, and
+        the novelty rate (share of this week's distinct IOC values that are
+        new versus recurring). Regenerated alongside the rest of the feed.
+      responses:
+        "200":
+          description: Trends document.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrendsDocument"
 
   /v1/blocklist/{file}:
     get:
@@ -245,6 +305,30 @@ paths:
                 06updatelive.xyz
         "404":
           description: Unknown file name (outside the allowlist below).
+
+  /taxii2/:
+    get:
+      operationId: getTaxiiDiscovery
+      summary: TAXII 2.1 discovery endpoint
+      description: |
+        TAXII 2.1 (read-only) discovery document. Points to the API root at
+        `/taxii2/root/`, which exposes the standard TAXII 2.1 collection
+        endpoints (`/collections/`, `/collections/{id}/objects/`, etc.) for
+        one rolling 31-day collection of community IOCs modeled as STIX 2.1
+        objects. No authentication, CC0.
+
+        The full TAXII route surface is intentionally not modeled path-by-path
+        here - see the
+        [TAXII 2.1 specification](https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html)
+        and https://tweetfeed.live/api/ for the collection ID and the
+        incremental-poll pattern (`added_after` on `/objects/`).
+      responses:
+        "200":
+          description: TAXII 2.1 discovery document.
+          content:
+            application/taxii+json;version=2.1:
+              schema:
+                type: object
 
 components:
   parameters:
@@ -314,6 +398,26 @@ components:
         type: string
         enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt]
 
+    IocValueQuery:
+      name: value
+      in: query
+      required: true
+      description: |
+        IOC value to look up (URL, domain, IP, or hash). Accepts defanged
+        input - `hxxp://`, `[.]`, etc. - normalised server-side before the
+        exact-match lookup.
+      schema:
+        type: string
+      example: "example.malicious.com"
+
+    IocValuePath:
+      name: value
+      in: path
+      required: true
+      description: Same as the `value` query parameter, passed as a path segment.
+      schema:
+        type: string
+
   schemas:
     Ioc:
       type: object
@@ -351,6 +455,130 @@ components:
             applicable). Current taxonomy: 122+ tags. Full list at
             https://tweetfeed.live/tags/.
           example: ["phishing", "scam"]
+
+    IocRecord:
+      type: object
+      required: [type, value, first_seen, last_seen, count, users, tags, tweets]
+      properties:
+        type:
+          type: string
+          enum: [url, domain, ip, sha256, md5]
+          description: IOC type.
+        value:
+          type: string
+          description: The IOC value, refanged (same normalisation as the main feed).
+        first_seen:
+          type: string
+          format: date-time
+          description: UTC timestamp of the earliest occurrence within the 365-day window.
+        last_seen:
+          type: string
+          format: date-time
+          description: UTC timestamp of the most recent occurrence within the 365-day window.
+        count:
+          type: integer
+          description: Total number of times this IOC was reported within the window.
+        users:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+          description: Reporting researcher handles (no leading `@`), capped at 10.
+        tags:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+          description: Distinct tags observed across all reports of this IOC, capped at 10.
+        tweets:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+          description: Sample source tweet URLs, capped at 3.
+        related:
+          type: array
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            items:
+              type: string
+            description: A `[type, value]` pair.
+          description: |
+            Optional. Other IOCs posted in the same source tweets as this one
+            (sample, max 5). Absent when there are none.
+
+    IocLookupResult:
+      type: object
+      required: [found, query, window, records]
+      properties:
+        found:
+          type: boolean
+          description: Whether at least one matching record was found.
+        query:
+          type: string
+          description: The normalised (refanged) value that was looked up.
+        window:
+          type: string
+          description: Retention window searched.
+          example: "365d"
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/IocRecord"
+        ai:
+          type: object
+          description: |
+            Optional. AI-generated enrichment sidecar for this IOC - not part
+            of the canonical feed data, present only once an enrichment run
+            has annotated this value.
+          properties:
+            summary:
+              type: string
+              description: AI-generated one-line summary of the IOC's context (<=200 chars).
+            family:
+              type: string
+              nullable: true
+              description: Malware family, when identifiable. `null` otherwise.
+            threat_type:
+              type: string
+              description: AI-classified threat category.
+            suggested_tags:
+              type: array
+              items:
+                type: string
+              description: AI-suggested tags drawn from the feed's tag vocabulary.
+            confidence:
+              type: number
+              description: AI confidence score, 0-1.
+            enriched_at:
+              type: string
+              format: date-time
+              description: UTC timestamp of the enrichment run.
+
+    TrendsDocument:
+      type: object
+      description: |
+        Trends analytics document. Loosely typed here - see
+        https://tweetfeed.live/trends/ for the human-readable rendering.
+      properties:
+        daily:
+          type: object
+          description: |
+            31 days of totals plus a per-IOC-type breakdown (url/domain/ip/
+            sha256/md5), used for the rolling 30-day volume chart.
+        movers:
+          type: object
+          description: Current vs previous 7-day tag counts, ranked by change magnitude.
+        tlds:
+          type: object
+          description: Top TLDs among malicious domains from the last 30 days.
+        novelty:
+          type: object
+          description: |
+            Share of this week's distinct IOC values that are new versus
+            recurring.
 
     CampaignsDocument:
       type: object
