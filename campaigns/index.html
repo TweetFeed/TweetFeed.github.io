@@ -505,6 +505,7 @@
 					'<span class="tfc-ioc-type" style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
 					'<code class="tfc-ioc-value">' + esc(value) + '</code>' +
 					'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
+					'<a class="tf-action tf-action-lookup" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;"><i class="fas fa-search" aria-hidden="true"></i></a>' +
 					tweetLink +
 				'</div>'
 			);

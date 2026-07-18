@@ -11,6 +11,7 @@ import datetime
 import json
 import sys
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 import yaml
@@ -53,6 +54,15 @@ def fetch_samples(slug):
     return data[:SAMPLE_LIMIT]
 
 
+def js_encode_uri_component(s):
+    """Mirror JS encodeURIComponent() exactly: percent-encode everything
+    except A-Z a-z 0-9 - _ . ! ~ * ' ( ). Used to build the 365-day IOC
+    lookup link (search/?q=<value>) so the query string matches what the
+    client-side encodeURIComponent(value) calls produce elsewhere on the
+    site (index.html, search.html, malicious-*.html, campaigns.html)."""
+    return quote(s, safe="!*'()~")
+
+
 def format_sample(r):
     try:
         ts = datetime.datetime.strptime(r["date"], "%Y-%m-%d %H:%M:%S")
@@ -69,6 +79,7 @@ def format_sample(r):
         "type_text_color": text_color,
         "value_full": val,
         "value_display": val_display,
+        "value_query": js_encode_uri_component(val),
         "user": r.get("user", ""),
     }
 
