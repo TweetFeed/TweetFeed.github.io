@@ -303,6 +303,18 @@
 			background: #fff;
 			color: #1c1c1c;
 		}
+		.tfl-corro-chip {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid #b3b3b3;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #f5f5f5;
+			color: #595959;
+			cursor: help;
+			white-space: nowrap;
+		}
 		.tfl-ai {
 			background: #f8f9fa;
 			border: 1px solid #1c1c1c;
@@ -333,6 +345,53 @@
 			line-height: 1.6;
 			margin: 0 0 0.6rem 0;
 		}
+		.tfl-fp-row {
+			margin-top: 0.6rem;
+			padding-top: 0.5rem;
+			border-top: 1px solid #e0e0e0;
+			color: #8a8a8a;
+			font-size: 12px;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfl-fp-row a { color: #1178b3; }
+		.tfl-fp-row .tf-copy {
+			cursor: pointer;
+			color: #8a8a8a;
+		}
+		.tfl-fp-row .tf-copy:hover { color: #000; text-decoration: underline; }
+
+		/* Feed explorer card (/search/) rules - same inline-per-page pattern as
+		   the .tfl- rules above (this panel is unique to /search/, avoids a
+		   site-wide tweetfeed.css?v= bump). Prefixed tfe- to stay distinct
+		   from the IOC lookup panel's tfl- namespace. */
+		.tfe-hint {
+			display: block;
+			margin-top: 0.5rem;
+		}
+		.tfe-actions {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.9rem;
+			margin-top: 0.25rem;
+		}
+		.tfe-status-loading {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.75rem 0;
+			color: #555;
+			font-family: 'Rubik', sans-serif;
+			font-size: 14px;
+		}
+		.tfe-permalink {
+			cursor: pointer;
+			color: #555;
+			font-size: 14px;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfe-permalink:hover { color: #000; }
+		.tfe-truncate-notice { margin-top: 0.9rem; }
 	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -505,6 +564,93 @@
 							</form>
 							<div id="iocLookupStatus" role="status" aria-live="polite"></div>
 							<div id="iocLookupResults" aria-live="polite"></div>
+						</div>
+					</div>
+					<!-- Feed explorer: ad-hoc filtered queries against the live
+					     api.tweetfeed.live/v1/<window>[/filter1][/filter2] endpoint
+					     (same server the MCP query_iocs tool wraps - see
+					     mcp/src/index.ts toolQueryIocs). Distinct from the two
+					     panels around it: the IOC lookup above is an EXACT match
+					     against the 365-day index; the week table below is a
+					     fixed 7-day view with DataTables substring search. This
+					     card renders into its OWN table (#feedExplorerTable) -
+					     never #dataTableFull, which js/demo/datatables-full.js
+					     auto-inits at document ready and would collide with. No
+					     fetch on page load and no auto-refresh - explicit "Load"
+					     only (except the tag <datalist>, populated once from
+					     counts.json, and a one-time auto-run when explorer deep-
+					     link params are present in the URL). -->
+					<div class="card shadow mb-4" id="feedExplorerCard">
+						<div class="card-body">
+							<h3 class="section-heading">Feed explorer</h3>
+							<form id="feedExplorerForm" role="search" aria-label="Feed explorer filters">
+								<div class="form-row">
+									<div class="form-group col-6 col-md-2">
+										<label for="feWindow">Window</label>
+										<select class="form-control" id="feWindow">
+											<option value="today">Today</option>
+											<option value="week" selected>Last 7 days</option>
+											<option value="month">Last 30 days</option>
+										</select>
+									</div>
+									<div class="form-group col-6 col-md-2">
+										<label for="feType">Type</label>
+										<select class="form-control" id="feType">
+											<option value="">Any</option>
+											<option value="url">URL</option>
+											<option value="domain">Domain</option>
+											<option value="ip">IP</option>
+											<option value="sha256">SHA256</option>
+											<option value="md5">MD5</option>
+										</select>
+									</div>
+									<div class="form-group col-6 col-md-2">
+										<label for="feTag">Tag</label>
+										<input type="text" class="form-control" id="feTag" list="feTagOptions" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. cobaltstrike">
+										<datalist id="feTagOptions"></datalist>
+										<small class="form-text text-danger" id="feTagError" aria-live="polite"></small>
+									</div>
+									<div class="form-group col-6 col-md-2">
+										<label for="feUser">User</label>
+										<input type="text" class="form-control" id="feUser" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="@handle">
+										<small class="form-text text-danger" id="feUserError" aria-live="polite"></small>
+									</div>
+									<div class="form-group col-6 col-md-2">
+										<label for="feFrom">From</label>
+										<input type="date" class="form-control" id="feFrom">
+									</div>
+									<div class="form-group col-6 col-md-2">
+										<label for="feTo">To</label>
+										<input type="date" class="form-control" id="feTo">
+									</div>
+								</div>
+								<div class="tfe-actions">
+									<button class="btn btn-primary btn-tf buttonHover" type="submit" id="feLoadBtn"><i class="fas fa-search"></i> Load</button>
+									<button class="btn btn-primary btn-sm btn-tf buttonHover" type="button" id="feExportBtn"><i class="fas fa-download"></i> Export CSV</button>
+									<span class="tf-copy tfe-permalink" id="fePermalink" data-copy="" role="button" tabindex="0" aria-label="Copy permalink to these filters" title="Copy permalink"><i class="fas fa-link"></i> Copy permalink</span>
+								</div>
+								<small class="form-text text-muted tfe-hint" id="feIdleHint">Pick a window, then Load. Type, tag and user narrow the query server-side (first two apply directly; a third client-side, same priority as the MCP <code>query_iocs</code> tool: type &gt; user &gt; tag). From/To filter client-side only, after the fetch.</small>
+							</form>
+							<div id="feStatus" role="status" aria-live="polite"></div>
+							<div id="feMessage" aria-live="polite"></div>
+							<div id="feTruncateNotice" style="display:none;"></div>
+							<div id="feResultsWrap" style="display:none;">
+								<div class="table-responsive table-responsive-sm">
+									<table class="table table-borderless" id="feedExplorerTable" style="width:98%; box-sizing: inherit;">
+										<thead>
+											<tr>
+												<th class="text-nowrap">Date (UTC)</th>
+												<th class="text-nowrap">User</th>
+												<th class="text-nowrap">Type</th>
+												<th class="text-nowrap">Value</th>
+												<th class="text-nowrap">Tags</th>
+												<th class="text-nowrap">Tweet</th>
+												<th class="text-nowrap">VT</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 					<!-- Page Heading -->
@@ -937,7 +1083,10 @@
 	<script>
 	function exportTableToCSV(filename) {
 		var csv = [];
-		var rows = document.querySelectorAll("table tr");
+		// Scoped to #dataTableFull (the week table) - a page-wide "table tr"
+		// selector would also scrape #feedExplorerTable rows once the Feed
+		// explorer card below has results loaded.
+		var rows = document.querySelectorAll("#dataTableFull tr");
 		for (var i = 2; i < rows.length; i++) {
 			var row = [],
 				cols = rows[i].querySelectorAll("td, th");
@@ -971,7 +1120,8 @@
 
 	function exportValuesToCSV(filename) {
 		var csv = [];
-		var rows = document.querySelectorAll("table tr");
+		// Scoped to #dataTableFull - see comment in exportTableToCSV above.
+		var rows = document.querySelectorAll("#dataTableFull tr");
 		for (var i = 2; i < rows.length; i++) {
 			var row = [];
 			var cols = rows[i].querySelectorAll("td, th");
@@ -1057,6 +1207,74 @@
 			return KNOWN_TYPES.indexOf(type) !== -1 ? 'tfl-type-' + type : 'tfl-type-other';
 		}
 
+		function parseUtcTimestamp(s) {
+			// Defensive parse of the API's "YYYY-MM-DD HH:MM:SS" (space or
+			// T-separated) timestamp strings. Returns NaN - never throws - on
+			// anything else so a malformed/missing value just skips the span.
+			if (typeof s !== 'string') return NaN;
+			var m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2}):(\d{2})/);
+			if (!m) return NaN;
+			return Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+		}
+
+		// Coverage signal only - describes how many accounts/posts reported the
+		// IOC, never a maliciousness verdict. Kept monochrome on purpose (no
+		// green/red) so it can't be mistaken for a confidence/verdict badge.
+		function corroborationChip(rec) {
+			var users = (rec && Array.isArray(rec.users)) ? rec.users : [];
+			var U = users.length;
+			var C = Number(rec && rec.count) || 0;
+			var label;
+
+			if (U >= 10) {
+				label = 'Reported by 10+ accounts';
+			} else if (U >= 2) {
+				label = 'Reported by ' + U + ' accounts';
+			} else if (U === 1 && C > 1) {
+				label = C + ' posts · same account';
+			} else {
+				label = 'Single report';
+			}
+
+			var firstTs = parseUtcTimestamp(rec && rec.first_seen);
+			var lastTs = parseUtcTimestamp(rec && rec.last_seen);
+			if (!isNaN(firstTs) && !isNaN(lastTs)) {
+				var spanDays = (lastTs - firstTs) / 86400000;
+				if (spanDays >= 90) {
+					label += ' · recurring over ' + Math.floor(spanDays / 30) + ' months';
+				}
+			}
+
+			var tip = 'Coverage signal only: how many accounts posted this IOC. ' +
+				'More reports do not confirm maliciousness - verify independently.';
+			return '<span class="tfl-corro-chip" data-toggle="tooltip" data-placement="top" title="' + esc(tip) + '">' + esc(label) + '</span>';
+		}
+
+		// Plain-text template for a false-positive report, copied to the
+		// clipboard via the existing .tf-copy delegation (js/utils.js). Never
+		// wired with onclick - data-copy + delegated listener only.
+		function buildFpReportText(rec) {
+			var value = (rec && rec.value) || '';
+			var type = (rec && rec.type) || '';
+			var firstSeen = (rec && rec.first_seen) || '?';
+			var lastSeen = (rec && rec.last_seen) || '?';
+			var count = Number(rec && rec.count) || 0;
+			var users = (rec && Array.isArray(rec.users)) ? rec.users : [];
+			var tweets = (rec && Array.isArray(rec.tweets)) ? rec.tweets : [];
+			var reportedBy = users.map(function(u) { return '@' + u; }).join(' ');
+			var tweetList = tweets.filter(function(u) { return typeof u === 'string'; }).join(' ');
+
+			return 'False positive report\n' +
+				'IOC: ' + value + '\n' +
+				'Type: ' + type + '\n' +
+				'First seen: ' + firstSeen + ' UTC\n' +
+				'Last seen: ' + lastSeen + ' UTC\n' +
+				'Seen: ' + count + ' times\n' +
+				'Reported by: ' + reportedBy + '\n' +
+				'Tweets: ' + tweetList + '\n' +
+				'Reason: ';
+		}
+
 		function renderRecord(r) {
 			var type = r && r.type || '';
 			var value = r && r.value || '';
@@ -1086,6 +1304,7 @@
 				'<div class="tfl-record">' +
 					'<div class="tfl-record-header">' +
 						'<span class="tfl-type-badge ' + typeClass(type) + '">' + esc(type || 'unknown') + '</span>' +
+						corroborationChip(r) +
 						'<code class="tfl-value">' + esc(value) + '</code>' +
 						'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>' +
 						'<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>' +
@@ -1094,6 +1313,11 @@
 					(tagsHtml ? '<div class="tfl-tags">' + tagsHtml + '</div>' : '') +
 					(usersHtml ? '<div class="tfl-meta">Reported by: ' + usersHtml + '</div>' : '') +
 					(tweetsHtml ? '<div class="tfl-meta tfl-tweets">Source tweets: ' + tweetsHtml + '</div>' : '') +
+					'<div class="tfl-fp-row">' +
+						'<a href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Report a false positive</a>' +
+						' &middot; ' +
+						'<span class="tf-copy" data-copy="' + esc(buildFpReportText(r)) + '" role="button" tabindex="0" aria-label="Copy false positive report details" title="Copy report details">Copy report details</span>' +
+					'</div>' +
 				'</div>'
 			);
 		}
@@ -1158,6 +1382,11 @@
 			html += renderAI(data && data.ai);
 
 			$results.html(html);
+			// Bootstrap tooltips are only auto-initialized once, at document
+			// ready ($('[data-toggle="tooltip"]').tooltip() below), for the
+			// static markup present at load - re-init here for the
+			// .tfl-corro-chip tooltips just inserted dynamically.
+			$results.find('[data-toggle="tooltip"]').tooltip();
 		}
 
 		function renderError(query) {
@@ -1216,6 +1445,362 @@
 		if (qp && qp.trim()) {
 			$input.val(qp);
 			runQuery(qp.trim());
+		}
+	})();
+	</script>
+	<!-- Feed explorer: ad-hoc filtered queries against the live
+	     api.tweetfeed.live/v1/<window>[/filter1][/filter2] endpoint. Query
+	     building mirrors mcp/src/index.ts toolQueryIocs EXACTLY (priority
+	     type > user > tag; first two active filters become URL path
+	     segments; a third is applied client-side with the same semantics as
+	     api-worker/src/handler.ts applyFilter/rowMatches). Placed after
+	     js/utils.js (TweetFeed.escapeHtml, TweetFeed.downloadCSV, dataUrl,
+	     addZero) and after the IOC lookup panel script above, whose
+	     $status/$results/setLoading/renderError patterns this mirrors. -->
+	<script>
+	(function() {
+		'use strict';
+
+		var API_BASE = 'https://api.tweetfeed.live';
+		var esc = TweetFeed.escapeHtml;
+		var HANDLE_RE = /^[A-Za-z0-9_]{1,15}$/;
+		var RESERVED_TAG_RE = /^(url|domain|ip|sha256|md5)$/i;
+		var VALID_WINDOWS = ['today', 'week', 'month'];
+		var VALID_TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
+		var LIMIT = 10000;
+		var EXPLORER_PARAMS = ['w', 'type', 'tag', 'user', 'from', 'to'];
+		// Same inline X logo used by the week table and the IOC lookup panel
+		// above - reused here for visual parity.
+		var X_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>';
+		var EMPTY_HTML = '<div class="empty-state">' +
+			'<div class="empty-icon"><i class="fas fa-search"></i></div>' +
+			'<div class="empty-message">No IOCs match those filters</div>' +
+			'<div class="empty-hint">Try a broader window, or remove a type, tag, user or date filter.</div>' +
+			'</div>';
+
+		var $form = $('#feedExplorerForm');
+		var $winSel = $('#feWindow');
+		var $typeSel = $('#feType');
+		var $tag = $('#feTag');
+		var $tagOptions = $('#feTagOptions');
+		var $user = $('#feUser');
+		var $from = $('#feFrom');
+		var $to = $('#feTo');
+		var $tagError = $('#feTagError');
+		var $userError = $('#feUserError');
+		var $loadBtn = $('#feLoadBtn');
+		var $exportBtn = $('#feExportBtn');
+		var $permalink = $('#fePermalink');
+		var $status = $('#feStatus');
+		var $message = $('#feMessage');
+		var $resultsWrap = $('#feResultsWrap');
+		var $truncateNotice = $('#feTruncateNotice');
+
+		var inFlight = false;
+		var lastQueryToken = 0;
+		var feTable = null;
+		var lastRenderedRows = [];
+		var lastWindow = 'week';
+
+		function ensureTable() {
+			if (feTable) return feTable;
+			feTable = $('#feedExplorerTable').DataTable({
+				order: [[0, 'desc']],
+				pageLength: 25,
+				language: {
+					emptyTable: EMPTY_HTML,
+					zeroRecords: EMPTY_HTML
+				}
+			});
+			return feTable;
+		}
+
+		function clearErrors() {
+			$tagError.text('');
+			$userError.text('');
+		}
+
+		function collectFilters() {
+			var w = $winSel.val();
+			return {
+				window: VALID_WINDOWS.indexOf(w) !== -1 ? w : 'week',
+				type: $typeSel.val() || '',
+				tag: ($tag.val() || '').trim().replace(/^#/, ''),
+				user: ($user.val() || '').trim(),
+				from: $from.val() || '',
+				to: $to.val() || ''
+			};
+		}
+
+		function validate(f) {
+			clearErrors();
+			var ok = true;
+			if (f.user) {
+				var stripped = f.user.charAt(0) === '@' ? f.user.slice(1) : f.user;
+				if (!HANDLE_RE.test(stripped)) {
+					$userError.text('Must be 1-15 letters, digits or underscores, with or without a leading @.');
+					ok = false;
+				}
+			}
+			if (f.tag && RESERVED_TAG_RE.test(f.tag)) {
+				$tagError.text('That would be interpreted as a type filter - use the Type selector.');
+				ok = false;
+			}
+			return ok;
+		}
+
+		// Mirrors mcp/src/index.ts toolQueryIocs EXACTLY: priority
+		// type > user > tag; the first two active filters become URL path
+		// segments (API supports up to 2); a third active filter is returned
+		// here to be applied client-side below.
+		function buildQuery(f) {
+			var apiFilters = [];
+			var clientFilterTag = '';
+			var clientFilterUser = '';
+			var userParam = f.user ? (f.user.charAt(0) === '@' ? f.user : '@' + f.user) : '';
+
+			if (f.type) apiFilters.push(f.type);
+			if (userParam) {
+				if (apiFilters.length < 2) apiFilters.push(userParam);
+				else clientFilterUser = userParam.slice(1).toLowerCase();
+			}
+			if (f.tag) {
+				if (apiFilters.length < 2) apiFilters.push(f.tag);
+				else clientFilterTag = f.tag.toLowerCase();
+			}
+
+			var pathSuffix = apiFilters.length > 0 ? '/' + apiFilters.map(encodeURIComponent).join('/') : '';
+			return {
+				url: API_BASE + '/v1/' + f.window + pathSuffix,
+				clientFilterTag: clientFilterTag,
+				clientFilterUser: clientFilterUser
+			};
+		}
+
+		// Explorer's own query params (w/type/tag/user/from/to) - a distinct
+		// namespace from the IOC lookup panel's ?q above. Both can coexist in
+		// the URL; each panel only reads/writes its own keys, so this never
+		// touches 'q'.
+		function updateHistoryAndPermalink(f) {
+			var params = new URLSearchParams(location.search);
+			params.set('w', f.window);
+			if (f.type) params.set('type', f.type); else params.delete('type');
+			if (f.tag) params.set('tag', f.tag); else params.delete('tag');
+			if (f.user) params.set('user', f.user); else params.delete('user');
+			if (f.from) params.set('from', f.from); else params.delete('from');
+			if (f.to) params.set('to', f.to); else params.delete('to');
+			var qs = params.toString();
+			var newPath = location.pathname + (qs ? '?' + qs : '');
+			history.replaceState(null, '', newPath);
+			$permalink.attr('data-copy', location.origin + newPath);
+		}
+
+		function setLoading(isLoading) {
+			inFlight = isLoading;
+			$loadBtn.prop('disabled', isLoading);
+			if (isLoading) {
+				$status.html('<span class="tfe-status-loading"><img loading="lazy" src="../img/loading.svg" alt="" width="18" height="18"> Loading feed...</span>');
+			} else {
+				$status.empty();
+			}
+		}
+
+		// User handles are validated (HANDLE_RE: alnum + underscore, 1-15
+		// chars) before being treated as a link - anything else (should never
+		// happen given the pipeline's own Twitter-handle extraction, but
+		// defensive here) renders as escaped plain text instead. Mirrors the
+		// IOC lookup panel's usersHtml pattern above.
+		function userCell(user) {
+			var u = String(user || '');
+			if (!HANDLE_RE.test(u)) return esc(u);
+			var eu = esc(u);
+			var picSrc = '../pics/' + eu + '.png';
+			var fallback = 'https://unavatar.io/twitter/' + eu;
+			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
+		}
+
+		// Same value-cell markup as the week table's loadData() above: copy
+		// icon (data-copy) + 365-day lookup deep-link + escaped value text.
+		function valueCell(value) {
+			var v = String(value || '');
+			return '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + esc(v) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + esc(encodeURIComponent(v)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + esc(v) + '</span>';
+		}
+
+		function tweetCell(tweetUrl) {
+			return '<a class="tf-action tf-action-tweet" target="_blank" href="' + esc(tweetUrl) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet">' + X_SVG + '</a>';
+		}
+
+		// encodeURIComponent on every type (not just "url", unlike the week
+		// table's inline pattern) - matches the IOC lookup panel's own VT
+		// link, the safer of this page's two existing patterns.
+		function vtCell(value) {
+			return '<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>';
+		}
+
+		function tagsCell(tags) {
+			return esc(Array.isArray(tags) ? tags.join(' ') : '');
+		}
+
+		function renderRows(rows) {
+			var t = ensureTable();
+			t.clear();
+			var data = rows.map(function(row) {
+				return [
+					esc(row.date || ''),
+					userCell(row.user),
+					esc(row.type || ''),
+					valueCell(row.value),
+					tagsCell(row.tags),
+					tweetCell(row.tweet),
+					vtCell(row.value)
+				];
+			});
+			t.rows.add(data);
+			t.draw();
+			$resultsWrap.show();
+		}
+
+		function showTruncationNotice() {
+			$truncateNotice.html(
+				'<div class="alert alert-warning alert-dismissible fade show tfe-truncate-notice" role="alert">' +
+					'Results truncated to the 10,000 most recent - narrow your filters.' +
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+				'</div>'
+			).show();
+		}
+
+		function renderErrorMessage(retryFn) {
+			$message.html(
+				'<div class="alert alert-danger" role="alert">' +
+					'Could not reach the TweetFeed API. Please try again.' +
+					' <button type="button" class="btn btn-primary btn-tf" id="feRetry">Retry</button>' +
+				'</div>'
+			);
+			$('#feRetry').one('click', retryFn);
+		}
+
+		function runQuery(f) {
+			if (inFlight) return;
+			var token = ++lastQueryToken;
+			var q = buildQuery(f);
+			setLoading(true);
+			$message.empty();
+			$truncateNotice.hide().empty();
+
+			fetch(q.url)
+				.then(function(res) {
+					if (!res.ok) throw new Error('HTTP ' + res.status);
+					return res.json();
+				})
+				.then(function(rows) {
+					if (token !== lastQueryToken) return;
+					setLoading(false);
+					if (!Array.isArray(rows)) rows = [];
+					var truncated = rows.length === LIMIT;
+
+					// Third filter, applied client-side - see buildQuery above.
+					// tag: substring match on row.tags joined, lowercased, "#"
+					// stripped (identical to api-worker's rowMatches on the raw
+					// CSV tags column); user: case-insensitive equality.
+					if (q.clientFilterUser) {
+						rows = rows.filter(function(row) {
+							return typeof row.user === 'string' && row.user.toLowerCase() === q.clientFilterUser;
+						});
+					}
+					if (q.clientFilterTag) {
+						rows = rows.filter(function(row) {
+							var tags = row.tags;
+							if (!Array.isArray(tags)) return false;
+							var joined = tags.join(' ').toLowerCase().replace(/#/g, '');
+							return joined.indexOf(q.clientFilterTag) !== -1;
+						});
+					}
+					// Client-side-only date range (server has no concept of
+					// this filter). Lexicographic compare is safe: rows use
+					// "YYYY-MM-DD HH:MM:SS" and both bounds are zero-padded.
+					if (f.from || f.to) {
+						rows = rows.filter(function(row) {
+							var d = row.date || '';
+							if (f.from && !(d >= f.from)) return false;
+							if (f.to && !(d <= (f.to + ' 23:59:59'))) return false;
+							return true;
+						});
+					}
+
+					lastRenderedRows = rows;
+					lastWindow = f.window;
+					renderRows(rows);
+					if (truncated) showTruncationNotice();
+				})
+				.catch(function(err) {
+					if (token !== lastQueryToken) return;
+					console.error('[TweetFeed] Feed explorer query failed:', err);
+					setLoading(false);
+					renderErrorMessage(function() { runQuery(f); });
+				});
+		}
+
+		function attemptLoad() {
+			if (inFlight) return;
+			var f = collectFilters();
+			if (!validate(f)) return;
+			updateHistoryAndPermalink(f);
+			runQuery(f);
+		}
+
+		$form.on('submit', function(e) {
+			e.preventDefault();
+			attemptLoad();
+		});
+
+		$exportBtn.on('click', function() {
+			if (!lastRenderedRows.length) return;
+			var rowsOut = [['date', 'user', 'type', 'value', 'tags', 'tweet']];
+			lastRenderedRows.forEach(function(row) {
+				rowsOut.push([
+					row.date || '',
+					row.user || '',
+					row.type || '',
+					row.value || '',
+					Array.isArray(row.tags) ? row.tags.join(' ') : '',
+					row.tweet || ''
+				]);
+			});
+			var d = new Date();
+			var stamp = d.getUTCFullYear() + '' + TweetFeed.addZero(d.getUTCMonth() + 1) + TweetFeed.addZero(d.getUTCDate()) +
+				'_' + TweetFeed.addZero(d.getUTCHours()) + TweetFeed.addZero(d.getUTCMinutes());
+			TweetFeed.downloadCSV('tweetfeed_explorer_' + lastWindow + '_' + stamp + '.csv', rowsOut);
+		});
+
+		// Tag <datalist>: populated once from counts.json (~5 KB, same file
+		// feeds.html/graphs.html already fetch for aggregate counters) - NOT
+		// the explorer's own IOC query, which only ever runs on explicit
+		// Load or a deep-linked param below. Deferred to window load so this
+		// small fetch never competes with LCP-critical resources.
+		$(window).on('load', function() {
+			$.getJSON(TweetFeed.dataUrl('counts.json'), function(counts) {
+				var tagsObj = (counts && counts.windows && counts.windows.year && counts.windows.year.tags) || {};
+				var sorted = Object.keys(tagsObj).sort(function(a, b) { return (tagsObj[b] || 0) - (tagsObj[a] || 0); });
+				var html = sorted.map(function(t) { return '<option value="' + esc(t) + '">'; }).join('');
+				$tagOptions.html(html);
+			});
+		});
+
+		// Deep-link: w/type/tag/user/from/to prefill + a single auto-run.
+		// Distinct namespace from the IOC lookup panel's ?q above - both can
+		// coexist, each panel auto-runs only its own params.
+		var qp = new URLSearchParams(location.search);
+		var hasExplorerParam = EXPLORER_PARAMS.some(function(k) { return qp.has(k) && qp.get(k) !== ''; });
+		if (hasExplorerParam) {
+			var pw = qp.get('w');
+			if (pw && VALID_WINDOWS.indexOf(pw) !== -1) $winSel.val(pw);
+			var pt = (qp.get('type') || '').toLowerCase();
+			if (pt && VALID_TYPES.indexOf(pt) !== -1) $typeSel.val(pt);
+			if (qp.get('tag')) $tag.val(qp.get('tag'));
+			if (qp.get('user')) $user.val(qp.get('user'));
+			if (qp.get('from')) $from.val(qp.get('from'));
+			if (qp.get('to')) $to.val(qp.get('to'));
+			attemptLoad();
 		}
 	})();
 	</script>
