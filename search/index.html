@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Search TweetFeed for indicators of compromise (URLs, domains, IPs, hashes) shared by the infosec community on Twitter/X. Filter by type, tag or researcher.">
+	<meta name="description" content="Search 7 days of TweetFeed IOC data, or run an exact 365-day IOC lookup with AI-generated threat context. Filter by type, tag or researcher.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="search,ioc,twitter,feed,phishing,scam,malware,osint,socmint,threat,malicious">
 	<link rel="canonical" href="https://tweetfeed.live/search/">
@@ -18,7 +18,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Search IOC database - TweetFeed">
-	<meta name="twitter:description" content="Search the TweetFeed IOC database by value, user, type, or tag.">
+	<meta name="twitter:description" content="Search 7 days of TweetFeed IOC data, or run an exact 365-day IOC lookup with AI-generated threat context. Filter by type, tag or researcher.">
 	<meta name="twitter:url" content="https://tweetfeed.live/search/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/search/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Search IOC database - TweetFeed">
-	<meta property="og:description" content="Search the TweetFeed IOC database by value, user, type, or tag.">
+	<meta property="og:description" content="Search 7 days of TweetFeed IOC data, or run an exact 365-day IOC lookup with AI-generated threat context. Filter by type, tag or researcher.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -164,6 +164,22 @@
 					"@type": "Answer",
 					"text": "Incident response triage, Threat Intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted."
 				}
+			},
+			{
+				"@type": "Question",
+				"name": "What does the IOC lookup search?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "The IOC lookup panel runs an exact match against TweetFeed's 365-day index via the api.tweetfeed.live/v1/ioc endpoint. Input is normalized server-side (defanged hxxp and [.], lowercase, scheme and trailing slashes stripped). This is different from the table below, which matches substrings across the last 7 days."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What is the AI context in lookup results?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "When available, an AI-generated summary of the source tweet accompanies an IOC lookup match, along with a threat type, malware family (if identified) and a confidence score. This AI context is not part of the canonical feed data - verify it before acting on it."
+				}
 			}
 		]
 	}
@@ -171,6 +187,153 @@
 </head>
 
 <body id="page-top">
+	<style>
+		/* IOC lookup panel (/search/) rules kept inline per the pattern already
+		   used on campaigns/index.html rather than adding to the shared
+		   css/tweetfeed.css (avoids a site-wide ?v= bump for rules only this
+		   panel uses). IOC-type badge colours reuse the exact url/domain/ip/
+		   md5/sha256 palette from campaigns/ioc-types/feeds so the type badge
+		   here feels native next to the week table below. */
+		.tfl-window-badge {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid #9a9a9a;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			color: #555;
+			vertical-align: middle;
+			margin-left: 0.4rem;
+		}
+		.tfl-hint {
+			display: block;
+			margin-top: 0.5rem;
+		}
+		.tfl-status-loading {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.75rem 0;
+			color: #555;
+			font-family: 'Rubik', sans-serif;
+			font-size: 14px;
+		}
+		.tfl-multi-note {
+			color: #737373;
+			font-size: 12.5px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.6rem 0;
+		}
+		.tfl-record {
+			border: 1px solid #1c1c1c;
+			border-radius: 4px;
+			padding: 0.9rem 1rem;
+			margin-bottom: 0.9rem;
+		}
+		.tfl-record-header {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+		.tfl-type-badge {
+			display: inline-block;
+			padding: 2px 9px;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			white-space: nowrap;
+		}
+		.tfl-type-url { background: #0026E6; color: #fff; }
+		.tfl-type-domain { background: #3399FF; color: #fff; }
+		.tfl-type-ip { background: #02bf0f; color: #fff; }
+		.tfl-type-md5,
+		.tfl-type-sha256 { background: #FFC34D; color: #5c3d12; }
+		.tfl-type-other { background: #e2e3e5; color: #41464b; }
+		.tfl-value {
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 13px;
+			background: #f5f5f5;
+			padding: 2px 7px;
+			border-radius: 3px;
+			word-break: break-all;
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+		.tfl-record-header .tf-copy {
+			flex-shrink: 0;
+			cursor: pointer;
+			color: #555;
+		}
+		.tfl-record-header .tf-copy:hover { color: #000; }
+		.tfl-meta {
+			color: #737373;
+			font-size: 12.5px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.5rem 0;
+			line-height: 1.6;
+		}
+		.tfl-meta a { color: #1178b3; }
+		.tfl-tweets {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.35rem;
+		}
+		.tfl-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px;
+			margin: 0 0 0.6rem 0;
+		}
+		.tfl-tag-chip {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+		}
+		.tfl-ai {
+			background: #f8f9fa;
+			border: 1px solid #1c1c1c;
+			border-left: 3px solid #1178b3;
+			border-radius: 0 4px 4px 0;
+			padding: 0.9rem 1rem;
+			margin-top: 0.4rem;
+		}
+		.tfl-ai-header {
+			font-family: 'Rubik', sans-serif;
+			font-weight: 700;
+			font-size: 14px;
+			color: #1c1c1c;
+			margin-bottom: 0.2rem;
+		}
+		.tfl-ai-disclaimer {
+			text-transform: uppercase;
+			font-size: 10.5px;
+			letter-spacing: 0.03em;
+			color: #8a8a8a;
+			font-family: 'Rubik', sans-serif;
+			margin-bottom: 0.6rem;
+		}
+		.tfl-ai-summary {
+			color: #333;
+			font-size: 14.5px;
+			font-family: 'Rubik', sans-serif;
+			line-height: 1.6;
+			margin: 0 0 0.6rem 0;
+		}
+	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -257,7 +420,7 @@
 				<div id="presentationMobile">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
-					<p style="font-size: 14px;"><em>Search 7 days of IOCs from 90+ infosec researchers</em></p>
+					<p style="font-size: 14px;"><em>Search 7 days of IOCs from 90+ infosec researchers - or run an exact 365-day lookup</em></p>
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
@@ -318,10 +481,32 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
-					<h2><em>Search 7 days of IOCs from 90+ infosec researchers on Twitter/X</em></h2>
+					<h2><em>Search 7 days of IOCs from 90+ infosec researchers - or run an exact 365-day lookup with AI context</em></h2>
 					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<div class="container-fluid">
+					<!-- IOC lookup: exact-match, 365-day index with optional AI context.
+					     Consumes api.tweetfeed.live directly (NOT TweetFeed.dataUrl(),
+					     which points at the stage data repo CSVs backing the week
+					     table below) - same already-live prod service pattern as
+					     campaigns/index.html. -->
+					<div class="card shadow mb-4" id="iocLookupCard">
+						<div class="card-body">
+							<h3 class="section-heading">IOC lookup <span class="tfl-window-badge">last 365 days</span></h3>
+							<form id="iocLookupForm" role="search" aria-label="IOC lookup (exact match, last 365 days)">
+								<label for="iocLookupInput" class="sr-only">Exact IOC value to look up</label>
+								<div class="input-group">
+									<input type="text" class="form-control" id="iocLookupInput" name="q" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Exact IOC - URL, domain, IP, MD5 or SHA256 (365-day index)">
+									<div class="input-group-append">
+										<button class="btn btn-primary btn-tf buttonHover" type="submit" aria-label="Search"><i class="fas fa-search"></i> Search</button>
+									</div>
+								</div>
+								<small class="form-text text-muted tfl-hint">Exact match against the 365-day index. Defanged input (<code>hxxp</code>, <code>[.]</code>) is normalized automatically. Same dataset as the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a> - see the <a href="../api/">API docs</a>.</small>
+							</form>
+							<div id="iocLookupStatus" role="status" aria-live="polite"></div>
+							<div id="iocLookupResults" aria-live="polite"></div>
+						</div>
+					</div>
 					<!-- Page Heading -->
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
@@ -422,6 +607,14 @@
 						<details>
 							<summary>What can I use this for?</summary>
 							<p>Incident response triage, Threat Intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted (see the disclaimer in the <a href="../api/">API page</a>).</p>
+						</details>
+						<details>
+							<summary>What does the IOC lookup search?</summary>
+							<p>The IOC lookup panel above runs an exact match against TweetFeed's 365-day index via the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">api.tweetfeed.live/v1/ioc</a> endpoint. Input is normalized server-side (defanged <code>hxxp</code> and <code>[.]</code>, lowercase, scheme and trailing slashes stripped) - don't normalize it yourself. This is different from the table below, which matches substrings across the last 7 days.</p>
+						</details>
+						<details>
+							<summary>What is the AI context in lookup results?</summary>
+							<p>When available, an AI-generated summary of the source tweet accompanies an IOC lookup match, along with a threat type, malware family (if identified) and a confidence score. This AI context is not part of the canonical feed data - verify it before acting on it.</p>
 						</details>
 					</section>
 				</div> <!-- /.container-fluid -->
@@ -832,6 +1025,199 @@
 		});
 		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 	}
+	</script>
+	<!-- IOC lookup panel: fetches api.tweetfeed.live directly (NOT
+	     TweetFeed.dataUrl(), which points at the stage data repo CSVs behind
+	     the week table above) - same already-live prod service pattern as
+	     campaigns/index.html. Placed after js/utils.js for TweetFeed.escapeHtml
+	     / TweetFeed.formatDateLong and the .tf-copy delegation it wires up. -->
+	<script>
+	(function() {
+		'use strict';
+
+		var API = 'https://api.tweetfeed.live/v1/ioc?value=';
+		var esc = TweetFeed.escapeHtml;
+		var HANDLE_RE = /^[A-Za-z0-9_]{1,15}$/;
+		var HTTP_RE = /^https?:\/\//i;
+		var KNOWN_TYPES = ['url', 'domain', 'ip', 'md5', 'sha256'];
+		// Same inline X logo already used by this page's own week-table
+		// tweet links (see loadData() above) - reused here for visual parity.
+		var X_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>';
+
+		var $form = $('#iocLookupForm');
+		var $input = $('#iocLookupInput');
+		var $submitBtn = $form.find('button[type="submit"]');
+		var $status = $('#iocLookupStatus');
+		var $results = $('#iocLookupResults');
+
+		var inFlight = false;
+		var lastQueryToken = 0;
+
+		function typeClass(type) {
+			return KNOWN_TYPES.indexOf(type) !== -1 ? 'tfl-type-' + type : 'tfl-type-other';
+		}
+
+		function renderRecord(r) {
+			var type = r && r.type || '';
+			var value = r && r.value || '';
+			var count = typeof (r && r.count) === 'number' ? r.count : 0;
+			var firstSeen = (r && r.first_seen) || '?';
+			var lastSeen = (r && r.last_seen) || '?';
+			var tags = (r && Array.isArray(r.tags)) ? r.tags : [];
+			var tweets = (r && Array.isArray(r.tweets)) ? r.tweets : [];
+			var users = (r && Array.isArray(r.users)) ? r.users : [];
+
+			var tagsHtml = tags.map(function(t) {
+				return '<span class="tfl-tag-chip">' + esc(t) + '</span>';
+			}).join('');
+
+			var usersHtml = users.map(function(u) {
+				return HANDLE_RE.test(u)
+					? '<a href="https://x.com/' + esc(u) + '" target="_blank" rel="noopener noreferrer">@' + esc(u) + '</a>'
+					: esc(u);
+			}).join(', ');
+
+			var tweetsHtml = tweets.map(function(u) {
+				if (typeof u !== 'string' || !HTTP_RE.test(u)) return '';
+				return '<a class="tf-action tf-action-tweet" href="' + esc(u) + '" target="_blank" rel="noopener noreferrer" title="Open source tweet" aria-label="Open source tweet">' + X_SVG + '</a>';
+			}).join('');
+
+			return (
+				'<div class="tfl-record">' +
+					'<div class="tfl-record-header">' +
+						'<span class="tfl-type-badge ' + typeClass(type) + '">' + esc(type || 'unknown') + '</span>' +
+						'<code class="tfl-value">' + esc(value) + '</code>' +
+						'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>' +
+						'<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>' +
+					'</div>' +
+					'<div class="tfl-meta">Seen ' + count + ' time' + (count === 1 ? '' : 's') + ' &middot; First seen ' + esc(firstSeen) + ' UTC &middot; Last seen ' + esc(lastSeen) + ' UTC</div>' +
+					(tagsHtml ? '<div class="tfl-tags">' + tagsHtml + '</div>' : '') +
+					(usersHtml ? '<div class="tfl-meta">Reported by: ' + usersHtml + '</div>' : '') +
+					(tweetsHtml ? '<div class="tfl-meta tfl-tweets">Source tweets: ' + tweetsHtml + '</div>' : '') +
+				'</div>'
+			);
+		}
+
+		function renderAI(ai) {
+			if (!ai || !ai.summary) return '';
+			var family = ai.family;
+			var threatType = ai.threat_type;
+			var confidence = ai.confidence;
+			var enrichedAt = ai.enriched_at;
+			var suggestedTags = Array.isArray(ai.suggested_tags) ? ai.suggested_tags : [];
+
+			var metaBits = [];
+			metaBits.push('Threat type: ' + esc(threatType || 'unknown'));
+			metaBits.push('Family: ' + esc(family || 'unknown'));
+			if (typeof confidence === 'number') {
+				metaBits.push('Confidence: ' + Math.round(confidence * 100) + '%');
+			}
+			if (enrichedAt) {
+				metaBits.push('Enriched: ' + esc(TweetFeed.formatDateLong(enrichedAt)));
+			}
+
+			var tagsHtml = suggestedTags.map(function(t) {
+				return '<span class="tfl-tag-chip">' + esc(t) + '</span>';
+			}).join('');
+
+			return (
+				'<div class="tfl-ai" role="note" aria-label="AI-generated context">' +
+					'<div class="tfl-ai-header"><i class="fas fa-robot"></i> AI context</div>' +
+					'<div class="tfl-ai-disclaimer">AI-generated - not part of the canonical feed data. Verify before acting.</div>' +
+					'<p class="tfl-ai-summary">' + esc(ai.summary) + '</p>' +
+					'<div class="tfl-meta">' + metaBits.join(' &middot; ') + '</div>' +
+					(tagsHtml ? '<div class="tfl-tags">' + tagsHtml + '</div>' : '') +
+				'</div>'
+			);
+		}
+
+		function renderEmpty(query) {
+			return (
+				'<div class="empty-state">' +
+					'<div class="empty-icon"><i class="far fa-eye-slash"></i></div>' +
+					'<div class="empty-message">Not seen in the last 365 days</div>' +
+					'<div class="empty-hint">No exact match in the 365-day index for <code>' + esc(query) + '</code> - try the 7-day table below (substring, tags and reporters).</div>' +
+				'</div>'
+			);
+		}
+
+		function renderResults(data, query) {
+			var html = '';
+			var records = (data && Array.isArray(data.records)) ? data.records : [];
+			var found = !!(data && data.found) && records.length > 0;
+
+			if (found) {
+				if (records.length > 1) {
+					html += '<div class="tfl-multi-note">' + records.length + ' records matched after normalization.</div>';
+				}
+				html += records.map(renderRecord).join('');
+			} else {
+				html += renderEmpty(query);
+			}
+
+			html += renderAI(data && data.ai);
+
+			$results.html(html);
+		}
+
+		function renderError(query) {
+			$results.html(
+				'<div class="alert alert-danger" role="alert">' +
+					'Could not reach the lookup API. Please try again.' +
+					' <button type="button" class="btn btn-primary btn-tf" id="iocLookupRetry">Retry</button>' +
+				'</div>'
+			);
+			$('#iocLookupRetry').one('click', function() { runQuery(query); });
+		}
+
+		function setLoading(isLoading) {
+			inFlight = isLoading;
+			$submitBtn.prop('disabled', isLoading);
+			if (isLoading) {
+				$status.html('<span class="tfl-status-loading"><img loading="lazy" src="../img/loading.svg" alt="" width="18" height="18"> Searching 365-day index...</span>');
+			} else {
+				$status.empty();
+			}
+		}
+
+		function runQuery(raw) {
+			if (inFlight || !raw) return;
+			var token = ++lastQueryToken;
+			setLoading(true);
+			$results.empty();
+			fetch(API + encodeURIComponent(raw))
+				.then(function(res) {
+					if (!res.ok) throw new Error('HTTP ' + res.status);
+					return res.json();
+				})
+				.then(function(data) {
+					if (token !== lastQueryToken) return;
+					setLoading(false);
+					renderResults(data, raw);
+				})
+				.catch(function(err) {
+					if (token !== lastQueryToken) return;
+					console.error('[TweetFeed] IOC lookup failed:', err);
+					setLoading(false);
+					renderError(raw);
+				});
+		}
+
+		$form.on('submit', function(e) {
+			e.preventDefault();
+			var raw = ($input.val() || '').trim();
+			if (!raw) { $input.focus(); return; }
+			history.replaceState(null, '', location.pathname + '?q=' + encodeURIComponent(raw));
+			runQuery(raw);
+		});
+
+		// Deep-link: ?q=<value> prefills the input and auto-runs the lookup.
+		var qp = new URLSearchParams(location.search).get('q');
+		if (qp && qp.trim()) {
+			$input.val(qp);
+			runQuery(qp.trim());
+		}
+	})();
 	</script>
 </body>
 
