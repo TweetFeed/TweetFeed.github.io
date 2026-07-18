@@ -20,7 +20,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-# The 13 user-facing main pages - the ones that share nav, footer, analytics,
+# The 14 user-facing main pages - the ones that share nav, footer, analytics,
 # and canonical patterns, and get the full check suite below (nav order,
 # canonical, analytics, footer, meta-description length, single h1).
 # Excluded, verified via ls 2026-07-16 (the old comment's today.html/tos.html
@@ -38,7 +38,7 @@ MAIN_PAGES = [
     "about/index.html", "agents/index.html", "api/index.html", "campaigns/index.html",
     "changelog/index.html", "dashboard/index.html", "docs/index.html", "feeds/index.html",
     "graphs/index.html", "hunt/index.html", "index.html", "researchers/index.html",
-    "search/index.html",
+    "search/index.html", "trends/index.html",
 ]
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

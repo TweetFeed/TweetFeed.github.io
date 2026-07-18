@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- 100% privacy-first analytics -->
+	<script defer src="https://cloud.umami.is/script.js" data-website-id="37841dcd-5b99-4fb8-8dc8-4d40f4d38d86"></script>
+	<!-- Ahrefs Web Analytics (cookieless) -->
+	<script src="https://analytics.ahrefs.com/analytics.js" data-key="J59c6Ehci39jQWCQRIWuRw" async></script>
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Daily IOC volume over 30 days, top trending tags week over week, top malicious-domain TLDs, and new vs recurring IOC rates on TweetFeed.">
+	<meta name="author" content="tweetfeed.live">
+	<meta name="keywords" content="ioc trends,threat statistics,top movers,malicious tld,phishing trends,malware trends,ioc volume,new vs recurring iocs">
+	<link rel="canonical" href="https://tweetfeed.live/trends/">
+	<title>IOC Trends: 30-Day Threat Activity, Top Movers, TLDs - TweetFeed</title>
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="IOC Trends: 30-Day Threat Activity, Top Movers, TLDs - TweetFeed">
+	<meta name="twitter:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, malicious-domain TLD breakdown, and new vs recurring rates.">
+	<meta name="twitter:url" content="https://tweetfeed.live/trends/">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta name="twitter:creator" content="@0xDanielLopez">
+	<!-- Facebook -->
+	<meta property="og:url" content="https://tweetfeed.live/trends/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="IOC Trends: 30-Day Threat Activity, Top Movers, TLDs - TweetFeed">
+	<meta property="og:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, malicious-domain TLD breakdown, and new vs recurring rates.">
+	<meta property="og:site_name" content="tweetfeed.live">
+	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC Trends">
+	<!-- Preconnect -->
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+	<!-- Custom fonts for this template -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	<!-- Custom styles for this template -->
+	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="../css/table.css?v=1" rel="stylesheet">
+	<link href="../css/index.css" rel="stylesheet">
+	<link href="../css/tooltip.css" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=25" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/",
+			"https://tweetfeed.featurebase.app/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about/",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher with 10+ years in cybersecurity. Founder of TweetFeed and phishunt.io; maintainer of public Threat Intelligence feeds and MCP servers for AI agents.",
+				"knowsAbout": [
+			"Threat Intelligence",
+			"Indicators of compromise",
+			"OSINT",
+			"Malware analysis",
+			"Phishing detection",
+			"Cybersecurity"
+		],
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
+			"https://x.com/0xDanielLopez",
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search/?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://tweetfeed.live/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Trends",
+				"item": "https://tweetfeed.live/trends/"
+			}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "FAQPage",
+		"mainEntity": [
+			{"@type": "Question", "name": "What does this page measure?", "acceptedAnswer": {"@type": "Answer", "text": "Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, and how many IOC values seen this week are new versus previously reported."}},
+			{"@type": "Question", "name": "How are top movers calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined."}},
+			{"@type": "Question", "name": "What's the difference between new and recurring IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Over the current week, an IOC value counts as new if TweetFeed has never reported it before, and recurring if it was seen in an earlier period. A high new rate usually means fresh infrastructure; a high recurring rate means attackers are reusing existing domains, IPs, or files."}},
+			{"@type": "Question", "name": "How often is this data updated?", "acceptedAnswer": {"@type": "Answer", "text": "Every 15 minutes, the same cadence as the rest of the TweetFeed feed."}}
+		]
+	}
+	</script>
+</head>
+
+<body id="page-top">
+	<style>
+		/* Page-specific rules for /trends/. Kept inline per the pattern already
+		   used on campaigns/index.html rather than adding to the shared
+		   css/tweetfeed.css (avoids a site-wide ?v= bump for rules only this
+		   page uses). Reuses the existing url/domain/ip/sha256/md5 colour
+		   palette from graphs/feeds so type colours stay consistent site-wide,
+		   and 1px solid #1c1c1c borders on stat cards / table cells / the new
+		   badge to match the site's heavy-box aesthetic. */
+		.trd-generated-line {
+			color: #737373;
+			font-size: 13px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.5rem 0;
+		}
+		.trd-fail-notice {
+			display: none;
+			color: #737373;
+			font-size: 13px;
+			font-family: 'Rubik', sans-serif;
+			padding: 0.6rem 0;
+			text-align: center;
+		}
+		.trd-subtitle {
+			color: #737373;
+			font-size: 13px;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.8rem 0;
+		}
+		.trd-movers-table {
+			width: 100%;
+			border-collapse: collapse;
+			font-family: 'Rubik', sans-serif;
+			font-size: 14px;
+		}
+		.trd-movers-table th,
+		.trd-movers-table td {
+			border: 1px solid #1c1c1c;
+			padding: 6px 10px;
+			text-align: left;
+		}
+		.trd-movers-table th {
+			background: #f2f2f2;
+		}
+		.trd-movers-table td.trd-num,
+		.trd-movers-table th.trd-num {
+			text-align: right;
+			font-variant-numeric: tabular-nums;
+		}
+		.trd-arrow-up { color: #1a7a3d; font-weight: 600; }
+		.trd-arrow-down { color: #b3261e; font-weight: 600; }
+		.trd-arrow-flat { color: #737373; font-weight: 600; }
+		.trd-pct {
+			color: #737373;
+			font-size: 12px;
+			margin-left: 3px;
+		}
+		.trd-badge-new {
+			display: inline-block;
+			padding: 1px 8px;
+			border: 1px solid #1c1c1c;
+			border-radius: 3px;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			background: #34e3a4;
+			color: #0b3d2e;
+			margin-right: 4px;
+		}
+		.trd-stat-card {
+			border: 1px solid #1c1c1c;
+			border-radius: 4px;
+			padding: 1rem;
+			text-align: center;
+			height: 100%;
+			font-family: 'Rubik', sans-serif;
+		}
+		.trd-stat-value {
+			font-size: 34px;
+			font-weight: 700;
+			color: #1c1c1c;
+			line-height: 1.2;
+		}
+		.trd-stat-label {
+			font-size: 13px;
+			color: #555;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			margin-top: 0.25rem;
+		}
+		.trd-stat-sub {
+			font-size: 12.5px;
+			color: #737373;
+			margin-top: 0.4rem;
+		}
+		.trd-legend-item {
+			display: inline-block;
+			margin: 0 8px 4px 0;
+			font-family: 'Rubik', sans-serif;
+		}
+	</style>
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link" href="../"><i class="fas fa-home"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../dashboard/"><i class="fas fa-th"></i> Dashboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../feeds/"><i class="fas fa-rss"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../api/"><i class="fas fa-code"></i> API</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../hunt/"><i class="fas fa-bullseye"></i> Hunt</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../graphs/"><i class="fas fa-chart-pie"></i> Graphs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../researchers/"><i class="fas fa-users"></i> Researchers</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../search/"><i class="fas fa-search"></i> Search</a>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item" id="phishunt-link">
+							<a class="nav-link" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <sup><i class="fas fa-external-link-alt"></i></sup></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../docs/"><i class="fas fa-book"></i> Docs</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../about/"><i class="fas fa-question-circle"></i> About</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark bg-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item" style="font-size: 15px">
+							<a id="logo" class="nav-link" href="../"><i class="fas fa-home"></i> TweetFeed</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item dropdown " style="font-size: 15px;">
+							<a class="nav-link dropdown-toggle" aria-label="Menu" href="../" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="outline: none;">
+								&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-bars"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+								<a class="dropdown-item" href="../agents/"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+								<a class="dropdown-item" href="../feeds/"><i class="fas fa-rss"></i> Feeds</a>
+								<a class="dropdown-item" href="../graphs/"><i class="fas fa-chart-pie"></i> Graphs</a>
+								<a class="dropdown-item" href="../researchers/"><i class="fas fa-users"></i> Researchers</a>
+								<a class="dropdown-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> List <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish"></i> phishunt.io <i class="fas fa-external-link-alt"></i></a>
+								<a class="dropdown-item" href="../docs/"><i class="fas fa-book"></i> Docs</a>
+								<a class="dropdown-item" href="../about/"><i class="fas fa-question-circle"></i> About</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content" role="main">
+				<div id="presentationSecondary" class="d-none d-md-block">
+					<br><br><br>
+					<h1 class="toph1"><i class="fas fa-chart-line" style="font-size: 36px;"></i> IOC Trends</h1>
+					<h2><em>Daily volume, top movers and TLD trends across TweetFeed's IOC feed</em></h2>
+				</div>
+				<div id="presentationMobile" class="d-block d-md-none">
+					<br>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-chart-line" style="font-size: 36px;"></i> IOC Trends</p>
+					<p style="font-size: 14px;"><em>30-day volume, movers and TLD breakdown</em></p>
+				</div>
+				<hr class="divider"> <!-- DIVIDER -->
+
+				<div id="trendsLoading" class="text-center" style="padding:2rem 0;">
+					<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading">
+				</div>
+				<div class="trd-fail-notice" id="trendsFailNotice" role="alert">
+					<i class="fas fa-exclamation-circle"></i> Could not load trend data right now. Please try again later.
+				</div>
+
+				<div id="trendsContent" style="display:none;">
+
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Daily IOC volume (last 30 days)</h6>
+								</div>
+								<div class="card-body">
+									<p class="trd-generated-line" id="trendsGeneratedLine"></p>
+									<div class="chart-area">
+										<canvas id="trendsVolumeChart" role="img" aria-label="Daily IOC volume for the last 30 days, by type"></canvas>
+									</div>
+									<hr>
+									<em style="font-size: 13px;color: grey;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Click a legend item to show or hide that IOC type. Times in UTC.</em>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Top movers (7 days vs previous 7 days)</h6>
+								</div>
+								<div class="card-body">
+									<p class="trd-subtitle" id="trendsMoversSubtitle"></p>
+									<div class="table-responsive">
+										<table class="trd-movers-table">
+											<colgroup>
+												<col span="1" style="width: 40%;">
+												<col span="1" style="width: 20%;">
+												<col span="1" style="width: 20%;">
+												<col span="1" style="width: 20%;">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>Tag</th>
+													<th class="trd-num">Count (7d)</th>
+													<th class="trd-num">Previous (7d)</th>
+													<th class="trd-num">Change</th>
+												</tr>
+											</thead>
+											<tbody id="trendsMoversBody"></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col d-flex align-items-stretch">
+							<div class="col-xl-12 col-lg-12">
+								<div class="card shadow mb-4 h-100">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-primary text-center">IOC types (last 30 days)</h6>
+									</div>
+									<div class="card-body">
+										<div class="chart-pie pt-4">
+											<canvas id="trendsTypesDonut"></canvas>
+										</div>
+										<div class="mt-4 text-center small" id="trendsTypesLegend"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col d-flex align-items-stretch">
+							<div class="col-xl-12 col-lg-12">
+								<div class="card shadow mb-4 h-100">
+									<div class="card-header py-3">
+										<h6 class="m-0 font-weight-bold text-primary text-center">Top TLDs (last 30 days)</h6>
+									</div>
+									<div class="card-body">
+										<p class="trd-subtitle" id="trendsTldsSubtitle"></p>
+										<div class="chart-bar">
+											<canvas id="trendsTldsBar"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-4 mb-4">
+							<div class="trd-stat-card">
+								<div class="trd-stat-value" id="trendsNoveltyDistinct">-</div>
+								<div class="trd-stat-label">Distinct values</div>
+								<div class="trd-stat-sub" id="trendsNoveltyWindow"></div>
+							</div>
+						</div>
+						<div class="col-md-4 mb-4">
+							<div class="trd-stat-card">
+								<div class="trd-stat-value" id="trendsNoveltyPctNew">-</div>
+								<div class="trd-stat-label">New</div>
+								<div class="trd-stat-sub" id="trendsNoveltyNewSub"></div>
+							</div>
+						</div>
+						<div class="col-md-4 mb-4">
+							<div class="trd-stat-card">
+								<div class="trd-stat-value" id="trendsNoveltyRecurring">-</div>
+								<div class="trd-stat-label">Recurring</div>
+								<div class="trd-stat-sub" id="trendsNoveltyRecurringSub"></div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What does this page measure?</summary>
+						<p>Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, and how many IOC values seen this week are new versus previously reported.</p>
+					</details>
+					<details>
+						<summary>How are top movers calculated?</summary>
+						<p>Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined.</p>
+					</details>
+					<details>
+						<summary>What's the difference between new and recurring IOCs?</summary>
+						<p>Over the current week, an IOC value counts as new if TweetFeed has never reported it before, and recurring if it was seen in an earlier period. A high new rate usually means fresh infrastructure; a high recurring rate means attackers are reusing existing domains, IPs, or files.</p>
+					</details>
+					<details>
+						<summary>How often is this data updated?</summary>
+						<p>Every 15 minutes, the same cadence as the rest of the TweetFeed feed.</p>
+					</details>
+				</section>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<!-- End of Main Content -->
+	<!-- Footer -->
+	<footer class="d-none d-lg-block" style="border-top: 1px solid gray; background-color: #f2f2f2; position: relative; width: 100%;">
+		<div class="container-fluid py-2" style="color: black; font-family: 'Rubik', sans-serif; font-size: 14px;">
+			<div class="row align-items-center">
+				<div class="col-md-4 text-left">
+					By Daniel López
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">𝕏 @0xDanielLopez</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+				</div>
+				<div class="col-md-4 text-center">
+					<a class="text-decoration-none" href="../changelog/">Changelog</a>
+
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="../tos/">Terms of Service</a>
+							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../malicious-domains/">Bad domains list</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../trends/">Trends</a></span>
+				</div>
+				<div class="col-md-4 text-right">© 2026 TweetFeed.live</div>
+			</div>
+		</div>
+	</footer>
+	<footer class="sticky-footer bg-white d-lg-none" style="font-size: 11px;">
+		<div class="container-fluid py-2" style="color: black;">
+			<div class="row">
+				<div class="col text-center">
+					By Daniel López
+					&nbsp;·&nbsp; Made with <span>❤</span> in Andalucía, Spain<br>
+					<a class="text-decoration-none" href="../changelog/">Changelog</a>
+
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+					&nbsp;·&nbsp;
+					<a class="text-decoration-none" href="../tos/">Terms of Service</a>
+							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../ioc-types/">IOC types</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../threat-intelligence-guide/">Guide</a>
+							&nbsp;·&nbsp;
+							<a class="text-decoration-none" href="../malicious-domains/">Bad domains list</a> &nbsp;·&nbsp; <a class="text-decoration-none" href="../trends/">Trends</a></span>
+					&nbsp;·&nbsp; © 2026 TweetFeed.live				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- End of Footer -->
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="../js/sb-admin-2.min.js"></script>
+	<!-- TweetFeed shared utilities -->
+	<script src="../js/config.js"></script>
+	<script src="../js/utils.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="../vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level custom script: single fetch of trends.json (TweetFeed.dataUrl,
+	     stage/prod-aware via js/config.js), renders all charts client-side. -->
+	<script>
+	(function() {
+		'use strict';
+
+		Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+		Chart.defaults.global.defaultFontColor = '#858796';
+
+		var TYPE_COLORS = { URL: '#0026E6', Domain: '#3399FF', IP: '#02bf0f', SHA256: '#FFC34D', MD5: '#ffc591' };
+		var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+		// Lazy-render a Chart.js instance once its target canvas enters the
+		// viewport (with a 200px preload margin). Copied verbatim from
+		// graphs/index.html - keeps expensive chart paint out of LCP/TBT.
+		function lazyChart(canvas, config) {
+			if (!canvas) return;
+			var render = function() { new Chart(canvas, config); };
+			if (!('IntersectionObserver' in window)) { render(); return; }
+			var obs = new IntersectionObserver(function(entries) {
+				for (var i = 0; i < entries.length; i++) {
+					if (entries[i].isIntersecting) { render(); obs.disconnect(); return; }
+				}
+			}, { rootMargin: '200px' });
+			obs.observe(canvas);
+		}
+
+		function fmtShortDate(s) {
+			var d = new Date(s + 'T00:00:00Z');
+			if (isNaN(d.getTime())) return s;
+			return MONTHS[d.getUTCMonth()] + ' ' + d.getUTCDate();
+		}
+
+		function renderVolumeChart(daily) {
+			var ctx = document.getElementById('trendsVolumeChart');
+			if (!ctx) return;
+			var types = daily.types || {};
+			var datasets = [
+				{ label: 'Total', data: daily.total || [], borderColor: '#4e73df', backgroundColor: 'rgba(78, 115, 223, 0.08)', pointRadius: 2, pointHoverRadius: 3, lineTension: 0.3, borderWidth: 2, hidden: false },
+				{ label: 'URL', data: types.url || [], borderColor: TYPE_COLORS.URL, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
+				{ label: 'Domain', data: types.domain || [], borderColor: TYPE_COLORS.Domain, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
+				{ label: 'IP', data: types.ip || [], borderColor: TYPE_COLORS.IP, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
+				{ label: 'SHA256', data: types.sha256 || [], borderColor: TYPE_COLORS.SHA256, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true },
+				{ label: 'MD5', data: types.md5 || [], borderColor: TYPE_COLORS.MD5, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: true }
+			];
+			lazyChart(ctx, {
+				type: 'line',
+				data: { labels: daily.dates || [], datasets: datasets },
+				options: {
+					maintainAspectRatio: false,
+					layout: { padding: { left: 10, right: 25, top: 10, bottom: 0 } },
+					scales: {
+						xAxes: [{ gridLines: { display: false, drawBorder: false } }],
+						yAxes: [{ ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true }, gridLines: { color: 'rgb(234, 236, 244)', zeroLineColor: 'rgb(234, 236, 244)', drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } }]
+					},
+					legend: { display: true, position: 'bottom', labels: { boxWidth: 12, padding: 12 } },
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+						backgroundColor: 'rgb(255,255,255)',
+						bodyFontColor: '#858796',
+						titleFontColor: '#6e707e',
+						borderColor: '#dddfeb',
+						borderWidth: 1,
+						xPadding: 15,
+						yPadding: 15,
+						displayColors: true,
+						caretPadding: 10
+					}
+				}
+			});
+		}
+
+		function renderTypesDonut(daily) {
+			var types = daily.types || {};
+			var keyMap = { url: 'URL', domain: 'Domain', ip: 'IP', sha256: 'SHA256', md5: 'MD5' };
+			var labels = [];
+			var data = [];
+			var colors = [];
+			Object.keys(keyMap).forEach(function(k) {
+				var arr = types[k] || [];
+				var sum = 0;
+				for (var i = 0; i < arr.length; i++) sum += (arr[i] || 0);
+				labels.push(keyMap[k]);
+				data.push(sum);
+				colors.push(TYPE_COLORS[keyMap[k]]);
+			});
+
+			var legendHtml = labels.map(function(l, i) {
+				return '<span class="trd-legend-item"><i class="fas fa-circle" style="color:' + colors[i] + ';"></i> ' +
+					TweetFeed.escapeHtml(l) + ': ' + TweetFeed.escapeHtml(TweetFeed.numberFormat(data[i])) + '</span>';
+			}).join('');
+			$('#trendsTypesLegend').html(legendHtml);
+
+			var ctx = document.getElementById('trendsTypesDonut');
+			if (!ctx) return;
+			lazyChart(ctx, {
+				type: 'doughnut',
+				data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, hoverBorderColor: 'rgba(234, 236, 244, 1)' }] },
+				options: {
+					maintainAspectRatio: false,
+					legend: { display: false },
+					cutoutPercentage: 75,
+					tooltips: { backgroundColor: 'rgb(255,255,255)', bodyFontColor: '#858796', borderColor: '#dddfeb', borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
+				}
+			});
+		}
+
+		function renderTldsBar(tlds) {
+			var top = tlds.top || [];
+			var labels = top.map(function(t) { return '.' + t.tld; });
+			var data = top.map(function(t) { return t.count; });
+			if (tlds.other) {
+				labels.push('other');
+				data.push(tlds.other);
+			}
+			var palette = ['#0026E6', '#3399FF', '#02bf0f', '#FFC34D', '#ffc591', '#7315BF', '#FF9933', '#008040', '#B02699', '#2F60F1'];
+			var colors = labels.map(function(l, i) { return l === 'other' ? '#9a9a9a' : palette[i % palette.length]; });
+
+			$('#trendsTldsSubtitle').text(TweetFeed.numberFormat(tlds.domains_total || 0) + ' malicious domains in the last 30 days');
+
+			var ctx = document.getElementById('trendsTldsBar');
+			if (!ctx) return;
+			lazyChart(ctx, {
+				type: 'horizontalBar',
+				data: { labels: labels, datasets: [{ label: 'Domains', data: data, backgroundColor: colors }] },
+				options: {
+					maintainAspectRatio: false,
+					legend: { display: false },
+					scales: {
+						xAxes: [{ ticks: { beginAtZero: true, maxTicksLimit: 6 }, gridLines: { color: 'rgb(234, 236, 244)', drawBorder: false } }],
+						yAxes: [{ gridLines: { display: false, drawBorder: false } }]
+					},
+					tooltips: { backgroundColor: 'rgb(255,255,255)', bodyFontColor: '#858796', borderColor: '#dddfeb', borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
+				}
+			});
+		}
+
+		function renderMovers(movers) {
+			var esc = TweetFeed.escapeHtml;
+			var cur = movers.current_range || [];
+			var prev = movers.previous_range || [];
+			if (cur.length === 2 && prev.length === 2) {
+				$('#trendsMoversSubtitle').text(
+					fmtShortDate(cur[0]) + ' - ' + fmtShortDate(cur[1]) + ' vs ' + fmtShortDate(prev[0]) + ' - ' + fmtShortDate(prev[1])
+				);
+			}
+
+			var rows = (movers.tags || []).map(function(m) {
+				var count = esc(TweetFeed.numberFormat(m.count || 0));
+				var previous = esc(TweetFeed.numberFormat(m.previous || 0));
+				var delta = m.delta || 0;
+				var changeHtml;
+				if (m.pct === null || m.pct === undefined) {
+					changeHtml = '<span class="trd-badge-new">New</span>';
+				} else if (delta > 0) {
+					changeHtml = '<span class="trd-arrow-up">&#9650; +' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
+						'<span class="trd-pct">(+' + esc(m.pct.toFixed(1)) + '%)</span>';
+				} else if (delta < 0) {
+					changeHtml = '<span class="trd-arrow-down">&#9660; ' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
+						'<span class="trd-pct">(' + esc(m.pct.toFixed(1)) + '%)</span>';
+				} else {
+					changeHtml = '<span class="trd-arrow-flat">&#9679; 0</span><span class="trd-pct">(0.0%)</span>';
+				}
+				return '<tr><td>' + esc(m.tag || '') + '</td><td class="trd-num">' + count +
+					'</td><td class="trd-num">' + previous + '</td><td class="trd-num">' + changeHtml + '</td></tr>';
+			}).join('');
+			$('#trendsMoversBody').html(rows);
+		}
+
+		function renderNovelty(novelty) {
+			var windowLabel = 'Last ' + (novelty.window === 'week' ? '7 days' : (novelty.window === 'month' ? '30 days' : (novelty.window || '')));
+			$('#trendsNoveltyDistinct').text(TweetFeed.numberFormat(novelty.distinct_values || 0));
+			$('#trendsNoveltyWindow').text(windowLabel);
+			$('#trendsNoveltyPctNew').text((typeof novelty.pct_new === 'number' ? novelty.pct_new.toFixed(1) : '0.0') + '%');
+			$('#trendsNoveltyNewSub').text(TweetFeed.numberFormat(novelty.new || 0) + ' new values');
+			$('#trendsNoveltyRecurring').text(TweetFeed.numberFormat(novelty.recurring || 0));
+			$('#trendsNoveltyRecurringSub').text(windowLabel);
+		}
+
+		function renderTrends(data) {
+			$('#trendsLoading').hide();
+			$('#trendsContent').show();
+
+			if (data.generated_at) {
+				$('#trendsGeneratedLine').text('Last updated: ' + TweetFeed.formatDateLong(data.generated_at));
+			}
+			if (data.daily) {
+				renderVolumeChart(data.daily);
+				renderTypesDonut(data.daily);
+			}
+			if (data.movers) renderMovers(data.movers);
+			if (data.tlds) renderTldsBar(data.tlds);
+			if (data.novelty) renderNovelty(data.novelty);
+		}
+
+		function showTrendsFailure() {
+			$('#trendsLoading').hide();
+			$('#trendsContent').hide();
+			$('#trendsFailNotice').show();
+		}
+
+		$(function() {
+			$.get(TweetFeed.dataUrl('trends.json'))
+				.done(function(response) {
+					var data = (typeof response === 'string') ? JSON.parse(response) : response;
+					try {
+						renderTrends(data);
+					} catch (e) {
+						console.error('[TweetFeed] trends render failed:', e);
+						showTrendsFailure();
+					}
+				})
+				.fail(function(xhr, status, err) {
+					console.error('[TweetFeed] trends.json fetch failed:', status, err);
+					showTrendsFailure();
+				});
+		});
+	})();
+	</script>
+</body>
+
+</html>
