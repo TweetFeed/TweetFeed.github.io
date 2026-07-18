@@ -582,6 +582,31 @@ components:
                 type: string
                 format: date
                 description: Date the indicator was added to the source feed.
+        net:
+          type: object
+          description: |
+            IP network metadata from ipinfo.io (third-party sidecar,
+            refreshed every 6h); absent for non-IP lookups or when
+            unavailable.
+          properties:
+            org:
+              type: string
+              description: Organisation/ASN name as reported by ipinfo.io.
+            country:
+              type: string
+              description: ISO country code.
+            city:
+              type: string
+              description: City name.
+            fetched_at:
+              type: string
+              format: date-time
+              description: UTC timestamp the network metadata was last refreshed.
+            bogon:
+              type: boolean
+              description: |
+                `true` when the looked-up value is a bogon/reserved-range
+                address. Other fields are absent in that case.
 
     TrendsDocument:
       type: object

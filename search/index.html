@@ -469,6 +469,33 @@
 			padding-top: 0.5rem;
 			border-top: 1px solid #e0e0e0;
 		}
+		.tfl-net {
+			background: #fff;
+			border: 1px solid #1c1c1c;
+			border-left: 3px solid #595959;
+			border-radius: 0 4px 4px 0;
+			padding: 0.9rem 1rem;
+			margin-top: 0.4rem;
+		}
+		.tfl-net-header {
+			font-family: 'Rubik', sans-serif;
+			font-weight: 700;
+			font-size: 14px;
+			color: #1c1c1c;
+			margin-bottom: 0.4rem;
+		}
+		.tfl-net-row {
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			color: #333;
+			word-break: break-word;
+		}
+		.tfl-net-foot {
+			font-size: 11px;
+			color: #8a8a8a;
+			font-family: 'Rubik', sans-serif;
+			margin-top: 0.5rem;
+		}
 
 		/* Feed explorer card (/search/) rules - same inline-per-page pattern as
 		   the .tfl- rules above (this panel is unique to /search/, avoids a
@@ -1581,6 +1608,37 @@
 			);
 		}
 
+		// IP network metadata (ipinfo.io sidecar, optional API field, IP
+		// lookups only). Sibling pattern to renderExternal() above - own
+		// tfl-net- namespace, no verdict colors. Every field is esc()'d;
+		// renders only when net is a plain object with at least one of
+		// org/country/city/bogon present.
+		function renderNet(net) {
+			if (!net || typeof net !== 'object' || Array.isArray(net)) return '';
+			var hasOrg = typeof net.org === 'string' && net.org;
+			var hasCountry = typeof net.country === 'string' && net.country;
+			var hasCity = typeof net.city === 'string' && net.city;
+			var isBogon = net.bogon === true;
+			if (!hasOrg && !hasCountry && !hasCity && !isBogon) return '';
+
+			var line = isBogon
+				? 'bogon / reserved range'
+				: [hasOrg && net.org, hasCountry && net.country, hasCity && net.city]
+					.filter(Boolean).map(esc).join(' &middot; ');
+
+			var fetchedSuffix = (typeof net.fetched_at === 'string' && net.fetched_at)
+				? ', fetched ' + esc(net.fetched_at.slice(0, 10))
+				: '';
+
+			return (
+				'<div class="tfl-net" role="note" aria-label="IP network metadata">' +
+					'<div class="tfl-net-header"><i class="fas fa-network-wired"></i> Network</div>' +
+					'<div class="tfl-net-row">' + line + '</div>' +
+					'<div class="tfl-net-foot">(ipinfo.io' + fetchedSuffix + ')</div>' +
+				'</div>'
+			);
+		}
+
 		function renderEmpty(query) {
 			return (
 				'<div class="empty-state">' +
@@ -1606,6 +1664,7 @@
 			}
 
 			html += renderExternal(data && data.external);
+			html += renderNet(data && data.net);
 			html += renderAI(data && data.ai);
 
 			$results.html(html);

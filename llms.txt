@@ -52,6 +52,7 @@
 - Exposed as the optional `ai` field in [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com) responses (`/v1/ioc?value=<urlencoded-ioc>`, exact 365-day lookup) and inside the MCP `enrich_ioc` tool output.
 - IOC lookup records also carry an optional `related` field: other IOCs posted in the same source tweets as the looked-up value (sample, max 5); absent when there are none.
 - IOC lookup responses also carry an optional `external` field: cross-feed corroboration from public abuse.ch feeds (URLhaus/ThreatFox); absent when no match or the sidecar is unavailable.
+- IOC lookup responses also carry an optional `net` field for IP lookups: network metadata (org/ASN, country, city, or a `bogon` flag for reserved ranges) from ipinfo.io, refreshed every 6h; absent for non-IP lookups or when unavailable.
 - Raw sidecar: [enrichment.json](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json) (rolling 30 days, keyed by normalized IOC value, CC0).
 
 ## MCP integration (for AI agents)
