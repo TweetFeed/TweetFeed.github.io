@@ -529,64 +529,6 @@
 		}
 		.tfe-permalink:hover { color: #000; }
 		.tfe-truncate-notice { margin-top: 0.9rem; }
-
-		/* Week table + Feed explorer table (/search/) restyle to match the
-		   IOC lookup panel's visual language above: white rows, thin
-		   separators, colored type badges (reuses .tfl-type-badge /
-		   .tfl-type-* above rather than duplicating the palette), monospace
-		   values. ID-scoped so these override the site-wide per-type row
-		   tints (css/table.css .url/.domain/.ip/.sha256/.md5) and the
-		   .twitterUser button (css/table.css) on these two tables only. */
-		#dataTableFull tbody tr,
-		#feedExplorerTable tbody tr {
-			background: #fff;
-			border-bottom: 1px solid #e8e8e8;
-		}
-		#dataTableFull tbody tr.url,
-		#dataTableFull tbody tr.domain,
-		#dataTableFull tbody tr.ip,
-		#dataTableFull tbody tr.sha256,
-		#dataTableFull tbody tr.md5,
-		#dataTableFull tbody tr.odd,
-		#dataTableFull tbody tr.even,
-		#feedExplorerTable tbody tr.url,
-		#feedExplorerTable tbody tr.domain,
-		#feedExplorerTable tbody tr.ip,
-		#feedExplorerTable tbody tr.sha256,
-		#feedExplorerTable tbody tr.md5,
-		#feedExplorerTable tbody tr.odd,
-		#feedExplorerTable tbody tr.even {
-			background: #fff;
-		}
-		#dataTableFull tbody tr:hover,
-		#feedExplorerTable tbody tr:hover {
-			background: #f8f9fa;
-		}
-		#dataTableFull thead tr,
-		#feedExplorerTable thead tr {
-			background: #fff;
-		}
-		.tfs-user-chip {
-			display: inline-flex;
-			align-items: center;
-			gap: 5px;
-			color: #1DA1F2;
-			text-decoration: none;
-			font-family: 'Rubik', sans-serif;
-			font-size: clamp(0.75rem, 0.8vw, 0.9rem);
-			white-space: nowrap;
-		}
-		.tfs-user-chip:hover { text-decoration: underline; }
-		.tfs-user-chip img {
-			width: 18px;
-			height: 18px;
-			border-radius: 50%;
-			flex-shrink: 0;
-		}
-		.tfs-value {
-			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-			font-size: 13px;
-		}
 	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -1039,16 +981,6 @@
 	<script src="../js/demo/datatables-full.js?v=2"></script>
 	<!-- Page level custom scripts -->
 	<script>
-	// Shared by both /search/ DataTables below (the week table here and the
-	// Feed explorer table further down) - reuses the exact .tfl-type-badge /
-	// .tfl-type-* classes/palette the IOC lookup panel above defines, so the
-	// Type column reads as the same visual language instead of plain text.
-	function tfsTypeBadge(type) {
-		var known = ['url', 'domain', 'ip', 'sha256', 'md5'];
-		var t = String(type || '');
-		var cls = known.indexOf(t) !== -1 ? 'tfl-type-' + t : 'tfl-type-other';
-		return '<span class="tfl-type-badge ' + cls + '">' + escapeHtml(t.toUpperCase()) + '</span>';
-	}
 	$(function() {
 		let autorefresh = 1;
 		let init = 1;
@@ -1144,17 +1076,16 @@
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
 								var type = data[i][2];
-								data[i][2] = tfsTypeBadge(type);
 
 								var user = data[i][1];
 								var picSrc = '../pics/' + user + '.png';
 
-								data[i][1] = '<a class="tfs-user-chip" target="_blank" href="https://x.com/' + escapeHtml(user) + '" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">@' + escapeHtml(user) + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								var value = data[i][3];
 
 								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span class="tfs-value" style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>';
+								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>';
 
 								var tweet_url = data[i][5];
 								data[i][5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
@@ -1222,14 +1153,13 @@
 
 							var picSrc = '../pics/' + user + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="tfs-user-chip" target="_blank" href="https://x.com/' + escapeHtml(user) + '" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">@' + escapeHtml(user) + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/\'+encodeURIComponent(\'' + user + '\')" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
-							$(this.node()).find('td').eq(2).html(tfsTypeBadge(type));
 
 							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span class="tfs-value" style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>')
+							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + escapeHtml(encodeURIComponent(value)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + escapeHtml(value) + '</span>')
 
 							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
 							$(this.node()).find('td').eq(5).html('<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>');
@@ -1972,21 +1902,14 @@
 			var eu = esc(u);
 			var picSrc = '../pics/' + eu + '.png';
 			var fallback = 'https://unavatar.io/twitter/' + eu;
-			return '<a class="tfs-user-chip" target="_blank" href="https://x.com/' + eu + '" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">@' + eu + '</a>';
+			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
 		}
 
 		// Same value-cell markup as the week table's loadData() above: copy
 		// icon (data-copy) + 365-day lookup deep-link + escaped value text.
 		function valueCell(value) {
 			var v = String(value || '');
-			return '<span class="tfs-value" style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + esc(v) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + esc(encodeURIComponent(v)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + esc(v) + '</span>';
-		}
-
-		// Reuses the same tfsTypeBadge() helper as the week table's
-		// loadData() above (defined in the earlier <script>, global scope) -
-		// same .tfl-type-badge markup, not duplicated here.
-		function typeCell(type) {
-			return tfsTypeBadge(type);
+			return '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + esc(v) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i><a class="tf-action tf-action-lookup" href="../search/?q=' + esc(encodeURIComponent(v)) + '" title="365-day IOC lookup" aria-label="365-day IOC lookup" style="width:auto;height:auto;vertical-align:middle;"><i class="fas fa-search" aria-hidden="true"></i></a> ' + esc(v) + '</span>';
 		}
 
 		function tweetCell(tweetUrl) {
@@ -2011,7 +1934,7 @@
 				return [
 					esc(row.date || ''),
 					userCell(row.user),
-					typeCell(row.type),
+					esc(row.type || ''),
 					valueCell(row.value),
 					tagsCell(row.tags),
 					tweetCell(row.tweet),
