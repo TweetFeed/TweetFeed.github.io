@@ -336,6 +336,8 @@
 					<a class="page-toc-chip" href="#stix">STIX 2.1</a>
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
 					<a class="page-toc-chip" href="#per-tag-rss">Per-tag RSS</a>
+					<a class="page-toc-chip" href="#per-type-rss">Per-type RSS</a>
+					<a class="page-toc-chip" href="#per-user-rss">Per-user RSS</a>
 					<a class="page-toc-chip" href="#blocklist">Blocklists</a>
 				</nav>
 				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-bottom: 20px;">
@@ -664,6 +666,22 @@
 					One RSS feed per active tag (a tag is "active" once it has &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose. Browse all available feeds from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each per-tag landing page also exposes the feed via <code>&lt;link rel="alternate"&gt;</code>.
 				</p>
 				<pre class="code-block p-2" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml"></i></pre>
+
+				<h3 id="per-type-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspPer-type RSS feeds
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					One RSS feed per IOC type - always available, no activity threshold. Subscribe to a single indicator type without polling the firehose.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/type/<b style="color:gray;">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml"></i></pre>
+
+				<h3 id="per-user-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
+					&nbsp&nbsp&nbspPer-user RSS feeds
+				</h3>
+				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
+					One RSS feed per reporter active in the last 7 days; handle lowercase. 404 for quiet or unknown users.
+				</p>
+				<pre class="code-block p-2" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/user/<b style="color:gray;">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/malwrhunterteam.xml"></i></pre>
 
 				<hr class="divider">
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">

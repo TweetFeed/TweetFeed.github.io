@@ -9,6 +9,8 @@
 - [Past 30 days (CSV)](https://tweetfeed.live/feeds/month.csv): rolling 30d window.
 - [Past 365 days (CSV)](https://tweetfeed.live/feeds/year.csv): rolling year window (302 redirect to raw GitHub).
 - [RSS feed](https://tweetfeed.live/rss.xml): syndication-friendly.
+- [Per-type RSS](https://tweetfeed.live/rss/type/{url|domain|ip|sha256|md5}.xml): one feed per IOC type; always exists, subscribe to a single indicator type without polling the firehose.
+- [Per-user RSS](https://tweetfeed.live/rss/user/{handle}.xml): one feed per reporter active in the last 7 days; handle lowercase, 404 for quiet/unknown users.
 - [MISP manifest](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json): MISP feed integration; 4 events (today/week/month/year).
 - [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{file}): plain-text exports for Pi-hole, AdGuard Home, hosts files, DNS resolvers and firewalls - `domains.txt`, `hosts.txt`, `adguard.txt`, `ips.txt`, `rpz.txt` (DNS Response Policy Zone for BIND/Unbound/PowerDNS Recursor), `dnsmasq.txt` (dnsmasq address=/domain/0.0.0.0 format). Rolling 30-day window, rebuilt every 15 minutes, 1:1 mirror of the feed with no additional quality gate.
 - [Browseable feed page](https://tweetfeed.live/feeds.html): HTML index with stats and download buttons.
