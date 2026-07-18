@@ -8,6 +8,7 @@ Designed to run daily via .github/workflows/regen-landing-pages.yml. Skips a tag
 silently on transient API errors so a single bad tag does not fail the workflow.
 """
 import datetime
+import html
 import json
 import sys
 from pathlib import Path
@@ -72,15 +73,28 @@ def format_sample(r):
     color, text_color = TYPE_COLORS.get(r.get("type", ""), ("#737373", "white"))
     val = r.get("value", "")
     val_display = val[:60] + "..." if len(val) > 60 else val
+    # Everything below is feed-derived (IOC value/type/user/date come from the
+    # TweetFeed API, ultimately from tweets), not repo-owned config, and gets
+    # interpolated into tag_page.html.j2 with Jinja autoescape OFF - the
+    # templates render intentional raw HTML elsewhere via `| safe` (bullets,
+    # JSON-LD blobs), so turning on global autoescape isn't an option. A `"`
+    # in an IOC value would otherwise break the title="..."/data-copy="..."
+    # attributes it lands in; `<`/`&` would break surrounding markup/text.
+    # html.escape(quote=True) covers both the attribute and text-node uses
+    # of these fields. value_query is already percent-encoded (%22/%3C/%3E/
+    # %26 for "<>&) by js_encode_uri_component, which also leaves a literal
+    # `'` unescaped by design (matches JS encodeURIComponent); escaping it
+    # here too is redundant but harmless (browsers decode the HTML entity
+    # back to `'` before using the href) and keeps the four fields consistent.
     return {
-        "date_short": date_short,
-        "type": r.get("type", ""),
+        "date_short": html.escape(date_short, quote=True),
+        "type": html.escape(r.get("type", ""), quote=True),
         "type_color": color,
         "type_text_color": text_color,
-        "value_full": val,
-        "value_display": val_display,
-        "value_query": js_encode_uri_component(val),
-        "user": r.get("user", ""),
+        "value_full": html.escape(val, quote=True),
+        "value_display": html.escape(val_display, quote=True),
+        "value_query": html.escape(js_encode_uri_component(val), quote=True),
+        "user": html.escape(r.get("user", ""), quote=True),
     }
 
 
