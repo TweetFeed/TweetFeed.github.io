@@ -8,7 +8,7 @@ infosec community on Twitter/X, aggregated every 15 minutes.
 - **Data repository (the feed itself):** https://github.com/0xDanielLopez/TweetFeed
 - **API:** https://api.tweetfeed.live
 - **Terms of Service:** https://tweetfeed.live/tos/
-- **Feedback:** https://tweetfeed.featurebase.app
+- **Feedback:** https://github.com/0xDanielLopez/TweetFeed/issues/new/choose
 
 This repo is served by GitHub Pages behind Cloudflare. It contains only the
 website (HTML/CSS/JS); the IOC data lives in the data repository above and is

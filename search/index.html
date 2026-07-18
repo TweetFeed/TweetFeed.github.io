@@ -62,8 +62,7 @@
 		"sameAs": [
 			"https://github.com/0xDanielLopez/TweetFeed",
 			"https://phishunt.io/",
-			"https://daniel.tools/",
-			"https://tweetfeed.featurebase.app/"
+			"https://daniel.tools/"
 		]
 	}
 	</script>
@@ -401,6 +400,74 @@
 			font-size: 11.5px;
 			font-family: 'Rubik', sans-serif;
 			margin-top: 0.3rem;
+		}
+		.tfl-ext {
+			background: #fff;
+			border: 1px solid #1c1c1c;
+			border-left: 3px solid #595959;
+			border-radius: 0 4px 4px 0;
+			padding: 0.9rem 1rem;
+			margin-top: 0.4rem;
+		}
+		.tfl-ext-header {
+			font-family: 'Rubik', sans-serif;
+			font-weight: 700;
+			font-size: 14px;
+			color: #1c1c1c;
+			margin-bottom: 0.6rem;
+		}
+		.tfl-ext-row {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem;
+			padding: 0.35rem 0;
+			border-top: 1px solid #e0e0e0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			color: #333;
+		}
+		.tfl-ext-row:first-of-type {
+			border-top: none;
+			padding-top: 0;
+		}
+		.tfl-ext-src {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid #595959;
+			border-radius: 3px;
+			font-size: 11px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			color: #595959;
+			background: #f5f5f5;
+			white-space: nowrap;
+		}
+		.tfl-ext-threat {
+			flex: 1 1 auto;
+			min-width: 0;
+			word-break: break-word;
+		}
+		.tfl-ext-date {
+			color: #8a8a8a;
+			font-size: 12px;
+			white-space: nowrap;
+		}
+		.tfl-ext-link {
+			color: #1178b3;
+			font-size: 12.5px;
+			white-space: nowrap;
+		}
+		.tfl-ext-foot {
+			text-transform: uppercase;
+			font-size: 10.5px;
+			letter-spacing: 0.03em;
+			color: #8a8a8a;
+			font-family: 'Rubik', sans-serif;
+			margin-top: 0.6rem;
+			padding-top: 0.5rem;
+			border-top: 1px solid #e0e0e0;
 		}
 
 		/* Feed explorer card (/search/) rules - same inline-per-page pattern as
@@ -824,7 +891,7 @@
 							<a class="text-decoration-none" href="../changelog/">Changelog</a>
 
 							&nbsp;·&nbsp;
-							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed/issues/new/choose" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="../tos/">Terms of Service</a>
 							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
@@ -848,7 +915,7 @@
 							<a class="text-decoration-none" href="../changelog/">Changelog</a>
 
 							&nbsp;·&nbsp;
-							<a class="text-decoration-none" href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Feedback</a>
+							<a class="text-decoration-none" href="https://github.com/0xDanielLopez/TweetFeed/issues/new/choose" target="_blank" rel="noopener noreferrer">Feedback</a>
 							&nbsp;·&nbsp;
 							<a class="text-decoration-none" href="../tos/">Terms of Service</a>
 							<br><span class="reference-row">Reference: <a class="text-decoration-none" href="../tags/">Tags</a>
@@ -1318,6 +1385,39 @@
 				'Reason: ';
 		}
 
+		// Compact, single-line context blurb for the prefilled GitHub issue URL
+		// (?context=). Same fields as buildFpReportText above, condensed - the
+		// issue template's own fields cover the IOC value/type and free-text
+		// reason, so those are not repeated here.
+		function buildFpContextText(rec) {
+			var firstSeen = (rec && rec.first_seen) || '?';
+			var lastSeen = (rec && rec.last_seen) || '?';
+			var count = Number(rec && rec.count) || 0;
+			var users = (rec && Array.isArray(rec.users)) ? rec.users : [];
+			var tweets = (rec && Array.isArray(rec.tweets)) ? rec.tweets : [];
+			var reportedBy = users.map(function(u) { return '@' + u; }).join(' ');
+			var tweetList = tweets.filter(function(u) { return typeof u === 'string'; }).join(' ');
+
+			return 'First seen: ' + firstSeen + ' UTC. Last seen: ' + lastSeen + ' UTC. ' +
+				'Seen ' + count + ' time' + (count === 1 ? '' : 's') + '.' +
+				(reportedBy ? ' Reported by: ' + reportedBy + '.' : '') +
+				(tweetList ? ' Tweets: ' + tweetList : '');
+		}
+
+		// Prefilled GitHub issue URL for the false-positive report template.
+		// ioc-type is only included when it matches one of the template's known
+		// options (KNOWN_TYPES); anything else is left for the reporter to pick
+		// from the template's own dropdown rather than sending a bad value.
+		function buildFpReportUrl(rec) {
+			var value = (rec && rec.value) || '';
+			var type = (rec && rec.type) || '';
+			var params = 'template=false-positive.yml' +
+				'&ioc=' + encodeURIComponent(value) +
+				(KNOWN_TYPES.indexOf(type) !== -1 ? '&ioc-type=' + encodeURIComponent(type) : '') +
+				'&context=' + encodeURIComponent(buildFpContextText(rec));
+			return 'https://github.com/0xDanielLopez/TweetFeed/issues/new?' + params;
+		}
+
 		// Other IOCs co-occurring in this record's source tweets (optional API
 		// field, max 5 pairs, added 2026-07-18). Every pair is guarded - only
 		// [type, value] with both entries strings renders - and every field is
@@ -1392,7 +1492,7 @@
 					(tweetsHtml ? '<div class="tfl-meta tfl-tweets">Source tweets: ' + tweetsHtml + '</div>' : '') +
 					renderRelated(r && r.related) +
 					'<div class="tfl-fp-row">' +
-						'<a href="https://tweetfeed.featurebase.app/" target="_blank" rel="noopener noreferrer">Report a false positive</a>' +
+						'<a href="' + esc(buildFpReportUrl(r)) + '" target="_blank" rel="noopener nofollow">Report a false positive</a>' +
 						' &middot; ' +
 						'<span class="tf-copy" data-copy="' + esc(buildFpReportText(r)) + '" role="button" tabindex="0" aria-label="Copy false positive report details" title="Copy report details">Copy report details</span>' +
 					'</div>' +
@@ -1433,6 +1533,54 @@
 			);
 		}
 
+		// Cross-feed corroboration from public abuse.ch feeds (optional API
+		// field, max 3 entries). Sibling pattern to renderAI() below - own
+		// tfl-ext- namespace, no verdict colors. Every field is esc()'d in
+		// text/attribute/href position; `link` only renders as an href when
+		// it passes a strict allowlist (must start with the urlhaus.abuse.ch
+		// or threatfox.abuse.ch origin) - otherwise the row renders without
+		// a link rather than trusting an arbitrary URL from the API.
+		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox' };
+		var EXT_LINK_ALLOW = ['https://urlhaus.abuse.ch/', 'https://threatfox.abuse.ch/'];
+
+		function isAllowedExtLink(link) {
+			if (typeof link !== 'string') return false;
+			return EXT_LINK_ALLOW.some(function(prefix) { return link.indexOf(prefix) === 0; });
+		}
+
+		function renderExternal(external) {
+			var entries = (Array.isArray(external) ? external : []).filter(function(e) {
+				return e && typeof e.src === 'string' && typeof e.threat === 'string';
+			}).slice(0, 3);
+			if (!entries.length) return '';
+
+			var rows = entries.map(function(e) {
+				var srcLabel = EXT_SRC_LABELS[e.src] || e.src;
+				var addedHtml = typeof e.added === 'string'
+					? '<span class="tfl-ext-date">added ' + esc(e.added) + '</span>'
+					: '';
+				var linkHtml = isAllowedExtLink(e.link)
+					? '<a class="tfl-ext-link" href="' + esc(e.link) + '" target="_blank" rel="noopener noreferrer">View</a>'
+					: '';
+				return (
+					'<div class="tfl-ext-row">' +
+						'<span class="tfl-ext-src">' + esc(srcLabel) + '</span>' +
+						'<span class="tfl-ext-threat">' + esc(e.threat) + '</span>' +
+						addedHtml +
+						linkHtml +
+					'</div>'
+				);
+			}).join('');
+
+			return (
+				'<div class="tfl-ext" role="note" aria-label="External feed corroboration">' +
+					'<div class="tfl-ext-header"><i class="fas fa-globe"></i> External feeds</div>' +
+					rows +
+					'<div class="tfl-ext-foot">Third-party open feeds (abuse.ch) - shown for corroboration, not part of the canonical feed data.</div>' +
+				'</div>'
+			);
+		}
+
 		function renderEmpty(query) {
 			return (
 				'<div class="empty-state">' +
@@ -1457,6 +1605,7 @@
 				html += renderEmpty(query);
 			}
 
+			html += renderExternal(data && data.external);
 			html += renderAI(data && data.ai);
 
 			$results.html(html);

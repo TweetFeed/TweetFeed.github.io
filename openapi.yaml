@@ -22,7 +22,7 @@ info:
   version: "1.0"
   contact:
     name: TweetFeed
-    url: https://tweetfeed.featurebase.app/
+    url: https://github.com/0xDanielLopez/TweetFeed/issues
   license:
     name: CC0 1.0 Universal
     url: https://creativecommons.org/publicdomain/zero/1.0/
@@ -556,6 +556,32 @@ components:
               type: string
               format: date-time
               description: UTC timestamp of the enrichment run.
+        external:
+          type: array
+          maxItems: 3
+          description: |
+            Optional. Cross-feed corroboration from public abuse.ch feeds
+            (URLhaus/ThreatFox); absent when no match or the sidecar is
+            unavailable.
+          items:
+            type: object
+            required: [src, threat, link, added]
+            properties:
+              src:
+                type: string
+                enum: [urlhaus, threatfox]
+                description: Which abuse.ch feed reported this indicator.
+              threat:
+                type: string
+                description: Threat label as reported by the source feed.
+              link:
+                type: string
+                format: uri
+                description: URL of the source feed's entry for this indicator.
+              added:
+                type: string
+                format: date
+                description: Date the indicator was added to the source feed.
 
     TrendsDocument:
       type: object
