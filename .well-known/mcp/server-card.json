@@ -51,6 +51,10 @@
     {
       "name": "get_campaigns",
       "description": "List AI-clustered threat campaign groupings of the last 7 days of community IOCs. Each campaign groups related IOCs by shared infrastructure, tags, or targeted brand, with an AI-generated name and context. Optional: brand (substring match on targeted_brand), min_confidence (low/medium/high), limit (1-50, default 20). Returns trimmed campaigns with up to 5 sample IOCs each."
+    },
+    {
+      "name": "get_trends",
+      "description": "IOC trend analytics from the last 31 days: daily volume by type, top moving tags week-over-week (current 7d vs previous 7d), most-abused TLDs among domain IOCs, and new vs recurring indicator ratio. Optional: section (daily/movers/tlds/novelty/all, default all)."
     }
   ],
   "dataEndpoints": [
