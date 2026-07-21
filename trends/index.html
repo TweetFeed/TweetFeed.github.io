@@ -240,6 +240,29 @@
 			margin: 0 8px 4px 0;
 			font-family: 'Rubik', sans-serif;
 		}
+		.trd-health-badge {
+			display: inline-block;
+			padding: 4px 14px;
+			border: 1px solid #1c1c1c;
+			border-radius: 3px;
+			font-size: 13px;
+			font-weight: 700;
+			font-family: 'Rubik', sans-serif;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+		}
+		/* Contrast-checked (WCAG AA, >= 4.5:1) against their text colour:
+		   low 7.36:1, moderate 7.77:1, high 5.62:1. */
+		.trd-health-low { background: #34e3a4; color: #0b3d2e; }
+		.trd-health-mod { background: #ffc94d; color: #4a3300; }
+		.trd-health-high { background: #c62828; color: #ffffff; }
+		.trd-health-badge-note {
+			display: inline-block;
+			margin-left: 8px;
+			color: #737373;
+			font-size: 12.5px;
+			font-family: 'Rubik', sans-serif;
+		}
 	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -448,6 +471,68 @@
 								<div class="trd-stat-value" id="trendsNoveltyRecurring">-</div>
 								<div class="trd-stat-label">Recurring</div>
 								<div class="trd-stat-sub" id="trendsNoveltyRecurringSub"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Feed health: producer concentration. Hidden by default and only
+					     revealed by renderProducers() when data.producers is present -
+					     older cached trends.json payloads (pre-backend-rollout) won't
+					     have this key, and the section must disappear silently. -->
+					<div class="row" id="trendsHealthSection" style="display:none;">
+						<div class="col">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary text-center">Feed health</h6>
+								</div>
+								<div class="card-body">
+									<p class="trd-subtitle">How concentrated the feed's Indicators of Compromise are among the accounts that post them.</p>
+									<div class="text-center" style="margin-bottom:1rem;">
+										<span class="trd-health-badge" id="trendsHealthBadge"></span>
+										<span class="trd-health-badge-note" id="trendsHealthBadgeNote"></span>
+									</div>
+									<div class="row">
+										<div class="col-md-4 mb-4">
+											<div class="trd-stat-card">
+												<div class="trd-stat-value" id="trendsHealthActive7d">-</div>
+												<div class="trd-stat-label">Active producers (7d)</div>
+											</div>
+										</div>
+										<div class="col-md-4 mb-4">
+											<div class="trd-stat-card">
+												<div class="trd-stat-value" id="trendsHealthActive30d">-</div>
+												<div class="trd-stat-label">Active producers (30d)</div>
+											</div>
+										</div>
+										<div class="col-md-4 mb-4">
+											<div class="trd-stat-card">
+												<div class="trd-stat-value" id="trendsHealthBusFactor">-</div>
+												<div class="trd-stat-label">Bus factor 50% (7d)</div>
+												<div class="trd-stat-sub">Min. accounts covering half of 7d IOCs</div>
+											</div>
+										</div>
+									</div>
+									<p class="trd-subtitle" id="trendsHealthTableSubtitle">Top producers (last 7 days)</p>
+									<div class="table-responsive">
+										<table class="trd-movers-table">
+											<colgroup>
+												<col span="1" style="width: 10%;">
+												<col span="1" style="width: 45%;">
+												<col span="1" style="width: 25%;">
+												<col span="1" style="width: 20%;">
+											</colgroup>
+											<thead>
+												<tr>
+													<th class="trd-num">#</th>
+													<th>Account</th>
+													<th class="trd-num">IOCs</th>
+													<th class="trd-num">Share</th>
+												</tr>
+											</thead>
+											<tbody id="trendsHealthBody"></tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -726,6 +811,56 @@
 			$('#trendsNoveltyRecurringSub').text(windowLabel);
 		}
 
+		// Concentration tier for the top2_share badge. Boundaries match the
+		// spec exactly: <0.40 low, 0.40-0.60 (inclusive both ends) moderate,
+		// >0.60 high.
+		function tierForConcentration(share) {
+			if (share > 0.60) return { cls: 'trd-health-high', label: 'High concentration' };
+			if (share >= 0.40) return { cls: 'trd-health-mod', label: 'Moderate concentration' };
+			return { cls: 'trd-health-low', label: 'Low concentration' };
+		}
+
+		// Renders the "Feed health" (producer concentration) section. Defensive
+		// by design: additive `producers` key may be absent from cached/older
+		// trends.json payloads, so every field is guarded and the function
+		// returns silently (no throw, no console error) rather than reveal a
+		// partially-populated section. Only on success does it un-hide
+		// #trendsHealthSection.
+		function renderProducers(producers) {
+			if (!producers || typeof producers !== 'object') return;
+			var w7 = producers.window_7d;
+			var w30 = producers.window_30d;
+			if (!w7 || typeof w7 !== 'object' || !w30 || typeof w30 !== 'object') return;
+
+			var esc = TweetFeed.escapeHtml;
+			var top2 = (typeof w7.top2_share === 'number') ? w7.top2_share : 0;
+			var tier = tierForConcentration(top2);
+
+			$('#trendsHealthBadge').attr('class', 'trd-health-badge ' + tier.cls).text(tier.label);
+			$('#trendsHealthBadgeNote').text('Top 2 accounts: ' + (top2 * 100).toFixed(1) + '% of the 7-day total');
+
+			$('#trendsHealthActive7d').text(TweetFeed.numberFormat(w7.active_producers || 0));
+			$('#trendsHealthActive30d').text(TweetFeed.numberFormat(w30.active_producers || 0));
+			$('#trendsHealthBusFactor').text(TweetFeed.numberFormat(w7.bus_factor_50 || 0));
+			$('#trendsHealthTableSubtitle').text(
+				TweetFeed.numberFormat(w7.total || 0) + ' IOCs from ' + TweetFeed.numberFormat(w7.active_producers || 0) + ' accounts in the last 7 days'
+			);
+
+			var top = Array.isArray(w7.top) ? w7.top : [];
+			var rows = top.slice(0, 10).map(function(p, i) {
+				var user = (p && p.user) ? String(p.user) : '';
+				var count = (p && typeof p.count === 'number') ? p.count : 0;
+				var share = (p && typeof p.share === 'number') ? p.share : 0;
+				return '<tr><td class="trd-num">' + (i + 1) + '</td>' +
+					'<td><a class="text-decoration-none" href="https://x.com/' + esc(user) + '" target="_blank" rel="noopener noreferrer">@' + esc(user) + '</a></td>' +
+					'<td class="trd-num">' + esc(TweetFeed.numberFormat(count)) + '</td>' +
+					'<td class="trd-num">' + esc((share * 100).toFixed(1)) + '%</td></tr>';
+			}).join('');
+			$('#trendsHealthBody').html(rows);
+
+			$('#trendsHealthSection').show();
+		}
+
 		function renderTrends(data) {
 			$('#trendsLoading').hide();
 			$('#trendsContent').show();
@@ -740,6 +875,7 @@
 			if (data.movers) renderMovers(data.movers);
 			if (data.tlds) renderTldsBar(data.tlds);
 			if (data.novelty) renderNovelty(data.novelty);
+			if (data.producers) renderProducers(data.producers);
 		}
 
 		function showTrendsFailure() {
