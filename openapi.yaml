@@ -14,7 +14,9 @@ info:
     All endpoints:
     - Require no authentication.
     - Set `Access-Control-Allow-Origin: *` (CORS open).
-    - Cache responses at the CF edge for 30 s (`Cache-Control: public, max-age=30`).
+    - Cache responses at the CF edge: 60 s for `/v1/{time}`, `/v1/ioc`, `/v1/campaigns`,
+      `/v1/trends` and `/v1/counts`; 30 s for `/v1/since`; 15 min for `/v1/blocklist`
+      (all with `stale-while-revalidate`).
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol

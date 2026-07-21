@@ -107,7 +107,7 @@ All IOC data is CC0 1.0 Universal (public domain). No attribution required for t
 
 ## Related pointers
 
-- Human API docs: `https://tweetfeed.live/api.html`
+- Human API docs: `https://tweetfeed.live/api/`
 - API catalog (RFC 9727 linkset): `https://tweetfeed.live/.well-known/api-catalog`
 - Researcher directory: `https://tweetfeed.live/researchers.html`
 - Charts/stats: `https://tweetfeed.live/graphs.html`

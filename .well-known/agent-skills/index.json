@@ -6,7 +6,7 @@
       "type": "skill",
       "description": "Query TweetFeed for security IOCs (URLs, domains, IPs, MD5/SHA256 hashes) shared by the infosec community on Twitter/X. Public HTTP API, no auth, CC0 licensed. Filter by @researcher, tag (malware family or category), and IOC type.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-iocs/SKILL.md",
-      "sha256": "cde99991b0966f00653e618af2332d52bcffc911ad1b911e14be0986c00b1035"
+      "sha256": "2192ce589b2d40b9e61d1770e12a899dfb5666189d8223986ecc4f5a82ca0fde"
     }
   ]
 }
