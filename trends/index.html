@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Daily IOC volume over 30 days, top trending tags week over week, top malicious-domain TLDs, and new vs recurring IOC rates on TweetFeed.">
+	<meta name="description" content="Daily IOC volume over 30 days, top trending tags, malicious-domain TLDs, new vs recurring IOC rates, and feed health with producer concentration on TweetFeed.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="ioc trends,threat statistics,top movers,malicious tld,phishing trends,malware trends,ioc volume,new vs recurring iocs">
 	<link rel="canonical" href="https://tweetfeed.live/trends/">
@@ -18,7 +18,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="IOC Trends: 30-Day Threat Activity, Top Movers, TLDs - TweetFeed">
-	<meta name="twitter:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, malicious-domain TLD breakdown, and new vs recurring rates.">
+	<meta name="twitter:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, TLD breakdown, new vs recurring rates, and producer concentration.">
 	<meta name="twitter:url" content="https://tweetfeed.live/trends/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/trends/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="IOC Trends: 30-Day Threat Activity, Top Movers, TLDs - TweetFeed">
-	<meta property="og:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, malicious-domain TLD breakdown, and new vs recurring rates.">
+	<meta property="og:description" content="Charts and stats on TweetFeed's IOC feed: 30-day volume by type, weekly top movers, TLD breakdown, new vs recurring rates, and producer concentration.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -130,9 +130,10 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What does this page measure?", "acceptedAnswer": {"@type": "Answer", "text": "Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, and how many IOC values seen this week are new versus previously reported."}},
+			{"@type": "Question", "name": "What does this page measure?", "acceptedAnswer": {"@type": "Answer", "text": "Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, how many IOC values seen this week are new versus previously reported, and how concentrated the feed is across the accounts producing IOCs."}},
 			{"@type": "Question", "name": "How are top movers calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined."}},
 			{"@type": "Question", "name": "What's the difference between new and recurring IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Over the current week, an IOC value counts as new if TweetFeed has never reported it before, and recurring if it was seen in an earlier period. A high new rate usually means fresh infrastructure; a high recurring rate means attackers are reusing existing domains, IPs, or files."}},
+			{"@type": "Question", "name": "What does the Feed health section measure?", "acceptedAnswer": {"@type": "Answer", "text": "Producer concentration in the feed. It tracks active producer accounts over the last 7 and 30 days, the share of IOCs coming from the top 2 accounts (shown as a badge: green under 40%, amber between 40% and 60%, red above 60%), and the bus factor, the minimum number of accounts behind 50% of the IOCs. High concentration means the feed depends heavily on a few accounts."}},
 			{"@type": "Question", "name": "How often is this data updated?", "acceptedAnswer": {"@type": "Answer", "text": "Every 15 minutes, the same cadence as the rest of the TweetFeed feed."}}
 		]
 	}
@@ -568,7 +569,7 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What does this page measure?</summary>
-						<p>Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, and how many IOC values seen this week are new versus previously reported.</p>
+						<p>Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, how many IOC values seen this week are new versus previously reported, and how concentrated the feed is across the accounts producing IOCs.</p>
 					</details>
 					<details>
 						<summary>How are top movers calculated?</summary>
@@ -577,6 +578,10 @@
 					<details>
 						<summary>What's the difference between new and recurring IOCs?</summary>
 						<p>Over the current week, an IOC value counts as new if TweetFeed has never reported it before, and recurring if it was seen in an earlier period. A high new rate usually means fresh infrastructure; a high recurring rate means attackers are reusing existing domains, IPs, or files.</p>
+					</details>
+					<details>
+						<summary>What does the Feed health section measure?</summary>
+						<p>Producer concentration in the feed. It tracks active producer accounts over the last 7 and 30 days, the share of IOCs coming from the top 2 accounts (shown as a badge: green under 40%, amber between 40% and 60%, red above 60%), and the bus factor, the minimum number of accounts behind 50% of the IOCs. High concentration means the feed depends heavily on a few accounts.</p>
 					</details>
 					<details>
 						<summary>How often is this data updated?</summary>
