@@ -62,14 +62,31 @@ curl -sL 'https://api.tweetfeed.live/v1/year' > year.csv
 
 ## Check if a specific IOC is in the feed
 
-The API doesn't have a direct `?value=` lookup. Pull a window and filter client-side:
+There is a direct exact-match lookup over the full 365-day retention window:
+
+```bash
+curl -s 'https://api.tweetfeed.live/v1/ioc/example.com'
+
+# equivalent query-parameter form, easier when the value needs escaping
+curl -s 'https://api.tweetfeed.live/v1/ioc?value=example.com'
+```
+
+Response when there is no match:
+
+```json
+{"found": false, "query": "example.com", "window": "365d", "records": []}
+```
+
+On a hit, `found` is `true` and `records` holds one entry per time the value was posted, with the same fields as the `/v1/{time}` rows. `query` echoes the normalised value that was actually looked up: defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so the defanged and plain forms behave the same. When a value has been annotated by the enrichment job the response also carries optional `ai` (summary, malware family, threat type), `external` (abuse.ch corroboration) and `net` (IP network metadata) blocks - those are sidecars, not canonical feed data, and are absent for most values.
+
+The lookup is exact, not a substring search. For partial matches (for example every URL on a given host) filter a window client-side instead:
 
 ```bash
 curl -s 'https://api.tweetfeed.live/v1/month' \
   | jq --arg v 'suspicious-domain.com' '[.[] | select(.value | contains($v))]'
 ```
 
-For IP/hash exact match, use `select(.value == $v)`. For longer retention, query `year` via the raw CSV.
+MCP equivalent: `enrich_ioc` tool (same exact 365-day lookup, with a 30-day substring fallback on a miss).
 
 ## Campaign clusters
 
@@ -87,7 +104,7 @@ Human page: `https://tweetfeed.live/campaigns/`.
 
 ## Tag-family taxonomy
 
-119 tags in `tags.yaml` split by casing:
+92 tags in `tags.yaml` split by casing:
 - **PascalCase for malware families** (avoid substring collisions): `#CobaltStrike`, `#AkiraRansomware`, `#PlayRansomware`, `#Lockbit3`, `#Kimsuky`
 - **lowercase for generic categories**: `#phishing`, `#scam`, `#ransomware`, `#malware`, `#C2`, `#credtheft`
 

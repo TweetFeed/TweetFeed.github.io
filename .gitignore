@@ -10,3 +10,4 @@ Thumbs.db
 
 # sass/scss build output (if any local builds)
 .sass-cache/
+__pycache__/
