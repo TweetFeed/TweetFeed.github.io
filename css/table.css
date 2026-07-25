@@ -179,6 +179,26 @@ table th:nth-child(7) {
 @media (max-width: 767.98px) {
   .card-body:has(#dataTable) { min-height: 1010px; }
 }
+
+/* CLS (mobile), researchers tables: the 820px floor above was never measured
+   on mobile for the three user tables, and they render far taller, so the
+   spinner->table swap shifted the page. CLS on /researchers/ is bimodal - it
+   comes out 0.052 when the rows land before paint and 0.442 when they land
+   after, which is why a single lab run can miss it entirely.
+   Measured 2026-07-25 via Playwright on the visible (Today) pane; the Week
+   and Month panes are display:none so they never contribute:
+     360px -> 996   390px -> 981   575/576px -> 1059
+     680px -> 1103  767px -> 859
+   The curve is not monotonic (it peaks at 680px and drops again by 767px), so
+   rather than fit tier boundaries to a jumpy curve this reserves the measured
+   peak across the whole bracket. It over-reserves by up to ~256px at 767px,
+   which is deliberate: the trade is dead whitespace below the table in
+   exchange for never shifting. Re-measure before tightening. */
+@media (max-width: 767.98px) {
+  .card-body:has(#dataTableUsersToday),
+  .card-body:has(#dataTableUsersWeek),
+  .card-body:has(#dataTableUsersMonth) { min-height: 1115px; }
+}
 @media (max-width: 374.98px) {
   .card-body:has(#dataTable) { min-height: 1150px; }
 }
