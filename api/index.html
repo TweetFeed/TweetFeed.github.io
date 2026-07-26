@@ -438,7 +438,7 @@
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: incremental poll of the rolling 31-day collection</span>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z"></i></pre>
-				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Paginate with <code>limit</code> and <code>next</code>. Media type <code>application/taxii+json;version=2.1</code>.</p>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Paginate with <code>limit</code> and <code>next</code>. Media type <code>application/taxii+json;version=2.1</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references via <code>created_by_ref</code> and <code>object_marking_refs</code> were added when the collection was created, so they fall outside any recent window. Fetch them once by id from <code>/objects/{id}/</code> (or with <code>match[id]</code>) so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Details</h3>
 				<div class="table-responsive">
