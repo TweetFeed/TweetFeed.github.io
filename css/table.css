@@ -203,6 +203,33 @@ table th:nth-child(7) {
   .card-body:has(#dataTable) { min-height: 1150px; }
 }
 
+/* CLS: DataTables paints its info/pagination row directly under the empty
+   tbody, so on first paint that row sits above the fold; when the rows land it
+   is pushed ~900px down and that move IS the mobile CLS of the home (measured
+   2026-07-26: 0.079 at 360px, 0.082 at 390px, 0.074 at 412px, 0.089 at 576px).
+   The card-body floors above cannot prevent it - the row lives INSIDE the card,
+   below the tbody that grows, so reserving the card's outer height only stops
+   the page below the card from moving. Keep the row out of the paint until the
+   first draw with data: DataTables drops td.dataTables_empty as soon as there
+   are rows, so this un-hides itself with no JS. visibility (not display) keeps
+   its box, so revealing it never shifts anything either. */
+.dataTables_wrapper:has(td.dataTables_empty) > .row:has(.dataTables_info) {
+  visibility: hidden;
+}
+
+/* CLS: the loading spinner (40px) and the "From:/To:" date range swap in the
+   same slot above the table, and the date block renders one line (24px) before
+   its second line fades in (48px), so the swap moved the whole page twice:
+   measured 2026-07-26 at 1280x900 as -16px at 247ms and +24px at 558ms, CLS
+   0.19 - the entire desktop CLS of the home. Reserve the settled height on both
+   sides of the swap so the slot never changes size. On mobile this slot is in a
+   d-none d-lg-block card and does not render at all, which is why the desktop
+   and mobile CLS of the same URL had different root causes. */
+#loadingToday, #loadingWeek, #loadingMonth, #loadingYear,
+#lastDateToday, #lastDateWeek, #lastDateMonth, #lastDateYear {
+  min-height: 48px;
+}
+
 input {
   text-align: center;
   vertical-align: middle;
