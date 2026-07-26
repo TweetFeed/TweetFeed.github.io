@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Live feed of malicious URLs (phishing, scam, malware delivery, C2) from Twitter/X researchers. 58k+ in the past year. Refresh: 15 min. CSV, JSON, RSS.">
+	<meta name="description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 58k+ past year. CSV, JSON, RSS.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="malicious urls,phishing urls,scam urls,malware urls,c2 urls,ioc feed,osint,Threat Intelligence">
 	<link rel="canonical" href="https://tweetfeed.live/malicious-urls/">
@@ -18,7 +18,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Malicious URLs feed - free phishing & scam URL list - TweetFeed">
-	<meta name="twitter:description" content="Live feed of malicious URLs (phishing, scam, malware delivery, C2) from Twitter/X researchers. 58k+ in the past year. Refresh: 15 min. CSV, JSON, RSS.">
+	<meta name="twitter:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 58k+ past year. CSV, JSON, RSS.">
 	<meta name="twitter:url" content="https://tweetfeed.live/malicious-urls/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -26,7 +26,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/malicious-urls/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Malicious URLs feed - free phishing & scam URL list - TweetFeed">
-	<meta property="og:description" content="Live feed of malicious URLs (phishing, scam, malware delivery, C2) from Twitter/X researchers. 58k+ in the past year. Refresh: 15 min. CSV, JSON, RSS.">
+	<meta property="og:description" content="Free malicious URL list: full links with path and query, for phishing, scam and malware delivery. From Twitter/X researchers. 58k+ past year. CSV, JSON, RSS.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -159,6 +159,22 @@
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do malicious URLs differ from malicious domains?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "A URL is the full link, including path and query string (https://example.com/login.php?u=1); a domain is only the host (example.com). Block at the URL level for phishing kits parked on a compromised or shared host, where blocking the whole domain would take legitimate content down with it. For infrastructure that is bad end to end, block the host instead - that list is the malicious domains feed."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Where can I download a malicious URL list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "From this page: the CSV and JSON links above cover today, the past week, the past month and the past year, plus an RSS feed of the same data. No registration and no API key - the data is CC0."
 				}
 			},
 			{
@@ -310,7 +326,7 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-link" style="font-size: 36px;"></i> Malicious URLs</h1>
-					<h2><em>Free feed of phishing, scam and malware-delivery URLs from Twitter/X researchers</em></h2>
+					<h2><em>Free malicious URL list: full links with path and query, from Twitter/X researchers</em></h2>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
@@ -470,6 +486,14 @@
 						<details>
 							<summary>How is this list updated?</summary>
 							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
+						</details>
+						<details>
+							<summary>How do malicious URLs differ from malicious domains?</summary>
+							<p>A URL is the full link, including path and query string (https://example.com/login.php?u=1); a domain is only the host (example.com). Block at the URL level for phishing kits parked on a compromised or shared host, where blocking the whole domain would take legitimate content down with it. For infrastructure that is bad end to end, block the host instead - that list is the <a href="../malicious-domains/">malicious domains feed</a>.</p>
+						</details>
+						<details>
+							<summary>Where can I download a malicious URL list?</summary>
+							<p>From this page: the CSV and JSON links above cover today, the past week, the past month and the past year, plus an RSS feed of the same data. No registration and no API key - the data is CC0.</p>
 						</details>
 						<details>
 							<summary>Can I integrate this feed with my SIEM, MISP or firewall?</summary>
