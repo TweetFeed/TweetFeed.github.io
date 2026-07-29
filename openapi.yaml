@@ -52,9 +52,16 @@ paths:
         on the Free plan. Clients should follow redirects.
       parameters:
         - $ref: "#/components/parameters/Time"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
@@ -74,6 +81,8 @@ paths:
               schema:
                 type: string
                 example: https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/{time}/{filter1}:
     get:
@@ -89,15 +98,24 @@ paths:
       parameters:
         - $ref: "#/components/parameters/Time"
         - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ioc"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/{time}/{filter1}/{filter2}:
     get:
@@ -112,15 +130,24 @@ paths:
         - $ref: "#/components/parameters/Time"
         - $ref: "#/components/parameters/Filter1"
         - $ref: "#/components/parameters/Filter2"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ioc"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/since/{datetime}:
     get:
@@ -138,15 +165,24 @@ paths:
         - Malformed - `400`.
       parameters:
         - $ref: "#/components/parameters/DateTime"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ioc"
+        "304":
+          $ref: "#/components/responses/NotModified"
         "400":
           description: Malformed ISO 8601 timestamp.
         "410":
@@ -159,15 +195,24 @@ paths:
       parameters:
         - $ref: "#/components/parameters/DateTime"
         - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ioc"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/since/{datetime}/{filter1}/{filter2}:
     get:
@@ -177,15 +222,24 @@ paths:
         - $ref: "#/components/parameters/DateTime"
         - $ref: "#/components/parameters/Filter1"
         - $ref: "#/components/parameters/Filter2"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: JSON array of IOCs.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: "#/components/schemas/Ioc"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/ioc:
     get:
@@ -200,15 +254,24 @@ paths:
         Also available as a path parameter: `/v1/ioc/{value}`.
       parameters:
         - $ref: "#/components/parameters/IocValueQuery"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: |
             Lookup result. `found: false` with an empty `records` array when
             there is no match.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/IocLookupResult"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/ioc/{value}:
     get:
@@ -219,15 +282,24 @@ paths:
         path segment instead of a query parameter.
       parameters:
         - $ref: "#/components/parameters/IocValuePath"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: |
             Lookup result. `found: false` with an empty `records` array when
             there is no match.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/IocLookupResult"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/campaigns:
     get:
@@ -244,13 +316,23 @@ paths:
         Regenerated once a day. If a run fails, `stale` is `true` and the
         document falls back to the previous day's snapshot (`stale_since`
         holds the date of that last successful run).
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: Campaigns document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/CampaignsDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/trends:
     get:
@@ -262,13 +344,23 @@ paths:
         most-abused TLDs among malicious domains from the last 30 days, and
         the novelty rate (share of this week's distinct IOC values that are
         new versus recurring). Regenerated alongside the rest of the feed.
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: Trends document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/TrendsDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
   /v1/blocklist/{file}:
     get:
@@ -285,12 +377,19 @@ paths:
         header) only changes when its entries actually change.
       parameters:
         - $ref: "#/components/parameters/BlocklistFile"
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: |
             Plain-text blocklist, starting with a comment header block. The
             `# Updated:` line reflects the last time the entries actually
             changed, not the last regeneration.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             text/plain:
               schema:
@@ -305,6 +404,8 @@ paths:
 
                 008963466.weebly.com
                 06updatelive.xyz
+        "304":
+          $ref: "#/components/responses/NotModified"
         "404":
           description: Unknown file name (outside the allowlist below).
 
@@ -324,13 +425,52 @@ paths:
         [TAXII 2.1 specification](https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html)
         and https://tweetfeed.live/api/ for the collection ID and the
         incremental-poll pattern (`added_after` on `/objects/`).
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
       responses:
         "200":
           description: TAXII 2.1 discovery document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
           content:
             application/taxii+json;version=2.1:
               schema:
                 type: object
+        "304":
+          $ref: "#/components/responses/NotModified"
+
+  /v1/counts:
+    get:
+      operationId: getCounts
+      summary: Per-window totals, type/tag breakdowns and date bounds
+      description: |
+        Returns pre-aggregated counts for the four standard windows
+        (`today`, `week`, `month`, `year`): total IOCs, a per-type
+        breakdown, a per-tag breakdown, and the first/last IOC timestamp
+        in that window. Lets a client render dashboard-style stats without
+        fetching and parsing the full `year` CSV (~120k rows). Regenerated
+        every 15 minutes alongside the rest of the feed.
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
+      responses:
+        "200":
+          description: Counts document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountsDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
 
 components:
   parameters:
@@ -419,6 +559,74 @@ components:
       description: Same as the `value` query parameter, passed as a path segment.
       schema:
         type: string
+
+    IfNoneMatch:
+      name: If-None-Match
+      in: header
+      required: false
+      description: |
+        Conditional GET, strong validator. Send back the `ETag` value from a
+        previous response; a match returns `304 Not Modified` with an empty
+        body. This is the recommended validator - unlike `Last-Modified`, it
+        changes only when the response body actually changes, not every time
+        it is recomputed. Per RFC 7232 section 6, if both `If-None-Match` and
+        `If-Modified-Since` are sent, `If-None-Match` takes precedence and
+        `If-Modified-Since` is ignored.
+      schema:
+        type: string
+      example: '"a1b2c3d4e5f60718"'
+
+    IfModifiedSince:
+      name: If-Modified-Since
+      in: header
+      required: false
+      description: |
+        Conditional GET, timestamp validator. Send back the `Last-Modified`
+        value from a previous response; if the representation has not
+        changed since, returns `304 Not Modified` with an empty body. Weaker
+        than `If-None-Match`: `Last-Modified` reflects when this Worker
+        cached the representation, not when the underlying data last
+        changed, so it only saves a round trip while that cache entry is
+        still alive. Ignored if `If-None-Match` is also present (RFC 7232
+        section 6).
+      schema:
+        type: string
+        format: date-time
+      example: "Sun, 06 Jul 2026 08:49:37 GMT"
+
+  headers:
+    ETag:
+      description: |
+        Strong validator (quoted hex string) for this exact response body.
+        Echo it back as `If-None-Match` on the next request to this URL to
+        get a `304` instead of re-downloading the body.
+      schema:
+        type: string
+      example: '"a1b2c3d4e5f60718"'
+
+    LastModified:
+      description: |
+        When this Worker cached the representation being returned - not
+        when the underlying data last changed (recomputed on every
+        pipeline tick, so it moves even on a byte-identical body). Echo it
+        back as `If-Modified-Since` to get a `304` while that cache entry
+        is still alive. `ETag` / `If-None-Match` is the stronger, recommended
+        validator; see its description for the RFC 7232 section 6
+        precedence rule.
+      schema:
+        type: string
+      example: "Sun, 06 Jul 2026 08:49:37 GMT"
+
+  responses:
+    NotModified:
+      description: |
+        The client's cached copy is still current (matched via
+        `If-None-Match` or `If-Modified-Since`). No body is returned.
+      headers:
+        ETag:
+          $ref: "#/components/headers/ETag"
+        Last-Modified:
+          $ref: "#/components/headers/LastModified"
 
   schemas:
     Ioc:
@@ -632,6 +840,82 @@ components:
           description: |
             Share of this week's distinct IOC values that are new versus
             recurring.
+
+    CountsDocument:
+      type: object
+      required: [generated_at, windows]
+      properties:
+        generated_at:
+          type: string
+          format: date-time
+          description: UTC timestamp this document was generated, `YYYY-MM-DDTHH:MM:SSZ`.
+          example: "2026-07-29T18:15:03Z"
+        windows:
+          type: object
+          required: [today, week, month, year]
+          description: One entry per standard time window.
+          properties:
+            today:
+              $ref: "#/components/schemas/CountsWindow"
+            week:
+              $ref: "#/components/schemas/CountsWindow"
+            month:
+              $ref: "#/components/schemas/CountsWindow"
+            year:
+              allOf:
+                - $ref: "#/components/schemas/CountsWindow"
+                - type: object
+                  required: [months]
+                  properties:
+                    months:
+                      type: array
+                      minItems: 12
+                      maxItems: 12
+                      items:
+                        type: integer
+                      description: |
+                        IOC count per calendar month, only present on `year`.
+                        Indexed by calendar month, NOT relative to the window:
+                        index `0` is always January, index `11` is always
+                        December, regardless of which month the document was
+                        generated in.
+                      example: [1203, 980, 1450, 1102, 1330, 1560, 1290, 0, 0, 0, 0, 0]
+
+    CountsWindow:
+      type: object
+      required: [total, types, tags, first_date, last_date]
+      properties:
+        total:
+          type: integer
+          description: Total IOC count in this window.
+        types:
+          type: object
+          description: IOC count per type (`url`, `domain`, `ip`, `sha256`, `md5`).
+          additionalProperties:
+            type: integer
+          example: {"url": 812, "domain": 301, "ip": 90}
+        tags:
+          type: object
+          description: |
+            IOC count per tag. Keys are lowercase and have no leading `#`
+            (unlike the `tags` array on `Ioc`, which keeps the `#` prefix).
+          additionalProperties:
+            type: integer
+          example: {"phishing": 640, "malware": 210}
+        first_date:
+          type: string
+          nullable: true
+          description: |
+            Timestamp of the earliest IOC in this window, `YYYY-MM-DD
+            HH:MM:SS`. `null` when the window has no IOCs.
+          example: "2026-07-28 00:04:11"
+        last_date:
+          type: string
+          nullable: true
+          description: |
+            Timestamp of the most recent IOC in this window, `YYYY-MM-DD
+            HH:MM:SS`. `null` when the window has no IOCs.
+          example: "2026-07-29 18:11:47"
 
     CampaignsDocument:
       type: object
