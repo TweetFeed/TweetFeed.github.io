@@ -14,7 +14,7 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 - [Per-type RSS](https://tweetfeed.live/rss/type/{url|domain|ip|sha256|md5}.xml): one feed per IOC type; always exists, subscribe to a single indicator type without polling the firehose.
 - [Per-user RSS](https://tweetfeed.live/rss/user/{handle}.xml): one feed per reporter active in the last 7 days; handle lowercase; unavailable (error response) for quiet/unknown users.
 - [MISP manifest](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/misp/manifest.json): MISP feed integration; 4 events (today/week/month/year).
-- [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{file}): plain-text exports for Pi-hole, AdGuard Home, hosts files, DNS resolvers and firewalls - `domains.txt`, `hosts.txt`, `adguard.txt`, `ips.txt`, `rpz.txt` (DNS Response Policy Zone for BIND/Unbound/PowerDNS Recursor), `dnsmasq.txt` (dnsmasq address=/domain/0.0.0.0 format). Rolling 30-day window, rebuilt every 15 minutes, 1:1 mirror of the feed with no additional quality gate.
+- [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{file}): plain-text exports for Pi-hole, AdGuard Home, hosts files, DNS resolvers, firewalls, proxies and IDS - `domains.txt`, `hosts.txt`, `adguard.txt`, `ips.txt`, `rpz.txt` (DNS Response Policy Zone for BIND/Unbound/PowerDNS Recursor), `dnsmasq.txt` (dnsmasq address=/domain/0.0.0.0 format), `urls.txt` (full URL per line, not just the host, so it also covers `url`-type IOCs on shared/legitimate infrastructure DNS-level blocking can't safely reach). Rolling 30-day window, rebuilt every 15 minutes, 1:1 mirror of the feed with no additional quality gate.
 - [Browseable feed page](https://tweetfeed.live/feeds.html): HTML index with stats and download buttons.
 
 ## API
@@ -28,6 +28,8 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 - Time windows: `today`, `week`, `month`, `year`
 - Filters: IOC type (`url`, `domain`, `ip`, `sha256`, `md5`), tag (e.g. `phishing`, `cobaltstrike`, `lockbit`), researcher handle (`@malwrhunterteam`)
 - No authentication. CORS open. JSON only.
+- Result cap: 10,000 rows per response, truncated from the oldest end. Only the unfiltered `/v1/month` (~15,000 rows) exceeds it, losing roughly the first ten days of its window. Every `200` carries `X-Result-Count`, `X-Result-Window-Start` and `X-Result-Window-End`, plus `X-Result-Truncated: true` when the cap was hit. For the complete 30-day window use `https://tweetfeed.live/feeds/month.csv`, which is served uncapped.
+- `/v1/since/{ISO8601}` has the same cap but truncates the newest rows instead, so the block you get always starts at your `since`. To page, re-request with `since` set to the returned `X-Result-Window-End` until `X-Result-Truncated` stops appearing.
 - Examples:
     - `https://api.tweetfeed.live/v1/today` - all IOCs from the last 24h.
     - `https://api.tweetfeed.live/v1/week/phishing/url` - phishing URLs from the last 7 days.

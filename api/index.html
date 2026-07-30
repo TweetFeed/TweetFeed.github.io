@@ -346,6 +346,17 @@
 				<pre class="code-block p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
 				<!-- -->
 				<br>
+				<h3 id="result-cap" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Result cap</h3>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">A response is capped at <b>10,000 rows</b>, truncated from the oldest end so you keep the most recent data. In practice only the unfiltered <code>/v1/month</code> exceeds it - that window holds about 15,000 rows, so roughly its first ten days are dropped. <code>today</code>, <code>week</code> and every filtered variant stay below the cap.</p>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Truncation is never silent. Every <code>200</code> reports what you actually received:</p>
+				<ul style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+					<li><code>X-Result-Count</code> - rows in this response.</li>
+					<li><code>X-Result-Window-Start</code> / <code>X-Result-Window-End</code> - the real date range of the payload.</li>
+					<li><code>X-Result-Truncated: true</code> - sent only when the cap was hit. Test for presence; it is never sent as <code>false</code>.</li>
+				</ul>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Need the complete 30-day window? The CSV feed is served in full, with no cap:</p>
+				<pre class="code-block p-2">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv"></i></pre>
+				<br>
 				<h3 id="caching" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Caching and conditional requests</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Every <code>200</code> response carries an <code>ETag</code> and a <code>Last-Modified</code> header. Send either one back on your next request and get a <code>304 Not Modified</code> with an empty body instead of re-downloading the full payload - this works on every route above, and also on the static apex files (<code>/feeds/*.csv</code>, <code>/rss.xml</code>, <code>/misp/*</code>, <code>/stix/*</code>).</p>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: revalidate with <code>If-None-Match</code></span>
@@ -353,7 +364,7 @@
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: revalidate with <code>curl -z</code> / <code>wget -N</code></span>
 				<pre class="code-block p-2">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv"></i></pre>
 				<pre class="code-block p-2">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv"></i></pre>
-				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes. <code>Last-Modified</code> reflects when this response was cached, not when the underlying data last changed, so <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive. If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</p>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes. <code>Last-Modified</code> reflects when this Worker cached the feed data behind the response, not when that data last changed, so <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive. If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Diff endpoint (incremental sync)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Returns IOCs added after the given ISO 8601 timestamp. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
@@ -361,6 +372,7 @@
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
 				<pre class="code-block p-2">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing"></i></pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block starting at your <code>since</code>. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Campaigns (AI-clustered)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Groups related IOCs from the last 7 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>

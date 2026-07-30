@@ -159,7 +159,8 @@
 			{"@type": "DataDownload", "name": "Blocklist - adguard (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/adguard.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - ips (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - rpz (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/rpz.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - dnsmasq (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - dnsmasq (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - urls (TXT)",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"}
 		]
 	}
 	</script>
@@ -713,7 +714,7 @@
 				</div>
 				<h3 id="blocklist" class="section-heading">Blocklists</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Plain-text exports for direct use in Pi-hole, AdGuard Home, hosts files and firewalls - one indicator per line, 30-day window, rebuilt every 15 minutes. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk.
+					Plain-text exports for direct use in Pi-hole, AdGuard Home, hosts files, firewalls, proxies and IDS - one indicator per line, 30-day window, rebuilt every 15 minutes. <code>urls.txt</code> carries the full URL instead of just the host, so it also covers indicators hosted on shared or otherwise legitimate infrastructure that DNS-level blocking can't safely reach. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk.
 				</p>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-12">
@@ -773,6 +774,16 @@
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
 								<hr>
 								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> dnsmasq (.txt)</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 col-12">
+						<div class="card shadow mb-4">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">URLs</span>
+								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies / IDS / enrichment - covers hosts that can't be blocked by DNS alone"></i>
+								<hr>
+								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> URLs (.txt)</a></p>
 							</div>
 						</div>
 					</div>

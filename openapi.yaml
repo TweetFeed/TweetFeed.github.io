@@ -47,6 +47,22 @@ paths:
         is the last 24 h, `week` the last 7 d, `month` the last 30 d, `year` the
         last 365 d.
 
+        **Result cap: 10 000 rows.** A response that hits the cap is truncated
+        from the OLDEST end, so you keep the most recent rows and lose the start
+        of the window. In practice only the unfiltered `month` window exceeds it
+        (14 936 rows on 2026-07-30, so roughly the first ten days of the window
+        are dropped); `today`, `week` and every filtered variant are comfortably
+        below it. Raising the cap is not possible on the Free plan: the month
+        payload is already ~2.7 MB and is what trips the Worker's 10 ms CPU
+        budget.
+
+        Every `200` reports what you actually got, so truncation is never
+        silent: `X-Result-Count`, plus `X-Result-Window-Start` / `X-Result-Window-End`
+        for the real date range of the payload, and `X-Result-Truncated: true`
+        only when the cap was reached. **If you need the complete 30-day window,
+        fetch the CSV feed at `https://tweetfeed.live/feeds/month.csv`** - it is
+        served in full with no cap.
+
         Note: `year` returns `302` to the raw CSV on GitHub because the full year
         dataset exceeds the 10 ms CPU budget of the underlying Cloudflare Worker
         on the Free plan. Clients should follow redirects.
@@ -62,6 +78,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -108,6 +132,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -140,6 +172,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -163,6 +203,13 @@ paths:
         - Future timestamp - `200` with `[]` body.
         - Timestamp older than 365 days - `410 Gone`.
         - Malformed - `400`.
+
+        **Result cap: 10 000 rows**, same as `/v1/{time}` but truncated from the
+        opposite end. This endpoint returns rows oldest-first, so the cap drops
+        the NEWEST ones and you are left with a contiguous block starting at your
+        `since`. That is what makes it safe to page: when `X-Result-Truncated`
+        is present, pass `X-Result-Window-End` back as the next `since` and
+        repeat until the header stops appearing.
       parameters:
         - $ref: "#/components/parameters/DateTime"
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -175,6 +222,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -205,6 +260,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -232,6 +295,14 @@ paths:
               $ref: "#/components/headers/ETag"
             Last-Modified:
               $ref: "#/components/headers/LastModified"
+            X-Result-Count:
+              $ref: "#/components/headers/ResultCount"
+            X-Result-Truncated:
+              $ref: "#/components/headers/ResultTruncated"
+            X-Result-Window-Start:
+              $ref: "#/components/headers/ResultWindowStart"
+            X-Result-Window-End:
+              $ref: "#/components/headers/ResultWindowEnd"
           content:
             application/json:
               schema:
@@ -372,6 +443,13 @@ paths:
         firewalls. This is a 1:1 mirror of the feed - no additional quality
         gate beyond the standard pipeline. Community-reported IOCs, use at
         your own risk.
+
+        `urls.txt` is the exception: it carries the full URL, not just the
+        host, so it also covers `url`-type IOCs hosted on shared or otherwise
+        legitimate infrastructure (a public code host, a cloud storage
+        bucket, a bare-IP host) that host/DNS blocking can't safely reach
+        without collateral damage - meant for proxies, IDS and enrichment
+        pipelines that can match on the full path.
 
         Rebuilt every 15 minutes, but a file's content (and its `# Updated:`
         header) only changes when its entries actually change.
@@ -535,10 +613,12 @@ components:
         Policy Zone (exact and wildcard `CNAME .` records, SOA serial =
         the epoch of the last content change) for BIND, Unbound and
         PowerDNS Recursor. `dnsmasq.txt` uses the `address=/<domain>/0.0.0.0`
-        format.
+        format. `urls.txt` is the only URL-level export: full URLs, not just
+        hosts, for `url`-type IOCs on shared/legitimate infrastructure that
+        host/DNS blocking can't safely cover.
       schema:
         type: string
-        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt]
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt]
 
     IocValueQuery:
       name: value
@@ -616,6 +696,40 @@ components:
       schema:
         type: string
       example: "Sun, 06 Jul 2026 08:49:37 GMT"
+
+    ResultCount:
+      description: Number of rows in this response.
+      schema:
+        type: integer
+      example: 10000
+
+    ResultTruncated:
+      description: |
+        Present, with the value `true`, only when the 10 000-row cap was
+        reached and rows were dropped. Absent means you received the whole
+        window. It is never sent as `false`, so test for presence.
+      schema:
+        type: string
+        enum: ["true"]
+      example: "true"
+
+    ResultWindowStart:
+      description: |
+        Date of the OLDEST row in this response. When `X-Result-Truncated` is
+        present on a `/v1/{time}` call this is later than the window you asked
+        for, and the difference is exactly what the cap dropped.
+      schema:
+        type: string
+      example: "2026-07-11 21:34:00"
+
+    ResultWindowEnd:
+      description: |
+        Date of the NEWEST row in this response. On a truncated
+        `/v1/since/{datetime}` call this is where to resume: pass it back as
+        the next `since` value to page forward through the remainder.
+      schema:
+        type: string
+      example: "2026-07-30 17:00:00"
 
   responses:
     NotModified:
