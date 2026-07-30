@@ -208,7 +208,11 @@
 .tf-agent-setup { text-align: center; margin: 0.6rem auto 1.1rem; }
 .tf-agent-pill { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 17px; max-width: 100%;
 	border: 1px solid #0f172a; border-radius: 999px; background: #0f172a; color: #f1f5f9;
-	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -.01em; line-height: 1;
+	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -.01em;
+	/* NOT line-height:1. At 14px the line box would be exactly 14px while the text
+	   needs 15, and the label's overflow:hidden then clips the 1px holding the
+	   descenders of g/y. Fixed 40px + align-items:center absorbs the taller box. */
+	line-height: 1.5;
 	white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.18);
 	transition: background .15s, border-color .15s, box-shadow .15s; }
 .tf-agent-pill:hover { background: #1e293b; border-color: #1e293b; box-shadow: 0 4px 14px rgba(15,23,42,.24); }
