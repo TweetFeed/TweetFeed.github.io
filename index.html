@@ -216,6 +216,14 @@
 .tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
 .tf-agent-pill .tf-copy { color: #94a3b8; flex-shrink: 0; font-size: 13px; }
 .tf-agent-pill:hover .tf-copy { color: #cbd5e1; }
+/* index.css carries a blunt legacy `.fa-copy:hover { color: blue !important }`
+   aimed at the IOC table icons. Inside this pill it landed as pure blue on
+   navy, which is what made the icon look broken on hover. Overridden here
+   rather than site-wide, where the table icons still want that behaviour.
+   Needs !important + higher specificity to outrank it: the pill is the
+   control, the icon is not separately hoverable. */
+.tf-agent-pill .tf-copy:hover { color: #cbd5e1 !important; }
+.tf-agent-pill.is-copied .tf-copy:hover { color: #86efac !important; }
 .tf-agent-pill.is-copied { background: #166534; border-color: #166534; color: #ecfdf5; }
 .tf-agent-pill.is-copied .tf-agent-pill-spark, .tf-agent-pill.is-copied .tf-copy { color: #86efac; }
 .tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
