@@ -214,18 +214,8 @@
 .tf-agent-pill:hover { background: #1e293b; border-color: #1e293b; box-shadow: 0 4px 14px rgba(15,23,42,.24); }
 .tf-agent-pill .tf-agent-pill-spark { color: #7dd3fc; flex-shrink: 0; transition: color .15s; }
 .tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
-.tf-agent-pill .tf-copy { color: #94a3b8; flex-shrink: 0; font-size: 13px; }
-.tf-agent-pill:hover .tf-copy { color: #cbd5e1; }
-/* index.css carries a blunt legacy `.fa-copy:hover { color: blue !important }`
-   aimed at the IOC table icons. Inside this pill it landed as pure blue on
-   navy, which is what made the icon look broken on hover. Overridden here
-   rather than site-wide, where the table icons still want that behaviour.
-   Needs !important + higher specificity to outrank it: the pill is the
-   control, the icon is not separately hoverable. */
-.tf-agent-pill .tf-copy:hover { color: #cbd5e1 !important; }
-.tf-agent-pill.is-copied .tf-copy:hover { color: #86efac !important; }
 .tf-agent-pill.is-copied { background: #166534; border-color: #166534; color: #ecfdf5; }
-.tf-agent-pill.is-copied .tf-agent-pill-spark, .tf-agent-pill.is-copied .tf-copy { color: #86efac; }
+.tf-agent-pill.is-copied .tf-agent-pill-spark { color: #86efac; }
 .tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
 @media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 14px; gap: 7px; font-size: 13px; } }
 </style>
@@ -352,7 +342,6 @@
 						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
 							<svg class="tf-agent-pill-spark" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>
 							<span class="tf-agent-pill-label" data-pill-label>Onboard your agent to TweetFeed</span>
-							<i class="far fa-copy tf-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" aria-hidden="true"></i>
 						</button>
 						<a href="agents/" class="tf-agent-setup-more">See all agent integrations</a>
 					</div>
@@ -424,7 +413,6 @@
 						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
 							<svg class="tf-agent-pill-spark" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>
 							<span class="tf-agent-pill-label" data-pill-label>Onboard your agent to TweetFeed</span>
-							<i class="far fa-copy tf-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" aria-hidden="true"></i>
 						</button>
 						<a href="agents/" class="tf-agent-setup-more">See all agent integrations</a>
 					</div>
@@ -654,7 +642,7 @@
 	<script src="js/demo/datatables-demo.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="js/config.js"></script>
-	<script src="js/utils.js"></script>
+	<script src="js/utils.js?v=2"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
