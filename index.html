@@ -201,21 +201,25 @@
 	</script>
 <style>
 /* Agent-setup pill (home hero). Same geometry Cloudflare uses on its
-   /agent-setup/ page: full-round, 40px tall, 8px gap, 0 16px padding. The
-   1px black border is the site convention, not an oversight. The whole pill
-   is the copy target; utils.js swaps the label in place to confirm. */
+   /agent-setup/ page: full-round, 40px tall, 0 17px padding. Solid dark
+   rather than light: a light pill with a hairline border dissolved into
+   this page and stopped reading as a control at all. The whole pill is the
+   copy target; utils.js swaps the label in place to confirm. */
 .tf-agent-setup { text-align: center; margin: 0.6rem auto 1.1rem; }
-.tf-agent-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; max-width: 100%;
-	border: 1px solid #000; border-radius: 999px; background: #fff; color: #212529;
-	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap;
-	cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.06); transition: background .15s, color .15s; }
-.tf-agent-pill:hover { background: #f1f4f8; }
-.tf-agent-pill .tf-agent-pill-spark { color: #1178b3; flex-shrink: 0; transition: color .15s; }
+.tf-agent-pill { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 17px; max-width: 100%;
+	border: 1px solid #0f172a; border-radius: 999px; background: #0f172a; color: #f1f5f9;
+	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -.01em; line-height: 1;
+	white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.18);
+	transition: background .15s, border-color .15s, box-shadow .15s; }
+.tf-agent-pill:hover { background: #1e293b; border-color: #1e293b; box-shadow: 0 4px 14px rgba(15,23,42,.24); }
+.tf-agent-pill .tf-agent-pill-spark { color: #7dd3fc; flex-shrink: 0; transition: color .15s; }
 .tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
-.tf-agent-pill .tf-copy { color: #737373; flex-shrink: 0; font-size: 13px; }
-.tf-agent-pill.is-copied { color: #1178b3; background: #f1f4f8; }
-.tf-agent-setup-more { display: block; margin-top: 0.55rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
-@media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 13px; gap: 6px; font-size: 13px; } }
+.tf-agent-pill .tf-copy { color: #94a3b8; flex-shrink: 0; font-size: 13px; }
+.tf-agent-pill:hover .tf-copy { color: #cbd5e1; }
+.tf-agent-pill.is-copied { background: #166534; border-color: #166534; color: #ecfdf5; }
+.tf-agent-pill.is-copied .tf-agent-pill-spark, .tf-agent-pill.is-copied .tf-copy { color: #86efac; }
+.tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
+@media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 14px; gap: 7px; font-size: 13px; } }
 </style>
 </head>
 
