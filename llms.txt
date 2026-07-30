@@ -65,7 +65,9 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 - [Agent setup prompt](https://tweetfeed.live/agent-setup/prompt.md): fetch this file and follow it directly - it registers the MCP server, verifies the connection, and reports back. The fastest way for an agent to self-configure, no manual reading required.
 - [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type, 365-day lookup + AI context when available), `get_campaigns` (cluster search by brand/confidence, trimmed sample IOCs), `get_trends` (community trends: 31-day daily series, top movers, TLD distribution, novelty).
 - [/agents/](https://tweetfeed.live/agents/): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
-- [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest for the `tweetfeed-iocs` skill.
+- [llms-full.txt](https://tweetfeed.live/llms-full.txt): expanded single-file AI reference (definition, at-a-glance stats, MCP tools, methodology, FAQ optimized for passage extraction).
+- [AGENTS.md](https://tweetfeed.live/AGENTS.md): agents.md-convention guide (MCP-first access order, tool table, discovery links).
+- [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest, 5 skills (general queries, single-IOC lookup, blocklists, trends, campaigns).
 - [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.
 - [MCP server card](https://tweetfeed.live/.well-known/mcp/server-card.json): SEP-1649 metadata.
 
