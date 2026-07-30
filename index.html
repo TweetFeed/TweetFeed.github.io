@@ -199,6 +199,24 @@
 		]
 	}
 	</script>
+<style>
+/* Agent-setup pill (home hero). Same geometry Cloudflare uses on its
+   /agent-setup/ page: full-round, 40px tall, 8px gap, 0 16px padding. The
+   1px black border is the site convention, not an oversight. The whole pill
+   is the copy target; utils.js swaps the label in place to confirm. */
+.tf-agent-setup { text-align: center; margin: 0.6rem auto 1.1rem; }
+.tf-agent-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; max-width: 100%;
+	border: 1px solid #000; border-radius: 999px; background: #fff; color: #212529;
+	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap;
+	cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.06); transition: background .15s, color .15s; }
+.tf-agent-pill:hover { background: #f1f4f8; }
+.tf-agent-pill .tf-agent-pill-spark { color: #1178b3; flex-shrink: 0; transition: color .15s; }
+.tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
+.tf-agent-pill .tf-copy { color: #737373; flex-shrink: 0; font-size: 13px; }
+.tf-agent-pill.is-copied { color: #1178b3; background: #f1f4f8; }
+.tf-agent-setup-more { display: block; margin-top: 0.55rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
+@media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 13px; gap: 6px; font-size: 13px; } }
+</style>
 </head>
 
 <body id="page-top">
@@ -318,11 +336,13 @@
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community on Twitter/X.
 						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
-					<div class="agent-setup-badge" style="max-width: 620px; margin: 0.5rem auto 1rem;">
-						<span style="color: #737373; font-size: 15px; font-family: 'Rubik', sans-serif;">Set up your AI agent</span>
-						<pre class="code-block p-2" style="display: inline-block; max-width: 100%; margin: 0.4rem 0 0.35rem; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; text-align: left;">Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it <i class="tf-copy far fa-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-						<br>
-						<a href="agents/" style="color: #0000EE; font-size: 14px; font-family: 'Rubik', sans-serif;">See all agent integrations</a>
+					<div class="tf-agent-setup">
+						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
+							<svg class="tf-agent-pill-spark" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>
+							<span class="tf-agent-pill-label" data-pill-label>Onboard your agent to TweetFeed</span>
+							<i class="far fa-copy tf-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" aria-hidden="true"></i>
+						</button>
+						<a href="agents/" class="tf-agent-setup-more">See all agent integrations</a>
 					</div>
 				</div>
 				<!-- Only mobile -->
@@ -388,11 +408,13 @@
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community on Twitter/X.
 						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
-					<div class="agent-setup-badge" style="max-width: 620px; margin: 0.5rem auto 1rem;">
-						<span style="color: #737373; font-size: 15px; font-family: 'Rubik', sans-serif;">Set up your AI agent</span>
-						<pre class="code-block p-2" style="display: inline-block; max-width: 100%; margin: 0.4rem 0 0.35rem; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; text-align: left;">Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it <i class="tf-copy far fa-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-						<br>
-						<a href="agents/" style="color: #0000EE; font-size: 14px; font-family: 'Rubik', sans-serif;">See all agent integrations</a>
+					<div class="tf-agent-setup">
+						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
+							<svg class="tf-agent-pill-spark" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>
+							<span class="tf-agent-pill-label" data-pill-label>Onboard your agent to TweetFeed</span>
+							<i class="far fa-copy tf-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" aria-hidden="true"></i>
+						</button>
+						<a href="agents/" class="tf-agent-setup-more">See all agent integrations</a>
 					</div>
 				</div>
 				<div class="container-fluid">

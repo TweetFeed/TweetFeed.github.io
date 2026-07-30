@@ -292,6 +292,26 @@
         $(this).trigger('click.tfcopy');
       }
     });
+    // Agent-setup pill: the WHOLE pill copies, and its label confirms in
+    // place rather than only flipping a small icon. The pill still nests a
+    // .tf-copy icon carrying the same data-copy, so this is a progressive
+    // enhancement over the delegation above, never a dependency on it.
+    $(document).off('click.tfpill').on('click.tfpill', '[data-copy-pill]', function() {
+      var pill = this;
+      if (pill.dataset.pillBusy) return;
+      copyToClipboard(pill.getAttribute('data-copy-pill'), null);
+      var label = pill.querySelector('[data-pill-label]');
+      if (!label) return;
+      var previous = label.textContent;
+      pill.dataset.pillBusy = '1';
+      label.textContent = pill.getAttribute('data-copied-label') || 'Copied';
+      pill.classList.add('is-copied');
+      setTimeout(function() {
+        label.textContent = previous;
+        pill.classList.remove('is-copied');
+        delete pill.dataset.pillBusy;
+      }, 1800);
+    });
   }
   if (typeof $ !== 'undefined') {
     $(initCopyDelegation);
