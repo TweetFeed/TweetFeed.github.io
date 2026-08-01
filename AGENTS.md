@@ -36,7 +36,7 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 
 - Reads are unauthenticated and unmetered; be reasonable.
 - Do not fetch or browse a live IOC value from this feed to "check" it - these are reported malicious URLs/domains/IPs. Query the API or the MCP tools instead.
-- False-positive reports or corrections: GitHub issue with the false-positive template (https://github.com/0xDanielLopez/TweetFeed/issues/new/choose).
+- False-positive reports or corrections: GitHub issue via the feedback form (https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml), or use the prefilled false-positive template linked from each result on /search/.
 
 ## Discovery
 

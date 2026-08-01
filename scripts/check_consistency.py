@@ -41,6 +41,13 @@ MAIN_PAGES = [
     "search/index.html", "trends/index.html",
 ]
 
+# Direct link to the feedback issue form, added 2026-08-01 to replace the
+# GitHub issue chooser (which forced an extra click before a user could
+# actually write anything). See check_feedback_cta / check_no_chooser_link.
+FEEDBACK_URL = "https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml"
+# Split so this file itself doesn't trip a literal grep for the fragment.
+CHOOSER_URL_FRAGMENT = "issues/new/" + "choose"
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # Only the prod repo (TweetFeed.github.io) carries a CNAME file; the stage
 # clone does not. Checks with opposite expectations per repo key off this.
@@ -177,6 +184,37 @@ def check_footers(pages: list[str]) -> list[str]:
     return failures
 
 
+def check_feedback_cta(pages: list[str]) -> list[str]:
+    """Every page must expose a one-click Feedback CTA in the nav, styled as
+    a button (btn-tf), pointing straight at the feedback issue template.
+    Added 2026-08-01: the only feedback entry point used to be a plain-text
+    footer link to the GitHub issue chooser, which forced a second click
+    (pick a template) before a user could write anything."""
+    failures: list[str] = []
+    btn_re = re.compile(
+        r'class="[^"]*\bbtn-tf\b[^"]*"[^>]*href="' + re.escape(FEEDBACK_URL)
+        + r'"|href="' + re.escape(FEEDBACK_URL) + r'"[^>]*class="[^"]*\bbtn-tf\b[^"]*"'
+    )
+    for p in pages:
+        html = read(p)
+        if FEEDBACK_URL not in html:
+            failures.append(f"{p}: missing feedback CTA (expected an href to {FEEDBACK_URL})")
+        elif not btn_re.search(html):
+            failures.append(f"{p}: feedback link present but not styled as a button (missing btn-tf)")
+    return failures
+
+
+def check_no_chooser_link(pages: list[str]) -> list[str]:
+    """Regression guard for the 2026-08-01 feedback CTA change: nothing
+    should link to the GitHub issue chooser anymore, on any page - it forces
+    an extra click (pick a template) before a user can write feedback."""
+    failures: list[str] = []
+    for p in pages:
+        if CHOOSER_URL_FRAGMENT in read(p):
+            failures.append(f"{p}: still links to the issue chooser ({CHOOSER_URL_FRAGMENT})")
+    return failures
+
+
 def check_meta_description_length(pages: list[str]) -> list[str]:
     """Meta description should be 80-160 chars (Google snippet limit ~155-160).
     Shorter than 80 leaves SEO real estate on the table; longer than 160
@@ -213,6 +251,7 @@ CHECKS = [
     ("Canonical URLs", check_canonicals),
     ("Analytics scripts (anchor + Umami + Ahrefs)", check_analytics),
     ("Footer pattern (desktop + mobile)", check_footers),
+    ("Feedback CTA (button, direct template link)", check_feedback_cta),
     ("Meta description length (80-160)", check_meta_description_length),
     ("Single <h1> per page", check_single_h1),
 ]
@@ -287,6 +326,15 @@ def main() -> int:
             print(f"  - {f}")
         total_failures += len(failures)
 
+    failures = check_feedback_cta(extra)
+    if not failures:
+        print(f"[PASS] Feedback CTA (tag pages + hubs + templates): all {len(extra)} pages OK")
+    else:
+        print(f"[FAIL] Feedback CTA (tag pages + hubs + templates): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
     pages_all = all_html_pages()
     role = "prod: must be absent" if REPO_IS_PROD else "stage: must be present"
     failures = check_noindex_polarity(pages_all)
@@ -294,6 +342,18 @@ def main() -> int:
         print(f"[PASS] Noindex polarity ({role}): all {len(pages_all)} pages OK")
     else:
         print(f"[FAIL] Noindex polarity ({role}): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    # Full-site scan (not just MAIN_PAGES/landing_pages): the chooser link
+    # must not reappear anywhere, including stray hub pages no other check
+    # covers yet (see MAIN_PAGES comment above on 404.html/tos/malicious-*).
+    failures = check_no_chooser_link(pages_all)
+    if not failures:
+        print(f"[PASS] No issue-chooser links (site-wide): all {len(pages_all)} pages OK")
+    else:
+        print(f"[FAIL] No issue-chooser links (site-wide): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)

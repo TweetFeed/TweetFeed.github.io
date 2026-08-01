@@ -386,6 +386,20 @@ button.btn.btn-tf {
 	color: #fff;
 }
 
+/* Nav/dropdown Feedback CTA (added 2026-08-01): index.css's
+   ".navbar-nav li a { color: black !important; }" (written for plain
+   nav-link text) otherwise wins over the rule above and blacks out the
+   button label, since only a higher-specificity !important rule can beat
+   an !important rule. Matches both the desktop nav-item button and the
+   mobile dropdown-item row. */
+.navbar-nav li a.btn-tf {
+	color: #fff !important;
+}
+.navbar-nav li a.btn-tf:hover,
+.navbar-nav li a.btn-tf:focus {
+	color: #fff !important;
+}
+
 /* Per-row action buttons (Tweet, VirusTotal) inside the IOC DataTables
    on index.html / search.html / dashboard.html / about.html / changelog.html.
    Replaces the prior pattern of "icon + external-link arrow" per cell,
