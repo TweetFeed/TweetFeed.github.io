@@ -204,6 +204,16 @@ paths:
         - Timestamp older than 365 days - `410 Gone`.
         - Malformed - `400`.
 
+        **Reaches back 30 days, not 365.** This endpoint is served from the
+        30-day window file; the full year is too large to scan inside the
+        Worker's CPU budget. A `since` older than that still returns `200`
+        with the 30 days it can serve, and says so with
+        `X-Result-Window-Incomplete: true` plus an `X-Result-Window-Start`
+        showing where the data really begins - it is never silently short.
+        For a deeper backfill fetch `https://tweetfeed.live/feeds/year.csv`
+        (365 days, uncapped) once, then switch to this endpoint for the
+        incremental updates it is built for.
+
         **Result cap: 10 000 rows**, same as `/v1/{time}` but truncated from the
         opposite end. This endpoint returns rows oldest-first, so the cap drops
         the NEWEST ones and you are left with a contiguous block starting at your
@@ -739,14 +749,22 @@ components:
 
     ResultWindowIncomplete:
       description: |
-        Present, with the value `true`, only when the underlying data does
-        not reach as far back as the requested window (or `since` value) -
-        it happens when you ask for more history than is actually retained.
+        Present, with the value `true`, only on `/v1/since` and only when the
+        file backing the response does not reach as far back as the `since`
+        you asked for. In practice that means a `since` older than 30 days:
+        the endpoint is served from the 30-day window file, so it answers with
+        those 30 days rather than failing. Pair it with `X-Result-Window-Start`
+        to see where the data actually begins, and fetch
+        `https://tweetfeed.live/feeds/year.csv` for the rest.
+
+        The history is not missing - it exists for 365 days, it just cannot be
+        scanned inside the Worker's CPU budget on this route.
+
         Different from `X-Result-Truncated`: `truncated` means the 10 000-row
-        cap cut rows out of a window that otherwise exists in full;
-        `window-incomplete` means the requested window itself is wider than
-        the data available. Like its siblings, it is never sent as `false`,
-        so test for presence.
+        cap cut rows out of a window that was served in full; this one means
+        the served window itself starts later than you asked. They are
+        independent and can both appear on the same response. Like its
+        siblings it is never sent as `false`, so test for presence.
       schema:
         type: string
         enum: ["true"]
