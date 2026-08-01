@@ -44,8 +44,8 @@ paths:
       summary: List IOCs in a time window
       description: |
         Returns all IOCs that landed in the chosen time window. The `today` window
-        is the last 24 h, `week` the last 7 d, `month` the last 30 d, `year` the
-        last 365 d.
+        is the current UTC calendar day (from 00:00 UTC, not a rolling 24 h),
+        `week` the last 7 d, `month` the last 30 d, `year` the last 365 d.
 
         **Result cap: 10 000 rows.** A response that hits the cap is truncated
         from the OLDEST end, so you keep the most recent rows and lose the start
@@ -230,6 +230,8 @@ paths:
               $ref: "#/components/headers/ResultWindowStart"
             X-Result-Window-End:
               $ref: "#/components/headers/ResultWindowEnd"
+            X-Result-Window-Incomplete:
+              $ref: "#/components/headers/ResultWindowIncomplete"
           content:
             application/json:
               schema:
@@ -268,6 +270,8 @@ paths:
               $ref: "#/components/headers/ResultWindowStart"
             X-Result-Window-End:
               $ref: "#/components/headers/ResultWindowEnd"
+            X-Result-Window-Incomplete:
+              $ref: "#/components/headers/ResultWindowIncomplete"
           content:
             application/json:
               schema:
@@ -303,6 +307,8 @@ paths:
               $ref: "#/components/headers/ResultWindowStart"
             X-Result-Window-End:
               $ref: "#/components/headers/ResultWindowEnd"
+            X-Result-Window-Incomplete:
+              $ref: "#/components/headers/ResultWindowIncomplete"
           content:
             application/json:
               schema:
@@ -731,6 +737,21 @@ components:
         type: string
       example: "2026-07-30 17:00:00"
 
+    ResultWindowIncomplete:
+      description: |
+        Present, with the value `true`, only when the underlying data does
+        not reach as far back as the requested window (or `since` value) -
+        it happens when you ask for more history than is actually retained.
+        Different from `X-Result-Truncated`: `truncated` means the 10 000-row
+        cap cut rows out of a window that otherwise exists in full;
+        `window-incomplete` means the requested window itself is wider than
+        the data available. Like its siblings, it is never sent as `false`,
+        so test for presence.
+      schema:
+        type: string
+        enum: ["true"]
+      example: "true"
+
   responses:
     NotModified:
       description: |
@@ -750,9 +771,18 @@ components:
         date:
           type: string
           description: |
-            Timestamp the IOC entered the TweetFeed pipeline, UTC, format
-            `YYYY-MM-DD HH:MM:SS`. This is the ingest time, not the original
-            tweet time.
+            Publication timestamp of the tweet that reported the IOC, UTC,
+            format `YYYY-MM-DD HH:MM:SS`. It is the tweet's own publication
+            time as given by the source feed, not the moment the pipeline
+            ingested it (the pipeline polls every 15 minutes, so the two are
+            normally minutes apart).
+
+            When the reporting tweet is a quote-tweet, the IOC is extracted
+            from the QUOTED tweet but stamped with the QUOTING tweet's time,
+            so that a re-share lands in the day it was re-shared. `user` and
+            `tweet_url` then point at the quoted tweet while `date` points at
+            the quoting one, and `date` can be much newer than the tweet the
+            IOC first appeared in.
           example: "2026-05-21 09:13:00"
         user:
           type: string
