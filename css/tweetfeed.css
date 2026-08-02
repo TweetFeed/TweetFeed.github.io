@@ -386,18 +386,72 @@ button.btn.btn-tf {
 	color: #fff;
 }
 
-/* Nav/dropdown Feedback CTA (added 2026-08-01): index.css's
-   ".navbar-nav li a { color: black !important; }" (written for plain
-   nav-link text) otherwise wins over the rule above and blacks out the
-   button label, since only a higher-specificity !important rule can beat
-   an !important rule. Matches both the desktop nav-item button and the
-   mobile dropdown-item row. */
-.navbar-nav li a.btn-tf {
-	color: #fff !important;
+/* Nav Feedback CTA (.nav-cta) - desktop bar + mobile dropdown row.
+   Derived from the .tf-agent-pill token set in index.html (#0f172a / 999px /
+   40px / Rubik 500) so the two site-level CTAs read as one family.
+
+   Scoped to .navbar-nav on purpose: plain .btn-tf still dresses ~30 export and
+   download buttons sitting on white cards, where #4682B4 works fine. On the
+   #1DA1F2 bar that same fill measures 1.47:1 against its own background, below
+   the 3:1 WCAG 1.4.11 asks of a control's boundary, so the bar gets its own.
+
+   Specificity note: index.css's `.navbar-nav li a:hover:not(.active)` is
+   (0,3,2) and sets `background` + `border-radius: 50px`. It outranked
+   `.btn.btn-tf:hover` (0,3,0) and turned this button into a washed-out #8ec9ee
+   pill on hover (white label at 1.80:1). The hover rules below are (0,4,2). */
+.navbar-nav li a.btn-tf.nav-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 40px;               /* == the 40px .nav-link box of Docs / About */
+	padding: 0 16px;
+	border: 1px solid #0f172a;
+	border-radius: 999px;
+	background: #0f172a;
+	color: #f1f5f9 !important;  /* beats index.css `.navbar-nav li a{color:black!important}` */
+	font-family: 'Rubik', sans-serif;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.5;           /* NOT 1 - see the descender note on .tf-agent-pill */
+	letter-spacing: -.01em;
+	white-space: nowrap;
+	box-shadow: 0 2px 8px rgba(15, 23, 42, .18);
+	transition: background .15s, border-color .15s, box-shadow .15s;
 }
-.navbar-nav li a.btn-tf:hover,
-.navbar-nav li a.btn-tf:focus {
+/* Docs/About only contribute .nav-link's .5rem of padding, so without this the
+   chip butts straight against "About" at 0px (measured). */
+.navbar-nav li a.btn-tf.nav-cta:not(.dropdown-item) {
+	margin-left: 10px;
+}
+.navbar-nav li a.btn-tf.nav-cta:hover,
+.navbar-nav li a.btn-tf.nav-cta:focus-visible {
+	background: #1e293b;
+	background-image: none;     /* index.css `.btn:hover` layers a 15% black gradient */
+	border-color: #1e293b;
+	border-radius: 999px;       /* re-assert: index.css's nav hover wants 50px */
 	color: #fff !important;
+	box-shadow: 0 4px 14px rgba(15, 23, 42, .24);
+}
+/* :focus-visible, not :focus - with target=_blank a :focus ring stays stuck on
+   the button after the user comes back from the new tab. */
+.navbar-nav li a.btn-tf.nav-cta:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+.navbar-nav li a.btn-tf.nav-cta .nav-cta-icon { color: #7dd3fc; flex-shrink: 0; }
+.navbar-nav li a.btn-tf.nav-cta .nav-cta-ext  { font-size: .75em; opacity: .75; flex-shrink: 0; }
+
+/* Mobile dropdown row: the menu is 175px wide with `padding: 8px 0`, so a
+   full-bleed .dropdown-item has its radius clipped by the menu edge. Inset it
+   and let it size to its content. */
+.navbar-nav li a.dropdown-item.btn-tf.nav-cta {
+	width: auto;
+	height: 36px;
+	margin: 6px 12px 2px;
+	font-size: 14px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.navbar-nav li a.btn-tf.nav-cta { transition: none; }
 }
 
 /* Per-row action buttons (Tweet, VirusTotal) inside the IOC DataTables

@@ -214,6 +214,19 @@ def check_no_chooser_link(pages: list[str]) -> list[str]:
     return failures
 
 
+def check_stylesheet_present(pages: list[str]) -> list[str]:
+    """Every page must link the shared css/tweetfeed.css. tos/index.html
+    shipped without it and its nav CTA rendered as unstyled black text -
+    check_feedback_cta asserts the CTA markup exists, not that the stylesheet
+    which dresses it actually loads. Substring match covers ../css/,
+    ../../css/ and 404.html's /tweetfeed-stage/css/ form."""
+    failures: list[str] = []
+    for p in pages:
+        if "css/tweetfeed.css" not in read(p):
+            failures.append(f"{p}: missing css/tweetfeed.css <link>")
+    return failures
+
+
 def check_meta_description_length(pages: list[str]) -> list[str]:
     """Meta description should be 80-160 chars (Google snippet limit ~155-160).
     Shorter than 80 leaves SEO real estate on the table; longer than 160
@@ -341,6 +354,16 @@ def main() -> int:
         print(f"[PASS] Noindex polarity ({role}): all {len(pages_all)} pages OK")
     else:
         print(f"[FAIL] Noindex polarity ({role}): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    pages_css = sorted(set(pages_all) | set(landing_pages()))
+    failures = check_stylesheet_present(pages_css)
+    if not failures:
+        print(f"[PASS] Stylesheet link (site-wide): all {len(pages_css)} pages OK")
+    else:
+        print(f"[FAIL] Stylesheet link (site-wide): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)
