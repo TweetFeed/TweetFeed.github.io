@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Consistency checks across the 12 main pages of TweetFeed.
+"""Consistency checks across the 21 main pages of TweetFeed.
 
 Run from the repo root (frontend-stage/ or frontend-prod/):
     python3 scripts/check_consistency.py
@@ -20,7 +20,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-# The 14 user-facing main pages - the ones that share nav, footer, analytics,
+# The 21 user-facing main pages - the ones that share nav, footer, analytics,
 # and canonical patterns, and get the full check suite below (nav order,
 # canonical, analytics, footer, meta-description length, single h1).
 # Excluded, verified via ls 2026-07-16 (the old comment's today.html/tos.html
@@ -30,15 +30,14 @@ from pathlib import Path
 #   - tag/<slug>/index.html, tags/index.html, ioc-types/index.html + the
 #     scripts/templates/*.j2 they're rendered from: checked separately by
 #     landing_pages() (footer pattern only, not the full suite here).
-#   - tos/index.html, threat-intelligence-guide/index.html and the
-#     malicious-{urls,domains,ips,hashes-md5,hashes-sha256}/index.html hub
-#     pages: DO carry the shared nav/footer/analytics but aren't wired into
-#     any check yet - a real coverage gap, not an intentional exclusion.
 MAIN_PAGES = [
     "about/index.html", "agents/index.html", "api/index.html", "campaigns/index.html",
     "changelog/index.html", "dashboard/index.html", "docs/index.html", "feeds/index.html",
     "graphs/index.html", "hunt/index.html", "index.html", "researchers/index.html",
-    "search/index.html", "trends/index.html",
+    "search/index.html", "trends/index.html", "tos/index.html",
+    "threat-intelligence-guide/index.html", "malicious-urls/index.html",
+    "malicious-domains/index.html", "malicious-ips/index.html",
+    "malicious-hashes-md5/index.html", "malicious-hashes-sha256/index.html",
 ]
 
 # Direct link to the feedback issue form, added 2026-08-01 to replace the
