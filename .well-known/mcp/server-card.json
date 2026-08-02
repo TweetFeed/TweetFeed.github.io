@@ -68,7 +68,7 @@
       "name": "stix_2_1_bundles",
       "url": "https://tweetfeed.live/stix/manifest.json",
       "format": "application/stix+json;version=2.1",
-      "description": "Static STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms. Manifest indexes today/week/month bundles, each a spec-compliant Bundle of Indicator objects with TLP:CLEAR marking. Regenerated every 15 minutes."
+      "description": "Static STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms. Manifest indexes today/week/month bundles, each a spec-compliant, self-contained Bundle: the TweetFeed Identity, the canonical TLP:CLEAR marking-definition and the Indicator objects, so every created_by_ref and object_marking_refs resolves inside the bundle itself. Regenerated every 15 minutes."
     },
     {
       "name": "diff_endpoint",
