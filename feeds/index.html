@@ -206,7 +206,7 @@
 				"name": "How do I import TweetFeed into MISP, OpenCTI or Splunk?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "For MISP, point your instance at the manifest URL https://tweetfeed.live/misp/manifest.json under Sync Actions, Feeds, Add - it imports the 4 native MISP events (today/week/month/year) automatically. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+					"text": "For MISP, under Sync Actions, Feeds, Add, set the feed URL to https://tweetfeed.live/misp - the directory, not the manifest file, because MISP appends /manifest.json itself. It imports the 4 native MISP events (today/week/month/year) automatically. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
 				}
 			}
 		]
@@ -583,7 +583,7 @@
 					&nbsp&nbsp&nbspMISP Feed
 				</h3>
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Add the <a href="https://tweetfeed.live/misp/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> to your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
+					Native MISP feed format (4 Events refreshed every 15 minutes, deterministic UUIDs so consumers dedupe across pulls). Set the feed URL to <a href="https://tweetfeed.live/misp" target="_blank" rel="noopener noreferrer">tweetfeed.live/misp</a> in your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> to import all 4 events automatically. Use the directory, not <code>manifest.json</code> &mdash; MISP appends that itself. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
 				</p>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-12">
@@ -850,7 +850,7 @@
 					</details>
 					<details>
 						<summary>How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
-						<p>For <b>MISP</b>, point your instance at the manifest URL <code>https://tweetfeed.live/misp/manifest.json</code> under <em>Sync Actions &rarr; Feeds &rarr; Add</em>. It imports the 4 native MISP events (today/week/month/year) automatically with deterministic UUIDs for dedup across pulls. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+						<p>For <b>MISP</b>, under <em>Sync Actions &rarr; Feeds &rarr; Add</em>, set the feed URL to <code>https://tweetfeed.live/misp</code> &mdash; the directory, not the manifest file, because MISP appends <code>/manifest.json</code> itself. It imports the 4 native MISP events (today/week/month/year) automatically with deterministic UUIDs for dedup across pulls. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
 					</details>
 				</section>
 			</div>
