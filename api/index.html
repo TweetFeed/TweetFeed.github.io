@@ -330,6 +330,7 @@
 					<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Introduction</h3>
 				<!-- -->
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;"><b>Free</b> API to get IOCs shared by the community on Twitter/X. Building an AI agent? Use the <a href="../agents/">MCP server</a> instead.</p>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Cloudflare's bot protection returns <code>403</code> to requests sent with a bare <code>Python-urllib</code> or <code>libwww-perl</code> User-Agent - use <code>requests</code>, <code>curl</code> or another standard HTTP client instead.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
@@ -451,6 +452,30 @@
 }</pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>months</code> (only present on <code>year</code>) is indexed by calendar month, not relative to the window - index <code>0</code> is always January, index <code>11</code> is always December. Any window with no IOCs reports <code>first_date</code>/<code>last_date</code> as <code>null</code>.</p>
 				<br>
+				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Trends</h3>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints: a rolling 31-day daily IOC volume series with a per-type breakdown, week-over-week top-moving tags, the most-abused TLDs among malicious domains from the last 30 days, and the novelty rate (new vs. recurring share of this week's distinct IOC values). Human page: <a href="../trends/">tweetfeed.live/trends/</a>. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_trends</code> tool.</p>
+				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/trends <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/trends"></i></pre>
+				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
+				<pre class="code-block p-2" style="font-size: 12px;">{
+    "version": 1,
+    "generated_at": "2026-08-04T19:00:36Z",
+    "daily": {
+        "days": 31,
+        "dates": ["2026-07-05", "2026-07-06"],
+        "total": [62, 154],
+        "types": { "url": [30, 71], "domain": [22, 60], "ip": [7, 15], "sha256": [2, 5], "md5": [1, 3] }
+    },
+    "movers": {
+        "current_range": ["2026-07-29", "2026-08-04"],
+        "previous_range": ["2026-07-22", "2026-07-28"],
+        "tags": [{ "tag": "phishing", "count": 783, "previous": 3600, "delta": -2817, "pct": -78.2 }]
+    },
+    "tlds": { "window": "month", "domains_total": 5991, "top": [{ "tld": "com", "count": 1601 }], "other": 1931 },
+    "novelty": { "window": "week", "distinct_values": 1579, "new": 1504, "recurring": 75, "pct_new": 95.3 },
+    "producers": { }
+}</pre>
+				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index. The most recent day is partial until 00:00 UTC. <code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</p>
+				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">IOC lookup (exact match)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/ioc?value=<span style="color:gray;"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}"></i></pre>
@@ -475,13 +500,14 @@
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Unknown values return <code>200</code> with <code>found: false</code>. Values containing <code>/</code> or <code>?</code> must use the <code>?value=</code> query form.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Blocklists</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Ready-to-consume exports of the last 30 days for Pi-hole, AdGuard Home, hosts files, DNS resolvers (BIND, Unbound, PowerDNS Recursor) and dnsmasq, plus firewalls. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Ready-to-consume exports of the last 30 days for Pi-hole, AdGuard Home, hosts files, DNS resolvers (BIND, Unbound, PowerDNS Recursor) and dnsmasq, plus firewalls. The first six are DNS/host-level; <code>urls.txt</code> is one full URL per line instead, for consumers that match on path (proxies, IDS, SOAR enrichment) - it also covers <code>url</code>-type IOCs on shared or legitimate infrastructure that DNS-level blocking can't safely reach. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/domains.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/hosts.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/adguard.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/ips.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/rpz.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt"></i></pre>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"></i></pre>
+				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/urls.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (header)</b></span>
 				<pre class="code-block p-2" style="font-size: 12px;"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days

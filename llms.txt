@@ -28,6 +28,7 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 - Time windows: `today`, `week`, `month`, `year`
 - Filters: IOC type (`url`, `domain`, `ip`, `sha256`, `md5`), tag (e.g. `phishing`, `cobaltstrike`, `lockbit`), researcher handle (`@malwrhunterteam`)
 - No authentication. CORS open. JSON only.
+- Client compatibility: Cloudflare's Browser Integrity Check returns `403` to requests sent with a bare `Python-urllib` or `libwww-perl` User-Agent, on both `tweetfeed.live` and `api.tweetfeed.live`. `requests`, `curl`, `wget`, `feedparser`, `taxii2-client` and browsers all work fine - avoid a bare `urllib.request` call.
 - `date` is the timestamp of the tweet that reported the IOC, not the quoted tweet's timestamp when the source tweet is a quote-tweet.
 - Result cap: 10,000 rows per response, truncated from the oldest end. Only the unfiltered `/v1/month` (~15,000 rows) exceeds it, losing roughly the first ten days of its window. Every `200` carries `X-Result-Count`, `X-Result-Window-Start` and `X-Result-Window-End`, plus `X-Result-Truncated: true` when the cap was hit. For the complete 30-day window use `https://tweetfeed.live/feeds/month.csv`, which is served uncapped.
 - `/v1/since/{ISO8601}` has the same cap but truncates the newest rows instead, so the block you get always starts at your `since`. To page, re-request with `since` set to the returned `X-Result-Window-End` until `X-Result-Truncated` stops appearing.

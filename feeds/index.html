@@ -656,6 +656,9 @@
 				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
 					Year window omitted on purpose: the STIX schema is ~2.6x more verbose per IOC than MISP, putting year.json &gt;80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX consumption use the diff endpoint below.
 				</p>
+				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
+					<code>today.json</code> is served directly. <code>week.json</code> and <code>month.json</code> respond with a <code>302</code> redirect to <code>raw.githubusercontent.com</code> because of their size, so they arrive with a <code>Content-Type: text/plain</code> instead of <code>application/stix+json;version=2.1</code>. Follow redirects and don't gate on the response content type.
+				</p>
 
 				<h3 id="diff" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspDiff endpoint (incremental sync)

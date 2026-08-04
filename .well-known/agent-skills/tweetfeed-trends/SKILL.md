@@ -5,10 +5,10 @@ description: Pull TweetFeed's community IOC trend analytics - 31-day daily volum
 
 # TweetFeed Trends
 
-Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints, regenerated alongside it. Raw data: `https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/trends.json` (CC0).
+Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints, regenerated alongside it. Raw data: `https://api.tweetfeed.live/v1/trends` (CC0).
 
 ```bash
-curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/trends.json | jq .
+curl -s https://api.tweetfeed.live/v1/trends | jq .
 ```
 
 ## Response shape

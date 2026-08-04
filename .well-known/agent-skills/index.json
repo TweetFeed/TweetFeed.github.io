@@ -27,7 +27,7 @@
       "type": "skill",
       "description": "Pull TweetFeed's community IOC trend analytics: 31-day daily volume by type, week-over-week top-moving tags, most-abused TLDs, and the new-vs-recurring novelty ratio. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-trends/SKILL.md",
-      "sha256": "ef19474711e7c60233fcc900d10b70739d1682394006d329cf517a0daa673a21"
+      "sha256": "57171bd909e24450cf4feb631ad602d9e775f93ee50790f248c987ca104425dc"
     },
     {
       "name": "tweetfeed-campaigns",
