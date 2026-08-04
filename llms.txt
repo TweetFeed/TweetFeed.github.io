@@ -84,7 +84,7 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 
 ## Tag taxonomy
 
-92 malware family / tactic tags including:
+93 malware family / tactic tags including:
 - Malware families: `cobaltstrike`, `lockbit`, `redline`, `qakbot`, `emotet`, etc.
 - Tactic categories: `phishing`, `ransomware`, `c2`, `infostealer`, `loader`, `rat`, etc.
 - Source signal tags: `osint`, `ioc`, `malware`.

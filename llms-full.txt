@@ -10,7 +10,7 @@
 - Volume: roughly 200-300 new IOCs on a typical day, several thousand per rolling week, tens of thousands per rolling month - live counts at https://api.tweetfeed.live/v1/counts.
 - IOC types: URL, domain, IPv4/IPv6, SHA-256, MD5.
 - Sources: ~95 vetted infosec researchers and lists on Twitter/X, tilted toward English but with multilingual contributors.
-- Tag taxonomy: 92 malware-family and tactic tags (PascalCase for families like `CobaltStrike`, lowercase for generic categories like `phishing`).
+- Tag taxonomy: 93 malware-family and tactic tags (PascalCase for families like `CobaltStrike`, lowercase for generic categories like `phishing`).
 - AI use: reading, inference, live citation and LLM training all welcome (Content-Signal: ai-train=yes, search=yes, ai-input=yes).
 - Operator: Daniel López. Contact: GitHub Issues or DM @0xDanielLopez on X.
 
@@ -59,7 +59,7 @@ Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X
 ## Coverage and reference
 
 - Landing pages by IOC type: https://tweetfeed.live/malicious-urls/, /malicious-domains/, /malicious-ips/, /malicious-hashes-md5/, /malicious-hashes-sha256/ - hub: /ioc-types/
-- Tag index (92 tags: APT groups, malware families, TTPs): https://tweetfeed.live/tags/
+- Tag index (22 curated landing pages covering APT groups, malware families and TTPs; all 93 tags are queryable via the API): https://tweetfeed.live/tags/
 - Threat Intelligence guide (IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary): https://tweetfeed.live/threat-intelligence-guide/
 - Campaigns (human page): https://tweetfeed.live/campaigns/ - Trends (human page): https://tweetfeed.live/trends/
 - Researcher directory: https://tweetfeed.live/researchers/ - Dashboard: https://tweetfeed.live/dashboard/
