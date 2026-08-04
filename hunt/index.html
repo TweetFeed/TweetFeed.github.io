@@ -438,7 +438,7 @@ enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role
 						<p style="font-size: 14px; margin-top: 1rem;"><b>3.4 externaldata against today's CSV</b> - DNS hits in last 24h:</p>
 						<pre id="sentinel-dns" class="code-block p-2"><code>let TweetFeedDomains = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
   [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"]
-  with (format="csv", ignoreFirstRecord=true)
+  with (format="csv")
   | where type == "domain"
   | project Domain = value, Tags = tags, Tweet = tweet;
 DnsEvents
@@ -449,7 +449,7 @@ DnsEvents
 						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.5 SecurityEvent against TweetFeed IPs</b> - logon source pivot against week.csv:</p>
 						<pre id="sentinel-secevent" class="code-block p-2"><code>let TweetFeedIPs = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
   [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"]
-  with (format="csv", ignoreFirstRecord=true)
+  with (format="csv")
   | where type == "ip"
   | project IPAddress = value, Tags = tags, Tweet = tweet;
 SecurityEvent
@@ -620,7 +620,6 @@ filter {
   split { field =&gt; "message" }
   csv {
     columns =&gt; ["date","user","type","value","tags","tweet"]
-    skip_header =&gt; true
     separator =&gt; ","
   }
   date { match =&gt; ["date","ISO8601"] target =&gt; "@timestamp" }
