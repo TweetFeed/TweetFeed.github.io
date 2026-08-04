@@ -182,7 +182,7 @@
 				"name": "Can I integrate this feed with my SIEM, MISP or firewall?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at api.tweetfeed.live/v1/{time}/url returns JSON for any HTTP client. The MISP manifest at /misp/manifest.json imports four native MISP events (today/week/month/year). The /hunt page on tweetfeed.live has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+					"text": "Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at api.tweetfeed.live/v1/{time}/url returns JSON for any HTTP client. The MISP manifest at /misp/manifest.json imports one native MISP event per day (365 days). The /hunt page on tweetfeed.live has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
 				}
 			},
 			{
@@ -499,7 +499,7 @@
 						</details>
 						<details>
 							<summary>Can I integrate this feed with my SIEM, MISP or firewall?</summary>
-							<p>Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at <code>api.tweetfeed.live/v1/{time}/url</code> returns JSON for any HTTP client. The MISP manifest at <code>/misp/manifest.json</code> imports four native MISP events (today, week, month, year). The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+							<p>Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at <code>api.tweetfeed.live/v1/{time}/url</code> returns JSON for any HTTP client. The MISP manifest at <code>/misp/manifest.json</code> imports one native MISP event per day (365 days). The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
 						</details>
 						<details>
 							<summary>Are these URLs verified malicious?</summary>
