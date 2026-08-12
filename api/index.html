@@ -362,6 +362,7 @@
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Need the complete 30-day window? The CSV feed is served in full, with no cap:</p>
 				<pre class="code-block p-2">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv"></i></pre>
 				<br>
+				<!-- Technical reference content intentionally uses heading+paragraph, not .card/.faq-grid - this is API/feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="caching" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Caching and conditional requests</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Every <code>200</code> response carries an <code>ETag</code> and a <code>Last-Modified</code> header. Send either one back on your next request and get a <code>304 Not Modified</code> with an empty body instead of re-downloading the full payload - this works on every route above, and also on the static apex files (<code>/feeds/*.csv</code>, <code>/rss.xml</code>, <code>/misp/*</code>, <code>/stix/*</code>).</p>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: revalidate with <code>If-None-Match</code></span>

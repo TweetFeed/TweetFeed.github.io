@@ -14,7 +14,6 @@
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="terms,tos,privacy,tweetfeed">
 	<link rel="canonical" href="https://tweetfeed.live/tos/">
-	<meta name="robots" content="index,follow">
 	<title>Terms of Service - TweetFeed</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
@@ -338,7 +337,7 @@
 				<li><b>IP address, User-Agent, request path, referer</b> - recorded in edge/server access logs for abuse prevention, troubleshooting, and rate limiting. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: short-lived, typically 30 days or less at the CDN/host level.</li>
 				<li><b>Aggregate traffic analytics</b> - collected via <a href="https://umami.is/" target="_blank" rel="noopener">Umami</a>, <a href="https://ahrefs.com/web-analytics" target="_blank" rel="noopener">Ahrefs Web Analytics</a> and Cloudflare Web Analytics, all cookieless analytics tools. No cookies, no localStorage, and no fingerprinting are used. IP addresses are hashed with a daily-rotating salt and never stored. Only aggregate page views, referrers, and coarse device/country information are retained. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
 				<li><b>Feedback content</b> - only if you open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener">GitHub issue</a> (public) or send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a>. Used solely for correspondence about TweetFeed.</li>
-				<li><b>Public Twitter/X content</b> - the Service ingests publicly available tweets and extracts IOCs from them. It does not process private messages, protected accounts, or any non-public content. The author handle of a tweet is retained alongside its IOC strictly as provenance metadata.</li>
+				<li><b>Public Twitter/X content</b> - the Service ingests publicly available tweets and extracts IOCs from them. It does not process private messages, protected accounts, or any non-public content. The author handle of a tweet is retained alongside its IOC strictly as provenance metadata. Retention: the core IOC dataset (daily CSV buckets, including the provenance handle) is kept indefinitely as a public historical archive released under CC0 (§7), with no automatic expiration window.</li>
 				<li><b>Researcher profile avatars</b> - the public X/Twitter profile picture of researchers currently active in the rolling today/week/month/year windows is sourced via <a href="https://unavatar.io/" target="_blank" rel="noopener">unavatar.io</a> and cached as a static image at tweetfeed.live/pics/*.png. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: pruned 180 days after a researcher drops out of the active window.</li>
 				</ul>
 
