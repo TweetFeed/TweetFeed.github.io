@@ -1032,23 +1032,23 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script defer src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
+	<script defer src="../js/sb-admin-2.min.js"></script>
 	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
+	<script defer src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script defer src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- js/demo/datatables-demo.js removed: targets #dataTable, which does not exist on this page (graphs uses #dataTableType*/#dataTableTag* tables, initialized in its own inline script below); confirmed no-op here -->
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js"></script>
 	<!-- Page level custom scripts -->
-	<script src="../vendor/chart.js/Chart.min.js"></script>
+	<script defer src="../vendor/chart.js/Chart.min.js"></script>
 	<script>
+	document.addEventListener('DOMContentLoaded', function() {
 	let tableTypesToday = $('#dataTableTypesToday').DataTable();
 	let tableTagsToday = $('#dataTableTagsToday').DataTable();
 	let tableTypesWeek = $('#dataTableTypesWeek').DataTable();
@@ -1690,6 +1690,7 @@
 			}
 		});
 	}
+	});
 	</script>
 	<script>
 	function addData(chart, label, data) {

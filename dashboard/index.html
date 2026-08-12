@@ -42,7 +42,7 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
-	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- vendor/datatables/dataTables.bootstrap4.min.css removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<!-- <link href="../css/table.css?v=3" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
 	<link href="../css/index.css" rel="stylesheet">
@@ -52,8 +52,20 @@
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
-	<!-- Fonts -->
-	<link href="../css/fonts.css" rel="stylesheet">
+	<!-- Fonts: css/fonts.css inlined (150B, dashboard-only, no @font-face) to remove a blocking round-trip -->
+	<style>
+	label {
+		font-size: 15px;
+		font-family: 'Rubik', sans-serif;
+		color:black;
+	}
+
+	span[id^='check'] {
+		font-size: 12px;
+		font-family: 'Rubik', sans-serif;
+		color:grey;
+	}
+	</style>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -993,20 +1005,17 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script defer src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
+	<script defer src="../js/sb-admin-2.min.js"></script>
 	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
+	<!-- vendor/datatables/*.js + js/demo/datatables-demo.js removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// Tweet rendering queue: loadData() may run before platform widgets.js
@@ -1098,6 +1107,7 @@
 	}
 	</script>
 	<script>
+	document.addEventListener('DOMContentLoaded', function() {
 	$(function() {
 		let autorefresh = 1;
 		let init = 1;
@@ -1438,6 +1448,7 @@
 		}
 
 	})
+	});
 	</script>
 	<script>
 	// Defer Twitter widgets.js until after window.load + 1.5s so the
@@ -1462,9 +1473,11 @@
 	});
 	</script>
 	<script>
+	document.addEventListener('DOMContentLoaded', function() {
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
+	});
 	</script>
 	<script>
 	function nFormatter(num, digits) {

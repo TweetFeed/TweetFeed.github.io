@@ -644,22 +644,23 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="vendor/jquery/jquery.min.js"></script>
+	<script defer src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script defer src="vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
+	<script defer src="js/sb-admin-2.min.js"></script>
 	<!-- Page level plugins -->
-	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script defer src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script defer src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- Export -->
-	<script src="js/demo/datatables-demo.js"></script>
+	<script defer src="js/demo/datatables-demo.js"></script>
 	<!-- TweetFeed shared utilities -->
-	<script src="js/config.js"></script>
-	<script src="js/utils.js?v=2"></script>
+	<script defer src="js/config.js"></script>
+	<script defer src="js/utils.js?v=2"></script>
 	<!-- Page level custom scripts -->
 	<script>
+	document.addEventListener('DOMContentLoaded', function() {
 	$(function() {
 		let autorefresh = 1;
 		let init = 1;
@@ -889,6 +890,7 @@
 
 		}
 	})
+	});
 	</script>
 	<script>
 	function exportTableToCSV(filename) {
@@ -964,9 +966,11 @@
 
 	</script>
 	<script>
+	document.addEventListener('DOMContentLoaded', function() {
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
+	});
 	</script>
 	<!-- copyClipboard now provided by js/utils.js (event delegation on .tf-copy) -->
 </body>
