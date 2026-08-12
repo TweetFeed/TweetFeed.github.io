@@ -1,40 +1,40 @@
 {
-  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
       "name": "tweetfeed-iocs",
-      "type": "skill",
+      "type": "skill-md",
       "description": "Query TweetFeed for security IOCs (URLs, domains, IPs, MD5/SHA256 hashes) shared by the infosec community on Twitter/X. Public HTTP API, no auth, CC0 licensed. Filter by @researcher, tag (malware family or category), and IOC type.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-iocs/SKILL.md",
-      "sha256": "6399d1602c16f55acfa13021285758d25fc3a63b8836aa463c81d985082a9629"
+      "digest": "sha256:6399d1602c16f55acfa13021285758d25fc3a63b8836aa463c81d985082a9629"
     },
     {
       "name": "tweetfeed-ioc-lookup",
-      "type": "skill",
+      "type": "skill-md",
       "description": "Look up one specific IOC (URL, domain, IP, MD5 or SHA-256 hash) in TweetFeed's full 365-day retention window - first/last seen, reporters, and optional AI context. Exact match, not a substring search. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-ioc-lookup/SKILL.md",
-      "sha256": "e60af32903c3403f1a75ff7f0bc7788ee9210b0e0abaa27324153a4d4091c59d"
+      "digest": "sha256:e60af32903c3403f1a75ff7f0bc7788ee9210b0e0abaa27324153a4d4091c59d"
     },
     {
       "name": "tweetfeed-blocklists",
-      "type": "skill",
+      "type": "skill-md",
       "description": "Fetch ready-made plain-text blocklists (domains, hosts-file, AdGuard, IPs, DNS RPZ, dnsmasq, full URLs) built from TweetFeed's rolling 30-day IOC window, for direct import into Pi-hole, AdGuard Home, firewalls, DNS resolvers or IDS. Rebuilt every 15 minutes, CC0 licensed, no auth.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-blocklists/SKILL.md",
-      "sha256": "37520508be466655c1beb8ff89f7f80f4c856bfe11712983a180cc64340aabba"
+      "digest": "sha256:37520508be466655c1beb8ff89f7f80f4c856bfe11712983a180cc64340aabba"
     },
     {
       "name": "tweetfeed-trends",
-      "type": "skill",
+      "type": "skill-md",
       "description": "Pull TweetFeed's community IOC trend analytics: 31-day daily volume by type, week-over-week top-moving tags, most-abused TLDs, and the new-vs-recurring novelty ratio. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-trends/SKILL.md",
-      "sha256": "57171bd909e24450cf4feb631ad602d9e775f93ee50790f248c987ca104425dc"
+      "digest": "sha256:57171bd909e24450cf4feb631ad602d9e775f93ee50790f248c987ca104425dc"
     },
     {
       "name": "tweetfeed-campaigns",
-      "type": "skill",
+      "type": "skill-md",
       "description": "Query TweetFeed's AI-clustered campaign groupings: related IOCs from the last 7 days grouped by shared infrastructure or tag, then named/described by an AI layer that never adds or removes IOCs. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-campaigns/SKILL.md",
-      "sha256": "cb469395ae063feb876dbb49c331757af5e0b884e1e5f0228c777c57e7ac2023"
+      "digest": "sha256:cb469395ae063feb876dbb49c331757af5e0b884e1e5f0228c777c57e7ac2023"
     }
   ]
 }

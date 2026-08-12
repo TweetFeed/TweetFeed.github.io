@@ -365,15 +365,17 @@
 						<tr>
 							<td><code>check_ip</code></td>
 							<td>
-								Check whether an IPv4 or IPv6 address appears in the past 30 days
-								(substring match against <code>type=ip</code> IOCs).
+								Check whether an IPv4 or IPv6 address appears in TweetFeed. Exact match
+								over the past 365 days, falling back to a 30-day substring match against
+								<code>type=ip</code> IOCs if there's no exact hit.
 							</td>
 						</tr>
 						<tr>
 							<td><code>check_hash</code></td>
 							<td>
-								Check whether a file hash appears in the past 30 days. Type auto-detected
-								from length (32 hex = MD5, 64 hex = SHA-256). Exact match, hex required.
+								Check whether a file hash appears in TweetFeed. Exact match over the past
+								365 days, falling back to a 30-day window if there's no exact hit. Type
+								auto-detected from length (32 hex = MD5, 64 hex = SHA-256), hex required.
 							</td>
 						</tr>
 						<tr>
@@ -405,8 +407,9 @@
 						<tr>
 							<td><code>enrich_ioc</code></td>
 							<td>
-								Auto-detects IOC type (URL / domain / IP / MD5 / SHA-256) from the value
-								and looks it up across the past 30 days. Saves the agent from picking the
+								Auto-detects IOC type (URL / domain / IP / MD5 / SHA-256) from the value.
+								Exact match over the past 365 days first, falling back to a 30-day
+								substring scan if there's no exact hit. Saves the agent from picking the
 								right <code>check_*</code> tool when the type is uncertain.
 							</td>
 						</tr>

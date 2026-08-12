@@ -339,6 +339,7 @@
 				<li><b>Aggregate traffic analytics</b> - collected via <a href="https://umami.is/" target="_blank" rel="noopener">Umami</a>, <a href="https://ahrefs.com/web-analytics" target="_blank" rel="noopener">Ahrefs Web Analytics</a> and Cloudflare Web Analytics, all cookieless analytics tools. No cookies, no localStorage, and no fingerprinting are used. IP addresses are hashed with a daily-rotating salt and never stored. Only aggregate page views, referrers, and coarse device/country information are retained. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
 				<li><b>Feedback content</b> - only if you open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener">GitHub issue</a> (public) or send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a>. Used solely for correspondence about TweetFeed.</li>
 				<li><b>Public Twitter/X content</b> - the Service ingests publicly available tweets and extracts IOCs from them. It does not process private messages, protected accounts, or any non-public content. The author handle of a tweet is retained alongside its IOC strictly as provenance metadata.</li>
+				<li><b>Researcher profile avatars</b> - the public X/Twitter profile picture of researchers currently active in the rolling today/week/month/year windows is sourced via <a href="https://unavatar.io/" target="_blank" rel="noopener">unavatar.io</a> and cached as a static image at tweetfeed.live/pics/*.png. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: pruned 180 days after a researcher drops out of the active window.</li>
 				</ul>
 
 				<br>
@@ -358,6 +359,7 @@
 				<li><b>GitHub, Inc.</b> - hosts the static frontend at tweetfeed.live via GitHub Pages, the public data repository from which feeds are served, and the public issue tracker used for feedback and IOC reports. Issue content is public and subject to GitHub's own terms and privacy policy.</li>
 				<li><b>Umami Software, Inc.</b> - cookieless web analytics (cloud.umami.is). Receives page URL, referrer, and hashed visitor signal; does not set cookies or store IP addresses.</li>
 				<li><b>Ahrefs Pte. Ltd.</b> - cookieless web analytics (analytics.ahrefs.com). Receives page URL and referrer; does not set cookies or store personal identifiers.</li>
+				<li><b>unavatar.io</b> - sources the public X/Twitter profile avatar image for each currently active researcher; the image is cached and re-served from tweetfeed.live/pics/*.png, so visitor requests never reach unavatar.io directly.</li>
 				<li><b>Google LLC</b> - Google Fonts used for typography on the website.</li>
 				<li><b>Public CDN providers</b> - jsDelivr, Cloudflare CDN, and similar services deliver common JavaScript and CSS libraries (jQuery, Bootstrap, DataTables, FontAwesome).</li>
 				</ul>
