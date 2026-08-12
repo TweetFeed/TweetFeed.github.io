@@ -918,12 +918,8 @@ tags:
       - {display: "Sliver", slug: "sliver"}
 
   - slug: njrat
-    # display_tag diverge a proposito del canonical 'Njrat' (tags.yaml/CSV/checkbox
-    # value, 475+ rows historicas): njRAT es el casing de la comunidad. El matching
-    # es por value= exacto del canonical (worker case-insensitive), NO por display.
-    # NO renombrar el canonical: obligaria a retro-editar el historico en 2 repos.
-    display_tag: njRAT
-    license_subject: "njRAT"
+    display_tag: Njrat
+    license_subject: "Njrat"
     category: malware-family
     short_subtitle: "Long-running .NET commodity Remote Access Trojan, especially active in MENA-region campaigns"
     short_subtitle_mobile: "Long-running .NET commodity RAT (especially MENA)"
