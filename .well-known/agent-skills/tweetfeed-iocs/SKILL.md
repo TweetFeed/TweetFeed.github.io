@@ -96,7 +96,9 @@ For grouped threat activity instead of raw rows, use the separate campaigns endp
 curl -s 'https://api.tweetfeed.live/v1/campaigns' | jq '.campaigns[] | {id, name, confidence, ioc_count}'
 ```
 
-Each campaign clusters related IOCs from the last 7 days by shared infrastructure (registered domain, cross-domain URL path patterns) or tag, then an AI layer names and describes the cluster - it never adds or removes IOCs, every `iocs` entry is verbatim from the feed. Regenerated daily; `stale: true` plus `stale_since` means the last run failed and this is the previous day's document.
+Each campaign clusters related IOCs from a rolling 30-day window by shared infrastructure (registered domain, cross-domain URL path patterns) or tag, then an AI layer names and describes the cluster - it never adds or removes IOCs, every `iocs` entry is verbatim from the feed. Regenerated daily; `stale: true` plus `stale_since` means the last run failed and this is the previous day's document.
+
+Each campaign also carries optional `ioc_count_1d`/`ioc_count_7d`/`ioc_count_30d` int fields (IOCs seen in the last 1/7/30 days; `ioc_count` stays the total across the full window). They may be absent on older documents - a missing `ioc_count_7d` should be treated as "currently active", not as zero. `ioc_count_7d > 0` is what identifies a campaign as currently active.
 
 MCP equivalent: `get_campaigns` tool, optional `brand` (substring match on `targeted_brand`), `min_confidence` (`low`/`medium`/`high`), `limit` (1-50, default 20).
 

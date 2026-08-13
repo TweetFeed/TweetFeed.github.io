@@ -17,14 +17,14 @@
 	<title>AI Campaigns - TweetFeed</title>
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="AI Campaigns - TweetFeed">
-	<meta name="twitter:description" content="AI-generated threat campaign clusters from the last 7 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta name="twitter:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with confidence and targeted brand.">
 	<meta name="twitter:url" content="https://tweetfeed.live/campaigns/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<meta property="og:url" content="https://tweetfeed.live/campaigns/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="AI Campaigns - TweetFeed">
-	<meta property="og:description" content="AI-generated threat campaign clusters from the last 7 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta property="og:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with confidence and targeted brand.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -65,7 +65,7 @@
 		"@type": "CollectionPage",
 		"name": "AI Campaigns",
 		"url": "https://tweetfeed.live/campaigns/",
-		"description": "Daily AI-clustered threat campaigns from TweetFeed IOCs, refreshed each day from the last 7 days of community-reported indicators.",
+		"description": "Daily AI-clustered threat campaigns from TweetFeed IOCs, refreshed each day from the last 30 days of community-reported indicators.",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
 		"inLanguage": "en"
 	}
@@ -85,9 +85,9 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 7 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative."}},
+			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative."}},
 			{"@type": "Question", "name": "How is campaign confidence calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Confidence (high, medium, low) reflects how strongly related the underlying IOCs are. Shared registrable domains, matching tags and overlapping reporters raise confidence; loosely related indicators lower it. Treat low-confidence campaigns as a lead to verify, not a verdict."}},
-			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 7-day window of TweetFeed IOCs. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
+			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows campaigns still active this week by default - switch to 'All (30 days)' to see the full window. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
 			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}}
 		]
 	}
@@ -418,8 +418,8 @@
 
 				<div class="card mb-3">
 					<div class="card-body">
-						<p style="margin-bottom:0.6rem; color:#333; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed clusters related IOCs shared over the last 7 days into campaign narratives using AI: shared infrastructure, malware family, TTPs and targeted brand are grouped together so you see the bigger picture instead of scrolling isolated indicators one by one.</p>
-						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 7 days of community IOCs.</p>
+						<p style="margin-bottom:0.6rem; color:#333; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed clusters related IOCs shared over the last 30 days into campaign narratives using AI: shared infrastructure, malware family, TTPs and targeted brand are grouped together so you see the bigger picture instead of scrolling isolated indicators one by one. This page shows campaigns active this week by default - switch to 'All (30 days)' below to see the full window.</p>
+						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
 						<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
 					</div>
 				</div>
@@ -437,7 +437,13 @@
 				<div class="empty-state" id="campaignsEmpty" style="display:none;">
 					<div class="empty-icon"><i class="far fa-folder-open"></i></div>
 					<div class="empty-message">No campaigns clustered right now</div>
-					<div class="empty-hint">Check back soon - campaigns are recomputed daily from the last 7 days of IOCs.</div>
+					<div class="empty-hint">Check back soon - campaigns are recomputed daily from the last 30 days of IOCs.</div>
+				</div>
+
+				<div class="tfc-filter-row" id="campaignsActivityRow" style="display:none;">
+					<span class="tfc-filter-label">Show:</span>
+					<button type="button" class="tfc-filter-chip active" data-activity="week" aria-pressed="true">Active this week</button>
+					<button type="button" class="tfc-filter-chip" data-activity="all" aria-pressed="false">All (30 days)</button>
 				</div>
 
 				<div class="tfc-filter-row" id="campaignsFilterRow" style="display:none;">
@@ -453,14 +459,14 @@
 				<div class="empty-state" id="campaignsFilterEmpty" style="display:none;">
 					<div class="empty-icon"><i class="fas fa-filter"></i></div>
 					<div class="empty-message">No campaigns match this filter</div>
-					<div class="empty-hint">Try enabling another confidence level above.</div>
+					<div class="empty-hint">Try enabling another confidence level, or switch to 'All (30 days)' above.</div>
 				</div>
 
 				<section class="faq-section">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an AI campaign on TweetFeed?</summary>
-						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 7 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative.</p>
+						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. Instead of scrolling isolated indicators one by one, you see the cluster as a single narrative.</p>
 					</details>
 					<details>
 						<summary>How is campaign confidence calculated?</summary>
@@ -468,7 +474,7 @@
 					</details>
 					<details>
 						<summary>How often is the campaign data refreshed?</summary>
-						<p>Campaigns are recomputed daily from a rolling 7-day window of TweetFeed IOCs. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
+						<p>Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows campaigns still active this week by default - switch to 'All (30 days)' to see the full window. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
 					</details>
 					<details>
 						<summary>Where does the underlying IOC data come from?</summary>
@@ -608,14 +614,23 @@
 			var iocsHtml = shown.map(renderIocRow).join('');
 			var moreCount = iocs.length > shown.length ? (iocs.length - shown.length) : 0;
 
+			// Activity flag: ioc_count_7d is optional (a doc from before the
+			// field was added, or a degraded response, may not carry it) -
+			// missing/non-numeric defaults to "active" so nothing silently
+			// disappears from the default view.
+			var isActive = (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+
 			var metaBits = [];
 			metaBits.push('<b>' + esc(TweetFeed.numberFormat(c.ioc_count || 0)) + '</b> IOCs');
+			if (typeof c.ioc_count_7d === 'number') {
+				metaBits.push('<b>' + esc(TweetFeed.numberFormat(c.ioc_count_7d)) + '</b> this week');
+			}
 			if (typesStr) metaBits.push(esc(typesStr));
 			metaBits.push(esc(c.first_seen || '?') + ' &ndash; ' + esc(c.last_seen || '?'));
 			if (reportersHtml) metaBits.push('reporters: ' + reportersHtml);
 
 			return (
-				'<div class="card mb-4" data-confidence="' + conf + '"' + idAttr + '><div class="card-body">' +
+				'<div class="card mb-4" data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '"' + idAttr + '><div class="card-body">' +
 					'<div class="tfc-card-header">' +
 						'<h3 class="tfc-name">' + esc(c.name || 'Untitled campaign') + '</h3>' +
 						'<span class="tfc-badge tfc-badge-' + conf + '">' + esc(conf) + ' confidence</span>' +
@@ -632,37 +647,63 @@
 			);
 		}
 
-		// Confidence filter: client-side show/hide only, no re-fetch. Reads
-		// the current on/off state straight from the chip DOM (.active class)
-		// rather than tracking a parallel JS state object.
-		function applyConfidenceFilter() {
+		// Filtering: client-side show/hide only, no re-fetch. Reads current
+		// state straight from the chip DOM (.active class) rather than
+		// tracking a parallel JS state object. A card shows only if its
+		// confidence chip is active AND (the activity chip is "all" OR the
+		// card's data-active is "1").
+		function applyFilters() {
 			var activeConfidences = {};
-			$('.tfc-filter-chip').each(function() {
+			$('.tfc-filter-chip[data-confidence]').each(function() {
 				var $chip = $(this);
 				activeConfidences[$chip.data('confidence')] = $chip.hasClass('active');
 			});
+			var showAllActivity = $('.tfc-filter-chip[data-activity="all"]').hasClass('active');
 			var $cards = $('#campaignsList > .card');
 			var shown = 0;
 			$cards.each(function() {
-				var conf = $(this).attr('data-confidence') || 'low';
-				var visible = activeConfidences[conf] !== false;
-				$(this).toggle(visible);
+				var $card = $(this);
+				var conf = $card.attr('data-confidence') || 'low';
+				var confOk = activeConfidences[conf] !== false;
+				var activityOk = showAllActivity || $card.attr('data-active') !== '0';
+				var visible = confOk && activityOk;
+				$card.toggle(visible);
 				if (visible) shown++;
 			});
 			$('#campaignsFilterCount').text(shown + ' shown');
 			$('#campaignsFilterEmpty').toggle(shown === 0);
 		}
 
+		// Activity chip group behaves like a 2-way radio (unlike the
+		// independently-toggleable confidence chips): selecting one always
+		// deselects the other, so exactly one of "week"/"all" is active.
+		function setActivityChip(value) {
+			$('.tfc-filter-chip[data-activity]').each(function() {
+				var $chip = $(this);
+				var isMatch = $chip.data('activity') === value;
+				$chip.toggleClass('active', isMatch);
+				$chip.attr('aria-pressed', isMatch ? 'true' : 'false');
+			});
+		}
+
 		// Deep-link scroll: only ever acts on a hash that passes the same
 		// fixed-shape check used to build the ids in the first place - a
 		// missing/junk/foreign hash is a silent no-op, never a DOM lookup on
-		// unsanitized input.
+		// unsanitized input. If the target campaign exists but is hidden by
+		// the default "active this week" filter, switch to "All (30 days)"
+		// first so the deep link still lands on the card instead of
+		// scrolling to nothing.
 		function scrollToHashCampaign() {
 			var hash = window.location.hash || '';
 			if (hash.charAt(0) === '#') hash = hash.slice(1);
 			if (!CAMPAIGN_ID_RE.test(hash)) return;
 			var el = document.getElementById(hash);
-			if (el && typeof el.scrollIntoView === 'function') {
+			if (!el) return;
+			if (el.style.display === 'none') {
+				setActivityChip('all');
+				applyFilters();
+			}
+			if (typeof el.scrollIntoView === 'function') {
 				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
 		}
@@ -671,11 +712,18 @@
 			$('#campaignsLoading').hide();
 
 			var campaigns = (data && data.campaigns) || [];
-			var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 7 days of community IOCs';
+			// Degrades gracefully when ioc_count_7d is absent from the doc
+			// (older API version): every campaign counts as active in that
+			// case, matching renderCampaignCard's data-active default.
+			var activeCount = campaigns.filter(function(c) {
+				return (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+			}).length;
+
+			var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs';
 			if (data && data.generated_at) {
 				genLine += ' &middot; last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(data.generated_at));
 			}
-			genLine += ' &middot; ' + campaigns.length + ' campaign' + (campaigns.length === 1 ? '' : 's');
+			genLine += ' &middot; ' + activeCount + ' active this week &middot; ' + campaigns.length + ' tracked over 30 days';
 			$('#generatedLine').html(genLine);
 
 			if (data && data.stale) {
@@ -699,8 +747,9 @@
 			// Copy buttons need no re-init: utils.js attaches document-level
 			// .tf-copy delegation once at page load.
 
+			$('#campaignsActivityRow').show();
 			$('#campaignsFilterRow').show();
-			applyConfidenceFilter();
+			applyFilters();
 			scrollToHashCampaign();
 		}
 
@@ -716,10 +765,17 @@
 				error: showError
 			});
 
-			$(document).on('click', '.tfc-filter-chip', function() {
+			$(document).on('click', '.tfc-filter-chip[data-confidence]', function() {
 				var $chip = $(this).toggleClass('active');
 				$chip.attr('aria-pressed', $chip.hasClass('active') ? 'true' : 'false');
-				applyConfidenceFilter();
+				applyFilters();
+			});
+
+			$(document).on('click', '.tfc-filter-chip[data-activity]', function() {
+				var $chip = $(this);
+				if ($chip.hasClass('active')) return;
+				setActivityChip($chip.data('activity'));
+				applyFilters();
 			});
 		});
 	})();

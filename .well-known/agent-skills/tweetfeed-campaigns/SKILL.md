@@ -1,11 +1,11 @@
 ---
 name: tweetfeed-campaigns
-description: Query TweetFeed's AI-clustered campaign groupings - related IOCs from the last 7 days grouped by shared infrastructure (registered domain, cross-domain URL path patterns) or a shared specific tag, then named and described by an AI layer that never adds or removes IOCs. Invoke when the user asks "what phishing campaigns are active right now", "is this IOC part of a larger campaign", or wants IOCs grouped by threat instead of a flat time-windowed list.
+description: Query TweetFeed's AI-clustered campaign groupings - related IOCs from a rolling 30-day window grouped by shared infrastructure (registered domain, cross-domain URL path patterns) or a shared specific tag, then named and described by an AI layer that never adds or removes IOCs. Invoke when the user asks "what phishing campaigns are active right now", "is this IOC part of a larger campaign", or wants IOCs grouped by threat instead of a flat time-windowed list.
 ---
 
 # TweetFeed Campaigns
 
-Daily job that clusters the last 7 days of community-reported IOCs into named campaigns. Clustering is two-stage: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, or a shared specific tag - generic tags like `#phishing`/`#malware` never cluster alone), then an AI layer names and describes each cluster. The AI only names/describes - it never adds or removes IOCs; every `iocs` entry in a campaign is verbatim from the feed.
+Daily job that clusters the last 30 days of community-reported IOCs into named campaigns. Clustering is two-stage: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, or a shared specific tag - generic tags like `#phishing`/`#malware` never cluster alone), then an AI layer names and describes each cluster. The AI only names/describes - it never adds or removes IOCs; every `iocs` entry in a campaign is verbatim from the feed.
 
 ```bash
 curl -s https://api.tweetfeed.live/v1/campaigns | jq '.campaigns[] | {id, name, confidence, ioc_count}'
@@ -13,7 +13,7 @@ curl -s https://api.tweetfeed.live/v1/campaigns | jq '.campaigns[] | {id, name, 
 
 ## Response shape
 
-Top level: `version`, `generated_at`, `window` (`week`), `stale` / `stale_since`, `campaign_count`, `campaigns` (array).
+Top level: `version`, `generated_at`, `window` (`month`), `stale` / `stale_since`, `campaign_count`, `campaigns` (array).
 
 Each campaign:
 
@@ -27,6 +27,9 @@ Each campaign:
   "first_seen": "...",
   "last_seen": "...",
   "ioc_count": 0,
+  "ioc_count_1d": 0,
+  "ioc_count_7d": 0,
+  "ioc_count_30d": 0,
   "types": {"url": 0, "domain": 0, "ip": 0, "sha256": 0, "md5": 0},
   "tags": ["..."],
   "reporters": ["..."],
@@ -37,6 +40,8 @@ Each campaign:
 ```
 
 `confidence` is `high` / `medium` / `low`. `targeted_brand` is present only when one was identified. `iocs` is capped at 25 sample rows per campaign even if the cluster has more members.
+
+`ioc_count_1d`/`ioc_count_7d`/`ioc_count_30d` are optional ints: IOCs seen in the last 1/7/30 days respectively (`ioc_count` stays the total across the full window, unchanged). They may be absent on older documents - treat a missing `ioc_count_7d` as "currently active" rather than as zero. `ioc_count_7d > 0` is what identifies a campaign as currently active; the human page at `/campaigns/` uses exactly that check to default to "active this week" and hide campaigns that have gone quiet.
 
 ## Staleness
 
@@ -62,7 +67,7 @@ curl -s https://api.tweetfeed.live/v1/campaigns | jq '.campaigns[] | select(.tar
 ## Gotchas
 
 - This is not attribution - "campaign" here means shared infrastructure or tag, not a claim about who operates it.
-- 7-day rolling window only; older activity isn't clustered even if it's still in the raw IOC feed.
+- 30-day rolling window only; older activity isn't clustered even if it's still in the raw IOC feed.
 - `iocs` samples cap at 25 - for the full membership of a cluster you only get what's sampled, not a guaranteed complete list.
 
 ## License
