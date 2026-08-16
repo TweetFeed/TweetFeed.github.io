@@ -1679,6 +1679,64 @@
 			);
 		}
 
+		// Domain registration metadata (optional API field, domain/URL lookups
+		// only). Sibling pattern to renderNet() above - reuses the tfl-net-*
+		// namespace as-is rather than a new tfl-reg- one, since a card with a
+		// header + N rows + small foot is exactly this shape too. Coverage is
+		// sparse and growing, so absence renders nothing (checked first, both
+		// as an object-shape guard and as the "nothing to show yet" case).
+		// Every field is esc()'d. A confirmed-unregistered lookup renders a
+		// single muted line instead of the card - no other copy is added.
+		function renderReg(reg) {
+			if (!reg || typeof reg !== 'object' || Array.isArray(reg)) return '';
+
+			if (reg.status === 'nxdomain') {
+				return '<div class="tfl-meta">Domain no longer registered (checked at first sighting)</div>';
+			}
+
+			var hasRegistrar = typeof reg.registrar === 'string' && reg.registrar;
+			var hasCreated = typeof reg.created === 'string' && reg.created;
+			var hasNs = Array.isArray(reg.ns) && reg.ns.length > 0;
+			var hasIps = Array.isArray(reg.ips) && reg.ips.length > 0;
+			var hasAsn = typeof reg.asn === 'string' && reg.asn;
+			var hasOrg = typeof reg.org === 'string' && reg.org;
+			if (!hasRegistrar && !hasCreated && !hasNs && !hasIps && !hasAsn && !hasOrg) return '';
+
+			var rows = [];
+			if (hasRegistrar) {
+				rows.push('Registrar: ' + esc(reg.registrar) +
+					(hasCreated ? ' (registered ' + esc(reg.created.slice(0, 10)) + ')' : ''));
+			} else if (hasCreated) {
+				rows.push('Registered: ' + esc(reg.created.slice(0, 10)));
+			}
+			if (hasNs) {
+				rows.push('Nameservers: ' + reg.ns.map(esc).join(', '));
+			}
+			if (hasIps) {
+				rows.push('Resolves to: ' + reg.ips.map(esc).join(', '));
+			}
+			if (hasAsn || hasOrg) {
+				rows.push('ASN: ' + (hasAsn ? esc(reg.asn) : '') +
+					(hasAsn && hasOrg ? ' - ' : '') + (hasOrg ? esc(reg.org) : ''));
+			}
+
+			var rowsHtml = rows.map(function(line) {
+				return '<div class="tfl-net-row">' + line + '</div>';
+			}).join('');
+
+			var checkedHtml = (typeof reg.checked_at === 'string' && reg.checked_at)
+				? '<div class="tfl-net-foot">(checked ' + esc(reg.checked_at.slice(0, 10)) + ')</div>'
+				: '';
+
+			return (
+				'<div class="tfl-net" role="note" aria-label="Domain registration metadata">' +
+					'<div class="tfl-net-header"><i class="fas fa-id-card"></i> Registration</div>' +
+					rowsHtml +
+					checkedHtml +
+				'</div>'
+			);
+		}
+
 		function renderEmpty(query) {
 			return (
 				'<div class="empty-state">' +
@@ -1705,6 +1763,7 @@
 
 			html += renderExternal(data && data.external);
 			html += renderNet(data && data.net);
+			html += renderReg(data && data.reg);
 			html += renderAI(data && data.ai);
 
 			$results.html(html);

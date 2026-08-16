@@ -979,6 +979,58 @@ components:
               description: |
                 `true` when the looked-up value is a bogon/reserved-range
                 address. Other fields are absent in that case.
+        reg:
+          type: object
+          description: |
+            Optional. Domain registration enrichment: RDAP registrar/
+            creation-date/nameservers plus the IP(s)/ASN the domain resolved
+            to at first-seen. Covers domain/url values seen in the 30-day
+            window only; absent when the value hasn't been enriched yet or
+            falls outside that coverage window.
+          properties:
+            apex:
+              type: string
+              description: Registered/apex domain the lookup value resolves under.
+            registrar:
+              type: string
+              nullable: true
+              description: Registrar name from RDAP. `null` when unavailable.
+            created:
+              type: string
+              nullable: true
+              description: Domain creation date from RDAP. `null` when unavailable.
+            ns:
+              type: array
+              nullable: true
+              items:
+                type: string
+              description: Nameservers from RDAP. `null` when unavailable.
+            ips:
+              type: array
+              nullable: true
+              items:
+                type: string
+              description: IP addresses the domain resolved to at first-seen. `null` when unavailable.
+            asn:
+              type: string
+              nullable: true
+              description: ASN of the resolved IP(s) at first-seen. `null` when unavailable.
+            org:
+              type: string
+              nullable: true
+              description: Organisation name for the ASN. `null` when unavailable.
+            status:
+              type: string
+              enum: [ok, nxdomain, tld_unsupported]
+              description: |
+                `ok` = RDAP registration data found; `nxdomain` = the domain was
+                already deleted from the registry at first check; `tld_unsupported` =
+                the TLD's registry exposes no RDAP (registration fields are null,
+                but resolved IPs/ASN may still be present).
+            checked_at:
+              type: string
+              format: date-time
+              description: UTC timestamp the registration/DNS data was checked.
 
     TrendsDocument:
       type: object
