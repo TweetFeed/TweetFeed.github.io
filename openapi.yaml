@@ -393,7 +393,7 @@ paths:
       operationId: getCampaigns
       summary: List AI-clustered threat campaigns
       description: |
-        Returns AI-clustered campaign groupings of the last 7 days of community
+        Returns AI-clustered campaign groupings of the last 30 days of community
         IOCs. Clustering is two-stage: deterministic pre-grouping (shared
         registered domain, cross-domain URL path patterns, or a shared specific
         tag), followed by AI naming and context generation. The AI only names
@@ -1094,8 +1094,8 @@ components:
           example: "2026-07-05T19:36:35Z"
         window:
           type: string
-          enum: [week]
-          description: Source window for clustering - always the rolling last 7 days.
+          enum: [month]
+          description: Source window for clustering - always the rolling last 30 days.
         stale:
           type: boolean
           description: |
@@ -1158,6 +1158,22 @@ components:
           type: integer
           description: Total IOCs in the cluster (may exceed the `iocs` sample size).
           example: 198
+        ioc_count_1d:
+          type: integer
+          description: |
+            IOCs in the cluster observed in the last 1 day. Per-window activity
+            counts satisfy `ioc_count_1d <= ioc_count_7d <= ioc_count_30d <= ioc_count`.
+          example: 4
+        ioc_count_7d:
+          type: integer
+          description: |
+            IOCs in the cluster observed in the last 7 days. Consumers filtering
+            for live campaigns should use `ioc_count_7d > 0`.
+          example: 22
+        ioc_count_30d:
+          type: integer
+          description: IOCs in the cluster observed in the last 30 days.
+          example: 87
         types:
           type: object
           description: Per-IOC-type counts across the cluster.

@@ -22,7 +22,7 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 | `get_tag_info` | Aggregate counts across all time windows plus recent IOCs for one tag. |
 | `get_trending` | Top tags and IOC-type distribution for a window. |
 | `enrich_ioc` | Auto-detected-type 365-day exact lookup, with AI context when available. |
-| `get_campaigns` | AI-clustered campaign groupings of the last 7 days, filterable by brand/confidence. |
+| `get_campaigns` | AI-clustered campaign groupings of the last 30 days, filterable by brand/confidence. |
 | `get_trends` | 31-day daily volume, top movers, TLD distribution, novelty ratio. |
 
 ## Data

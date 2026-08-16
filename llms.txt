@@ -41,8 +41,8 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 
 ## Campaigns
 
-- [AI-clustered campaigns](https://tweetfeed.live/campaigns/): human page showing daily campaign groupings clustered from the last 7 days of community IOCs.
-- [Campaigns API](https://api.tweetfeed.live/v1/campaigns): JSON, CORS open, no auth, CC0. Returns `version`, `generated_at`, `window` (`week`), `stale`/`stale_since`, `campaign_count`, and a `campaigns` array. Each campaign has `id` (`tfc-<12hex>`), `name`, `context`, `confidence` (`high`/`medium`/`low`), `targeted_brand`, `first_seen`/`last_seen`, `ioc_count`, per-type `types` counts, `tags`, `reporters`, up to 25 sample `iocs` (same shape as the main feed), `member_cluster_ids`, and `anchors` (`registered_domains`, `url_path_patterns`, `tags` used for pre-grouping).
+- [AI-clustered campaigns](https://tweetfeed.live/campaigns/): human page showing daily campaign groupings clustered from the last 30 days of community IOCs.
+- [Campaigns API](https://api.tweetfeed.live/v1/campaigns): JSON, CORS open, no auth, CC0. Returns `version`, `generated_at`, `window` (`month`), `stale`/`stale_since`, `campaign_count`, and a `campaigns` array. Each campaign has `id` (`tfc-<12hex>`), `name`, `context`, `confidence` (`high`/`medium`/`low`), `targeted_brand`, `first_seen`/`last_seen`, `ioc_count`, per-type `types` counts, `tags`, `reporters`, up to 25 sample `iocs` (same shape as the main feed), `member_cluster_ids`, and `anchors` (`registered_domains`, `url_path_patterns`, `tags` used for pre-grouping).
 - Clustering is two-stage: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, or a shared specific tag), then AI naming and context generation. The AI only names and describes clusters - it never adds or removes IOCs; every `iocs` entry is verbatim from the feed.
 - Regenerated daily. If a run fails, `stale` is `true` and `stale_since` holds the date of the last successful run; the document falls back to that previous snapshot instead of going empty.
 - MCP tool: `get_campaigns` (optional `brand`, `min_confidence`, `limit`).

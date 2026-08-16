@@ -34,14 +34,14 @@ TweetFeed is a free, community-sourced Threat Intelligence feed. It answers "has
 - `get_tag_info(tag)`: aggregate counts across all four time windows plus recent IOCs for one tag.
 - `get_trending(window)`: top tags and IOC-type distribution for a window, from the live counts aggregate.
 - `enrich_ioc(value)`: auto-detects type, does the 365-day exact lookup, includes AI context when available.
-- `get_campaigns(brand?, min_confidence?, limit?)`: AI-clustered campaign groupings of the last 7 days.
+- `get_campaigns(brand?, min_confidence?, limit?)`: AI-clustered campaign groupings of the last 30 days.
 - `get_trends()`: 31-day daily volume, top movers, TLD distribution, novelty ratio.
 
 Full JSON-RPC descriptions: https://tweetfeed.live/.well-known/mcp/server-card.json
 
 ## Methodology (how the data is built)
 
-Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X researcher accounts and one shared list. It extracts IOCs from post text (not from arbitrary link text, which would surface database IDs as fake hashes), refangs defanged indicators back to their canonical form, filters against an allowlist of legitimate infrastructure (registrars, CDNs, common shorteners, auth pages of major platforms), deduplicates against the trailing year, and tags each entry with a malware family or tactic category parsed from the source post's hashtags. Two supplementary jobs run on top of the base pipeline: an AI enrichment job (every 6h) that annotates newly-published IOCs with a summary, malware family guess and confidence score without altering the canonical values, and an AI campaign-clustering job (daily) that groups related IOCs from the last 7 days by shared infrastructure or tag and writes a name/description for the cluster - it never adds or removes IOCs from a cluster.
+Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X researcher accounts and one shared list. It extracts IOCs from post text (not from arbitrary link text, which would surface database IDs as fake hashes), refangs defanged indicators back to their canonical form, filters against an allowlist of legitimate infrastructure (registrars, CDNs, common shorteners, auth pages of major platforms), deduplicates against the trailing year, and tags each entry with a malware family or tactic category parsed from the source post's hashtags. Two supplementary jobs run on top of the base pipeline: an AI enrichment job (every 6h) that annotates newly-published IOCs with a summary, malware family guess and confidence score without altering the canonical values, and an AI campaign-clustering job (daily) that groups related IOCs from the last 30 days by shared infrastructure or tag and writes a name/description for the cluster - it never adds or removes IOCs from a cluster.
 
 ## Common questions
 
@@ -52,7 +52,7 @@ Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X
 - **Is a TweetFeed IOC verified malicious?** No - TweetFeed is OSINT, not a sandbox or a detection engine. Every row reflects a public claim by an infosec researcher, deduplicated and tagged, not an automated verdict. Cross-reference VirusTotal, urlscan.io or a sandbox before blocking outright; false positives happen, especially for compromised legitimate domains hosting phishing kits temporarily.
 - **How do I check a single IOC?** `GET https://api.tweetfeed.live/v1/ioc?value=<value>` for an exact 365-day lookup, or the MCP `enrich_ioc` tool.
 - **How do I get a ready-to-import blocklist?** Pull `https://api.tweetfeed.live/v1/blocklist/{domains,hosts,adguard,ips,rpz,dnsmasq,urls}.txt` - plain text, one indicator per line, 30-day rolling window, rebuilt every 15 minutes.
-- **What are TweetFeed campaigns?** Daily AI-clustered groupings of the last 7 days of IOCs that share infrastructure (registered domain, cross-domain URL path patterns) or a specific tag. The AI only names and describes a cluster; membership is always a subset of the verbatim feed. `GET https://api.tweetfeed.live/v1/campaigns`.
+- **What are TweetFeed campaigns?** Daily AI-clustered groupings of the last 30 days of IOCs that share infrastructure (registered domain, cross-domain URL path patterns) or a specific tag. The AI only names and describes a cluster; membership is always a subset of the verbatim feed. `GET https://api.tweetfeed.live/v1/campaigns`.
 - **How do I import TweetFeed into MISP, OpenCTI or Splunk?** MISP: under Sync Actions -> Feeds -> Add, set the feed URL to `https://tweetfeed.live/misp` (the feed directory, not the manifest file - MISP appends `/manifest.json` itself, so pointing it at the manifest URL produces a 404). OpenCTI/Splunk: point at the CSV feed URLs and schedule a periodic refresh, or use the TAXII 2.1 server at `https://api.tweetfeed.live/taxii2/` for incremental polling.
 - **How do I report a false positive?** Open a GitHub issue via the feedback form: https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml. Every `/search/` lookup result also links a prefilled false-positive template for that specific IOC.
 

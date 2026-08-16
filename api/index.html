@@ -384,13 +384,13 @@
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block starting at your <code>since</code>. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Campaigns (AI-clustered)</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Groups related IOCs from the last 7 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
+				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Groups related IOCs from the last 30 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
 				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
 				<pre class="code-block p-2" style="font-size: 12px;">{
     "version": 1,
     "generated_at": "2026-07-05T19:36:35Z",
-    "window": "week",
+    "window": "month",
     "stale": false,
     "stale_since": null,
     "campaign_count": 23,

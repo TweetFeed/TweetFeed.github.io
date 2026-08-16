@@ -258,6 +258,57 @@ def check_single_h1(pages: list[str]) -> list[str]:
     return failures
 
 
+# Files describing the /v1/campaigns machine-facing contract (schema +
+# discovery docs). Kept in sync by hand - added 2026-08-16 after the
+# 2026-08-13 window change (7d -> 30d) shipped in the API but left these
+# stale.
+MACHINE_SURFACE_FILES = [
+    "openapi.yaml",
+    ".well-known/mcp/server-card.json",
+    ".well-known/agent-skills/index.json",
+    "AGENTS.md",
+    "llms.txt",
+    "llms-full.txt",
+]
+
+
+def check_machine_surfaces(pages: list[str]) -> list[str]:
+    """The /v1/campaigns contract must stay in sync across openapi.yaml and
+    the machine-facing discovery docs: (1) the Campaigns `window` enum must
+    be exactly `month` (it was `week` before 2026-08-13); (2) the Campaign
+    schema must expose the per-window `ioc_count_1d/7d/30d` activity fields;
+    (3) no campaign-related line may still claim a 7-day window - scoped to
+    lines mentioning 'campaign' so the legitimate 7-day /v1/week endpoint
+    docs are left alone. Offline, regex/line-scan based (no yaml import,
+    matching the rest of this file - openapi.yaml is not valid enough JSON
+    to abuse a JSON parser on, and a real YAML parser is not a stdlib dep)."""
+    del pages  # fixed file set, not MAIN_PAGES
+    failures: list[str] = []
+    openapi = read("openapi.yaml")
+
+    window_m = re.search(
+        r"enum:\s*\[([^\]]*)\]\s*\n\s*description:\s*Source window for clustering",
+        openapi,
+    )
+    if not window_m or [w.strip() for w in window_m.group(1).split(",")] != ["month"]:
+        found = window_m.group(1) if window_m else "(anchor not found)"
+        failures.append(f"openapi.yaml: Campaigns `window` enum is not exactly [month] (found: [{found}])")
+
+    idx = openapi.find("\n    Campaign:\n")
+    campaign_schema = openapi[idx:] if idx != -1 else ""
+    for field in ("ioc_count_1d", "ioc_count_7d", "ioc_count_30d"):
+        if not re.search(rf"^        {field}:", campaign_schema, re.MULTILINE):
+            failures.append(f"openapi.yaml: Campaign schema missing `{field}` property")
+
+    seven_day_re = re.compile(r"7[- ]day", re.IGNORECASE)
+    for name in MACHINE_SURFACE_FILES:
+        for i, line in enumerate(read(name).splitlines(), start=1):
+            if "campaign" in line.lower() and seven_day_re.search(line):
+                failures.append(f"{name}:{i}: still claims a 7-day window: {line.strip()}")
+
+    return failures
+
+
 CHECKS = [
     ("Nav order (desktop + mobile dropdown)", check_nav_order),
     ("Canonical URLs", check_canonicals),
@@ -266,6 +317,7 @@ CHECKS = [
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
     ("Meta description length (80-160)", check_meta_description_length),
     ("Single <h1> per page", check_single_h1),
+    ("Machine-facing campaigns contract (openapi + discovery docs)", check_machine_surfaces),
 ]
 
 
