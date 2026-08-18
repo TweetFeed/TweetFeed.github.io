@@ -177,7 +177,8 @@ def render_tag(m, env, counts, today_str):
         # what keeps the generated pages identical to the static ones; before
         # 2026-08-18 the shell was inlined in this template and the daily regen
         # silently re-stamped whatever it happened to contain.
-        **shell_context(depth=2, active_key="tags/", indent="\t\t\t"),
+        **shell_context(depth=2, active_key="tags/", indent="\t\t\t",
+                        docs_active="tags/"),
     )
 
 
@@ -266,7 +267,8 @@ def render_tags_index(tags, env, counts, today_str):
         today_str=today_str,
         tags_flat=tags_flat,
         noindex=IS_STAGE,
-        **shell_context(depth=1, active_key="tags/", indent="\t\t\t"),
+        **shell_context(depth=1, active_key="tags/", indent="\t\t\t",
+                        docs_active="tags/"),
     )
     out_dir = REPO_ROOT / "tags"
     out_dir.mkdir(parents=True, exist_ok=True)

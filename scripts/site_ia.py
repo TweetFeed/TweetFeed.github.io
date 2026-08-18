@@ -192,6 +192,66 @@ def internal_footer_targets():
     return {l.href for l in footer_links() if not l.external}
 
 
+# --- Docs sidebar ----------------------------------------------------------
+# The left-hand nav on the 43 pages that use `.docs-wrap`. It used to be
+# copy-pasted, and had drifted into SEVEN divergent variants with no partial
+# and no check to catch it: on all five malicious-* pages `class="active"` sat
+# on ../ioc-types/ instead of the page's own link, because the whole block had
+# been copied from ioc-types/. Declaring it here makes the active state a
+# function of the page path instead of something a human has to remember.
+#
+# `child=True` renders the item indented one level under the entry above it.
+# That used to be an inline style="padding-left:26px", which the mobile chip
+# row could not neutralise, so the chips came out lopsided.
+DOCS_SIDEBAR = [
+    ("Overview", [
+        Link("Docs home", "docs/"),
+    ]),
+    ("Concepts", [
+        Link("Threat Intelligence guide", "threat-intelligence-guide/"),
+    ]),
+    ("Browse the data", [
+        Link("Tag index", "tags/"),
+        Link("IOC types", "ioc-types/"),
+        Link("Malicious URLs", "malicious-urls/"),
+        Link("Malicious domains", "malicious-domains/"),
+        Link("Malicious IPs", "malicious-ips/"),
+        Link("MD5 hashes", "malicious-hashes-md5/"),
+        Link("SHA-256 hashes", "malicious-hashes-sha256/"),
+        Link("AI Campaigns", "campaigns/"),
+    ]),
+    ("Other", [
+        Link("Changelog", "changelog/"),
+    ]),
+]
+
+# Items rendered as indented children of the entry above them.
+DOCS_SIDEBAR_CHILDREN = {
+    "malicious-urls/",
+    "malicious-domains/",
+    "malicious-ips/",
+    "malicious-hashes-md5/",
+    "malicious-hashes-sha256/",
+}
+
+
+def docs_sidebar_links():
+    return [l for _, links in DOCS_SIDEBAR for l in links]
+
+
+def docs_sidebar_active_for(page: str):
+    """Which sidebar entry a page should highlight, or None if the page has no
+    sidebar. A tag page highlights the tag index; a campaign permalink
+    highlights AI Campaigns."""
+    if page.startswith("tag/"):
+        return "tags/"
+    if page.startswith("campaigns/tfc-"):
+        return "campaigns/"
+    own = page[: -len("index.html")] if page.endswith("index.html") else page
+    hrefs = {l.href for l in docs_sidebar_links()}
+    return own if own in hrefs else None
+
+
 # --- Active state ----------------------------------------------------------
 # Exactly one item lights up per page. A page that lives inside the More menu
 # lights up the *trigger* (so the bar always shows one pill) and additionally

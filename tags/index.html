@@ -36,9 +36,9 @@
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="../css/table.css?v=3" rel="stylesheet">
-	<link href="../css/index.css?v=34" rel="stylesheet">
+	<link href="../css/index.css?v=40" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=34" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=40" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -236,25 +236,49 @@
 			<!-- Top bar end -->
 			<div id="content" tabindex="-1">
 			<div class="docs-wrap">
-				<aside class="docs-sidebar" aria-label="Docs navigation">
+			<aside class="docs-sidebar" aria-label="Docs navigation">
+				<details class="docs-nav-collapse" open>
+					<summary class="docs-nav-summary">Browse docs</summary>
 					<ul>
-					<li class="docs-nav-label">Overview</li>
-					<li><a href="../docs/">Docs home</a></li>
-					<li class="docs-nav-label">Concepts</li>
-					<li><a href="../threat-intelligence-guide/">Threat Intelligence guide</a></li>
-					<li class="docs-nav-label">Browse the data</li>
-					<li><a href="../tags/" class="active">Tag index</a></li>
-					<li><a href="../ioc-types/">IOC types</a></li>
-					<li><a href="../malicious-urls/" style="padding-left:26px;font-size:13px;">Malicious URLs</a></li>
-					<li><a href="../malicious-domains/" style="padding-left:26px;font-size:13px;">Malicious domains</a></li>
-					<li><a href="../malicious-ips/" style="padding-left:26px;font-size:13px;">Malicious IPs</a></li>
-					<li><a href="../malicious-hashes-md5/" style="padding-left:26px;font-size:13px;">MD5 hashes</a></li>
-					<li><a href="../malicious-hashes-sha256/" style="padding-left:26px;font-size:13px;">SHA-256 hashes</a></li>
-					<li><a href="../campaigns/">AI Campaigns</a></li>
-					<li class="docs-nav-label">Other</li>
-					<li><a href="../changelog/">Changelog</a></li>
+						<li class="docs-nav-label">Overview</li>
+						<li><a href="../docs/">Docs home</a></li>
+						<li class="docs-nav-label">Concepts</li>
+						<li><a href="../threat-intelligence-guide/">Threat Intelligence guide</a></li>
+						<li class="docs-nav-label">Browse the data</li>
+						<li><a href="../tags/" class="active" aria-current="page">Tag index</a></li>
+						<li><a href="../ioc-types/">IOC types</a></li>
+						<li><a href="../malicious-urls/" class="docs-nav-child">Malicious URLs</a></li>
+						<li><a href="../malicious-domains/" class="docs-nav-child">Malicious domains</a></li>
+						<li><a href="../malicious-ips/" class="docs-nav-child">Malicious IPs</a></li>
+						<li><a href="../malicious-hashes-md5/" class="docs-nav-child">MD5 hashes</a></li>
+						<li><a href="../malicious-hashes-sha256/" class="docs-nav-child">SHA-256 hashes</a></li>
+						<li><a href="../campaigns/">AI Campaigns</a></li>
+						<li class="docs-nav-label">Other</li>
+						<li><a href="../changelog/">Changelog</a></li>
 					</ul>
-				</aside>
+				</details>
+				<script>
+					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
+					   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
+					   never reach a warm cache. Inline also means no FOUC.
+					   The markup ships `open`, so desktop and any JS-disabled browser get the
+					   full list with no CSS trickery. CSS cannot close it: a closed <details>
+					   is hidden by the UA through its slot, and an author-level display:block
+					   on the child does not override that (measured: sidebar rendered 0px tall
+					   on desktop). The change listener matters, or a reader who collapses on a
+					   phone and rotates to landscape gets a list that is closed AND has its
+					   summary display:none, i.e. unreachable. */
+					(function () {
+						var d = document.querySelector('.docs-nav-collapse');
+						if (!d || !window.matchMedia) return;
+						var m = window.matchMedia('(max-width: 991.98px)');
+						function sync() { d.open = !m.matches; }
+						sync();
+						if (m.addEventListener) m.addEventListener('change', sync);
+					})();
+				</script>
+			</aside>
+
 				<main class="docs-content">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
@@ -279,7 +303,7 @@
 								<a href="../tag/kimsuky/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Kimsuky</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">13,246 hits last year &middot; 80 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">13,247 hits last year &middot; 82 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">DPRK-aligned APT (Velvet Chollima, TA427, Black Banshee)</div>
 								</a>
@@ -299,7 +323,7 @@
 								<a href="../tag/lazarus/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Lazarus</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">134 hits last year &middot; 4 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">134 hits last year &middot; 3 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">DPRK-aligned APT focused on financial gain</div>
 								</a>
@@ -319,7 +343,7 @@
 								<a href="../tag/cobaltstrike/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#CobaltStrike</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,584 hits last year &middot; 10 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,454 hits last year &middot; 12 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Adversary simulation tool abused by APTs and ransomware crews</div>
 								</a>
@@ -329,7 +353,7 @@
 								<a href="../tag/interactsh/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Interactsh</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,370 hits last year &middot; 0 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,314 hits last year &middot; 0 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">OAST canary used by attackers for blind XSS / SSRF / RCE detection</div>
 								</a>
@@ -339,7 +363,7 @@
 								<a href="../tag/remcos/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Remcos</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">980 hits last year &middot; 13 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">968 hits last year &middot; 40 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Commercial RAT widely abused in mass phishing</div>
 								</a>
@@ -349,7 +373,7 @@
 								<a href="../tag/asyncrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#AsyncRAT</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">964 hits last year &middot; 159 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">966 hits last year &middot; 168 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Open-source .NET RAT, common in Latam + EU mass phishing</div>
 								</a>
@@ -359,7 +383,7 @@
 								<a href="../tag/deimos/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Deimos</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">868 hits last year &middot; 0 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">851 hits last year &middot; 0 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Open-source Go C2 framework, cross-platform implants</div>
 								</a>
@@ -369,7 +393,7 @@
 								<a href="../tag/lumma/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Lumma</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">711 hits last year &middot; 17 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">710 hits last year &middot; 21 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">LummaC2 infostealer (browser, crypto, autofill, MFA)</div>
 								</a>
@@ -379,7 +403,7 @@
 								<a href="../tag/sliver/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Sliver</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">611 hits last year &middot; 17 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">607 hits last year &middot; 9 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Open-source C2 framework abused as Cobalt Strike alternative</div>
 								</a>
@@ -389,7 +413,7 @@
 								<a href="../tag/netsupportrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#NetSupportRAT</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">510 hits last year &middot; 0 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">462 hits last year &middot; 0 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">NetSupport Manager abused as RAT</div>
 								</a>
@@ -399,7 +423,7 @@
 								<a href="../tag/njrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Njrat</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">397 hits last year &middot; 4 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">346 hits last year &middot; 4 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Long-running .NET commodity RAT (especially MENA)</div>
 								</a>
@@ -409,7 +433,7 @@
 								<a href="../tag/mythic/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Mythic</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">361 hits last year &middot; 0 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">339 hits last year &middot; 0 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Open-source modular C2 by SpecterOps</div>
 								</a>
@@ -419,7 +443,7 @@
 								<a href="../tag/havoc/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#Havoc</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">324 hits last year &middot; 0 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">294 hits last year &middot; 0 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Modern open-source C2, increasingly real-world abused</div>
 								</a>
@@ -439,7 +463,7 @@
 								<a href="../tag/phishing/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#phishing</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">39,927 hits last year &middot; 6,876 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">40,897 hits last year &middot; 7,817 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Phishing infrastructure observed by public Twitter/X researchers</div>
 								</a>
@@ -449,7 +473,7 @@
 								<a href="../tag/c2/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#C2</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">11,255 hits last year &middot; 359 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">10,753 hits last year &middot; 330 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Command and Control servers (URLs, IPs, domains)</div>
 								</a>
@@ -459,7 +483,7 @@
 								<a href="../tag/scam/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#scam</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">5,783 hits last year &middot; 114 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">5,652 hits last year &middot; 108 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Fraud and scam infrastructure (fake stores, crypto, romance, giveaways)</div>
 								</a>
@@ -469,7 +493,7 @@
 								<a href="../tag/malware/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#malware</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,869 hits last year &middot; 610 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">2,839 hits last year &middot; 553 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Malware-hosting URLs, domains and IPs</div>
 								</a>
@@ -479,19 +503,9 @@
 								<a href="../tag/apt/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#APT</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,681 hits last year &middot; 138 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">1,689 hits last year &middot; 145 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">APT infrastructure (URLs, domains, IPs, hashes)</div>
-								</a>
-							</div>
-							
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../tag/stealer/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#stealer</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">730 hits last year &middot; 42 last month</span>
-									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Infostealer infrastructure (URLs, domains, IPs, hashes)</div>
 								</a>
 							</div>
 							
@@ -499,9 +513,19 @@
 								<a href="../tag/opendir/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#opendir</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">725 hits last year &middot; 145 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">750 hits last year &middot; 156 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Open directories hosting attacker payloads</div>
+								</a>
+							</div>
+							
+							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
+								<a href="../tag/stealer/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#stealer</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">734 hits last year &middot; 46 last month</span>
+									</div>
+									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Infostealer infrastructure (URLs, domains, IPs, hashes)</div>
 								</a>
 							</div>
 							
@@ -509,7 +533,7 @@
 								<a href="../tag/ransomware/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#ransomware</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">625 hits last year &middot; 60 last month</span>
+										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">634 hits last year &middot; 62 last month</span>
 									</div>
 									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Ransomware infrastructure (URLs, domains, IPs, hashes)</div>
 								</a>
@@ -529,8 +553,8 @@
 						</p>
 					</div>
 				</div>
+				</main>
 
-			</main>
 			</div>
 			</div>
 			<!-- Footer -->

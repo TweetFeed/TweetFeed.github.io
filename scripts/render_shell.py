@@ -99,7 +99,7 @@ def _env():
     return env
 
 
-def shell_context(depth=0, active_key=None, link_base=None, indent=None):
+def shell_context(depth=0, active_key=None, link_base=None, indent=None, docs_active=None):
     """Build the template context for one page depth.
 
     depth      0 for /index.html, 1 for /about/index.html, 2 for /tag/apt/...
@@ -141,6 +141,9 @@ def shell_context(depth=0, active_key=None, link_base=None, indent=None):
         "DOCS": ia.DOCS,
         "FEEDBACK_URL": ia.FEEDBACK_URL,
         "FOOTER_COLUMNS": ia.FOOTER_COLUMNS,
+        "DOCS_SIDEBAR": ia.DOCS_SIDEBAR,
+        "DOCS_SIDEBAR_CHILDREN": ia.DOCS_SIDEBAR_CHILDREN,
+        "docs_active": docs_active,
         "FOOTER_MOBILE_COLUMNS": ia.FOOTER_MOBILE_COLUMNS,
         "FOOTER_MOBILE_LEGAL": ia.FOOTER_MOBILE_LEGAL,
         "FOOTER_SOCIAL": ia.FOOTER_SOCIAL,
@@ -152,6 +155,9 @@ def shell_context(depth=0, active_key=None, link_base=None, indent=None):
     if indent is not None:
         ctx["shell_nav"] = Markup(reindent(render_partial("_nav.html.j2", ctx), indent))
         ctx["shell_footer"] = Markup(reindent(render_partial("_footer.html.j2", ctx), indent))
+        ctx["shell_docs_sidebar"] = Markup(
+            reindent(render_partial("_docs_sidebar.html.j2", ctx), indent)
+        )
     return ctx
 
 
@@ -166,6 +172,7 @@ def render_partial(name, ctx):
 # them) and never on ordinal position (feeds/ has 3 <nav>, hunt/ has 6 because
 # of content-level nav.page-toc elements).
 REGION_ANCHORS = {
+    "sidebar_start": re.compile(r'<aside\b[^>]*\bdocs-sidebar\b[^>]*>', re.I),
     "nav_start": re.compile(r'<nav\b[^>]*\bnavbar-expand-lg\b[^>]*\bfixed-top\b[^>]*>', re.I),
     "nav_end": re.compile(r'<nav\b(?![^>]*\bnavbar-expand-lg\b)[^>]*\bnavbar-expand\b[^>]*\bd-lg-none\b[^>]*>', re.I),
     "foot_start": re.compile(r'<footer\b[^>]*\bd-none\b[^>]*\bd-lg-block\b[^>]*>', re.I),
@@ -210,6 +217,13 @@ def close_element(html, start, tag):
 
 def find_region(html, kind):
     """Return (start, end) covering both blocks of a region plus its markers."""
+    if kind == "sidebar":
+        # Unlike nav and footer, this region is ONE element, not a pair.
+        m = REGION_ANCHORS["sidebar_start"].search(html)
+        if not m:
+            raise ValueError("no docs sidebar found")
+        end = close_element(html, m.start(), "aside")
+        return html.rfind("\n", 0, m.start()) + 1, end
     if kind == "nav":
         first, second, tag = REGION_ANCHORS["nav_start"], REGION_ANCHORS["nav_end"], "nav"
     else:
@@ -281,13 +295,31 @@ def page_params(page):
 
 def render_for(page):
     depth, link_base, active = page_params(page)
-    ctx = shell_context(depth=depth, active_key=active, link_base=link_base)
-    return render_partial("_nav.html.j2", ctx), render_partial("_footer.html.j2", ctx)
+    docs_active = ia.docs_sidebar_active_for(page)
+    ctx = shell_context(
+        depth=depth, active_key=active, link_base=link_base, docs_active=docs_active
+    )
+    sidebar = render_partial("_docs_sidebar.html.j2", ctx) if docs_active else None
+    return (
+        render_partial("_nav.html.j2", ctx),
+        render_partial("_footer.html.j2", ctx),
+        sidebar,
+    )
 
 
 def rewrite(html, page):
-    nav, foot = render_for(page)
+    nav, foot, sidebar = render_for(page)
     html = MARKER_LINE_RE.sub("", html)
+    if sidebar is not None and REGION_ANCHORS["sidebar_start"].search(html):
+        start, end = find_region(html, "sidebar")
+        # The region ends exactly at </aside> with no trailing newline, so the
+        # rendered block must not carry one either: otherwise every --apply
+        # inserted one more blank line and the run never converged.
+        html = (
+            html[:start]
+            + reindent(sidebar.rstrip("\n"), indent_of(html, start))
+            + html[end:]
+        )
     for kind, block in (("nav", nav), ("foot", foot)):
         start, end = find_region(html, kind)
         prefix = indent_of(html, start)
@@ -302,11 +334,12 @@ def rewrite(html, page):
 # generator a block that is already indented on every line, first one included.
 INCLUDE_NAV = "{{ shell_nav }}"
 INCLUDE_FOOT = "{{ shell_footer }}"
+INCLUDE_SIDEBAR = "{{ shell_docs_sidebar }}"
 
 
 def rewrite_template(text):
     text = MARKER_LINE_RE.sub("", text)
-    for kind, inc in (("nav", INCLUDE_NAV), ("foot", INCLUDE_FOOT)):
+    for kind, inc in (("sidebar", INCLUDE_SIDEBAR), ("nav", INCLUDE_NAV), ("foot", INCLUDE_FOOT)):
         try:
             start, end = find_region(text, kind)
         except ValueError:

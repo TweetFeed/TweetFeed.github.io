@@ -45,9 +45,9 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=3" rel="stylesheet">
-	<link href="../css/index.css?v=34" rel="stylesheet">
+	<link href="../css/index.css?v=40" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=34" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=40" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -291,24 +291,47 @@
 			<div id="content" tabindex="-1">
 			<div class="docs-wrap">
 				<aside class="docs-sidebar" aria-label="Docs navigation">
-					<ul>
-					<li class="docs-nav-label">Overview</li>
-					<li><a href="../docs/">Docs home</a></li>
-					<li class="docs-nav-label">Concepts</li>
-					<li><a href="../threat-intelligence-guide/">Threat Intelligence guide</a></li>
-					<li class="docs-nav-label">Browse the data</li>
-					<li><a href="../tags/">Tag index</a></li>
-					<li><a href="../ioc-types/">IOC types</a></li>
-					<li><a href="../malicious-urls/" style="padding-left:26px;font-size:13px;">Malicious URLs</a></li>
-					<li><a href="../malicious-domains/" style="padding-left:26px;font-size:13px;">Malicious domains</a></li>
-					<li><a href="../malicious-ips/" style="padding-left:26px;font-size:13px;">Malicious IPs</a></li>
-					<li><a href="../malicious-hashes-md5/" style="padding-left:26px;font-size:13px;">MD5 hashes</a></li>
-					<li><a href="../malicious-hashes-sha256/" style="padding-left:26px;font-size:13px;">SHA-256 hashes</a></li>
-					<li><a href="../campaigns/">AI Campaigns</a></li>
-					<li class="docs-nav-label">Other</li>
-					<li><a href="../changelog/" class="active">Changelog</a></li>
-					</ul>
-					</aside>
+					<details class="docs-nav-collapse" open>
+						<summary class="docs-nav-summary">Browse docs</summary>
+						<ul>
+							<li class="docs-nav-label">Overview</li>
+							<li><a href="../docs/">Docs home</a></li>
+							<li class="docs-nav-label">Concepts</li>
+							<li><a href="../threat-intelligence-guide/">Threat Intelligence guide</a></li>
+							<li class="docs-nav-label">Browse the data</li>
+							<li><a href="../tags/">Tag index</a></li>
+							<li><a href="../ioc-types/">IOC types</a></li>
+							<li><a href="../malicious-urls/" class="docs-nav-child">Malicious URLs</a></li>
+							<li><a href="../malicious-domains/" class="docs-nav-child">Malicious domains</a></li>
+							<li><a href="../malicious-ips/" class="docs-nav-child">Malicious IPs</a></li>
+							<li><a href="../malicious-hashes-md5/" class="docs-nav-child">MD5 hashes</a></li>
+							<li><a href="../malicious-hashes-sha256/" class="docs-nav-child">SHA-256 hashes</a></li>
+							<li><a href="../campaigns/">AI Campaigns</a></li>
+							<li class="docs-nav-label">Other</li>
+							<li><a href="../changelog/" class="active" aria-current="page">Changelog</a></li>
+						</ul>
+					</details>
+					<script>
+						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
+						   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
+						   never reach a warm cache. Inline also means no FOUC.
+						   The markup ships `open`, so desktop and any JS-disabled browser get the
+						   full list with no CSS trickery. CSS cannot close it: a closed <details>
+						   is hidden by the UA through its slot, and an author-level display:block
+						   on the child does not override that (measured: sidebar rendered 0px tall
+						   on desktop). The change listener matters, or a reader who collapses on a
+						   phone and rotates to landscape gets a list that is closed AND has its
+						   summary display:none, i.e. unreachable. */
+						(function () {
+							var d = document.querySelector('.docs-nav-collapse');
+							if (!d || !window.matchMedia) return;
+							var m = window.matchMedia('(max-width: 991.98px)');
+							function sync() { d.open = !m.matches; }
+							sync();
+							if (m.addEventListener) m.addEventListener('change', sync);
+						})();
+					</script>
+				</aside>
 							<main class="docs-content">
 				<div id="presentationSecondary">
 					<br><br><br>
@@ -460,9 +483,9 @@
 					</article>
 				</div>
 				<!-- =========================END of Main Content ========================= -->
-			</div>
-			<!-- End of Main Content -->
 			</main>
+			<!-- End of Main Content -->
+			</div>
 			</div>
 			<!-- Footer -->
 			<footer class="tf-footer d-none d-lg-block">
@@ -555,6 +578,7 @@
 			<!-- End of Footer -->
 		</div>
 		<!-- End of Content Wrapper -->
+	</div>
 		<!-- End of Page Wrapper -->
 		<!-- Scroll to Top Button-->
 		<!-- Logout Modal-->

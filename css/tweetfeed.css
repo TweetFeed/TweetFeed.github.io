@@ -550,21 +550,57 @@ button.btn.btn-tf {
 }
 
 /* ── Docs site layout ─────────────────────────────────────────────────
-   Two-column layout: sticky left sidebar (220px) listing all docs pages,
-   main content on the right (max 800px). Active page is highlighted with
-   left-border accent + tinted background. Mobile (<992px) collapses the
-   sidebar into a chip-row above the content. */
+   Two-column layout on the 43 .docs-wrap pages: sticky left nav + content.
+
+   WIDTH (rebuilt 2026-08-18). Three stacked caps used to strangle this to a
+   800px column: #content's width:80%, .docs-wrap's max-width:1180px and
+   .docs-content's max-width:800px. Measured result was 800px of 1440 (56% of
+   the viewport) and still 800px of 1920, leaving 477px of dead space. Below
+   ~1380px the binding constraint was #content's 80%, not either max-width,
+   and .docs-wrap's 1180px cap was dead code: it could never be the narrowing
+   constraint.
+
+   The widening is scoped with :has() so the other 69 pages keep #content at
+   80%. This file already relies on :has() in css/table.css (the DataTable
+   min-height rules), and it degrades gracefully: a browser without :has()
+   simply keeps today's 80%.
+
+   PROSE. With a ~1276px column a paragraph would run to ~190 characters, so
+   text is capped at 72ch while tables, stat rows and card grids stay full
+   width. No inline style= in these pages sets a width on prose, so the cap
+   needs no !important.
+
+   MOBILE. Below 992px the sidebar used to render as a full-width wall of
+   chips ABOVE the content: 316px tall at 768px, pushing the <h1> to y=485 and
+   eating 32% of the first screen. It is now a collapsed <details>. */
+/* Desktop only. Unscoped, this (1,1,0) rule also beat index.css's
+   `@media (max-width:991.98px) #content { width:98%; margin:1% }`, so docs
+   pages came out ~16px narrower than every other page on a phone. */
+@media (min-width: 992px) {
+	#content:has(> .docs-wrap) {
+		width: 94%;
+		margin-left: 3%;
+		margin-right: 3%;
+	}
+	/* The footer deliberately mirrors #content's width. On these pages the
+	   content is now 94%/1560px, so the footer needs to follow or it sits
+	   ~200px narrower than the grid above it at 1440. */
+	#content:has(> .docs-wrap) ~ .tf-footer .container-fluid {
+		width: 94%;
+		max-width: 1560px;
+	}
+}
 .docs-wrap {
 	display: flex;
-	max-width: 1180px;
+	max-width: 1560px;
 	margin: 0 auto;
 	padding: 24px 1.5rem 60px;
-	gap: 36px;
+	gap: 32px;
 }
 .docs-sidebar {
 	position: sticky;
 	top: 80px;
-	width: 220px;
+	width: 200px;
 	flex-shrink: 0;
 	align-self: flex-start;
 	max-height: calc(100vh - 100px);
@@ -597,6 +633,12 @@ button.btn.btn-tf {
 	transition: color 0.15s, background 0.15s, border-color 0.15s;
 	line-height: 1.45;
 }
+/* Was an inline style="padding-left:26px;font-size:13px" on five links, which
+   the mobile chip row could not neutralise, so the chips came out lopsided. */
+.docs-sidebar a.docs-nav-child {
+	padding-left: 26px;
+	font-size: 13px;
+}
 .docs-sidebar a:hover {
 	color: #1c1c1c;
 	background: rgba(0,0,0,0.03);
@@ -611,9 +653,25 @@ button.btn.btn-tf {
 .docs-content {
 	flex: 1;
 	min-width: 0;
-	max-width: 800px;
+	max-width: none;
 }
-@media (max-width: 991px) {
+/* Readable measure for RUNNING TEXT only. Excludes the centred one-liners and
+   anything in the campaigns card (.tfc-*), which manages its own width.
+   Bullet lists are deliberately NOT capped: their items are one line each, so
+   capping them just wrapped them and left the card looking half empty, which
+   is the same wasted-space complaint this change exists to fix. */
+.docs-content p:not(.text-center):not([class*="tfc-"]),
+.docs-content .faq-section details > p {
+	max-width: 72ch;
+}
+
+/* The sidebar is a <details> so it can collapse on small screens. On desktop
+   the summary is hidden and the list is forced visible, so a user who
+   collapsed it on a phone and then widened the window still sees it. */
+@media (min-width: 992px) {
+	.docs-nav-summary { display: none; }
+}
+@media (max-width: 991.98px) {
 	.docs-wrap {
 		flex-direction: column;
 		padding: 12px 1rem 40px;
@@ -625,20 +683,42 @@ button.btn.btn-tf {
 		width: 100%;
 		max-height: none;
 		overflow: visible;
-		padding: 8px 0 12px;
+		padding: 0;
 		border-bottom: 1px solid #e0e0e0;
 	}
+	.docs-nav-summary {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-height: 44px;
+		padding: 4px 0;
+		font-family: 'Rubik', sans-serif;
+		font-size: 14px;
+		font-weight: 600;
+		color: #1c1c1c;
+		cursor: pointer;
+		list-style: none;
+	}
+	.docs-nav-summary::-webkit-details-marker { display: none; }
+	.docs-nav-summary::before {
+		content: "\2261";           /* ≡ */
+		font-size: 18px;
+		line-height: 1;
+	}
+	.docs-nav-collapse[open] .docs-nav-summary { margin-bottom: 4px; }
 	.docs-sidebar ul {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px 8px;
 		align-items: center;
+		padding-bottom: 10px;
 	}
 	.docs-sidebar .docs-nav-label {
 		flex-basis: 100%;
 		padding: 8px 0 2px;
 	}
-	.docs-sidebar a {
+	.docs-sidebar a,
+	.docs-sidebar a.docs-nav-child {
 		border: 1px solid #c0c0c0;
 		border-radius: 4px;
 		padding: 4px 10px;

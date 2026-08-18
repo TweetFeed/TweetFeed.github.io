@@ -1,0 +1,48 @@
+{#- Docs sidebar. Single source of truth: scripts/site_ia.py (DOCS_SIDEBAR).
+    Rendered into the 43 .docs-wrap pages by scripts/render_shell.py.
+
+    Before 2026-08-18 this block was copy-pasted and had drifted into seven
+    variants; on all five malicious-* pages the `active` class sat on
+    ../ioc-types/ rather than the page's own link. `active` is now derived from
+    the page path by site_ia.docs_sidebar_active_for().
+
+    The <details> wrapper is what collapses the sidebar on phones and tablets.
+    Below 992px it used to render as a full-width wall of chips ABOVE the
+    content, pushing the <h1> to y=485 and eating 32% of the first screen. It
+    ships `open` and the summary is hidden on desktop, so the same markup
+    serves both breakpoints.
+-#}
+<aside class="docs-sidebar" aria-label="Docs navigation">
+	<details class="docs-nav-collapse" open>
+		<summary class="docs-nav-summary">Browse docs</summary>
+		<ul>
+{%- for heading, links in DOCS_SIDEBAR %}
+			<li class="docs-nav-label">{{ heading }}</li>
+{%- for link in links %}
+			<li><a href="{{ url(link) }}"{% if link.href in DOCS_SIDEBAR_CHILDREN %} class="docs-nav-child{% if docs_active == link.href %} active{% endif %}"{% elif docs_active == link.href %} class="active"{% endif %}{% if docs_active == link.href %} aria-current="page"{% endif %}>{{ link.label }}</a></li>
+{%- endfor %}
+{%- endfor %}
+		</ul>
+	</details>
+	<script>
+		/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
+		   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
+		   never reach a warm cache. Inline also means no FOUC.
+		   The markup ships `open`, so desktop and any JS-disabled browser get the
+		   full list with no CSS trickery. CSS cannot close it: a closed <details>
+		   is hidden by the UA through its slot, and an author-level display:block
+		   on the child does not override that (measured: sidebar rendered 0px tall
+		   on desktop). The change listener matters, or a reader who collapses on a
+		   phone and rotates to landscape gets a list that is closed AND has its
+		   summary display:none, i.e. unreachable. */
+		(function () {
+			var d = document.querySelector('.docs-nav-collapse');
+			if (!d || !window.matchMedia) return;
+			var m = window.matchMedia('(max-width: 991.98px)');
+			function sync() { d.open = !m.matches; }
+			sync();
+			if (m.addEventListener) m.addEventListener('change', sync);
+		})();
+	</script>
+</aside>
+

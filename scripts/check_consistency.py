@@ -410,6 +410,48 @@ def check_links_resolve(pages: list[str]) -> list[str]:
     return failures
 
 
+DOCS_SIDEBAR_RE = re.compile(r'<aside\b[^>]*\bdocs-sidebar\b[^>]*>', re.I)
+
+
+def check_docs_sidebar(pages: list[str]) -> list[str]:
+    """Every .docs-wrap page must carry the sidebar declared in site_ia, and
+    must highlight ITS OWN entry.
+
+    This block used to be copy-pasted and had drifted into seven variants with
+    nothing watching it. On all five malicious-* pages `class="active"` sat on
+    ../ioc-types/ rather than the page's own link, because the whole aside had
+    been copied from ioc-types/. Neither the drift nor the wrong highlight was
+    detectable before this check existed."""
+    expected = tuple(norm(l.href) for l in ia.docs_sidebar_links())
+    failures: list[str] = []
+    for p in pages:
+        html = read(p)
+        if not DOCS_SIDEBAR_RE.search(html):
+            continue                      # not a docs-layout page
+        block = _block(html, DOCS_SIDEBAR_RE, "aside")
+        if block is None:
+            failures.append(f"{p}: docs sidebar block is unbalanced")
+            continue
+        got = tuple(norm(h) for h in re.findall(r'<li><a href="([^"]+)"', block))
+        if got != expected:
+            failures.append(
+                f"{p}: docs sidebar links do not match site_ia\n"
+                f"        drift: {list_drift(expected, got)}"
+            )
+        want_active = ia.docs_sidebar_active_for(p)
+        active = re.findall(r'<a href="([^"]+)"[^>]*\bclass="[^"]*\bactive\b', block)
+        active_n = [norm(h) for h in active]
+        if want_active is None:
+            continue
+        if active_n != [norm(want_active)]:
+            failures.append(
+                f"{p}: docs sidebar should highlight {want_active!r}, highlights {active_n}"
+            )
+        if "<details" not in block:
+            failures.append(f"{p}: docs sidebar is not collapsible (<details> missing)")
+    return failures
+
+
 def check_orphan_pages() -> list[str]:
     """Every page directory must be reachable from the nav or the footer.
 
@@ -625,6 +667,7 @@ SHELL_CHECKS = [
     ("Footer links match site_ia", check_footer_parity),
     ("Footer column headings present", check_footer_headings),
     ("Nav/footer links resolve", check_links_resolve),
+    ("Docs sidebar matches site_ia", check_docs_sidebar),
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
 ]
 
