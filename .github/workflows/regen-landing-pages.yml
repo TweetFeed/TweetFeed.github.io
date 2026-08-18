@@ -50,7 +50,10 @@ jobs:
         run: |
           git config user.name  "tweetfeed-bot"
           git config user.email "tweetfeed-bot@phishunt.io"
-          git add tag/ sitemap.xml
+          # tags/ was missing: regen_tag_pages.render_tags_index() rewrites
+          # tags/index.html on every run but it was never staged, so the hub
+          # silently stayed stale in git while CI reported success.
+          git add tag/ tags/ sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

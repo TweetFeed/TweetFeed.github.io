@@ -1,0 +1,79 @@
+{#- Site footer. Single source of truth: scripts/site_ia.py.
+
+    Contracts enforced by scripts/check_consistency.py check_footers():
+      * exactly TWO <footer> elements per page, no more.
+      * desktop footer carries d-none + d-lg-block; mobile carries
+        sticky-footer + d-lg-none. BOTH gate on lg (992). Never d-md-block:
+        that overlapped the two footers at 768-991px across 44 pages x 2 repos
+        (bug fixed 2026-06-28, do not reintroduce).
+      * footer links must NOT carry .text-decoration-none: index.css pins that
+        selector to #555 with !important and a #1DA1F2 hover measuring 2.83:1.
+-#}
+<!-- Footer -->
+<footer class="tf-footer d-none d-lg-block">
+	<div class="tf-foot-cols">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-6 col-xl-3 tf-foot-col">
+					<div class="tf-foot-brand">
+						<a class="tf-foot-wordmark" href="{{ home_href }}">TweetFeed</a>
+						<p class="tf-foot-tagline">{{ FOOTER_TAGLINE }}</p>
+						<div class="tf-foot-social">
+{%- for link in FOOTER_SOCIAL %}
+							<a class="tf-social" href="{{ link.href }}" target="_blank" rel="noopener noreferrer" aria-label="{{ link.label }}">{{ icon(link, "") }}</a>
+{%- endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="col-6 col-xl-3 tf-foot-col">
+					{{ column(FOOTER_COLUMNS[0]) }}
+				</div>
+				<div class="col-6 col-xl-3 tf-foot-col">
+					{{ column(FOOTER_COLUMNS[1]) }}
+				</div>
+				<div class="col-6 col-xl-3 tf-foot-col">
+					{{ column(FOOTER_COLUMNS[2]) }}
+					{{ column(FOOTER_COLUMNS[3]) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tf-foot-bar">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-6 text-left">{{ FOOTER_BYLINE }} &nbsp;·&nbsp; {{ FOOTER_MADE_IN }}</div>
+				<div class="col-6 text-right">{{ FOOTER_COPYRIGHT }}</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- MOBILE -->
+<footer class="sticky-footer tf-mfooter bg-white d-lg-none">
+	<div class="container-fluid">
+		<div class="tf-mfoot-brand">
+			<a class="tf-foot-wordmark" href="{{ home_href }}">TweetFeed</a>
+			<p class="tf-foot-tagline">{{ FOOTER_TAGLINE }}</p>
+			<div class="tf-foot-social">
+{%- for link in FOOTER_SOCIAL %}
+				<a class="tf-social" href="{{ link.href }}" target="_blank" rel="noopener noreferrer" aria-label="{{ link.label }}">{{ icon(link, "") }}</a>
+{%- endfor %}
+			</div>
+		</div>
+		<hr class="tf-mfoot-rule">
+		<div class="row">
+			<div class="col-6 tf-mfoot-col">
+				{{ column(FOOTER_COLUMNS[0], mobile=True) }}
+				{{ column(FOOTER_COLUMNS[2], mobile=True) }}
+			</div>
+			<div class="col-6 tf-mfoot-col">
+				{{ column(FOOTER_COLUMNS[1], mobile=True) }}
+				{{ column(FOOTER_COLUMNS[3], mobile=True) }}
+			</div>
+		</div>
+		<hr class="tf-mfoot-rule">
+		<div class="tf-mfoot-legal">
+			{{ FOOTER_BYLINE }} &nbsp;·&nbsp; {{ FOOTER_MADE_IN }}<br>{{ FOOTER_COPYRIGHT }}
+		</div>
+	</div>
+</footer>
+<!-- End of Footer -->

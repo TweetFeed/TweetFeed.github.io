@@ -1,0 +1,77 @@
+{#- Site navbar. Single source of truth: scripts/site_ia.py.
+    Rendered into every page + template by scripts/render_shell.py.
+    Do NOT hand-edit the copies inside page HTML; they get overwritten.
+
+    Structural contracts enforced by scripts/check_consistency.py:
+      * <ul class="nav navbar-nav navbar-left"> must exist verbatim (extract_desktop_nav),
+        and must contain no </ul> before its own close, so the More menu is a <div>.
+      * every nav anchor keeps class BEFORE href with a single space between them.
+      * separators are <hr class="dropdown-divider">, never <div>...</div>:
+        the extractor is non-greedy to the first </div> and would truncate.
+      * the Feedback CTA keeps `btn-tf` on the same tag as the feedback URL.
+-#}
+<!-- Top bar -->
+<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav navbar-left">
+			<li class="nav-item">
+				<a class="nav-link tf-wordmark" href="{{ home_href }}"{% if active_key == "" %} aria-current="page"{% endif %}>{{ icon(HOME, "tf-wordmark-mark") }} <span class="tf-wordmark-text">TweetFeed</span></a>
+			</li>
+			<li class="tf-nav-divider" aria-hidden="true"></li>
+{%- for link in NAV_PRIMARY %}
+			<li class="nav-item">
+				<a class="nav-link tf-navlink{% if active_key == link.key %} tf-nav-active{% endif %}" href="{{ url(link) }}"{% if active_key == link.key %} aria-current="page"{% endif %}>{{ icon(link, "tf-nav-icon") }} {{ link.label }}</a>
+			</li>
+{%- endfor %}
+			<li class="nav-item dropdown">
+				<a class="nav-link tf-navlink tf-nav-more dropdown-toggle{% if active_in_more %} tf-nav-active{% endif %}" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+				<div class="dropdown-menu tf-menu">
+{%- for link in NAV_MORE %}
+{%- if link is none %}
+					<hr class="dropdown-divider">
+{%- else %}
+					<a class="dropdown-item tf-menu-item" href="{{ url(link) }}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}{% if active_key == link.key %} aria-current="page"{% endif %}>{{ icon(link, "tf-menu-icon") }} {{ link.label }}{% if link.external %} <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i>{% endif %}</a>
+{%- endif %}
+{%- endfor %}
+				</div>
+			</li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li class="nav-item">
+				<a class="nav-link tf-nav-search{% if active_key == SEARCH.key %} tf-nav-active{% endif %}" href="{{ url(SEARCH) }}"{% if active_key == SEARCH.key %} aria-current="page"{% endif %}><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">Search IOCs</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link tf-navlink{% if active_key == DOCS.key %} tf-nav-active{% endif %}" href="{{ url(DOCS) }}"{% if active_key == DOCS.key %} aria-current="page"{% endif %}>{{ icon(DOCS, "tf-nav-icon") }} {{ DOCS.label }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="btn btn-tf nav-cta" href="{{ FEEDBACK_URL }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
+			</li>
+		</ul>
+	</div>
+</nav>
+<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+	<div class="container-fluid">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link tf-wordmark" href="{{ home_href }}"{% if active_key == "" %} aria-current="page"{% endif %}>{{ icon(HOME, "tf-wordmark-mark") }} <span class="tf-wordmark-text">TweetFeed</span></a>
+			</li>
+		</ul>
+		<ul class="navbar-nav navbar-right">
+			<li class="nav-item dropdown">
+				<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
+				<div class="dropdown-menu dropdown-menu-right tf-menu">
+{%- for link in NAV_MOBILE %}
+{%- if link is none %}
+					<hr class="dropdown-divider">
+{%- elif link.href == FEEDBACK_URL %}
+					<a class="dropdown-item btn btn-tf nav-cta" href="{{ FEEDBACK_URL }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
+{%- else %}
+					<a class="dropdown-item tf-menu-item" href="{{ url(link) }}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}{% if active_key == link.key %} aria-current="page"{% endif %}>{{ icon(link, "tf-menu-icon") }} {{ link.label }}{% if link.external %} <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i>{% endif %}</a>
+{%- endif %}
+{%- endfor %}
+				</div>
+			</li>
+		</ul>
+	</div>
+</nav>
+<!-- Top bar end -->

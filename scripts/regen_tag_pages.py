@@ -19,6 +19,8 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+from render_shell import shell_context
+
 REPO_ROOT = SCRIPT_DIR.parent
 TAG_DIR = REPO_ROOT / "tag"
 # Stage repo has no CNAME file; prod (tweetfeed.live) does. Stage output gets
@@ -170,6 +172,12 @@ def render_tag(m, env, counts, today_str):
         webpage_jsonld=build_webpage_jsonld(m),
         faq_jsonld=build_faq_jsonld(m),
         noindex=IS_STAGE,
+        # The nav/footer come from scripts/templates/_nav.html.j2 and
+        # _footer.html.j2 via {% include %}. Passing the shell context here is
+        # what keeps the generated pages identical to the static ones; before
+        # 2026-08-18 the shell was inlined in this template and the daily regen
+        # silently re-stamped whatever it happened to contain.
+        **shell_context(depth=2, active_key="tags/", indent="\t\t\t"),
     )
 
 
@@ -258,6 +266,7 @@ def render_tags_index(tags, env, counts, today_str):
         today_str=today_str,
         tags_flat=tags_flat,
         noindex=IS_STAGE,
+        **shell_context(depth=1, active_key="tags/", indent="\t\t\t"),
     )
     out_dir = REPO_ROOT / "tags"
     out_dir.mkdir(parents=True, exist_ok=True)
