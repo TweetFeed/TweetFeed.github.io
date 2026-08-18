@@ -50,9 +50,8 @@
 <!-- MOBILE -->
 <footer class="sticky-footer tf-mfooter bg-white d-lg-none">
 	<div class="container-fluid">
-		<div class="tf-mfoot-brand">
+		<div class="tf-mfoot-top">
 			<a class="tf-foot-wordmark" href="{{ home_href }}">TweetFeed</a>
-			<p class="tf-foot-tagline">{{ FOOTER_TAGLINE }}</p>
 			<div class="tf-foot-social">
 {%- for link in FOOTER_SOCIAL %}
 				<a class="tf-social" href="{{ link.href }}" target="_blank" rel="noopener noreferrer" aria-label="{{ link.label }}">{{ icon(link, "") }}</a>
@@ -60,19 +59,22 @@
 			</div>
 		</div>
 		<hr class="tf-mfoot-rule">
-		<div class="row">
-			<div class="col-6 tf-mfoot-col">
-				{{ column(FOOTER_COLUMNS[0], mobile=True) }}
-				{{ column(FOOTER_COLUMNS[2], mobile=True) }}
-			</div>
-			<div class="col-6 tf-mfoot-col">
-				{{ column(FOOTER_COLUMNS[1], mobile=True) }}
-				{{ column(FOOTER_COLUMNS[3], mobile=True) }}
-			</div>
+{%- for heading, links in FOOTER_MOBILE_COLUMNS %}
+		<p class="tf-mfoot-head">{{ heading }}</p>
+		<div class="tf-mfoot-grid">
+{%- for link in links %}
+			<a class="tf-mfoot-link" href="{{ url(link) }}">{{ link.label }}</a>
+{%- endfor %}
 		</div>
+{%- endfor %}
 		<hr class="tf-mfoot-rule">
 		<div class="tf-mfoot-legal">
-			{{ FOOTER_BYLINE }} &nbsp;·&nbsp; {{ FOOTER_MADE_IN }}<br>{{ FOOTER_COPYRIGHT }}
+			<span class="tf-mfoot-legal-links">
+{%- for link in FOOTER_MOBILE_LEGAL %}
+				<a class="tf-mfoot-link tf-mfoot-link-inline" href="{{ url(link) }}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ link.label }}{% if link.external %} <i class="fas fa-external-link-alt tf-foot-ext" aria-hidden="true"></i>{% endif %}</a>
+{%- endfor %}
+			</span>
+			<span class="tf-mfoot-copy">{{ FOOTER_BYLINE }} &nbsp;·&nbsp; {{ FOOTER_COPYRIGHT }}</span>
 		</div>
 	</div>
 </footer>

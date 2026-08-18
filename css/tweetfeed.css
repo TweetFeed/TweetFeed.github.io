@@ -1036,10 +1036,11 @@ a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
 }
 
 /* --- mobile footer ------------------------------------------------------- */
-/* Was an 11px run-on blob with ~40x14px targets. Now a 2-column grid of real
-   rows. Not a <details> accordion: that adds a tap per link and jumps page
-   height at the very bottom of the scroll, and .faq-section is a content
-   pattern, not chrome. */
+/* Deliberately not a copy of the desktop footer. Repeating all 23 links made
+   this 849px tall (a full phone screen) when 18 of them were already one tap
+   away in the hamburger, so mobile carries only what the menu does not plus
+   the legal row. Tap targets stay at 44px: the height came out of removing
+   redundancy, not out of shrinking the targets. */
 .tf-mfooter.sticky-footer {
 	padding: 0;
 	border-top: 1px solid #000;
@@ -1047,22 +1048,37 @@ a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
 	font-size: 14px;
 	color: #555;
 }
-.tf-mfooter .tf-mfoot-brand { padding: 18px 0 4px; }
-.tf-mfooter .tf-mfoot-rule { border: 0; border-top: 1px solid #000; margin: 12px 0; }
-.tf-mfooter .tf-mfoot-head { margin: 16px 0 2px; }
-.tf-mfooter .tf-mfoot-col .tf-mfoot-head:first-child { margin-top: 0; }
+.tf-mfooter .tf-mfoot-top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 0;
+}
+.tf-mfooter .tf-mfoot-rule { border: 0; border-top: 1px solid #000; margin: 0; }
+.tf-mfooter .tf-mfoot-head { margin: 14px 0 2px; }
+.tf-mfooter .tf-mfoot-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 12px;
+	padding-bottom: 10px;
+}
 .tf-mfooter a.tf-mfoot-link {
 	display: flex;
 	align-items: center;
-	min-height: 44px;
-	padding: 4px 0;
+	min-height: 44px;            /* WCAG 2.5.8 tap target, kept */
+	padding: 2px 0;
 	font-size: 14px;
 	line-height: 1.4;
 	color: #555;
 	text-decoration: none;
 }
 .tf-mfooter a.tf-mfoot-link:active { color: #1178b3; }
-.tf-mfooter .tf-mfoot-legal { padding: 0 0 18px; font-size: 13px; line-height: 1.6; }
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-mfooter .tf-mfoot-legal { padding: 6px 0 16px; font-size: 13px; line-height: 1.6; }
+.tf-mfooter .tf-mfoot-legal-links { display: flex; gap: 20px; }
+.tf-mfooter a.tf-mfoot-link-inline { min-height: 40px; font-size: 13px; }
+.tf-mfooter .tf-mfoot-copy { display: block; color: #6b6d7c; }
 
 @media (prefers-reduced-motion: reduce) {
 	.navbar-nav li a.tf-navlink,

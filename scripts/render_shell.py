@@ -141,6 +141,8 @@ def shell_context(depth=0, active_key=None, link_base=None, indent=None):
         "DOCS": ia.DOCS,
         "FEEDBACK_URL": ia.FEEDBACK_URL,
         "FOOTER_COLUMNS": ia.FOOTER_COLUMNS,
+        "FOOTER_MOBILE_COLUMNS": ia.FOOTER_MOBILE_COLUMNS,
+        "FOOTER_MOBILE_LEGAL": ia.FOOTER_MOBILE_LEGAL,
         "FOOTER_SOCIAL": ia.FOOTER_SOCIAL,
         "FOOTER_TAGLINE": ia.FOOTER_TAGLINE,
         "FOOTER_BYLINE": ia.FOOTER_BYLINE,

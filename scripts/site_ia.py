@@ -159,11 +159,25 @@ FOOTER_MADE_IN = "Made with ❤ in Andalucía, Spain"
 FOOTER_COPYRIGHT = "© 2026 TweetFeed.live"
 
 
-# Desktop lays the columns out left to right; the mobile footer is a 2-column
-# grid whose DOM order therefore reads down column 1 (DATA, DEVELOPERS) and
-# then column 2 (EXPLORE, PROJECT). Both orders are declared so the gate can
-# check each surface against what it should actually contain.
-FOOTER_MOBILE_COLUMN_ORDER = (0, 2, 1, 3)
+# The mobile footer is deliberately NOT a copy of the desktop one. Measured
+# 2026-08-18: repeating all 23 desktop links made it 849px tall, a full phone
+# screen, while 18 of those 23 were already one tap away in the hamburger. So
+# mobile carries only what the menu does not: the three list pages, the guide,
+# and the legal row. The desktop <footer> block stays in the markup at every
+# viewport, so internal linking for crawlers is unaffected.
+FOOTER_MOBILE_COLUMNS = [
+    ("REFERENCE", [
+        Link("Malicious URLs", "malicious-urls/"),
+        Link("MD5 hashes", "malicious-hashes-md5/"),
+        Link("SHA-256 hashes", "malicious-hashes-sha256/"),
+        Link("Guide", "threat-intelligence-guide/"),
+    ]),
+]
+
+FOOTER_MOBILE_LEGAL = [
+    Link("Terms of Service", "tos/"),
+    Link("Feedback", FEEDBACK_URL, external=True),
+]
 
 
 def footer_links():
@@ -171,7 +185,7 @@ def footer_links():
 
 
 def footer_links_mobile():
-    return [l for i in FOOTER_MOBILE_COLUMN_ORDER for l in FOOTER_COLUMNS[i][1]]
+    return [l for _, links in FOOTER_MOBILE_COLUMNS for l in links] + FOOTER_MOBILE_LEGAL
 
 
 def internal_footer_targets():

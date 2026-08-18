@@ -156,7 +156,7 @@ def extract_footer_links(html: str, mobile: bool) -> list[str] | None:
     block = _block(html, anchor, "footer")
     if block is None:
         return None
-    return re.findall(r'<a class="' + cls + r'"\s+href="([^"]+)"', block)
+    return re.findall(r'<a class="' + cls + r'[^"]*"\s+href="([^"]+)"', block)
 
 
 def norm(href: str) -> str:
@@ -351,16 +351,27 @@ def check_footer_parity(pages: list[str]) -> list[str]:
 
 
 def check_footer_headings(pages: list[str]) -> list[str]:
-    """The 4 column headings must be present, so the columns cannot silently
-    collapse back into a one-line run-on row."""
-    headings = [h for h, _ in ia.FOOTER_COLUMNS]
+    """Each footer must carry its own declared column headings, so the columns
+    cannot silently collapse back into a one-line run-on row.
+
+    Desktop and mobile are checked separately on purpose: since 2026-08-18 the
+    mobile footer is a deliberate subset (see site_ia.FOOTER_MOBILE_COLUMNS),
+    not a copy."""
     failures: list[str] = []
     for p in pages:
         html = read(p)
-        for h in headings:
-            # once per footer, desktop + mobile
-            if html.count(f">{h}</p>") < 2:
-                failures.append(f"{p}: footer heading {h!r} missing from one or both footers")
+        for mobile, columns, label in (
+            (False, ia.FOOTER_COLUMNS, "desktop footer"),
+            (True, ia.FOOTER_MOBILE_COLUMNS, "mobile footer"),
+        ):
+            anchor = MOBILE_FOOTER_RE if mobile else DESKTOP_FOOTER_RE
+            block = _block(html, anchor, "footer")
+            if block is None:
+                failures.append(f"{p}: missing {label} block")
+                continue
+            for heading, _ in columns:
+                if f">{heading}</p>" not in block:
+                    failures.append(f"{p}: {label} missing heading {heading!r}")
     return failures
 
 
