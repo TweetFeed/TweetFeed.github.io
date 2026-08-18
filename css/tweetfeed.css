@@ -702,7 +702,6 @@ body { color: #6b6d7c; }
 .navbar-nav li a.tf-wordmark {
 	display: inline-flex;
 	align-items: center;
-	gap: 8px;
 	height: 40px;
 	padding: 0 4px 0 0;
 	font-family: 'Rubik', sans-serif;
@@ -714,7 +713,6 @@ body { color: #6b6d7c; }
 	text-decoration: none;
 	white-space: nowrap;
 }
-.navbar-nav li a.tf-wordmark .tf-wordmark-mark { font-size: 16px; line-height: 1; }
 /* Kill index.css:85's hover pill on the brand: a wordmark is not a chip. */
 /* font-size/weight/family are re-declared in every hover state on purpose.
    Hover must never change geometry: the bar is a nowrap flex row, so a single
@@ -912,7 +910,7 @@ body { color: #6b6d7c; }
 	.navbar-nav li.tf-nav-divider { margin: 0 8px; }
 	.navbar-nav li a.tf-wordmark,
 	.navbar-nav li a.tf-wordmark:hover,
-	.navbar-nav li a.tf-wordmark:focus-visible { font-size: 17px; gap: 6px; }
+	.navbar-nav li a.tf-wordmark:focus-visible { font-size: 17px; }
 	.navbar-nav li a.tf-navlink .tf-nav-icon { display: none; }
 	.navbar-nav li a.btn-tf.nav-cta { padding: 0 12px; }
 	.navbar-nav li a.btn-tf.nav-cta:not(.dropdown-item) { margin-left: 6px; }

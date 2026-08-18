@@ -53,7 +53,9 @@ class Link(NamedTuple):
 
 
 # Home is special: its href is pure depth prefix, so it normalizes to "".
-HOME = Link("TweetFeed", "", icon="svg:spark")
+# No icon by design (operator's call, 2026-08-18): the wordmark carries the
+# brand on its own. SPARK_SVG is still used by the Agents nav item.
+HOME = Link("TweetFeed", "", icon="")
 
 # --- Navbar ----------------------------------------------------------------
 # Visible on the desktop bar, in order. Agents leads (operator's call), then
