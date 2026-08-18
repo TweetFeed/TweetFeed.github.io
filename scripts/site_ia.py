@@ -56,16 +56,16 @@ class Link(NamedTuple):
 HOME = Link("TweetFeed", "", icon="svg:spark")
 
 # --- Navbar ----------------------------------------------------------------
-# Visible on the desktop bar, in order. Campaigns leads: it is the site's
-# differentiator and measured ~0 internal navigation while it lived in the
-# footer only (CF RUM 30d, 2026-08-18).
+# Visible on the desktop bar, in order. Agents leads (operator's call), then
+# Campaigns: the site's differentiator, which measured ~0 internal navigation
+# while it lived in the footer only (CF RUM 30d, 2026-08-18).
 NAV_PRIMARY = [
+    Link("Agents", "agents/", "svg:spark"),
     Link("Campaigns", "campaigns/", "fa-project-diagram"),
     Link("Dashboard", "dashboard/", "fa-th"),
     Link("Hunt", "hunt/", "fa-bullseye"),
     Link("Feeds", "feeds/", "fa-rss"),
     Link("API", "api/", "fa-code"),
-    Link("Agents", "agents/", "svg:spark"),
 ]
 
 # The "More" menu. None marks a group separator (rendered as <hr>, never as a

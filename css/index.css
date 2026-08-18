@@ -67,12 +67,12 @@ body {
     color: #1178b3;
 }
 
-.navbar-nav li a {
-    color: black !important;
-    font-size: 16px;
-    font-family: 'Rubik', sans-serif;
-    font-weight: 500;
-}
+/* Legacy navbar base. RETIRED 2026-08-18: the shell is generated from
+   scripts/site_ia.py and every anchor in it carries its own tf-* rule with an
+   explicit colour, size, family and weight, so this only served to start
+   specificity fights. `.navbar-nav` exists nowhere else on the site (verified
+   across all 56 pages). Kept as a comment rather than deleted so the history
+   of the cascade is legible. */
 
 .active:not([role=tab]) {
     color: black !important;
@@ -82,13 +82,13 @@ body {
     background: white;
 }
 
-.navbar-nav li a:hover:not(.active) {
-    color: black !important;
-    font-size: 16px;
-    font-family: 'Rubik', sans-serif;
-    border-radius: 50px;
-    background: #8ec9ee;
-}
+/* Legacy navbar hover. RETIRED 2026-08-18 because it CHANGED THE BAR'S
+   GEOMETRY: at (0,3,2) it outranked .navbar-nav li a.tf-wordmark (0,2,2) and
+   forced font-size back to 16px on hover, so hovering the brand shrank it
+   from 20px to 16px and shifted every item to its right. It is the same rule
+   that previously washed the #4682B4 CTA out to #8ec9ee (see the note at the
+   top of the .nav-cta block in tweetfeed.css). Hover for every shell element
+   now lives with that element's own tf-* rule. */
 
 /* Todos */
 .nav-pills li a {

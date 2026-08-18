@@ -716,12 +716,19 @@ body { color: #6b6d7c; }
 }
 .navbar-nav li a.tf-wordmark .tf-wordmark-mark { font-size: 16px; line-height: 1; }
 /* Kill index.css:85's hover pill on the brand: a wordmark is not a chip. */
+/* font-size/weight/family are re-declared in every hover state on purpose.
+   Hover must never change geometry: the bar is a nowrap flex row, so a single
+   resized child shifts everything to its right. This is exactly how the old
+   index.css hover rule broke the brand (20px -> 16px on hover). */
 .navbar-nav li a.tf-wordmark:hover,
 .navbar-nav li a.tf-wordmark:focus-visible {
 	background: none;
 	background-image: none;
 	border-radius: 0;
 	color: #0f172a !important;
+	font-size: 20px;
+	font-weight: 600;
+	font-family: 'Rubik', sans-serif;
 }
 .navbar-nav li a.tf-wordmark:hover .tf-wordmark-text { text-decoration: underline; text-underline-offset: 3px; }
 .navbar-nav li a.tf-wordmark:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
@@ -766,6 +773,8 @@ body { color: #6b6d7c; }
 	background-image: none;
 	border-radius: 999px;
 	color: #000 !important;
+	font-size: 16px;
+	font-weight: 500;
 }
 .navbar-nav li a.tf-navlink:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
@@ -813,6 +822,7 @@ body { color: #6b6d7c; }
 	border-color: #0f172a;
 	border-radius: 999px;
 	color: #fff !important;
+	font-size: 17px;
 }
 .navbar-nav li a.tf-nav-search.tf-nav-active {
 	background: #fff;
@@ -900,7 +910,9 @@ body { color: #6b6d7c; }
 	.navbar-nav li a.tf-navlink { padding: 0 6px; }
 	.navbar-nav li a.tf-navlink.tf-nav-active { padding: 0 5px; }
 	.navbar-nav li.tf-nav-divider { margin: 0 8px; }
-	.navbar-nav li a.tf-wordmark { font-size: 17px; gap: 6px; }
+	.navbar-nav li a.tf-wordmark,
+	.navbar-nav li a.tf-wordmark:hover,
+	.navbar-nav li a.tf-wordmark:focus-visible { font-size: 17px; gap: 6px; }
 	.navbar-nav li a.tf-navlink .tf-nav-icon { display: none; }
 	.navbar-nav li a.btn-tf.nav-cta { padding: 0 12px; }
 	.navbar-nav li a.btn-tf.nav-cta:not(.dropdown-item) { margin-left: 6px; }
@@ -909,7 +921,9 @@ body { color: #6b6d7c; }
 /* --- mobile bar ---------------------------------------------------------- */
 /* The mobile <nav> is NOT fixed-top, so its height is free to grow. */
 @media (max-width: 991.98px) {
-	.navbar-nav li a.tf-wordmark { font-size: 18px; padding: 6px 0; }
+	.navbar-nav li a.tf-wordmark,
+	.navbar-nav li a.tf-wordmark:hover,
+	.navbar-nav li a.tf-wordmark:focus-visible { font-size: 18px; padding: 6px 0; }
 	.navbar-nav li a.tf-nav-burger {
 		display: inline-flex;
 		align-items: center;
