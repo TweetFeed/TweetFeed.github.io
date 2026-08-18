@@ -728,15 +728,15 @@ body { color: #6b6d7c; }
 	font-weight: 600;
 	font-family: 'Rubik', sans-serif;
 }
-.navbar-nav li a.tf-wordmark:hover .tf-wordmark-text { text-decoration: underline; text-underline-offset: 3px; }
 .navbar-nav li a.tf-wordmark:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-/* "You are here" on the home page without demoting the brand to a nav chip.
-   A border on an inline element does not change the line box, so the bar
-   stays 56px. */
-.navbar-nav li a.tf-wordmark[aria-current="page"] .tf-wordmark-text {
-	border-bottom: 2px solid #0f172a;
-	padding-bottom: 1px;
-}
+/* No underline on the wordmark, in either state (operator's call,
+   2026-08-18). The home page carries `aria-current="page"` on the brand for
+   screen readers but paints nothing: the 60px hero wordmark directly below
+   the bar already says "you are here", so the marker was redundant noise.
+   Hover uses opacity rather than an underline or a transform: it reads as
+   interactive without drawing a line and without moving anything, which
+   matters because the bar is a nowrap flex row. */
+.navbar-nav li a.tf-wordmark:hover { opacity: .75; }
 
 /* --- divider ------------------------------------------------------------- */
 .navbar-nav li.tf-nav-divider {
