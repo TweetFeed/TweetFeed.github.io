@@ -109,7 +109,10 @@ body {
     background: #e1e6f2;
 }
 
-/* El activo */
+/* El activo. DEAD RULE, kept only so the cascade stays as documented: every
+   internal nav href ends in "/", so :not([href$="/"]) has always excluded the
+   navbar. Do NOT "fix" it, the declared white-on-#1DA1F2 is 2.83:1 and fails
+   AA. The real active state is .tf-nav-active in tweetfeed.css. */
 .nav-link.active:not([href$="html"]):not([href$="/"]):not(.border-bottom-0) {
     color: white !important;
     font-size: 16px;
@@ -223,15 +226,18 @@ body {
 }
 /* =========== END Tweets ======== */
 
-/* phishunt.io cross-link - phishunt's dark navy text on TweetFeed's blue bar */
-#phishunt-link .nav-link { color: #0f172a !important; }
-#phishunt-link .nav-link:hover { color: #1e293b !important; }
+/* phishunt.io cross-link: RETIRED 2026-08-18. The nav redesign moved the link
+   into the More dropdown as a .dropdown-item, so #phishunt-link no longer
+   exists and this rule matched nothing. Menu items are styled by
+   .tf-menu-item in tweetfeed.css. */
 
 /* Copy-to-clipboard icons - prevent blue flash on click */
 .tf-copy { cursor: pointer; color: inherit; }
 .tf-copy:active, .tf-copy:focus { color: inherit; outline: none; }
 
-/* Footer link colors - muted, not distracting */
-footer a.text-decoration-none { color: #555 !important; }
-footer a.text-decoration-none:hover { color: #1DA1F2 !important; }
+/* Footer link colors: RETIRED 2026-08-18. The regenerated footers use
+   .tf-foot-link / .tf-mfoot-link (see tweetfeed.css) and no longer carry
+   .text-decoration-none. Do not reinstate: the old #1DA1F2 hover measured
+   2.83:1 on both #fff and #f2f2f2, failing WCAG AA. The replacement hover is
+   #1178b3 (4.81:1 on white), which is why the footer background is white. */
 

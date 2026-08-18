@@ -666,8 +666,395 @@ body { color: #6b6d7c; }
    links inside body copy + the footer reference row; nav, buttons, TOC chips
    keep their own shape so are excluded. !important overrides Bootstrap's
    .text-decoration-none utility on the reference-row / inline links. */
-#content p a:not(.btn):not(.page-toc-chip):not(.feeds-toc-chip),
-.reference-row a {
+#content p a:not(.btn):not(.page-toc-chip):not(.feeds-toc-chip) {
 	text-decoration: underline !important;
 	text-underline-offset: 2px;
+}
+
+/* ==========================================================================
+   Site shell: navbar + footer (redesign 2026-08-18)
+   --------------------------------------------------------------------------
+   Markup is generated from scripts/site_ia.py via scripts/render_shell.py.
+   Do not hand-edit the nav/footer HTML in pages; it gets overwritten.
+
+   THE HEIGHT INVARIANT. The desktop bar is `fixed-top` and NOTHING in any
+   stylesheet compensates for it: all 102 pages clear it with literal <br>
+   tags in page content. The bar measures exactly 56px = .navbar padding
+   (8+8) + a 40px content row. Every direct child of the bar must therefore
+   resolve to a 40px box. box-sizing is border-box globally (sb-admin-2), so
+   a 1px border does NOT grow a height:40px box. If the bar ever becomes
+   58px, the first fold of every page is wrong.
+
+   SPECIFICITY. css/index.css loads before this file and ships
+   `.navbar-nav li a { color:black!important }` (0,1,2) plus
+   `.navbar-nav li a:hover:not(.active)` (0,3,2), which paints a washed-out
+   #8ec9ee 50px pill. Every rule below is authored at (0,2,2)+ for base and
+   (0,4,2) for hover, and re-declares background / background-image /
+   border-radius / color, the same defensive shape .nav-cta already uses.
+
+   CONTRAST. The bar is #1DA1F2. Black text on it is 7.43:1; white is only
+   2.83:1, which is why nav ink stays black and the active pill carries a
+   black border (a borderless white pill is 2.83:1 against the bar and fails
+   WCAG 1.4.11).
+   ========================================================================== */
+
+/* --- wordmark ------------------------------------------------------------ */
+.navbar-nav li a.tf-wordmark {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 40px;
+	padding: 0 4px 0 0;
+	font-family: 'Rubik', sans-serif;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: -.01em;
+	color: #0f172a !important;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.navbar-nav li a.tf-wordmark .tf-wordmark-mark { font-size: 16px; line-height: 1; }
+/* Kill index.css:85's hover pill on the brand: a wordmark is not a chip. */
+.navbar-nav li a.tf-wordmark:hover,
+.navbar-nav li a.tf-wordmark:focus-visible {
+	background: none;
+	background-image: none;
+	border-radius: 0;
+	color: #0f172a !important;
+}
+.navbar-nav li a.tf-wordmark:hover .tf-wordmark-text { text-decoration: underline; text-underline-offset: 3px; }
+.navbar-nav li a.tf-wordmark:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+/* "You are here" on the home page without demoting the brand to a nav chip.
+   A border on an inline element does not change the line box, so the bar
+   stays 56px. */
+.navbar-nav li a.tf-wordmark[aria-current="page"] .tf-wordmark-text {
+	border-bottom: 2px solid #0f172a;
+	padding-bottom: 1px;
+}
+
+/* --- divider ------------------------------------------------------------- */
+.navbar-nav li.tf-nav-divider {
+	width: 1px;
+	height: 20px;
+	align-self: center;
+	flex: 0 0 1px;
+	margin: 0 14px;
+	padding: 0;
+	background: #0f172a;
+}
+
+/* --- primary items ------------------------------------------------------- */
+.navbar-nav li a.tf-navlink {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	height: 40px;
+	padding: 0 12px;
+	border: 1px solid transparent;   /* reserved so the active border cannot shift layout */
+	border-radius: 999px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: #000 !important;
+	white-space: nowrap;
+}
+.navbar-nav li a.tf-navlink:hover:not(.tf-nav-active),
+.navbar-nav li a.tf-navlink:focus-visible:not(.tf-nav-active) {
+	background: rgba(255, 255, 255, .28);   /* keeps black ink well above 4.5:1 */
+	background-image: none;
+	border-radius: 999px;
+	color: #000 !important;
+}
+.navbar-nav li a.tf-navlink:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Active pill. The black border is load-bearing for WCAG 1.4.11, and free
+   on height because of border-box. */
+.navbar-nav li a.tf-navlink.tf-nav-active {
+	background: #fff;
+	background-image: none;
+	border: 1px solid #000;
+	border-radius: 999px;
+	padding: 0 11px;
+	color: #000 !important;
+	font-weight: 600;
+}
+.navbar-nav li a.tf-navlink.tf-nav-active:hover {
+	background: #fff;
+	background-image: none;
+	border-radius: 999px;
+	color: #000 !important;
+}
+.navbar-nav li a.tf-navlink .tf-nav-icon { font-size: .95em; }
+.navbar-nav li a.tf-nav-more.dropdown-toggle::after { margin-left: 2px; vertical-align: .15em; }
+
+/* --- search icon --------------------------------------------------------- */
+/* Deliberately a plain link to /search/, not an expanding form: the bar is
+   flex-wrap:nowrap and an input would push the CTA off-screen at 992-1199px,
+   and /search/ is a rich page whose filters a raw nav string would bypass. */
+.navbar-nav li a.tf-nav-search {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid transparent;
+	border-radius: 999px;
+	color: #000 !important;
+	font-size: 17px;
+	line-height: 1;
+}
+.navbar-nav li a.tf-nav-search:hover,
+.navbar-nav li a.tf-nav-search:focus-visible {
+	background: #0f172a;
+	background-image: none;
+	border-color: #0f172a;
+	border-radius: 999px;
+	color: #fff !important;
+}
+.navbar-nav li a.tf-nav-search.tf-nav-active {
+	background: #fff;
+	border: 1px solid #000;
+	color: #000 !important;
+}
+.navbar-nav li a.tf-nav-search:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* --- dropdown menu (desktop More + mobile hamburger) --------------------- */
+/* White card with a 1px black border, not the old flat-blue panel: a blue
+   menu on a blue bar has a 1:1 boundary and 2.83:1 against the page, failing
+   WCAG 1.4.11. A menu is a card, and cards here carry black borders. */
+.navbar-nav .dropdown-menu.tf-menu {
+	min-width: 232px;
+	margin-top: 8px;
+	padding: 6px 0;
+	background: #fff;
+	border: 1px solid #000;
+	border-radius: 4px;
+	box-shadow: none;
+	font-family: 'Rubik', sans-serif;
+	font-size: 15px;
+}
+.navbar-nav li a.dropdown-item.tf-menu-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 36px;
+	padding: 6px 14px 6px 11px;
+	border-left: 3px solid transparent;   /* reserved: hover must not shift text */
+	font-size: 15px;
+	font-weight: 500;
+	color: #1c1c1c !important;
+	white-space: nowrap;
+}
+.navbar-nav li a.dropdown-item.tf-menu-item:hover,
+.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible {
+	background: #f2f2f2;
+	background-image: none;
+	border-radius: 0;
+	border-left-color: #4682B4;
+	color: #000 !important;
+}
+.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible { outline: 2px solid #4682B4; outline-offset: -2px; }
+/* Current page reached through the menu. Reuses the .docs-sidebar a.active
+   left-accent idiom so the site has one "current item in a list" language. */
+.navbar-nav li a.dropdown-item.tf-menu-item[aria-current="page"] {
+	background: #f2f2f2;
+	border-left-color: #1178b3;
+	color: #000 !important;
+	font-weight: 600;
+}
+.navbar-nav li a.dropdown-item.tf-menu-item .tf-menu-icon { width: 1em; text-align: center; opacity: .75; }
+.navbar-nav li a.dropdown-item.tf-menu-item .tf-menu-ext { font-size: .75em; opacity: .6; }
+/* sb-admin-2 ships NO .dropdown-divider rule at all (verified: 0 matches), so
+   author it. It is an <hr>, never a <div>: check_consistency's extractor is
+   non-greedy to the first </div> and a <div> divider would truncate the check. */
+.navbar-nav .dropdown-menu.tf-menu hr.dropdown-divider {
+	height: 0;
+	margin: 6px 0;
+	border: 0;
+	border-top: 1px solid #000;
+	opacity: 1;
+}
+
+/* --- no wrapping, ever --------------------------------------------------- */
+/* THE bar-height bug. BS4 sets flex-wrap:nowrap on
+   .navbar-expand-lg > .container-fluid, so the two <ul>s never wrap relative
+   to each other, but each <ul> is also a flex CONTAINER with .nav's
+   flex-wrap:wrap AND a flex ITEM with the default flex-shrink:1. At 992px the
+   left list got shrunk below its content width and wrapped "More" onto a
+   second row, taking the fixed bar from 56px to 96px and sliding it over the
+   page content. Measured, not theorised. */
+.navbar-expand-lg .nav.navbar-nav {
+	flex-wrap: nowrap;
+	flex-shrink: 0;
+}
+
+/* --- 992-1199px compaction ---------------------------------------------- */
+/* Drop the decorative icons before ever dropping a label: labels are the
+   navigation, icons are decoration. Measured budget at 992px after this
+   block: ~890px of content in ~945px of container. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	.navbar-expand-lg .navbar-nav .nav-link { padding-left: 6px; padding-right: 6px; }
+	.navbar-nav li a.tf-navlink { padding: 0 6px; }
+	.navbar-nav li a.tf-navlink.tf-nav-active { padding: 0 5px; }
+	.navbar-nav li.tf-nav-divider { margin: 0 8px; }
+	.navbar-nav li a.tf-wordmark { font-size: 17px; gap: 6px; }
+	.navbar-nav li a.tf-navlink .tf-nav-icon { display: none; }
+	.navbar-nav li a.btn-tf.nav-cta { padding: 0 12px; }
+	.navbar-nav li a.btn-tf.nav-cta:not(.dropdown-item) { margin-left: 6px; }
+}
+
+/* --- mobile bar ---------------------------------------------------------- */
+/* The mobile <nav> is NOT fixed-top, so its height is free to grow. */
+@media (max-width: 991.98px) {
+	.navbar-nav li a.tf-wordmark { font-size: 18px; padding: 6px 0; }
+	.navbar-nav li a.tf-nav-burger {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border-radius: 999px;
+		color: #000 !important;
+		font-size: 18px;
+	}
+	.navbar-nav li a.tf-nav-burger[aria-expanded="true"] { background: rgba(255, 255, 255, .28); }
+	.navbar-nav li a.tf-nav-burger:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+	.navbar-nav .dropdown-menu.tf-menu {
+		min-width: 264px;
+		max-width: calc(100vw - 24px);
+		max-height: calc(100vh - 72px);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		margin-top: 6px;
+	}
+	.navbar-nav li a.dropdown-item.tf-menu-item {
+		min-height: 44px;            /* WCAG 2.5.8 tap target */
+		padding: 11px 16px 11px 13px;
+	}
+	.navbar-nav li a.dropdown-item.btn-tf.nav-cta { height: 40px; }
+}
+
+/* --- desktop footer ------------------------------------------------------ */
+/* White, not #f2f2f2: the #1178b3 link hover is 4.81:1 on white but only
+   4.30:1 on #f2f2f2, which fails AA. Black top border, not gray: this is the
+   widest edge on the page and was the one place the 1px-black identity broke. */
+.tf-footer {
+	position: relative;
+	width: 100%;
+	border-top: 1px solid #000;
+	background: #fff;
+	font-family: 'Rubik', sans-serif;
+	color: #555;
+}
+/* Align the footer grid with #content (width:80%, centred) so the columns sit
+   on the same optical margins as the page above instead of running edge to
+   edge under an inset page. */
+.tf-footer .container-fluid { width: 80%; margin: 0 auto; padding: 0; }
+.tf-footer .tf-foot-cols { padding: 36px 0 28px; }
+.tf-footer .tf-foot-col { margin-bottom: 0; }
+.tf-footer .tf-foot-head,
+.tf-mfooter .tf-mfoot-head {
+	margin: 0 0 10px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	color: #4b5563;
+}
+.tf-footer .tf-foot-head + .tf-foot-link { margin-top: 0; }
+.tf-footer .tf-foot-col .tf-foot-head:not(:first-child) { margin-top: 24px; }
+.tf-footer a.tf-foot-link {
+	display: block;
+	padding: 5px 0;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #555;
+	text-decoration: none;
+}
+.tf-footer a.tf-foot-link:hover,
+.tf-footer a.tf-foot-link:focus-visible {
+	color: #1178b3;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.tf-footer a.tf-foot-link:focus-visible,
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-foot-ext { font-size: .75em; opacity: .6; }
+.tf-footer a.tf-foot-wordmark,
+.tf-mfooter a.tf-foot-wordmark {
+	display: inline-block;
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: -.01em;
+	color: #0f172a;
+	text-decoration: none;
+}
+.tf-foot-tagline { margin: 8px 0 14px; font-size: 13px; line-height: 1.5; color: #6b6d7c; max-width: 30ch; }
+.tf-foot-social { display: flex; gap: 10px; }
+a.tf-social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 1px solid #000;
+	border-radius: 4px;
+	background: #fff;
+	color: #0f172a;
+	font-size: 17px;
+	text-decoration: none;
+}
+a.tf-social:hover, a.tf-social:focus-visible { background: #f2f2f2; color: #0f172a; }
+a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-footer .tf-foot-bar {
+	border-top: 1px solid #000;
+	background: #f8f9fa;
+	padding: 12px 0;
+	font-size: 13px;
+	color: #555;
+}
+/* Four 25% columns are ~230px at 992px and go ragged as the longer labels
+   wrap. Fall back to a 2x2 grid until 1200px. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+	.tf-footer .tf-foot-col { margin-bottom: 28px; }
+}
+
+/* --- mobile footer ------------------------------------------------------- */
+/* Was an 11px run-on blob with ~40x14px targets. Now a 2-column grid of real
+   rows. Not a <details> accordion: that adds a tap per link and jumps page
+   height at the very bottom of the scroll, and .faq-section is a content
+   pattern, not chrome. */
+.tf-mfooter.sticky-footer {
+	padding: 0;
+	border-top: 1px solid #000;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	color: #555;
+}
+.tf-mfooter .tf-mfoot-brand { padding: 18px 0 4px; }
+.tf-mfooter .tf-mfoot-rule { border: 0; border-top: 1px solid #000; margin: 12px 0; }
+.tf-mfooter .tf-mfoot-head { margin: 16px 0 2px; }
+.tf-mfooter .tf-mfoot-col .tf-mfoot-head:first-child { margin-top: 0; }
+.tf-mfooter a.tf-mfoot-link {
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 4px 0;
+	font-size: 14px;
+	line-height: 1.4;
+	color: #555;
+	text-decoration: none;
+}
+.tf-mfooter a.tf-mfoot-link:active { color: #1178b3; }
+.tf-mfooter .tf-mfoot-legal { padding: 0 0 18px; font-size: 13px; line-height: 1.6; }
+
+@media (prefers-reduced-motion: reduce) {
+	.navbar-nav li a.tf-navlink,
+	.navbar-nav li a.tf-nav-search,
+	.navbar-nav li a.dropdown-item.tf-menu-item,
+	.tf-footer a.tf-foot-link { transition: none; }
 }
