@@ -431,8 +431,13 @@ def check_cachebust_uniform() -> list[str]:
     targets = [REPO_ROOT / p for p in all_html_pages()]
     targets += sorted((REPO_ROOT / "scripts" / "templates").glob("*.j2"))
     for path in targets:
-        for v in re.findall(r"tweetfeed\.css\?v=(\d+)", path.read_text(encoding="utf-8")):
+        text = path.read_text(encoding="utf-8")
+        for v in re.findall(r"(?:tweetfeed|index)\.css\?v=(\d+)", text):
             seen.setdefault(v, []).append(str(path.relative_to(REPO_ROOT)))
+        # index.css used to ship unversioned, so edits to it never reached
+        # warm caches. Treat a missing parameter as a failure, not as "uniform".
+        if re.search(r'href="[^"]*index\.css"', text):
+            seen.setdefault("(none)", []).append(str(path.relative_to(REPO_ROOT)))
     if len(seen) <= 1:
         return []
     out = ["tweetfeed.css cache-bust is not uniform:"]

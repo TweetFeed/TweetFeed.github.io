@@ -316,14 +316,24 @@ def rewrite_template(text):
 # --------------------------------------------------------------------------
 # main
 # --------------------------------------------------------------------------
+# Both files are versioned together. index.css shipped for years with NO
+# cache-bust at all, which meant a change to it simply never reached anyone
+# with a warm cache: the hover fix of 2026-08-18 landed on the origin and the
+# live site kept the old behaviour until this was added.
+CSS_BUST_FILES = ("tweetfeed.css", "index.css")
+
+
 def bump_css(version, apply_):
-    pat = re.compile(r"(tweetfeed\.css\?v=)(\d+)")
+    pat = re.compile(r"((?:" + "|".join(f.replace(".", r"\.") for f in CSS_BUST_FILES) + r")\?v=)(\d+)")
+    # Adds the parameter where it is missing (index.css had none).
+    add = re.compile(r'(href="[^"]*(?:' + "|".join(f.replace(".", r"\.") for f in CSS_BUST_FILES) + r'))"')
     changed = []
     targets = [REPO_ROOT / p for p in html_pages()]
     targets += sorted(TEMPLATE_DIR.glob("*.j2"))
     for path in targets:
         text = path.read_text(encoding="utf-8")
-        new = pat.sub(lambda m: m.group(1) + str(version), text)
+        new = add.sub(lambda m: m.group(1) + f'?v={version}"', text)
+        new = pat.sub(lambda m: m.group(1) + str(version), new)
         if new != text:
             changed.append(str(path.relative_to(REPO_ROOT)))
             if apply_:
