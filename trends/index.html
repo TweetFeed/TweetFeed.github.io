@@ -242,6 +242,99 @@
 			height: 100%;
 			font-family: 'Rubik', sans-serif;
 		}
+		/* ── Headline figures ─────────────────────────────────────────────
+		   All four numbers already existed on this page; they were just
+		   scattered below a full-screen chart, so the first one sat 1,799px
+		   down. Black 1px borders per the site's card idiom. */
+		.trd-headline {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 0;
+			border: 1px solid black;
+			border-radius: 3px;
+			background: #fff;
+			margin-bottom: 1.5rem;
+		}
+		.trd-headline-cell {
+			padding: 0.9rem 0.75rem;
+			text-align: center;
+			font-family: 'Rubik', sans-serif;
+		}
+		.trd-headline-cell + .trd-headline-cell { border-left: 1px solid black; }
+		.trd-headline-value {
+			font-size: 30px;
+			font-weight: 600;
+			line-height: 1.1;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+		}
+		.trd-headline-label {
+			margin-top: 2px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		.trd-headline-sub { font-size: 12px; color: #737373; }
+		@media (max-width: 767.98px) {
+			.trd-headline { grid-template-columns: repeat(2, 1fr); }
+			.trd-headline-cell:nth-child(3) { border-left: 0; }
+			.trd-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
+			.trd-headline-value { font-size: 24px; }
+		}
+
+		/* ── Top movers as diverging bars ────────────────────────────────
+		   The data is a week-over-week comparison (+450%, -33%, -92%), which a
+		   4-column table made you deduce by reading numbers. Bars grow left
+		   for a fall and right for a rise from a shared centre line. */
+		.trd-movers-list { font-family: 'Rubik', sans-serif; }
+		.trd-mover {
+			display: grid;
+			grid-template-columns: minmax(90px, 150px) 1fr minmax(120px, auto);
+			align-items: center;
+			gap: 0.75rem;
+			padding: 5px 0;
+		}
+		.trd-mover-tag {
+			text-align: right;
+			font-size: 13.5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.trd-mover-track {
+			position: relative;
+			height: 18px;
+			background: #f2f2f2;
+			border: 1px solid black;
+			border-radius: 2px;
+			overflow: hidden;
+		}
+		/* The centre line is the zero axis: everything left of it fell, right rose. */
+		.trd-mover-track::after {
+			content: "";
+			position: absolute;
+			left: 50%;
+			top: 0;
+			bottom: 0;
+			width: 1px;
+			background: #9aa0a6;
+		}
+		.trd-mover-bar { position: absolute; top: 0; bottom: 0; }
+		.trd-mover-bar-down { right: 50%; background: #e2574c; }
+		.trd-mover-bar-up { left: 50%; background: #16a34a; }
+		.trd-mover-fig {
+			font-size: 13px;
+			font-variant-numeric: tabular-nums;
+			white-space: nowrap;
+		}
+		.trd-mover-fig .trd-pct { color: #737373; margin-left: 4px; }
+		@media (max-width: 575.98px) {
+			.trd-mover { grid-template-columns: minmax(70px, 100px) 1fr; row-gap: 2px; }
+			.trd-mover-fig { grid-column: 2; text-align: right; }
+		}
+
 		.trd-stat-value {
 			font-size: 34px;
 			font-weight: 700;
@@ -417,12 +510,38 @@
 
 				<div id="trendsContent" style="display:none;">
 
+					<!-- Headline figures. The page already carried all four, but
+					     scattered mid-page: the first number sat 1,799px down, so
+					     you had to scroll past a full-screen chart to learn
+					     anything. The per-section KPI tiles below stay where they
+					     are; this row is the summary, not a replacement. -->
+					<div class="trd-headline" id="trendsHeadline">
+						<div class="trd-headline-cell">
+							<div class="trd-headline-value" id="trendsHlVolume">-</div>
+							<div class="trd-headline-label">IOCs</div>
+							<div class="trd-headline-sub">last 30 days</div>
+						</div>
+						<div class="trd-headline-cell">
+							<div class="trd-headline-value" id="trendsHlNew">-</div>
+							<div class="trd-headline-label">new values</div>
+							<div class="trd-headline-sub" id="trendsHlNewSub">last 7 days</div>
+						</div>
+						<div class="trd-headline-cell">
+							<div class="trd-headline-value" id="trendsHlProducers">-</div>
+							<div class="trd-headline-label">researchers</div>
+							<div class="trd-headline-sub">last 30 days</div>
+						</div>
+						<div class="trd-headline-cell">
+							<div class="trd-headline-value" id="trendsHlBus">-</div>
+							<div class="trd-headline-label" id="trendsHlBusLabel">accounts</div>
+							<div class="trd-headline-sub">cover half the feed</div>
+						</div>
+					</div>
+
 					<div class="row">
 						<div class="col">
+							<h3 class="section-heading">Daily IOC volume (last 30 days)</h3>
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary text-center">Daily IOC volume (last 30 days)</h6>
-								</div>
 								<div class="card-body">
 									<p class="trd-generated-line" id="trendsGeneratedLine"></p>
 									<div class="chart-area">
@@ -437,31 +556,11 @@
 
 					<div class="row">
 						<div class="col">
+							<h3 class="section-heading">Top movers (7 days vs previous 7 days)</h3>
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary text-center">Top movers (7 days vs previous 7 days)</h6>
-								</div>
 								<div class="card-body">
 									<p class="trd-subtitle" id="trendsMoversSubtitle"></p>
-									<div class="table-responsive">
-										<table class="trd-movers-table">
-											<colgroup>
-												<col span="1" style="width: 40%;">
-												<col span="1" style="width: 20%;">
-												<col span="1" style="width: 20%;">
-												<col span="1" style="width: 20%;">
-											</colgroup>
-											<thead>
-												<tr>
-													<th>Tag</th>
-													<th class="trd-num">Count (7d)</th>
-													<th class="trd-num">Previous (7d)</th>
-													<th class="trd-num">Change</th>
-												</tr>
-											</thead>
-											<tbody id="trendsMoversBody"></tbody>
-										</table>
-									</div>
+									<div class="trd-movers-list" id="trendsMoversList"></div>
 								</div>
 							</div>
 						</div>
@@ -470,10 +569,8 @@
 					<div class="row">
 						<div class="col d-flex align-items-stretch mb-4">
 							<div class="col-xl-12 col-lg-12">
+								<h3 class="section-heading">IOC types (last 30 days)</h3>
 								<div class="card shadow h-100">
-									<div class="card-header py-3">
-										<h6 class="m-0 font-weight-bold text-primary text-center">IOC types (last 30 days)</h6>
-									</div>
 									<div class="card-body">
 										<div class="chart-pie pt-4">
 											<canvas id="trendsTypesDonut"></canvas>
@@ -485,10 +582,8 @@
 						</div>
 						<div class="col d-flex align-items-stretch mb-4">
 							<div class="col-xl-12 col-lg-12">
+								<h3 class="section-heading">Top TLDs (last 30 days)</h3>
 								<div class="card shadow h-100">
-									<div class="card-header py-3">
-										<h6 class="m-0 font-weight-bold text-primary text-center">Top TLDs (last 30 days)</h6>
-									</div>
 									<div class="card-body">
 										<p class="trd-subtitle" id="trendsTldsSubtitle"></p>
 										<div class="chart-bar">
@@ -530,10 +625,8 @@
 					     have this key, and the section must disappear silently. -->
 					<div class="row" id="trendsHealthSection" style="display:none;">
 						<div class="col">
+							<h3 class="section-heading">Feed health</h3>
 							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary text-center">Feed health</h6>
-								</div>
 								<div class="card-body">
 									<p class="trd-subtitle">How concentrated the feed's Indicators of Compromise are among the accounts that post them.</p>
 									<div class="text-center" style="margin-bottom:1rem;">
@@ -867,33 +960,95 @@
 				);
 			}
 
-			var rows = (movers.tags || []).map(function(m) {
-				var count = esc(TweetFeed.numberFormat(m.count || 0));
-				var previous = esc(TweetFeed.numberFormat(m.previous || 0));
+			var tags = movers.tags || [];
+			// Bars are scaled against the largest absolute delta in the set, so
+			// the widest bar is always full-half and the rest are honest
+			// fractions of it. Half the track per side: the centre is zero.
+			var maxAbs = tags.reduce(function(m, t) {
+				return Math.max(m, Math.abs(t.delta || 0));
+			}, 0) || 1;
+
+			var rows = tags.map(function(m) {
 				var delta = m.delta || 0;
-				var changeHtml;
+				var pctWidth = (Math.abs(delta) / maxAbs) * 50;
+				var barCls = delta < 0 ? 'trd-mover-bar-down' : 'trd-mover-bar-up';
+				var bar = delta
+					? '<span class="trd-mover-bar ' + barCls + '" style="width:' + pctWidth.toFixed(2) + '%;"></span>'
+					: '';
+
+				var fig;
 				if (m.pct === null || m.pct === undefined) {
-					changeHtml = '<span class="trd-badge-new">New</span>';
+					fig = '<span class="trd-arrow-up">+' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
+						'<span class="trd-badge-new">New</span>';
 				} else if (delta > 0) {
-					changeHtml = '<span class="trd-arrow-up">&#9650; +' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
+					fig = '<span class="trd-arrow-up">&#9650; +' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
 						'<span class="trd-pct">(+' + esc(m.pct.toFixed(1)) + '%)</span>';
 				} else if (delta < 0) {
-					changeHtml = '<span class="trd-arrow-down">&#9660; ' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
+					fig = '<span class="trd-arrow-down">&#9660; ' + esc(TweetFeed.numberFormat(delta)) + '</span>' +
 						'<span class="trd-pct">(' + esc(m.pct.toFixed(1)) + '%)</span>';
 				} else {
-					changeHtml = '<span class="trd-arrow-flat">&#9679; 0</span><span class="trd-pct">(0.0%)</span>';
+					fig = '<span class="trd-arrow-flat">&#9679; 0</span><span class="trd-pct">(0.0%)</span>';
 				}
+
 				var tagRaw = m.tag || '';
 				var tagClean = tagRaw.replace(/^#/, '');
-				// Pivot to /search/?tag= (Feed explorer panel auto-runs on a
-				// ?tag= param - see search/index.html EXPLORER_PARAMS).
 				var tagCell = tagClean
 					? '<a href="../search/?tag=' + encodeURIComponent(tagClean.toLowerCase()) + '" title="Search ' + esc(tagRaw) + ' on TweetFeed">' + esc(tagRaw) + '</a>'
 					: esc(tagRaw);
-				return '<tr><td>' + tagCell + '</td><td class="trd-num">' + count +
-					'</td><td class="trd-num">' + previous + '</td><td class="trd-num">' + changeHtml + '</td></tr>';
+
+				// The exact counts the table used to show stay reachable on hover
+				// rather than costing two more columns.
+				var title = esc(TweetFeed.numberFormat(m.count || 0)) + ' this period, ' +
+					esc(TweetFeed.numberFormat(m.previous || 0)) + ' the period before';
+
+				return (
+					'<div class="trd-mover" title="' + title + '">' +
+						'<span class="trd-mover-tag">' + tagCell + '</span>' +
+						'<span class="trd-mover-track">' + bar + '</span>' +
+						'<span class="trd-mover-fig">' + fig + '</span>' +
+					'</div>'
+				);
 			}).join('');
-			$('#trendsMoversBody').html(rows);
+			$('#trendsMoversList').html(rows);
+		}
+
+		// Fills the headline row. Every value here is already rendered further
+		// down the page; this is a summary so the reader does not have to
+		// scroll two screens to learn how the feed is doing.
+		// A cell with no value hides rather than showing a dash, and the whole
+		// row hides if nothing resolved. `producers` only landed in the feed
+		// recently, so an older trends.json (the stage data repo is pinned to
+		// 2026-07-18) legitimately has no producer figures; three dashes would
+		// read as breakage rather than as absent data.
+		function renderHeadline(data) {
+			var producers = data.producers || {};
+			var w30 = producers.window_30d || {};
+			var w7 = producers.window_7d || {};
+			var novelty = data.novelty || {};
+			var filled = 0;
+
+			function setCell(sel, value) {
+				var $el = $(sel);
+				if (value === null || value === undefined) {
+					$el.closest('.trd-headline-cell').hide();
+					return;
+				}
+				$el.text(value);
+				filled++;
+			}
+
+			setCell('#trendsHlVolume', typeof w30.total === 'number' ? TweetFeed.numberFormat(w30.total) : null);
+			setCell('#trendsHlNew', typeof novelty.pct_new === 'number' ? novelty.pct_new.toFixed(1) + '%' : null);
+			if (novelty.window) {
+				$('#trendsHlNewSub').text('last ' + (novelty.window === 'week' ? '7 days' : novelty.window));
+			}
+			setCell('#trendsHlProducers', typeof w30.active_producers === 'number' ? TweetFeed.numberFormat(w30.active_producers) : null);
+			setCell('#trendsHlBus', typeof w7.bus_factor_50 === 'number' ? TweetFeed.numberFormat(w7.bus_factor_50) : null);
+			if (typeof w7.bus_factor_50 === 'number') {
+				$('#trendsHlBusLabel').text(w7.bus_factor_50 === 1 ? 'account' : 'accounts');
+			}
+
+			if (!filled) $('#trendsHeadline').hide();
 		}
 
 		function renderNovelty(novelty) {
@@ -967,6 +1122,7 @@
 				renderVolumeChart(data.daily);
 				renderTypesDonut(data.daily);
 			}
+			renderHeadline(data);
 			if (data.movers) renderMovers(data.movers);
 			if (data.tlds) renderTldsBar(data.tlds);
 			if (data.novelty) renderNovelty(data.novelty);
