@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Copy-paste IOC hunting recipes from TweetFeed: terminal, Splunk SPL, Sentinel KQL, Defender, Elastic ES|QL, MISP feed, Sigma rule. Free, 15-min refresh.">
+	<meta name="description" content="25 copy-paste IOC hunting recipes for terminal, Splunk, Sentinel, Defender, Elastic, MISP, TAXII 2.1, Sigma and MCP. Free, CC0, refreshed every 15 min.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma">
 	<link rel="canonical" href="https://tweetfeed.live/hunt/">
@@ -41,13 +41,10 @@
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<!-- Custom styles for this page -->
-	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
-	<link href="../css/index.css?v=41" rel="stylesheet">
+	<link href="../css/index.css?v=42" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=41" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=42" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -73,10 +70,12 @@
 			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
 			{"@type": "HowToTool", "name": "Elastic Stack (Logstash + Elasticsearch + Kibana)"},
 			{"@type": "HowToTool", "name": "MISP"},
-			{"@type": "HowToTool", "name": "Sigma"}
+			{"@type": "HowToTool", "name": "Sigma"},
+			{"@type": "HowToTool", "name": "TAXII 2.1"},
+			{"@type": "HowToTool", "name": "Model Context Protocol (MCP)"}
 		],
 		"step": [
-			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Jump to the section that matches your stack: terminal, SIEM, or detection content."},
+			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Every recipe is listed on one page with its own link. Filter the list by stack - raw feeds, terminal, Splunk, Sentinel, Defender, Elastic, MISP and TAXII, Sigma, or MCP agents."},
 			{"@type": "HowToStep", "name": "Configure the connector or lookup", "text": "Each recipe includes the exact ingest pattern: REST API calls, CSV download, RSS feed, MISP feed URL, KQL externaldata() block or Splunk inputlookup."},
 			{"@type": "HowToStep", "name": "Schedule the refresh", "text": "TweetFeed CSVs and the API refresh every 15 minutes. Match your pull cadence to your detection latency tolerance."},
 			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause) so trusted assets stop firing alerts."},
@@ -174,7 +173,7 @@
 			{
 				"@type": "Question",
 				"name": "Is there an MCP server for AI agents?",
-				"acceptedAnswer": {"@type": "Answer", "text": "Yes. mcp.tweetfeed.live exposes 5 tools: query_iocs, check_url, check_ip, check_hash and list_recent_iocs. See the Agents page for the config snippet."}
+				"acceptedAnswer": {"@type": "Answer", "text": "Yes. mcp.tweetfeed.live exposes 10 tools: query_iocs, check_url, check_ip, check_hash, list_recent_iocs, get_tag_info, get_trending, enrich_ioc, get_campaigns and get_trends. See the Agents page for the config snippet."}
 			},
 			{
 				"@type": "Question",
@@ -204,6 +203,256 @@
 		]
 	}
 	</script>
+	<style>
+		/* Page-specific rules for /hunt/. Kept inline per the pattern already
+		   used on trends/index.html and campaigns/index.html rather than
+		   growing css/tweetfeed.css, so a layout only this page uses does not
+		   cost a site-wide ?v= bump. Prefix is hnt-. Every box is a 1px solid
+		   black border with no shadow (feedback_tweetfeed_black_borders), and
+		   every badge colour comes from the palette the IOC-type rows and the
+		   changelog tags already use, so nothing here adds a new hue. */
+
+		/* The mobile header re-uses .toph1, and .toph1's 60px is overridden
+		   ONLY by `#presentationSecondary h1` (42px) - which the mobile block
+		   is not. So the phone title rendered BIGGER than the desktop one and
+		   wrapped to four lines. Same latent bug on every page carrying a
+		   #presentationMobile block; fixed here for this page only. */
+		#presentationMobile .toph1 { font-size: 34px; line-height: 1.1; }
+
+		.hnt-lede {
+			font-family: 'Rubik', sans-serif;
+			font-size: 15px;
+			line-height: 1.6;
+			color: #444;
+			margin: 0.35rem 0 0;
+			max-width: 68ch;
+		}
+
+		/* Headline figures. Same idiom as .trd-headline on /trends/: one
+		   bordered grid, values in tabular numerals, labels in small caps.
+		   The four facts were all on the page already, buried in the FAQ at
+		   the very bottom. */
+		.hnt-headline {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			border: 1px solid black;
+			border-radius: 3px;
+			background: #fff;
+			margin: 1.25rem 0 1rem;
+		}
+		.hnt-headline-cell {
+			padding: 0.9rem 0.75rem;
+			text-align: center;
+			font-family: 'Rubik', sans-serif;
+		}
+		.hnt-headline-cell + .hnt-headline-cell { border-left: 1px solid black; }
+		.hnt-headline-value {
+			font-size: 30px;
+			font-weight: 600;
+			line-height: 1.1;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+		}
+		.hnt-headline-label {
+			margin-top: 2px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		@media (max-width: 767.98px) {
+			.hnt-headline { grid-template-columns: repeat(2, 1fr); }
+			.hnt-headline-cell:nth-child(3) { border-left: 0; }
+			.hnt-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
+			.hnt-headline-value { font-size: 24px; }
+		}
+
+		/* Filter bar. Replaces three nested levels of Bootstrap nav-tabs that
+		   left 16 of the 24 code blocks in display:none on load - unreachable
+		   by Ctrl+F, unlinkable, and invisible to anyone who did not think to
+		   click. Filtering NARROWS a list that starts fully expanded, so with
+		   JS off the page still shows every recipe.
+
+		   sb-admin-2 sets #content-wrapper{overflow-x:hidden}, and ANY ancestor
+		   with a non-visible overflow disables position:sticky on every
+		   descendant - the trap already documented on .docs-sidebar in
+		   tweetfeed.css. This <style> ships on /hunt/ only, so un-clipping it
+		   here is already scoped to this page. The selector has to carry #wrapper
+		   too: sb-admin-2 declares it as `#wrapper #content-wrapper` (0,2,0,0), so
+		   a bare `#content-wrapper` loses the cascade and the bar never sticks. */
+		#wrapper #content-wrapper { overflow: visible; }
+		.hnt-filter {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 6px 8px;
+			padding: 10px 0;
+			margin: 0;
+			background: #f8f9fc;
+			border-bottom: 1px solid black;
+		}
+		/* The desktop bar is fixed-top and exactly 56px (see the note in
+		   tweetfeed.css); below 992px the bar scrolls away with the page. */
+		@media (min-width: 992px) { .hnt-filter { top: 56px; } }
+		@media (max-width: 991.98px) {
+			.hnt-filter { flex-wrap: nowrap; overflow-x: auto; }
+			.hnt-chip { flex-shrink: 0; }
+		}
+		.hnt-chip {
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			line-height: 1.5;
+			padding: 4px 12px;
+			border: 1px solid black;
+			border-radius: 4px;
+			background: #fff;
+			color: #000;
+			cursor: pointer;
+		}
+		.hnt-chip:hover { background: #4682B4; color: #fff; }
+		.hnt-chip:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+		.hnt-chip[aria-pressed="true"] { background: #1178b3; color: #fff; font-weight: 600; }
+		.hnt-chip-n { opacity: 0.7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+		.hnt-chip[aria-pressed="true"] .hnt-chip-n { opacity: 0.85; }
+		.hnt-status {
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			color: #737373;
+			margin: 0.6rem 0 0;
+		}
+		.hnt-status button {
+			background: none;
+			border: 0;
+			padding: 0;
+			font: inherit;
+			color: #4682B4;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.hnt-status button:hover { color: #1178b3; }
+
+		/* Groups and cards. Each recipe is its own <article> with an id, so
+		   every one of them is linkable (/hunt/#sentinel-dns-hits) - the old
+		   markup made recipe titles bold <p> text inside a hidden tab pane. */
+		.hnt-groups { margin-top: 1.5rem; }
+		.hnt-group { margin: 0 0 1.75rem; }
+		.hnt-group > .section-heading { font-size: 22px; margin: 0 0 0.35rem; }
+		.hnt-group-note {
+			font-family: 'Rubik', sans-serif;
+			font-size: 15px;
+			line-height: 1.6;
+			color: #444;
+			margin: 0 0 0.9rem;
+			max-width: 72ch;
+		}
+		.hnt-card {
+			border: 1px solid black;
+			background: #fff;
+			padding: 1rem 1.15rem 1.15rem;
+			margin: 0 0 0.85rem;
+		}
+		.hnt-head {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 0.35rem;
+		}
+		.hnt-badge {
+			padding: 1px 8px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 10.5px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			line-height: 1.5;
+			color: #000;
+			white-space: nowrap;
+		}
+		.hnt-title {
+			font-family: 'Segoe UI', Arial, sans-serif;
+			font-size: 1.05rem;
+			font-weight: 600;
+			color: #1c1c1c;
+			margin: 0;
+		}
+		.hnt-anchor {
+			margin-left: auto;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 15px;
+			color: #9aa0a6;
+			text-decoration: none;
+			opacity: 0;
+			transition: opacity 0.15s ease;
+		}
+		.hnt-card:hover .hnt-anchor,
+		.hnt-card:focus-within .hnt-anchor { opacity: 1; }
+		.hnt-anchor:hover,
+		.hnt-anchor:focus-visible { color: #1178b3; text-decoration: none; opacity: 1; }
+		.hnt-desc,
+		.hnt-note {
+			font-family: 'Rubik', sans-serif;
+			line-height: 1.6;
+			max-width: 72ch;
+		}
+		/* 15px, matching .cl-body and .faq-section p. The old page set
+		   style="font-size:14px" inline on ~30 paragraphs, one notch under
+		   every other page's prose. */
+		.hnt-desc { font-size: 15px; color: #444; margin: 0 0 0.6rem; }
+		.hnt-note { font-size: 14px; color: #555; margin: 0.75rem 0 0.35rem; }
+		.hnt-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 0.5rem; margin: 0 0 0.75rem; }
+		.hnt-meta span {
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			line-height: 1.6;
+			color: #4b5563;
+			background: #f2f2f2;
+			border: 1px solid #c9c9c9;
+			border-radius: 3px;
+			padding: 1px 7px;
+		}
+		.hnt-card .code-block { margin-bottom: 0; }
+		.hnt-links {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.35rem 1rem;
+			margin: 0.8rem 0 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13.5px;
+		}
+		.hnt-links a { color: #4682B4; text-decoration: underline; text-underline-offset: 2px; }
+		.hnt-links a:hover { color: #1178b3; }
+		.hnt-card[hidden], .hnt-group[hidden] { display: none; }
+
+		/* A deep link must clear BOTH the sticky filter row (51px) and, on
+		   desktop, the fixed-top bar above it (56px). Without this a
+		   /hunt/#sentinel-dns-hits landed the card header behind 107px of
+		   chrome. */
+		.hnt-card,
+		.hnt-group > .section-heading { scroll-margin-top: 64px; }
+		@media (min-width: 992px) {
+			.hnt-card,
+			.hnt-group > .section-heading { scroll-margin-top: 120px; }
+		}
+
+		/* One pastel per stack, all from the existing palette. Black text on
+		   every one of them clears AA by a wide margin. */
+		.hnt-badge-api      { background: #c8f6fd; }
+		.hnt-badge-terminal { background: #d9d9d9; }
+		.hnt-badge-splunk   { background: #34e3a4; }
+		.hnt-badge-sentinel { background: #7BC5F9; }
+		.hnt-badge-defender { background: #cdd8fa; }
+		.hnt-badge-elastic  { background: #ffc591; }
+		.hnt-badge-misp     { background: #a0dde6; }
+		.hnt-badge-sigma    { background: #FFCC99; }
+		.hnt-badge-agents   { background: #e6d3f7; }
+	</style>
 </head>
 
 <body id="page-top">
@@ -338,43 +587,52 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</h1>
-					<h2><em>Copy-paste recipes to hunt with TweetFeed IOCs in your terminal, SIEM and firewall</em></h2>
+					<p class="hnt-lede">Copy-paste recipes for hunting with TweetFeed IOCs in your terminal, SIEM, Threat Intelligence platform and detection content.</p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
-					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</p>
-					<p style="font-size: 14px;"><em>Recipes for terminal, SIEM, firewall</em></p>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-bullseye" style="font-size: 26px;"></i> Threat Hunting cookbook</p>
+					<p class="hnt-lede">Copy-paste recipes for terminal, SIEM, TIP and detection content.</p>
 				</div>
-				<hr class="divider">
-				<nav class="page-toc" aria-label="Page sections">
-					<a class="page-toc-chip" href="#quickstart">Quick start</a>
-					<a class="page-toc-chip" href="#terminal">Terminal &amp; shell</a>
-					<a class="page-toc-chip" href="#siem">SIEM playbooks</a>
-					<a class="page-toc-chip" href="#detection">Detection content</a>
-					<a class="page-toc-chip" href="#faq">FAQ</a>
-				</nav>
-
-				<hr id="quickstart" class="divider">
-				<h3 class="section-heading">1. Quick start - get raw IOCs</h3>
-				<p style="font-size: 14px;">Four ways to ingest the feed. Pick the one that matches your downstream tool.</p>
-				<nav>
-					<div class="nav nav-tabs" id="qs-tab" role="tablist">
-						<a class="nav-item nav-link active border-bottom-0" id="qs-rest-tab" data-toggle="tab" href="#qs-rest" role="tab" aria-controls="qs-rest" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> REST API</a>
-						<a class="nav-item nav-link border-bottom-0" id="qs-csv-tab" data-toggle="tab" href="#qs-csv" role="tab" aria-controls="qs-csv" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> CSV download</a>
-						<a class="nav-item nav-link border-bottom-0" id="qs-rss-tab" data-toggle="tab" href="#qs-rss" role="tab" aria-controls="qs-rss" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> RSS</a>
-						<a class="nav-item nav-link border-bottom-0" id="qs-misp-tab" data-toggle="tab" href="#qs-misp" role="tab" aria-controls="qs-misp" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#4</b> MISP feed</a>
-					</div>
-				</nav>
-				<div class="tab-content" id="qs-tabContent">
-					<div class="tab-pane fade show active" id="qs-rest" role="tabpanel" aria-labelledby="qs-rest-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">All IOCs from today as JSON:</p>
-						<pre id="qs-rest-1" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-1" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Filter by IOC type (<code>url</code>, <code>domain</code>, <code>ip</code>, <code>sha256</code>, <code>md5</code>):</p>
-						<pre id="qs-rest-2" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-2" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Combine type and tag (this week's CobaltStrike IPs):</p>
-						<pre id="qs-rest-3" class="code-block p-2"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-3" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Response shape (one IOC per array element):</p>
-						<pre id="qs-rest-4" class="code-block p-2"><code class="language-json">{
+				<div class="hnt-headline">
+					<div class="hnt-headline-cell"><div class="hnt-headline-value">25</div><div class="hnt-headline-label">Recipes</div></div>
+					<div class="hnt-headline-cell"><div class="hnt-headline-value">9</div><div class="hnt-headline-label">Stacks covered</div></div>
+					<div class="hnt-headline-cell"><div class="hnt-headline-value">15 min</div><div class="hnt-headline-label">Feed refresh</div></div>
+					<div class="hnt-headline-cell"><div class="hnt-headline-value">CC0</div><div class="hnt-headline-label">Public domain, no auth</div></div>
+				</div>
+				<div class="hnt-filter" id="hnt-filter" role="group" aria-label="Filter recipes by stack">
+					<button class="hnt-chip" type="button" data-stack="all" aria-pressed="true">All <span class="hnt-chip-n">25</span></button>
+					<button class="hnt-chip" type="button" data-stack="api" aria-pressed="false">Raw feeds <span class="hnt-chip-n">4</span></button>
+					<button class="hnt-chip" type="button" data-stack="terminal" aria-pressed="false">Terminal <span class="hnt-chip-n">5</span></button>
+					<button class="hnt-chip" type="button" data-stack="splunk" aria-pressed="false">Splunk <span class="hnt-chip-n">3</span></button>
+					<button class="hnt-chip" type="button" data-stack="sentinel" aria-pressed="false">Sentinel <span class="hnt-chip-n">2</span></button>
+					<button class="hnt-chip" type="button" data-stack="defender" aria-pressed="false">Defender <span class="hnt-chip-n">4</span></button>
+					<button class="hnt-chip" type="button" data-stack="elastic" aria-pressed="false">Elastic <span class="hnt-chip-n">3</span></button>
+					<button class="hnt-chip" type="button" data-stack="misp" aria-pressed="false">MISP &amp; TAXII <span class="hnt-chip-n">2</span></button>
+					<button class="hnt-chip" type="button" data-stack="sigma" aria-pressed="false">Sigma <span class="hnt-chip-n">1</span></button>
+					<button class="hnt-chip" type="button" data-stack="agents" aria-pressed="false">Agents <span class="hnt-chip-n">1</span></button>
+				</div>
+				<p class="hnt-status" id="hnt-status" hidden>Showing <b id="hnt-status-count">25 of 25</b> recipes. <button type="button" id="hnt-show-all">Show all</button></p>
+				<div class="hnt-groups">
+				<section class="hnt-group" id="quickstart" data-group="api">
+					<h2 class="section-heading" id="stack-api">Get the raw IOCs</h2>
+					<p class="hnt-group-note">Four ways to pull the feed itself. Everything below is free, unauthenticated and CC0.</p>
+					<article class="hnt-card" id="rest-api" data-stack="api">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-api">Raw feeds</span>
+							<h3 class="hnt-title">REST API</h3>
+							<a class="hnt-anchor" href="#rest-api" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Every window and IOC type as JSON. No key, no signup, no per-caller throttling.</p>
+						<p class="hnt-meta"><span>Windows: today &middot; week &middot; month &middot; year</span><span>Refresh: 15 min</span></p>
+						<p class="hnt-note">All of today's IOCs as JSON:</p>
+						<pre id="qs-rest-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-1" title="Copy"></i></pre>
+						<p class="hnt-note">Filter by IOC type (<code>url</code>, <code>domain</code>, <code>ip</code>, <code>sha256</code>, <code>md5</code>):</p>
+						<pre id="qs-rest-2" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-2" title="Copy"></i></pre>
+						<p class="hnt-note">Combine type and tag - this week's Cobalt Strike IPs:</p>
+						<pre id="qs-rest-3" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-3" title="Copy"></i></pre>
+						<p class="hnt-note">Response shape, one IOC per array element:</p>
+						<pre id="qs-rest-4" class="code-block"><code class="language-json">{
   "date": "2026-05-03 06:07:00",
   "user": "PhishStats",
   "type": "domain",
@@ -382,80 +640,175 @@
   "tags": ["#phishing"],
   "tweet": "https://x.com/PhishStats/status/..."
 }</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-4" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="qs-csv" role="tabpanel" aria-labelledby="qs-csv-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">CSVs cover four windows: <code>today</code>, <code>week</code>, <code>month</code>, <code>year</code>. Header: <code>date,user,type,value,tags,tweet</code>.</p>
-						<pre id="qs-csv-1" class="code-block p-2"><code class="language-bash">wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv
+						<p class="hnt-links"><a href="../api/">Full API reference</a><a href="../openapi.yaml">OpenAPI spec</a></p>
+					</article>
+					<article class="hnt-card" id="csv-download" data-stack="api">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-api">Raw feeds</span>
+							<h3 class="hnt-title">CSV download</h3>
+							<a class="hnt-anchor" href="#csv-download" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The same four windows as CSV, straight off the data repo. Header: <code>date,user,type,value,tags,tweet</code>.</p>
+						<p class="hnt-meta"><span>Windows: today &middot; week &middot; month &middot; year</span></p>
+						<pre id="qs-csv-1" class="code-block"><code class="language-bash">wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-csv-1" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="qs-rss" role="tabpanel" aria-labelledby="qs-rss-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">RSS feed with the latest IOCs (refreshed every 15 min):</p>
-						<pre id="qs-rss-1" class="code-block p-2"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rss-1" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="qs-misp" role="tabpanel" aria-labelledby="qs-misp-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">TweetFeed publishes a MISP-format manifest with one Event per day (365 days of history). In MISP, go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b> and give it the feed <em>directory</em> - MISP appends <code>/manifest.json</code> itself:</p>
-						<pre id="qs-misp-1" class="code-block p-2"><code class="language-text">URL:           https://tweetfeed.live/misp
-Source format: misp
-Provider:      TweetFeed
-Auto-pull:     yes
-Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;">Save, click <b>Fetch and store all feed data</b> to seed, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh. Prefer STIX/TAXII ingestion (OpenCTI, ThreatQ)? See <a class="text-decoration-none" href="../api/#taxii">TAXII 2.1</a> in the API docs.</p>
-					</div>
-				</div>
-
-				<hr id="terminal" class="divider">
-				<h3 class="section-heading">2. Terminal &amp; shell</h3>
-				<p style="font-size: 14px;">Four recipes you can paste into a shell right now. All return clean stdout suitable for piping into your tooling.</p>
-				<p style="font-size: 14px;"><b>2.1 Daily blocklist refresh</b> - cron-friendly, runs every 15 min and updates a flat file:</p>
-				<pre id="term-1" class="code-block p-2"><code class="language-bash">*/15 * * * * curl -sfL https://api.tweetfeed.live/v1/today/url \
+					</article>
+					<article class="hnt-card" id="rss-feed" data-stack="api">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-api">Raw feeds</span>
+							<h3 class="hnt-title">RSS</h3>
+							<a class="hnt-anchor" href="#rss-feed" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The latest IOCs as an item stream, for feed readers and no-code automations.</p>
+						<p class="hnt-meta"><span>Refresh: 15 min</span></p>
+						<pre id="qs-rss-1" class="code-block"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rss-1" title="Copy"></i></pre>
+					</article>
+					<article class="hnt-card" id="blocklists" data-stack="api">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-api">Raw feeds</span>
+							<h3 class="hnt-title">Plain-text blocklists</h3>
+							<a class="hnt-anchor" href="#blocklists" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Seven ready-to-consume exports of the last 30 days, one indicator per line, for Pi-hole, AdGuard Home, hosts files, dnsmasq, BIND RPZ and firewalls.</p>
+						<p class="hnt-meta"><span>Window: 30 days</span><span>Refresh: 15 min</span></p>
+						<pre id="qs-blocklist-1" class="code-block"><code class="language-bash"># Seven plain-text exports, rolling 30-day window, one indicator per line
+curl -sfL https://api.tweetfeed.live/v1/blocklist/domains.txt   # bare domains (Pi-hole)
+curl -sfL https://api.tweetfeed.live/v1/blocklist/hosts.txt     # 0.0.0.0 hosts file
+curl -sfL https://api.tweetfeed.live/v1/blocklist/adguard.txt   # AdGuard Home
+curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt   # dnsmasq address= rules
+curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt       # BIND RPZ zone
+curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt       # bare IPs
+curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not just hosts</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-blocklist-1" title="Copy"></i></pre>
+						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist.</p>
+						<p class="hnt-links"><a href="../malicious-domains/">Bad domains list</a><a href="../malicious-ips/">Bad IPs list</a></p>
+					</article>
+				</section>
+				<section class="hnt-group" id="terminal" data-group="terminal">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-terminal">Terminal &amp; shell</h2>
+					<p class="hnt-group-note">Recipes you can paste into a shell right now. All of them return clean stdout, ready to pipe.</p>
+					<article class="hnt-card" id="blocklist-cron" data-stack="terminal">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-terminal">Terminal</span>
+							<h3 class="hnt-title">Daily blocklist refresh</h3>
+							<a class="hnt-anchor" href="#blocklist-cron" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Rewrites a flat file every 15 minutes, ready for a firewall or proxy to reload.</p>
+						<p class="hnt-meta"><span>Window: today</span><span>Refresh: 15 min</span></p>
+						<pre id="term-1" class="code-block"><code class="language-bash">*/15 * * * * curl -sfL https://api.tweetfeed.live/v1/today/url \
   | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-1" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.2 Slice by malware family tag</b> - only IPs tagged Cobalt Strike from this week:</p>
-				<pre id="term-2" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-2" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.3 Pivot from a researcher</b> - every IOC published this week by <code>@malwrhunterteam</code> (filter is client-side because the REST endpoint does not accept user as a path filter):</p>
-				<pre id="term-3" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
+					</article>
+					<article class="hnt-card" id="tag-slice" data-stack="terminal">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-terminal">Terminal</span>
+							<h3 class="hnt-title">Slice by malware family</h3>
+							<a class="hnt-anchor" href="#tag-slice" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Only the IPs tagged Cobalt Strike this week. Swap the tag for any of the tracked hashtags.</p>
+						<p class="hnt-meta"><span>Window: week</span></p>
+						<pre id="term-2" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-2" title="Copy"></i></pre>
+						<p class="hnt-links"><a href="../tags/">Tag index</a></p>
+					</article>
+					<article class="hnt-card" id="researcher-pivot" data-stack="terminal">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-terminal">Terminal</span>
+							<h3 class="hnt-title">Pivot from a researcher</h3>
+							<a class="hnt-anchor" href="#researcher-pivot" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Every IOC published this week by one handle. The filter is client-side because the REST route does not take <code>user</code> as a path segment.</p>
+						<p class="hnt-meta"><span>Window: week</span></p>
+						<pre id="term-3" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
   | jq -r '.[] | select(.user=="malwrhunterteam") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3" title="Copy"></i></pre>
-				<p style="font-size: 14px; margin-top: 0.5rem;"><b>2.4 IOC to source tweet</b> - every IOC carries provenance, useful before you alert on it:</p>
-				<pre id="term-4" class="code-block p-2"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
+						<p class="hnt-links"><a href="../researchers/">Researchers</a></p>
+					</article>
+					<article class="hnt-card" id="ioc-provenance" data-stack="terminal">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-terminal">Terminal</span>
+							<h3 class="hnt-title">IOC to source tweet</h3>
+							<a class="hnt-anchor" href="#ioc-provenance" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Every IOC carries provenance. Resolve one back to the post it came from before you alert on it.</p>
+						<p class="hnt-meta"><span>Window: today</span></p>
+						<pre id="term-4" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
   | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-4" title="Copy"></i></pre>
-
-				<hr id="siem" class="divider">
-				<h3 class="section-heading">3. SIEM playbooks</h3>
-				<p style="font-size: 14px;">Use TweetFeed as a lookup table or external source against your log indexes.</p>
-				<nav>
-					<div class="nav nav-tabs" id="siem-tab" role="tablist">
-						<a class="nav-item nav-link active border-bottom-0" id="siem-spl-tab" data-toggle="tab" href="#siem-spl" role="tab" aria-controls="siem-spl" aria-selected="true" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#1</b> Splunk SPL</a>
-						<a class="nav-item nav-link border-bottom-0" id="siem-sentinel-tab" data-toggle="tab" href="#siem-sentinel" role="tab" aria-controls="siem-sentinel" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#2</b> Sentinel KQL</a>
-						<a class="nav-item nav-link border-bottom-0" id="siem-mde-tab" data-toggle="tab" href="#siem-mde" role="tab" aria-controls="siem-mde" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#3</b> Defender (KQL)</a>
-						<a class="nav-item nav-link border-bottom-0" id="siem-elastic-tab" data-toggle="tab" href="#siem-elastic" role="tab" aria-controls="siem-elastic" aria-selected="false" style="color:black;font-size: 16px;font-family: 'Rubik', sans-serif"><b>#4</b> Elastic Stack</a>
-					</div>
-				</nav>
-				<div class="tab-content" id="siem-tabContent">
-					<div class="tab-pane fade show active" id="siem-spl" role="tabpanel" aria-labelledby="siem-spl-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>Setup</b> - schedule a saved search to refresh the lookup table from the TweetFeed CSV every 15 min (savedsearches.conf):</p>
-						<pre id="spl-setup" class="code-block p-2"><code class="language-ini">[TweetFeed_today_lookup_refresh]
+					</article>
+					<article class="hnt-card" id="active-campaigns" data-stack="terminal">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-terminal">Terminal</span>
+							<h3 class="hnt-title">Active campaigns</h3>
+							<a class="hnt-anchor" href="#active-campaigns" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The daily clustering run, ranked by how many IOCs each campaign produced in the last 7 days.</p>
+						<p class="hnt-meta"><span>Window: 30 days</span><span>Refresh: daily</span></p>
+						<pre id="term-5" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/campaigns \
+  | jq -r &#39;.campaigns[] | select(.ioc_count_7d &gt; 0)
+           | "\(.ioc_count_7d)\t\(.confidence)\t\(.name)"&#39; | sort -rn</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-5" title="Copy"></i></pre>
+						<p class="hnt-links"><a href="../campaigns/">Campaigns</a></p>
+					</article>
+				</section>
+				<section class="hnt-group" id="siem" data-group="splunk">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-splunk">Splunk</h2>
+					<p class="hnt-group-note">Keep a TweetFeed lookup table current, then join it against your indexes.</p>
+					<article class="hnt-card" id="splunk-lookup" data-stack="splunk">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-splunk">Splunk</span>
+							<h3 class="hnt-title">Refresh the lookup table</h3>
+							<a class="hnt-anchor" href="#splunk-lookup" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">A saved search that keeps the TweetFeed lookup current, in <code>savedsearches.conf</code>. Every query below reads from it.</p>
+						<p class="hnt-meta"><span>Refresh: 15 min</span></p>
+						<pre id="spl-setup" class="code-block"><code class="language-ini">[TweetFeed_today_lookup_refresh]
 search = | inputlookup append=t external_lookup tweetfeed_today.csv \
          | outputlookup tweetfeed_today.csv
 cron_schedule = */15 * * * *
 dispatch.earliest_time = -15m
 enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-setup" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.1 Match outbound proxy logs vs TweetFeed URLs and domains</b>:</p>
-						<pre id="spl-proxy" class="code-block p-2"><code>index=proxy [
+					</article>
+					<article class="hnt-card" id="spl-proxy-match" data-stack="splunk">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-splunk">Splunk</span>
+							<h3 class="hnt-title">Match proxy logs against URLs and domains</h3>
+							<a class="hnt-anchor" href="#spl-proxy-match" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">A subsearch turns the lookup into a filter, then groups the hits by source host so you see who reached what.</p>
+						<p class="hnt-meta"><span>Window: today</span></p>
+						<pre id="spl-proxy" class="code-block"><code class="language-plaintext">index=proxy [
   | inputlookup tweetfeed_today.csv
   | where type IN ("url","domain")
   | rename value AS url
   | fields url
 ] | stats count, values(tags), values(tweet) by src_ip, url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-proxy" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.2 DNS query enrichment</b> - any DNS query that hits a TweetFeed domain in the last 7d:</p>
-						<pre id="spl-dns" class="code-block p-2"><code>index=dns sourcetype=dns:query [
+					</article>
+					<article class="hnt-card" id="spl-dns-enrich" data-stack="splunk">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-splunk">Splunk</span>
+							<h3 class="hnt-title">DNS query enrichment</h3>
+							<a class="hnt-anchor" href="#spl-dns-enrich" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Any DNS query in the last 7 days that resolved a TweetFeed domain, carrying the tags and the source tweet along for triage.</p>
+						<p class="hnt-meta"><span>Window: week</span></p>
+						<pre id="spl-dns" class="code-block"><code class="language-plaintext">index=dns sourcetype=dns:query [
   | inputlookup tweetfeed_week.csv
   | where type="domain" | rename value AS query | fields query
 ] | table _time, src_ip, query, [tweetfeed.tags], [tweetfeed.tweet]</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-dns" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.3 Real-time alert</b> - save the previous query as a Notable Event with severity=medium and trigger immediately when count &gt; 0.</p>
-					</div>
-					<div class="tab-pane fade" id="siem-sentinel" role="tabpanel" aria-labelledby="siem-sentinel-tab">
-						<p style="font-size: 14px; margin-top: 1rem;"><b>3.4 externaldata against today's CSV</b> - DNS hits in last 24h:</p>
-						<pre id="sentinel-dns" class="code-block p-2"><code>let TweetFeedDomains = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
+						<p class="hnt-note">Save this one as a Notable Event with <code>severity=medium</code> and trigger it as soon as <code>count &gt; 0</code> to turn it into a real-time alert.</p>
+					</article>
+				</section>
+				<section class="hnt-group" data-group="sentinel">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-sentinel">Microsoft Sentinel</h2>
+					<p class="hnt-group-note">No connector needed: <code>externaldata()</code> reads the CSV straight off the data repo at query time.</p>
+					<article class="hnt-card" id="sentinel-dns-hits" data-stack="sentinel">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-sentinel">Sentinel</span>
+							<h3 class="hnt-title">DNS hits with externaldata()</h3>
+							<a class="hnt-anchor" href="#sentinel-dns-hits" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Reads <code>today.csv</code> at query time - no connector, no ingestion cost - and joins it against <code>DnsEvents</code>.</p>
+						<p class="hnt-meta"><span>Window: today</span><span>Lookback: 24h</span></p>
+						<pre id="sentinel-dns" class="code-block"><code class="language-plaintext">let TweetFeedDomains = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
   [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"]
   with (format="csv")
   | where type == "domain"
@@ -465,8 +818,16 @@ DnsEvents
 | where Name in (TweetFeedDomains | project Domain)
 | join kind=leftouter TweetFeedDomains on $left.Name == $right.Domain
 | project TimeGenerated, Computer, ClientIP, Name, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-dns" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.5 SecurityEvent against TweetFeed IPs</b> - logon source pivot against week.csv:</p>
-						<pre id="sentinel-secevent" class="code-block p-2"><code>let TweetFeedIPs = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
+					</article>
+					<article class="hnt-card" id="sentinel-ip-logons" data-stack="sentinel">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-sentinel">Sentinel</span>
+							<h3 class="hnt-title">Logon sources against TweetFeed IPs</h3>
+							<a class="hnt-anchor" href="#sentinel-ip-logons" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The same pattern over <code>week.csv</code> and <code>SecurityEvent</code>, to catch authentication from a flagged address.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 7d</span></p>
+						<pre id="sentinel-secevent" class="code-block"><code class="language-plaintext">let TweetFeedIPs = externaldata(date:string, user:string, type:string, value:string, tags:string, tweet:string)
   [@"https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv"]
   with (format="csv")
   | where type == "ip"
@@ -476,22 +837,22 @@ SecurityEvent
 | where IpAddress in (TweetFeedIPs | project IPAddress)
 | join kind=leftouter TweetFeedIPs on $left.IpAddress == $right.IPAddress
 | project TimeGenerated, Computer, Account, IpAddress, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-secevent" title="Copy"></i></pre>
-					</div>
-					<div class="tab-pane fade" id="siem-mde" role="tabpanel" aria-labelledby="siem-mde-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">Defender for Endpoint advanced hunting (KQL). The 4 sub-tabs cover every IOC type. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness vs coverage trade-off.</p>
-						<a style="background-color: #00a1f1;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview" target="_blank" role="button" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt"></i></a>
-						<br><br>
-						<nav>
-							<div class="nav nav-tabs" id="mde-subtab" role="tablist">
-								<a class="nav-item nav-link active border-bottom-0" id="mde-url-subtab" data-toggle="tab" href="#mde-url" role="tab" aria-controls="mde-url" aria-selected="true" style="color:black;font-size: 14px;font-family: 'Rubik', sans-serif">URLs &amp; Domains</a>
-								<a class="nav-item nav-link border-bottom-0" id="mde-ip-subtab" data-toggle="tab" href="#mde-ip" role="tab" aria-controls="mde-ip" aria-selected="false" style="color:black;font-size: 14px;font-family: 'Rubik', sans-serif">IP addresses</a>
-								<a class="nav-item nav-link border-bottom-0" id="mde-sha256-subtab" data-toggle="tab" href="#mde-sha256" role="tab" aria-controls="mde-sha256" aria-selected="false" style="color:black;font-size: 14px;font-family: 'Rubik', sans-serif">SHA256</a>
-								<a class="nav-item nav-link border-bottom-0" id="mde-md5-subtab" data-toggle="tab" href="#mde-md5" role="tab" aria-controls="mde-md5" aria-selected="false" style="color:black;font-size: 14px;font-family: 'Rubik', sans-serif">MD5</a>
-							</div>
-						</nav>
-						<div class="tab-content" id="mde-subtabContent">
-							<div class="tab-pane fade show active" id="mde-url" role="tabpanel" aria-labelledby="mde-url-subtab">
-								<pre id="nav-url-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
+					</article>
+				</section>
+				<section class="hnt-group" data-group="defender">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-defender">Microsoft Defender for Endpoint</h2>
+					<p class="hnt-group-note">Advanced hunting queries covering all four IOC types. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness-versus-coverage trade-off.</p>
+					<p class="hnt-links"><a href="https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview" target="_blank" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
+					<article class="hnt-card" id="mde-urls" data-stack="defender">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-defender">Defender</span>
+							<h3 class="hnt-title">URLs and domains</h3>
+							<a class="hnt-anchor" href="#mde-urls" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Joins the URL and domain rows against <code>DeviceNetworkEvents</code>. The <code>domain_whitelist</code> array at the top is where your trusted assets go.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 30d</span></p>
+						<pre id="nav-url-pre" class="code-block"><code class="language-plaintext">let MaxAge = ago(30d);
 let domain_whitelist = pack_array(
 'XXX' // Some URL/Domain you want to whitelist.
 );
@@ -515,9 +876,16 @@ TweetFeed
     | where Timestamp&gt; MaxAge
     ) on RemoteUrl
 ) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-url-pre" title="Copy"></i></pre>
-							</div>
-							<div class="tab-pane fade" id="mde-ip" role="tabpanel" aria-labelledby="mde-ip-subtab">
-								<pre id="nav-ip-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
+					</article>
+					<article class="hnt-card" id="mde-ips" data-stack="defender">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-defender">Defender</span>
+							<h3 class="hnt-title">IP addresses</h3>
+							<a class="hnt-anchor" href="#mde-ips" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Same join over the IP rows, with private ranges dropped by <code>ipv4_is_private()</code> so RFC1918 noise never fires.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 30d</span></p>
+						<pre id="nav-ip-pre" class="code-block"><code class="language-plaintext">let MaxAge = ago(30d);
 let IPaddress_whitelist = pack_array(
 'XXX' // Some IP address you want to whitelist.
 );
@@ -542,9 +910,16 @@ TweetFeed
     | where Timestamp&gt; MaxAge
     ) on RemoteIP
 ) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-ip-pre" title="Copy"></i></pre>
-							</div>
-							<div class="tab-pane fade" id="mde-sha256" role="tabpanel" aria-labelledby="mde-sha256-subtab">
-								<pre id="nav-sha256-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
+					</article>
+					<article class="hnt-card" id="mde-sha256" data-stack="defender">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-defender">Defender</span>
+							<h3 class="hnt-title">SHA-256 hashes</h3>
+							<a class="hnt-anchor" href="#mde-sha256" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Unions process, file and image-load events, so a flagged hash is caught whether it ran, landed on disk or was loaded into another process.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 30d</span></p>
+						<pre id="nav-sha256-pre" class="code-block"><code class="language-plaintext">let MaxAge = ago(30d);
 let SHA256_whitelist = pack_array(
 'XXX' // Some SHA256 hash to whitelist.
 );
@@ -580,9 +955,16 @@ union (
         | where Timestamp&gt; MaxAge
     ) on SHA256
 ) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-sha256-pre" title="Copy"></i></pre>
-							</div>
-							<div class="tab-pane fade" id="mde-md5" role="tabpanel" aria-labelledby="mde-md5-subtab">
-								<pre id="nav-md5-pre" class="code-block p-2"><code>let MaxAge = ago(30d);
+					</article>
+					<article class="hnt-card" id="mde-md5" data-stack="defender">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-defender">Defender</span>
+							<h3 class="hnt-title">MD5 hashes</h3>
+							<a class="hnt-anchor" href="#mde-md5" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The MD5 counterpart of the query above, for the samples reported without a SHA-256.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 30d</span></p>
+						<pre id="nav-md5-pre" class="code-block"><code class="language-plaintext">let MaxAge = ago(30d);
 let MD5_whitelist = pack_array(
 'XXX' // Some MD5 hash to whitelist.
 );
@@ -618,15 +1000,22 @@ union (
         | where Timestamp&gt; MaxAge
     ) on MD5
 ) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-md5-pre" title="Copy"></i></pre>
-							</div>
-						</div>
-					</div>
-					<div class="tab-pane fade" id="siem-elastic" role="tabpanel" aria-labelledby="siem-elastic-tab">
-						<p style="font-size: 14px; margin-top: 1rem;">Ingest the TweetFeed CSV into an Elasticsearch index every 15 min, then run KQL or ES|QL against it from Kibana. The 3 recipes cover the most common joins.</p>
-						<a style="background-color: #00bfb3;border-color: black;font-size: 12px;" class="btn btn-primary btn-sm" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-overview.html" target="_blank" role="button" rel="noopener noreferrer">ES|QL reference <i class="fas fa-external-link-alt"></i></a>
-						<br><br>
-						<p style="font-size: 14px;"><b>3.6 Logstash pipeline</b> - pull <code>today.csv</code> every 15 min and index to <code>tweetfeed-iocs-*</code>:</p>
-						<pre id="elastic-logstash" class="code-block p-2"><code class="language-yaml">input {
+					</article>
+				</section>
+				<section class="hnt-group" data-group="elastic">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-elastic">Elastic Stack</h2>
+					<p class="hnt-group-note">Index the CSV every 15 minutes, then join it from Kibana with ES|QL or alert on it with Watcher.</p>
+					<p class="hnt-links"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-overview.html" target="_blank" rel="noopener noreferrer">ES|QL reference <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
+					<article class="hnt-card" id="elastic-ingest" data-stack="elastic">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-elastic">Elastic</span>
+							<h3 class="hnt-title">Logstash ingest pipeline</h3>
+							<a class="hnt-anchor" href="#elastic-ingest" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Polls <code>today.csv</code> every 15 minutes and upserts into <code>tweetfeed-iocs-*</code>, keyed on type plus value so re-reported IOCs update in place.</p>
+						<p class="hnt-meta"><span>Window: today</span><span>Refresh: 15 min</span></p>
+						<pre id="elastic-logstash" class="code-block"><code class="language-yaml">input {
   http_poller {
     urls =&gt; {
       tweetfeed =&gt; "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv"
@@ -653,16 +1042,32 @@ output {
     doc_as_upsert =&gt; true
   }
 }</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-logstash" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.7 ES|QL join</b> - DNS hits against TweetFeed domains in last 24h (Kibana Discover or Lens):</p>
-						<pre id="elastic-esql" class="code-block p-2"><code class="language-sql">FROM logs-network-dns-*
+					</article>
+					<article class="hnt-card" id="elastic-esql-join" data-stack="elastic">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-elastic">Elastic</span>
+							<h3 class="hnt-title">ES|QL join against DNS logs</h3>
+							<a class="hnt-anchor" href="#elastic-esql-join" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">A <code>LOOKUP JOIN</code> from your DNS index into the ingested IOCs, runnable straight from Kibana Discover or Lens.</p>
+						<p class="hnt-meta"><span>Lookback: 24h</span></p>
+						<pre id="elastic-esql" class="code-block"><code class="language-sql">FROM logs-network-dns-*
 | WHERE @timestamp &gt; NOW() - 24h
 | LOOKUP JOIN tweetfeed-iocs-* ON dns.question.name == value
 | WHERE type == "domain"
 | KEEP @timestamp, host.name, source.ip, dns.question.name, tags, tweet
 | SORT @timestamp DESC
 | LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-esql" title="Copy"></i></pre>
-						<p style="font-size: 14px; margin-top: 0.5rem;"><b>3.8 Watcher alert</b> - fire when any internal endpoint resolves a TweetFeed domain. Save under Stack Management &rarr; Watcher:</p>
-						<pre id="elastic-watcher" class="code-block p-2"><code class="language-json">{
+					</article>
+					<article class="hnt-card" id="elastic-watcher-alert" data-stack="elastic">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-elastic">Elastic</span>
+							<h3 class="hnt-title">Watcher alert</h3>
+							<a class="hnt-anchor" href="#elastic-watcher-alert" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Fires whenever an internal endpoint resolves a TweetFeed domain. Save it under Stack Management &rarr; Watcher.</p>
+						<p class="hnt-meta"><span>Interval: 15 min</span></p>
+						<pre id="elastic-watcher" class="code-block"><code class="language-json">{
   "trigger": { "schedule": { "interval": "15m" } },
   "input": {
     "search": {
@@ -687,15 +1092,61 @@ output {
     "log": {"logging": {"text": "TweetFeed DNS hit: {{ctx.payload.hits.total.value}} events"}}
   }
 }</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-watcher" title="Copy"></i></pre>
-						<p style="font-size: 13.5px;color:#555;margin-top: 0.5rem;">For SIEM detection rules, the <code>tweetfeed-iocs-*</code> index becomes a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
-					</div>
-				</div>
+						<p class="hnt-note">For detection rules, <code>tweetfeed-iocs-*</code> also works as a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
+					</article>
+				</section>
+				<section class="hnt-group" data-group="misp">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-misp">MISP &amp; TAXII</h2>
+					<p class="hnt-group-note">Two standards-based ingest paths for Threat Intelligence platforms.</p>
+					<article class="hnt-card" id="misp-feed" data-stack="misp">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-misp">MISP</span>
+							<h3 class="hnt-title">MISP feed</h3>
+							<a class="hnt-anchor" href="#misp-feed" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">A MISP-format manifest with one Event per day and 365 days of history. In MISP go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b> and give it the feed <em>directory</em> - MISP appends <code>/manifest.json</code> itself.</p>
+						<p class="hnt-meta"><span>Window: 365 days</span></p>
+						<pre id="qs-misp-1" class="code-block"><code class="language-plaintext">URL:           https://tweetfeed.live/misp
+Source format: misp
+Provider:      TweetFeed
+Auto-pull:     yes
+Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1" title="Copy"></i></pre>
+						<p class="hnt-note">Save, click <b>Fetch and store all feed data</b> to seed it, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh.</p>
+					</article>
+					<article class="hnt-card" id="taxii" data-stack="misp">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-misp">TAXII</span>
+							<h3 class="hnt-title">TAXII 2.1 collection</h3>
+							<a class="hnt-anchor" href="#taxii" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">STIX 2.1 indicators over a TAXII 2.1 endpoint, for OpenCTI, ThreatQ and anything else that speaks the standard.</p>
+						<p class="hnt-meta"><span>Window: 365 days</span><span>Media type: taxii+json 2.1</span></p>
+						<pre id="qs-taxii-1" class="code-block"><code class="language-bash"># 1. Discovery - lists the API root and its collections
+curl -s https://api.tweetfeed.live/taxii2/ \
+  -H &#39;Accept: application/taxii+json;version=2.1&#39;
 
-				<hr id="detection" class="divider">
-				<h3 class="section-heading">4. Detection content</h3>
-				<p style="font-size: 14px;">Generate a Sigma rule template that any modern SIEM can compile to its query language.</p>
-				<p style="font-size: 14px;"><b>4.1 Sigma rule template</b> - DNS lookup to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> via your Sigma processing pipeline (e.g. sigmac with a lookup expansion):</p>
-				<pre id="det-sigma" class="code-block p-2"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
+# 2. Poll everything added since a timestamp (delta sync)
+COLL=b7dc78af-1d12-5059-898c-3f0e77636204
+curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?added_after=2026-07-01T00:00:00Z&#34; \
+  -H &#39;Accept: application/taxii+json;version=2.1&#39;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-taxii-1" title="Copy"></i></pre>
+						<p class="hnt-note">Paginate with <code>limit</code> and <code>next</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references were created with the collection, so they fall outside any recent window. Fetch those once by id from <code>/objects/{id}/</code> so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
+						<p class="hnt-links"><a href="../api/#taxii">TAXII reference</a></p>
+					</article>
+				</section>
+				<section class="hnt-group" id="detection" data-group="sigma">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-sigma">Detection content</h2>
+					<p class="hnt-group-note">A vendor-neutral rule template your Sigma pipeline can compile to any SIEM.</p>
+					<article class="hnt-card" id="sigma-rule" data-stack="sigma">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-sigma">Sigma</span>
+							<h3 class="hnt-title">Sigma rule template</h3>
+							<a class="hnt-anchor" href="#sigma-rule" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Detects DNS lookups to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> from your Sigma processing pipeline, e.g. a sigmac lookup expansion.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Logsource: sysmon EventID 22</span></p>
+						<pre id="det-sigma" class="code-block"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
 id: f1c0c0d0-1111-4444-9999-aaaaaaaaaaaa
 status: experimental
 description: Detects DNS lookups to domains published by TweetFeed within the last week
@@ -718,9 +1169,28 @@ level: medium
 tags:
   - attack.command_and_control
   - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#det-sigma" title="Copy"></i></pre>
-
-				<hr id="faq" class="divider">
-				<section class="faq-section">
+					</article>
+				</section>
+				<section class="hnt-group" data-group="agents">
+					<hr class="divider">
+					<h2 class="section-heading" id="stack-agents">AI agents</h2>
+					<p class="hnt-group-note">The same corpus over the Model Context Protocol, so an agent can query it as a tool.</p>
+					<article class="hnt-card" id="mcp-server" data-stack="agents">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-agents">Agents</span>
+							<h3 class="hnt-title">MCP server</h3>
+							<a class="hnt-anchor" href="#mcp-server" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The corpus as agent tools over the Model Context Protocol, so a coding or SOC agent can query it directly instead of scraping a CSV.</p>
+						<p class="hnt-meta"><span>Transport: streamable HTTP</span><span>Tools: 10</span></p>
+						<pre id="qs-mcp-1" class="code-block"><code class="language-bash">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-mcp-1" title="Copy"></i></pre>
+						<p class="hnt-note">Ten tools: <code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code>, <code>list_recent_iocs</code>, <code>get_tag_info</code>, <code>get_trending</code>, <code>enrich_ioc</code>, <code>get_campaigns</code> and <code>get_trends</code>. No key, no auth.</p>
+						<p class="hnt-links"><a href="../agents/">Agents page and config snippets</a></p>
+					</article>
+				</section>
+				</div>
+				<hr class="divider">
+				<section class="faq-section" id="faq">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>How fresh are the IOCs?</summary>
@@ -744,7 +1214,7 @@ tags:
 					</details>
 					<details>
 						<summary>Is there an MCP server for AI agents?</summary>
-						<p>Yes. <code>mcp.tweetfeed.live</code> exposes 5 tools: <code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code> and <code>list_recent_iocs</code>. See the <a href="../agents/">Agents page</a> for the config snippet.</p>
+						<p>Yes. <code>mcp.tweetfeed.live</code> exposes 10 tools: <code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code>, <code>list_recent_iocs</code>, <code>get_tag_info</code>, <code>get_trending</code>, <code>enrich_ioc</code>, <code>get_campaigns</code> and <code>get_trends</code>. See the <a href="../agents/">Agents page</a> for the config snippet.</p>
 					</details>
 					<details>
 						<summary>How do I contribute new IOCs?</summary>
@@ -857,11 +1327,63 @@ tags:
 	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
 	<script src="../js/sb-admin-2.min.js"></script>
-	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
+	<!-- Recipe filter. Progressive enhancement on purpose: the markup ships
+	     with every card visible, so with JS off (or before this runs) the page
+	     is the complete cookbook. Filtering only ever NARROWS it. -->
+	<script>
+	(function () {
+		var bar = document.getElementById('hnt-filter');
+		if (!bar || !document.querySelector) return;
+		var chips = [].slice.call(bar.querySelectorAll('.hnt-chip'));
+		var cards = [].slice.call(document.querySelectorAll('.hnt-card'));
+		var groups = [].slice.call(document.querySelectorAll('.hnt-group'));
+		var status = document.getElementById('hnt-status');
+		var countEl = document.getElementById('hnt-status-count');
+		var showAll = document.getElementById('hnt-show-all');
+		var known = {};
+		chips.forEach(function (b) { known[b.getAttribute('data-stack')] = true; });
+
+		function apply(stack, writeUrl) {
+			if (!known[stack]) stack = 'all';
+			var shown = 0;
+			cards.forEach(function (c) {
+				var on = stack === 'all' || c.getAttribute('data-stack') === stack;
+				c.hidden = !on;
+				if (on) shown++;
+			});
+			groups.forEach(function (g) {
+				g.hidden = stack !== 'all' && g.getAttribute('data-group') !== stack;
+			});
+			chips.forEach(function (b) {
+				b.setAttribute('aria-pressed', b.getAttribute('data-stack') === stack ? 'true' : 'false');
+			});
+			if (countEl) countEl.textContent = shown + ' of ' + cards.length;
+			if (status) status.hidden = stack === 'all';
+			if (writeUrl && window.history && history.replaceState) {
+				var q = window.location.search.replace(/[?&]stack=[^&]*/g, '').replace(/^&/, '?');
+				if (stack !== 'all') q = (q && q.charAt(0) === '?' ? q + '&' : '?') + 'stack=' + stack;
+				history.replaceState(null, '', window.location.pathname + q + window.location.hash);
+			}
+		}
+
+		bar.addEventListener('click', function (e) {
+			var t = e.target;
+			while (t && t !== bar && !(t.classList && t.classList.contains('hnt-chip'))) t = t.parentNode;
+			if (t && t !== bar) apply(t.getAttribute('data-stack'), true);
+		});
+		if (showAll) showAll.addEventListener('click', function () { apply('all', true); });
+
+		// A deep link to one recipe outranks a ?stack= filter: never let the
+		// filter hide the card the visitor was sent to.
+		var hash = window.location.hash ? window.location.hash.slice(1) : '';
+		var want = (window.location.search.match(/[?&]stack=([^&]+)/) || [])[1];
+		if (hash && document.getElementById(hash)) {
+			apply('all', false);
+		} else if (want) {
+			apply(decodeURIComponent(want), false);
+		}
+	})();
+	</script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()

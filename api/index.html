@@ -45,9 +45,9 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=3" rel="stylesheet">
-	<link href="../css/index.css?v=41" rel="stylesheet">
+	<link href="../css/index.css?v=42" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=41" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=42" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -352,22 +352,22 @@
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Cloudflare's bot protection returns <code>403</code> to requests sent with a bare <code>Python-urllib</code> or <code>libwww-perl</code> User-Agent - use <code>requests</code>, <code>curl</code> or another standard HTTP client instead.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Endpoint</h3>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/<span style="color:gray;"><b>{time}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 1</b>: IOCs posted today</span>
-				<pre class="code-block p-2">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 2</b>: URLs posted today with phishing tag</span>
-				<pre class="code-block p-2">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
-				<pre class="code-block p-2">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip"></i></pre>
 				<!-- -->
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://x.com/malwrhunterteam" rel="noopener noreferrer">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
 				<!-- #00acee -->
-				<pre class="code-block p-2">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
 				<!-- -->
 				<br>
 				<h3 id="result-cap" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Result cap</h3>
@@ -379,31 +379,31 @@
 					<li><code>X-Result-Truncated: true</code> - sent only when the cap was hit. Test for presence; it is never sent as <code>false</code>.</li>
 				</ul>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Need the complete 30-day window? The CSV feed is served in full, with no cap:</p>
-				<pre class="code-block p-2">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv"></i></pre>
 				<br>
 				<!-- Technical reference content intentionally uses heading+paragraph, not .card/.faq-grid - this is API/feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="caching" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Caching and conditional requests</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Every <code>200</code> response carries an <code>ETag</code> and a <code>Last-Modified</code> header. Send either one back on your next request and get a <code>304 Not Modified</code> with an empty body instead of re-downloading the full payload - this works on every route above, and also on the static apex files (<code>/feeds/*.csv</code>, <code>/rss.xml</code>, <code>/misp/*</code>, <code>/stix/*</code>).</p>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: revalidate with <code>If-None-Match</code></span>
-				<pre class="code-block p-2">curl -H 'If-None-Match: "a1b2c3d4e5f60718"' -i https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="curl -H 'If-None-Match: &quot;a1b2c3d4e5f60718&quot;' -i https://api.tweetfeed.live/v1/today"></i></pre>
+				<pre class="code-block">curl -H 'If-None-Match: "a1b2c3d4e5f60718"' -i https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="curl -H 'If-None-Match: &quot;a1b2c3d4e5f60718&quot;' -i https://api.tweetfeed.live/v1/today"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: revalidate with <code>curl -z</code> / <code>wget -N</code></span>
-				<pre class="code-block p-2">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv"></i></pre>
-				<pre class="code-block p-2">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv"></i></pre>
+				<pre class="code-block">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv"></i></pre>
+				<pre class="code-block">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv"></i></pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;"><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes. <code>Last-Modified</code> reflects when this Worker cached the feed data behind the response, not when that data last changed, so <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive. If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Diff endpoint (incremental sync)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Returns IOCs added after the given ISO 8601 timestamp. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/since/<span style="color:gray;"><b>{ISO8601}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<span style="color:gray;"><b>{ISO8601}</b></span>/<span style="color:gray;"><b>{filter1}</b></span>/<span style="color:gray;"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
-				<pre class="code-block p-2">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing"></i></pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block starting at your <code>since</code>. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Campaigns (AI-clustered)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Groups related IOCs from the last 30 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
-				<pre class="code-block p-2" style="font-size: 12px;">{
+				<pre class="code-block" style="font-size: 12px;">{
     "version": 1,
     "generated_at": "2026-07-05T19:36:35Z",
     "window": "month",
@@ -446,9 +446,9 @@
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Counts</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Pre-aggregated totals for each time window: overall count, a per-type breakdown, a per-tag breakdown, and the first/last IOC timestamp - without fetching and parsing the full <code>year</code> CSV. Regenerated every 15 minutes alongside the rest of the feed.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/counts <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/counts"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/counts <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/counts"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
-				<pre class="code-block p-2" style="font-size: 12px;">{
+				<pre class="code-block" style="font-size: 12px;">{
     "generated_at": "2026-07-29T18:15:03Z",
     "windows": {
         "today": {
@@ -474,9 +474,9 @@
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Trends</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints: a rolling 31-day daily IOC volume series with a per-type breakdown, week-over-week top-moving tags, the most-abused TLDs among malicious domains from the last 30 days, and the novelty rate (new vs. recurring share of this week's distinct IOC values). Human page: <a href="../trends/">tweetfeed.live/trends/</a>. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_trends</code> tool.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/trends <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/trends"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/trends <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/trends"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (trimmed)</b></span>
-				<pre class="code-block p-2" style="font-size: 12px;">{
+				<pre class="code-block" style="font-size: 12px;">{
     "version": 1,
     "generated_at": "2026-08-04T19:00:36Z",
     "daily": {
@@ -498,9 +498,9 @@
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">IOC lookup (exact match)</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/ioc?value=<span style="color:gray;"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/ioc?value=<span style="color:gray;"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response</b></span>
-				<pre class="code-block p-2" style="font-size: 12px;">{
+				<pre class="code-block" style="font-size: 12px;">{
     "found": true,
     "query": "praserfelizlu.site",
     "window": "365d",
@@ -521,15 +521,15 @@
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Blocklists</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Ready-to-consume exports of the last 30 days for Pi-hole, AdGuard Home, hosts files, DNS resolvers (BIND, Unbound, PowerDNS Recursor) and dnsmasq, plus firewalls. The first six are DNS/host-level; <code>urls.txt</code> is one full URL per line instead, for consumers that match on path (proxies, IDS, SOAR enrichment) - it also covers <code>url</code>-type IOCs on shared or legitimate infrastructure that DNS-level blocking can't safely reach. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/domains.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/hosts.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/adguard.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/ips.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/rpz.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"></i></pre>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/v1/blocklist/urls.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/domains.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/hosts.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/adguard.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/ips.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/rpz.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/blocklist/urls.txt <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Response (header)</b></span>
-				<pre class="code-block p-2" style="font-size: 12px;"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
+				<pre class="code-block" style="font-size: 12px;"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days
 # Entries: 4399
 # Updated: 2026-07-12T21:11:25Z
@@ -542,9 +542,9 @@
 				<br>
 				<h3 id="taxii" style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">TAXII 2.1</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">Read-only TAXII 2.1 server exposing the same STIX 2.1 data (indicators, identity, TLP:CLEAR marking) for Threat Intelligence Platforms such as OpenCTI or ThreatQ. No authentication.</p>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/"></i></pre>
 				<span style="align-self: flex-end;font-size: 16px;font-family: 'Rubik', sans-serif;" class="align-self-bottom"><b>Example</b>: incremental poll of the rolling 31-day collection</span>
-				<pre class="code-block p-2">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z"></i></pre>
 				<p style="color: #737373;font-size: 14px;font-family: 'Rubik', sans-serif;">Paginate with <code>limit</code> and <code>next</code>. Media type <code>application/taxii+json;version=2.1</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references via <code>created_by_ref</code> and <code>object_marking_refs</code> were added when the collection was created, so they fall outside any recent window. Fetch them once by id from <code>/objects/{id}/</code> (or with <code>match[id]</code>) so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Details</h3>
@@ -607,7 +607,7 @@
 				</div> <!-- table-responsive -->
 				<br>
 				<h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Output example</h3>
-				<pre class="code-block p-2" style="font-size: 12px;">
+				<pre class="code-block" style="font-size: 12px;">
 [
 	{
         "date": "2022-05-11 19:39:06",

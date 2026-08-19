@@ -218,6 +218,35 @@ hr.divider {
 }
 .code-block .tf-copy.code-copy:hover { color: #000; background: #fff; }
 
+/* highlight.js repaints its own box INSIDE ours. The default theme ships
+   `.hljs{background:#f0f0f0;color:#444}` plus `pre code.hljs{display:block;
+   overflow-x:auto;padding:1em}`, and hljs.highlightAll() stamps .hljs on every
+   `pre code` it finds. Net effect on /hunt/, the only page whose blocks are
+   `pre > code` (api/agents load highlight.js but their .code-blocks are bare
+   <pre>, so it never fired there): a light #f0f0f0 rectangle inset inside the
+   #DEDEDE .code-block declared right above, on all 24 of its blocks - the
+   token was never the box anyone actually saw. We keep the theme's TOKEN
+   colours and hand the box (background, border, padding, overflow) back to
+   .code-block.
+
+   Bootstrap's .p-2 was the other, wider half of the same problem: it is
+   `padding:.5rem!important`, unbeatable from a class selector, and it sat on
+   all 63 .code-blocks across hunt/api/agents/feeds, so NONE of them ever got
+   the .75rem/1rem declared above. Fixed by removing it from the markup rather
+   than by fighting it here. */
+.code-block code.hljs {
+	background: transparent;
+	padding: 0;
+	color: inherit;
+	overflow-x: visible;
+}
+/* The theme's #888 comment colour measures 2.4:1 on #DEDEDE and fails WCAG AA
+   (1.4.3). Measured: 10 comment tokens render on /hunt/, and they are
+   load-bearing - the blocklist recipe says which of its seven files is which
+   entirely in trailing `#` comments. #5a5a5a is 4.9:1 on the same ground. */
+.code-block .hljs-comment,
+.code-block .hljs-quote { color: #5a5a5a; }
+
 /* Changelog cards: one <article class="card cl-entry"> per entry, with a
    coloured type tag + ISO date in the meta row. Reuses .card black border
    and the IOC-type colour palette so type badges feel native. */
