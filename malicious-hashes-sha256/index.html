@@ -717,7 +717,10 @@
 		// Recent samples: latest 10 URLs from past 7 days, live from API.
 		$.getJSON('https://api.tweetfeed.live/v1/week/sha256', function(rows) {
 			const $tbody = $('#samplesTable tbody');
-			const top = (rows || []).slice(0, 10);
+			// The API returns oldest-first, so slice(0,10) was showing the OLDEST ten
+			// rows of the 7-day window under a "Recent samples" heading. Take the tail
+			// and reverse it so the newest row is first.
+			const top = (rows || []).slice(-10).reverse();
 			if (top.length === 0) { $('#samplesError').show(); $('#samplesLoading').hide(); return; }
 			for (const r of top) {
 				const valSafe = escapeHtml(r.value || '');
@@ -726,7 +729,7 @@
 				const tweetSafe = escapeHtml(r.tweet || '');
 				const $tr = $('<tr>')
 					.append('<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+escapeHtml(fmtDate(r.date))+'</td>')
-					.append('<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="'+valSafe+'"><i class="tf-copy far fa-copy" data-copy="'+valSafe+'" style="margin-right:0.4rem;"></i>'+valSafe+'</td>')
+					.append('<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="'+valSafe+'"><i class="tf-copy far fa-copy" data-copy="'+valSafe+'" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>'+valSafe+'</td>')
 					.append('<td style="font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">'+tags+'</td>')
 					.append('<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="'+tweetSafe+'" target="_blank" rel="noopener noreferrer">@'+userSafe+'</a></td>');
 				$tbody.append($tr);

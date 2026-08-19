@@ -686,7 +686,7 @@
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
 					Fetch only IOCs added after a given timestamp. Replace <code>&lt;ISO8601&gt;</code> with the last sync time (use the Z form for unambiguous UTC). Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is &gt;365 days old.
 				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z"></i></pre>
+				<pre class="code-block" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 
 				<h3 id="per-tag-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspPer-tag RSS feeds
@@ -694,7 +694,7 @@
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
 					One RSS feed per active tag (a tag is "active" once it has &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose. Browse all available feeds from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each per-tag landing page also exposes the feed via <code>&lt;link rel="alternate"&gt;</code>.
 				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml"></i></pre>
+				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 
 				<h3 id="per-type-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspPer-type RSS feeds
@@ -702,7 +702,7 @@
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
 					One RSS feed per IOC type - always available, no activity threshold. Subscribe to a single indicator type without polling the firehose.
 				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/type/<b style="color:gray;">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml"></i></pre>
+				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/type/<b style="color:gray;">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 
 				<h3 id="per-user-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
 					&nbsp&nbsp&nbspPer-user RSS feeds
@@ -710,7 +710,7 @@
 				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
 					One RSS feed per reporter active in the last 7 days; handle lowercase. Feeds for quiet or unknown users are unavailable (error response).
 				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/user/<b style="color:gray;">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/malwrhunterteam.xml"></i></pre>
+				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/user/<b style="color:gray;">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/malwrhunterteam.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 
 				<hr class="divider">
 				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">

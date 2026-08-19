@@ -697,6 +697,32 @@ def check_machine_surfaces(pages: list[str]) -> list[str]:
     return failures
 
 
+# Handle values arriving from the feed are the only field that used to reach a
+# URL or an attribute unvalidated: on / , /search/ and /researchers/ the same
+# string escaped `user` for the href, the alt and the link text, but built
+# `picSrc` and the inline `onerror=` fallback from the raw value. escapeHtml()
+# alone cannot close the onerror case - the HTML parser decodes entities before
+# the JS runs, so an escaped quote becomes a real quote again. The fix is to
+# validate the handle first, which search/index.html's userCell() already did.
+RAW_USER_PATTERNS = (
+    "'pics/' + user",
+    "'../pics/' + user",
+)
+
+
+def check_no_raw_user_interpolation(pages: list[str]) -> list[str]:
+    """Regression guard for the 2026-08-20 fix: a feed-derived handle must be
+    validated (the safeUser / HANDLE_RE pattern) before it is used to build a
+    URL or an HTML attribute."""
+    failures: list[str] = []
+    for p in pages:
+        body = read(p)
+        for pat in RAW_USER_PATTERNS:
+            if pat in body:
+                failures.append(f"{p}: builds a URL from an unvalidated feed handle ({pat})")
+    return failures
+
+
 # Page-content checks: the 21 hand-written pages carrying real copy.
 CHECKS = [
     ("Canonical URLs", check_canonicals),
@@ -841,6 +867,18 @@ def main() -> int:
         print(f"[PASS] No issue-chooser links (site-wide): all {len(pages_all)} pages OK")
     else:
         print(f"[FAIL] No issue-chooser links (site-wide): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    # Feed-derived handles must be validated before they reach a URL or an
+    # attribute. Site-wide because the same avatar markup is duplicated across
+    # index.html, search/ and researchers/.
+    failures = check_no_raw_user_interpolation(pages_all)
+    if not failures:
+        print(f"[PASS] No raw feed handle in a URL/attribute (site-wide): all {len(pages_all)} pages OK")
+    else:
+        print(f"[FAIL] No raw feed handle in a URL/attribute (site-wide): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)

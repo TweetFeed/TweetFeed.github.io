@@ -368,22 +368,22 @@
 				<p class="tf-note">Cloudflare's bot protection returns <code>403</code> to requests sent with a bare <code>Python-urllib</code> or <code>libwww-perl</code> User-Agent - use <code>requests</code>, <code>curl</code> or another standard HTTP client instead.</p>
 				<br>
 				<h3 id="endpoint" class="section-heading">Endpoint</h3>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/<span class="tf-ph"><b>{time}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/<span class="tf-ph"><b>{time}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<span class="tf-code-label"><b>Example 1</b>: IOCs posted today</span>
-				<pre class="code-block">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span class="tf-code-label"><b>Example 2</b>: URLs posted today with phishing tag</span>
-				<pre class="code-block">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/today/phishing/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/today/phishing/url" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<!-- -->
 				<span class="tf-code-label"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
-				<pre class="code-block">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<span class="tf-code-label"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://x.com/malwrhunterteam" rel="noopener noreferrer">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
 				<!-- #00acee -->
-				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<br>
 				<h3 id="result-cap" class="section-heading">Result cap</h3>
@@ -395,29 +395,29 @@
 					<li><code>X-Result-Truncated: true</code> - sent only when the cap was hit. Test for presence; it is never sent as <code>false</code>.</li>
 				</ul>
 				<p>Need the complete 30-day window? The CSV feed is served in full, with no cap:</p>
-				<pre class="code-block">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/feeds/month.csv <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/feeds/month.csv" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<br>
 				<!-- Technical reference content intentionally uses heading+paragraph, not .card/.faq-grid - this is API/feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="caching" class="section-heading">Caching and conditional requests</h3>
 				<p>Every <code>200</code> response carries an <code>ETag</code> and a <code>Last-Modified</code> header. Send either one back on your next request and get a <code>304 Not Modified</code> with an empty body instead of re-downloading the full payload - this works on every route above, and also on the static apex files (<code>/feeds/*.csv</code>, <code>/rss.xml</code>, <code>/misp/*</code>, <code>/stix/*</code>).</p>
 				<span class="tf-code-label"><b>Example</b>: revalidate with <code>If-None-Match</code></span>
-				<pre class="code-block">curl -H 'If-None-Match: "a1b2c3d4e5f60718"' -i https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="curl -H 'If-None-Match: &quot;a1b2c3d4e5f60718&quot;' -i https://api.tweetfeed.live/v1/today"></i></pre>
+				<pre class="code-block">curl -H 'If-None-Match: "a1b2c3d4e5f60718"' -i https://api.tweetfeed.live/v1/today <i class="tf-copy far fa-copy" data-copy="curl -H 'If-None-Match: &quot;a1b2c3d4e5f60718&quot;' -i https://api.tweetfeed.live/v1/today" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Example</b>: revalidate with <code>curl -z</code> / <code>wget -N</code></span>
-				<pre class="code-block">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv"></i></pre>
-				<pre class="code-block">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv"></i></pre>
+				<pre class="code-block">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<p class="tf-note"><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes. <code>Last-Modified</code> reflects when this Worker cached the feed data behind the response, not when that data last changed, so <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive. If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</p>
 				<br>
 				<h3 id="diff" class="section-heading">Diff endpoint (incremental sync)</h3>
 				<p>Returns IOCs added after the given ISO 8601 timestamp. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<span class="tf-ph"><b>{ISO8601}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<span class="tf-ph"><b>{ISO8601}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
-				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<p class="tf-note">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
 				<p class="tf-note">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block starting at your <code>since</code>. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
 				<br>
 				<h3 id="campaigns" class="section-heading">Campaigns (AI-clustered)</h3>
 				<p>Groups related IOCs from the last 30 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Response (trimmed)</b></span>
 				<pre class="code-block code-block-sm">{
     "version": 1,
@@ -462,7 +462,7 @@
 				<br>
 				<h3 id="counts" class="section-heading">Counts</h3>
 				<p>Pre-aggregated totals for each time window: overall count, a per-type breakdown, a per-tag breakdown, and the first/last IOC timestamp - without fetching and parsing the full <code>year</code> CSV. Regenerated every 15 minutes alongside the rest of the feed.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/counts <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/counts"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/counts <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/counts" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Response (trimmed)</b></span>
 				<pre class="code-block code-block-sm">{
     "generated_at": "2026-07-29T18:15:03Z",
@@ -490,7 +490,7 @@
 				<br>
 				<h3 id="trends" class="section-heading">Trends</h3>
 				<p>Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints: a rolling 31-day daily IOC volume series with a per-type breakdown, week-over-week top-moving tags, the most-abused TLDs among malicious domains from the last 30 days, and the novelty rate (new vs. recurring share of this week's distinct IOC values). Human page: <a href="../trends/">tweetfeed.live/trends/</a>. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_trends</code> tool.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/trends <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/trends"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/trends <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/trends" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Response (trimmed)</b></span>
 				<pre class="code-block code-block-sm">{
     "version": 1,
@@ -514,7 +514,7 @@
 				<br>
 				<h3 id="ioc-lookup" class="section-heading">IOC lookup (exact match)</h3>
 				<p>Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/ioc?value=<span class="tf-ph"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/ioc?value=<span class="tf-ph"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Response</b></span>
 				<pre class="code-block code-block-sm">{
     "found": true,
@@ -549,37 +549,37 @@
 						<tbody>
 							<tr>
 								<td>Domain list</td>
-								<td><code>/v1/blocklist/domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt"></i></td>
+								<td><code>/v1/blocklist/domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>Pi-hole, and anything that takes one domain per line</td>
 							</tr>
 							<tr>
 								<td>hosts file</td>
-								<td><code>/v1/blocklist/hosts.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt"></i></td>
+								<td><code>/v1/blocklist/hosts.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td><code>/etc/hosts</code>, Windows hosts file</td>
 							</tr>
 							<tr>
 								<td>AdGuard rules</td>
-								<td><code>/v1/blocklist/adguard.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt"></i></td>
+								<td><code>/v1/blocklist/adguard.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>AdGuard Home</td>
 							</tr>
 							<tr>
 								<td>IP list</td>
-								<td><code>/v1/blocklist/ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt"></i></td>
+								<td><code>/v1/blocklist/ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>Firewalls and edge ACLs</td>
 							</tr>
 							<tr>
 								<td>DNS RPZ zone</td>
-								<td><code>/v1/blocklist/rpz.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt"></i></td>
+								<td><code>/v1/blocklist/rpz.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>BIND, Unbound, PowerDNS Recursor</td>
 							</tr>
 							<tr>
 								<td>dnsmasq config</td>
-								<td><code>/v1/blocklist/dnsmasq.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"></i></td>
+								<td><code>/v1/blocklist/dnsmasq.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>dnsmasq</td>
 							</tr>
 							<tr>
 								<td>Full URLs</td>
-								<td><code>/v1/blocklist/urls.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt"></i></td>
+								<td><code>/v1/blocklist/urls.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>Proxies, IDS, SOAR enrichment - consumers that match on path</td>
 							</tr>
 						</tbody>
@@ -600,9 +600,9 @@
 				<br>
 				<h3 id="taxii" class="section-heading">TAXII 2.1</h3>
 				<p>Read-only TAXII 2.1 server exposing the same STIX 2.1 data (indicators, identity, TLP:CLEAR marking) for Threat Intelligence Platforms such as OpenCTI or ThreatQ. No authentication.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Example</b>: incremental poll of the rolling 31-day collection</span>
-				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<p class="tf-note">Paginate with <code>limit</code> and <code>next</code>. Media type <code>application/taxii+json;version=2.1</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references via <code>created_by_ref</code> and <code>object_marking_refs</code> were added when the collection was created, so they fall outside any recent window. Fetch them once by id from <code>/objects/{id}/</code> (or with <code>match[id]</code>) so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
 				<br>
 				<h3 id="details" class="section-heading">Details</h3>
