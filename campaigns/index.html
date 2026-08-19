@@ -668,6 +668,23 @@
 		.tfc-filter-chip.active.tfc-filter-chip-high { background: #34e3a4; color: #0b3d2e; }
 		.tfc-filter-chip.active.tfc-filter-chip-medium { background: #ffc591; color: #5c3d12; }
 		.tfc-filter-chip.active.tfc-filter-chip-low { background: #e2e3e5; color: #41464b; }
+		/* Each activity chip states how many campaigns it selects. Measured over
+		   the week ioc_count_7d has existed in the published document, 6 of 7
+		   daily runs had ZERO campaigns with ioc_count_7d == 0 (the exception
+		   was 2026-08-17, 4 of 29): Stage 1 ranks candidates recency-first, so
+		   an inactive cluster is usually evicted by the 60-candidate cap before
+		   it ever reaches the page. The toggle therefore selects the same set
+		   on most days, and without these numbers it reads as a dead control -
+		   you click it and nothing moves. With them you can see both sides hold
+		   the same count, and on the days they differ the control earns its
+		   place. */
+		.tfc-chip-count {
+			margin-left: 4px;
+			opacity: 0.6;
+			font-weight: 500;
+			font-variant-numeric: tabular-nums;
+		}
+		.tfc-filter-chip.active .tfc-chip-count { opacity: 0.8; }
 		.tfc-filter-count {
 			font-family: 'Rubik', sans-serif;
 			font-size: 12.5px;
@@ -876,8 +893,8 @@
 
 				<div class="tfc-filter-row" id="campaignsActivityRow" style="display:none;">
 					<span class="tfc-filter-label">Show:</span>
-					<button type="button" class="tfc-filter-chip active" data-activity="week" aria-pressed="true">Active this week</button>
-					<button type="button" class="tfc-filter-chip" data-activity="all" aria-pressed="false">All (30 days)</button>
+					<button type="button" class="tfc-filter-chip active" data-activity="week" aria-pressed="true">Active this week <span class="tfc-chip-count"></span></button>
+					<button type="button" class="tfc-filter-chip" data-activity="all" aria-pressed="false">All (30 days) <span class="tfc-chip-count"></span></button>
 				</div>
 
 				<div class="tfc-filter-row" id="campaignsFilterRow" style="display:none;">
@@ -1497,6 +1514,14 @@
 			$('#campaignsList').html(html).show();
 			// Copy buttons need no re-init: utils.js attaches document-level
 			// .tf-copy delegation once at page load.
+
+			// Set BEFORE the row is revealed, so the chips never flash a
+			// countless state. activeCount is the same number applyFilters()
+			// would land on for "week"; campaigns.length is what "all" holds.
+			$('.tfc-filter-chip[data-activity="week"] .tfc-chip-count')
+				.text(TweetFeed.numberFormat(activeCount));
+			$('.tfc-filter-chip[data-activity="all"] .tfc-chip-count')
+				.text(TweetFeed.numberFormat(campaigns.length));
 
 			$('#campaignsActivityRow').show();
 			$('#campaignsFilterRow').show();
