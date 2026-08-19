@@ -36,9 +36,9 @@
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="../css/table.css?v=3" rel="stylesheet">
-	<link href="../css/index.css?v=40" rel="stylesheet">
+	<link href="../css/index.css?v=41" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=40" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=41" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -139,6 +139,59 @@
 			font-size: 13px;
 			font-family: 'Rubik', sans-serif;
 			margin: 0;
+		}
+		/* ── Lead stat strip ──────────────────────────────────────────────
+		   Replaces a 4-line prose paragraph. Measured 2026-08-19: that box
+		   was 187px tall and sat above 516px of dead space before the first
+		   campaign - 57% of a 900px viewport with zero data in it. The three
+		   numbers below come from the same payload the cards render from, so
+		   they cost no extra request; they get the same tabular-nums/
+		   Rubik-700 treatment as .tfc-count-num on the cards, because a count
+		   is a data element here, not decoration. Pattern lifted from
+		   trends/index.html's .trd-headline (2026-08-19, "lead with the
+		   numbers"): 1px black grid, cell dividers, no card shadow. */
+		.tfc-lead {
+			margin: 0 0 0.75rem;
+			color: #333;
+			font-size: 14px;
+			font-family: 'Rubik', sans-serif;
+			line-height: 1.6;
+		}
+		.tfc-headline {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0;
+			border: 1px solid black;
+			border-radius: 3px;
+			background: #fff;
+			margin-bottom: 0.75rem;
+		}
+		.tfc-headline-cell {
+			padding: 0.75rem 0.6rem;
+			text-align: center;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfc-headline-cell + .tfc-headline-cell { border-left: 1px solid black; }
+		.tfc-headline-value {
+			font-size: 28px;
+			font-weight: 700;
+			line-height: 1.1;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+		}
+		.tfc-headline-label {
+			margin-top: 3px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		.tfc-headline-sub { margin-top: 2px; font-size: 12px; color: #737373; }
+		@media (max-width: 575.98px) {
+			.tfc-headline { grid-template-columns: 1fr; }
+			.tfc-headline-cell + .tfc-headline-cell { border-left: 0; border-top: 1px solid black; }
+			.tfc-headline-value { font-size: 24px; }
 		}
 		.tfc-card-header {
 			display: flex;
@@ -345,9 +398,18 @@
 		/* ── Type proportion bar ─────────────────────────────────────────
 		   Replaces "domain 35, ip 14, md5 5, sha256 12, url 70". Segment
 		   colours are IOC_TYPE_COLORS, the same ones the type badges use on
-		   the IOC rows below, so the bar and the rows agree. */
+		   the IOC rows below, so the bar and the rows agree.
+		   Width is set inline by renderFullCard(), proportional to
+		   ioc_count / max ioc_count among full cards (405 IOCs -> 100%, 50
+		   IOCs -> ~12%, measured 2026-08-19). Before this the bar was always
+		   100% wide regardless of campaign size, so 8 cards spanning 8.1x in
+		   IOCs (405 vs 50) all drew an identical-width bar. Only full cards
+		   get this treatment: an expanded compact row calls the same
+		   renderBody() with no width argument and keeps the bar at 100%,
+		   since the tail's mini-bar (below) already carries its size signal. */
 		.tfc-typebar {
 			display: flex;
+			width: 100%;
 			height: 8px;
 			border: 1px solid black;
 			border-radius: 2px;
@@ -477,7 +539,38 @@
 			border-top: 1px solid black;
 		}
 		.tfc-rows { border: 1px solid black; border-radius: 3px; background: #fff; margin-bottom: 1.5rem; }
-		.tfc-row + .tfc-row { border-top: 1px solid black; }
+		.tfc-row { border-top: 1px solid black; }
+		.tfc-row:first-child { border-top: 0; }
+		/* ── Two-column grid at >=992px ────────────────────────────────
+		   Measured 2026-08-19: 15 compact rows were 1058px wide and 44-45px
+		   tall each (674px total), with the row title ending near x=740 and
+		   ~700px of dead space before the mini-bar. Two columns fills that
+		   width and drops the same 15 rows to ~350px. Border logic moves
+		   from adjacent-sibling to nth-child because a grid fills
+		   left-to-right: the first VISUAL row is items 1 AND 2, not just
+		   item 1, and every second item needs a divider on its left instead
+		   of a top border. */
+		@media (min-width: 992px) {
+			.tfc-rows { display: grid; grid-template-columns: repeat(2, 1fr); }
+			.tfc-row:nth-child(-n+2) { border-top: 0; }
+			.tfc-row:nth-child(even) { border-left: 1px solid black; }
+			/* Grid items default to min-width:auto, which sizes a track by
+			   its content's min-content width, not the 1fr share. A long
+			   campaign name in .tfc-row-name (white-space:nowrap for the
+			   ellipsis) has a min-content width equal to its full unwrapped
+			   text, so without this the grid blew its own columns out to
+			   ~600px+~611px inside a 1059.5px container - measured as
+			   document.documentElement.scrollWidth going to 1511px against a
+			   1425px viewport (real horizontal scroll). min-width:0 lets the
+			   track shrink to its 1fr share and hands truncation back to
+			   .tfc-row-name's own overflow:hidden/ellipsis. */
+			.tfc-row { min-width: 0; }
+			/* An opened row's body (evidence + IOC list, same renderBody() as
+			   a full card) needs the whole row width, not a ~520px half
+			   column. The class comes from the click handler and the
+			   deep-link auto-open, not :has(), so both paths get it. */
+			.tfc-row.tfc-row-expanded { grid-column: 1 / -1; }
+		}
 		.tfc-row-head {
 			display: flex;
 			align-items: center;
@@ -504,10 +597,16 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		/* Width used to be a fixed 60px, so a 38-IOC campaign and a 6-IOC one
+		   painted the exact same bar - the tail encoded composition but not
+		   size. JS now sets width inline, proportional to ioc_count against
+		   the largest campaign in the compact-row group (not the page max:
+		   scaling against an 405-IOC full card would flatten every tail bar
+		   to a sliver). max-width here is only the JS-off/error fallback. */
 		.tfc-minibar {
 			flex: 0 0 auto;
 			display: flex;
-			width: 60px;
+			max-width: 60px;
 			height: 7px;
 			border: 1px solid black;
 			border-radius: 2px;
@@ -736,7 +835,24 @@
 
 				<div class="card mb-3">
 					<div class="card-body">
-						<p style="margin-bottom:0.6rem; color:#333; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.6;">TweetFeed clusters related IOCs shared over the last 30 days into campaign narratives using AI: shared infrastructure, malware family, TTPs and targeted brand are grouped together so you see the bigger picture instead of scrolling isolated indicators one by one. This page shows campaigns active this week by default - switch to 'All (30 days)' below to see the full window.</p>
+						<p class="tfc-lead">AI clusters IOCs from the last 30 days into campaign narratives: shared infrastructure, malware family or targeted brand.</p>
+						<div class="tfc-headline" id="campaignsHeadline">
+							<div class="tfc-headline-cell">
+								<div class="tfc-headline-value" id="tfcHlShown">-</div>
+								<div class="tfc-headline-label">campaigns shown</div>
+								<div class="tfc-headline-sub" id="tfcHlShownSub"></div>
+							</div>
+							<div class="tfc-headline-cell">
+								<div class="tfc-headline-value" id="tfcHlIocs">-</div>
+								<div class="tfc-headline-label">IOCs clustered</div>
+								<div class="tfc-headline-sub" id="tfcHlIocsSub"></div>
+							</div>
+							<div class="tfc-headline-cell">
+								<div class="tfc-headline-value" id="tfcHlHead">-</div>
+								<div class="tfc-headline-label" id="tfcHlHeadLabel">in top campaigns</div>
+								<div class="tfc-headline-sub" id="tfcHlHeadSub"></div>
+							</div>
+						</div>
 						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
 						<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
 					</div>
@@ -955,6 +1071,14 @@
 		var FULL_CARD_MIN_IOCS = 50;
 		var FULL_CARD_FLOOR = 3;
 
+		// Bounds for the two size-encoded bars below (type bar on full cards,
+		// mini-bar on compact rows). A floor keeps the smallest campaign in
+		// each group visible as a bar rather than a sliver; the ceiling is
+		// the width the bar always used to render at before this change.
+		var TYPEBAR_MIN_PCT = 8;
+		var MINIBAR_MAX_PX = 60;
+		var MINIBAR_MIN_PX = 10;
+
 		// Fixed label vocabulary for the evidence block. The VALUES in
 		// c.anchors are attacker-authored strings, so they are escaped and
 		// rendered as plain text, never as links or labels. Only these keys are
@@ -971,7 +1095,13 @@
 		// ("domain 35, ip 14, md5 5, sha256 12, url 70"), which was data
 		// pretending to be prose. Reuses IOC_TYPE_COLORS so a segment is the
 		// same colour as the type badge on the IOC rows below it.
-		function renderTypeBar(types) {
+		// widthPct (0-100) is only ever passed by renderFullCard(): it scales
+		// the whole bar against the largest full card, so a 50-IOC card draws
+		// a ~12% bar next to a 405-IOC card at 100% (measured 2026-08-19).
+		// Segment widths inside stay percentages of the bar's OWN width, so
+		// the type composition still reads correctly at any scale. Omitted
+		// (compact-row bodies) the bar keeps its original 100%.
+		function renderTypeBar(types, widthPct) {
 			var esc = TweetFeed.escapeHtml;
 			var keys = Object.keys(types || {}).filter(function(t) { return types[t] > 0; });
 			if (!keys.length) return '';
@@ -988,8 +1118,9 @@
 				return '<span class="tfc-typebar-key"><span class="tfc-typebar-dot" style="background:' + bg + ';"></span>' +
 					esc(t) + ' ' + esc(TweetFeed.numberFormat(types[t])) + '</span>';
 			}).join('');
+			var barStyle = (typeof widthPct === 'number') ? ' style="width:' + widthPct.toFixed(1) + '%;"' : '';
 			return (
-				'<div class="tfc-typebar" role="img" aria-label="IOC types: ' + esc(keys.map(function(t) { return t + ' ' + types[t]; }).join(', ')) + '">' + segs + '</div>' +
+				'<div class="tfc-typebar"' + barStyle + ' role="img" aria-label="IOC types: ' + esc(keys.map(function(t) { return t + ' ' + types[t]; }).join(', ')) + '">' + segs + '</div>' +
 				'<div class="tfc-typebar-legend">' + legend + '</div>'
 			);
 		}
@@ -1078,7 +1209,11 @@
 
 		// Shared body for both wrappers: a full card and an expanded compact
 		// row render exactly the same thing, so there is one generator.
-		function renderBody(c) {
+		// typeBarWidthPct only ever arrives from renderFullCard(); a compact
+		// row's expanded body leaves it undefined and keeps the 100% bar,
+		// since the row's own mini-bar (collapsed state) already carries the
+		// size signal for that group.
+		function renderBody(c, typeBarWidthPct) {
 			var esc = TweetFeed.escapeHtml;
 			var tagsHtml = (c.tags || []).map(function(t) {
 				var clean = String(t).replace(/^#/, '');
@@ -1089,7 +1224,7 @@
 
 			return (
 				'<p class="tfc-context">' + esc(c.context || '') + '</p>' +
-				renderTypeBar(c.types) +
+				renderTypeBar(c.types, typeBarWidthPct) +
 				renderEvidence(c) +
 				'<div class="tfc-foot-line">' +
 					(tagsHtml ? '<span class="tfc-tags">' + tagsHtml + '</span>' : '<span></span>') +
@@ -1116,7 +1251,9 @@
 			};
 		}
 
-		function renderFullCard(c) {
+		// maxIocs is the largest ioc_count among the full-card group (7 cards,
+		// 2026-08-19); the type bar below scales against it, not the page max.
+		function renderFullCard(c, maxIocs) {
 			var esc = TweetFeed.escapeHtml;
 			var a = campaignAttrs(c);
 			var anchorLink = a.validId
@@ -1128,6 +1265,8 @@
 			var weekLine = (typeof c.ioc_count_7d === 'number')
 				? '<span class="tfc-count-sub">' + esc(TweetFeed.numberFormat(c.ioc_count_7d)) + ' this week</span>'
 				: '';
+			var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
+			var typeBarPct = maxIocs > 0 ? Math.max(TYPEBAR_MIN_PCT, Math.min(100, (n / maxIocs) * 100)) : 100;
 
 			return (
 				'<div class="card tfc-card mb-4"' + a.dataAttrs + a.idAttr + '><div class="card-body">' +
@@ -1146,7 +1285,7 @@
 							weekLine +
 						'</div>' +
 					'</div>' +
-					renderBody(c) +
+					renderBody(c, typeBarPct) +
 				'</div></div>'
 			);
 		}
@@ -1154,14 +1293,21 @@
 		// Compact row for the tail. Measured 2026-08-19: the 11 campaigns with
 		// <=22 IOCs were 10% of the data but half the page height, because every
 		// card was the same size regardless of campaign size.
-		function renderCompactRow(c) {
+		// maxIocs is the largest ioc_count within the compact-row group itself
+		// (not the page max): scaling a 38-IOC row's bar against a 405-IOC
+		// card would flatten every row in the tail to the same sliver.
+		function renderCompactRow(c, maxIocs) {
 			var esc = TweetFeed.escapeHtml;
 			var a = campaignAttrs(c);
 			var types = c.types || {};
 			var keys = Object.keys(types).filter(function(t) { return types[t] > 0; });
 			var total = keys.reduce(function(acc, t) { return acc + types[t]; }, 0);
 			keys.sort(function(x, y) { return types[y] - types[x]; });
-			var miniBar = total ? '<span class="tfc-minibar">' + keys.map(function(t) {
+			var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
+			var barWidth = maxIocs > 0
+				? Math.max(MINIBAR_MIN_PX, Math.round(MINIBAR_MAX_PX * (n / maxIocs)))
+				: MINIBAR_MIN_PX;
+			var miniBar = total ? '<span class="tfc-minibar" style="width:' + barWidth + 'px;">' + keys.map(function(t) {
 				return '<span style="width:' + ((types[t] / total) * 100).toFixed(2) + '%;background:' + (IOC_TYPE_COLORS[t] || '#737373') + ';"></span>';
 			}).join('') + '</span>' : '';
 
@@ -1211,9 +1357,13 @@
 			$('#campaignsFilterCount').text(shown + ' shown');
 			$('#campaignsFilterEmpty').toggle(shown === 0);
 			// The divider counts what is actually visible below it, so it never
-			// promises rows the filters have hidden.
+			// promises rows the filters have hidden. The headline "campaigns
+			// shown" cell follows the same rule - it starts equal to the
+			// default week filter's count, then tracks whatever the reader
+			// actually toggled, so it never contradicts the filter row below it.
 			$('.tfc-divider').toggle(rowsShown > 0)
 				.find('.tfc-divider-count').text(rowsShown + ' smaller campaign' + (rowsShown === 1 ? '' : 's'));
+			$('#tfcHlShown').text(TweetFeed.numberFormat(shown));
 		}
 
 		// Activity chip group behaves like a 2-way radio (unlike the
@@ -1251,6 +1401,7 @@
 			if ($row.hasClass('tfc-row')) {
 				$row.find('.tfc-row-body').prop('hidden', false);
 				$row.find('.tfc-row-head').attr('aria-expanded', 'true').addClass('is-open');
+				$row.addClass('tfc-row-expanded');
 			}
 			if (typeof el.scrollIntoView === 'function') {
 				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1272,8 +1423,37 @@
 			if (data && data.generated_at) {
 				genLine += ' &middot; last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(data.generated_at));
 			}
-			genLine += ' &middot; ' + activeCount + ' active this week &middot; ' + campaigns.length + ' tracked over 30 days';
 			$('#generatedLine').html(genLine);
+
+			// Headline stat strip: the "shown/tracked" and window numbers that
+			// used to close out genLine above now live here instead, at the
+			// same type scale as .tfc-count-num on the cards - stated once, not
+			// twice at two different sizes. The other two numbers (total IOCs,
+			// head weight) are new: neither existed anywhere on the page before.
+			var totalIocs = campaigns.reduce(function(sum, c) { return sum + (c.ioc_count || 0); }, 0);
+			var totalTracked = (data && typeof data.campaign_count === 'number') ? data.campaign_count : campaigns.length;
+			// Same week/month -> days mapping trends/index.html uses for its
+			// own novelty.window field, so the two pages describe a window
+			// the same way. Falls back to the raw value for anything else.
+			var apiWindow = data && data.window;
+			var windowLabel = 'last ' + (apiWindow === 'week' ? '7 days' : (apiWindow === 'month' ? '30 days' : (apiWindow || '30 days')));
+			$('#tfcHlShown').text(TweetFeed.numberFormat(activeCount));
+			$('#tfcHlShownSub').text(TweetFeed.numberFormat(totalTracked) + ' tracked, ' + windowLabel);
+			$('#tfcHlIocs').text(TweetFeed.numberFormat(totalIocs));
+			$('#tfcHlIocsSub').text('across ' + TweetFeed.numberFormat(campaigns.length) + ' campaign' + (campaigns.length === 1 ? '' : 's'));
+
+			// Head weight: how concentrated the IOC volume is in the largest
+			// campaigns. Measured 2026-08-19: the top 2 campaigns (405 + 307 of
+			// 1,901 total that day) carried 37% of every IOC clustered into any
+			// campaign - a fact the old "domain 35, ip 14..." style prose never
+			// surfaced anywhere on the page.
+			var sizesDesc = campaigns.map(function(c) { return c.ioc_count || 0; }).sort(function(x, y) { return y - x; });
+			var headN = Math.min(2, sizesDesc.length);
+			var headSum = sizesDesc.slice(0, headN).reduce(function(sum, n) { return sum + n; }, 0);
+			var headPct = (headN && totalIocs > 0) ? Math.round((headSum / totalIocs) * 100) : null;
+			$('#tfcHlHead').text(headPct === null ? '-' : headPct + '%');
+			$('#tfcHlHeadLabel').text('in top ' + headN + ' campaign' + (headN === 1 ? '' : 's'));
+			$('#tfcHlHeadSub').text(headN ? (TweetFeed.numberFormat(headSum) + ' of ' + TweetFeed.numberFormat(totalIocs) + ' IOCs') : '');
 
 			if (data && data.stale) {
 				var since = data.stale_since ? TweetFeed.formatDateLong(data.stale_since) : 'unknown';
@@ -1301,12 +1481,18 @@
 				if (n >= FULL_CARD_MIN_IOCS || i < FULL_CARD_FLOOR) big.push(c);
 				else small.push(c);
 			});
-			var html = big.map(renderFullCard).join('');
+			// Each group's own max, not the page max - see the comments on
+			// renderFullCard/renderCompactRow. Wrapped in a closure rather than
+			// passed via .map(fn) directly: .map already passes (item, index,
+			// array), and that index would silently land in the maxIocs slot.
+			var maxBigIocCount = big.reduce(function(m, c) { return Math.max(m, c.ioc_count || 0); }, 0);
+			var maxSmallIocCount = small.reduce(function(m, c) { return Math.max(m, c.ioc_count || 0); }, 0);
+			var html = big.map(function(c) { return renderFullCard(c, maxBigIocCount); }).join('');
 			if (small.length) {
 				html += '<div class="tfc-divider"><span class="tfc-divider-count">' +
 					small.length + ' smaller campaign' + (small.length === 1 ? '' : 's') +
 					'</span></div>';
-				html += '<div class="tfc-rows">' + small.map(renderCompactRow).join('') + '</div>';
+				html += '<div class="tfc-rows">' + small.map(function(c) { return renderCompactRow(c, maxSmallIocCount); }).join('') + '</div>';
 			}
 			$('#campaignsList').html(html).show();
 			// Copy buttons need no re-init: utils.js attaches document-level
@@ -1337,6 +1523,9 @@
 				var open = $btn.attr('aria-expanded') === 'true';
 				$btn.attr('aria-expanded', open ? 'false' : 'true').toggleClass('is-open', !open);
 				$btn.siblings('.tfc-row-body').prop('hidden', open);
+				// Span both grid columns while open - see .tfc-row-expanded in
+				// the <style> block above.
+				$btn.closest('.tfc-row').toggleClass('tfc-row-expanded', !open);
 			});
 
 			$(document).on('click', '.tfc-show-all', function() {

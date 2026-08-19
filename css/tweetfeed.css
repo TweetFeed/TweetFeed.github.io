@@ -589,6 +589,28 @@ button.btn.btn-tf {
 		width: 94%;
 		max-width: 1560px;
 	}
+	/* INCIDENT, not a feature add: .docs-sidebar below has carried
+	   `position: sticky; top: 80px` since this layout shipped, and it never
+	   once stuck. sb-admin-2's #content-wrapper.d-flex.flex-column sets
+	   overflow-x:hidden / overflow-y:auto, and ANY ancestor with a non-visible
+	   overflow turns off sticky for every descendant, on both axes, even
+	   though only one axis was clipped. Measured on /campaigns/ before this
+	   rule: the sidebar sat at top:80 with the page scrolled to 0, and at
+	   top:-2420 at scroll 2500 - it was scrolling with the page, not against
+	   it. After this rule: top:80 holds at scroll 3000 on /campaigns/ and at
+	   scroll 1500 on /malicious-urls/, with scrollWidth still == clientWidth
+	   on both (no new horizontal scroll from removing the clip).
+	   Scoped with :has() for the same reason as the width rule above: only
+	   these 43 .docs-wrap pages get overflow:visible, so the overflow-x:hidden
+	   still contains wide content (tables, the stat grids) on the other 15+
+	   pages that rely on it. A browser without :has() just keeps today's
+	   already-broken non-sticky sidebar - no regression, since sticky here
+	   was dead code for every visitor until this rule landed. min-width:992px
+	   on purpose: below that the sidebar is a static collapsed <details>, so
+	   there is nothing to keep pinned. */
+	#content-wrapper:has(#content > .docs-wrap) {
+		overflow: visible;
+	}
 }
 .docs-wrap {
 	display: flex;
