@@ -295,6 +295,132 @@ hr.divider {
 	font-weight: 600;
 }
 
+/* Reference-page prose (/api/, /agents/). Neither page uses the .docs-wrap
+   layout, so the .docs-content rules above never reached them: every
+   paragraph carried its own style="color:#737373;font-size:16px;
+   font-family:'Rubik'" instead - 22 of them on /api/, 9 on /agents/.
+   .tf-prose wraps the doc body ONLY. It opens after the <hr class="divider">
+   so the .toph1 presentation blocks above keep their own 60px treatment
+   (a descendant `p` rule here would otherwise outrank .toph1 on the mobile
+   heading, which is a <p role="heading">), and it closes before
+   <section class="faq-section">, which sets its own Rubik/#444 and must not
+   be overridden from here. */
+.tf-prose p,
+.tf-prose ul,
+.tf-prose ol {
+	color: #737373;
+	font-size: 16px;
+	font-family: 'Rubik', sans-serif;
+}
+/* Caveats, edge cases and "recommended validator" asides: 14px inline before. */
+.tf-prose .tf-note {
+	font-size: 14px;
+}
+/* Placeholder token in an endpoint pattern - {time}, {filter1}, {ISO8601} -
+   and the same grey in the Details table. Was `color: grey` / `color:gray`
+   inline 17 times across /api/. */
+.tf-ph {
+	color: #808080;
+}
+/* JSON response samples run longer than the endpoint one-liners, so they are
+   set a step down. Was `style="font-size: 12px"` on 6 .code-blocks. */
+.code-block-sm {
+	font-size: 12px;
+}
+/* Per-parameter note under a key in the Details table. */
+.tf-param-note {
+	color: #000;
+}
+/* /agents/ entry points. The three cards under the setup callout were styled
+   inline three times over - the card box, its <h4>, its <code> and its <ul> -
+   and carried no hover state at all even though each card is a link. Declared
+   after .tf-prose so the card's own type sizes win over the prose defaults. */
+.agent-setup-callout {
+	max-width: 780px;
+	margin: 0 auto 1.25rem;
+	text-align: center;
+}
+.agent-setup-callout p {
+	color: #737373;
+	font-size: 15px;
+	font-family: 'Rubik', sans-serif;
+	margin-bottom: 0.4rem;
+}
+.agent-setup-callout .code-block {
+	display: inline-block;
+	max-width: 100%;
+	margin: 0;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	text-align: left;
+}
+.agent-options {
+	max-width: 980px;
+	margin: 0 auto 1rem;
+}
+.agent-option-link,
+.agent-option-link:hover {
+	display: block;
+	height: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+.agent-option-card {
+	height: 100%;
+	padding: 1rem;
+	background: #fff;
+	transition: background-color 0.15s ease;
+}
+/* Same #f8f9fa the FAQ uses for an opened <details>: one "active surface"
+   tone across the site rather than a second invented one. */
+.agent-option-link:hover .agent-option-card,
+.agent-option-link:focus-visible .agent-option-card {
+	background: #f8f9fa;
+}
+.agent-option-card h4 {
+	color: #1178b3;
+	font-family: 'Segoe UI', Arial, sans-serif;
+	font-weight: 600;
+	font-size: 18px;
+	margin-bottom: 0.4rem;
+}
+.agent-option-card code {
+	color: #1178b3;
+	font-size: 13px;
+	background: transparent;
+	padding: 0;
+}
+.agent-option-card ul {
+	margin: 0.6rem 0 0;
+	padding-left: 1.2rem;
+	font-size: 14px;
+	color: #737373;
+	font-family: 'Rubik', sans-serif;
+}
+/* Colour and family inherit from .tf-prose p; only the centred measure and
+   the step down in size are specific to this line. */
+p.agent-option-note {
+	max-width: 780px;
+	margin: 0 auto 1.5rem;
+	font-size: 14px;
+	text-align: center;
+}
+/* Standing disclaimer above the FAQ on /api/: community IOCs are not
+   blocklist-ready. Sits at 15px, between body prose and .tf-note. */
+.tf-disclaimer {
+	color: #737373;
+	font-size: 15px;
+	font-family: 'Rubik', sans-serif;
+}
+/* Caption that introduces a .code-block. The inline version also carried
+   align-self:flex-end plus an .align-self-bottom class that is declared in no
+   stylesheet; #content is display:block, so neither ever applied to anything
+   (verified in the browser against live /api/). Both dropped. */
+.tf-code-label {
+	font-size: 16px;
+	font-family: 'Rubik', sans-serif;
+}
+
 /* FAQ accordion - heavy black border + steel-blue left accent.
    Each <details> stacks as its own card (matches .code-block visual
    language). Replaces three legacy patterns: bare details/summary on a
