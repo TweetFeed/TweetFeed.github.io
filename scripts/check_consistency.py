@@ -474,29 +474,79 @@ def check_orphan_pages() -> list[str]:
     return failures
 
 
-def check_cachebust_uniform() -> list[str]:
-    """One and only one tweetfeed.css?v=N across every page and template.
+# Local CSS/JS assets that get cache-busted with a `?v=N` query string.
+# tweetfeed.css and index.css bump together (render_shell.py --bump-css), so
+# they are tracked as one group; every other asset stands on its own.
+#
+# Extended 2026-08-19: this used to hardcode just those two filenames.
+# js/utils.js turned up referenced on 58 pages with NO ?v= at all (one
+# straggler carried ?v=2) - a real edit to that file would never have
+# reached anyone's warm cache, and the check as written had no way to catch
+# it because it only ever looked at tweetfeed.css/index.css.
+CSS_BUST_GROUP = frozenset({"tweetfeed.css", "index.css"})
 
-    With 107 files across two repos a partial bump is the single most likely
-    mechanical failure, and its symptom (new markup + cached old CSS) is
-    exactly the unstyled-CTA bug documented in check_stylesheet_present."""
-    seen: dict[str, list[str]] = {}
+# Matches a same-repo css/ or js/ asset reference: href="…" or src="…" whose
+# path is a chain of "../" (or the 404.html stage prefix) followed directly
+# by "css/<file>" or "js/<file>", optionally with "?v=N". No wildcard skip
+# between the anchor and "css/"/"js/", so this does not match vendor/ or
+# js/demo/ paths (e.g. "../vendor/bootstrap/js/bootstrap.bundle.min.js" or
+# "../js/demo/datatables-demo.js") - those have another directory name
+# between the leading "../" run and the "js/" segment, or another "/" inside
+# the filename slot, and either breaks the match.
+ASSET_REF_RE = re.compile(
+    r'(?:href|src)="'
+    r'(?:\.\./)*(?:/tweetfeed-stage/)?'
+    r'(?:css|js)/'
+    r'([\w.-]+\.(?:css|js))'
+    r'(?:\?v=(\d+))?'
+    r'"'
+)
+
+
+def check_cachebust_uniform() -> list[str]:
+    """Every local CSS/JS asset that carries a ?v=N ANYWHERE must carry the
+    SAME N everywhere, and never show up unversioned once it has started
+    being versioned at all.
+
+    With 107+ files across two repos a partial bump is the single most
+    likely mechanical failure, and its symptom (new markup + cached old
+    asset) is exactly the unstyled-CTA bug documented in
+    check_stylesheet_present. Assets are discovered rather than hardcoded so
+    this covers "todo asset local versionable" per the 2026-08-19 audit, not
+    just the CSS pair: tweetfeed.css and index.css are one group because
+    render_shell.py --bump-css always moves them together; every other
+    local css/js file (table.css, utils.js, ...) is its own group. An asset
+    nobody has started versioning yet (tooltip.css, config.js, the vendored
+    sb-admin-2 files) is not this check's problem - only a group with at
+    least one ?v= reference somewhere gets enforced, so adopting
+    cache-busting for a new asset is opt-in, never a drive-by fix forced
+    onto unrelated files that never asked for it."""
     targets = [REPO_ROOT / p for p in all_html_pages()]
     targets += sorted((REPO_ROOT / "scripts" / "templates").glob("*.j2"))
+
+    refs: dict[str, list[tuple[str, str]]] = {}  # group -> [(version, file), ...]
     for path in targets:
         text = path.read_text(encoding="utf-8")
-        for v in re.findall(r"(?:tweetfeed|index)\.css\?v=(\d+)", text):
-            seen.setdefault(v, []).append(str(path.relative_to(REPO_ROOT)))
-        # index.css used to ship unversioned, so edits to it never reached
-        # warm caches. Treat a missing parameter as a failure, not as "uniform".
-        if re.search(r'href="[^"]*index\.css"', text):
-            seen.setdefault("(none)", []).append(str(path.relative_to(REPO_ROOT)))
-    if len(seen) <= 1:
-        return []
-    out = ["tweetfeed.css cache-bust is not uniform:"]
-    for v, files in sorted(seen.items()):
-        out.append(f"        ?v={v}: {len(files)} file(s), e.g. {files[:3]}")
-    return ["\n".join(out)]
+        for m in ASSET_REF_RE.finditer(text):
+            filename, version = m.group(1), m.group(2)
+            group = "tweetfeed.css+index.css" if filename in CSS_BUST_GROUP else filename
+            refs.setdefault(group, []).append((version or "(none)", str(path.relative_to(REPO_ROOT))))
+
+    failures: list[str] = []
+    for group, entries in sorted(refs.items()):
+        versions = {v for v, _ in entries}
+        if versions == {"(none)"}:
+            continue  # nobody has started versioning this asset - not our problem
+        if len(versions) <= 1:
+            continue
+        by_version: dict[str, list[str]] = {}
+        for v, f in entries:
+            by_version.setdefault(v, []).append(f)
+        out = [f"{group} cache-bust is not uniform:"]
+        for v, files in sorted(by_version.items()):
+            out.append(f"        ?v={v}: {len(files)} file(s), e.g. {files[:3]}")
+        failures.append("\n".join(out))
+    return failures
 
 
 def check_templates_include_shell() -> list[str]:
@@ -674,7 +724,7 @@ SHELL_CHECKS = [
 # Whole-repo invariants that take no page list.
 GLOBAL_CHECKS = [
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
-    ("Cache-bust uniform (tweetfeed.css?v=N)", check_cachebust_uniform),
+    ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),
     ("Templates include the shell partials", check_templates_include_shell),
 ]
 
