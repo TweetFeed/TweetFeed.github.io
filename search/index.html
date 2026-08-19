@@ -44,7 +44,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
+	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=43" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=43" rel="stylesheet">
@@ -145,7 +145,7 @@
 			},
 			{
 				"@type": "Question",
-				"name": "How do I match values in the TweetFeed search?",
+				"name": "How do I match values?",
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (such as #CobaltStrike or #phishing), and the researcher handle. The search is case-insensitive."
@@ -153,7 +153,7 @@
 			},
 			{
 				"@type": "Question",
-				"name": "How fresh are TweetFeed search results?",
+				"name": "How fresh are results?",
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "The pipeline refreshes every 15 minutes and republishes week.csv. Each row shows its UTC timestamp in the Date column."
@@ -161,7 +161,7 @@
 			},
 			{
 				"@type": "Question",
-				"name": "What can I use TweetFeed search for?",
+				"name": "What can I use this for?",
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Incident response triage, Threat Intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted."
@@ -1060,8 +1060,8 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
 	<script src="../js/utils.js?v=2"></script>

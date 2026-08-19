@@ -45,7 +45,7 @@
 	<!-- Custom styles for this page -->
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="css/table.css?v=3" rel="stylesheet">
+	<link href="css/table.css?v=4" rel="stylesheet">
 	<link href="css/index.css?v=43" rel="stylesheet">
 	<link href="css/tooltip.css" rel="stylesheet">
 	<link href="css/tweetfeed.css?v=43" rel="stylesheet">
@@ -138,70 +138,11 @@
 		]
 	}
 	</script>
-	<script type="application/ld+json">
-	{
-		"@context": "https://schema.org",
-		"@type": "FAQPage",
-		"mainEntity": [
-			{
-				"@type": "Question",
-				"name": "What is TweetFeed?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "TweetFeed is a free, community-driven service that aggregates indicators of compromise (IOCs) - malicious URLs, domains, IPs and file hashes - shared publicly by infosec researchers on Twitter/X. The pipeline republishes fresh IOCs every 15 minutes as CSV, JSON, TXT, RSS and a REST API."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "What kinds of IOCs does TweetFeed collect?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "URLs, domains, IPs, SHA-256 and MD5 file hashes associated with phishing, malware, ransomware, C2 infrastructure and other threats. The original tweet hashtags (for example #phishing, #CobaltStrike, #LockBit) are preserved for each IOC so you can filter by tag."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How do I download TweetFeed IOCs?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "CSV, JSON, TXT and RSS downloads are on the Feeds page. For programmatic access use the free REST API at api.tweetfeed.live. See the Threat Hunting page for MISP, OpenCTI, Splunk, Microsoft Sentinel KQL and QRadar integration examples."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "Is TweetFeed free to use?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Yes. TweetFeed is completely free. There is no registration, API key or rate limit for normal use."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "Who contributes to TweetFeed?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "TweetFeed scrapes around 95 public RSS feeds of infosec researchers on Twitter/X. The Researchers page lists the current contributors. Attribution is preserved: every IOC record includes the original tweet URL."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "What are the types of IOCs in TweetFeed?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "TweetFeed aggregates four primary IOC types: URLs (malicious links), domains (phishing/C2 servers), IP addresses (botnet/C2 infrastructure), and file hashes (malware signatures in MD5, SHA1, SHA256 format). Each IOC is tagged by type and threat category (malware, phishing, ransomware) and sourced from the researcher who posted it on Twitter/X."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How do I use IOC feeds in my security tools?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "TweetFeed feeds are compatible with SIEM tools (Splunk, ELK, Sumo Logic), Threat Intelligence platforms (MISP, OpenCTI), firewalls, and proxies. Download as CSV for quick import, JSON for REST API integration, or RSS for continuous ingestion. See the API documentation for real-time programmatic access."
-				}
-			}
-		]
-	}
-	</script>
+	<!-- The FAQPage block that sat here was removed 2026-08-20: it declared 7
+	     Q&A pairs none of which appear anywhere on this page. Google requires the
+	     question and answer text to be visible, so the markup earned no rich
+	     result and only carried manual-action risk. The home stays hero + hubs
+	     rather than growing a FAQ wall to justify the schema. -->
 <style>
 /* Agent-setup pill (home hero). Same geometry Cloudflare uses on its
    /agent-setup/ page: full-round, 40px tall, 0 17px padding. Solid dark

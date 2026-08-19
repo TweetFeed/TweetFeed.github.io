@@ -44,7 +44,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
+	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=43" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=43" rel="stylesheet">
@@ -154,7 +154,7 @@
 				"name": "How do I query IOCs by type?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Call GET https://api.tweetfeed.live/v1/{time}/{type} where time is today, week, month or year and type is url, domain, ip, sha256 or md5. The response is JSON by default."
+					"text": "Call GET https://api.tweetfeed.live/v1/{time}/{type} where time is today, week or month and type is url, domain, ip, sha256 or md5. The response is a JSON array. The year window is different: it ignores any filters and returns a 302 redirect to the full year.csv on GitHub."
 				}
 			},
 			{
@@ -381,9 +381,9 @@
 				<span class="tf-code-label"><b>Example 3</b>: IPs posted in the last 7 days with CobaltStrike tag</span>
 				<pre class="code-block">https://api.tweetfeed.live/v1/week/cobaltstrike/ip <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/week/cobaltstrike/ip" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
-				<span class="tf-code-label"><b>Example 4</b>: SHA256 hashes posted by <a target="_blank" href="https://x.com/malwrhunterteam" rel="noopener noreferrer">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
+				<span class="tf-code-label"><b>Example 4</b>: URLs posted by <a target="_blank" href="https://x.com/malwrhunterteam" rel="noopener noreferrer">&nbsp;@malwrhunterteam&nbsp;</a> in the last month</span>
 				<!-- #00acee -->
-				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256 <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/sha256" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/url" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<!-- -->
 				<br>
 				<h3 id="result-cap" class="section-heading">Result cap</h3>
@@ -413,7 +413,8 @@
 				<span class="tf-code-label"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
 				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<p class="tf-note">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
-				<p class="tf-note">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block starting at your <code>since</code>. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
+				<p class="tf-note">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
+				<p class="tf-note"><b>Reach is the trailing 30 days, not 365.</b> The route is served from the 30-day window file, because scanning the full year exceeds the Worker's CPU budget. A <code>since</code> older than that still returns <code>200</code>, but the payload starts at the oldest row available rather than at your timestamp, and the response says so via <code>X-Result-Window-Incomplete: true</code> alongside the real <code>X-Result-Window-Start</code>. For a deeper backfill pull <a href="../feeds/">year.csv</a> once, then switch to this endpoint for incremental updates.</p>
 				<br>
 				<h3 id="campaigns" class="section-heading">Campaigns (AI-clustered)</h3>
 				<p>Groups related IOCs from the last 30 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
@@ -843,63 +844,13 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
 	<!-- Page level custom scripts -->
-	<script>
-	function codeClipboard() {
-		/* Get the text field */
-		var text = $(".tab-pane.active code").text()
-
-		var queryTextButton = $("#textQuery1").text()
-
-		/* Copy the text inside the text field */
-		navigator.clipboard.writeText(text);
-
-		$("#iconQuery1").removeClass("far fa-clipboard");
-		$("#iconQuery1").addClass("fas fa-check");
-		$("#textQuery1").text("Copied! ");
-		$("#buttonQuery1").css("background-color", "green");
-		setTimeout(
-			function() {
-				$("#iconQuery1").removeClass("fas fa-check");
-				$("#iconQuery1").addClass("far fa-clipboard");
-				$("#textQuery1").text(queryTextButton);
-				$("#buttonQuery1").css("background-color", "#4682B4");
-			}, 1000);
-	}
-
-	function changeCopyButton(number) {
-		$("#textQuery1").text("Copy #" + number + " to clipboard ");
-	}
-	</script>
 	<script>
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
-	</script>
-	<script>
-	function commandClipboard(element, number) {
-		/* Get the text field */
-		var text = $(element).text()
-
-		var queryTextButton = $("#textQuery" + number).text()
-
-		/* Copy the text inside the text field */
-		navigator.clipboard.writeText(text);
-
-		$("#iconQuery" + number).removeClass("far fa-clipboard");
-		$("#iconQuery" + number).addClass("fas fa-check");
-		$("#textQuery" + number).text("Copied! ");
-		$("#buttonQuery" + number).css("background-color", "green");
-		setTimeout(
-			function() {
-				$("#iconQuery" + number).removeClass("fas fa-check");
-				$("#iconQuery" + number).addClass("far fa-clipboard");
-				$("#textQuery" + number).text(queryTextButton);
-				$("#buttonQuery" + number).css("background-color", "#4682B4");
-			}, 1000);
-	}
 	</script>
 </body>
 

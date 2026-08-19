@@ -716,10 +716,10 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 							<h3 class="hnt-title">Pivot from a researcher</h3>
 							<a class="hnt-anchor" href="#researcher-pivot" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">Every IOC published this week by one handle. The filter is client-side because the REST route does not take <code>user</code> as a path segment.</p>
-						<p class="hnt-meta"><span>Window: week</span></p>
-						<pre id="term-3" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week \
-  | jq -r '.[] | select(.user=="malwrhunterteam") | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3" title="Copy"></i></pre>
+						<p class="hnt-desc">Every IOC published in the last 30 days by one handle, filtered server-side: a researcher handle is a valid path filter as long as you keep the leading <code>@</code>.</p>
+						<p class="hnt-meta"><span>Window: month</span></p>
+						<pre id="term-3" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/month/@malwrhunterteam \
+  | jq -r '.[] | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3" title="Copy"></i></pre>
 						<p class="hnt-links"><a href="../researchers/">Researchers</a></p>
 					</article>
 					<article class="hnt-card" id="ioc-provenance" data-stack="terminal">

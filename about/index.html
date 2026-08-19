@@ -44,7 +44,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
+	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=43" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=43" rel="stylesheet">
@@ -308,14 +308,6 @@
 			<div id="content" role="main" tabindex="-1">
 				<style>
 				.about-section { color: #555; font-size: 15px; font-family: 'Rubik', sans-serif; }
-				.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-				@media(max-width:768px) { .faq-grid { grid-template-columns: 1fr; } }
-				.faq-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.2rem 1.4rem; box-shadow: 0 2px 6px rgba(0,0,0,.04); }
-				.faq-card h4 { font-size: 1rem; font-weight: 700; margin: 0 0 0.6rem; color: #333; }
-				.faq-card h4 i { color: #1DA1F2; margin-right: 6px; font-size: 0.85rem; }
-				.faq-card p { margin: 0 0 0.5rem; line-height: 1.6; }
-				.faq-card p:last-child { margin-bottom: 0; }
-				.faq-card.wide { grid-column: 1 / -1; }
 				.section-heading { font-size: 1.3rem; font-weight: 700; color: #444; margin: 2rem 0 1rem; display: flex; align-items: center; gap: 8px; }
 				.section-heading i { color: #1DA1F2; font-size: 1rem; }
 				.similar-list { list-style: none; padding: 0; margin: 0 0 1.5rem; }
@@ -569,8 +561,8 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
 	<!-- Page level custom scripts -->
 	<!-- The feed-table poller that used to live here was removed 2026-08-20:
 	     it fetched today.csv from raw.githubusercontent every 6s and wrote to

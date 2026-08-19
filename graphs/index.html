@@ -44,7 +44,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
+	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=43" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=43" rel="stylesheet">
@@ -1109,7 +1109,7 @@
 	let tableTypesYear = $('#dataTableTypesYear').DataTable();
 	let tableTagsYear = $('#dataTableTagsYear').DataTable();
 
-	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+	Chart.defaults.global.defaultFontFamily = 'Nunito,-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
 		$.get(TweetFeed.dataUrl('today.csv'), function(response) {

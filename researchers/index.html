@@ -44,7 +44,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=3" rel="stylesheet">
+	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=43" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=43" rel="stylesheet">
@@ -510,14 +510,14 @@
 	<script src="../js/sb-admin-2.min.js"></script>
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<!-- vendor/chart.js/Chart.min.js removed 2026-08-20: this page has zero <canvas> and zero new Chart() calls, so 173 KB was downloaded and parsed to render nothing. The two Chart.defaults lines that configured it went with it. -->
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
-	<script src="../js/demo/datatables-demo.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
 	<script src="../js/utils.js?v=2"></script>
 	<!-- Page level custom scripts -->
-	<script src="../vendor/chart.js/Chart.min.js"></script>
 	<script>
 	// IOCs column (index 2) is fed an {display, sort} object instead of a
 	// plain string - nFormatter()'s abbreviated "1.2K" is not numeric, so
@@ -548,8 +548,6 @@
 	let tableUsersToday = $('#dataTableUsersToday').DataTable(researchersTableOpts);
 	let tableUsersWeek, tableUsersMonth;
 
-	Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-	Chart.defaults.global.defaultFontColor = '#858796';
 	$(function() {
 		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 			let data = csvJSON(response);

@@ -572,7 +572,14 @@ components:
       name: time
       in: path
       required: true
-      description: Time window for the query.
+      description: |
+        Time window for the query.
+
+        `year` is only meaningful on the unfiltered `/v1/{time}` route. On the
+        filtered routes it does NOT filter: the request still returns `302` to
+        the full, unfiltered `year.csv`, so `/v1/year/phishing/url` yields every
+        IOC of every type from every researcher. Filter the CSV client-side, or
+        use `month` if a 30-day window is enough.
       schema:
         type: string
         enum: [today, week, month, year]

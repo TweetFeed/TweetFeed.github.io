@@ -76,44 +76,30 @@ table th:nth-child(7) {
   font-size: clamp(0.6875rem, 0.72vw, 0.9375rem);
 }
 
-/* Styles for screens that are 992px or smaller */
-@media (max-width: 992px) {
+/* Styles for screens that are 992px or smaller.
+   991.98px, not 992px: Bootstrap's lg breakpoint and index.css both switch at
+   991.98/992, so `max-width: 992px` made BOTH branches apply at exactly 992 CSS
+   px - desktop shell plus mobile table rules on the same viewport. */
+@media (max-width: 991.98px) {
+  /* Removed 2026-08-20: the `.table-borderless table th:nth-child(n)` and
+     `.tableResearchers table th:nth-child(n)` rules that used to sit here needed a
+     <table> nested INSIDE those classes, but both are classes ON the <table>
+     element itself (index.html:460, researchers/index.html:318), so none of them
+     ever matched. The column hiding they were meant to do is already done in the
+     markup with Bootstrap's d-none d-lg-table-cell. */
+
 
   table {
     table-layout: auto;
     width: 95%;
   }
 
-  .table-borderless table th:nth-child(1),
-  .table-borderless table th:nth-child(3),
-  .table-borderless table th:nth-child(5),
-  .table-borderless table th:nth-child(7) {
-    display: none;
-  }
 
-  .table-borderless table th:nth-child(2) {
-    width: 20%;
-  }
 
-  .table-borderless table th:nth-child(4) {
-    width: 70%;
-  }
 
-  .table-borderless table th:nth-child(6) {
-    width: 10%;
-  }
 
-  .tableResearchers table th:nth-child(1) {
-    width: 10%;
-  }
 
-  .tableResearchers table th:nth-child(2) {
-    width: 80%;
-  }
 
-  .tableResearchers table th:nth-child(3) {
-    width: 10%;
-  }
 
 
   .table tr,
