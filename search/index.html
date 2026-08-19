@@ -731,7 +731,7 @@
 				<div class="container-fluid">
 					<!-- IOC lookup: exact-match, 365-day index with optional AI context.
 					     Consumes api.tweetfeed.live directly (NOT TweetFeed.dataUrl(),
-					     which points at the stage data repo CSVs backing the week
+					     which resolves to this repo's own data repo CSVs backing the week
 					     table below) - same already-live prod service pattern as
 					     campaigns/index.html. -->
 					<div class="card shadow mb-4" id="iocLookupCard">
@@ -1149,7 +1149,7 @@
 					var data = csvJSON(response);
 					if (data.length < 2) return;
 					var last_date = data[data.length - 1][0];
-					var first_date = data[1][0];
+					var first_date = data[0][0];
 					var date1 = formatDateLong(last_date);
 					var date2 = formatDateLong(first_date);
 					$(".lastDateWeekFrom").fadeOut(function() {
@@ -1413,7 +1413,7 @@
 	}
 	</script>
 	<!-- IOC lookup panel: fetches api.tweetfeed.live directly (NOT
-	     TweetFeed.dataUrl(), which points at the stage data repo CSVs behind
+	     TweetFeed.dataUrl(), which resolves to this repo's own data repo CSVs behind
 	     the week table above) - same already-live prod service pattern as
 	     campaigns/index.html. Placed after js/utils.js for TweetFeed.escapeHtml
 	     / TweetFeed.formatDateLong and the .tf-copy delegation it wires up. -->

@@ -45,6 +45,26 @@ def fetch_counts():
     return requests.get(COUNTS_URL, timeout=HTTP_TIMEOUT).json()
 
 
+def carries_tag(row, slug):
+    """True only if the row really carries this exact tag.
+
+    The API's path filter is a SUBSTRING match, while the count cards on the
+    same page come from counts.json, which is an exact tag match. That made the
+    table contradict the number printed directly above it and, worse, publish
+    IOCs under a tag they do not carry. Measured 2026-08-20 on the month
+    window: /v1/month/scam returned 510 rows of which 111 carried #scam (399
+    were #cryptoscam); apt was contaminated by #AdaptixC2 and #FakeCaptcha
+    ("apt" sits inside both), c2 by #AdaptixC2, remcos by #RemcosRAT, and
+    stealer by #SalatStealer and #infostealer.
+
+    Tags arrive from the API with a "#" prefix and are compared case-insensitively,
+    because tags.yaml uses PascalCase for malware families (#CobaltStrike) and
+    lowercase for generic ones while the slug in the URL is always lowercase.
+    """
+    want = f"#{slug}".lower()
+    return any((t or "").lower() == want for t in (row.get("tags") or []))
+
+
 def fetch_samples(slug):
     url = f"{API_BASE}/month/{slug}"
     resp = requests.get(url, timeout=HTTP_TIMEOUT)
@@ -53,6 +73,7 @@ def fetch_samples(slug):
     data = resp.json()
     if not isinstance(data, list):
         return []
+    data = [r for r in data if carries_tag(r, slug)]
     data.sort(key=lambda r: r.get("date", ""), reverse=True)
     return data[:SAMPLE_LIMIT]
 

@@ -703,7 +703,7 @@
 					var data = csvJSON(response);
 					if (data.length < 2) return;
 					var last_date = data[data.length - 1][0];
-					var first_date = data[1][0];
+					var first_date = data[0][0];
 					var date1 = formatDateLong(last_date);
 					var date2 = formatDateLong(first_date);
 

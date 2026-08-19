@@ -1281,7 +1281,7 @@
 				var data = csvJSON(response);
 				var data_filtered = [];
 				var last_date = data[data.length - 1][0];
-				var first_date = data[1][0];
+				var first_date = data[0][0];
 				var date1 = formatDateLong(last_date);
 				var date2 = formatDateLong(first_date);
 
@@ -1551,12 +1551,16 @@
 	</script>
 	<script>
 	function exportValuesToCSV(filename) {
-		var csv = [];
-
-		seen_values_rev = [...seen_values.reverse()];
-		for (var i = 0; i < seen_values.length; i++) {
-			csv.push(seen_values[i]);
+		// seen_values is only created once the first today.csv fetch resolves, and
+		// this function is reached from an inline onclick at global scope, so an
+		// early click used to throw "ReferenceError: seen_values is not defined"
+		// and produce nothing. Array.reverse() is also in-place: the old code
+		// reversed the live array on every click, so two exports in a row came out
+		// in opposite orders. Copy first, then reverse the copy.
+		if (typeof seen_values === 'undefined' || !seen_values || !seen_values.length) {
+			return;
 		}
+		var csv = seen_values.slice().reverse();
 
 		// Download CSV file
 		var dateNowUTC = new Date(Date.now());

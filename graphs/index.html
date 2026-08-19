@@ -1115,7 +1115,7 @@
 		$.get(TweetFeed.dataUrl('today.csv'), function(response) {
 			let data = csvJSON(response);
 			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
+			var first_date = data[0][0];
 			var date1 = formatDateLong(last_date);
 			var date2 = formatDateLong(first_date);
 			$(".lastDateTodayFrom").fadeOut(function() {
@@ -1138,7 +1138,7 @@
 		$.get(TweetFeed.dataUrl('week.csv'), function(response) {
 			let data = csvJSON(response);
 			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
+			var first_date = data[0][0];
 			var date1 = formatDateLong(last_date);
 			var date2 = formatDateLong(first_date);
 			$(".lastDateWeekFrom").fadeOut(function() {
@@ -1160,7 +1160,7 @@
 		$.get(TweetFeed.dataUrl('month.csv'), function(response) {
 			let data = csvJSON(response);
 			var last_date = data[data.length - 1][0];
-			var first_date = data[1][0];
+			var first_date = data[0][0];
 			var date1 = formatDateLong(last_date);
 			var date2 = formatDateLong(first_date);
 			$(".lastDateMonthFrom").fadeOut(function() {
