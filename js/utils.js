@@ -192,7 +192,19 @@
     return 'th';
   }
   function formatDateLong(dateStr, parenTime) {
-    var d = new Date(dateStr);
+    // Feed timestamps are UTC and arrive as "YYYY-MM-DD HH:MM:SS". That is not
+    // an ISO 8601 string (space instead of "T", no zone), so V8 parses it as
+    // LOCAL time; the getUTC* readers below then rendered the wrong instant
+    // while still appending the literal "UTC". In a UTC+2 browser the first IOC
+    // of 2026-08-19 00:52:38 UTC displayed as "August 18th, 2026 22:52:38 UTC" -
+    // two hours early and on the previous day. Pin the zone before parsing.
+    // Strings that already carry a zone (trailing Z or +HH:MM) are left alone.
+    var s = dateStr;
+    if (typeof s === 'string') {
+      s = s.trim().replace(' ', 'T');
+      if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?$/.test(s)) s += 'Z';
+    }
+    var d = new Date(s);
     if (isNaN(d.getTime())) return dateStr;
     var day = d.getUTCDate();
     var time = addZero(d.getUTCHours()) + ':' + addZero(d.getUTCMinutes()) + ':' + addZero(d.getUTCSeconds());

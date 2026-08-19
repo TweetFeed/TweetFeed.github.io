@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: pip install --no-cache-dir requests jinja2 pyyaml
 
+      - name: formatDateLong UTC test
+        # Feed timestamps are UTC but arrive space-separated, which V8 parses as
+        # local time; this pins the rendering across viewer timezones.
+        run: node scripts/test_utils_dates.js
+
       - name: Tag sample exact-match test
         # Guards the substring-vs-exact bug: the API path filter is a substring
         # match, so /v1/month/scam also returns #cryptoscam. Runs before the
