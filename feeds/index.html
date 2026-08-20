@@ -806,9 +806,10 @@
 				<!-- Technical reference content intentionally uses heading, lead and list rather than .card or .faq-grid: this is feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="misp" class="section-heading fds-sect-head">MISP feed</h3>
 				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
-				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed URL" title="Copy"></i></pre>
+				<p class="tf-code-label">Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
+				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL" title="Copy"></i></pre>
 				<ul class="fds-facts">
-					<li>Add it under <em>Sync Actions, Feeds, Add</em> and paste the URL above. Use the directory, not <code>manifest.json</code>: MISP appends that itself.</li>
+					<li>Point MISP at the directory, not at <code>manifest.json</code>. Giving it the manifest file makes it fetch <code>/misp/manifest.json/manifest.json</code>, which does not exist.</li>
 					<li>Only the current day's Event changes between pulls, so after the first sync your instance re-fetches one file.</li>
 					<li>Tags applied to every Event: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.</li>
 				</ul>
