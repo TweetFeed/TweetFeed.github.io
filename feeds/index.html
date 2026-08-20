@@ -42,7 +42,6 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
-	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
 	<link href="../css/index.css?v=44" rel="stylesheet">
@@ -256,6 +255,212 @@
 			outline-offset: -2px;
 		}
 	</style>
+	<style>
+		/* ── Headline figures ─────────────────────────────────────────────
+		   Same component /trends/ (.trd-headline), /hunt/ (.hnt-headline) and
+		   /campaigns/ (.tfc-headline) each carry in their own inline <style>.
+		   Declarations lifted from .trd-headline, whose label colour and
+		   2-column mobile fallback were already contrast-reviewed. Kept page
+		   local like the other three: promoting all four to a shared
+		   .tf-headline in tweetfeed.css is its own change.
+		   Three of the four values come from the counts.json fetch this page
+		   already makes; the fourth is static. No extra request. */
+		.fds-headline {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			border: 1px solid black;
+			border-radius: 3px;
+			background: #fff;
+			margin: 0 0 1.25rem;
+		}
+		.fds-headline-cell {
+			padding: 0.9rem 0.75rem;
+			text-align: center;
+			font-family: 'Rubik', sans-serif;
+		}
+		.fds-headline-cell + .fds-headline-cell { border-left: 1px solid black; }
+		.fds-headline-value {
+			font-size: 30px;
+			font-weight: 600;
+			line-height: 1.1;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+		}
+		.fds-headline-label {
+			margin-top: 2px;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		.fds-headline-sub { font-size: 12px; color: #737373; }
+		@media (max-width: 767.98px) {
+			.fds-headline { grid-template-columns: repeat(2, 1fr); }
+			.fds-headline-cell:nth-child(3) { border-left: 0; }
+			.fds-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
+			.fds-headline-value { font-size: 24px; }
+		}
+
+		/* ── Grouped section chips ────────────────────────────────────────
+		   Nine flat chips said nothing about which chip belonged to which
+		   job. The label is a flex item of the shared .page-toc, reusing the
+		   11px/700/.06em/#4b5563 eyebrow that .fds-headline-label,
+		   .tf-foot-head and .docs-nav-label already share. */
+		.fds-toc-label {
+			align-self: center;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		.fds-toc-label + .page-toc-chip { margin-right: 2px; }
+		.fds-toc-label:not(:first-child) { margin-left: 12px; }
+		@media (max-width: 767.98px) {
+			.fds-toc-label,
+			.fds-toc-label:not(:first-child) { flex-basis: 100%; margin-left: 0; }
+			.fds-toc-label:not(:first-child) { margin-top: 6px; }
+		}
+
+		/* ── Page outline ─────────────────────────────────────────────────
+		   h1 42 > h2 28 > h3 20. Bootstrap ships h2 at 2rem and h3 at
+		   1.75rem, four pixels apart, which is not a hierarchy, and
+		   .section-heading deliberately sets neither size nor margin so the
+		   49 other pages that use it are not resized from here. 28px keeps
+		   the dominant heading on this page identical to the top-level
+		   section headings on /api/ and /hunt/.
+		   The margin also restores the 30px of section separation the eight
+		   inline-styled h3 used to carry before they moved onto the class. */
+		.fds-block-head { font-size: 28px; margin: 0 0 0.35rem; }
+		.fds-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
+		/* The desktop navbar is fixed-top at 56px and nothing compensates for
+		   it, so every one of the nine anchors used to land underneath it. */
+		@media (min-width: 992px) {
+			.fds-block-head, .fds-sect-head { scroll-margin-top: 72px; }
+		}
+		/* Eyebrow over a card grid that is one half of the section above it. */
+		p.fds-grid-label {
+			margin: 0 0 0.6rem;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		/* Colour, size and family come from .tf-prose ul; only rhythm here. */
+		ul.fds-facts { margin: 0 0 1rem; padding-left: 1.25rem; line-height: 1.6; }
+		/* A second eyebrow following a card row sat flush against the cards'
+		   bottom border, reading as a caption for the row above it. */
+		.row + p.fds-grid-label { margin-top: 0.75rem; }
+
+		/* ── Window card internals ────────────────────────────────────────
+		   The five per-type counts were five bare coloured icons in a nested
+		   .container > .row > .col, with the meaning of each icon reachable
+		   only through a tooltip: invisible on touch, invisible to a screen
+		   reader, and about 30px of column at the mobile breakpoint. One
+		   labelled row per type, count right-aligned on a shared edge with
+		   tabular figures so the four cards read as a comparison. */
+		ul.fds-typelist {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			text-align: left;
+			font-family: 'Rubik', sans-serif;
+			font-size: 14px;
+			color: #1c1c1c;
+		}
+		.fds-typelist li {
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 0.5rem;
+			padding: 2px 0;
+		}
+		.fds-typelist .fds-type-n { font-weight: 600; font-variant-numeric: tabular-nums; }
+		.fds-typelist i { width: 1em; margin-right: 6px; text-align: center; }
+		/* Canonical IOC-type ink, declared once instead of 20 inline copies.
+		   SHA-256 #FFC34D and MD5 #ffc591 are the site-wide pair (index.html,
+		   graphs/, search/, trends/ TYPE_COLORS); three of the four cards here
+		   had MD5 on the SHA-256 colour, which made the two indistinguishable.
+		   Decorative now in any case: every icon sits beside its own label. */
+		.fds-ic-url    { color: #0026E6; }
+		.fds-ic-domain { color: #3399FF; }
+		.fds-ic-ip     { color: #02bf0f; }
+		.fds-ic-sha256 { color: #FFC34D; }
+		.fds-ic-md5    { color: #ffc591; }
+		/* Coverage line under the card title. Element-qualified so it beats
+		   .tf-prose p on document order. min-height reserves the two lines the
+		   dates land on, so the row does not resize when counts.json arrives. */
+		p.fds-card-range {
+			margin: 0;
+			min-height: 1.4em;
+			font-size: 12px;
+			line-height: 1.4;
+			color: #737373;
+			font-family: 'Rubik', sans-serif;
+		}
+		/* At 360px each card is 157px wide and Bootstrap's card-header eats
+		   40px of that in padding, which left "SHA-256  4,957" wrapping onto
+		   two lines. Every card on this page is a download card, so trimming
+		   the gutter here costs nothing and buys back 24px of measure. */
+		@media (max-width: 575.98px) {
+			.card-header { padding-left: 0.6rem; padding-right: 0.6rem; }
+			ul.fds-typelist { font-size: 13px; }
+			.fds-typelist i { margin-right: 4px; }
+			p.fds-card-range { font-size: 11px; }
+		}
+
+		/* ── IOC-type cross-links ─────────────────────────────────────────
+		   Was five link tiles with no class hooks and about 30 inline
+		   declarations, laid out col-md-6 for a ragged 2+2+1. Five items do
+		   not divide into any column count, so they are full-width rows
+		   instead: badge and name on a fixed measure, description in the
+		   space that is left. */
+		.fds-typetile {
+			display: grid;
+			grid-template-columns: minmax(180px, 240px) 1fr;
+			align-items: baseline;
+			gap: 0.2rem 1rem;
+			padding: 0.6rem 0.8rem;
+			border: 1px solid black;
+			background: #fff;
+			text-decoration: none;
+		}
+		.fds-typetile + .fds-typetile { margin-top: 0.5rem; }
+		/* The same #f8f9fa active surface the FAQ and .agent-option-card use. */
+		.fds-typetile:hover,
+		.fds-typetile:focus-visible { background: #f8f9fa; text-decoration: none; }
+		.fds-typetile:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+		.fds-typetile-head { display: flex; align-items: baseline; gap: 0.6rem; }
+		.fds-typetile-name { font-family: 'Rubik', sans-serif; font-weight: 600; color: #1c1c1c; }
+		.fds-typetile-desc {
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			line-height: 1.45;
+			color: #737373;
+		}
+		.fds-typebadge {
+			display: inline-block;
+			padding: 2px 8px;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			line-height: 1.5;
+			color: #fff;
+		}
+		.fds-typebadge-url    { background: #0026E6; }
+		.fds-typebadge-domain { background: #3399FF; }
+		.fds-typebadge-ip     { background: #02bf0f; }
+		/* Both amber tokens need dark ink: white on them measures under 2:1. */
+		.fds-typebadge-sha256 { background: #FFC34D; color: #1c1c1c; }
+		.fds-typebadge-md5    { background: #ffc591; color: #1c1c1c; }
+		@media (max-width: 575.98px) {
+			.fds-typetile { grid-template-columns: 1fr; }
+		}
+	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -374,464 +579,337 @@
 					<p style="font-size: 14px;" role="heading" aria-level="2"><em>Full feeds from today, last week, last month and last year</em></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
-				<nav class="page-toc" aria-label="Available formats">
+				<div class="tf-prose">
+				<div class="fds-headline">
+					<div class="fds-headline-cell">
+						<div class="fds-headline-value" id="feedsHlToday">-</div>
+						<div class="fds-headline-label">IOCs today</div>
+						<div class="fds-headline-sub">since 00:00 UTC</div>
+					</div>
+					<div class="fds-headline-cell">
+						<div class="fds-headline-value" id="feedsHlMonth">-</div>
+						<div class="fds-headline-label">last 30 days</div>
+						<div class="fds-headline-sub">rolling window</div>
+					</div>
+					<div class="fds-headline-cell">
+						<div class="fds-headline-value" id="feedsHlYear">-</div>
+						<div class="fds-headline-label">last 365 days</div>
+						<div class="fds-headline-sub">full archive</div>
+					</div>
+					<div class="fds-headline-cell">
+						<div class="fds-headline-value">15 min</div>
+						<div class="fds-headline-label">refresh</div>
+						<div class="fds-headline-sub">CC0, no API key</div>
+					</div>
+				</div>
+				<div id="feedsCountsError"></div>
+				<nav class="page-toc" aria-label="Sections on this page">
+					<span class="fds-toc-label">Download</span>
 					<a class="page-toc-chip" href="#csv">CSV</a>
-					<a class="page-toc-chip" href="#rss">RSS</a>
+					<a class="page-toc-chip" href="#blocklist">Blocklists</a>
+					<span class="fds-toc-label">Subscribe</span>
+					<a class="page-toc-chip" href="#rss">RSS firehose</a>
+					<a class="page-toc-chip" href="#per-tag-rss">Per-tag</a>
+					<a class="page-toc-chip" href="#per-type-rss">Per-type</a>
+					<a class="page-toc-chip" href="#per-user-rss">Per-user</a>
+					<span class="fds-toc-label">Integrate</span>
 					<a class="page-toc-chip" href="#misp">MISP</a>
 					<a class="page-toc-chip" href="#stix">STIX 2.1</a>
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
-					<a class="page-toc-chip" href="#per-tag-rss">Per-tag RSS</a>
-					<a class="page-toc-chip" href="#per-type-rss">Per-type RSS</a>
-					<a class="page-toc-chip" href="#per-user-rss">Per-user RSS</a>
-					<a class="page-toc-chip" href="#blocklist">Blocklists</a>
 				</nav>
-				<h3 id="csv" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-bottom: 20px;">
-					&nbsp&nbsp&nbspCSV Feeds
-				</h3>
+				<hr class="divider">
+				<h2 id="download" class="section-heading fds-block-head">Download</h2>
+				<p>Static files you fetch on your own schedule. Public domain (CC0), no key, no sign-up.</p>
+				<h3 id="csv" class="section-heading fds-sect-head">CSV feeds</h3>
+				<p>One row per IOC: date, reporter, type, value, tags and the tweet it came from. Windows roll forward and are rebuilt every 15 minutes.</p>
 				<div class="row">
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Today</span><i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Today (Starting 00:00 UTC)"></i>
-								<br>
-								<div id="lastDateToday" style="display:none">
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayFrom"></em></span>
-									<br>
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateTodayTo"></em></span>
-								</div>
-								<div id="loadingToday" class="text-center">
-									<img loading="lazy" style="height: 20px;width:auto;" src="../img/loading.svg" alt="Loading" width="20" height="20">
-								</div>
+								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Since 00:00 UTC today"></i>
+								<p class="fds-card-range"><em class="fds-range-today"></em></p>
 								<hr>
-								<div class="container">
-									<div class="row h-100 align-items-center">
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs today"></i></span>
-											<span class="today-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains today"></i></span>
-											<span class="today-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs today"></i></span>
-											<span class="today-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes today"></i></span>
-											<span class="today-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="right" title="MD5 hashes today"></i></span>
-											<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-									</div> <!-- row -->
-									<div class="row today">
-									</div> <!-- row 2 -->
-								</div> <!-- container -->
+								<ul class="fds-typelist">
+									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n today-url">-</span></li>
+									<li><span><i class="fas fa-globe fds-ic-domain" aria-hidden="true"></i>Domains</span><span class="fds-type-n today-domain">-</span></li>
+									<li><span><i class="fas fa-map-marker-alt fds-ic-ip" aria-hidden="true"></i>IPs</span><span class="fds-type-n today-ip">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-sha256" aria-hidden="true"></i>SHA-256</span><span class="fds-type-n today-sha256">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n today-md5">-</span></li>
+								</ul>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/feeds/today.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.csv)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/today.csv" data-umami-event="download-csv-today" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Today (.csv)</a>
 							</div>
-						</div> <!-- card -->
-					</div> <!-- class="col-sm-6" -->
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 7 days"></i>
-								<br>
-								<div id="lastDateWeek" style="display:none">
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom"></em></span>
-									<br>
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo"></em></span>
-								</div>
-								<div id="loadingWeek" class="text-center">
-									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
-								</div>
+								<p class="fds-card-range"><em class="fds-range-week"></em></p>
 								<hr>
-								<div class="container">
-									<div class="row h-100 align-items-center">
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs week"></i></span>
-											<span class="week-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains week"></i></span>
-											<span class="week-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs week"></i></span>
-											<span class="week-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes week"></i></span>
-											<span class="week-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes week"></i></span>
-											<span class="week-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-									</div> <!-- row -->
-									<div class="row week">
-									</div> <!-- row 2 -->
-								</div> <!-- container -->
+								<ul class="fds-typelist">
+									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n week-url">-</span></li>
+									<li><span><i class="fas fa-globe fds-ic-domain" aria-hidden="true"></i>Domains</span><span class="fds-type-n week-domain">-</span></li>
+									<li><span><i class="fas fa-map-marker-alt fds-ic-ip" aria-hidden="true"></i>IPs</span><span class="fds-type-n week-ip">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-sha256" aria-hidden="true"></i>SHA-256</span><span class="fds-type-n week-sha256">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n week-md5">-</span></li>
+								</ul>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/feeds/week.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.csv)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/week.csv" data-umami-event="download-csv-week" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Week (.csv)</a>
 							</div>
-						</div> <!-- card -->
-					</div> <!-- class="col-sm-6" -->
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 30 days"></i>
-								<br>
-								<div id="lastDateMonth" style="display:none">
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthFrom"></em></span>
-									<br>
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateMonthTo"></em></span>
-								</div>
-								<div id="loadingMonth" class="text-center">
-									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
-								</div>
+								<p class="fds-card-range"><em class="fds-range-month"></em></p>
 								<hr>
-								<div class="container">
-									<div class="row h-100 align-items-center">
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs month"></i></span>
-											<span class="month-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains month"></i></span>
-											<span class="month-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs month"></i></span>
-											<span class="month-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes month"></i></span>
-											<span class="month-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes month"></i></span>
-											<span class="month-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-									</div> <!-- row -->
-									<div class="row month">
-									</div> <!-- row 2 -->
-								</div> <!-- container -->
+								<ul class="fds-typelist">
+									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n month-url">-</span></li>
+									<li><span><i class="fas fa-globe fds-ic-domain" aria-hidden="true"></i>Domains</span><span class="fds-type-n month-domain">-</span></li>
+									<li><span><i class="fas fa-map-marker-alt fds-ic-ip" aria-hidden="true"></i>IPs</span><span class="fds-type-n month-ip">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-sha256" aria-hidden="true"></i>SHA-256</span><span class="fds-type-n month-sha256">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n month-md5">-</span></li>
+								</ul>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/feeds/month.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.csv)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/month.csv" data-umami-event="download-csv-month" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Month (.csv)</a>
 							</div>
-						</div> <!-- card -->
-					</div> <!-- class="col-sm-6" -->
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 365 days"></i>
-								<br>
-								<div id="lastDateYear" style="display:none">
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearFrom"></em></span>
-									<br>
-									<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateYearTo"></em></span>
-								</div>
-								<div id="loadingYear" class="text-center">
-									<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
-								</div>
+								<p class="fds-card-range"><em class="fds-range-year"></em></p>
 								<hr>
-								<div class="container">
-									<div class="row h-100 align-items-center">
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="right" title="URLs year"></i></span>
-											<span class="year-url" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="right" title="Domains year"></i></span>
-											<span class="year-domain" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="right" title="IPs year"></i></span>
-											<span class="year-ip" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="SHA256 hashes year"></i></span>
-											<span class="year-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-										<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-											<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="right" title="MD5 hashes year"></i></span>
-											<span class="year-md5" style="font-family: 'Rubik', sans-serif;font-weight: 500;color:black;"></span>
-										</div>
-									</div> <!-- row -->
-									<div class="row year">
-									</div> <!-- row 2 -->
-								</div> <!-- container -->
+								<ul class="fds-typelist">
+									<li><span><i class="fas fa-link fds-ic-url" aria-hidden="true"></i>URLs</span><span class="fds-type-n year-url">-</span></li>
+									<li><span><i class="fas fa-globe fds-ic-domain" aria-hidden="true"></i>Domains</span><span class="fds-type-n year-domain">-</span></li>
+									<li><span><i class="fas fa-map-marker-alt fds-ic-ip" aria-hidden="true"></i>IPs</span><span class="fds-type-n year-ip">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-sha256" aria-hidden="true"></i>SHA-256</span><span class="fds-type-n year-sha256">-</span></li>
+									<li><span><i class="fas fa-file-alt fds-ic-md5" aria-hidden="true"></i>MD5</span><span class="fds-type-n year-md5">-</span></li>
+								</ul>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/feeds/year.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Year (.csv)</a></p>
-							</div>
-						</div> <!-- card -->
-					</div> <!-- class="col-sm-6" -->
-				</div> <!-- row -->
-				<!-- <hr class="divider"> <hr> between CSV and RSS feeds -->
-				<h3 id="rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 20px;">
-					&nbsp&nbsp&nbspRSS Feed
-				</h3>
-				<div class="d-flex justify-content-start">
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
-							<div class="card-header text-center">
-								<span class="card-text cardTitle">RSS Feed</span> 
-								<i class="far fa-question-circle fa-sm align-self-center" 
-									data-toggle="tooltip" 
-									data-placement="right" 
-									title="Download the RSS feed of IOCs"></i>
-								<br>
-								<hr>
-								<p style="font-size: 20px;">
-									<a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/rss.xml" target="_blank" role="button" rel="noopener noreferrer">
-									   <i class="fas fa-rss"></i> RSS Feed (.xml)
-									</a>
-								</p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/feeds/year.csv" data-umami-event="download-csv-year" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> Year (.csv)</a>
 							</div>
 						</div>
 					</div>
 				</div>
-
-				<!-- Technical reference content intentionally uses heading+paragraph, not .card/.faq-grid - this is API/feed documentation, not FAQ content. Reviewed 2026-08-12. -->
-				<h3 id="misp" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspMISP Feed
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Native MISP feed format: <b>one Event per day</b>, 365 days of history, refreshed every 15 minutes. Set the feed URL to <a href="https://tweetfeed.live/misp" target="_blank" rel="noopener noreferrer">tweetfeed.live/misp</a> in your MISP instance under <em>Sync Actions &rarr; Feeds &rarr; Add</em> and it imports every day automatically. Use the directory, not <code>manifest.json</code> &mdash; MISP appends that itself. Only the current day's Event changes between pulls, so after the first sync your instance re-fetches just that one. Tags applied: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.
-				</p>
+				<div class="alert alert-secondary tf-disclaimer" role="alert">
+					These are community-reported IOCs and their confidence is not always 100%, so adding them straight to a blocklist is not recommended. Run your own analysis first. They work better as a <b>Watchlist</b> or as input to <b>Threat Hunting</b>.
+				</div>
+				<h3 id="blocklist" class="section-heading fds-sect-head">Blocklists</h3>
+				<p>Plain-text exports, one indicator per line, 30-day window, rebuilt every 15 minutes.</p>
+				<ul class="fds-facts">
+					<li>Drop-in for Pi-hole, AdGuard Home, hosts files, firewalls, proxies and IDS.</li>
+					<li><code>urls.txt</code> carries the full URL instead of just the host, so it also covers indicators sitting on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</li>
+					<li>A 1:1 mirror of the feed, with no extra quality gate beyond the standard pipeline.</li>
+				</ul>
+				<p class="fds-grid-label">DNS and host-level blocking</p>
 				<div class="row">
-					<div class="col-md-6 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Manifest</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of every daily Event - the file MISP fetches first"></i>
+								<span class="card-text cardTitle">Domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One domain per line, Pi-hole/dnsmasq style"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/misp/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Manifest (.json)</a></p>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/domains.txt" data-umami-event="download-blocklist-domains" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> domains.txt</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Feed cache</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="md5(value),event-uuid per attribute - what MISP's Cache feed correlates against (last 31 days)"></i>
+								<span class="card-text cardTitle">Hosts</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="0.0.0.0 hosts-file format"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/misp/hashes.csv" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Hashes (.csv)</a></p>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/hosts.txt" data-umami-event="download-blocklist-hosts" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hosts.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">AdGuard</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="AdGuard Home ||domain^ syntax"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/adguard.txt" data-umami-event="download-blocklist-adguard" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> adguard.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">dnsmasq</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" data-umami-event="download-blocklist-dnsmasq" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> dnsmasq.txt</a>
 							</div>
 						</div>
 					</div>
 				</div>
-
-				<h3 id="stix" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspSTIX 2.1 Bundles
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Industry-standard STIX 2.1 indicator bundles for SIEM/Threat Intelligence platforms (TLP:CLEAR, deterministic UUIDs for cross-pull dedupe). Point your consumer at the <a href="https://tweetfeed.live/stix/manifest.json" target="_blank" rel="noopener noreferrer">manifest URL</a> and pull the windows you care about. Need a live pull instead of static bundles? See <a class="text-decoration-none" href="../api/#taxii">TAXII 2.1</a> in the API docs.
-				</p>
+				<p class="fds-grid-label">Resolver, firewall and proxy</p>
 				<div class="row">
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Manifest</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles + indicator counts"></i>
+								<span class="card-text cardTitle">RPZ</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="DNS Response Policy Zone for BIND, Unbound and PowerDNS Recursor"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/manifest.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Manifest (.json)</a></p>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/rpz.txt" data-umami-event="download-blocklist-rpz" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> rpz.txt</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Today</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 24h IOCs"></i>
+								<span class="card-text cardTitle">IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/today.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Today (.json)</a></p>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" data-umami-event="download-blocklist-ips" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> ips.txt</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Week</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 7-day IOCs"></i>
+								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies, IDS and enrichment"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/week.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Week (.json)</a></p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
-							<div class="card-header text-center">
-								<span class="card-text cardTitle">Month</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with last 31-day IOCs"></i>
-								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://tweetfeed.live/stix/month.json" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Month (.json)</a></p>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" data-umami-event="download-blocklist-urls" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> urls.txt</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
-					Year window omitted on purpose: the STIX schema is ~2.6x more verbose per IOC than MISP, putting year.json &gt;80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX consumption use the diff endpoint below.
-				</p>
-				<p style="font-size: 14px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 8px 1.5rem;">
-					<code>today.json</code> is served directly. <code>week.json</code> and <code>month.json</code> respond with a <code>302</code> redirect to <code>raw.githubusercontent.com</code> because of their size, so they arrive with a <code>Content-Type: text/plain</code> instead of <code>application/stix+json;version=2.1</code>. Follow redirects and don't gate on the response content type.
-				</p>
-
-				<h3 id="diff" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspDiff endpoint (incremental sync)
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Fetch only IOCs added after a given timestamp. Replace <code>&lt;ISO8601&gt;</code> with the last sync time (use the Z form for unambiguous UTC). Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is &gt;365 days old.
-				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">GET https://api.tweetfeed.live/v1/since/<b style="color:gray;">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-
-				<h3 id="per-tag-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspPer-tag RSS feeds
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					One RSS feed per active tag (a tag is "active" once it has &gt;=1 hit in the last 7 days). Subscribe to a single threat type without polling the firehose. Browse all available feeds from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each per-tag landing page also exposes the feed via <code>&lt;link rel="alternate"&gt;</code>.
-				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/tag/<b style="color:gray;">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-
-				<h3 id="per-type-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspPer-type RSS feeds
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					One RSS feed per IOC type - always available, no activity threshold. Subscribe to a single indicator type without polling the firehose.
-				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/type/<b style="color:gray;">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-
-				<h3 id="per-user-rss" style="text-align: left; font-family: 'Rubik', sans-serif; color: #1178b3; font-weight: bold; margin-top: 30px; margin-bottom: 12px;">
-					&nbsp&nbsp&nbspPer-user RSS feeds
-				</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					One RSS feed per reporter active in the last 7 days; handle lowercase. Feeds for quiet or unknown users are unavailable (error response).
-				</p>
-				<pre class="code-block" style="margin-left: 1.5rem;">https://tweetfeed.live/rss/user/<b style="color:gray;">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/phishunt_io.xml" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
-
 				<hr class="divider">
-				<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
-					Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
-				</div>
-				<h3 id="blocklist" class="section-heading">Blocklists</h3>
-				<p style="font-size: 15px; color: #737373; font-family: 'Rubik', sans-serif; margin: 0 0 16px 1.5rem;">
-					Plain-text exports for direct use in Pi-hole, AdGuard Home, hosts files, firewalls, proxies and IDS - one indicator per line, 30-day window, rebuilt every 15 minutes. <code>urls.txt</code> carries the full URL instead of just the host, so it also covers indicators hosted on shared or otherwise legitimate infrastructure that DNS-level blocking can't safely reach. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk.
-				</p>
+				<h2 id="subscribe" class="section-heading fds-block-head">Subscribe</h2>
+				<p>Poll-on-a-timer feeds for a reader or a bot. Every item links back to the tweet it came from.</p>
+				<h3 id="rss" class="section-heading fds-sect-head">RSS firehose</h3>
+				<p>Every IOC as it lands, newest first, across all types, reporters and tags.</p>
 				<div class="row">
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Domains</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One domain per line, Pi-hole/dnsmasq style"></i>
+								<span class="card-text cardTitle">RSS feed</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Download the RSS feed of IOCs"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/domains.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Domains (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/rss.xml" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-rss" aria-hidden="true"></i> rss.xml</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+				</div>
+				<h3 id="per-tag-rss" class="section-heading fds-sect-head">Per-tag RSS</h3>
+				<p>One feed per active tag, where active means at least one hit in the last 7 days. Browse them all from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each tag landing page also exposes its feed through <code>&lt;link rel="alternate"&gt;</code>.</p>
+				<pre class="code-block">https://tweetfeed.live/rss/tag/<b class="tf-ph">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the phishing tag" title="Copy example (phishing)"></i></pre>
+				<h3 id="per-type-rss" class="section-heading fds-sect-head">Per-type RSS</h3>
+				<p>One feed per IOC type. Always available, no activity threshold.</p>
+				<pre class="code-block">https://tweetfeed.live/rss/type/<b class="tf-ph">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the url type" title="Copy example (url)"></i></pre>
+				<h3 id="per-user-rss" class="section-heading fds-sect-head">Per-user RSS</h3>
+				<p>One feed per reporter active in the last 7 days. Handles are lowercase. Quiet or unknown handles return an error.</p>
+				<pre class="code-block">https://tweetfeed.live/rss/user/<b class="tf-ph">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/phishunt_io.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for phishunt_io" title="Copy example (phishunt_io)"></i></pre>
+				<hr class="divider">
+				<h2 id="integrate" class="section-heading fds-block-head">Integrate</h2>
+				<p>Formats that plug straight into a Threat Intelligence platform.</p>
+				<!-- Technical reference content intentionally uses heading, lead and list rather than .card or .faq-grid: this is feed documentation, not FAQ content. Reviewed 2026-08-12. -->
+				<h3 id="misp" class="section-heading fds-sect-head">MISP feed</h3>
+				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
+				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed URL" title="Copy"></i></pre>
+				<ul class="fds-facts">
+					<li>Add it under <em>Sync Actions, Feeds, Add</em> and paste the URL above. Use the directory, not <code>manifest.json</code>: MISP appends that itself.</li>
+					<li>Only the current day's Event changes between pulls, so after the first sync your instance re-fetches one file.</li>
+					<li>Tags applied to every Event: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.</li>
+				</ul>
+				<div class="row">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">Hosts</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="0.0.0.0 hosts-file format"></i>
+								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of every daily Event - the file MISP fetches first"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/hosts.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> Hosts (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/manifest.json" data-umami-event="download-misp-manifest" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">AdGuard</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="AdGuard Home ||domain^ syntax"></i>
+								<span class="card-text cardTitle">Feed cache</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="md5(value),event-uuid per attribute - what MISP's Cache feed correlates against (last 31 days)"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/adguard.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> AdGuard (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/misp/hashes.csv" data-umami-event="download-misp-hashes" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> hashes.csv</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+				</div>
+				<h3 id="stix" class="section-heading fds-sect-head">STIX 2.1 bundles</h3>
+				<p>Indicator bundles for SIEM and Threat Intelligence platforms. TLP:CLEAR, with deterministic UUIDs so a re-pull dedupes cleanly. Need a live pull instead of static bundles? See <a class="text-decoration-none" href="../api/#taxii">TAXII 2.1</a> in the API docs.</p>
+				<div class="row">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">IPs</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
+								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles plus indicator counts"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/ips.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> IPs (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/manifest.json" data-umami-event="download-stix-manifest" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> manifest.json</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">RPZ</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="DNS Response Policy Zone for BIND, Unbound and PowerDNS Recursor"></i>
+								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 24h of IOCs"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/rpz.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> RPZ (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/today.json" data-umami-event="download-stix-today" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> today.json</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">dnsmasq</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
+								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 7 days of IOCs"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> dnsmasq (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/week.json" data-umami-event="download-stix-week" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> week.json</a>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
-						<div class="card shadow mb-4">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
 							<div class="card-header text-center">
-								<span class="card-text cardTitle">URLs</span>
-								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies / IDS / enrichment - covers hosts that can't be blocked by DNS alone"></i>
+								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 31 days of IOCs"></i>
 								<hr>
-								<p style="font-size: 20px;"><a class="btn btn-primary buttonHover btn-tf" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download"></i> URLs (.txt)</a></p>
+								<a class="btn btn-tf btn-block" href="https://tweetfeed.live/stix/month.json" data-umami-event="download-stix-month" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> month.json</a>
 							</div>
 						</div>
 					</div>
-				</div> <!-- row -->
-				<h3 class="section-heading">Browse by IOC type</h3>
+				</div>
+				<ul class="fds-facts tf-note">
+					<li>No year bundle on purpose: STIX runs about 2.6x more verbose per IOC than MISP, which puts <code>year.json</code> over 80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX, use the diff endpoint below.</li>
+					<li><code>today.json</code> is served directly. <code>week.json</code> and <code>month.json</code> answer with a <code>302</code> to <code>raw.githubusercontent.com</code> because of their size, so they arrive as <code>Content-Type: text/plain</code> instead of <code>application/stix+json;version=2.1</code>. Follow redirects and do not gate on the content type.</li>
+				</ul>
+				<h3 id="diff" class="section-heading fds-sect-head">Diff endpoint (incremental sync)</h3>
+				<p>Fetch only the IOCs added after a given timestamp. Replace the placeholder with your last sync time, in the <code>Z</code> form for unambiguous UTC. Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is more than 365 days old.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<b class="tf-ph">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy the example request with a 2026-05-01 timestamp" title="Copy example"></i></pre>
+				<hr class="divider">
+				<h2 class="section-heading fds-block-head">Browse by IOC type</h2>
+				<p>Need only one indicator type? Each type has its own feed page with stats, recent samples, formats and a FAQ.</p>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Need only one indicator type? Each type has its own live feed page with stats, recent samples, formats and a FAQ.</p>
-						<div class="row">
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-urls/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">url</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious URLs</span></div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by Twitter/X researchers. Highest-volume IOC type.</div>
-								</a>
-							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-domains/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">domain</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious domains</span></div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names for DNS-level blocklists and CT-log correlation.</div>
-								</a>
-							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-ips/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px; font-family:'Rubik',sans-serif;">ip</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">Malicious IPs</span></div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4/IPv6 tied to attacker infrastructure (C2, scanners, phishing hosts).</div>
-								</a>
-							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-md5/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">md5</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">MD5 hashes</span></div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes; pivot through VirusTotal / Malpedia.</div>
-								</a>
-							</div>
-							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../malicious-hashes-sha256/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
-									<div style="display:flex; align-items:baseline; gap:0.6rem;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span><span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">SHA-256 hashes</span></div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred for IR artefacts and chain of custody.</div>
-								</a>
-							</div>
-						</div>
+						<a class="fds-typetile" href="../malicious-urls/">
+							<span class="fds-typetile-head"><span class="fds-typebadge fds-typebadge-url">url</span><span class="fds-typetile-name">Malicious URLs</span></span>
+							<span class="fds-typetile-desc">Full HTTP/HTTPS URLs flagged by Twitter/X researchers. Highest-volume IOC type.</span>
+						</a>
+						<a class="fds-typetile" href="../malicious-domains/">
+							<span class="fds-typetile-head"><span class="fds-typebadge fds-typebadge-domain">domain</span><span class="fds-typetile-name">Malicious domains</span></span>
+							<span class="fds-typetile-desc">Bare domain names for DNS-level blocklists and CT-log correlation.</span>
+						</a>
+						<a class="fds-typetile" href="../malicious-ips/">
+							<span class="fds-typetile-head"><span class="fds-typebadge fds-typebadge-ip">ip</span><span class="fds-typetile-name">Malicious IPs</span></span>
+							<span class="fds-typetile-desc">IPv4/IPv6 tied to attacker infrastructure (C2, scanners, phishing hosts).</span>
+						</a>
+						<a class="fds-typetile" href="../malicious-hashes-sha256/">
+							<span class="fds-typetile-head"><span class="fds-typebadge fds-typebadge-sha256">sha256</span><span class="fds-typetile-name">SHA-256 hashes</span></span>
+							<span class="fds-typetile-desc">Modern 256-bit file hashes; preferred for IR artefacts and chain of custody.</span>
+						</a>
+						<a class="fds-typetile" href="../malicious-hashes-md5/">
+							<span class="fds-typetile-head"><span class="fds-typebadge fds-typebadge-md5">md5</span><span class="fds-typetile-name">MD5 hashes</span></span>
+							<span class="fds-typetile-desc">Legacy 128-bit file hashes; pivot through VirusTotal or Malpedia.</span>
+						</a>
 					</div>
 				</div>
+				</div><!-- /.tf-prose -->
+				<hr class="divider">
 				<section class="faq-section">
-					<h3 class="section-heading">Frequently asked questions</h3>
+					<h2 class="section-heading">Frequently asked questions</h2>
 					<details>
 						<summary>What is an IOC feed?</summary>
 						<p>An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS. New to IOCs? Read the <a href="../threat-intelligence-guide/" class="text-decoration-none">IOC Threat Intelligence guide</a>.</p>
@@ -850,7 +928,7 @@
 					</details>
 					<details>
 						<summary>How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
-						<p>For <b>MISP</b>, under <em>Sync Actions &rarr; Feeds &rarr; Add</em>, set the feed URL to <code>https://tweetfeed.live/misp</code> &mdash; the directory, not the manifest file, because MISP appends <code>/manifest.json</code> itself. It imports one native MISP event per day (365 days) automatically, and after the first sync only the current day is re-fetched. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+						<p>For <b>MISP</b>, under <em>Sync Actions, Feeds, Add</em>, set the feed URL to <code>https://tweetfeed.live/misp</code> - the directory, not the manifest file, because MISP appends <code>/manifest.json</code> itself. It imports one native MISP event per day (365 days) automatically. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
 					</details>
 				</section>
 			</div>
@@ -957,64 +1035,56 @@
 	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
 	<script src="../js/sb-admin-2.min.js"></script>
-	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
+	<!-- DataTables (js + css) and js/demo/datatables-demo.js all removed: this page has no <table>. Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
 	<script src="../js/utils.js?v=3"></script>
 	<!-- Page level custom scripts -->
 	<script>
-	// Load precomputed counts.json for per-window totals (types, dates).
-	// Replaces 4 CSV fetches (including year.csv at ~4MB / 120k rows)
-	// that previously blocked the main thread during LCP. counts.json is
-	// typically ~500 bytes and generated by the backend pipeline.
+	// One counts.json fetch feeds both the headline figures and the four
+	// window cards. Replaces the 4 CSV fetches (year.csv is ~4MB / 120k rows)
+	// that used to block the main thread during LCP; counts.json is ~500 bytes.
+	//
+	// raw.githubusercontent.com serves counts.json as text/plain, so jQuery's
+	// content-type sniffing hands back a STRING, not an object. Without this
+	// guard `counts.windows` is undefined, the TypeError kills the whole
+	// callback, and every figure on the page stays blank. graphs/index.html
+	// has carried the same guard since it moved onto counts.json; this page
+	// never got it, so its four cards spun forever in production.
 	$(window).on('load', function() {
-		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { errorTarget: '#loadingToday, #loadingWeek, #loadingMonth, #loadingYear', success: function(counts) {
+		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { errorTarget: '#feedsCountsError', success: function(counts) {
+			if (typeof counts === 'string') counts = JSON.parse(counts);
+			const windows = (counts && counts.windows) || {};
 			const TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
+			// Date only. formatDateLong's "August 19th, 2026 00:52:38 UTC" is 36
+			// characters and a "YYYY-MM-DD HH:MM UTC" stamp is 20; both wrap
+			// inside a card that is 157px wide at 360px. The window a file
+			// covers is a date range, and the exact timestamps are in the file.
+			const stamp = function(s) { return s ? String(s).slice(0, 10) : ''; };
+
+			const HEADLINE = { today: '#feedsHlToday', month: '#feedsHlMonth', year: '#feedsHlYear' };
+			for (const key of Object.keys(HEADLINE)) {
+				const w = windows[key];
+				if (w && typeof w.total === 'number') {
+					$(HEADLINE[key]).text(TweetFeed.numberFormat(w.total));
+				}
+			}
+
 			for (const period of ['Today', 'Week', 'Month', 'Year']) {
 				const key = period.toLowerCase();
-				const w = counts.windows[key];
+				const w = windows[key];
 				if (!w) continue;
 				if (w.first_date) {
-					$(".lastDate" + period + "From").fadeOut(function() {
-						$(this).text("From: " + formatDateLong(w.first_date)).fadeIn(2000);
-					});
-					$(".lastDate" + period + "To").fadeOut(function() {
-						$(this).text("To: " + formatDateLong(w.last_date)).fadeIn(2000);
-					});
-					$("#lastDate" + period).show();
+					const from = stamp(w.first_date), to = stamp(w.last_date);
+					$('.fds-range-' + key).text(from === to ? from : from + ' to ' + to);
 				}
-				$("#loading" + period).hide();
 				for (const t of TYPES) {
-					const count = (w.types && w.types[t]) || 0;
-					$('.' + key + '-' + t).fadeOut(function() {
-						$(this).text(nFormatter(count, 0)).fadeIn(1000);
-					});
+					$('.' + key + '-' + t).text(TweetFeed.numberFormat((w.types && w.types[t]) || 0));
 				}
 			}
 		}});
 	});
-	</script>
-	<script>
-	function nFormatter(num, digits) {
-		const lookup = [
-			{ value: 1, symbol: "" },
-			{ value: 1e3, symbol: "k" },
-			{ value: 1e6, symbol: "M" },
-			{ value: 1e9, symbol: "G" },
-			{ value: 1e12, symbol: "T" },
-			{ value: 1e15, symbol: "P" },
-			{ value: 1e18, symbol: "E" }
-		];
-		const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-		var item = lookup.slice().reverse().find(function(item) {
-			return num>= item.value;
-		});
-		return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-	}
 	</script>
 	<script>
 	$(function() {
