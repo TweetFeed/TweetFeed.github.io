@@ -94,6 +94,12 @@
 }
 .chart-wrap { position: relative; }
 
+/* graphs/index.html: the 20 chart-card titles were <h6> for their default
+   1rem size, not for semantics - fixed to <h3> (C4, 2026-08-20) so the page
+   gets a real h1 > h2 > h3 outline. This rule pins the pre-existing visual
+   size so the fix is semantics-only, not a redesign. */
+.tf-graph-card-title { font-size: 1rem; }
+
 /* Tweet column wrapper (responsive 1/2/3/4 grid). 8 px padding so the
    embedded iframes don't touch each other on the dashboard. */
 .tweet-col { padding: 8px; }

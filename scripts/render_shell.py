@@ -57,15 +57,34 @@ TEMPLATE_DEPTH = {
 # --------------------------------------------------------------------------
 # Jinja environment
 # --------------------------------------------------------------------------
+def _add_svg_class(svg_html, extra_class):
+    """Merge `extra_class` into the <svg>'s class attribute, creating one if
+    absent. Only the first <svg ...> opening tag is touched (each icon SVG
+    here has exactly one), and merging (not blind replace) keeps this safe
+    even if the source SVG ever ships its own `class`."""
+    if not extra_class:
+        return svg_html
+
+    def merge(m):
+        tag = m.group(0)
+        cm = re.search(r'class="([^"]*)"', tag)
+        if cm:
+            merged = (cm.group(1) + " " + extra_class).strip()
+            return tag[: cm.start()] + f'class="{merged}"' + tag[cm.end():]
+        return re.sub(r"^<svg\b", f'<svg class="{extra_class}"', tag)
+
+    return re.sub(r"<svg\b[^>]*>", merge, svg_html, count=1)
+
+
 def _icon_html(link, extra_class=""):
     """Render a site_ia.Link's icon. Font Awesome is 5.15.4, not 6."""
     if not link or not link.icon:
         return Markup("")
     cls = (" " + extra_class).rstrip()
     if link.icon == "svg:spark":
-        return Markup(ia.SPARK_SVG)
+        return Markup(_add_svg_class(ia.SPARK_SVG, extra_class))
     if link.icon == "svg:x":
-        return Markup(ia.X_SVG)
+        return Markup(_add_svg_class(ia.X_SVG, extra_class))
     family = "fab" if link.icon in ("fa-github",) else "fas"
     return Markup(f'<i class="{family} {link.icon}{cls}" aria-hidden="true"></i>')
 
