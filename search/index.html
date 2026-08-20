@@ -742,7 +742,7 @@
 								<div class="input-group">
 									<input type="text" class="form-control" id="iocLookupInput" name="q" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Exact IOC - URL, domain, IP, MD5 or SHA256 (365-day index)">
 									<div class="input-group-append">
-										<button class="btn btn-primary btn-tf buttonHover" type="submit" aria-label="Search"><i class="fas fa-search"></i> Search</button>
+										<button class="btn btn-tf" type="submit" aria-label="Search"><i class="fas fa-search"></i> Search</button>
 									</div>
 								</div>
 								<small class="form-text text-muted tfl-hint">Exact match against the 365-day index. Defanged input (<code>hxxp</code>, <code>[.]</code>) is normalized automatically. Same dataset as the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a> - see the <a href="../api/">API docs</a>.</small>
@@ -810,8 +810,8 @@
 									</div>
 								</div>
 								<div class="tfe-actions">
-									<button class="btn btn-primary btn-tf buttonHover" type="submit" id="feLoadBtn"><i class="fas fa-search"></i> Load</button>
-									<button class="btn btn-primary btn-sm btn-tf buttonHover" type="button" id="feExportBtn"><i class="fas fa-download"></i> Export CSV</button>
+									<button class="btn btn-tf" type="submit" id="feLoadBtn"><i class="fas fa-search"></i> Load</button>
+									<button class="btn btn-tf btn-sm" type="button" id="feExportBtn"><i class="fas fa-download"></i> Export CSV</button>
 									<span class="tf-copy tfe-permalink" id="fePermalink" data-copy="" role="button" tabindex="0" aria-label="Copy permalink to these filters" title="Copy permalink"><i class="fas fa-link"></i> Copy permalink</span>
 								</div>
 								<small class="form-text text-muted tfe-hint" id="feIdleHint">Pick a window, then Load. Type, tag and user narrow the query server-side (first two apply directly; a third client-side, same priority as the MCP <code>query_iocs</code> tool: type &gt; user &gt; tag). From/To filter client-side only, after the fetch.</small>
@@ -893,11 +893,11 @@
 									<div class="col align-self-center" style="padding-right: 0;">
 										<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: flex-end;">
 											<div style="display: flex; align-items: center; gap: 0.5rem;">
-												<button class="btn btn-primary btn-sm buttonHover btn-tf" onclick="exportTableToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export table</button>
+												<button class="btn btn-tf btn-sm" onclick="exportTableToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export table</button>
 												<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 											</div>
 											<div style="display: flex; align-items: center; gap: 0.5rem;">
-												<button class="btn btn-primary btn-sm buttonHover btn-tf" onclick="exportValuesToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export values only</button>
+												<button class="btn btn-tf btn-sm" onclick="exportValuesToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export values only</button>
 												<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 											</div>
 										</div>
