@@ -157,6 +157,7 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    track('export-csv', { file: filename });
   }
 
   function exportTableToCSV(tableSelector, filename) {
@@ -296,6 +297,7 @@
         if ($target.length) text = $target.text();
       }
       copyToClipboard(text, $(this));
+      track('copy', { path: location.pathname });
     });
     // Keyboard activation (Enter/Space) for the focusable .tf-copy controls.
     $(document).off('keydown.tfcopy').on('keydown.tfcopy', '.tf-copy', function(e) {
@@ -312,6 +314,7 @@
       var pill = this;
       if (pill.dataset.pillBusy) return;
       copyToClipboard(pill.getAttribute('data-copy-pill'), null);
+      track('copy', { path: location.pathname });
       var label = pill.querySelector('[data-pill-label]');
       if (!label) return;
       var previous = label.textContent;
@@ -327,10 +330,24 @@
   }
   if (typeof $ !== 'undefined') {
     $(initCopyDelegation);
+    $(initSearchTracking);
   } else {
     // Defer until jQuery loads
     document.addEventListener('DOMContentLoaded', function() {
-      if (typeof $ !== 'undefined') initCopyDelegation();
+      if (typeof $ !== 'undefined') {
+        initCopyDelegation();
+        initSearchTracking();
+      }
+    });
+  }
+
+  // ─── Search tracking ───────────────────────────────────────────────────────
+  // Delegated so it never competes with the page's own submit handler: this
+  // listener only records, it never preventDefaults or stops propagation.
+  function initSearchTracking() {
+    if (typeof $ === 'undefined') return;
+    $(document).off('submit.tftrack').on('submit.tftrack', '#iocLookupForm, #feedExplorerForm', function() {
+      track('search', { form: this.id === 'feedExplorerForm' ? 'feed-explorer' : 'ioc-lookup' });
     });
   }
 
@@ -358,6 +375,18 @@
     obs.observe(el);
   }
 
+  // ─── Umami custom events ───────────────────────────────────────────────────
+  // The tracker loads async on every page; if it has not landed yet (or an
+  // ad-blocker dropped it) this is a no-op, never an exception inside a user
+  // action handler.
+  function track(name, data) {
+    try {
+      if (window.umami && typeof window.umami.track === 'function') {
+        window.umami.track(name, data);
+      }
+    } catch (e) { /* analytics must never break a click handler */ }
+  }
+
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
@@ -375,6 +404,7 @@
     trackInterval: trackInterval,
     clearTrackedIntervals: clearTrackedIntervals,
     lazyInViewport: lazyInViewport,
+    track: track,
   };
 
   window.TweetFeed = window.TweetFeed || {};
@@ -401,6 +431,7 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    track('export-csv', { file: filename });
   };
 
   // Legacy exportTableToCSV(filename) - scrapes the first <table> on the
