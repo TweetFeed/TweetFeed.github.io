@@ -190,6 +190,127 @@
 			animation-duration: 60s;
 		}
 	</style>
+	<style>
+		/* Type strip. Pattern copied from .tfc-headline (campaigns/index.html:161-190):
+		   grid with a black border and 1px dividers, tabular-nums figures. */
+		.tfd-types { display:grid; grid-template-columns:repeat(5,1fr); gap:0;
+			border:1px solid black; border-radius:3px; background:#fff; margin:0 0 .75rem 0; }
+		.tfd-type { appearance:none; border:0; background:#fff; padding:.7rem .4rem;
+			font-family:'Rubik',sans-serif; text-align:center; cursor:pointer;
+			border-bottom:3px solid transparent; transition:background-color .15s ease; }
+		.tfd-type + .tfd-type { border-left:1px solid black; }
+		.tfd-type:hover { background:#f8f9fa; background-image:none; }
+		.tfd-type-num { display:block; font-size:26px; font-weight:700; color:#1c1c1c;
+			font-variant-numeric:tabular-nums; line-height:1.1; }
+		.tfd-type-label { display:block; font-size:11px; font-weight:700; text-transform:uppercase;
+			letter-spacing:.06em; color:#4b5563; margin-top:2px; }
+		/* Per-type accent: same palette as .tfl-type-* in search/index.html:278-283 */
+		.tfd-type-url    { border-bottom-color:#0026E6; }
+		.tfd-type-domain { border-bottom-color:#3399FF; }
+		.tfd-type-ip     { border-bottom-color:#02bf0f; }
+		.tfd-type-sha256, .tfd-type-md5 { border-bottom-color:#FFC34D; }
+		/* Selected: filled with the type's color, same idiom as .tfc-filter-chip.active */
+		.tfd-type[aria-pressed="true"].tfd-type-url    { background:#0026E6; }
+		.tfd-type[aria-pressed="true"].tfd-type-domain { background:#3399FF; }
+		.tfd-type[aria-pressed="true"].tfd-type-ip     { background:#02bf0f; }
+		.tfd-type[aria-pressed="true"].tfd-type-sha256,
+		.tfd-type[aria-pressed="true"].tfd-type-md5    { background:#FFC34D; }
+		.tfd-type[aria-pressed="true"].tfd-type-url .tfd-type-num,
+		.tfd-type[aria-pressed="true"].tfd-type-url .tfd-type-label,
+		.tfd-type[aria-pressed="true"].tfd-type-domain .tfd-type-num,
+		.tfd-type[aria-pressed="true"].tfd-type-domain .tfd-type-label,
+		.tfd-type[aria-pressed="true"].tfd-type-ip .tfd-type-num,
+		.tfd-type[aria-pressed="true"].tfd-type-ip .tfd-type-label { color:#fff; }
+		.tfd-type[aria-pressed="true"].tfd-type-sha256 .tfd-type-num,
+		.tfd-type[aria-pressed="true"].tfd-type-sha256 .tfd-type-label,
+		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-num,
+		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-label { color:#5c3d12; }
+		.tfd-type:focus-visible { outline:2px solid #4682B4; outline-offset:-2px; }
+
+		/* Tag chips. Copy of .tfc-filter-chip (campaigns/index.html:648-688). */
+		.tfd-chips { display:flex; flex-wrap:wrap; gap:6px; }
+		/* On /campaigns/ the equivalent chips are a secondary control and there are
+		   three of them, so #9a9a9a at 85% opacity passes as decoration. Here the
+		   chips ARE the tag filter, so they carry #4b5563 at full opacity: 11px
+		   uppercase at 2.4:1 was unreadable, and the site already carries an
+		   explicit AA fix for exactly this (body{color:#6b6d7c} in tweetfeed.css). */
+		.tfd-chip { appearance:none; padding:3px 12px; border:1px solid #9a9a9a; border-radius:3px;
+			font-size:11px; font-family:'Rubik',sans-serif; font-weight:600; text-transform:uppercase;
+			letter-spacing:.03em; line-height:1.6; background:#fff; color:#4b5563; cursor:pointer;
+			transition:background-color .15s ease, border-color .15s ease; }
+		.tfd-chip:hover { border-color:#4b5563; background:#f8f9fa; background-image:none; }
+		.tfd-chip[aria-pressed="true"] { border-color:black; background:#4682B4; color:#fff; }
+		.tfd-chip[aria-pressed="true"]:hover { background:#3a6f96; }
+		.tfd-chip:focus-visible { outline:2px solid #4682B4; outline-offset:1px; }
+		.tfd-chip-count { margin-left:4px; font-weight:400; color:#737373; }
+		.tfd-chip[aria-pressed="true"] .tfd-chip-count { color:#fff; opacity:.8; }
+		/* Zero-hit tags stay legible, just clearly recessive: a lighter border and
+		   a muted label, not a global opacity that would drag the text under AA. */
+		.tfd-chip-zero { border-color:#d6d6d6; color:#737373; }
+		/* X marker on the removable filter chips inside the summary bar (not part
+		   of the spec's chip spec verbatim; minimal addition, namespaced .tfd-). */
+		.tfd-chip-x { margin-left:4px; opacity:.7; }
+
+		/* Filter panel */
+		.tfd-panel { border:1px solid black; border-radius:3px; background:#fff;
+			padding:.9rem 1rem; margin-bottom:.75rem; }
+		.tfd-panel-label { font-family:'Rubik',sans-serif; font-size:11px; font-weight:700;
+			text-transform:uppercase; letter-spacing:.06em; color:#4b5563; margin:0 0 .5rem 0; }
+		/* No-tags-in-window notice. Not in the spec's CSS listing verbatim; reuses
+		   the same microcopy typography as .tfd-summary. */
+		.tfd-no-live { font-family:'Rubik',sans-serif; font-size:12.5px; color:#737373; margin:0; }
+		/* details: same +/- marker as .faq-section (tweetfeed.css:437-527) */
+		.tfd-all { margin-top:.9rem; border-top:1px solid #e6e6e6; padding-top:.75rem; }
+		/* .faq-section pushes this marker to the far right with margin-left:auto,
+		   which works there because the question fills the line. Here the label is
+		   four words wide, so the marker has to sit next to it or it floats a full
+		   content width away from the thing it opens. */
+		.tfd-all > summary { list-style:none; cursor:pointer; display:inline-flex; align-items:center;
+			gap:.5rem; font-family:'Rubik',sans-serif; font-size:13px; color:#1c1c1c; }
+		.tfd-all > summary::-webkit-details-marker { display:none; }
+		.tfd-all > summary::after { content:'+'; width:20px; height:20px;
+			display:inline-flex; align-items:center; justify-content:center; color:#4682B4;
+			border:1px solid #4682B4; border-radius:3px; font-size:14px; line-height:1; }
+		.tfd-all[open] > summary::after { content:'\2212'; }
+		.tfd-all .tag-search-wrap { margin:.6rem 0; }
+		.tag-hidden { display:none !important; }
+
+		/* Summary bar */
+		.tfd-summary { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem;
+			font-family:'Rubik',sans-serif; font-size:12.5px; color:#737373; margin-bottom:.75rem; }
+		.tfd-summary-text { font-variant-numeric:tabular-nums; }
+		.tfd-linkbtn { appearance:none; border:0; background:none; padding:0; color:#4682B4;
+			font-family:'Rubik',sans-serif; font-size:12.5px; cursor:pointer; text-decoration:underline; }
+		.tfd-linkbtn:hover { color:#3a6f96; background-image:none; }
+
+		/* Row-count segmented control */
+		.tfd-seg { display:inline-flex; border:1px solid black; border-radius:3px; overflow:hidden; }
+		.tfd-seg button { appearance:none; border:0; background:#fff; padding:2px 10px;
+			font-family:'Rubik',sans-serif; font-size:12px; font-weight:600; color:#4b5563; cursor:pointer; }
+		.tfd-seg button + button { border-left:1px solid black; }
+		.tfd-seg button:hover { background:#f8f9fa; background-image:none; }
+		.tfd-seg button[aria-pressed="true"] { background:#4682B4; color:#fff; }
+		.tfd-seg button:focus-visible { outline:2px solid #4682B4; outline-offset:-2px; }
+
+		/* Tweet grid: N flex columns with round-robin distribution. Do NOT use
+		   column-count: X's iframes resize on load and column-count reflows the
+		   whole layout every time. With fixed columns each tweet keeps its own
+		   column and nothing jumps. */
+		.tfd-grid { display:flex; align-items:flex-start; gap:12px; }
+		.tfd-col { flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:12px; }
+		.tfd-cell > .twitter-tweet-rendered, .tfd-cell > iframe { width:100% !important; }
+
+		@media (max-width:575.98px) { .tfd-types { grid-template-columns:repeat(2,1fr); }
+			.tfd-type:nth-child(2n) { border-left:1px solid black; }
+			.tfd-type:nth-child(n+3) { border-top:1px solid black; }
+			.tfd-type:nth-child(2n+1) { border-left:0; }
+			/* Five tiles in two columns leaves MD5 alone on the last row with an
+			   empty half inside the border. Let it span instead. */
+			.tfd-type:last-child:nth-child(odd) { grid-column:1 / -1; }
+			.tfd-type-num { font-size:22px; } }
+		@media (prefers-reduced-motion: reduce) {
+			.tfd-type, .tfd-chip { transition:none; } }
+	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
@@ -315,628 +436,36 @@
 							</div>
 						</div>
 						<div class="toolbar-group">
-							<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters"><i class="fas fa-sliders-h"></i> Filters</button>
+							<div class="tfd-seg" role="group" aria-label="Number of rows to show">
+								<button type="button" class="tfd-n" data-n="10" aria-pressed="true">10</button>
+								<button type="button" class="tfd-n" data-n="50" aria-pressed="false">50</button>
+								<button type="button" class="tfd-n" data-n="100" aria-pressed="false">100</button>
+							</div>
+							<button type="button" id="filtersToggle" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters"><i class="fas fa-sliders-h" aria-hidden="true"></i> Filters</button>
 							<button onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#4682B4"><i class="fas fa-download"></i> Export CSV</button>
 							<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 						</div>
 					</div>
-					<!-- ------------------------------- -->
-					<div id="filters" class="collapse show">
-						<div class="alert alert-secondary">
-							<!-- ------------------------------- -->
-							<div>
-								<p>
-									Show last:
-									<select class="form-select" aria-label="Number of rows to show">
-										<option value="10" selected>10</option>
-										<option value="50">50</option>
-										<option value="100">100</option>
-									</select>
-									lines from TweetFeed
-								</p>
-							</div>
-							<!-- ------------------------------- -->
-							<div class="row">
-								<div class="col-12 col-md-3">
-									<div class="card shadow mb-4 h-100">
-										<div class="card-header text-center">
-											<span class="card-text cardTitle">Types</span>
-										</div>
-										<div class="card-body">
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkallTypes" name="allTypes" value="allTypes" checked>
-												<label class="form-check-label" for="checkallTypes">Select all</label>
-												<span id="check-allTypes"></span> <i class="far fa-question-circle fa-xs align-self-center" data-toggle="tooltip" data-placement="top" title="Some tweets may contain more than 1 IOC. That's why the number of tweets can be less than the number of lines selected."></i>
-											</div>
-											<br>
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkTypeurl" name="url" value="url" checked>
-												<label class="form-check-label" for="checkTypeurl"><i class="fas fa-link" style="color: #0026E6;"></i> URLs</label>
-												<span id="check-url"></span>
-											</div>
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkTypedomain" name="domain" value="domain" checked>
-												<label class="form-check-label" for="checkTypedomain"><i class="fas fa-globe" style="color: #3399FF"></i> Domains</label>
-												<span id="check-domain"></span>
-											</div>
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkTypeip" name="ip" value="ip" checked>
-												<label class="form-check-label" for="checkTypeip"><i class="fas fa-map-marker-alt" style="color: #02bf0f"></i> IPs</label>
-												<span id="check-ip"></span>
-											</div>
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkTypesha256" name="sha256" value="sha256" checked>
-												<label class="form-check-label" for="checkTypesha256"><i class="fas fa-file-alt" style="color: #FFC34D;"></i> SHA256</label>
-												<span id="check-sha256"></span>
-											</div>
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" id="checkTypemd5" name="md5" value="md5" checked>
-												<label class="form-check-label" for="checkTypemd5"><i class="fas fa-file-alt" style="color: #ffc591;"></i> MD5</label>
-												<span id="check-md5"></span>
-											</div>
-										</div>
-									</div>
+					<div id="tfdTypes" class="tfd-types"></div>
+					<div class="tfd-summary">
+						<span id="tfdSummaryText" class="tfd-summary-text">Showing all 0 IOCs in 0 tweets</span>
+						<span id="tfdActiveChips" class="tfd-chips"></span>
+						<button type="button" id="tfdClear" class="tfd-linkbtn" style="display:none;">Clear filters</button>
+						<button type="button" id="tfdCopyLink" class="tfd-linkbtn">Copy link</button>
+					</div>
+					<div id="filters" class="collapse">
+						<div class="tfd-panel">
+							<p class="tfd-panel-label">Tags in this window</p>
+							<div id="tfdLiveTags" class="tfd-chips"></div>
+							<p id="tfdNoLiveTags" class="tfd-no-live" style="display:none;">No tags on the IOCs in this window.</p>
+							<details class="tfd-all">
+								<summary>Show all 93 tracked tags</summary>
+								<div class="tag-search-wrap">
+									<i class="fas fa-search tag-search-icon" aria-hidden="true"></i>
+									<input type="text" class="tag-search" placeholder="Filter tags by name…" aria-label="Filter tags by name">
 								</div>
-								<div class="col-12 col-md-9">
-									<div class="card shadow mb-4 h-100">
-										<div class="card-header text-center">
-											<span class="card-text cardTitle">Tags</span>
-										</div>
-										<div class="card-body text-left">
-											<div class="tag-search-wrap">
-												<i class="fas fa-search tag-search-icon" aria-hidden="true"></i>
-												<input type="text" class="tag-search" placeholder="Filter tags by name…" aria-label="Filter tags by name">
-											</div>
-											<div class="row">
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkallTags" name="allTags" value="allTags" checked>
-														<label class="form-check-label" for="checkallTags">Select all</label>
-														<!-- <span id="check-allTags"></span> -->
-													</div>
-												</div> <!-- col --->
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagnotag" name="notag" value="notag" checked>
-														<label class="form-check-label" for="checkTagnotag">With no tags</label>
-														<span id="checkTag-notag"></span>
-													</div>
-												</div> <!-- col --->
-											</div>
-											<br>
-											<div class="row">
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagphishing" name="phishing" value="phishing" checked>
-														<label class="form-check-label" for="checkTagphishing"> #phishing</label>
-														<span id="checkTag-phishing"></span>
-													</div>
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagscam" name="scam" value="scam" checked>
-														<label class="form-check-label" for="checkTagscam">#scam</label>
-														<span id="checkTag-scam"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagopendir" name="opendir" value="opendir" checked>
-														<label class="form-check-label" for="checkTagopendir">#opendir</label>
-														<span id="checkTag-opendir"></span>
-													</div>
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagmalware" name="malware" value="malware" checked>
-														<label class="form-check-label" for="checkTagmalware">#malware</label>
-														<span id="checkTag-malware"></span>
-													</div>
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagransomware" name="ransomware" value="ransomware" checked>
-														<label class="form-check-label" for="checkTagransomware">#ransomware</label>
-														<span id="checkTag-ransomware"></span>
-													</div>
-													<div class="form-check">
-														<input type="checkbox" class="form-check-input" id="checkTagAgentTesla" name="AgentTesla" value="AgentTesla" checked>
-														<label class="form-check-label" for="checkTagAgentTesla">#AgentTesla</label>
-														<span id="checkTag-AgentTesla"></span>
-													</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagCobaltStrike" name="CobaltStrike" value="CobaltStrike" checked>
-														<label class="form-check-label" for="checkTagCobaltStrike">#CobaltStrike <span id="checkTag-CobaltStrike"></span></label>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagDcrat" name="Dcrat" value="Dcrat" checked>
-														<label class="form-check-label" for="checkTagDcrat">#Dcrat <span id="checkTag-Dcrat"></span></label>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagFormbook" name="Formbook" value="Formbook" checked>
-														<label class="form-check-label" for="checkTagFormbook">#Formbook</label>
-														<span id="checkTag-Formbook"></span>
-													</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagGuLoader" name="GuLoader" value="GuLoader" checked>
-														<label class="form-check-label" for="checkTagGuLoader">#GuLoader</label>
-														<span id="checkTag-GuLoader"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagLazarus" name="Lazarus" value="Lazarus" checked>
-														<label class="form-check-label" for="checkTagLazarus">#Lazarus</label>
-														<span id="checkTag-Lazarus"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagLokibot" name="Lokibot" value="Lokibot" checked>
-														<label class="form-check-label" for="checkTagLokibot">#Lokibot</label>
-														<span id="checkTag-Lokibot"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTaglog4j" name="log4j" value="log4j" checked>
-														<label class="form-check-label" for="checkTaglog4j">#log4j</label>
-														<span id="checkTag-log4j"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagLog4shell" name="Log4shell" value="Log4shell" checked>
-														<label class="form-check-label" for="checkTagLog4shell">#Log4shell</label>
-														<span id="checkTag-Log4shell"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagNjrat" name="Njrat" value="Njrat" checked>
-														<label class="form-check-label" for="checkTagNjrat">#njRAT</label>
-														<span id="checkTag-Njrat"></span>
-													</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagQakbot" name="Qakbot" value="Qakbot" checked>
-														<label class="form-check-label" for="checkTagQakbot">#Qakbot</label>
-														<span id="checkTag-Qakbot"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagRaccoon" name="Raccoon" value="Raccoon" checked>
-														<label class="form-check-label" for="checkTagRaccoon">#Raccoon</label>
-														<span id="checkTag-Raccoon"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagRedLine" name="RedLine" value="RedLine" checked>
-														<label class="form-check-label" for="checkTagRedLine">#RedLine</label>
-														<span id="checkTag-RedLine"></span>
-													</div>
-													<div class="form-check">
-														<input  type="checkbox" class="form-check-input" id="checkTagRemcos" name="Remcos" value="Remcos" checked>
-														<label class="form-check-label" for="checkTagRemcos">#Remcos</label>
-														<span id="checkTag-Remcos"></span>
-													</div>
-												</div> <!-- col -->
-											</div> <!-- row -->
-											<br>
-											<div class="row">
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">Ransomware (2024-25)</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagINCRansom" name="INCRansom" value="INCRansom" checked>
-													<label class="form-check-label" for="checkTagINCRansom">#INCRansom</label>
-													<span id="checkTag-INCRansom"></span>
-												</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">Stealers + Loaders</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagVidar" name="Vidar" value="Vidar" checked>
-													<label class="form-check-label" for="checkTagVidar">#Vidar</label>
-													<span id="checkTag-Vidar"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagStealC" name="StealC" value="StealC" checked>
-													<label class="form-check-label" for="checkTagStealC">#StealC</label>
-													<span id="checkTag-StealC"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagLatrodectus" name="Latrodectus" value="Latrodectus" checked>
-													<label class="form-check-label" for="checkTagLatrodectus">#Latrodectus</label>
-													<span id="checkTag-Latrodectus"></span>
-												</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">APT groups</small>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">Techniques + Mobile</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagClickFix" name="ClickFix" value="ClickFix" checked>
-													<label class="form-check-label" for="checkTagClickFix">#ClickFix</label>
-													<span id="checkTag-ClickFix"></span>
-												</div>
-												</div> <!-- col -->
-											</div> <!-- row -->
-											<!-- tag-section-2026-04-12-start -->
-											<br>
-											<div class="row">
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">Generic</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagC2" name="C2" value="C2" checked>
-													<label class="form-check-label" for="checkTagC2">#C2</label>
-													<span id="checkTag-C2"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagstealer" name="stealer" value="stealer" checked>
-													<label class="form-check-label" for="checkTagstealer">#stealer</label>
-													<span id="checkTag-stealer"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagAiTM" name="AiTM" value="AiTM" checked>
-													<label class="form-check-label" for="checkTagAiTM">#AiTM</label>
-													<span id="checkTag-AiTM"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagAPT" name="APT" value="APT" checked>
-													<label class="form-check-label" for="checkTagAPT">#APT</label>
-													<span id="checkTag-APT"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagRAT" name="RAT" value="RAT" checked>
-													<label class="form-check-label" for="checkTagRAT">#RAT</label>
-													<span id="checkTag-RAT"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagAndroid" name="Android" value="Android" checked>
-													<label class="form-check-label" for="checkTagAndroid">#Android</label>
-													<span id="checkTag-Android"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagTrojan" name="Trojan" value="Trojan" checked>
-													<label class="form-check-label" for="checkTagTrojan">#Trojan</label>
-													<span id="checkTag-Trojan"></span>
-												</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">RATs + loaders</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagAsyncRAT" name="AsyncRAT" value="AsyncRAT" checked>
-													<label class="form-check-label" for="checkTagAsyncRAT">#AsyncRAT</label>
-													<span id="checkTag-AsyncRAT"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagAmosStealer" name="AmosStealer" value="AmosStealer" checked>
-													<label class="form-check-label" for="checkTagAmosStealer">#AmosStealer</label>
-													<span id="checkTag-AmosStealer"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagDeimos" name="Deimos" value="Deimos" checked>
-													<label class="form-check-label" for="checkTagDeimos">#Deimos</label>
-													<span id="checkTag-Deimos"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagBianlian" name="Bianlian" value="Bianlian" checked>
-													<label class="form-check-label" for="checkTagBianlian">#Bianlian</label>
-													<span id="checkTag-Bianlian"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagHookbot" name="Hookbot" value="Hookbot" checked>
-													<label class="form-check-label" for="checkTagHookbot">#Hookbot</label>
-													<span id="checkTag-Hookbot"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagMagecart" name="Magecart" value="Magecart" checked>
-													<label class="form-check-label" for="checkTagMagecart">#Magecart</label>
-													<span id="checkTag-Magecart"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagNanoCore" name="NanoCore" value="NanoCore" checked>
-													<label class="form-check-label" for="checkTagNanoCore">#NanoCore</label>
-													<span id="checkTag-NanoCore"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagXworm" name="Xworm" value="Xworm" checked>
-													<label class="form-check-label" for="checkTagXworm">#Xworm</label>
-													<span id="checkTag-Xworm"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagLumma" name="Lumma" value="Lumma" checked>
-													<label class="form-check-label" for="checkTagLumma">#Lumma</label>
-													<span id="checkTag-Lumma"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagLummaStealer" name="LummaStealer" value="LummaStealer" checked>
-													<label class="form-check-label" for="checkTagLummaStealer">#LummaStealer</label>
-													<span id="checkTag-LummaStealer"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagRhadamanthys" name="Rhadamanthys" value="Rhadamanthys" checked>
-													<label class="form-check-label" for="checkTagRhadamanthys">#Rhadamanthys</label>
-													<span id="checkTag-Rhadamanthys"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagNetSupport" name="NetSupport" value="NetSupport" checked>
-													<label class="form-check-label" for="checkTagNetSupport">#NetSupport</label>
-													<span id="checkTag-NetSupport"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagNetSupportRAT" name="NetSupportRAT" value="NetSupportRAT" checked>
-													<label class="form-check-label" for="checkTagNetSupportRAT">#NetSupportRAT</label>
-													<span id="checkTag-NetSupportRAT"></span>
-												</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">C2 + APT + tools</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagBlueNoroff" name="BlueNoroff" value="BlueNoroff" checked>
-													<label class="form-check-label" for="checkTagBlueNoroff">#BlueNoroff</label>
-													<span id="checkTag-BlueNoroff"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagKimsuky" name="Kimsuky" value="Kimsuky" checked>
-													<label class="form-check-label" for="checkTagKimsuky">#Kimsuky</label>
-													<span id="checkTag-Kimsuky"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagBrute_Ratel_C4" name="Brute_Ratel_C4" value="Brute_Ratel_C4" checked>
-													<label class="form-check-label" for="checkTagBrute_Ratel_C4">#Brute_Ratel_C4</label>
-													<span id="checkTag-Brute_Ratel_C4"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagCovenant" name="Covenant" value="Covenant" checked>
-													<label class="form-check-label" for="checkTagCovenant">#Covenant</label>
-													<span id="checkTag-Covenant"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagEvilGoPhish" name="EvilGoPhish" value="EvilGoPhish" checked>
-													<label class="form-check-label" for="checkTagEvilGoPhish">#EvilGoPhish</label>
-													<span id="checkTag-EvilGoPhish"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagEvilginx" name="Evilginx" value="Evilginx" checked>
-													<label class="form-check-label" for="checkTagEvilginx">#Evilginx</label>
-													<span id="checkTag-Evilginx"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagHak5_Cloud_C2" name="Hak5_Cloud_C2" value="Hak5_Cloud_C2" checked>
-													<label class="form-check-label" for="checkTagHak5_Cloud_C2">#Hak5_Cloud_C2</label>
-													<span id="checkTag-Hak5_Cloud_C2"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagHavoc" name="Havoc" value="Havoc" checked>
-													<label class="form-check-label" for="checkTagHavoc">#Havoc</label>
-													<span id="checkTag-Havoc"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagInteractsh" name="Interactsh" value="Interactsh" checked>
-													<label class="form-check-label" for="checkTagInteractsh">#Interactsh</label>
-													<span id="checkTag-Interactsh"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagMythic" name="Mythic" value="Mythic" checked>
-													<label class="form-check-label" for="checkTagMythic">#Mythic</label>
-													<span id="checkTag-Mythic"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagPegasus" name="Pegasus" value="Pegasus" checked>
-													<label class="form-check-label" for="checkTagPegasus">#Pegasus</label>
-													<span id="checkTag-Pegasus"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagReverse_SSH" name="Reverse_SSH" value="Reverse_SSH" checked>
-													<label class="form-check-label" for="checkTagReverse_SSH">#Reverse_SSH</label>
-													<span id="checkTag-Reverse_SSH"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagSliver" name="Sliver" value="Sliver" checked>
-													<label class="form-check-label" for="checkTagSliver">#Sliver</label>
-													<span id="checkTag-Sliver"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagSupershell" name="Supershell" value="Supershell" checked>
-													<label class="form-check-label" for="checkTagSupershell">#Supershell</label>
-													<span id="checkTag-Supershell"></span>
-												</div>
-												</div> <!-- col -->
-												<div class="col-6 col-md-3">
-													<small class="text-muted" style="font-weight:bold;">2026-04-12 gap fill</small>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagHijackLoader" name="HijackLoader" value="HijackLoader" checked>
-													<label class="form-check-label" for="checkTagHijackLoader">#HijackLoader</label>
-													<span id="checkTag-HijackLoader"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagMustangPanda" name="MustangPanda" value="MustangPanda" checked>
-													<label class="form-check-label" for="checkTagMustangPanda">#MustangPanda</label>
-													<span id="checkTag-MustangPanda"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagGamaredon" name="Gamaredon" value="Gamaredon" checked>
-													<label class="form-check-label" for="checkTagGamaredon">#Gamaredon</label>
-													<span id="checkTag-Gamaredon"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagFakeCaptcha" name="FakeCaptcha" value="FakeCaptcha" checked>
-													<label class="form-check-label" for="checkTagFakeCaptcha">#FakeCaptcha</label>
-													<span id="checkTag-FakeCaptcha"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTaginfostealer" name="infostealer" value="infostealer" checked>
-													<label class="form-check-label" for="checkTaginfostealer">#infostealer</label>
-													<span id="checkTag-infostealer"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagDPRK" name="DPRK" value="DPRK" checked>
-													<label class="form-check-label" for="checkTagDPRK">#DPRK</label>
-													<span id="checkTag-DPRK"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagSalatStealer" name="SalatStealer" value="SalatStealer" checked>
-													<label class="form-check-label" for="checkTagSalatStealer">#SalatStealer</label>
-													<span id="checkTag-SalatStealer"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagNetXLoader" name="NetXLoader" value="NetXLoader" checked>
-													<label class="form-check-label" for="checkTagNetXLoader">#NetXLoader</label>
-													<span id="checkTag-NetXLoader"></span>
-												</div>
-												<div class="form-check">
-													<input type="checkbox" class="form-check-input" id="checkTagbooking" name="booking" value="booking" checked>
-													<label class="form-check-label" for="checkTagbooking">#booking</label>
-													<span id="checkTag-booking"></span>
-												</div>
-												</div> <!-- col -->
-											</div> <!-- row -->
-											<!-- tag-section-2026-04-12-end -->
-							<div class="row"> <!-- 2026-06-29 gap fill -->
-								<div class="col-6 col-md-3">
-									<small class="text-muted" style="font-weight:bold;">2026-06-29 gap fill</small>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagStrelaStealer" name="StrelaStealer" value="StrelaStealer" checked>
-										<label class="form-check-label" for="checkTagStrelaStealer">#StrelaStealer</label>
-										<span id="checkTag-StrelaStealer"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagGrandoreiro" name="Grandoreiro" value="Grandoreiro" checked>
-										<label class="form-check-label" for="checkTagGrandoreiro">#Grandoreiro</label>
-										<span id="checkTag-Grandoreiro"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagSpyNote" name="SpyNote" value="SpyNote" checked>
-										<label class="form-check-label" for="checkTagSpyNote">#SpyNote</label>
-										<span id="checkTag-SpyNote"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagDeerStealer" name="DeerStealer" value="DeerStealer" checked>
-										<label class="form-check-label" for="checkTagDeerStealer">#DeerStealer</label>
-										<span id="checkTag-DeerStealer"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagVenomRAT" name="VenomRAT" value="VenomRAT" checked>
-										<label class="form-check-label" for="checkTagVenomRAT">#VenomRAT</label>
-										<span id="checkTag-VenomRAT"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagFakeBat" name="FakeBat" value="FakeBat" checked>
-										<label class="form-check-label" for="checkTagFakeBat">#FakeBat</label>
-										<span id="checkTag-FakeBat"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagPhemedrone" name="Phemedrone" value="Phemedrone" checked>
-										<label class="form-check-label" for="checkTagPhemedrone">#Phemedrone</label>
-										<span id="checkTag-Phemedrone"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagMispadu" name="Mispadu" value="Mispadu" checked>
-										<label class="form-check-label" for="checkTagMispadu">#Mispadu</label>
-										<span id="checkTag-Mispadu"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagAdaptixC2" name="AdaptixC2" value="AdaptixC2" checked>
-										<label class="form-check-label" for="checkTagAdaptixC2">#AdaptixC2</label>
-										<span id="checkTag-AdaptixC2"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagFunkSec" name="FunkSec" value="FunkSec" checked>
-										<label class="form-check-label" for="checkTagFunkSec">#FunkSec</label>
-										<span id="checkTag-FunkSec"></span>
-									</div>
-								</div> <!-- col -->
-							</div> <!-- row 2026-06-29 -->
-							<!-- tag-section-2026-06-29-end -->
-							<div class="row"> <!-- 2026-07-17 histogram review -->
-								<div class="col-6 col-md-3">
-									<small class="text-muted" style="font-weight:bold;">2026-07-17 histogram review</small>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagWsgiDAV" name="WsgiDAV" value="WsgiDAV" checked>
-										<label class="form-check-label" for="checkTagWsgiDAV">#WsgiDAV</label>
-										<span id="checkTag-WsgiDAV"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagcryptoscam" name="cryptoscam" value="cryptoscam" checked>
-										<label class="form-check-label" for="checkTagcryptoscam">#cryptoscam</label>
-										<span id="checkTag-cryptoscam"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagPlugX" name="PlugX" value="PlugX" checked>
-										<label class="form-check-label" for="checkTagPlugX">#PlugX</label>
-										<span id="checkTag-PlugX"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagGh0st" name="Gh0st" value="Gh0st" checked>
-										<label class="form-check-label" for="checkTagGh0st">#Gh0st</label>
-										<span id="checkTag-Gh0st"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagmalvertising" name="malvertising" value="malvertising" checked>
-										<label class="form-check-label" for="checkTagmalvertising">#malvertising</label>
-										<span id="checkTag-malvertising"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagAkira" name="Akira" value="Akira" checked>
-										<label class="form-check-label" for="checkTagAkira">#Akira</label>
-										<span id="checkTag-Akira"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagFakeUpdates" name="FakeUpdates" value="FakeUpdates" checked>
-										<label class="form-check-label" for="checkTagFakeUpdates">#FakeUpdates</label>
-										<span id="checkTag-FakeUpdates"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagFunkLocker" name="FunkLocker" value="FunkLocker" checked>
-										<label class="form-check-label" for="checkTagFunkLocker">#FunkLocker</label>
-										<span id="checkTag-FunkLocker"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagCastleLoader" name="CastleLoader" value="CastleLoader" checked>
-										<label class="form-check-label" for="checkTagCastleLoader">#CastleLoader</label>
-										<span id="checkTag-CastleLoader"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagMekotio" name="Mekotio" value="Mekotio" checked>
-										<label class="form-check-label" for="checkTagMekotio">#Mekotio</label>
-										<span id="checkTag-Mekotio"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagRemcosRAT" name="RemcosRAT" value="RemcosRAT" checked>
-										<label class="form-check-label" for="checkTagRemcosRAT">#RemcosRAT</label>
-										<span id="checkTag-RemcosRAT"></span>
-									</div>
-									<div class="form-check">
-										<input type="checkbox" class="form-check-input" id="checkTagAgendaRansomware" name="AgendaRansomware" value="AgendaRansomware" checked>
-										<label class="form-check-label" for="checkTagAgendaRansomware">#AgendaRansomware</label>
-										<span id="checkTag-AgendaRansomware"></span>
-									</div>
-								</div> <!-- col -->
-							</div> <!-- row 2026-07-17 -->
-							<!-- tag-section-2026-07-17-end -->
-								<div class="row"> <!-- 2026-07-22 gap fill -->
-									<div class="col-6 col-md-3">
-										<small class="text-muted" style="font-weight:bold;">2026-07-22 gap fill</small>
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" id="checkTagTycoon2FA" name="Tycoon2FA" value="Tycoon2FA" checked>
-											<label class="form-check-label" for="checkTagTycoon2FA">#Tycoon2FA</label>
-											<span id="checkTag-Tycoon2FA"></span>
-										</div>
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" id="checkTagDarkGate" name="DarkGate" value="DarkGate" checked>
-											<label class="form-check-label" for="checkTagDarkGate">#DarkGate</label>
-											<span id="checkTag-DarkGate"></span>
-										</div>
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" id="checkTagKongTuke" name="KongTuke" value="KongTuke" checked>
-											<label class="form-check-label" for="checkTagKongTuke">#KongTuke</label>
-											<span id="checkTag-KongTuke"></span>
-										</div>
-									</div> <!-- col -->
-								</div> <!-- row 2026-07-22 -->
-								<!-- tag-section-2026-07-22-end -->
-								<div class="row"> <!-- 2026-07-26 gap fill -->
-									<div class="col-6 col-md-3">
-										<small class="text-muted" style="font-weight:bold;">2026-07-26 gap fill</small>
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input" id="checkTagClearFake" name="ClearFake" value="ClearFake" checked>
-											<label class="form-check-label" for="checkTagClearFake">#ClearFake</label>
-											<span id="checkTag-ClearFake"></span>
-										</div>
-									</div> <!-- col -->
-								</div> <!-- row 2026-07-26 -->
-								<!-- tag-section-2026-07-26-end -->
-										</div>
-									</div>
-								</div>
-							</div>
+								<div id="tfdAllTags" class="tfd-chips"></div>
+							</details>
 						</div>
 					</div>
 					<hr class="divider"> <!-- DIVIDER -->
@@ -946,11 +475,10 @@
 					<div id="emptyState" style="display:none;">
 						<div class="empty-icon"><i class="far fa-folder-open"></i></div>
 						<div class="empty-message">No tweets match your filters</div>
-						<div class="empty-hint">Try selecting more types or tags above, or expand the time window.</div>
+						<div class="empty-hint">Clear a filter, or show more rows.</div>
 						<button id="resetFilters" type="button" class="btn btn-outline-secondary btn-sm"><i class="fas fa-undo"></i> Reset filters</button>
 					</div>
-					<div class="tweetsclass alert alert-secondary shadow">
-					</div>
+					<div id="tfdGrid" class="tfd-grid"></div>
 					<!-- <hr class="divider">  DIVIDER -->
 			</div>
 			<!-- End of Main Content -->
@@ -1153,353 +681,600 @@
 	</script>
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
-	// The filter panel carries the whole tag taxonomy. On a phone that buries
-	// the results under a screenful of checkboxes, so it starts collapsed
-	// there and expanded from md up, where it fits beside them.
-	if (window.matchMedia('(max-width: 767.98px)').matches) {
-		var filtersEl = document.getElementById('filters');
-		if (filtersEl) { filtersEl.classList.remove('show'); }
-	}
-	$(function() {
-		let autorefresh = 1;
-		let init = 1;
-		checkedItems();
-		loadData();
-		progressBar();
-		var timerAux = setInterval(timerCycle, 60000);
-		TweetFeed.trackInterval(timerAux);
-		let p_lines = new Array();
+		$(function() {
 
-		$('#liveToggle').click(function() {
-			var btn = this;
-			var label = btn.querySelector('.tf-live-label');
-			if (autorefresh) {
-				// Disabled
-				autorefresh = 0;
-				btn.setAttribute('aria-pressed', 'false');
-				if (label) label.textContent = 'Paused';
-				clearInterval(timerAux);
-			} else {
-				// Enabled
-				autorefresh = 1;
-				btn.setAttribute('aria-pressed', 'true');
-				if (label) label.textContent = 'Live';
-				init = 1;
-				progressBar();
-				loadData();
-				timerAux = setInterval(timerCycle, 60000);
-				TweetFeed.trackInterval(timerAux);
+			// Roster of tracked tags. Must match tweetfeed/resources/tags.yaml in the
+			// backend exactly (case-sensitive), or IOCs carrying only a tag missing
+			// here can't be filtered. Verified identical 2026-08-20.
+			var TFD_TAGS = [
+				'AdaptixC2', 'AgendaRansomware', 'AgentTesla', 'AiTM', 'Akira', 'AmosStealer',
+				'Android', 'APT', 'AsyncRAT', 'Bianlian', 'BlueNoroff', 'booking',
+				'Brute_Ratel_C4', 'C2', 'CastleLoader', 'ClearFake', 'ClickFix', 'CobaltStrike',
+				'Covenant', 'cryptoscam', 'DarkGate', 'Dcrat', 'DeerStealer', 'Deimos',
+				'DPRK', 'Evilginx', 'EvilGoPhish', 'FakeBat', 'FakeCaptcha', 'FakeUpdates',
+				'Formbook', 'FunkLocker', 'FunkSec', 'Gamaredon', 'Gh0st', 'Grandoreiro',
+				'GuLoader', 'Hak5_Cloud_C2', 'Havoc', 'HijackLoader', 'Hookbot', 'INCRansom',
+				'infostealer', 'Interactsh', 'Kimsuky', 'KongTuke', 'Latrodectus', 'Lazarus',
+				'log4j', 'Log4shell', 'Lokibot', 'Lumma', 'LummaStealer', 'Magecart',
+				'malvertising', 'malware', 'Mekotio', 'Mispadu', 'MustangPanda', 'Mythic',
+				'NanoCore', 'NetSupport', 'NetSupportRAT', 'NetXLoader', 'Njrat', 'opendir',
+				'Pegasus', 'Phemedrone', 'phishing', 'PlugX', 'Qakbot', 'Raccoon',
+				'ransomware', 'RAT', 'RedLine', 'Remcos', 'RemcosRAT', 'Reverse_SSH',
+				'Rhadamanthys', 'SalatStealer', 'scam', 'Sliver', 'SpyNote', 'StealC',
+				'stealer', 'StrelaStealer', 'Supershell', 'Trojan', 'Tycoon2FA', 'VenomRAT',
+				'Vidar', 'WsgiDAV', 'Xworm'
+			];
+			// The value is what filters (matches tags.yaml); the label is what's shown.
+			// They only differ in these two cases.
+			var TFD_TAG_LABELS = { 'Njrat': 'njRAT', 'notag': 'With no tags' };
+
+			var TFD_TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
+			var TFD_TYPE_LABELS = { url: 'URLS', domain: 'DOMAINS', ip: 'IPS', sha256: 'SHA256', md5: 'MD5' };
+			var TFD_N_OPTIONS = [10, 50, 100];
+			var TFD_STORAGE_KEY = 'tfd:filters';
+
+			document.querySelector('#filters .tfd-all > summary').textContent = 'Show all ' + TFD_TAGS.length + ' tracked tags';
+
+			function tfdValidateTypes(arr) {
+				return (arr || []).filter(function(v) { return TFD_TYPES.indexOf(v) !== -1; });
 			}
-		})
-
-		$('[id^=checkType],[id^=checkTag],.form-select').change(function() {
-			checkedItems();
-			loadData();
-		});
-
-		$('#checkallTypes').change(function() {
-			$("input[type=checkbox][id^=checkType]").prop('checked', $(this).prop('checked'));
-			checkedItems();
-			loadData();
-		});
-		$('#checkallTags').change(function() {
-			$("input[type=checkbox][id^=checkTag]").prop('checked', $(this).prop('checked'));
-			checkedItems();
-			loadData();
-		});
-
-		// Reset filters from the empty-state notice: re-check every type
-		// and tag, then refire loadData so tweets reappear immediately.
-		$('#resetFilters').click(function() {
-			$('#checkallTypes, #checkallTags').prop('checked', true);
-			$("input[type=checkbox][id^=checkType], input[type=checkbox][id^=checkTag]").prop('checked', true);
-			checkedItems();
-			loadData();
-		});
-
-		// Tag filter search: hide checkboxes whose label text doesn't match
-		// the query. Empty input restores all. Case-insensitive.
-		$(document).on('input', '.tag-search', function() {
-			var q = $(this).val().trim().toLowerCase();
-			$('input[id^="checkTag"]').each(function() {
-				var $cb = $(this);
-				var $wrap = $cb.closest('.form-check');
-				if ($cb.attr('id') === 'checkTagnotag') return; // always show
-				var label = ($wrap.find('label').text() || '').toLowerCase();
-				$wrap.toggleClass('tag-hidden', q !== '' && label.indexOf(q) === -1);
-			});
-		});
-
-		function timerCycle() {
-			if (autorefresh) {
-				loadData();
-				progressBar();
+			function tfdValidateTags(arr) {
+				return (arr || []).filter(function(v) { return v === 'notag' || TFD_TAGS.indexOf(v) !== -1; });
 			}
-		}
+			function tfdValidateN(v) {
+				var n = parseInt(v, 10);
+				return TFD_N_OPTIONS.indexOf(n) !== -1 ? n : 10;
+			}
 
-		function checkedItems() {
-
-			checkedTypes = $('input[id^="checkType"]:checked').map(function() {
-				return $(this).val();
-			}).get(); // <----
-
-			checkedTags = $('input[id^="checkTag"]:checked').map(function() {
-				return $(this).val();
-			}).get(); // <----
-		}
-
-		function progressBar() {
-			var i = 0;
-			// Autorefresh interval is 60 s (was 6 s; the 6 s setting raced
-			// Twitter widgets render and wiped tweets mid-conversion). The
-			// progress bar fills evenly across the 60 s window: 100 / 60 ≈
-			// 1.67 % per second.
-			var downloadTimer = setInterval(function() {
-				if (i>= 100) {
-					clearInterval(downloadTimer);
-				}
-				if (autorefresh == 0) {
-					i = 0;
-					clearInterval(downloadTimer);
-					$('.progress-bar').css('width', i + '%');
+			// Restore filters from the URL first (?type=,?tag=,?n=, comma-separated
+			// lists), falling back to the last saved state in localStorage, falling
+			// back to "all" (both Sets empty = no filter) plus n=10. Anything that
+			// doesn't validate against the known types/tags/n options is dropped
+			// silently rather than trusted.
+			function tfdLoadState() {
+				var params = new URLSearchParams(location.search);
+				var hasParams = params.has('type') || params.has('tag') || params.has('n');
+				var types, tags, n;
+				if (hasParams) {
+					types = tfdValidateTypes((params.get('type') || '').split(',').filter(Boolean));
+					tags = tfdValidateTags((params.get('tag') || '').split(',').filter(Boolean));
+					n = tfdValidateN(params.get('n'));
 				} else {
-					$('.progress-bar').css('width', i + '%');
-				}
-				i = i + (100 / 60);
-			}, 1000);
-		}
-
-		function animation() {
-			$('.tweetsclass').hide();
-			$('.tweetsclass').fadeIn(1000, "linear");
-		}
-
-		function loadData() {
-
-			TweetFeed.safeGet(TweetFeed.dataUrl('today.csv'), { errorTarget: '#loadingTweets', success: function(response) {
-
-				var data = csvJSON(response);
-				var data_filtered = [];
-				var last_date = data[data.length - 1][0];
-				var first_date = data[0][0];
-				var date1 = formatDateLong(last_date);
-				var date2 = formatDateLong(first_date);
-
-				var seen_tweets = []; // seen tweet_urls
-				seen_values = []; // seen values
-
-				let lines = [];
-
-				var n_rows = $(".form-select option:selected").val();
-
-				if (data.length> n_rows) {
-					var auxFor = data.length - n_rows
-				} else {
-					var auxFor = 0
-				}
-
-				//for (var i = data.length - 40; i < data.length; i++) {
-				for (var i = auxFor; i < data.length; i++) {
-
-					var type = data[i][2];
-					var tags = []
-					var tweet_url = data[i][5];
-					var value = data[i][3];
-
-					if (data[i][4].trim() != "") {
-						let newArr = data[i][4].split(" ");
-						for (var j = 0; j < newArr.length; j++) {
-							tags.push(newArr[j]);
-						}
-					}
-
-					let isCheckedType = $('#checkType' + type)[0].checked
-					let isCheckedTag = false;
-
-					// Example:
-					// tags: ["phishing","scam"]
-
-					if (tags.length === 0) {
-
-						if (checkedTags.includes("notag")) {
-							isCheckedTag = true;
-						}
-
-					} else if (tags.length === 1) {
-
-						tag = tags[0].replace('#', '');
-
-						//isCheckedTag = $('#checkTag' + tag)[0].checked
-
-						if (checkedTags.includes(tag)) {
-							isCheckedTag = true;
-						}
-
+					var stored = null;
+					try { stored = JSON.parse(localStorage.getItem(TFD_STORAGE_KEY)); } catch (e) { stored = null; }
+					if (stored) {
+						types = tfdValidateTypes(stored.types);
+						tags = tfdValidateTags(stored.tags);
+						n = tfdValidateN(stored.n);
 					} else {
+						types = [];
+						tags = [];
+						n = 10;
+					}
+				}
+				return { types: new Set(types), tags: new Set(tags), n: n };
+			}
 
-						// 2+ tags: match if ANY of the IOC's tags is a checked filter
-						for (var ti = 0; ti < tags.length; ti++) {
-							if (checkedTags.includes(tags[ti].replace('#', ''))) {
-								isCheckedTag = true;
-								break;
+			// Persists the current filters both ways: into the URL (replaceState,
+			// never pushState - this must not grow the history stack) and into
+			// localStorage, so a visit with no query string still resumes the last
+			// filters used.
+			function tfdSyncLocation() {
+				var params = new URLSearchParams();
+				if (state.types.size) params.set('type', Array.from(state.types).join(','));
+				if (state.tags.size) params.set('tag', Array.from(state.tags).join(','));
+				params.set('n', String(state.n));
+				var qs = params.toString();
+				history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+				try {
+					localStorage.setItem(TFD_STORAGE_KEY, JSON.stringify({
+						types: Array.from(state.types),
+						tags: Array.from(state.tags),
+						n: state.n
+					}));
+				} catch (e) { /* localStorage unavailable (private mode quota, etc.) */ }
+			}
+
+			var state = tfdLoadState();
+
+			function colCount() {
+				var w = window.innerWidth;
+				if (w >= 1200) return 4;
+				if (w >= 992) return 3;
+				if (w >= 768) return 2;
+				return 1;
+			}
+
+			function tfdDebounce(fn, wait) {
+				var t;
+				return function() {
+					var args = arguments, ctx = this;
+					clearTimeout(t);
+					t = setTimeout(function() { fn.apply(ctx, args); }, wait);
+				};
+			}
+
+			// Builds one filter/type chip via DOM APIs (never innerHTML: tag names
+			// come straight from the CSV).
+			function tfdMakeChip(kind, value, label, count, opts) {
+				opts = opts || {};
+				var chip = document.createElement('button');
+				chip.type = 'button';
+				chip.className = 'tfd-chip' + (opts.zero ? ' tfd-chip-zero' : '');
+				chip.setAttribute('data-kind', kind);
+				chip.setAttribute('data-value', value);
+				chip.setAttribute('aria-pressed', opts.pressed ? 'true' : 'false');
+				chip.appendChild(document.createTextNode(label));
+				if (typeof count === 'number') {
+					var c = document.createElement('span');
+					c.className = 'tfd-chip-count';
+					c.textContent = count;
+					chip.appendChild(c);
+				}
+				if (opts.removable) {
+					var x = document.createElement('span');
+					x.className = 'tfd-chip-x';
+					x.textContent = ' \u2715';
+					chip.appendChild(x);
+				}
+				return chip;
+			}
+
+			function tfdTagLabel(t) {
+				return TFD_TAG_LABELS[t] || t;
+			}
+
+			function tfdRenderSeg() {
+				$('.tfd-seg .tfd-n').each(function() {
+					var n = parseInt(this.getAttribute('data-n'), 10);
+					this.setAttribute('aria-pressed', n === state.n ? 'true' : 'false');
+				});
+			}
+
+			// Every filter change rebuilds the tile and chip DOM, so the control the
+			// user just activated is destroyed and focus falls back to BODY. For a
+			// keyboard user that means landing at the top of the page and tabbing
+			// past up to 93 chips to get back. Capture what was focused, then put
+			// focus on its replacement. Tiles are keyed by data-type, chips by
+			// data-kind + data-value; both survive the rebuild.
+			function tfdFocusKey(el) {
+				if (!el || !el.getAttribute) return null;
+				var t = el.getAttribute('data-type');
+				if (t) return '[data-type="' + t + '"]';
+				var k = el.getAttribute('data-kind'), v = el.getAttribute('data-value');
+				if (k && v) return '[data-kind="' + k + '"][data-value="' + v + '"]';
+				return null;
+			}
+
+			function tfdWithFocusRestored(render) {
+				var prev = document.activeElement;
+				var key = tfdFocusKey(prev);
+				var host = (key && prev.closest)
+					? prev.closest('#tfdTypes, #tfdLiveTags, #tfdAllTags, #tfdActiveChips')
+					: null;
+				var kind = prev.getAttribute ? prev.getAttribute('data-kind') : null;
+				var value = prev.getAttribute ? prev.getAttribute('data-value') : null;
+				render();
+				if (!host) return;
+				// Prefer the same list. Removing a filter from the summary bar deletes
+				// that chip, so fall back to the control that still represents it: the
+				// live tag list for a tag, the type strip for a type. The strip keys on
+				// data-type, not data-kind/data-value, so it needs its own selector.
+				var next = host.querySelector(key);
+				if (!next && kind === 'tag') {
+					next = document.querySelector('#tfdLiveTags ' + key)
+						|| document.querySelector('#tfdAllTags ' + key);
+				}
+				if (!next && kind === 'type') {
+					next = document.querySelector('#tfdTypes [data-type="' + value + '"]');
+				}
+				// A hidden control cannot take focus, so don't strand it there.
+				if (next && next.offsetParent !== null) next.focus();
+			}
+
+			function tfdRenderTypes(counts) {
+				var wrap = document.getElementById('tfdTypes');
+				while (wrap.firstChild) wrap.removeChild(wrap.firstChild);
+				TFD_TYPES.forEach(function(t) {
+					var btn = document.createElement('button');
+					btn.type = 'button';
+					btn.className = 'tfd-type tfd-type-' + t;
+					btn.setAttribute('data-type', t);
+					btn.setAttribute('aria-pressed', state.types.has(t) ? 'true' : 'false');
+					var num = document.createElement('span');
+					num.className = 'tfd-type-num';
+					num.textContent = nFormatter(counts[t] || 0, 0);
+					var label = document.createElement('span');
+					label.className = 'tfd-type-label';
+					label.textContent = TFD_TYPE_LABELS[t];
+					btn.appendChild(num);
+					btn.appendChild(label);
+					wrap.appendChild(btn);
+				});
+			}
+
+			function tfdRenderTags(tagCounts, notagCount) {
+				// Live: any tag with hits in this window, plus any currently-selected
+				// tag even at 0 hits (otherwise there'd be no way to turn it back off
+				// without opening the full roster).
+				var liveNames = TFD_TAGS.filter(function(t) {
+					return (tagCounts[t] || 0) > 0 || state.tags.has(t);
+				});
+				liveNames.sort(function(a, b) {
+					var ca = tagCounts[a] || 0, cb = tagCounts[b] || 0;
+					if (cb !== ca) return cb - ca;
+					var la = tfdTagLabel(a).toLowerCase(), lb = tfdTagLabel(b).toLowerCase();
+					return la < lb ? -1 : (la > lb ? 1 : 0);
+				});
+
+				var live = document.getElementById('tfdLiveTags');
+				while (live.firstChild) live.removeChild(live.firstChild);
+				liveNames.forEach(function(t) {
+					live.appendChild(tfdMakeChip('tag', t, tfdTagLabel(t), tagCounts[t] || 0, {
+						pressed: state.tags.has(t), zero: (tagCounts[t] || 0) === 0
+					}));
+				});
+				var showNotag = notagCount > 0 || state.tags.has('notag');
+				if (showNotag) {
+					live.appendChild(tfdMakeChip('tag', 'notag', tfdTagLabel('notag'), notagCount, {
+						pressed: state.tags.has('notag'), zero: notagCount === 0
+					}));
+				}
+
+				var hasAnyLive = liveNames.length > 0 || showNotag;
+				document.getElementById('tfdNoLiveTags').style.display = hasAnyLive ? 'none' : '';
+				live.style.display = hasAnyLive ? '' : 'none';
+
+				var allNames = TFD_TAGS.slice().sort(function(a, b) {
+					var la = tfdTagLabel(a).toLowerCase(), lb = tfdTagLabel(b).toLowerCase();
+					return la < lb ? -1 : (la > lb ? 1 : 0);
+				});
+				var all = document.getElementById('tfdAllTags');
+				while (all.firstChild) all.removeChild(all.firstChild);
+				allNames.forEach(function(t) {
+					all.appendChild(tfdMakeChip('tag', t, tfdTagLabel(t), tagCounts[t] || 0, {
+						pressed: state.tags.has(t), zero: (tagCounts[t] || 0) === 0
+					}));
+				});
+			}
+
+			function tfdRenderSummary(matched, windowTotal, tweetCount) {
+				var hasFilter = state.types.size > 0 || state.tags.size > 0;
+				var text = hasFilter
+					? 'Showing ' + nFormatter(matched, 0) + ' of ' + nFormatter(windowTotal, 0) + ' IOCs in ' + nFormatter(tweetCount, 0) + ' tweets'
+					: 'Showing all ' + nFormatter(windowTotal, 0) + ' IOCs in ' + nFormatter(tweetCount, 0) + ' tweets';
+				document.getElementById('tfdSummaryText').textContent = text;
+
+				var active = document.getElementById('tfdActiveChips');
+				while (active.firstChild) active.removeChild(active.firstChild);
+				state.types.forEach(function(t) {
+					active.appendChild(tfdMakeChip('type', t, TFD_TYPE_LABELS[t], null, { pressed: true, removable: true }));
+				});
+				state.tags.forEach(function(t) {
+					active.appendChild(tfdMakeChip('tag', t, tfdTagLabel(t), null, { pressed: true, removable: true }));
+				});
+
+				document.getElementById('tfdClear').style.display = hasFilter ? '' : 'none';
+			}
+
+			var tfdCurCols = null;
+			var tfdLastLines = [];
+
+			function tfdBuildGrid(lines) {
+				var nCols = colCount();
+				tfdCurCols = nCols;
+				var grid = document.getElementById('tfdGrid');
+				while (grid.firstChild) grid.removeChild(grid.firstChild);
+				var cols = [];
+				for (var c = 0; c < nCols; c++) {
+					var col = document.createElement('div');
+					col.className = 'tfd-col';
+					grid.appendChild(col);
+					cols.push(col);
+				}
+				for (var i = 0; i < lines.length; i++) {
+					var statusId = lines[i];
+					var cell = document.createElement('div');
+					cell.className = 'tfd-cell';
+					cell.id = 'tweet-col-' + statusId;
+					cols[i % nCols].appendChild(cell);
+					renderTweet(statusId, cell);
+				}
+			}
+
+			// Rebuild the grid layout on resize, but only when the column count
+			// actually changes - otherwise every resize would recreate (and
+			// re-fetch) every embedded tweet iframe.
+			$(window).on('resize', tfdDebounce(function() {
+				var c = colCount();
+				if (c !== tfdCurCols) {
+					tfdBuildGrid(tfdLastLines);
+				}
+			}, 200));
+
+			function animation() {
+				$('#tfdGrid').hide();
+				$('#tfdGrid').fadeIn(600, 'linear');
+			}
+
+			function tfdCountTypes(rows) {
+				var counts = { url: 0, domain: 0, ip: 0, sha256: 0, md5: 0 };
+				for (var i = 0; i < rows.length; i++) {
+					var t = rows[i][2];
+					if (Object.prototype.hasOwnProperty.call(counts, t)) counts[t]++;
+				}
+				return counts;
+			}
+
+			function tfdCountTags(rows) {
+				var counts = {};
+				TFD_TAGS.forEach(function(t) { counts[t] = 0; });
+				var notagCount = 0;
+				for (var i = 0; i < rows.length; i++) {
+					var raw = rows[i][4];
+					if (raw && raw.trim() !== '') {
+						var parts = raw.trim().split(' ');
+						for (var j = 0; j < parts.length; j++) {
+							var name = parts[j].replace('#', '');
+							if (Object.prototype.hasOwnProperty.call(counts, name)) counts[name]++;
+						}
+					} else {
+						notagCount++;
+					}
+				}
+				return { counts: counts, notagCount: notagCount };
+			}
+
+			var autorefresh = 1;
+			var init = 1;
+			var p_lines = [];
+			window.seen_values = [];
+			var timerAux;
+
+			function timerCycle() {
+				if (autorefresh) {
+					loadData();
+					progressBar();
+				}
+			}
+
+			function progressBar() {
+				var i = 0;
+				// Autorefresh interval is 60s. The bar fills evenly across the
+				// 60s window: 100 / 60 ~= 1.67% per second.
+				var downloadTimer = setInterval(function() {
+					if (i >= 100) {
+						clearInterval(downloadTimer);
+					}
+					if (autorefresh == 0) {
+						i = 0;
+						clearInterval(downloadTimer);
+						$('.progress-bar').css('width', i + '%');
+					} else {
+						$('.progress-bar').css('width', i + '%');
+					}
+					i = i + (100 / 60);
+				}, 1000);
+			}
+
+			function loadData() {
+				tfdRenderSeg();
+				TweetFeed.safeGet(TweetFeed.dataUrl('today.csv'), { errorTarget: '#loadingTweets', success: function(response) {
+
+					var data = csvJSON(response);
+					// Every IOC row in the window, NOT deduped by tweet. The type
+					// strip and the tag chips count IOCs, so they have to see all
+					// the rows: a single tweet often carries 20+ hashes, and
+					// counting the deduped list showed "8 URLs" when the window
+					// held 34 (measured 2026-08-20, n=100). The deduped list is
+					// still what drives the grid, via seen_tweets/lines.
+					var data_window = [];
+					var seen_tweets = [];
+					window.seen_values = [];
+					var lines = [];
+
+					var n_rows = state.n;
+					var auxFor = data.length > n_rows ? data.length - n_rows : 0;
+
+					for (var i = auxFor; i < data.length; i++) {
+
+						var type = data[i][2];
+						var tags = [];
+						var tweet_url = data[i][5];
+						var value = data[i][3];
+
+						if (data[i][4].trim() !== '') {
+							var newArr = data[i][4].split(' ');
+							for (var j = 0; j < newArr.length; j++) {
+								tags.push(newArr[j]);
 							}
 						}
 
-					}
+						var isCheckedType = state.types.size === 0 || state.types.has(type);
+						var isCheckedTag;
 
-					if (isCheckedType && isCheckedTag) {
-						seen_values.push(value)
-					}
-
-					if (seen_tweets.includes(tweet_url)) {
-						continue;
-					}
-
-					seen_tweets.push(tweet_url)
-
-					data_filtered.push(data[i])
-
-					//if (isCheckedType && isCheckedTag) {
-					if (isCheckedType && isCheckedTag) {
-						var parts = tweet_url.split("/"); lines.push(parts[parts.length - 1])
-					}
-				}
-
-				lines = lines.reverse();
-
-				comp_lines = lines.toString();
-				comp_p_lines = p_lines.toString();
-
-				if (comp_lines !== comp_p_lines || init == 1) {
-
-					$(".tweetsclass").empty();
-
-					count_row = 0;
-					count_column = 0;
-					n_cols = 4;
-
-					for (var i = 0; i < lines.length; i++) {
-
-						if (i % n_cols === 0) {
-							count_row++
-							myvar_row = '<div class="row row_' + count_row + '">' +
-								'</div> <!-- row -->'
-
-							$('.tweetsclass').append(myvar_row);
+						if (tags.length === 0) {
+							isCheckedTag = state.tags.size === 0 || state.tags.has('notag');
+						} else if (state.tags.size === 0) {
+							isCheckedTag = true;
+						} else {
+							isCheckedTag = false;
+							for (var ti = 0; ti < tags.length; ti++) {
+								if (state.tags.has(tags[ti].replace('#', ''))) {
+									isCheckedTag = true;
+									break;
+								}
+							}
 						}
-						// twttr.widgets.load() with the simplified
-						// <blockquote><a href=".../status/ID"></a></blockquote>
-						// pattern silently fails to render iframes (sets
-						// data-twitter-extracted but no embed appears).
-						// createTweet() with a status ID + target element is
-						// the documented programmatic API and renders
-						// reliably. Queue the call until widgets.js loads.
-						// Bootstrap 4 responsive classes: 1 col mobile,
-						// 2 cols ≥768 px, 3 cols ≥992 px, 4 cols ≥1200 px.
-						var statusId = lines[i];
-						var colId = 'tweet-col-' + statusId;
-						var myvar_col = '<div id="' + colId + '" class="tweet-col col-12 col-md-6 col-lg-4 col-xl-3"></div>'
 
-						count_column++
-						$('.row_' + count_row).append(myvar_col);
-						renderTweet(statusId, document.getElementById(colId));
+						data_window.push(data[i]);
 
-						if (i === lines.length - 1) {
+						if (!isCheckedType || !isCheckedTag) {
+							continue;
+						}
+
+						// Export takes every matching IOC value, so it counts before
+						// the per-tweet dedup below.
+						window.seen_values.push(value);
+
+						// Dedup runs on the MATCHING rows only. Doing it over all
+						// rows first meant a tweet was kept only if its FIRST row
+						// matched, and a tweet that posts "domain" before "url" for
+						// the same host made every url row a dedup casualty: with
+						// type=url the grid came back empty while the counter said
+						// 12 IOCs matched. Measured 2026-08-20.
+						if (seen_tweets.indexOf(tweet_url) !== -1) {
+							continue;
+						}
+						seen_tweets.push(tweet_url);
+
+						var parts = tweet_url.split('/');
+						lines.push(parts[parts.length - 1]);
+					}
+
+					lines = lines.reverse();
+
+					var comp_lines = lines.toString();
+					var comp_p_lines = p_lines.toString();
+
+					// The grid is guarded: rebuilding it destroys and recreates every
+					// tweet iframe, so the 60s poll must not touch it when the same
+					// tweets came back.
+					if (comp_lines !== comp_p_lines || init == 1) {
+
+						tfdLastLines = lines;
+						tfdBuildGrid(lines);
+						p_lines = lines.slice();
+
+						if (lines.length === 0) {
+							$('#tfdGrid').hide();
+							$('#emptyState').show();
+						} else {
+							$('#emptyState').hide();
+							$('#tfdGrid').show();
 							animation();
-							$("#loadingTweets").hide();
+						}
+
+						if (init) {
+							init = 0;
 						}
 					}
 
-					p_lines = [...lines];
+					$('#loadingTweets').hide();
 
-					// Empty-state toggle: when filters return zero unique
-					// tweets, hide the (empty) grid and show the helpful
-					// "no tweets match" notice instead of leaving a blank box.
-					if (lines.length === 0) {
-						$('.tweetsclass').hide();
-						$('#emptyState').show();
-						$('#loadingTweets').hide();
-					} else {
-						$('#emptyState').hide();
-						$('.tweetsclass').show();
-					}
+					// The filter controls render UNGUARDED. They were inside the guard
+					// above, which meant a filter change that happened to select the
+					// same tweets left the whole UI frozen: the tile you clicked never
+					// lit up, the summary count never moved and the active-filter chip
+					// never appeared, while the URL updated behind it. Cheap to redraw,
+					// and it has to agree with the state on every change.
+					var typeCounts = tfdCountTypes(data_window);
+					var tagInfo = tfdCountTags(data_window);
+					tfdWithFocusRestored(function() {
+						tfdRenderTypes(typeCounts);
+						tfdRenderTags(tagInfo.counts, tagInfo.notagCount);
+						tfdRenderSummary(window.seen_values.length, data.length - auxFor, lines.length);
+					});
 
-					if (init) {
-						init = 0;
-					}
-
-					$('[id^="checkTag"]').empty();
-					countTypes('check', data_filtered);
-					countTags('checkTag', data_filtered);
-					let total = data.length - auxFor
-
-					$('#check-allTypes').empty();
-					$('#check-allTypes').text("(" + data_filtered.length + " Tweets)");
-					//$('#check-allTags').empty();
-					//$('#check-allTags').text("(" + data_filtered.length + ")");
-				}
-
-			}});
-		}
-
-		function countTypes(divAccess, jsonArr) {
-			let keys = [];
-			let values = [];
-			let type = { 'url': 0, 'domain': 0, 'ip': 0, 'sha256': 0, 'md5': 0 };
-			for (var i = 0; i < jsonArr.length; i++) {
-				type[jsonArr[i][2]]++;
+				}});
 			}
-			for (const [key, value] of Object.entries(type)) {
-				$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
-			}
-		}
 
-		function countTags(divAccess, jsonArr) {
-			let tags = [],
-				count = [];
-			let keys = [];
-			let values = [];
-			for (var i = 0; i < jsonArr.length; i++) {
-				if (jsonArr[i][4].trim() != "") {
-					let newArr = jsonArr[i][4].split(" ");
-					for (var j = 0; j < newArr.length; j++) {
-						tags.push(newArr[j]);
-					}
+			tfdSyncLocation();
+
+			if (!navigator.clipboard) {
+				$('#tfdCopyLink').hide();
+			}
+
+			loadData();
+			progressBar();
+			timerAux = setInterval(timerCycle, 60000);
+			TweetFeed.trackInterval(timerAux);
+
+			$('#liveToggle').click(function() {
+				var btn = this;
+				var label = btn.querySelector('.tf-live-label');
+				if (autorefresh) {
+					autorefresh = 0;
+					btn.setAttribute('aria-pressed', 'false');
+					if (label) label.textContent = 'Paused';
+					clearInterval(timerAux);
 				} else {
-					tags.push('#notag');
+					autorefresh = 1;
+					btn.setAttribute('aria-pressed', 'true');
+					if (label) label.textContent = 'Live';
+					init = 1;
+					progressBar();
+					loadData();
+					timerAux = setInterval(timerCycle, 60000);
+					TweetFeed.trackInterval(timerAux);
 				}
-			}
-
-			tags.forEach(function(i) {
-				count[i] = (count[i] || 0) + 1;
 			});
 
-			var tuples = [];
-
-			for (var key in count)
-				tuples.push([key, count[key]]);
-
-			tuples.sort(function(a, b) {
-				a = a[1];
-				b = b[1];
-
-				return a> b ? -1 : (a < b ? 1 : 0);
+			$(document).on('click', '#tfdTypes .tfd-type', function() {
+				var t = this.getAttribute('data-type');
+				if (state.types.has(t)) { state.types.delete(t); } else { state.types.add(t); }
+				tfdSyncLocation();
+				loadData();
 			});
-			for (var i = 0; i < tuples.length; i++) {
 
-				key = tuples[i][0].replace('#', '');
-				value = tuples[i][1]
+			$(document).on('click', '#tfdLiveTags .tfd-chip, #tfdAllTags .tfd-chip', function() {
+				var t = this.getAttribute('data-value');
+				if (state.tags.has(t)) { state.tags.delete(t); } else { state.tags.add(t); }
+				tfdSyncLocation();
+				loadData();
+			});
 
-				keys.push(key);
-				values.push(value);
+			$(document).on('click', '#tfdActiveChips .tfd-chip', function() {
+				var kind = this.getAttribute('data-kind');
+				var val = this.getAttribute('data-value');
+				if (kind === 'type') { state.types.delete(val); } else { state.tags.delete(val); }
+				tfdSyncLocation();
+				loadData();
+			});
 
-				$('#' + divAccess + '-' + key).empty();
-				$('#' + divAccess + '-' + key).text("(" + nFormatter(value, 0) + ")");
-			}
+			$(document).on('click', '.tfd-seg .tfd-n', function() {
+				state.n = tfdValidateN(this.getAttribute('data-n'));
+				tfdSyncLocation();
+				loadData();
+			});
 
-		}
+			$('#tfdClear').on('click', function() {
+				state.types.clear();
+				state.tags.clear();
+				tfdSyncLocation();
+				loadData();
+			});
 
-	})
+			// Reset filters from the empty-state notice: clear both Sets and
+			// refire loadData so tweets reappear immediately.
+			$('#resetFilters').on('click', function() {
+				state.types.clear();
+				state.tags.clear();
+				tfdSyncLocation();
+				loadData();
+			});
+
+			$('#tfdCopyLink').on('click', function() {
+				var btn = this;
+				var original = btn.textContent;
+				navigator.clipboard.writeText(location.href).then(function() {
+					btn.textContent = 'Copied';
+					setTimeout(function() { btn.textContent = original; }, 1500);
+				});
+			});
+
+			// Tag filter search: hides chips in the full roster whose label doesn't
+			// match the query. Empty input restores all. Case-insensitive. Kept as
+			// a delegated handler since #tfdAllTags is rebuilt on every repaint.
+			$(document).on('input', '.tag-search', function() {
+				var q = $(this).val().trim().toLowerCase();
+				$('#tfdAllTags .tfd-chip').each(function() {
+					var label = ($(this).text() || '').toLowerCase();
+					$(this).toggleClass('tag-hidden', q !== '' && label.indexOf(q) === -1);
+				});
+			});
+
+		});
 	});
 	</script>
 	<script>
