@@ -44,7 +44,7 @@ table th:nth-child(7) {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Rubik', sans-serif;
   font-size: clamp(0.625rem, 0.65vw, 0.875rem);
   font-weight: 600;
   color: #fff;

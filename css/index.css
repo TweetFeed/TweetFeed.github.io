@@ -80,7 +80,11 @@ body {
     font-size: 36px;
     text-align: center;
     font-family: 'Alegreya Sans SC', sans-serif;
-    font-weight: 600;
+    /* 700, not 600: Alegreya Sans SC has no 600 cut. Google Fonts answers
+       HTTP 400 for wght@600 and silently drops it from a multi-weight
+       request, so a 600 here could only ever be synthesised. Available:
+       100/300/400/500/700/800/900. */
+    font-weight: 700;
     color: #1178b3;
 }
 
@@ -103,13 +107,13 @@ body {
    GEOMETRY: at (0,3,2) it outranked .navbar-nav li a.tf-wordmark (0,2,2) and
    forced font-size back to 16px on hover, so hovering the brand shrank it
    from 20px to 16px and shifted every item to its right. It is the same rule
-   that previously washed the #4682B4 CTA out to #8ec9ee (see the note at the
+   that previously washed the #3a6f96 CTA out to #8ec9ee (see the note at the
    top of the .nav-cta block in tweetfeed.css). Hover for every shell element
    now lives with that element's own tf-* rule. */
 
 /* Todos */
 .nav-pills li a {
-    color: black !important;
+    color: black;
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
@@ -119,7 +123,7 @@ body {
 
 /* Hover */
 .nav-pills li a:hover:not(.active) {
-    color: black !important;
+    color: black;
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
@@ -141,20 +145,12 @@ body {
 /* #004080 */
 /* background: #00b8ff !important; */
 
-.twitterLink:hover {
-    color: #005677 !important;
-}
-
-.valueLink:hover {
-    color: blue !important;
-}
+/* Three dead !important rules removed 2026-08-21 (.twitterLink:hover,
+   .valueLink:hover, and the Defender-link :hover): each selector matched no
+   element on the site, so the !important overrode nothing. */
 
 .fa-copy:hover {
-    color: blue !important;
-}
-
-[href="https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/advanced-hunting-overview?view=o365-worldwide"]:hover {
-    background-color: #007fff !important;
+    color: #325d81 !important;
 }
 
 .btn:hover {

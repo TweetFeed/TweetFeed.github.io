@@ -47,13 +47,13 @@
 	<!-- vendor/datatables/dataTables.bootstrap4.min.css removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<!-- <link href="../css/table.css?v=4" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
-	<link href="../css/index.css?v=47" rel="stylesheet">
+	<link href="../css/index.css?v=48" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link href="../css/tweetfeed.css?v=48" rel="stylesheet">
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Fonts: css/fonts.css inlined (150B, dashboard-only, no @font-face) to remove a blocking round-trip -->
 	<style>
 	label {
@@ -181,7 +181,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 		/* .tf-live-dot's pulse animation is hardcoded to 6s in tweetfeed.css
@@ -227,7 +227,7 @@
 		.tfd-type[aria-pressed="true"].tfd-type-sha256 .tfd-type-label,
 		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-num,
 		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-label { color:#5c3d12; }
-		.tfd-type:focus-visible { outline:2px solid #4682B4; outline-offset:-2px; }
+		.tfd-type:focus-visible { outline:2px solid #3a6f96; outline-offset:-2px; }
 
 		/* Tag chips. Copy of .tfc-filter-chip (campaigns/index.html:648-688). */
 		.tfd-chips { display:flex; flex-wrap:wrap; gap:6px; }
@@ -241,9 +241,9 @@
 			letter-spacing:.03em; line-height:1.6; background:#fff; color:#4b5563; cursor:pointer;
 			transition:background-color .15s ease, border-color .15s ease; }
 		.tfd-chip:hover { border-color:#4b5563; background:#f8f9fa; background-image:none; }
-		.tfd-chip[aria-pressed="true"] { border-color:black; background:#4682B4; color:#fff; }
-		.tfd-chip[aria-pressed="true"]:hover { background:#3a6f96; }
-		.tfd-chip:focus-visible { outline:2px solid #4682B4; outline-offset:1px; }
+		.tfd-chip[aria-pressed="true"] { border-color:black; background:#3a6f96; color:#fff; }
+		.tfd-chip[aria-pressed="true"]:hover { background:#325d81; }
+		.tfd-chip:focus-visible { outline:2px solid #3a6f96; outline-offset:1px; }
 		.tfd-chip-count { margin-left:4px; font-weight:400; color:#737373; }
 		.tfd-chip[aria-pressed="true"] .tfd-chip-count { color:#fff; opacity:.8; }
 		/* Zero-hit tags stay legible, just clearly recessive: a lighter border and
@@ -271,8 +271,8 @@
 			gap:.5rem; font-family:'Rubik',sans-serif; font-size:13px; color:#1c1c1c; }
 		.tfd-all > summary::-webkit-details-marker { display:none; }
 		.tfd-all > summary::after { content:'+'; width:20px; height:20px;
-			display:inline-flex; align-items:center; justify-content:center; color:#4682B4;
-			border:1px solid #4682B4; border-radius:3px; font-size:14px; line-height:1; }
+			display:inline-flex; align-items:center; justify-content:center; color:#3a6f96;
+			border:1px solid #3a6f96; border-radius:3px; font-size:14px; line-height:1; }
 		.tfd-all[open] > summary::after { content:'\2212'; }
 		.tfd-all .tag-search-wrap { margin:.6rem 0; }
 		.tag-hidden { display:none !important; }
@@ -281,9 +281,9 @@
 		.tfd-summary { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem;
 			font-family:'Rubik',sans-serif; font-size:12.5px; color:#737373; margin-bottom:.75rem; }
 		.tfd-summary-text { font-variant-numeric:tabular-nums; }
-		.tfd-linkbtn { appearance:none; border:0; background:none; padding:0; color:#4682B4;
+		.tfd-linkbtn { appearance:none; border:0; background:none; padding:0; color:#3a6f96;
 			font-family:'Rubik',sans-serif; font-size:12.5px; cursor:pointer; text-decoration:underline; }
-		.tfd-linkbtn:hover { color:#3a6f96; background-image:none; }
+		.tfd-linkbtn:hover { color:#325d81; background-image:none; }
 
 		/* Row-count segmented control */
 		.tfd-seg { display:inline-flex; border:1px solid black; border-radius:3px; overflow:hidden; }
@@ -291,8 +291,8 @@
 			font-family:'Rubik',sans-serif; font-size:12px; font-weight:600; color:#4b5563; cursor:pointer; }
 		.tfd-seg button + button { border-left:1px solid black; }
 		.tfd-seg button:hover { background:#f8f9fa; background-image:none; }
-		.tfd-seg button[aria-pressed="true"] { background:#4682B4; color:#fff; }
-		.tfd-seg button:focus-visible { outline:2px solid #4682B4; outline-offset:-2px; }
+		.tfd-seg button[aria-pressed="true"] { background:#3a6f96; color:#fff; }
+		.tfd-seg button:focus-visible { outline:2px solid #3a6f96; outline-offset:-2px; }
 
 		/* Tweet grid: N flex columns with round-robin distribution. Do NOT use
 		   column-count: X's iframes resize on load and column-count reflows the
@@ -444,7 +444,7 @@
 								<button type="button" class="tfd-n" data-n="100" aria-pressed="false">100</button>
 							</div>
 							<button type="button" id="filtersToggle" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters"><i class="fas fa-sliders-h" aria-hidden="true"></i> Filters</button>
-							<button onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#4682B4"><i class="fas fa-download"></i> Export CSV</button>
+							<button onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#3a6f96"><i class="fas fa-download"></i> Export CSV</button>
 							<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 						</div>
 					</div>

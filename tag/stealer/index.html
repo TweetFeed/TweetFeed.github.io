@@ -45,13 +45,13 @@
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../../css/table.css?v=4" rel="stylesheet">
-	<link href="../../css/index.css?v=47" rel="stylesheet">
+	<link href="../../css/index.css?v=48" rel="stylesheet">
 	<link href="../../css/tooltip.css" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link href="../../css/tweetfeed.css?v=48" rel="stylesheet">
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -183,7 +183,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
@@ -314,9 +314,10 @@
 					</ul>
 				</details>
 				<script>
-					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
-					   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
-					   never reach a warm cache. Inline also means no FOUC.
+					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=4
+					   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
+					   56th) does not load it at all, so anything added there would never reach
+					   that page. Inline also means no FOUC.
 					   The markup ships `open`, so desktop and any JS-disabled browser get the
 					   full list with no CSS trickery. CSS cannot close it: a closed <details>
 					   is hidden by the UA through its slot, and an author-level display:block
@@ -442,61 +443,61 @@
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 19, 12:31</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="ad781dcd83ccbc4f5438525b4cd17c86"><i class="tf-copy far fa-copy" data-copy="ad781dcd83ccbc4f5438525b4cd17c86" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ad781dcd83ccbc4f5438525b4cd17c86</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="ad781dcd83ccbc4f5438525b4cd17c86"><i class="tf-copy far fa-copy" data-copy="ad781dcd83ccbc4f5438525b4cd17c86" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>ad781dcd83ccbc4f5438525b4cd17c86</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 17, 07:48</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="193.164.4.31"><i class="tf-copy far fa-copy" data-copy="193.164.4.31" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>193.164.4.31</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="193.164.4.31"><i class="tf-copy far fa-copy" data-copy="193.164.4.31" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>193.164.4.31</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/Fact_Finder03" target="_blank" rel="noopener noreferrer">@Fact_Finder03</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 11:40</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="08eb7d1794268304a579ac82e0a2aaa2"><i class="tf-copy far fa-copy" data-copy="08eb7d1794268304a579ac82e0a2aaa2" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>08eb7d1794268304a579ac82e0a2aaa2</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="08eb7d1794268304a579ac82e0a2aaa2"><i class="tf-copy far fa-copy" data-copy="08eb7d1794268304a579ac82e0a2aaa2" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>08eb7d1794268304a579ac82e0a2aaa2</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 10:07</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="245532f3812d2f84aca9f2517d9e042e"><i class="tf-copy far fa-copy" data-copy="245532f3812d2f84aca9f2517d9e042e" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>245532f3812d2f84aca9f2517d9e042e</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="245532f3812d2f84aca9f2517d9e042e"><i class="tf-copy far fa-copy" data-copy="245532f3812d2f84aca9f2517d9e042e" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>245532f3812d2f84aca9f2517d9e042e</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 09:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="401trading.com"><i class="tf-copy far fa-copy" data-copy="401trading.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>401trading.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="401trading.com"><i class="tf-copy far fa-copy" data-copy="401trading.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>401trading.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 09:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://401trading.com"><i class="tf-copy far fa-copy" data-copy="http://401trading.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://401trading.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://401trading.com"><i class="tf-copy far fa-copy" data-copy="http://401trading.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://401trading.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 09:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="fencecompanycharleston.com"><i class="tf-copy far fa-copy" data-copy="fencecompanycharleston.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>fencecompanycharleston.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="fencecompanycharleston.com"><i class="tf-copy far fa-copy" data-copy="fencecompanycharleston.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>fencecompanycharleston.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 09:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://fencecompanycharleston.com"><i class="tf-copy far fa-copy" data-copy="http://fencecompanycharleston.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://fencecompanycharleston.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://fencecompanycharleston.com"><i class="tf-copy far fa-copy" data-copy="http://fencecompanycharleston.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://fencecompanycharleston.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 14, 09:53</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#FFC34D; color:#1c1c1c; border-radius:3px;">md5</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="77d2dc8a24b9fa6c236c687193fd88fa"><i class="tf-copy far fa-copy" data-copy="77d2dc8a24b9fa6c236c687193fd88fa" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>77d2dc8a24b9fa6c236c687193fd88fa</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="77d2dc8a24b9fa6c236c687193fd88fa"><i class="tf-copy far fa-copy" data-copy="77d2dc8a24b9fa6c236c687193fd88fa" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>77d2dc8a24b9fa6c236c687193fd88fa</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									<tr>
 										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Aug 13, 12:57</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="atlantaairporttaxiservice.com"><i class="tf-copy far fa-copy" data-copy="atlantaairporttaxiservice.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>atlantaairporttaxiservice.com</td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="atlantaairporttaxiservice.com"><i class="tf-copy far fa-copy" data-copy="atlantaairporttaxiservice.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>atlantaairporttaxiservice.com</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/suyog41" target="_blank" rel="noopener noreferrer">@suyog41</a></td>
 									</tr>
 									</tbody>

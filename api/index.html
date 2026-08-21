@@ -46,13 +46,13 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=47" rel="stylesheet">
+	<link href="../css/index.css?v=48" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link href="../css/tweetfeed.css?v=48" rel="stylesheet">
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- highlight.js (js + css) removed: this page has no <pre><code> block to highlight. -->
 	<!-- Structured data -->
 	<script type="application/ld+json">
@@ -221,11 +221,20 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
-	<!-- Page Wrapper -->
+		<style>
+		/* The desktop navbar is fixed-top at 56px and nothing compensates for
+		   it, so every anchor on this page used to land underneath it. Same
+		   fix as feeds/index.html. */
+		@media (min-width: 992px) {
+			#content [id]:target,
+			#content h2[id], #content h3[id], #content section[id] { scroll-margin-top: 72px; }
+		}
+	</style>
+<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<!-- End of Sidebar -->
@@ -540,9 +549,9 @@
 					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
 						<thead>
 							<tr>
-								<th><b>Format</b></th>
-								<th><b>Endpoint</b></th>
-								<th><b>Feeds</b></th>
+								<th>Format</th>
+								<th>Endpoint</th>
+								<th>Feeds</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -614,9 +623,9 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th><b>Key</b></th>
-								<th><b>Required?</b></th>
-								<th><b>Possible values</b></th>
+								<th>Key</th>
+								<th>Required?</th>
+								<th>Possible values</th>
 							</tr>
 						</thead>
 						<tr>

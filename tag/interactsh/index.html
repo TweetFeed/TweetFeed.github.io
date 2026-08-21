@@ -45,13 +45,13 @@
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../../css/table.css?v=4" rel="stylesheet">
-	<link href="../../css/index.css?v=47" rel="stylesheet">
+	<link href="../../css/index.css?v=48" rel="stylesheet">
 	<link href="../../css/tooltip.css" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=47" rel="stylesheet">
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<link href="../../css/tweetfeed.css?v=48" rel="stylesheet">
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700;800&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -183,7 +183,7 @@
 		}
 		.skip-link:focus {
 			top: 0;
-			outline: 2px solid #4682B4;
+			outline: 2px solid #3a6f96;
 			outline-offset: -2px;
 		}
 	</style>
@@ -314,9 +314,10 @@
 					</ul>
 				</details>
 				<script>
-					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js is
-					   referenced WITHOUT a ?v= on 54 of 56 pages, so anything added there would
-					   never reach a warm cache. Inline also means no FOUC.
+					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=4
+					   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
+					   56th) does not load it at all, so anything added there would never reach
+					   that page. Inline also means no FOUC.
 					   The markup ships `open`, so desktop and any JS-disabled browser get the
 					   full list with no CSS trickery. CSS cannot close it: a closed <details>
 					   is hidden by the UA through its slot, and an author-level display:block

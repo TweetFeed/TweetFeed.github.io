@@ -723,6 +723,107 @@ def check_no_raw_user_interpolation(pages: list[str]) -> list[str]:
     return failures
 
 
+# Regression guard for the 2026-08-21 fix: the Google Fonts <link> requests
+# used to ask for `family=Rubik` / `family=Alegreya+Sans+SC` with no :wght@
+# axis, which Google Fonts serves as weight 400 ONLY - every 500/600/700/800
+# in the CSS was therefore browser-synthesised, not the real face. The links
+# now carry explicit axes (Rubik variable 400..700, Alegreya Sans SC static
+# 400;600;800); this check keeps a future page/rule from drifting back to a
+# weight nobody asked Google Fonts to serve.
+TRACKED_FONT_FAMILIES = ("Rubik", "Alegreya Sans SC")
+FONT_LINK_FAMILY_RE = re.compile(r"fonts\.googleapis\.com/css2\?family=([^\"&]+)")
+CSS_COMMENT_RE = re.compile(r"/\*.*?\*/", re.S)
+CSS_LEAF_BLOCK_RE = re.compile(r"\{([^{}]*)\}")
+FONT_FAMILY_DECL_RE = re.compile(r"font-family\s*:\s*([^;]+);")
+FONT_WEIGHT_DECL_RE = re.compile(r"font-weight\s*:\s*(\d+)\s*;")
+STYLE_BLOCK_RE = re.compile(r"<style\b[^>]*>(.*?)</style>", re.S | re.I)
+SHARED_FONT_CSS_FILES = ("css/tweetfeed.css", "css/index.css", "css/table.css")
+
+
+def _page_loaded_font_weights(html: str) -> dict[str, tuple]:
+    """Per tracked family, the set of weights this page's Google Fonts
+    <link>s actually request. `family=X` with no `:wght@` axis loads only
+    400 (Google Fonts default). Returned as ('set', frozenset[int]) for an
+    explicit list or ('range', lo, hi) for a variable-font closed range."""
+    loaded: dict[str, tuple] = {}
+    for m in FONT_LINK_FAMILY_RE.finditer(html):
+        spec = m.group(1)
+        name_part, _, weight_part = spec.partition(":wght@")
+        family = name_part.replace("+", " ")
+        if family not in TRACKED_FONT_FAMILIES:
+            continue
+        if not weight_part:
+            loaded[family] = ("set", frozenset({400}))
+        elif ".." in weight_part:
+            lo, hi = weight_part.split("..", 1)
+            loaded[family] = ("range", int(lo), int(hi))
+        else:
+            weights = frozenset(int(w) for w in weight_part.split(";") if w.strip().isdigit())
+            loaded[family] = ("set", weights)
+    return loaded
+
+
+def _weight_loaded(spec: tuple, weight: int) -> bool:
+    if spec[0] == "range":
+        return spec[1] <= weight <= spec[2]
+    return weight in spec[1]
+
+
+def _describe_loaded(spec: tuple) -> str:
+    if spec[0] == "range":
+        return f"{{{spec[1]}..{spec[2]}}}"
+    return "{" + ", ".join(str(w) for w in sorted(spec[1])) + "}"
+
+
+def _same_block_family_weights(css_text: str) -> set[tuple[str, int]]:
+    """(family, weight) pairs where a tracked font-family and a numeric
+    font-weight are set in the SAME leaf declaration block. Comments are
+    stripped first so prose that merely mentions a family/weight is never
+    mistaken for a rule. No cascade/inheritance resolution on purpose -
+    conservative by design, so it can miss cases but must never false-fail."""
+    text = CSS_COMMENT_RE.sub("", css_text)
+    pairs: set[tuple[str, int]] = set()
+    for block in CSS_LEAF_BLOCK_RE.findall(text):
+        fam_m = FONT_FAMILY_DECL_RE.search(block)
+        weight_m = FONT_WEIGHT_DECL_RE.search(block)
+        if not fam_m or not weight_m:
+            continue
+        fam_value = fam_m.group(1)
+        weight = int(weight_m.group(1))
+        for family in TRACKED_FONT_FAMILIES:
+            if family in fam_value:
+                pairs.add((family, weight))
+    return pairs
+
+
+def check_font_weights_loaded(pages: list[str]) -> list[str]:
+    """Every font-weight paired with a tracked family in the shared CSS or a
+    page's own <style> blocks must be a weight that page's Google Fonts
+    <link>s actually load - otherwise the browser is back to synthesising a
+    bold that was never served (see TRACKED_FONT_FAMILIES comment above)."""
+    shared_pairs = _same_block_family_weights(
+        "\n".join(read(name) for name in SHARED_FONT_CSS_FILES)
+    )
+    failures: list[str] = []
+    for p in pages:
+        html = read(p)
+        loaded = _page_loaded_font_weights(html)
+        if not loaded:
+            continue  # page requests neither tracked family - out of scope
+        page_pairs = _same_block_family_weights(
+            "\n".join(m.group(1) for m in STYLE_BLOCK_RE.finditer(html))
+        )
+        for family, weight in sorted(shared_pairs | page_pairs):
+            if family not in loaded:
+                continue  # page never loads this family - out of scope
+            if not _weight_loaded(loaded[family], weight):
+                failures.append(
+                    f"{p}: {family} weight {weight} used but only "
+                    f"{_describe_loaded(loaded[family])} loaded"
+                )
+    return failures
+
+
 # Page-content checks: the 21 hand-written pages carrying real copy.
 CHECKS = [
     ("Canonical URLs", check_canonicals),
@@ -745,6 +846,7 @@ SHELL_CHECKS = [
     ("Nav/footer links resolve", check_links_resolve),
     ("Docs sidebar matches site_ia", check_docs_sidebar),
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
+    ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
 ]
 
 # Whole-repo invariants that take no page list.

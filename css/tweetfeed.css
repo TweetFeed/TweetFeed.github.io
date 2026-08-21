@@ -289,7 +289,7 @@ hr.divider {
 	text-decoration: none;
 	line-height: 1.5;
 }
-.page-toc-chip:hover, .feeds-toc-chip:hover { background: #4682B4; color: #fff; text-decoration: none; }
+.page-toc-chip:hover, .feeds-toc-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
 
 /* Uppercase eyebrow that groups the chips above into named runs. Promoted
    from /feeds/, which was the only page that had it. */
@@ -610,21 +610,21 @@ p.agent-option-note {
 	text-align: center;
 	font-size: 18px;
 	font-weight: bold;
-	color: #4682B4;
-	border: 1px solid #4682B4;
+	color: #3a6f96;
+	border: 1px solid #3a6f96;
 	border-radius: 3px;
 	transition: background-color 0.15s ease, color 0.15s ease;
 }
 .faq-section details[open] > summary::after {
 	content: '\2212'; /* MINUS SIGN, distinct from hyphen */
-	background: #4682B4;
+	background: #3a6f96;
 	color: #fff;
 }
 .faq-section details > summary:hover {
 	color: #1DA1F2;
 }
 .faq-section details > summary:hover::after {
-	background: #4682B4;
+	background: #3a6f96;
 	color: #fff;
 }
 .faq-section details > p {
@@ -640,10 +640,10 @@ p.agent-option-note {
 	padding: 1px 6px;
 	font-size: 13px;
 	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-	color: #4682B4;
+	color: #3a6f96;
 }
 .faq-section details > p a {
-	color: #4682B4;
+	color: #3a6f96;
 	text-decoration: underline;
 	text-underline-offset: 2px;
 }
@@ -652,23 +652,23 @@ p.agent-option-note {
 }
 
 /* TweetFeed brand button - replaces inline
-   style="background-color: #4682B4; border-color: black; font-family: 'Rubik', sans-serif;"
+   style="background-color: #3a6f96; border-color: black; font-family: 'Rubik', sans-serif;"
    that was repeated on ~30 download/export buttons across pages.
    Selectors use .btn.btn-tf (0,0,2,0 specificity) so we override
    Bootstrap's .btn.btn-primary on the same class list. */
 .btn.btn-tf,
 a.btn.btn-tf,
 button.btn.btn-tf {
-	background-color: #4682B4;
-	border-color: #4682B4;
+	background-color: #3a6f96;
+	border-color: #3a6f96;
 	color: #fff;
 }
 .btn.btn-tf:hover,
 .btn.btn-tf:focus,
 .btn.btn-tf:active,
 .btn.btn-tf:not(:disabled):not(.disabled):active {
-	background-color: #3a6f96;
-	border-color: #3a6f96;
+	background-color: #325d81;
+	border-color: #325d81;
 	color: #fff;
 }
 
@@ -677,7 +677,7 @@ button.btn.btn-tf {
    40px / Rubik 500) so the two site-level CTAs read as one family.
 
    Scoped to .navbar-nav on purpose: plain .btn-tf still dresses ~30 export and
-   download buttons sitting on white cards, where #4682B4 works fine. On the
+   download buttons sitting on white cards, where #3a6f96 works fine. On the
    #1DA1F2 bar that same fill measures 1.47:1 against its own background, below
    the 3:1 WCAG 1.4.11 asks of a control's boundary, so the bar gets its own.
 
@@ -694,7 +694,7 @@ button.btn.btn-tf {
 	border: 1px solid #0f172a;
 	border-radius: 999px;
 	background: #0f172a;
-	color: #f1f5f9 !important;  /* beats index.css `.navbar-nav li a{color:black!important}` */
+	color: #f1f5f9 !important;
 	font-family: 'Rubik', sans-serif;
 	font-size: 15px;
 	font-weight: 500;
@@ -766,7 +766,7 @@ button.btn.btn-tf {
 	text-decoration: none;
 }
 .tf-action:focus-visible {
-	outline: 2px solid #4682B4;
+	outline: 2px solid #3a6f96;
 	outline-offset: 2px;
 }
 .tf-action.tf-action-tweet:hover {
@@ -811,7 +811,7 @@ button.btn.btn-tf {
 	transition: background-color .15s, color .15s;
 }
 .tf-live:hover { background: #f8f9fa; }
-.tf-live:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-live:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 .tf-live-dot {
 	width: 9px;
 	height: 9px;
@@ -1050,6 +1050,21 @@ button.btn.btn-tf {
    that clears 4.5:1 and reads cleaner on the coloured IOC-type rows too. */
 body { color: #6b6d7c; }
 
+/* sb-admin-2 also ships body{font-family:Nunito,...}, and Nunito is never
+   loaded, so every element that does not name a font itself fell through to
+   the visitor's system UI font - a different typeface on every machine.
+   Measured before this rule: 268 of 3,656 text-bearing elements, 7.3%. Rubik
+   is what the other 92% already ask for by name. */
+body { font-family: 'Rubik', sans-serif; }
+
+/* sb-admin-2 also ships a{color:#4e73df}, 4.34:1 on white and 4.12:1 on the
+   #f8f9fc card background - under AA, and a third blue next to #3a6f96 and
+   #1178b3 that nobody chose. A bare `a` is (0,0,1), so every component that
+   sets its own link colour still wins on specificity; this only catches the
+   links that were falling through to Bootstrap. */
+a { color: #3a6f96; }
+a:hover { color: #325d81; }
+
 /* Inline content links must not rely on colour alone (WCAG 1.4.1). Underline
    links inside body copy + the footer reference row; nav, buttons, TOC chips
    keep their own shape so are excluded. !important overrides Bootstrap's
@@ -1073,12 +1088,22 @@ body { color: #6b6d7c; }
    a 1px border does NOT grow a height:40px box. If the bar ever becomes
    58px, the first fold of every page is wrong.
 
-   SPECIFICITY. css/index.css loads before this file and ships
-   `.navbar-nav li a { color:black!important }` (0,1,2) plus
-   `.navbar-nav li a:hover:not(.active)` (0,3,2), which paints a washed-out
-   #8ec9ee 50px pill. Every rule below is authored at (0,2,2)+ for base and
-   (0,4,2) for hover, and re-declares background / background-image /
-   border-radius / color, the same defensive shape .nav-cta already uses.
+   SPECIFICITY. css/index.css used to ship `.navbar-nav li a { color:black
+   !important }` (0,1,2) plus `.navbar-nav li a:hover:not(.active)` (0,3,2),
+   which painted a washed-out #8ec9ee 50px pill. Every rule below is
+   authored at (0,2,2)+ for base and (0,4,2) for hover, and re-declares
+   background / background-image / border-radius / color, the same
+   defensive shape .nav-cta already uses. Both index.css rules were RETIRED
+   2026-08-18 (see the "Legacy navbar base/hover" comments in index.css), and
+   on 2026-08-21 the `!important` on every `color:` below was removed on the
+   assumption that it therefore beat nothing. IT DOES: the bar is
+   `.navbar navbar-dark`, so Bootstrap's own
+   `.navbar-dark .navbar-nav .nav-link { color: rgba(255,255,255,.5) }` is
+   still there, and without `!important` every nav link turned
+   half-transparent white on the blue bar. Measured with a before/after dump
+   of the computed styles, reverted the same day. Do not remove them again
+   without re-running that comparison: index.css was never the only thing
+   these were fighting.
 
    CONTRAST. The bar is #1DA1F2. Black text on it is 7.43:1; white is only
    2.83:1, which is why nav ink stays black and the active pill carries a
@@ -1249,10 +1274,10 @@ body { color: #6b6d7c; }
 	background: #f2f2f2;
 	background-image: none;
 	border-radius: 0;
-	border-left-color: #4682B4;
+	border-left-color: #3a6f96;
 	color: #000 !important;
 }
-.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible { outline: 2px solid #4682B4; outline-offset: -2px; }
+.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible { outline: 2px solid #3a6f96; outline-offset: -2px; }
 /* Current page reached through the menu. Reuses the .docs-sidebar a.active
    left-accent idiom so the site has one "current item in a list" language. */
 .navbar-nav li a.dropdown-item.tf-menu-item[aria-current="page"] {
@@ -1318,7 +1343,7 @@ body { color: #6b6d7c; }
 		height: 44px;
 		padding: 0;
 		border-radius: 999px;
-		color: #000 !important;
+		color: #000;
 		font-size: 18px;
 	}
 	.navbar-nav li a.tf-nav-burger[aria-expanded="true"] { background: rgba(255, 255, 255, .28); }
@@ -1382,7 +1407,7 @@ body { color: #6b6d7c; }
 	text-underline-offset: 2px;
 }
 .tf-footer a.tf-foot-link:focus-visible,
-.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 .tf-foot-ext { font-size: .75em; opacity: .6; }
 .tf-footer a.tf-foot-wordmark,
 .tf-mfooter a.tf-foot-wordmark {
@@ -1409,7 +1434,7 @@ a.tf-social {
 	text-decoration: none;
 }
 a.tf-social:hover, a.tf-social:focus-visible { background: #f2f2f2; color: #0f172a; }
-a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 .tf-footer .tf-foot-bar {
 	border-top: 1px solid #000;
 	background: #f8f9fa;
@@ -1462,7 +1487,7 @@ a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
 	text-decoration: none;
 }
 .tf-mfooter a.tf-mfoot-link:active { color: #1178b3; }
-.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 .tf-mfooter .tf-mfoot-legal { padding: 6px 0 16px; font-size: 13px; line-height: 1.6; }
 .tf-mfooter .tf-mfoot-legal-links { display: flex; gap: 20px; }
 .tf-mfooter a.tf-mfoot-link-inline { min-height: 40px; font-size: 13px; }

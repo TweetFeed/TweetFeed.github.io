@@ -59,19 +59,19 @@ FONT_AWESOME_NEW = (
     'crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>'
 )
 
-ALEGREYA_OLD = '<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet">'
+ALEGREYA_OLD = '<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;600;800&display=swap" rel="stylesheet">'
 ALEGREYA_NEW = (
-    '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" '
+    '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;600;800&display=swap" '
     'as="style" onload="this.onload=null;this.rel=\'stylesheet\'">\n'
-    '\t<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" '
+    '\t<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;600;800&display=swap" '
     'rel="stylesheet"></noscript>'
 )
 
-RUBIK_OLD = '<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">'
+RUBIK_OLD = '<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet">'
 RUBIK_NEW = (
-    '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" '
+    '<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" '
     'as="style" onload="this.onload=null;this.rel=\'stylesheet\'">\n'
-    '\t<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" '
+    '\t<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" '
     'rel="stylesheet"></noscript>'
 )
 
