@@ -940,15 +940,15 @@ components:
           maxItems: 3
           description: |
             Optional. Cross-feed corroboration from public abuse.ch feeds
-            (URLhaus/ThreatFox); absent when no match or the sidecar is
-            unavailable.
+            (URLhaus / ThreatFox / MalwareBazaar); absent when no match or
+            the sidecar is unavailable.
           items:
             type: object
             required: [src, threat, link, added]
             properties:
               src:
                 type: string
-                enum: [urlhaus, threatfox]
+                enum: [urlhaus, threatfox, malwarebazaar]
                 description: Which abuse.ch feed reported this indicator.
               threat:
                 type: string

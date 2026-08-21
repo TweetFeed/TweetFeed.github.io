@@ -32,7 +32,7 @@ Optional sidecar fields, present only when data exists for that value:
 
 - `ai`: AI-generated context from the enrichment job - `summary` (<=200 chars), `family` (malware family or null), `threat_type`, `confidence` (0-1).
 - `related`: up to 5 other IOCs posted in the same source tweet(s) as the looked-up value.
-- `external`: cross-feed corroboration from public abuse.ch feeds (URLhaus/ThreatFox).
+- `external`: cross-feed corroboration from public abuse.ch feeds (URLhaus/ThreatFox/MalwareBazaar).
 - `net`: for IP lookups only - network metadata (org/ASN, country, city, or a `bogon` flag for reserved ranges) from ipinfo.io, refreshed every 6h.
 
 ## Exact match, not substring

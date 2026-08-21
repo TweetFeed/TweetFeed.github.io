@@ -1663,11 +1663,14 @@
 		// field, max 3 entries). Sibling pattern to renderAI() below - own
 		// tfl-ext- namespace, no verdict colors. Every field is esc()'d in
 		// text/attribute/href position; `link` only renders as an href when
-		// it passes a strict allowlist (must start with the urlhaus.abuse.ch
-		// or threatfox.abuse.ch origin) - otherwise the row renders without
-		// a link rather than trusting an arbitrary URL from the API.
-		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox' };
-		var EXT_LINK_ALLOW = ['https://urlhaus.abuse.ch/', 'https://threatfox.abuse.ch/'];
+		// it passes a strict allowlist (must start with the urlhaus.abuse.ch,
+		// threatfox.abuse.ch or bazaar.abuse.ch origin) - otherwise the row
+		// renders without a link rather than trusting an arbitrary URL from
+		// the API. bazaar.abuse.ch is safe to allow the same way: the backend
+		// builds that URL itself from a regex-validated 64-hex sha256, it
+		// never copies a URL out of the feed.
+		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox', malwarebazaar: 'MalwareBazaar' };
+		var EXT_LINK_ALLOW = ['https://urlhaus.abuse.ch/', 'https://threatfox.abuse.ch/', 'https://bazaar.abuse.ch/'];
 
 		function isAllowedExtLink(link) {
 			if (typeof link !== 'string') return false;
