@@ -937,30 +937,37 @@ components:
               description: UTC timestamp of the enrichment run.
         external:
           type: array
-          maxItems: 3
+          maxItems: 5
           description: |
-            Optional. Cross-feed corroboration from public abuse.ch feeds
-            (URLhaus / ThreatFox / MalwareBazaar); absent when no match or
-            the sidecar is unavailable.
+            Optional. Cross-feed corroboration from public threat feeds -
+            three abuse.ch feeds (URLhaus / ThreatFox / MalwareBazaar) plus
+            two flat blocklists (USOM / IPsum); absent when no match or the
+            sidecar is unavailable. `link` and `added` are present only for
+            sources that publish them (abuse.ch); USOM/IPsum entries carry
+            only `src`/`threat`.
           items:
             type: object
-            required: [src, threat, link, added]
+            required: [src, threat]
             properties:
               src:
                 type: string
-                enum: [urlhaus, threatfox, malwarebazaar]
-                description: Which abuse.ch feed reported this indicator.
+                enum: [urlhaus, threatfox, malwarebazaar, usom, ipsum]
+                description: Which feed reported this indicator.
               threat:
                 type: string
                 description: Threat label as reported by the source feed.
               link:
                 type: string
                 format: uri
-                description: URL of the source feed's entry for this indicator.
+                description: |
+                  URL of the source feed's entry for this indicator.
+                  Present only for urlhaus/threatfox/malwarebazaar.
               added:
                 type: string
                 format: date
-                description: Date the indicator was added to the source feed.
+                description: |
+                  Date the indicator was added to the source feed. Present
+                  only for urlhaus/threatfox/malwarebazaar.
         net:
           type: object
           description: |
@@ -986,6 +993,43 @@ components:
               description: |
                 `true` when the looked-up value is a bogon/reserved-range
                 address. Other fields are absent in that case.
+            drop:
+              type: object
+              description: |
+                Optional. Present only when this IP's network has a hit in
+                The Spamhaus Project's DROP/ASN-DROP netblock lists (a
+                droplet-side sidecar refresh, independent of ipinfo.io
+                above); absent means no hit was found, never "verified
+                clean". `cidr` and `asn` are two independent checks - either,
+                both, or neither may be present. A hit flags the NETWORK
+                hosting this IP, not the IOC value itself.
+              properties:
+                cidr:
+                  type: object
+                  description: |
+                    Present when the IP falls inside a netblock listed on
+                    Spamhaus's DROP (Don't Route Or Peer) list.
+                  properties:
+                    sblid:
+                      type: string
+                      description: |
+                        Spamhaus SBL reference id for the listed netblock,
+                        e.g. "SBL627127".
+                asn:
+                  type: object
+                  description: |
+                    Present when this IP's ASN is listed on Spamhaus's
+                    ASN-DROP list. Carries no sblid - ASN-DROP entries are
+                    referenced by ASN, not by SBL id.
+                  properties:
+                    asn:
+                      type: integer
+                      description: The flagged ASN number.
+                    asname:
+                      type: string
+                      description: |
+                        AS name as published by Spamhaus. May be absent even
+                        when the asn block itself is present.
         reg:
           type: object
           description: |

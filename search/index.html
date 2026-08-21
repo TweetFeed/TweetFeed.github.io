@@ -522,6 +522,27 @@
 			font-family: 'Rubik', sans-serif;
 			margin-top: 0.5rem;
 		}
+		.tfl-net-drop {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.4rem;
+			margin-top: 0.5rem;
+		}
+		.tfl-net-drop-chip {
+			display: inline-block;
+			max-width: 100%;
+			padding: 2px 9px;
+			border: 1px solid #595959;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			color: #333;
+			background: #f5f5f5;
+			word-break: break-word;
+		}
+		.tfl-net-drop-chip a {
+			color: #1178b3;
+		}
 
 		/* Feed explorer card (/search/) rules - same inline-per-page pattern as
 		   the .tfl- rules above (this panel is unique to /search/, avoids a
@@ -1661,8 +1682,8 @@
 			);
 		}
 
-		// Cross-feed corroboration from public abuse.ch feeds (optional API
-		// field, max 3 entries). Sibling pattern to renderAI() below - own
+		// Cross-feed corroboration from public threat feeds (optional API
+		// field, max 5 entries). Sibling pattern to renderAI() below - own
 		// tfl-ext- namespace, no verdict colors. Every field is esc()'d in
 		// text/attribute/href position; `link` only renders as an href when
 		// it passes a strict allowlist (must start with the urlhaus.abuse.ch,
@@ -1670,8 +1691,11 @@
 		// renders without a link rather than trusting an arbitrary URL from
 		// the API. bazaar.abuse.ch is safe to allow the same way: the backend
 		// builds that URL itself from a regex-validated 64-hex sha256, it
-		// never copies a URL out of the feed.
-		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox', malwarebazaar: 'MalwareBazaar' };
+		// never copies a URL out of the feed. usom/ipsum entries never carry
+		// a link at all (see tweetfeed/external.py's module docstring), so
+		// they're not in EXT_LINK_ALLOW - isAllowedExtLink already returns
+		// false for a missing/non-string link, same as any other unmatched src.
+		var EXT_SRC_LABELS = { urlhaus: 'URLhaus', threatfox: 'ThreatFox', malwarebazaar: 'MalwareBazaar', usom: 'USOM', ipsum: 'IPsum' };
 		var EXT_LINK_ALLOW = ['https://urlhaus.abuse.ch/', 'https://threatfox.abuse.ch/', 'https://bazaar.abuse.ch/'];
 
 		function isAllowedExtLink(link) {
@@ -1680,9 +1704,13 @@
 		}
 
 		function renderExternal(external) {
+			// Cap matches openapi.yaml's `external.maxItems` (5) - keep both
+			// in lockstep, same reasoning as tweetfeed/external.py's
+			// combine_matches docstring on why a stale local cap silently
+			// truncates a legitimately-corroborated IOC.
 			var entries = (Array.isArray(external) ? external : []).filter(function(e) {
 				return e && typeof e.src === 'string' && typeof e.threat === 'string';
-			}).slice(0, 3);
+			}).slice(0, 5);
 			if (!entries.length) return '';
 
 			var rows = entries.map(function(e) {
@@ -1707,8 +1735,62 @@
 				'<div class="tfl-ext" role="note" aria-label="External feed corroboration">' +
 					'<div class="tfl-ext-header"><i class="fas fa-globe"></i> External feeds</div>' +
 					rows +
-					'<div class="tfl-ext-foot">Third-party open feeds (abuse.ch) - shown for corroboration, not part of the canonical feed data.</div>' +
+					'<div class="tfl-ext-foot">Third-party open feeds (abuse.ch, USOM via elliotwutingfeng/USOM-Blocklists, IPsum by @stamparm) - shown for corroboration, not part of the canonical feed data.</div>' +
 				'</div>'
+			);
+		}
+
+		// Spamhaus DROP/ASN-DROP corroboration (optional net.drop field,
+		// nested inside net above, IP lookups only - see the ipmeta.json
+		// sidecar's `drop` key). Own guard, same isolation principle as
+		// isAllowedExtLink() above: the cidr half's sblid renders as a
+		// https://check.spamhaus.org/ link only after passing a strict
+		// /^SBL\d+$/ format check - that's the exact link Spamhaus's own DNS
+		// TXT record hands out for a DROP-listed IP, so a validated sblid is
+		// safe to build a URL from without trusting an arbitrary string from
+		// the API. A cidr hit and an asn hit are independent claims with
+		// deliberately distinct wording: a cidr hit flags this IP's specific
+		// netblock, an asn hit flags the ASN that routes it - neither means
+		// the IOC value itself is listed anywhere. asname may be absent even
+		// when the asn half is present (ASN-DROP carries no sblid at all, so
+		// there is never a link for that half).
+		var SBLID_RE = /^SBL\d+$/;
+
+		function renderNetDrop(drop) {
+			if (!drop || typeof drop !== 'object' || Array.isArray(drop)) return '';
+
+			var chips = [];
+
+			if (drop.cidr && typeof drop.cidr === 'object' && !Array.isArray(drop.cidr) &&
+				typeof drop.cidr.sblid === 'string' && drop.cidr.sblid) {
+				var sblid = drop.cidr.sblid;
+				var cidrText = 'netblock on Spamhaus DROP (' + esc(sblid) + ')';
+				chips.push(
+					'<span class="tfl-net-drop-chip">' + (
+						SBLID_RE.test(sblid)
+							? '<a href="https://check.spamhaus.org/sbl/query/' + esc(sblid) + '" target="_blank" rel="noopener noreferrer">' + cidrText + '</a>'
+							: cidrText
+					) + '</span>'
+				);
+			}
+
+			if (drop.asn && typeof drop.asn === 'object' && !Array.isArray(drop.asn)) {
+				var asnText = 'ASN on Spamhaus ASN-DROP';
+				if (typeof drop.asn.asname === 'string' && drop.asn.asname) {
+					asnText += ' (' + esc(drop.asn.asname) + ')';
+				}
+				chips.push('<span class="tfl-net-drop-chip">' + asnText + '</span>');
+			}
+
+			if (!chips.length) return '';
+
+			return (
+				'<div class="tfl-net-drop">' + chips.join('') + '</div>' +
+				// Credit string mirrors ipmeta.json's top-level
+				// sources.spamhaus_drop.copyright - the worker only forwards
+				// the per-IP `drop` entry, not that sidecar-level block, so
+				// it can't be read at runtime and is hardcoded here instead.
+				'<div class="tfl-net-foot">Source: The Spamhaus Project DROP list, &copy; 2026 The Spamhaus Project SLU</div>'
 			);
 		}
 
@@ -1716,14 +1798,15 @@
 		// lookups only). Sibling pattern to renderExternal() above - own
 		// tfl-net- namespace, no verdict colors. Every field is esc()'d;
 		// renders only when net is a plain object with at least one of
-		// org/country/city/bogon present.
+		// org/country/city/bogon/drop present.
 		function renderNet(net) {
 			if (!net || typeof net !== 'object' || Array.isArray(net)) return '';
 			var hasOrg = typeof net.org === 'string' && net.org;
 			var hasCountry = typeof net.country === 'string' && net.country;
 			var hasCity = typeof net.city === 'string' && net.city;
 			var isBogon = net.bogon === true;
-			if (!hasOrg && !hasCountry && !hasCity && !isBogon) return '';
+			var dropHtml = renderNetDrop(net.drop);
+			if (!hasOrg && !hasCountry && !hasCity && !isBogon && !dropHtml) return '';
 
 			var line = isBogon
 				? 'bogon / reserved range'
@@ -1734,11 +1817,21 @@
 				? ', fetched ' + esc(net.fetched_at.slice(0, 10))
 				: '';
 
+			var lineHtml = line ? '<div class="tfl-net-row">' + line + '</div>' : '';
+			// Only attribute to ipinfo.io when something it actually sourced
+			// (org/country/city/bogon) is on screen - a record with a drop
+			// hit but no ipinfo.io fields shouldn't credit ipinfo.io for
+			// data it didn't provide.
+			var ipinfoFootHtml = line
+				? '<div class="tfl-net-foot">(ipinfo.io' + fetchedSuffix + ')</div>'
+				: '';
+
 			return (
 				'<div class="tfl-net" role="note" aria-label="IP network metadata">' +
 					'<div class="tfl-net-header"><i class="fas fa-network-wired"></i> Network</div>' +
-					'<div class="tfl-net-row">' + line + '</div>' +
-					'<div class="tfl-net-foot">(ipinfo.io' + fetchedSuffix + ')</div>' +
+					lineHtml +
+					dropHtml +
+					ipinfoFootHtml +
 				'</div>'
 			);
 		}
