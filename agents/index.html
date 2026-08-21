@@ -43,18 +43,14 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=44" rel="stylesheet">
+	<link href="../css/index.css?v=45" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=44" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=45" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css" integrity="sha512-3xLMEigMNYLDJLAgaGlDSxpGykyb+nQnJBzbkQy2a0gyVKL2ZpNOPIj1rD8IPFaJbwAgId/atho1+LBpWu5DhA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js" integrity="sha512-MinqHeqca99q5bWxFNQEQpplMBFiUNrEwuuDj2rCSh1DgeeTXUgvgYIHZ1puBS9IKBkdfLMSk/ZWVDasa3Y/2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script>
-	hljs.highlightAll();
-	</script>
+	<!-- highlight.js (js + css) removed: this page has no <pre><code> block to highlight. -->
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -168,6 +164,25 @@
 			top: 0;
 			outline: 2px solid #4682B4;
 			outline-offset: -2px;
+		}
+	</style>
+	<style>
+		/* Page outline. Bootstrap ships h2 at 2rem and h3 at 1.75rem, four
+		   pixels apart, which is not a hierarchy; .section-heading sets
+		   neither size nor margin so the other 49 pages that use it are not
+		   resized from here. Same 28/20 pair as /feeds/. */
+		.agt-block-head { font-size: 28px; margin: 0 0 0.35rem; }
+		.agt-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
+		/* The desktop navbar is fixed-top at 56px and nothing compensates for
+		   it, so the three anchors this page already had landed underneath
+		   it: #option-skills came to rest at top 0. */
+		@media (min-width: 992px) {
+			.agt-block-head, .agt-sect-head { scroll-margin-top: 72px; }
+		}
+		/* Paths and media types have no spaces to break at, so the three
+		   column discovery table pushed 475px into a 353px viewport. */
+		@media (max-width: 991.98px) {
+			.tf-doc-table td, .tf-doc-table th { word-break: break-word; overflow-wrap: anywhere; }
 		}
 	</style>
 	<!-- Page Wrapper -->
@@ -289,6 +304,41 @@
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 				<div class="tf-prose">
+				<div class="tf-headline">
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value">10</div>
+						<div class="tf-headline-label">MCP tools</div>
+						<div class="tf-headline-sub">mcp.tweetfeed.live</div>
+					</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value">5</div>
+						<div class="tf-headline-label">Agent Skills</div>
+						<div class="tf-headline-sub">RFC v0.2.0</div>
+					</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value">4</div>
+						<div class="tf-headline-label">Bulk formats</div>
+						<div class="tf-headline-sub">STIX, TAXII, RSS, diff</div>
+					</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value">15 min</div>
+						<div class="tf-headline-label">Refresh</div>
+						<div class="tf-headline-sub">CC0, no API key</div>
+					</div>
+				</div>
+				<nav class="page-toc" aria-label="Sections on this page">
+					<span class="page-toc-label">Connect</span>
+					<a class="page-toc-chip" href="#option-mcp">MCP server</a>
+					<a class="page-toc-chip" href="#option-skills">Agent Skills</a>
+					<a class="page-toc-chip" href="#option-api">REST API</a>
+					<span class="page-toc-label">Data</span>
+					<a class="page-toc-chip" href="#option-bulk">Bulk formats</a>
+					<a class="page-toc-chip" href="#discovery">Discovery</a>
+					<span class="page-toc-label">Reference</span>
+					<a class="page-toc-chip" href="#license">License</a>
+					<a class="page-toc-chip" href="#faq">FAQ</a>
+				</nav>
+				<hr class="divider">
 				<div class="agent-setup-callout">
 					<p>Fastest path: paste this line to your agent and it configures itself.</p>
 					<pre class="code-block">Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it <i class="tf-copy far fa-copy" data-copy="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
@@ -297,7 +347,7 @@
 					<div class="col-md-4 mb-3">
 						<a href="#option-mcp" class="agent-option-link">
 							<div class="card agent-option-card">
-								<h4>MCP server</h4>
+								<p class="agent-option-title">MCP server</p>
 								<code>mcp.tweetfeed.live</code>
 								<ul>
 									<li>Claude Desktop, Cursor, Zed</li>
@@ -309,7 +359,7 @@
 					<div class="col-md-4 mb-3">
 						<a href="#option-skills" class="agent-option-link">
 							<div class="card agent-option-card">
-								<h4>Agent Skills</h4>
+								<p class="agent-option-title">Agent Skills</p>
 								<code>/.well-known/agent-skills/</code>
 								<ul>
 									<li>RFC v0.2.0 manifest</li>
@@ -321,7 +371,7 @@
 					<div class="col-md-4 mb-3">
 						<a href="#option-api" class="agent-option-link">
 							<div class="card agent-option-card">
-								<h4>REST API</h4>
+								<p class="agent-option-title">REST API</p>
 								<code>api.tweetfeed.live</code>
 								<ul>
 									<li>Any HTTP client, n8n, Make, Zapier</li>
@@ -333,7 +383,11 @@
 				</div>
 				<p class="agent-option-note">All three are free, no authentication, no rate limit for normal use. Same IOC data underneath.</p>
 
-				<h3 id="option-mcp" class="section-heading">MCP server</h3>
+				<hr class="divider">
+				<h2 id="connect" class="section-heading agt-block-head">Connect</h2>
+				<p>Three ways in, one data set underneath. Pick the one your client already speaks.</p>
+
+				<h3 id="option-mcp" class="section-heading agt-sect-head">MCP server</h3>
 				<p>
 					Remote <b>Model Context Protocol</b> server at <code style="color:#1178b3;">https://mcp.tweetfeed.live/</code>
 					over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-11-25</code>). Works with Claude Desktop, Claude Code,
@@ -354,10 +408,10 @@
 
 				<span class="tf-code-label"><b>Available tools</b></span>
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered" style="border:none;width:100%;">
+					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
 						<colgroup>
-							<col span="1" style="width: 25%;">
-							<col span="1" style="width: 75%;">
+							<col span="1" style="width: 30%;">
+							<col span="1" style="width: 70%;">
 						</colgroup>
 						<thead>
 							<tr>
@@ -465,16 +519,15 @@
 					&nbsp;&middot;&nbsp; Server card:
 					<a target="_blank" rel="noopener noreferrer" href="/.well-known/mcp/server-card.json">/.well-known/mcp/server-card.json</a>
 				</p>
-				<br>
 
-				<h3 id="option-skills" class="section-heading">Agent Skills</h3>
+				<h3 id="option-skills" class="section-heading agt-sect-head">Agent Skills</h3>
 				<p>
 					For agents that consume
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/cloudflare/agent-skills-discovery-rfc">Agent Skills Discovery (RFC v0.2.0)</a>
 					instructions instead of MCP tools. Each skill is a markdown file describing how to call the feed.
 				</p>
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered" style="border:none;width:100%;">
+					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
 						<colgroup>
 							<col span="1" style="width: 30%;">
 							<col span="1" style="width: 70%;">
@@ -512,22 +565,23 @@
 					<a href="/.well-known/agent-skills/index.json">/.well-known/agent-skills/index.json</a>
 					&nbsp;(includes sha256 content digest for integrity).
 				</p>
-				<br>
 
-				<h3 id="option-api" class="section-heading">REST API</h3>
+				<h3 id="option-api" class="section-heading agt-sect-head">REST API</h3>
 				<p>
 					No MCP or skills harness? Call the public REST API directly: no key, no auth, CORS-enabled, JSON responses.
 				</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/<b class="tf-ph">{time}</b>/<b class="tf-ph">{filter1}</b>/<b class="tf-ph">{filter2}</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<p class="tf-note">The <a href="../api/">API page</a> is the reference: every parameter, the 10,000-row result cap and its truncation headers, conditional requests, and the campaigns, counts, trends and IOC-lookup endpoints.</p>
-				<br>
 
-				<h3 id="option-bulk" class="section-heading">Bulk data formats</h3>
+				<hr class="divider">
+				<h2 id="data" class="section-heading agt-block-head">Bulk data and discovery</h2>
+				<p>For platforms that ingest files on a schedule instead of calling a tool per question.</p>
+				<h3 id="option-bulk" class="section-heading agt-sect-head">Bulk data formats</h3>
 				<p>
 					Static bundles for SIEM/Threat Intelligence platforms and incremental sync. All regenerated every 15 minutes from the same pipeline that feeds the API and MCP server.
 				</p>
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered" style="border:none;width:100%;">
+					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
 						<colgroup>
 							<col span="1" style="width: 40%;">
 							<col span="1" style="width: 60%;">
@@ -556,9 +610,8 @@
 						</tr>
 					</table>
 				</div>
-				<br>
 
-				<h3 class="section-heading">Discovery endpoints</h3>
+				<h3 id="discovery" class="section-heading agt-sect-head">Discovery endpoints</h3>
 				<p>
 					Crawlers and agents can discover every integration from a single
 					<code>HEAD https://tweetfeed.live/</code>: the <code>Link</code> header carries
@@ -566,7 +619,7 @@
 					<code>rel="service-doc"</code> and <code>rel="service-desc"</code> (RFC 8288).
 				</p>
 				<div class="table-responsive">
-					<table class="table table-striped table-bordered" style="border:none;width:100%;">
+					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
 						<colgroup>
 							<col span="1" style="width: 40%;">
 							<col span="1" style="width: 22%;">
@@ -576,34 +629,34 @@
 							<tr>
 								<th><b>Path</b></th>
 								<th><b>Format</b></th>
-								<th><b>Spec</b></th>
+								<th class="d-none d-lg-table-cell"><b>Spec</b></th>
 							</tr>
 						</thead>
 						<tr>
 							<td><a href="/.well-known/api-catalog">/.well-known/api-catalog</a></td>
 							<td><code>application/linkset+json</code></td>
-							<td>RFC 9727</td>
+							<td class="d-none d-lg-table-cell">RFC 9727</td>
 						</tr>
 						<tr>
 							<td><a href="/.well-known/agent-skills/index.json">/.well-known/agent-skills/index.json</a></td>
 							<td><code>application/json</code></td>
-							<td>Agent Skills Discovery RFC v0.2.0</td>
+							<td class="d-none d-lg-table-cell">Agent Skills Discovery RFC v0.2.0</td>
 						</tr>
 						<tr>
 							<td><a href="/.well-known/mcp/server-card.json">/.well-known/mcp/server-card.json</a></td>
 							<td><code>application/json</code></td>
-							<td>MCP SEP-1649 draft</td>
+							<td class="d-none d-lg-table-cell">MCP SEP-1649 draft</td>
 						</tr>
 						<tr>
 							<td><a href="/robots.txt">robots.txt</a> &middot; <code>Content-Signal</code></td>
 							<td><code>text/plain</code></td>
-							<td><a target="_blank" rel="noopener noreferrer" href="https://contentsignals.org/">contentsignals.org</a></td>
+							<td class="d-none d-lg-table-cell"><a target="_blank" rel="noopener noreferrer" href="https://contentsignals.org/">contentsignals.org</a></td>
 						</tr>
 					</table>
 				</div>
-				<br>
 
-				<h3 class="section-heading">License</h3>
+				<hr class="divider">
+				<h2 id="license" class="section-heading agt-block-head">License</h2>
 				<p>
 					IOC data (feed rows, API responses, MCP tool outputs) is freely available; see the <a href="../tos/">Terms of Service</a> for license.
 					No attribution required, no warranty.
@@ -612,6 +665,30 @@
 				</p>
 
 				</div>
+				<hr class="divider">
+				<section class="faq-section" id="faq">
+					<h2 class="section-heading">Frequently asked questions</h2>
+					<details>
+						<summary>Do I need an API key or an account?</summary>
+						<p>No. The MCP server, the Agent Skills and the REST API are all open: no key, no sign-up, and no rate limit for normal use. The IOC data is CC0.</p>
+					</details>
+					<details>
+						<summary>MCP server, Agent Skills or REST API - which one?</summary>
+						<p>If your client speaks Model Context Protocol (Claude Desktop, Claude Code, Cursor, Zed), use the <a href="#option-mcp" class="text-decoration-none">MCP server</a>: the agent gets 10 typed tools and chooses between them itself. If it consumes <a href="#option-skills" class="text-decoration-none">Agent Skills</a> instructions instead, point it at the skills manifest. If it is a script, or an n8n, Make or Zapier workflow, call the <a href="#option-api" class="text-decoration-none">REST API</a>. All three read the same rows.</p>
+					</details>
+					<details>
+						<summary>Which clients work with the MCP server?</summary>
+						<p>Any client that speaks JSON-RPC 2.0 over HTTP at <code>protocolVersion 2025-11-25</code>. It is tested with Claude Desktop, Claude Code, Cursor and Zed. Nothing gets installed: the server is remote, so a URL in the client config is all it takes.</p>
+					</details>
+					<details>
+						<summary>How fresh is the data an agent sees?</summary>
+						<p>The pipeline rebuilds every 15 minutes, and the MCP server, the REST API and the bulk files all read that same output. An agent asking twice in the same quarter of an hour gets the same answer.</p>
+					</details>
+					<details>
+						<summary>Can I redistribute what the agent pulls?</summary>
+						<p>The IOC data is free to reuse; the <a href="../tos/">Terms of Service</a> carries the license. No attribution required, no warranty. The MCP server source is <a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/tweetfeed-mcp">MIT</a>.</p>
+					</details>
+				</section>
 			</div> <!-- content -->
 			<!-- End of Main Content -->
 			<!-- Footer -->

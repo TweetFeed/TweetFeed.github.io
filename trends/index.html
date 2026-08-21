@@ -43,9 +43,9 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=44" rel="stylesheet">
+	<link href="../css/index.css?v=45" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=44" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=45" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -242,47 +242,9 @@
 			height: 100%;
 			font-family: 'Rubik', sans-serif;
 		}
-		/* ── Headline figures ─────────────────────────────────────────────
-		   All four numbers already existed on this page; they were just
-		   scattered below a full-screen chart, so the first one sat 1,799px
-		   down. Black 1px borders per the site's card idiom. */
-		.trd-headline {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			gap: 0;
-			border: 1px solid black;
-			border-radius: 3px;
-			background: #fff;
-			margin-bottom: 1.5rem;
-		}
-		.trd-headline-cell {
-			padding: 0.9rem 0.75rem;
-			text-align: center;
-			font-family: 'Rubik', sans-serif;
-		}
-		.trd-headline-cell + .trd-headline-cell { border-left: 1px solid black; }
-		.trd-headline-value {
-			font-size: 30px;
-			font-weight: 600;
-			line-height: 1.1;
-			color: #1c1c1c;
-			font-variant-numeric: tabular-nums;
-		}
-		.trd-headline-label {
-			margin-top: 2px;
-			font-size: 11px;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #4b5563;
-		}
-		.trd-headline-sub { font-size: 12px; color: #737373; }
-		@media (max-width: 767.98px) {
-			.trd-headline { grid-template-columns: repeat(2, 1fr); }
-			.trd-headline-cell:nth-child(3) { border-left: 0; }
-			.trd-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
-			.trd-headline-value { font-size: 24px; }
-		}
+		/* Shared .tf-headline lives in tweetfeed.css. Only the container
+		   margin is page-specific. */
+		.tf-headline { margin: 0 0 1.5rem; }
 
 		/* ── Top movers as diverging bars ────────────────────────────────
 		   The data is a week-over-week comparison (+450%, -33%, -92%), which a
@@ -515,26 +477,26 @@
 					     you had to scroll past a full-screen chart to learn
 					     anything. The per-section KPI tiles below stay where they
 					     are; this row is the summary, not a replacement. -->
-					<div class="trd-headline" id="trendsHeadline">
-						<div class="trd-headline-cell">
-							<div class="trd-headline-value" id="trendsHlVolume">-</div>
-							<div class="trd-headline-label">IOCs</div>
-							<div class="trd-headline-sub">last 30 days</div>
+					<div class="tf-headline" id="trendsHeadline">
+						<div class="tf-headline-cell">
+							<div class="tf-headline-value" id="trendsHlVolume">-</div>
+							<div class="tf-headline-label">IOCs</div>
+							<div class="tf-headline-sub">last 30 days</div>
 						</div>
-						<div class="trd-headline-cell">
-							<div class="trd-headline-value" id="trendsHlNew">-</div>
-							<div class="trd-headline-label">new values</div>
-							<div class="trd-headline-sub" id="trendsHlNewSub">last 7 days</div>
+						<div class="tf-headline-cell">
+							<div class="tf-headline-value" id="trendsHlNew">-</div>
+							<div class="tf-headline-label">new values</div>
+							<div class="tf-headline-sub" id="trendsHlNewSub">last 7 days</div>
 						</div>
-						<div class="trd-headline-cell">
-							<div class="trd-headline-value" id="trendsHlProducers">-</div>
-							<div class="trd-headline-label">researchers</div>
-							<div class="trd-headline-sub">last 30 days</div>
+						<div class="tf-headline-cell">
+							<div class="tf-headline-value" id="trendsHlProducers">-</div>
+							<div class="tf-headline-label">researchers</div>
+							<div class="tf-headline-sub">last 30 days</div>
 						</div>
-						<div class="trd-headline-cell">
-							<div class="trd-headline-value" id="trendsHlBus">-</div>
-							<div class="trd-headline-label" id="trendsHlBusLabel">accounts</div>
-							<div class="trd-headline-sub">cover half the feed</div>
+						<div class="tf-headline-cell">
+							<div class="tf-headline-value" id="trendsHlBus">-</div>
+							<div class="tf-headline-label" id="trendsHlBusLabel">accounts</div>
+							<div class="tf-headline-sub">cover half the feed</div>
 						</div>
 					</div>
 
@@ -1030,7 +992,7 @@
 			function setCell(sel, value) {
 				var $el = $(sel);
 				if (value === null || value === undefined) {
-					$el.closest('.trd-headline-cell').hide();
+					$el.closest('.tf-headline-cell').hide();
 					return;
 				}
 				$el.text(value);

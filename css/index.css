@@ -132,11 +132,6 @@ body {
     color: blue !important;
 }
 
-
-.buttonHover:hover {
-    background: #009ad6 !important;
-}
-
 .fa-copy:hover {
     color: blue !important;
 }

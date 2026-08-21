@@ -44,9 +44,9 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=44" rel="stylesheet">
+	<link href="../css/index.css?v=45" rel="stylesheet">
 	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=44" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=45" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -256,73 +256,11 @@
 		}
 	</style>
 	<style>
-		/* ── Headline figures ─────────────────────────────────────────────
-		   Same component /trends/ (.trd-headline), /hunt/ (.hnt-headline) and
-		   /campaigns/ (.tfc-headline) each carry in their own inline <style>.
-		   Declarations lifted from .trd-headline, whose label colour and
-		   2-column mobile fallback were already contrast-reviewed. Kept page
-		   local like the other three: promoting all four to a shared
-		   .tf-headline in tweetfeed.css is its own change.
-		   Three of the four values come from the counts.json fetch this page
-		   already makes; the fourth is static. No extra request. */
-		.fds-headline {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			border: 1px solid black;
-			border-radius: 3px;
-			background: #fff;
-			margin: 0 0 1.25rem;
-		}
-		.fds-headline-cell {
-			padding: 0.9rem 0.75rem;
-			text-align: center;
-			font-family: 'Rubik', sans-serif;
-		}
-		.fds-headline-cell + .fds-headline-cell { border-left: 1px solid black; }
-		.fds-headline-value {
-			font-size: 30px;
-			font-weight: 600;
-			line-height: 1.1;
-			color: #1c1c1c;
-			font-variant-numeric: tabular-nums;
-		}
-		.fds-headline-label {
-			margin-top: 2px;
-			font-size: 11px;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #4b5563;
-		}
-		.fds-headline-sub { font-size: 12px; color: #737373; }
-		@media (max-width: 767.98px) {
-			.fds-headline { grid-template-columns: repeat(2, 1fr); }
-			.fds-headline-cell:nth-child(3) { border-left: 0; }
-			.fds-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
-			.fds-headline-value { font-size: 24px; }
-		}
+		/* Shared .tf-headline lives in tweetfeed.css; this page uses the
+		   default margin. Three of the four values come from the counts.json
+		   fetch this page already makes; the fourth is static. */
 
-		/* ── Grouped section chips ────────────────────────────────────────
-		   Nine flat chips said nothing about which chip belonged to which
-		   job. The label is a flex item of the shared .page-toc, reusing the
-		   11px/700/.06em/#4b5563 eyebrow that .fds-headline-label,
-		   .tf-foot-head and .docs-nav-label already share. */
-		.fds-toc-label {
-			align-self: center;
-			font-family: 'Rubik', sans-serif;
-			font-size: 11px;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #4b5563;
-		}
-		.fds-toc-label + .page-toc-chip { margin-right: 2px; }
-		.fds-toc-label:not(:first-child) { margin-left: 12px; }
-		@media (max-width: 767.98px) {
-			.fds-toc-label,
-			.fds-toc-label:not(:first-child) { flex-basis: 100%; margin-left: 0; }
-			.fds-toc-label:not(:first-child) { margin-top: 6px; }
-		}
+		/* Shared .page-toc-label lives in tweetfeed.css. */
 
 		/* ── Page outline ─────────────────────────────────────────────────
 		   h1 42 > h2 28 > h3 20. Bootstrap ships h2 at 2rem and h3 at
@@ -580,39 +518,39 @@
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 				<div class="tf-prose">
-				<div class="fds-headline">
-					<div class="fds-headline-cell">
-						<div class="fds-headline-value" id="feedsHlToday">-</div>
-						<div class="fds-headline-label">IOCs today</div>
-						<div class="fds-headline-sub">since 00:00 UTC</div>
+				<div class="tf-headline">
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value" id="feedsHlToday">-</div>
+						<div class="tf-headline-label">IOCs today</div>
+						<div class="tf-headline-sub">since 00:00 UTC</div>
 					</div>
-					<div class="fds-headline-cell">
-						<div class="fds-headline-value" id="feedsHlMonth">-</div>
-						<div class="fds-headline-label">last 30 days</div>
-						<div class="fds-headline-sub">rolling window</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value" id="feedsHlMonth">-</div>
+						<div class="tf-headline-label">last 30 days</div>
+						<div class="tf-headline-sub">rolling window</div>
 					</div>
-					<div class="fds-headline-cell">
-						<div class="fds-headline-value" id="feedsHlYear">-</div>
-						<div class="fds-headline-label">last 365 days</div>
-						<div class="fds-headline-sub">full archive</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value" id="feedsHlYear">-</div>
+						<div class="tf-headline-label">last 365 days</div>
+						<div class="tf-headline-sub">full archive</div>
 					</div>
-					<div class="fds-headline-cell">
-						<div class="fds-headline-value">15 min</div>
-						<div class="fds-headline-label">refresh</div>
-						<div class="fds-headline-sub">CC0, no API key</div>
+					<div class="tf-headline-cell">
+						<div class="tf-headline-value">15 min</div>
+						<div class="tf-headline-label">refresh</div>
+						<div class="tf-headline-sub">CC0, no API key</div>
 					</div>
 				</div>
 				<div id="feedsCountsError"></div>
 				<nav class="page-toc" aria-label="Sections on this page">
-					<span class="fds-toc-label">Download</span>
+					<span class="page-toc-label">Download</span>
 					<a class="page-toc-chip" href="#csv">CSV</a>
 					<a class="page-toc-chip" href="#blocklist">Blocklists</a>
-					<span class="fds-toc-label">Subscribe</span>
+					<span class="page-toc-label">Subscribe</span>
 					<a class="page-toc-chip" href="#rss">RSS firehose</a>
 					<a class="page-toc-chip" href="#per-tag-rss">Per-tag</a>
 					<a class="page-toc-chip" href="#per-type-rss">Per-type</a>
 					<a class="page-toc-chip" href="#per-user-rss">Per-user</a>
-					<span class="fds-toc-label">Integrate</span>
+					<span class="page-toc-label">Integrate</span>
 					<a class="page-toc-chip" href="#misp">MISP</a>
 					<a class="page-toc-chip" href="#stix">STIX 2.1</a>
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>

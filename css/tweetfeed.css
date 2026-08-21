@@ -291,6 +291,81 @@ hr.divider {
 }
 .page-toc-chip:hover, .feeds-toc-chip:hover { background: #4682B4; color: #fff; text-decoration: none; }
 
+/* Uppercase eyebrow that groups the chips above into named runs. Promoted
+   from /feeds/, which was the only page that had it. */
+.page-toc-label {
+	align-self: center;
+	font-family: 'Rubik', sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #4b5563;
+}
+.page-toc-label + .page-toc-chip { margin-right: 2px; }
+.page-toc-label:not(:first-child) { margin-left: 12px; }
+@media (max-width: 767.98px) {
+	.page-toc-label,
+	.page-toc-label:not(:first-child) { flex-basis: 100%; margin-left: 0; }
+	.page-toc-label:not(:first-child) { margin-top: 6px; }
+}
+
+/* Headline figure strip: one bordered grid, values in tabular numerals,
+   labels in small caps. /trends/, /hunt/ and /feeds/ each carried a
+   byte-identical private copy (.trd- .hnt- .fds-) because promoting it cost
+   a site-wide ?v= bump on its own. /agents/ needed a fifth copy and that
+   redesign pays the bump anyway, so the three merged here. Declarations
+   lifted verbatim from .trd-headline, whose label colour and 2-column
+   mobile fallback were already contrast-reviewed. The container margin is
+   the only thing the three pages disagreed on: the default below is the
+   /feeds/ value and the other two override that one line locally.
+   /campaigns/ keeps its own .tfc-headline: it is a 3-column variant with a
+   different breakpoint, so a modifier here would cost more rules than the
+   duplicate it removes. */
+.tf-headline {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #fff;
+	margin: 0 0 1.25rem;
+}
+.tf-headline-cell {
+	padding: 0.9rem 0.75rem;
+	text-align: center;
+	font-family: 'Rubik', sans-serif;
+}
+.tf-headline-cell + .tf-headline-cell { border-left: 1px solid black; }
+.tf-headline-value {
+	font-size: 30px;
+	font-weight: 600;
+	line-height: 1.1;
+	color: #1c1c1c;
+	font-variant-numeric: tabular-nums;
+}
+.tf-headline-label {
+	margin-top: 2px;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #4b5563;
+}
+.tf-headline-sub { font-size: 12px; color: #737373; }
+@media (max-width: 767.98px) {
+	.tf-headline { grid-template-columns: repeat(2, 1fr); }
+	.tf-headline-cell:nth-child(3) { border-left: 0; }
+	.tf-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
+	.tf-headline-value { font-size: 24px; }
+}
+
+/* Documentation tables (/agents/): the cells hold prose and endpoint paths,
+   not IOC values, so they read left-aligned. table.css centres every .table
+   cell for the IOC tables, which is why this needs its own class. */
+.table.tf-doc-table th, .table.tf-doc-table td { text-align: left; }
+.table.tf-doc-table td { vertical-align: top; }
+
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
 
@@ -360,9 +435,9 @@ hr.divider {
 	overflow-wrap: anywhere;
 	text-align: left;
 }
+/* Full prose width: at 980px centred the row sat 100px inside the headline strip and the tables it introduces. */
 .agent-options {
-	max-width: 980px;
-	margin: 0 auto 1rem;
+	margin: 0 0 1rem;
 }
 .agent-option-link,
 .agent-option-link:hover {
@@ -383,7 +458,7 @@ hr.divider {
 .agent-option-link:focus-visible .agent-option-card {
 	background: #f8f9fa;
 }
-.agent-option-card h4 {
+.agent-option-card .agent-option-title {
 	color: #1178b3;
 	font-family: 'Segoe UI', Arial, sans-serif;
 	font-weight: 600;
