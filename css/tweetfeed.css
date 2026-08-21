@@ -360,11 +360,24 @@ hr.divider {
 	.tf-headline-value { font-size: 24px; }
 }
 
-/* Documentation tables (/agents/): the cells hold prose and endpoint paths,
-   not IOC values, so they read left-aligned. table.css centres every .table
-   cell for the IOC tables, which is why this needs its own class. */
-.table.tf-doc-table th, .table.tf-doc-table td { text-align: left; }
+/* Documentation tables (/agents/, /api/): the cells hold prose and endpoint
+   paths, not IOC values, so they read left-aligned. table.css also centres
+   every .table cell and sizes it with a clamp() meant for IOC rows, which
+   left the Purpose column at 12px running 75 to 131 characters per line.
+   14px inside a 900px cap lands it at about 74, and the site had already
+   settled on that measure: .docs-content p caps at 72ch and /hunt/'s lede
+   at 68ch. max-width beats the inline width:100% on the table, so the
+   attribute does not need touching. */
+.table.tf-doc-table { max-width: 900px; }
+.table.tf-doc-table th, .table.tf-doc-table td { text-align: left; font-size: 14px; line-height: 1.55; }
 .table.tf-doc-table td { vertical-align: top; }
+/* #e83e8c is Bootstrap's default --pink, which nobody picked: 3.82:1 on
+   white and 3.41:1 on the striped rows, under the 4.5:1 AA floor, and it is
+   the colour carrying the meaning here (tool names, parameters, enum
+   values). #c2185b keeps the hue and gives 5.87:1 and 5.25:1. The site's
+   own #1178b3 was measured and rejected: 4.30:1 on the striped rows, and it
+   collides with the links living in the same cells. */
+.tf-prose table code { color: #c2185b; font-size: 13px; }
 
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
@@ -426,14 +439,6 @@ hr.divider {
 	font-size: 15px;
 	font-family: 'Rubik', sans-serif;
 	margin-bottom: 0.4rem;
-}
-.agent-setup-callout .code-block {
-	display: inline-block;
-	max-width: 100%;
-	margin: 0;
-	white-space: pre-wrap;
-	overflow-wrap: anywhere;
-	text-align: left;
 }
 /* Full prose width: at 980px centred the row sat 100px inside the headline strip and the tables it introduces. */
 .agent-options {
@@ -1424,3 +1429,28 @@ a.tf-social:focus-visible { outline: 2px solid #4682B4; outline-offset: 2px; }
 	.navbar-nav li a.dropdown-item.tf-menu-item,
 	.tf-footer a.tf-foot-link { transition: none; }
 }
+
+/* Promoted out of index.html's inline <style> on 2026-08-21 so /agents/ can
+   use the same control instead of a second copy. Rules unchanged. */
+/* Agent-setup pill (home hero). Same geometry Cloudflare uses on its
+   /agent-setup/ page: full-round, 40px tall, 0 17px padding. Solid dark
+   rather than light: a light pill with a hairline border dissolved into
+   this page and stopped reading as a control at all. The whole pill is the
+   copy target; utils.js swaps the label in place to confirm. */
+.tf-agent-setup { text-align: center; margin: 0.6rem auto 1.1rem; }
+.tf-agent-pill { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 17px; max-width: 100%;
+	border: 1px solid #0f172a; border-radius: 999px; background: #0f172a; color: #f1f5f9;
+	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -.01em;
+	/* NOT line-height:1. At 14px the line box would be exactly 14px while the text
+	   needs 15, and the label's overflow:hidden then clips the 1px holding the
+	   descenders of g/y. Fixed 40px + align-items:center absorbs the taller box. */
+	line-height: 1.5;
+	white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.18);
+	transition: background .15s, border-color .15s, box-shadow .15s; }
+.tf-agent-pill:hover { background: #1e293b; border-color: #1e293b; box-shadow: 0 4px 14px rgba(15,23,42,.24); }
+.tf-agent-pill .tf-agent-pill-spark { color: #7dd3fc; flex-shrink: 0; transition: color .15s; }
+.tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
+.tf-agent-pill.is-copied { background: #166534; border-color: #166534; color: #ecfdf5; }
+.tf-agent-pill.is-copied .tf-agent-pill-spark { color: #86efac; }
+.tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
+@media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 14px; gap: 7px; font-size: 13px; } }
