@@ -796,11 +796,25 @@ def _same_block_family_weights(css_text: str) -> set[tuple[str, int]]:
     return pairs
 
 
+# Families deliberately requested at 400 only, so their bold is synthesised.
+# See check_font_weights_loaded's docstring for why this one is here.
+SYNTHETIC_BOLD_BY_DESIGN = {"Alegreya Sans SC"}
+
+
 def check_font_weights_loaded(pages: list[str]) -> list[str]:
     """Every font-weight paired with a tracked family in the shared CSS or a
     page's own <style> blocks must be a weight that page's Google Fonts
     <link>s actually load - otherwise the browser is back to synthesising a
-    bold that was never served (see TRACKED_FONT_FAMILIES comment above)."""
+    bold that was never served (see TRACKED_FONT_FAMILIES comment above).
+
+    SYNTHETIC_BOLD_BY_DESIGN is the one deliberate exception. Alegreya Sans SC
+    is the hero wordmark, and its real 700 and 800 cuts are a heavier, more
+    condensed face than the 400 the browser was faking: loading them visibly
+    changed the wordmark and the owner rejected it on sight (2026-08-22). So
+    this family is requested at 400 only ON PURPOSE and .toph1 / .cardTitle
+    are synthesised, which is a typographic compromise taken with eyes open,
+    not the bug this check exists to catch. Rubik and any family added later
+    are still enforced."""
     shared_pairs = _same_block_family_weights(
         "\n".join(read(name) for name in SHARED_FONT_CSS_FILES)
     )
@@ -814,6 +828,8 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
             "\n".join(m.group(1) for m in STYLE_BLOCK_RE.finditer(html))
         )
         for family, weight in sorted(shared_pairs | page_pairs):
+            if family in SYNTHETIC_BOLD_BY_DESIGN:
+                continue  # deliberate, see the docstring
             if family not in loaded:
                 continue  # page never loads this family - out of scope
             if not _weight_loaded(loaded[family], weight):
