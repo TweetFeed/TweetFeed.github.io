@@ -360,17 +360,62 @@ hr.divider {
 	.tf-headline-value { font-size: 24px; }
 }
 
-/* Documentation tables (/agents/, /api/): the cells hold prose and endpoint
-   paths, not IOC values, so they read left-aligned. table.css also centres
-   every .table cell and sizes it with a clamp() meant for IOC rows, which
-   left the Purpose column at 12px running 75 to 131 characters per line.
-   14px inside a 900px cap lands it at about 74, and the site had already
-   settled on that measure: .docs-content p caps at 72ch and /hunt/'s lede
-   at 68ch. max-width beats the inline width:100% on the table, so the
-   attribute does not need touching. */
-.table.tf-doc-table { max-width: 900px; }
-.table.tf-doc-table th, .table.tf-doc-table td { text-align: left; font-size: 14px; line-height: 1.55; }
-.table.tf-doc-table td { vertical-align: top; }
+/* Documentation tables (/agents/, /api/). Three problems, all measured.
+   (1) The cells hold prose and endpoint paths, not IOC values, but
+   table.css centres every .table cell and sizes it with a clamp() meant for
+   IOC rows, which left the Purpose column at 12px running 75 to 131
+   characters a line. 14px inside a 900px cap lands it at about 74, the
+   measure the site had already settled on (.docs-content p caps at 72ch,
+   /hunt/'s lede at 68ch).
+   (2) Every other component on these pages carries a 1px black border:
+   cards, code blocks, the headline strip, the TOC chips. The table was the
+   one element speaking Bootstrap's #e3e6f0 hairline grid instead, drawn on
+   all four sides of every cell, plus zebra striping.
+   The frame goes on the .table-responsive wrapper rather than the table: a
+   border-collapse table does not round its own corners reliably, and the
+   wrapper already clips through its overflow-x:auto, which stays as the
+   small-screen safety net. The zebra and the vertical grid are turned off
+   here rather than by stripping .table-striped/.table-bordered out of the
+   markup, so the two pages change together without editing either one.
+   .table itself must stay on those tables: table-layout:fixed comes from
+   it, and without it the unscoped `table th:nth-child(N){width}` rules of
+   table.css:5-31 would take over from the <colgroup>. */
+.table-responsive:has(> .tf-doc-table) {
+	max-width: 900px;
+	border: 1px solid #000;
+	border-radius: 3px;
+	background: #fff;
+}
+.table.tf-doc-table { width: 100%; max-width: none; margin: 0; }
+.table.tf-doc-table thead th {
+	background: #f8f9fa;
+	border: 0;
+	border-bottom: 1px solid #000;
+	padding: 9px 14px;
+	font-family: 'Rubik', sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	color: #4b5563;
+	text-align: left;
+}
+.table.tf-doc-table td {
+	border: 0;
+	border-top: 1px solid #e3e6f0;
+	padding: 12px 14px;
+	vertical-align: top;
+	text-align: left;
+	font-size: 14px;
+	line-height: 1.55;
+}
+.table.tf-doc-table tbody tr:first-child td { border-top: 0; }
+.table.tf-doc-table tbody tr:nth-of-type(odd),
+.table.tf-doc-table tbody tr:nth-of-type(even) { background-color: transparent; }
+/* The identifier is not the same kind of thing as the tokens quoted inside
+   the prose next to it. Both were pink, so the first column read as a wall
+   of the same colour as the parameters it describes. */
+.table.tf-doc-table td:first-child code { color: #1c1c1c; font-weight: 600; }
 /* #e83e8c is Bootstrap's default --pink, which nobody picked: 3.82:1 on
    white and 3.41:1 on the striped rows, under the 4.5:1 AA floor, and it is
    the colour carrying the meaning here (tool names, parameters, enum

@@ -13,6 +13,19 @@ body {
     margin-right: 10%;
 }
 
+/* The footer opens with a 1px solid black rule and #content had no bottom
+   padding, so on 16 of the 21 pages measured the last element ended exactly
+   where the footer began and the two black rules touched. The footer starts
+   its own content 36px below that rule, so 40px above it leaves the same air
+   on both sides. One rule covers all 56 pages.
+   #content only, NOT #contentMobile: index.html and search/index.html render
+   both, stacked, with #contentMobile FIRST, so padding on both put 32px of
+   dead space in the middle of the page as well as at the end. #content is the
+   last block before the footer on every page. */
+#content {
+    padding-bottom: 40px;
+}
+
 /* style for small screens */
 @media (max-width: 991.98px) {
 
@@ -21,6 +34,10 @@ body {
         width: 98%;
         margin-left: 1%;
         margin-right: 1%;
+    }
+
+    #content {
+        padding-bottom: 32px;
     }
 }
 
