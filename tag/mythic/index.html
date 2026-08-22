@@ -446,26 +446,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is Mythic?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Mythic is an open-source modular C2 framework maintained by SpecterOps. Unlike monolithic frameworks, Mythic is built around pluggable agents - Apollo (.NET, Windows), Athena (.NET, multi-platform), Poseidon (Go, multi-platform), Apfell (macOS), Medusa (Python) - and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS). Operators mix and match for each engagement.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Is Mythic primarily used legitimately or maliciously?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Primarily a red-team and authorised-engagement tool. The open-source nature means real-world intrusions occasionally surface - most often using the Apollo or Athena agents - but mass-volume in commodity malware is low. The IOCs on this page reflect Mythic infrastructure researchers have observed in real intrusions, not the upstream tool itself.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
-						</details>
-						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this Mythic subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
-						</details>
-					</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is Mythic?</summary>
+						<p>Mythic is an open-source modular C2 framework maintained by SpecterOps. Unlike monolithic frameworks, Mythic is built around pluggable agents - Apollo (.NET, Windows), Athena (.NET, multi-platform), Poseidon (Go, multi-platform), Apfell (macOS), Medusa (Python) - and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS). Operators mix and match for each engagement.</p>
+					</details>
+					<details>
+						<summary>Is Mythic primarily used legitimately or maliciously?</summary>
+						<p>Primarily a red-team and authorised-engagement tool. The open-source nature means real-world intrusions occasionally surface - most often using the Apollo or Athena agents - but mass-volume in commodity malware is low. The IOCs on this page reflect Mythic infrastructure researchers have observed in real intrusions, not the upstream tool itself.</p>
+					</details>
+					<details>
+						<summary>How is this list updated?</summary>
+						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+					</details>
+					<details>
+						<summary>What is the license? Can I use this commercially?</summary>
+						<p>All TweetFeed IOC data, including this Mythic subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->

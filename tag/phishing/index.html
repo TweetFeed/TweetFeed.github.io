@@ -527,26 +527,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is phishing?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Phishing is a social-engineering attack in which an adversary impersonates a trusted brand, service or individual to trick the target into revealing credentials, deploying malware or transferring funds. The MITRE ATT&CK framework classifies it under T1566 (Phishing) with sub-techniques for spearphishing attachment (T1566.001), spearphishing link (T1566.002) and spearphishing via service (T1566.003). Common delivery vectors are email, SMS (smishing), instant message and voice (vishing).</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What kind of IOCs are tagged #phishing on TweetFeed?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">URLs, domains and IPs hosting phishing kits or fake login pages, observed by public Twitter/X researchers. Hashes are rare for phishing because the payload is usually a hosted webpage, not a binary. Adjacent tags include #scam (financial scam infrastructure), #opendir (open directories that host phishing kits) and brand-specific tags when researchers attribute the kit to a known impersonation campaign.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Phishing-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
-						</details>
-						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this Phishing subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
-						</details>
-					</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is phishing?</summary>
+						<p>Phishing is a social-engineering attack in which an adversary impersonates a trusted brand, service or individual to trick the target into revealing credentials, deploying malware or transferring funds. The MITRE ATT&CK framework classifies it under T1566 (Phishing) with sub-techniques for spearphishing attachment (T1566.001), spearphishing link (T1566.002) and spearphishing via service (T1566.003). Common delivery vectors are email, SMS (smishing), instant message and voice (vishing).</p>
+					</details>
+					<details>
+						<summary>What kind of IOCs are tagged #phishing on TweetFeed?</summary>
+						<p>URLs, domains and IPs hosting phishing kits or fake login pages, observed by public Twitter/X researchers. Hashes are rare for phishing because the payload is usually a hosted webpage, not a binary. Adjacent tags include #scam (financial scam infrastructure), #opendir (open directories that host phishing kits) and brand-specific tags when researchers attribute the kit to a known impersonation campaign.</p>
+					</details>
+					<details>
+						<summary>How is this list updated?</summary>
+						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Phishing-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+					</details>
+					<details>
+						<summary>What is the license? Can I use this commercially?</summary>
+						<p>All TweetFeed IOC data, including this Phishing subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->

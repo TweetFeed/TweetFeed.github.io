@@ -447,26 +447,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is Deimos C2?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Deimos C2 (also written DeimosC2) is an open-source Go-based command-and-control framework with a web UI, multi-operator support and cross-platform implants for Windows, Linux and macOS. It is designed for collaborative red-team engagements and has a lower public profile than its peers (Cobalt Strike, Sliver, Mythic), which makes it attractive to operators looking to avoid signatured tooling.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How does Deimos C2 compare to Sliver or Mythic?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All three are open-source post-CobaltStrike alternatives with cross-platform implants. Sliver has the largest user base and the most defender coverage. Mythic emphasises modularity (operators can plug in different agent and C2 profiles). Deimos is the smallest of the three but offers similar core capabilities and tends to slip past signatures that target the more popular frameworks.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Deimos-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
-						</details>
-						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this Deimos subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
-						</details>
-					</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is Deimos C2?</summary>
+						<p>Deimos C2 (also written DeimosC2) is an open-source Go-based command-and-control framework with a web UI, multi-operator support and cross-platform implants for Windows, Linux and macOS. It is designed for collaborative red-team engagements and has a lower public profile than its peers (Cobalt Strike, Sliver, Mythic), which makes it attractive to operators looking to avoid signatured tooling.</p>
+					</details>
+					<details>
+						<summary>How does Deimos C2 compare to Sliver or Mythic?</summary>
+						<p>All three are open-source post-CobaltStrike alternatives with cross-platform implants. Sliver has the largest user base and the most defender coverage. Mythic emphasises modularity (operators can plug in different agent and C2 profiles). Deimos is the smallest of the three but offers similar core capabilities and tends to slip past signatures that target the more popular frameworks.</p>
+					</details>
+					<details>
+						<summary>How is this list updated?</summary>
+						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Deimos-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+					</details>
+					<details>
+						<summary>What is the license? Can I use this commercially?</summary>
+						<p>All TweetFeed IOC data, including this Deimos subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->

@@ -446,26 +446,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is njRAT?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">njRAT (also tracked as Bladabindi) is a long-running .NET commodity Remote Access Trojan. The original builder leaked publicly years ago, which spawned dozens of forks and operator-tweaked variants in the wild. It supports keylogging, screen capture, file management, USB-spread persistence and remote shell. MITRE ATT&CK tracks it as S0385.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Where does njRAT activity concentrate?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">njRAT is especially active in MENA-region campaigns - Arabic-language phishing emails, fake game-cheat lures targeting young users, and Discord-distributed loaders are the most common vectors. The malware is also seen in opportunistic global campaigns where the operator wants a low-effort RAT with a wide feature set, but per-region telemetry usually weights heavily toward Middle East and North Africa.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Njrat-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
-						</details>
-						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this Njrat subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
-						</details>
-					</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is njRAT?</summary>
+						<p>njRAT (also tracked as Bladabindi) is a long-running .NET commodity Remote Access Trojan. The original builder leaked publicly years ago, which spawned dozens of forks and operator-tweaked variants in the wild. It supports keylogging, screen capture, file management, USB-spread persistence and remote shell. MITRE ATT&CK tracks it as S0385.</p>
+					</details>
+					<details>
+						<summary>Where does njRAT activity concentrate?</summary>
+						<p>njRAT is especially active in MENA-region campaigns - Arabic-language phishing emails, fake game-cheat lures targeting young users, and Discord-distributed loaders are the most common vectors. The malware is also seen in opportunistic global campaigns where the operator wants a low-effort RAT with a wide feature set, but per-region telemetry usually weights heavily toward Middle East and North Africa.</p>
+					</details>
+					<details>
+						<summary>How is this list updated?</summary>
+						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Njrat-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+					</details>
+					<details>
+						<summary>What is the license? Can I use this commercially?</summary>
+						<p>All TweetFeed IOC data, including this Njrat subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->

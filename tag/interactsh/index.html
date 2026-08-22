@@ -443,26 +443,24 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">Frequently asked questions</h3>
-				<section class="card mb-4">
-					<div class="card-body">
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is Interactsh?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Interactsh is an OAST (out-of-band application security testing) canary tool maintained by ProjectDiscovery. It issues unique callback URLs that record DNS, HTTP and SMTP requests directed at them, letting offensive security testers confirm blind vulnerabilities like blind XSS, SSRF and out-of-band RCE. The tool is open-source and free to self-host.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">Why are interactsh URLs in a malicious-IOC feed?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Interactsh is dual-use. Researchers tag a URL as #interactsh when they observe an attacker - or commodity exploit tooling - using interactsh callbacks against a real production target. The URL is not malicious in itself, but its presence in a request log indicates active exploitation attempts and is useful as a detection signal.</p>
-						</details>
-						<details style="margin-bottom:0.75rem;">
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">How is this list updated?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Interactsh-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
-						</details>
-						<details>
-							<summary style="cursor:pointer; font-weight:600; font-family:'Rubik',sans-serif; color:#1c1c1c;">What is the license? Can I use this commercially?</summary>
-							<p style="margin-top:0.5rem; font-size:15px; color:#1c1c1c; font-family:'Rubik',sans-serif; line-height:1.6;">All TweetFeed IOC data, including this Interactsh subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
-						</details>
-					</div>
+				<section class="faq-section">
+					<h3 class="section-heading">Frequently asked questions</h3>
+					<details>
+						<summary>What is Interactsh?</summary>
+						<p>Interactsh is an OAST (out-of-band application security testing) canary tool maintained by ProjectDiscovery. It issues unique callback URLs that record DNS, HTTP and SMTP requests directed at them, letting offensive security testers confirm blind vulnerabilities like blind XSS, SSRF and out-of-band RCE. The tool is open-source and free to self-host.</p>
+					</details>
+					<details>
+						<summary>Why are interactsh URLs in a malicious-IOC feed?</summary>
+						<p>Interactsh is dual-use. Researchers tag a URL as #interactsh when they observe an attacker - or commodity exploit tooling - using interactsh callbacks against a real production target. The URL is not malicious in itself, but its presence in a request log indicates active exploitation attempts and is useful as a detection signal.</p>
+					</details>
+					<details>
+						<summary>How is this list updated?</summary>
+						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Interactsh-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+					</details>
+					<details>
+						<summary>What is the license? Can I use this commercially?</summary>
+						<p>All TweetFeed IOC data, including this Interactsh subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+					</details>
 				</section>
 
 				<!-- ============================================================ -->
