@@ -98,6 +98,12 @@
     <priority>0.7</priority>
   </url>
   <!-- Pillar guide (added 2026-04-28) -->
+<url>
+    <loc>https://tweetfeed.live/blocklists/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://tweetfeed.live/threat-intelligence-guide/</loc>
     <lastmod>2026-08-22</lastmod>
@@ -260,6 +266,24 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/tag/njrat/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+<url>
+    <loc>https://tweetfeed.live/tag/xworm/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+<url>
+    <loc>https://tweetfeed.live/tag/malvertising/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+<url>
+    <loc>https://tweetfeed.live/tag/clickfix/</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>

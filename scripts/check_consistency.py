@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Consistency checks across the 21 main pages of TweetFeed.
+"""Consistency checks across the 22 main pages of TweetFeed.
 
 Run from the repo root (frontend-stage/ or frontend-prod/):
     python3 scripts/check_consistency.py
@@ -21,7 +21,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-# The 21 user-facing main pages - the ones that share nav, footer, analytics,
+# The 22 user-facing main pages - the ones that share nav, footer, analytics,
 # and canonical patterns, and get the full check suite below (nav order,
 # canonical, analytics, footer, meta-description length, single h1).
 # Excluded, verified via ls 2026-07-16 (the old comment's today.html/tos.html
@@ -39,6 +39,7 @@ MAIN_PAGES = [
     "threat-intelligence-guide/index.html", "malicious-urls/index.html",
     "malicious-domains/index.html", "malicious-ips/index.html",
     "malicious-hashes-md5/index.html", "malicious-hashes-sha256/index.html",
+    "blocklists/index.html",
 ]
 
 # Direct link to the feedback issue form, added 2026-08-01 to replace the
@@ -863,7 +864,7 @@ CHECKS = [
 ]
 
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on
-# all of them, and the 22 tag pages, 10 campaign pages, tags/, ioc-types/ and
+# all of them, and the 25 tag pages, 10 campaign pages, tags/, ioc-types/ and
 # 404.html previously had no nav validation at all.
 SHELL_CHECKS = [
     ("Nav matches site_ia (desktop + More + right + mobile)", check_nav_order),

@@ -82,6 +82,7 @@ NAV_MORE = [
     None,
     Link("Bad domains list", "malicious-domains/", "fa-globe"),
     Link("Bad IPs list", "malicious-ips/", "fa-map-marker-alt"),
+    Link("Blocklists", "blocklists/", "fa-ban"),
     None,
     Link("About", "about/", "fa-question-circle"),
     Link("Changelog", "changelog/", "fa-history"),
@@ -119,6 +120,7 @@ FOOTER_COLUMNS = [
         Link("IOC feeds", "feeds/"),
         Link("Bad domains list", "malicious-domains/"),
         Link("Bad IPs list", "malicious-ips/"),
+        Link("Blocklists", "blocklists/"),
         Link("Malicious URLs", "malicious-urls/"),
         Link("MD5 hashes", "malicious-hashes-md5/"),
         Link("SHA-256 hashes", "malicious-hashes-sha256/"),
@@ -213,6 +215,7 @@ DOCS_SIDEBAR = [
     ("Browse the data", [
         Link("Tag index", "tags/"),
         Link("IOC types", "ioc-types/"),
+        Link("Blocklists", "blocklists/"),
         Link("Malicious URLs", "malicious-urls/"),
         Link("Malicious domains", "malicious-domains/"),
         Link("Malicious IPs", "malicious-ips/"),
@@ -275,6 +278,7 @@ ACTIVE_BY_PAGE = {
     "ioc-types/index.html": "ioc-types/",
     "malicious-domains/index.html": "malicious-domains/",
     "malicious-ips/index.html": "malicious-ips/",
+    "blocklists/index.html": "blocklists/",
     "about/index.html": "about/",
     "changelog/index.html": "changelog/",
 }

@@ -958,3 +958,131 @@ tags:
       - {display: "malware", slug: "malware"}
       - {display: "C2", slug: "c2"}
       - {display: "phishing", slug: "phishing"}
+
+  - slug: xworm
+    display_tag: Xworm
+    license_subject: "Xworm"
+    category: malware-family
+    short_subtitle: "Modular .NET Remote Access Trojan and stealer, distributed via a publicly leaked builder"
+    short_subtitle_mobile: "Modular .NET RAT/stealer distributed via a leaked builder"
+    seo_title: "XWorm RAT IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "XWorm IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged XWorm, a modular .NET RAT/stealer distributed via a publicly leaked builder. CC0, no auth."
+    og_image_alt: "TweetFeed - XWorm IOC feed"
+    webpage_name: "XWorm IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) tagged XWorm, a modular .NET Remote Access Trojan and stealer with an optional ransomware plugin."
+    meta_description: "IOCs tagged XWorm, a modular .NET RAT/stealer with an optional ransomware plugin. {year} hits last year. Updated every 15 min."
+    meta_keywords: "xworm,xworm rat,dotnet rat,stealer,builder leak,ioc feed,osint,Threat Intelligence"
+    schema_about:
+      type: SoftwareApplication
+      name: "XWorm"
+      alternate_names: ["XWorm RAT"]
+      application_category: "SecurityApplication"
+      same_as:
+        - "https://malpedia.caad.fkie.fraunhofer.de/details/win.xworm"
+    bullets:
+      - label: "Type"
+        html: "modular .NET Remote Access Trojan and stealer, first observed around 2022. It is not open-source: cracked copies of its builder circulate on underground forums and Telegram channels, most recently a leaked v6.0 build in 2025 - the same distribution pattern that spread njRAT and AsyncRAT."
+      - label: "Abuse pattern"
+        html: "keylogging, screen and webcam capture, and credential / session theft from apps such as Telegram, Discord, WiFi profiles, MetaMask and FileZilla. A plugin system lets the operator load extra modules per victim, including an optional ransomware plugin. Delivered via phishing attachments, script loaders (VBS / JS / PowerShell) and trojanised software downloads."
+      - label: "Detection signals"
+        html: "an AES-encrypted configuration blob holding the operator's C2 host and port (no fixed default), a per-build randomised mutex to prevent multiple running instances, and heavy use of .NET obfuscators. Detection leans on behavioral and memory-based signals - reflective loading, injected .NET assemblies - rather than one static network indicator."
+      - label: "References"
+        html: '<a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.xworm" target="_blank" rel="noopener noreferrer">Malpedia</a>.'
+    faq_q1:
+      q: "What is XWorm?"
+      a: "XWorm is a modular .NET Remote Access Trojan and stealer first observed around 2022. It combines keylogging, screen and webcam capture, and credential theft from apps like Telegram, Discord and MetaMask with a plugin system that lets the operator load extra modules per victim, including an optional ransomware plugin. It is not open-source; cracked copies of its builder circulate on underground forums and Telegram channels, most recently a leaked v6.0 build in 2025."
+    faq_q2:
+      q: "How is XWorm typically delivered?"
+      a: "Most often via phishing email attachments, malicious script loaders (VBS, JS or PowerShell) and trojanised software downloads posing as cracked or pirated tools - the same loader ecosystem used to distribute njRAT and AsyncRAT. The malware does not exploit a vulnerability to install; it relies on the victim executing the dropper."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "stealer", slug: "stealer"}
+      - {display: "C2", slug: "c2"}
+      - {display: "phishing", slug: "phishing"}
+
+  # ============================================================
+  # TTPs (continued)
+  # ============================================================
+
+  - slug: malvertising
+    display_tag: malvertising
+    license_subject: "Malvertising"
+    category: ttp
+    short_subtitle: "Malicious advertising used to redirect victims to phishing pages or trigger drive-by malware downloads"
+    short_subtitle_mobile: "Malicious ads redirecting to phishing or malware"
+    seo_title: "Malvertising IOC Feed - URLs, Domains, IPs - TweetFeed"
+    twitter_title: "Malvertising IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged malvertising (T1583.008) - malicious ads used to redirect victims to phishing or malware. CC0, no auth."
+    og_image_alt: "TweetFeed - malvertising IOC feed"
+    webpage_name: "Malvertising IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged malvertising (T1583.008), malicious advertising used to redirect victims to phishing pages or drive-by malware downloads."
+    meta_description: "IOCs tagged malvertising (T1583.008): malicious ads redirecting to phishing pages or malware downloads. {year} hits last year. Updated every 15 min."
+    meta_keywords: "malvertising,malicious ads,drive-by download,t1583.008,ad fraud,ioc feed,osint,Threat Intelligence"
+    schema_about:
+      type: Thing
+      name: "Malvertising"
+      alternate_names: ["Malicious advertising"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1583/008/"
+    bullets:
+      - label: "Definition"
+        html: "the abuse of online advertising platforms to distribute malicious content. An adversary buys or injects an ad that looks legitimate; clicking it - or, in some drive-by variants, just loading the page - redirects the victim to attacker infrastructure. MITRE ATT&amp;CK T1583.008."
+      - label: "Where it shows up"
+        html: "search-engine ad slots for popular software (browsers, PDF readers, remote-access tools), display ads on legitimate high-traffic sites, and ad networks with weak vetting. Clicking the ad leads to a cloned download page or an exploit landing page instead of the real vendor."
+      - label: "Evasion"
+        html: "operators commonly cloak the ad: the ad network's own review crawler sees a benign page, while real visitors matched by IP range, user agent or referrer get redirected to the malicious destination. This keeps the payload hidden from the platform doing the vetting."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1583/008/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1583.008</a>.'
+    faq_q1:
+      q: "What is malvertising?"
+      a: "Malvertising is the abuse of online advertising to distribute malicious content. An adversary buys ad space or compromises an ad network, then serves an ad that looks legitimate - often impersonating a well-known brand or piece of software. Clicking the ad, or in some cases just loading the page it appears on, redirects the victim to a phishing page, a cloned download site or a drive-by exploit. MITRE ATT&CK tracks it as T1583.008."
+    faq_q2:
+      q: "How is malvertising different from a compromised website?"
+      a: "A compromised website is the attacker's own foothold: they altered a real site's code directly. Malvertising instead abuses a third-party advertising platform to plant malicious content on ad slots embedded across many unrelated, otherwise-legitimate sites, without touching those sites' own code. The two are often chained: a malvertising click can land on a compromised site that hosts the actual payload."
+    related_tags:
+      - {display: "phishing", slug: "phishing"}
+      - {display: "scam", slug: "scam"}
+      - {display: "malware", slug: "malware"}
+      - {display: "ClickFix", slug: "clickfix"}
+
+  - slug: clickfix
+    display_tag: ClickFix
+    license_subject: "ClickFix"
+    category: ttp
+    short_subtitle: "Social-engineering technique that tricks a victim into pasting an attacker command into the Run dialog or a terminal"
+    short_subtitle_mobile: "Fake CAPTCHA / error tricking victims into pasting a command"
+    seo_title: "ClickFix IOC Feed - URLs, Domains, IPs - TweetFeed"
+    twitter_title: "ClickFix IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs tagged ClickFix (T1204.004) - fake CAPTCHA / error pages that trick victims into pasting a command into Run or a terminal. CC0, no auth."
+    og_image_alt: "TweetFeed - ClickFix IOC feed"
+    webpage_name: "ClickFix IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs) tagged ClickFix (T1204.004), a social-engineering technique that shows a fake error or CAPTCHA and tells the victim to paste a command into the Windows Run dialog or a terminal."
+    meta_description: "IOCs tagged ClickFix (T1204.004): fake CAPTCHA / error pages that trick victims into pasting a malicious command. {year} hits last year. Updated every 15 min."
+    meta_keywords: "clickfix,fake captcha,paste and run,t1204.004,malicious copy paste,ioc feed,osint,Threat Intelligence"
+    schema_about:
+      type: Thing
+      name: "ClickFix"
+      alternate_names: ["Fake CAPTCHA attack", "Malicious copy and paste"]
+      same_as:
+        - "https://attack.mitre.org/techniques/T1204/004/"
+    bullets:
+      - label: "Definition"
+        html: "a social-engineering technique where a page shows a fake error message or CAPTCHA and instructs the victim to open the Windows Run dialog or a terminal and paste a command. The victim executes the malicious command themselves, so the flow needs no exploit and skips the file-download steps that AV / EDR usually watch."
+      - label: "Typical flow"
+        html: "the page copies a command to the clipboard via JavaScript, then tells the victim to press Win+R (or open a terminal), paste, and hit Enter to &quot;verify&quot; or &quot;fix&quot; a problem that does not really exist. The pasted command downloads and runs the actual payload."
+      - label: "Payloads observed"
+        html: "used mainly as a delivery step ahead of RATs and infostealers rather than as a payload of its own; researchers tag the technique alongside whatever family the page ultimately drops."
+      - label: "References"
+        html: '<a href="https://attack.mitre.org/techniques/T1204/004/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1204.004</a>.'
+    faq_q1:
+      q: "What is ClickFix?"
+      a: "ClickFix is a social-engineering technique where a malicious page shows a fake error message or CAPTCHA and tells the victim to open the Windows Run dialog or a terminal, paste a command, and press Enter to &quot;fix&quot; or &quot;verify&quot; something. The command was copied to the clipboard by the page's own JavaScript; the victim never sees it before running it. MITRE ATT&CK tracks it as T1204.004 (Malicious Copy and Paste), added to the framework in 2025."
+    faq_q2:
+      q: "Why does ClickFix work if the victim has to run the command themselves?"
+      a: "Because the victim, not the browser, executes the code, the trick sidesteps the download-and-double-click chain that most browser and endpoint defenses are tuned to catch. It also leans on user habits: people are used to clicking through CAPTCHAs and error dialogs quickly, so the extra step of opening Run and pasting a command reads as routine friction rather than a warning sign."
+    related_tags:
+      - {display: "phishing", slug: "phishing"}
+      - {display: "malware", slug: "malware"}
+      - {display: "malvertising", slug: "malvertising"}
+      - {display: "scam", slug: "scam"}
