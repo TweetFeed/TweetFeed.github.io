@@ -878,8 +878,43 @@ SHELL_CHECKS = [
     ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
 ]
 
+
+# Classes whose NAME is built at runtime from the data, so they never appear as
+# a literal `class="..."` anywhere and no static audit can see them.
+RUNTIME_APPLIED_CLASSES = {
+    "css/tweetfeed.css": [".url", ".domain", ".ip", ".sha256", ".md5"],
+}
+
+
+def check_runtime_applied_classes() -> list[str]:
+    """The IOC-table row tints are applied by jQuery from the Type column's
+    text - index.html:775 and search/index.html:1263 call toggleClass() with it
+    on the first draw, and lines 719 / 1215 call addClass(type) on the rows the
+    poller appends. Nothing ever writes class="url" into the HTML.
+
+    That makes them invisible to a "which selectors does the markup use" grep.
+    On 2026-08-22 exactly that audit called all five dead and removed them, the
+    home and /search/ tables went white, and no other check noticed: the served
+    HTML was still correct and the breakage only existed once the page painted.
+
+    This check exists so the next person cannot repeat it. If a rule here is
+    genuinely obsolete, delete it from this list in the same commit and say why."""
+    failures: list[str] = []
+    for css_file, selectors in RUNTIME_APPLIED_CLASSES.items():
+        text = CSS_COMMENT_RE.sub("", read(css_file))
+        for sel in selectors:
+            if not re.search(rf"^\s*{re.escape(sel)}\s*(,|\{{)", text, re.M):
+                failures.append(
+                    f"{css_file}: `{sel}` is missing. It is applied at runtime "
+                    f"(see this check's docstring); a grep for class=\"{sel[1:]}\" "
+                    f"will never find it, so do not conclude it is unused."
+                )
+    return failures
+
+
 # Whole-repo invariants that take no page list.
 GLOBAL_CHECKS = [
+    ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
     ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),
     ("Templates include the shell partials", check_templates_include_shell),

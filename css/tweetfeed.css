@@ -4,6 +4,25 @@
    already; only the viewport-tall wrapper was missing. */
 #wrapper { min-height: 100vh; }
 
+/* IOC type row colours. The classic IOC-table format, locked by the owner
+   (see feedback_tweetfeed_tables_classic_format).
+
+   DO NOT DELETE THESE BECAUSE A GREP SAYS NOBODY USES THEM. The class name is
+   built at runtime from the data, so `class="url"` appears in no HTML file:
+     index.html:775          toggleClass(<text of the Type column>)  first draw
+     index.html:719          addClass(type)                          poller rows
+     search/index.html:1263  toggleClass(<text of the Type column>)  first draw
+     search/index.html:1215  addClass(type)                          poller rows
+   They were removed on 2026-08-22 by a "zero confirmed consumers" static
+   audit and the home table lost its row colours until the owner spotted it.
+   check_runtime_applied_classes in scripts/check_consistency.py now fails the
+   build if any of the five goes missing again. */
+.url { background-color: #c8f6fd; }
+.domain { background-color: #a0dde6; }
+.ip { background-color: #34e3a4; }
+.sha256 { background-color: #ffc591; }
+.md5 { background-color: #FFCC99; }
+
 /* Row highlight animation */
 @keyframes highlight {
   from { opacity: 0; }
