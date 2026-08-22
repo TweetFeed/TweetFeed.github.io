@@ -22,9 +22,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # Full history: bump_sitemap_lastmod.py derives non-daily lastmod from
-          # git log; with the default shallow clone it would silently keep the
-          # committed value forever.
+          # Full history: bump_sitemap_lastmod.py derives every URL's lastmod
+          # from git log; with the default shallow clone it would silently keep
+          # the committed value forever.
           fetch-depth: 0
 
       - name: Setup Python
@@ -49,12 +49,19 @@ jobs:
       - name: Regenerate tag pages
         run: python3 scripts/regen_tag_pages.py
 
+      # Bakes a real IOC count + generation timestamp into the 5 malicious-*
+      # pages and /trends/, so their lastmod (set below) reflects a genuine
+      # content change instead of a hardcoded "today". Must run before the
+      # consistency gate so the gate checks what actually gets committed.
+      - name: Bake freshness (malicious-* + trends)
+        run: python3 scripts/bake_freshness.py
+
       # Fails the run (nothing gets pushed) if the regenerated pages break a
       # site invariant, e.g. a footer-breakpoint regression baked into a template.
       - name: Consistency gate
         run: python3 scripts/check_consistency.py
 
-      - name: Refresh sitemap lastmod (daily/hourly URLs)
+      - name: Refresh sitemap lastmod (real content-change dates)
         run: python3 scripts/bump_sitemap_lastmod.py
 
       - name: Commit and push if changed
@@ -63,8 +70,10 @@ jobs:
           git config user.email "tweetfeed-bot@phishunt.io"
           # tags/ was missing: regen_tag_pages.render_tags_index() rewrites
           # tags/index.html on every run but it was never staged, so the hub
-          # silently stayed stale in git while CI reported success.
-          git add tag/ tags/ sitemap.xml
+          # silently stayed stale in git while CI reported success. malicious-*/
+          # and trends/ were added 2026-08-22 alongside bake_freshness.py.
+          git add tag/ tags/ malicious-domains/ malicious-ips/ malicious-urls/ \
+                  malicious-hashes-md5/ malicious-hashes-sha256/ trends/ sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0

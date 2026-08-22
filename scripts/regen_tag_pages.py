@@ -129,7 +129,7 @@ def _dumps_tab_indented(payload):
     return "\n".join([lines[0]] + ["\t" + line for line in lines[1:]])
 
 
-def build_webpage_jsonld(m):
+def build_webpage_jsonld(m, date_modified):
     payload = {
         "@context": "https://schema.org",
         "@type": "WebPage",
@@ -137,6 +137,7 @@ def build_webpage_jsonld(m):
         "url": f"https://tweetfeed.live/tag/{m['slug']}/",
         "description": m["webpage_description"],
         "isPartOf": {"@id": "https://tweetfeed.live/#organization"},
+        "dateModified": date_modified,
         "about": {
             "@type": m["schema_about"]["type"],
             "name": m["schema_about"]["name"],
@@ -190,7 +191,7 @@ def render_tag(m, env, counts, today_str):
         counts=tag_counts,
         samples=samples,
         today_str=today_str,
-        webpage_jsonld=build_webpage_jsonld(m),
+        webpage_jsonld=build_webpage_jsonld(m, today_str),
         faq_jsonld=build_faq_jsonld(m),
         noindex=IS_STAGE,
         # The nav/footer come from scripts/templates/_nav.html.j2 and
@@ -209,7 +210,11 @@ def main():
         all_meta = yaml.safe_load(f)
 
     counts = fetch_counts()
-    today_str = datetime.date.today().isoformat()
+    # UTC, not local time: this date is now also the JSON-LD "dateModified"
+    # (build_webpage_jsonld) as well as the visible "Counts as of" line, and
+    # bump_sitemap_lastmod.py's <lastmod> for these pages is UTC-derived too
+    # (git commit date, or today's UTC date for what this run just changed).
+    today_str = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
 
     env = Environment(
         loader=FileSystemLoader(SCRIPT_DIR / "templates"),
