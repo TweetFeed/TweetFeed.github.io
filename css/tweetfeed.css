@@ -449,6 +449,29 @@ hr.divider {
    it an in-page anchor lands behind the navbar. /hunt/ still needs its own 120px
    override in the narrow media query because its filter row is sticky on top. */
 .tf-block-head { font-size: 28px; margin: 0 0 0.35rem; }
+
+/* A block heading that follows a container with no bottom margin was landing
+   flush against it (0px) while the rest of the same page ran at 24px.
+   .tf-block-head carries margin-top:0 because on /feeds/ and /agents/ an
+   <hr class="divider"> always precedes it and already supplies the gap
+   (verified 7 of 7). div.row and section.faq-section carry margin-bottom:0,
+   so there the heading had nothing at all above it.
+
+   Written as an adjacent-sibling rule on purpose, NOT as a blanket
+   .tf-block-head{margin-top}: /api/ spaces its 12 headings with a literal <br>
+   (~19px tall, so ~22px effective, already in rhythm) and a blanket rule would
+   have pushed those to ~46px. 1.5rem is the site's rhythm, the same 24px as
+   .card.mb-4 and .similar-list. Only fires when a heading actually follows, so
+   pages that END with the FAQ keep their spacing to the footer.
+   :not(.tf-sect-head) is load-bearing. Without it this rule is (0,2,0) and
+   outranks .tf-sect-head at (0,1,0), so it QUIETLY PULLED /feeds/'s sub-section
+   heads DOWN from their 2rem to 1.5rem - "Per-tag RSS" and "STIX 2.1 bundles"
+   each lost 8px. Caught by a before/after gap diff, not by eye. This rule must
+   only ever ADD space where there was none, never lower a margin a page already
+   set on purpose. */
+.faq-section + .section-heading:not(.tf-sect-head),
+.row + .section-heading:not(.tf-sect-head) { margin-top: 1.5rem; }
+
 .tf-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
 @media (min-width: 992px) {
 	.tf-block-head, .tf-sect-head { scroll-margin-top: 72px; }

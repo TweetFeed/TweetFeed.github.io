@@ -45,8 +45,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=51" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=51" rel="stylesheet">
+	<link href="../css/index.css?v=52" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=52" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -312,6 +312,11 @@
 				   instead of the site's blue #1178b3 at 600 - dropped 2026-08-22. */
 				.section-heading { display: flex; align-items: center; gap: 8px; }
 				.section-heading i { color: #1DA1F2; font-size: 1rem; }
+				/* The testimonials block is a bare div.container with no bottom margin, so
+				   the heading after it sat flush against it. Scoped here rather than in
+				   tweetfeed.css because .container is a Bootstrap utility used elsewhere.
+				   1.5rem matches .similar-list and .card.mb-4, this page's own rhythm. */
+				.container + .section-heading { margin-top: 1.5rem; }
 				.similar-list { list-style: none; padding: 0; margin: 0 0 1.5rem; }
 				.similar-list li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
 				.similar-list li:last-child { border-bottom: none; }
@@ -427,11 +432,11 @@
 				<h2 class="section-heading tf-block-head"><i class="fas fa-link"></i> Threat Intelligence ecosystem references</h2>
 <p style="color:#737373; font-size:0.95rem; margin:0 0 1rem;">Frameworks and resources that contextualize the data TweetFeed publishes:</p>
 <ul class="similar-list">
-	<li><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer external">MITRE ATT&amp;CK</a><span>Adversary tactics and techniques framework. Useful for mapping IOC tags to known threat-actor behavior.</span></li>
-	<li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer external">NIST Cybersecurity Framework</a><span>Standard reference for organizing detection, response, and recovery - what TweetFeed feeds support.</span></li>
-	<li><a href="https://owasp.org/" target="_blank" rel="noopener noreferrer external">OWASP</a><span>Web-application security project. Many phishing IOCs in the feed map to OWASP Top 10 attack patterns.</span></li>
-	<li><a href="https://abuse.ch/" target="_blank" rel="noopener noreferrer external">abuse.ch</a><span>Sister projects (URLhaus, ThreatFox, MalwareBazaar) that complement TweetFeed with curated samples and binaries.</span></li>
-	<li><a href="https://www.misp-project.org/" target="_blank" rel="noopener noreferrer external">MISP</a><span>Open-source Threat Intelligence platform. TweetFeed publishes a MISP-compatible manifest at /misp/.</span></li>
+	<li><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer external">MITRE ATT&amp;CK</a> - <span>Adversary tactics and techniques framework. Useful for mapping IOC tags to known threat-actor behavior.</span></li>
+	<li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer external">NIST Cybersecurity Framework</a> - <span>Standard reference for organizing detection, response, and recovery - what TweetFeed feeds support.</span></li>
+	<li><a href="https://owasp.org/" target="_blank" rel="noopener noreferrer external">OWASP</a> - <span>Web-application security project. Many phishing IOCs in the feed map to OWASP Top 10 attack patterns.</span></li>
+	<li><a href="https://abuse.ch/" target="_blank" rel="noopener noreferrer external">abuse.ch</a> - <span>Sister projects (URLhaus, ThreatFox, MalwareBazaar) that complement TweetFeed with curated samples and binaries.</span></li>
+	<li><a href="https://www.misp-project.org/" target="_blank" rel="noopener noreferrer external">MISP</a> - <span>Open-source Threat Intelligence platform. TweetFeed publishes a MISP-compatible manifest at /misp/.</span></li>
 </ul>
 
 <h2 class="section-heading tf-block-head"><i class="fas fa-star"></i> Similar services</h2>
