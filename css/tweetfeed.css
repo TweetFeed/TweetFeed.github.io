@@ -4,13 +4,6 @@
    already; only the viewport-tall wrapper was missing. */
 #wrapper { min-height: 100vh; }
 
-/* IOC type row colors */
-.url { background-color: #c8f6fd; }
-.domain { background-color: #a0dde6; }
-.ip { background-color: #34e3a4; }
-.sha256 { background-color: #ffc591; }
-.md5 { background-color: #FFCC99; }
-
 /* Row highlight animation */
 @keyframes highlight {
   from { opacity: 0; }
@@ -18,7 +11,7 @@
 }
 
 .highlight td {
-  animation: fadein 2s;
+  animation: highlight 2s;
 }
 
 /* ─────────────────────────────────────────────────────────────────────
@@ -28,8 +21,7 @@
    ───────────────────────────────────────────────────────────────────── */
 
 /* Tweet skeleton placeholder shown while createTweet promise pending.
-   Used directly on dashboard.html; the shimmer keyframe is reused by
-   .table-skeleton-row and .chart-skeleton below. */
+   Used directly on dashboard.html. */
 .tweet-skeleton {
 	background: #fff;
 	border: 1px solid #e1e8ed;
@@ -39,9 +31,7 @@
 	position: relative;
 	overflow: hidden;
 }
-.tweet-skeleton::after,
-.table-skeleton-row::after,
-.chart-skeleton::after {
+.tweet-skeleton::after {
 	content: "";
 	position: absolute;
 	top: 0; left: 0; right: 0; bottom: 0;
@@ -69,36 +59,16 @@
 .tweet-skeleton .sk-body .sk-row:nth-child(3) { width: 60%; height: 10px; margin-bottom: 14px; }
 .tweet-skeleton .sk-foot { width: 40%; height: 10px; background: #e6ecf0; border-radius: 6px; }
 
-/* Skeleton row injected into <tbody> of DataTables-managed tables
-   (search.html, researchers.html). DataTables empties tbody before its
-   first draw, so the skeleton naturally disappears once data arrives. */
-.table-skeleton-row {
-	position: relative;
-	overflow: hidden;
-}
-.table-skeleton-row td {
-	background: #f6f8fa;
-	height: 28px;
-	border-bottom: 1px solid #e1e4e8;
-}
-
-/* Skeleton overlay for Chart.js canvases (graphs.html, feeds.html).
-   Applied as a sibling element absolutely positioned over the canvas;
-   the script removes it on the first chart paint via animation.onComplete. */
-.chart-skeleton {
-	position: absolute;
-	top: 0; left: 0; right: 0; bottom: 0;
-	background: linear-gradient(180deg, #f6f8fa 0%, #e9ecef 100%);
-	border-radius: 8px;
-	overflow: hidden;
-}
-.chart-wrap { position: relative; }
-
 /* graphs/index.html: the 20 chart-card titles were <h6> for their default
    1rem size, not for semantics - fixed to <h3> (C4, 2026-08-20) so the page
    gets a real h1 > h2 > h3 outline. This rule pins the pre-existing visual
    size so the fix is semantics-only, not a redesign. */
-.tf-graph-card-title { font-size: 1rem; }
+/* Colour, 2026-08-22: these 20 card titles carried Bootstrap's
+   .text-primary, i.e. #4e73df !important - the third blue nobody chose,
+   the same one `a { color: #3a6f96 }` further down exists to fight. It was
+   the only place on the site still painting it. The class now owns the
+   colour so the utility is not needed and cannot out-!important it. */
+.tf-graph-card-title { font-size: 1rem; color: #1178b3; }
 
 /* Tweet column wrapper (responsive 1/2/3/4 grid). 8 px padding so the
    embedded iframes don't touch each other on the dashboard. */
@@ -274,10 +244,9 @@ hr.divider {
 .cl-tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 0.5rem 0 0.75rem 0; }
 .cl-subhead { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: #1c1c1c; }
 /* In-page section TOC chip row (hunt.html, feeds.html). Black border +
-   steel-blue hover matches the heavy-box design language. .feeds-toc /
-   .feeds-toc-chip kept as aliases for cache-warm compatibility. */
-.page-toc, .feeds-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
-.page-toc-chip, .feeds-toc-chip {
+   steel-blue hover matches the heavy-box design language. */
+.page-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
+.page-toc-chip {
 	display: inline-block;
 	padding: 4px 12px;
 	border: 1px solid black;
@@ -289,7 +258,7 @@ hr.divider {
 	text-decoration: none;
 	line-height: 1.5;
 }
-.page-toc-chip:hover, .feeds-toc-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
+.page-toc-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
 
 /* Uppercase eyebrow that groups the chips above into named runs. Promoted
    from /feeds/, which was the only page that had it. */
@@ -427,11 +396,43 @@ hr.divider {
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
 
-/* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...". */
+/* Section heading replacing inline style="color:#1DA1F2;font-family:'Segoe UI'...".
+
+   FAMILY, 2026-08-22. This used to carry over the 'Segoe UI', Arial stack from
+   the inline styles it replaced, and nobody ever chose it: Segoe UI ships with
+   Windows and is not loaded by the site, so every section heading on all 50
+   pages rendered in whatever the visitor's machine happened to have - Segoe on
+   Windows, Arial on Linux and macOS. Measured on the live site: .section-heading
+   computed to "Segoe UI", Arial, sans-serif while the hero above it was Alegreya
+   and the paragraph below it was Rubik, so the site was showing THREE typefaces,
+   one of them machine-dependent. It is Rubik now, which is what body copy, the
+   navbar and the footer already ask for by name. Alegreya Sans SC stays the
+   display face for .toph1 and .cardTitle only. Two fonts, no system fallback. */
 .section-heading {
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
+}
+
+/* SIZE. .section-heading deliberately carries no font-size and no margin: the
+   two modifiers below supply them, so a page can opt a heading into either rank
+   without the shared rule dictating one. Site scale: 42 (h1) / 28 (block) /
+   20 (section) / 22 (FAQ, set by .faq-section below).
+
+   These replace five byte-identical private copies that had drifted apart -
+   .fds-block-head/.fds-sect-head (feeds), .agt-block-head/.agt-sect-head
+   (agents), .hnt-group > .section-heading at 22px (hunt), .section-heading at
+   1.3rem (about) and h2.section-heading at 28px (the campaign template plus its
+   generated pages). Same values, five names, four different sizes for the same
+   visual rank.
+
+   scroll-margin-top clears the 56px fixed-top bar plus breathing room; without
+   it an in-page anchor lands behind the navbar. /hunt/ still needs its own 120px
+   override in the narrow media query because its filter row is sticky on top. */
+.tf-block-head { font-size: 28px; margin: 0 0 0.35rem; }
+.tf-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
+@media (min-width: 992px) {
+	.tf-block-head, .tf-sect-head { scroll-margin-top: 72px; }
 }
 
 /* Reference-page prose (/api/, /agents/). Neither page uses the .docs-wrap
@@ -510,7 +511,7 @@ hr.divider {
 }
 .agent-option-card .agent-option-title {
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	font-size: 18px;
 	margin-bottom: 0.4rem;
@@ -569,7 +570,7 @@ p.agent-option-note {
 .faq-section > h3 {
 	font-size: 22px;
 	color: #1178b3;
-	font-family: 'Segoe UI', Arial, sans-serif;
+	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	margin: 0 0 1rem 0;
 }
@@ -1069,7 +1070,7 @@ a:hover { color: #325d81; }
    links inside body copy + the footer reference row; nav, buttons, TOC chips
    keep their own shape so are excluded. !important overrides Bootstrap's
    .text-decoration-none utility on the reference-row / inline links. */
-#content p a:not(.btn):not(.page-toc-chip):not(.feeds-toc-chip) {
+#content p a:not(.btn):not(.page-toc-chip) {
 	text-decoration: underline !important;
 	text-underline-offset: 2px;
 }

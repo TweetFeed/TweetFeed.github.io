@@ -46,13 +46,12 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -266,20 +265,11 @@
 
 		/* ── Page outline ─────────────────────────────────────────────────
 		   h1 42 > h2 28 > h3 20. Bootstrap ships h2 at 2rem and h3 at
-		   1.75rem, four pixels apart, which is not a hierarchy, and
-		   .section-heading deliberately sets neither size nor margin so the
-		   49 other pages that use it are not resized from here. 28px keeps
-		   the dominant heading on this page identical to the top-level
-		   section headings on /api/ and /hunt/.
-		   The margin also restores the 30px of section separation the eight
-		   inline-styled h3 used to carry before they moved onto the class. */
-		.fds-block-head { font-size: 28px; margin: 0 0 0.35rem; }
-		.fds-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
-		/* The desktop navbar is fixed-top at 56px and nothing compensates for
-		   it, so every one of the nine anchors used to land underneath it. */
-		@media (min-width: 992px) {
-			.fds-block-head, .fds-sect-head { scroll-margin-top: 72px; }
-		}
+		   1.75rem, four pixels apart, which is not a hierarchy. The
+		   .tf-block-head / .tf-sect-head modifiers that supply that 28px /
+		   20px sizing, margin and the 72px scroll-margin-top for the fixed
+		   navbar now live in css/tweetfeed.css, shared across every page
+		   that uses them. */
 		/* Eyebrow over a card grid that is one half of the section above it. */
 		p.fds-grid-label {
 			margin: 0 0 0.6rem;
@@ -558,9 +548,9 @@
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
 				</nav>
 				<hr class="divider">
-				<h2 id="download" class="section-heading fds-block-head">Download</h2>
+				<h2 id="download" class="section-heading tf-block-head">Download</h2>
 				<p>Static files you fetch on your own schedule. Public domain (CC0), no key, no sign-up.</p>
-				<h3 id="csv" class="section-heading fds-sect-head">CSV feeds</h3>
+				<h3 id="csv" class="section-heading tf-sect-head">CSV feeds</h3>
 				<p>One row per IOC: date, reporter, type, value, tags and the tweet it came from. Windows roll forward and are rebuilt every 15 minutes.</p>
 				<div class="row">
 					<div class="col-6 col-xl-3">
@@ -639,7 +629,7 @@
 				<div class="alert alert-secondary tf-disclaimer" role="alert">
 					These are community-reported IOCs and their confidence is not always 100%, so adding them straight to a blocklist is not recommended. Run your own analysis first. They work better as a <b>Watchlist</b> or as input to <b>Threat Hunting</b>.
 				</div>
-				<h3 id="blocklist" class="section-heading fds-sect-head">Blocklists</h3>
+				<h3 id="blocklist" class="section-heading tf-sect-head">Blocklists</h3>
 				<p>Plain-text exports, one indicator per line, 30-day window, rebuilt every 15 minutes.</p>
 				<ul class="fds-facts">
 					<li>Drop-in for Pi-hole, AdGuard Home, hosts files, firewalls, proxies and IDS.</li>
@@ -716,9 +706,9 @@
 					</div>
 				</div>
 				<hr class="divider">
-				<h2 id="subscribe" class="section-heading fds-block-head">Subscribe</h2>
+				<h2 id="subscribe" class="section-heading tf-block-head">Subscribe</h2>
 				<p>Poll-on-a-timer feeds for a reader or a bot. Every item links back to the tweet it came from.</p>
-				<h3 id="rss" class="section-heading fds-sect-head">RSS firehose</h3>
+				<h3 id="rss" class="section-heading tf-sect-head">RSS firehose</h3>
 				<p>Every IOC as it lands, newest first, across all types, reporters and tags.</p>
 				<div class="row">
 					<div class="col-6 col-xl-3">
@@ -731,20 +721,20 @@
 						</div>
 					</div>
 				</div>
-				<h3 id="per-tag-rss" class="section-heading fds-sect-head">Per-tag RSS</h3>
+				<h3 id="per-tag-rss" class="section-heading tf-sect-head">Per-tag RSS</h3>
 				<p>One feed per active tag, where active means at least one hit in the last 7 days. Browse them all from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each tag landing page also exposes its feed through <code>&lt;link rel="alternate"&gt;</code>.</p>
 				<pre class="code-block">https://tweetfeed.live/rss/tag/<b class="tf-ph">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the phishing tag" title="Copy example (phishing)"></i></pre>
-				<h3 id="per-type-rss" class="section-heading fds-sect-head">Per-type RSS</h3>
+				<h3 id="per-type-rss" class="section-heading tf-sect-head">Per-type RSS</h3>
 				<p>One feed per IOC type. Always available, no activity threshold.</p>
 				<pre class="code-block">https://tweetfeed.live/rss/type/<b class="tf-ph">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the url type" title="Copy example (url)"></i></pre>
-				<h3 id="per-user-rss" class="section-heading fds-sect-head">Per-user RSS</h3>
+				<h3 id="per-user-rss" class="section-heading tf-sect-head">Per-user RSS</h3>
 				<p>One feed per reporter active in the last 7 days. Handles are lowercase. Quiet or unknown handles return an error.</p>
 				<pre class="code-block">https://tweetfeed.live/rss/user/<b class="tf-ph">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/phishunt_io.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for phishunt_io" title="Copy example (phishunt_io)"></i></pre>
 				<hr class="divider">
-				<h2 id="integrate" class="section-heading fds-block-head">Integrate</h2>
+				<h2 id="integrate" class="section-heading tf-block-head">Integrate</h2>
 				<p>Formats that plug straight into a Threat Intelligence platform.</p>
 				<!-- Technical reference content intentionally uses heading, lead and list rather than .card or .faq-grid: this is feed documentation, not FAQ content. Reviewed 2026-08-12. -->
-				<h3 id="misp" class="section-heading fds-sect-head">MISP feed</h3>
+				<h3 id="misp" class="section-heading tf-sect-head">MISP feed</h3>
 				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
 				<p class="tf-code-label">Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
 				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL" title="Copy"></i></pre>
@@ -773,7 +763,7 @@
 						</div>
 					</div>
 				</div>
-				<h3 id="stix" class="section-heading fds-sect-head">STIX 2.1 bundles</h3>
+				<h3 id="stix" class="section-heading tf-sect-head">STIX 2.1 bundles</h3>
 				<p>Indicator bundles for SIEM and Threat Intelligence platforms. TLP:CLEAR, with deterministic UUIDs so a re-pull dedupes cleanly. Need a live pull instead of static bundles? See <a class="text-decoration-none" href="../api/#taxii">TAXII 2.1</a> in the API docs.</p>
 				<div class="row">
 					<div class="col-6 col-xl-3">
@@ -817,11 +807,11 @@
 					<li>No year bundle on purpose: STIX runs about 2.6x more verbose per IOC than MISP, which puts <code>year.json</code> over 80 MB and too close to GitHub's 100 MB push limit. For year-scale STIX, use the diff endpoint below.</li>
 					<li><code>today.json</code> is served directly. <code>week.json</code> and <code>month.json</code> answer with a <code>302</code> to <code>raw.githubusercontent.com</code> because of their size, so they arrive as <code>Content-Type: text/plain</code> instead of <code>application/stix+json;version=2.1</code>. Follow redirects and do not gate on the content type.</li>
 				</ul>
-				<h3 id="diff" class="section-heading fds-sect-head">Diff endpoint (incremental sync)</h3>
+				<h3 id="diff" class="section-heading tf-sect-head">Diff endpoint (incremental sync)</h3>
 				<p>Fetch only the IOCs added after a given timestamp. Replace the placeholder with your last sync time, in the <code>Z</code> form for unambiguous UTC. Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is more than 365 days old.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<b class="tf-ph">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy the example request with a 2026-05-01 timestamp" title="Copy example"></i></pre>
 				<hr class="divider">
-				<h2 class="section-heading fds-block-head">Browse by IOC type</h2>
+				<h2 class="section-heading tf-block-head">Browse by IOC type</h2>
 				<p>Need only one indicator type? Each type has its own feed page with stats, recent samples, formats and a FAQ.</p>
 				<div class="card mb-4">
 					<div class="card-body">
@@ -972,10 +962,6 @@
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
 	<!-- DataTables (js + css) and js/demo/datatables-demo.js all removed: this page has no <table>. Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->

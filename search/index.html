@@ -47,13 +47,12 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -745,7 +744,7 @@
 				<!-- Topbar (center)-->
 				<!-- End of Topbar -->
 				<!-- Begin Page Content -->
-				<div id="presentationSecondary" class="d-none d-md-block">
+				<div id="presentationSecondary" class="d-none d-lg-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
 					<h2><em>Search 7 days of IOCs from 90+ infosec researchers - or run an exact 365-day lookup with AI context</em></h2>
@@ -759,7 +758,7 @@
 					     campaigns/index.html. -->
 					<div class="card shadow mb-4" id="iocLookupCard">
 						<div class="card-body">
-							<h3 class="section-heading">IOC lookup <span class="tfl-window-badge">last 365 days</span></h3>
+							<h3 class="section-heading tf-block-head">IOC lookup <span class="tfl-window-badge">last 365 days</span></h3>
 							<form id="iocLookupForm" role="search" aria-label="IOC lookup (exact match, last 365 days)">
 								<label for="iocLookupInput" class="sr-only">Exact IOC value to look up</label>
 								<div class="input-group">
@@ -790,7 +789,7 @@
 					     link params are present in the URL). -->
 					<div class="card shadow mb-4" id="feedExplorerCard">
 						<div class="card-body">
-							<h3 class="section-heading">Feed explorer</h3>
+							<h3 class="section-heading tf-block-head">Feed explorer</h3>
 							<form id="feedExplorerForm" role="search" aria-label="Feed explorer filters">
 								<div class="form-row">
 									<div class="form-group col-6 col-md-2">
@@ -847,13 +846,13 @@
 									<table class="table table-borderless" id="feedExplorerTable" style="width:98%; box-sizing: inherit;">
 										<thead>
 											<tr>
-												<th class="text-nowrap">Date (UTC)</th>
-												<th class="text-nowrap">User</th>
-												<th class="text-nowrap">Type</th>
-												<th class="text-nowrap">Value</th>
-												<th class="text-nowrap">Tags</th>
-												<th class="text-nowrap">Tweet</th>
-												<th class="text-nowrap">VT</th>
+												<th scope="col" class="text-nowrap">Date (UTC)</th>
+												<th scope="col" class="text-nowrap">User</th>
+												<th scope="col" class="text-nowrap">Type</th>
+												<th scope="col" class="text-nowrap">Value</th>
+												<th scope="col" class="text-nowrap">Tags</th>
+												<th scope="col" class="text-nowrap">Tweet</th>
+												<th scope="col" class="text-nowrap">VT</th>
 											</tr>
 										</thead>
 									</table>
@@ -883,7 +882,7 @@
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekTo"></em></span>
 										</div>
 										<div id="loadingWeek" class="text-center">
-											<img loading="lazy" src="../img/loading.svg" alt="Loading">
+											<img loading="lazy" src="../img/loading.svg" alt="Loading" width="98" height="98">
 										</div>
 										<br>
 										<div class="container">
@@ -916,11 +915,11 @@
 									<div class="col align-self-center" style="padding-right: 0;">
 										<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; justify-content: flex-end;">
 											<div style="display: flex; align-items: center; gap: 0.5rem;">
-												<button class="btn btn-tf btn-sm" onclick="exportTableToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export table</button>
+												<button class="btn btn-tf btn-sm" data-export="table" type="button"><i class="fas fa-download"></i> Export table</button>
 												<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 											</div>
 											<div style="display: flex; align-items: center; gap: 0.5rem;">
-												<button class="btn btn-tf btn-sm" onclick="exportValuesToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export values only</button>
+												<button class="btn btn-tf btn-sm" data-export="values" type="button"><i class="fas fa-download"></i> Export values only</button>
 												<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 											</div>
 										</div>
@@ -934,13 +933,13 @@
 								<table class="table table-borderless" id="dataTableFull" style="width:98%; box-sizing: inherit;">
 									<thead>
 										<tr>
-											<th class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
-											<th class="text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
-											<th class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
-											<th class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
-											<th class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
-											<th class="d-none d-lg-table-cell text-nowrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
-											<th class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="../img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
+											<th scope="col" class="text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
+											<th scope="col" class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="../img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
 								</table>
@@ -1076,10 +1075,6 @@
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -1198,7 +1193,7 @@
 								var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 								var picSrc = '../pics/' + safeUser + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								var value = data[i][3];
 
@@ -1275,7 +1270,7 @@
 							var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 							var picSrc = '../pics/' + safeUser + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
@@ -1408,6 +1403,20 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
+	// Delegated - the repo forbids inline click handlers. Deliberately plain
+	// DOM, not jQuery: this block is an inline <script>, so it runs during
+	// parsing, while vendor/jquery is loaded with `defer` and does not execute
+	// until parsing finishes. Binding with $ here threw "$ is not defined" and
+	// left both export buttons dead (2026-08-22).
+	document.addEventListener('click', function (e) {
+		var btn = e.target.closest('[data-export]');
+		if (!btn) return;
+		if (btn.getAttribute('data-export') === 'table') {
+			exportTableToCSV('TweetFeed.csv');
+		} else {
+			exportValuesToCSV('TweetFeed.csv');
+		}
+	});
 	</script>
 	<script>
 	$(function() {
@@ -1641,7 +1650,7 @@
 					(tweetsHtml ? '<div class="tfl-meta tfl-tweets">Source tweets: ' + tweetsHtml + '</div>' : '') +
 					renderRelated(r && r.related) +
 					'<div class="tfl-fp-row">' +
-						'<a href="' + esc(buildFpReportUrl(r)) + '" target="_blank" rel="noopener nofollow">Report a false positive</a>' +
+						'<a href="' + esc(buildFpReportUrl(r)) + '" target="_blank" rel="noopener noreferrer nofollow">Report a false positive</a>' +
 						' &middot; ' +
 						'<span class="tf-copy" data-copy="' + esc(buildFpReportText(r)) + '" role="button" tabindex="0" aria-label="Copy false positive report details" title="Copy report details">Copy report details</span>' +
 					'</div>' +
@@ -2158,7 +2167,7 @@
 			var eu = esc(u);
 			var picSrc = '../pics/' + eu + '.png';
 			var fallback = 'https://unavatar.io/twitter/' + eu;
-			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
+			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
 		}
 
 		// Same value-cell markup as the week table's loadData() above: copy

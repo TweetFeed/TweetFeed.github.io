@@ -48,9 +48,8 @@
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="css/table.css?v=4" rel="stylesheet">
-	<link href="css/index.css?v=49" rel="stylesheet">
-	<link href="css/tooltip.css" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="css/index.css?v=50" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=50" rel="stylesheet">
 	<style>
 		/* CLS fix: reserve the today-counts row height. countTypes() fills the
 		   empty .row.today with one line of bold counts after the today.csv
@@ -59,8 +58,8 @@
 	</style>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 <!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -409,13 +408,13 @@
 									<div class="col align-self-center" style="padding-right: 0;">
 										<div class="row float-right">
 											<span>
-												<button class="btn btn-tf align-middle" onclick="exportTableToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export table</button>
+												<button class="btn btn-tf align-middle" data-export="table" type="button"><i class="fas fa-download"></i> Export table</button>
 												<i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i></span>
 										</div> <!-- row 1 (Export table) -->
 										<br><br>
 										<div class="row float-right">
 											<span class="text-right">
-												<button class="btn btn-tf align-middle" onclick="exportValuesToCSV('TweetFeed.csv')" type="button"><i class="fas fa-download"></i> Export values only</button>
+												<button class="btn btn-tf align-middle" data-export="values" type="button"><i class="fas fa-download"></i> Export values only</button>
 												<i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i></span>
 										</div> <!-- row 2 (Export values) -->
 									</div>
@@ -428,13 +427,13 @@
 								<table class="table table-borderless" id="dataTable" style="width:98%; box-sizing: inherit;">
 									<thead>
 										<tr>
-											<th class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
-											<th class="text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
-											<th class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
-											<th class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
-											<th class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
-											<th class="text-nowrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
-											<th class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>
+											<th scope="col" class="text-nowrap">User <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="User that posted the Tweet"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap">Type <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="url, domain, ip, sha256 or md5"></i></th>
+											<th scope="col" class="text-nowrap">Value <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected IOC"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-sm text-nowrap">Tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Detected tag"></i></th>
+											<th scope="col" class="text-nowrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Original Tweet"></i></th>
+											<th scope="col" class="d-none d-lg-table-cell text-nowrap"><img loading="lazy" class="virustotal" src="img/vt.png" alt="VirusTotal logo" width="20" height="18"> <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Search in VirusTotal"></i></th>
 										</tr>
 									</thead>
 								</table>
@@ -593,10 +592,7 @@
 	<!-- Bootstrap core JavaScript-->
 	<script defer src="vendor/jquery/jquery.min.js"></script>
 	<script defer src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script defer src="vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script defer src="js/sb-admin-2.min.js"></script>
+	<!-- sb-admin-2.min.js + jquery.easing removed 2026-08-22: unused on this page (no #sidebarToggle/.sidebar/.scroll-to-top trigger); /agents/ still loads both for its .scroll-to-top button -->
 	<!-- Page level plugins -->
 	<script defer src="vendor/datatables/jquery.dataTables.min.js"></script>
 	<script defer src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -919,6 +915,20 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
+	// Delegated - the repo forbids inline click handlers. Deliberately plain
+	// DOM, not jQuery: this block is an inline <script>, so it runs during
+	// parsing, while vendor/jquery is loaded with `defer` and does not execute
+	// until parsing finishes. Binding with $ here threw "$ is not defined" and
+	// left both export buttons dead (2026-08-22).
+	document.addEventListener('click', function (e) {
+		var btn = e.target.closest('[data-export]');
+		if (!btn) return;
+		if (btn.getAttribute('data-export') === 'table') {
+			exportTableToCSV('TweetFeed.csv');
+		} else {
+			exportValuesToCSV('TweetFeed.csv');
+		}
+	});
 	</script>
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {

@@ -47,27 +47,13 @@
 	<!-- vendor/datatables/dataTables.bootstrap4.min.css removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<!-- <link href="../css/table.css?v=4" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
-	<!-- Fonts: css/fonts.css inlined (150B, dashboard-only, no @font-face) to remove a blocking round-trip -->
-	<style>
-	label {
-		font-size: 15px;
-		font-family: 'Rubik', sans-serif;
-		color:black;
-	}
-
-	span[id^='check'] {
-		font-size: 12px;
-		font-family: 'Rubik', sans-serif;
-		color:grey;
-	}
-	</style>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<!-- css/fonts.css deleted 2026-08-22: both inlined rules were dead (label{} matched 0 elements on this page, span[id^='check'] matched 0 elements site-wide) -->
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -427,7 +413,6 @@
 					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 					<!-- Body in dashboard -->
-					<!-- <h3 style="color:#1178b3;font-family: 'Segoe UI', Arial, sans-serif;font-weight: 600;">Options <button  type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filters"></h3> -->
 					<div class="dash-toolbar">
 						<div class="toolbar-group">
 							<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" title="Auto-refreshes every 60s. Click to pause."><span class="tf-live-dot" aria-hidden="true"></span><span class="tf-live-label">Live</span></button>
@@ -444,7 +429,7 @@
 								<button type="button" class="tfd-n" data-n="100" aria-pressed="false">100</button>
 							</div>
 							<button type="button" id="filtersToggle" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters"><i class="fas fa-sliders-h" aria-hidden="true"></i> Filters</button>
-							<button onclick="exportValuesToCSV('TweetFeed.csv')" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#3a6f96"><i class="fas fa-download"></i> Export CSV</button>
+							<button data-export="values" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#3a6f96"><i class="fas fa-download"></i> Export CSV</button>
 							<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 						</div>
 					</div>
@@ -472,7 +457,7 @@
 					</div>
 					<hr class="divider"> <!-- DIVIDER -->
 					<div id="loadingTweets" class="text-center">
-						<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading">
+						<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
 					</div>
 					<div id="emptyState" style="display:none;">
 						<div class="empty-icon"><i class="far fa-folder-open"></i></div>
@@ -582,10 +567,7 @@
 	<!-- Bootstrap core JavaScript-->
 	<script defer src="../vendor/jquery/jquery.min.js"></script>
 	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script defer src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script defer src="../js/sb-admin-2.min.js"></script>
+	<!-- sb-admin-2.min.js + jquery.easing removed 2026-08-22: unused on this page (no #sidebarToggle/.sidebar/.scroll-to-top trigger); /agents/ still loads both for its .scroll-to-top button -->
 	<!-- Page level plugins -->
 	<!-- vendor/datatables/*.js + js/demo/datatables-demo.js removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- TweetFeed shared utilities -->
@@ -1329,11 +1311,11 @@
 	<script>
 	function exportValuesToCSV(filename) {
 		// seen_values is only created once the first today.csv fetch resolves, and
-		// this function is reached from an inline onclick at global scope, so an
-		// early click used to throw "ReferenceError: seen_values is not defined"
-		// and produce nothing. Array.reverse() is also in-place: the old code
-		// reversed the live array on every click, so two exports in a row came out
-		// in opposite orders. Copy first, then reverse the copy.
+		// this function is reached from the [data-export] delegated click handler
+		// below, so an early click used to throw "ReferenceError: seen_values is
+		// not defined" and produce nothing. Array.reverse() is also in-place: the
+		// old code reversed the live array on every click, so two exports in a
+		// row came out in opposite orders. Copy first, then reverse the copy.
 		if (typeof seen_values === 'undefined' || !seen_values || !seen_values.length) {
 			return;
 		}
@@ -1358,6 +1340,15 @@
 		downloadCSV(csv.join("\n"), dateNow + "_" + time + "_" + filename);
 	}
 
+	// Delegated - the repo forbids inline click handlers. Deliberately plain
+	// DOM, not jQuery: this block is an inline <script>, so it runs during
+	// parsing, while vendor/jquery is loaded with `defer` and does not execute
+	// until parsing finishes. Binding with $ here threw "$ is not defined" and
+	// left the export button dead (2026-08-22).
+	document.addEventListener('click', function (e) {
+		if (!e.target.closest('[data-export="values"]')) return;
+		exportValuesToCSV('TweetFeed.csv');
+	});
 	</script>
 </body>
 

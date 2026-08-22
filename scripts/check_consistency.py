@@ -797,8 +797,8 @@ def _same_block_family_weights(css_text: str) -> set[tuple[str, int]]:
 
 
 # Families deliberately requested at 400 only, so their bold is synthesised.
-# See check_font_weights_loaded's docstring for why this one is here.
-SYNTHETIC_BOLD_BY_DESIGN = {"Alegreya Sans SC"}
+# See check_font_weights_loaded's docstring for why these are here.
+SYNTHETIC_BOLD_BY_DESIGN = {"Alegreya Sans SC", "Rubik"}
 
 
 def check_font_weights_loaded(pages: list[str]) -> list[str]:
@@ -807,14 +807,27 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
     <link>s actually load - otherwise the browser is back to synthesising a
     bold that was never served (see TRACKED_FONT_FAMILIES comment above).
 
-    SYNTHETIC_BOLD_BY_DESIGN is the one deliberate exception. Alegreya Sans SC
-    is the hero wordmark, and its real 700 and 800 cuts are a heavier, more
-    condensed face than the 400 the browser was faking: loading them visibly
-    changed the wordmark and the owner rejected it on sight (2026-08-22). So
-    this family is requested at 400 only ON PURPOSE and .toph1 / .cardTitle
-    are synthesised, which is a typographic compromise taken with eyes open,
-    not the bug this check exists to catch. Rubik and any family added later
-    are still enforced."""
+    SYNTHETIC_BOLD_BY_DESIGN holds the deliberate exceptions. BOTH of the
+    site's families are in it, and both for the same reason: the owner looked
+    at the real cuts and rejected them.
+
+    Alegreya Sans SC is the hero wordmark. Its real 700 and 800 are a heavier,
+    more condensed face than the 400 the browser was faking, loading them
+    visibly changed the wordmark, and it was rejected on sight (2026-08-22).
+    .toph1 / .cardTitle are synthesised as a result.
+
+    Rubik went the same way one day later. It dresses the navbar - .tf-wordmark
+    at 600, .tf-navlink and .nav-cta at 500 - and switching from a faked bold
+    over the 400 to the real 500/600 changed the wordmark's drawing (measured:
+    "TweetFeed" at 20px went 101.8px at every weight to 101.8 / 105.85 / 107.8
+    / 109.88). The owner rejected that too, so the family went back to
+    `family=Rubik` with no weight axis on 2026-08-22 and every Rubik bold on
+    the site - navbar, body copy, footer, tables - is synthetic again.
+
+    Both are typographic compromises taken with eyes open, not the bug this
+    check exists to catch. Any family added later is still enforced. Do NOT
+    "fix" either of these by adding a :wght@ axis without showing the owner a
+    before/after render first: that is exactly how both got reverted."""
     shared_pairs = _same_block_family_weights(
         "\n".join(read(name) for name in SHARED_FONT_CSS_FILES)
     )

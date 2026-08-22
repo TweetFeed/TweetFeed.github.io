@@ -45,13 +45,12 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<!-- highlight.js (js + css) removed: this page has no <pre><code> block to highlight. -->
 	<!-- Structured data -->
 	<script type="application/ld+json">
@@ -170,17 +169,11 @@
 	</style>
 	<style>
 		/* Page outline. Bootstrap ships h2 at 2rem and h3 at 1.75rem, four
-		   pixels apart, which is not a hierarchy; .section-heading sets
-		   neither size nor margin so the other 49 pages that use it are not
-		   resized from here. Same 28/20 pair as /feeds/. */
-		.agt-block-head { font-size: 28px; margin: 0 0 0.35rem; }
-		.agt-sect-head  { font-size: 20px; margin: 2rem 0 0.5rem; }
-		/* The desktop navbar is fixed-top at 56px and nothing compensates for
-		   it, so the three anchors this page already had landed underneath
-		   it: #option-skills came to rest at top 0. */
-		@media (min-width: 992px) {
-			.agt-block-head, .agt-sect-head { scroll-margin-top: 72px; }
-		}
+		   pixels apart, which is not a hierarchy. Same 28/20 pair as
+		   /feeds/: the .tf-block-head / .tf-sect-head modifiers that
+		   supply that sizing, margin and the 72px scroll-margin-top for
+		   the fixed navbar now live in css/tweetfeed.css, shared across
+		   every page that uses them. */
 		/* Paths and media types have no spaces to break at, so the three
 		   column discovery table pushed 475px into a 353px viewport. */
 		@media (max-width: 991.98px) {
@@ -396,10 +389,10 @@
 				<p class="agent-option-note">All three are free, no authentication, no rate limit for normal use. Same IOC data underneath.</p>
 
 				<hr class="divider">
-				<h2 id="connect" class="section-heading agt-block-head">Connect</h2>
+				<h2 id="connect" class="section-heading tf-block-head">Connect</h2>
 				<p>Three ways in, one data set underneath. Pick the one your client already speaks.</p>
 
-				<h3 id="option-mcp" class="section-heading agt-sect-head">MCP server</h3>
+				<h3 id="option-mcp" class="section-heading tf-sect-head">MCP server</h3>
 				<p>
 					Remote <b>Model Context Protocol</b> server at <code style="color:#1178b3;">https://mcp.tweetfeed.live/</code>
 					over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-11-25</code>). Works with Claude Desktop, Claude Code,
@@ -427,8 +420,8 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th>Tool</th>
-								<th>Purpose</th>
+								<th scope="col">Tool</th>
+								<th scope="col">Purpose</th>
 							</tr>
 						</thead>
 						<tr>
@@ -532,7 +525,7 @@
 					<a target="_blank" rel="noopener noreferrer" href="/.well-known/mcp/server-card.json">/.well-known/mcp/server-card.json</a>
 				</p>
 
-				<h3 id="option-skills" class="section-heading agt-sect-head">Agent Skills</h3>
+				<h3 id="option-skills" class="section-heading tf-sect-head">Agent Skills</h3>
 				<p>
 					For agents that consume
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/cloudflare/agent-skills-discovery-rfc">Agent Skills Discovery (RFC v0.2.0)</a>
@@ -546,8 +539,8 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th>Skill</th>
-								<th>Purpose</th>
+								<th scope="col">Skill</th>
+								<th scope="col">Purpose</th>
 							</tr>
 						</thead>
 						<tr>
@@ -578,7 +571,7 @@
 					&nbsp;(includes sha256 content digest for integrity).
 				</p>
 
-				<h3 id="option-api" class="section-heading agt-sect-head">REST API</h3>
+				<h3 id="option-api" class="section-heading tf-sect-head">REST API</h3>
 				<p>
 					No MCP or skills harness? Call the public REST API directly: no key, no auth, CORS-enabled, JSON responses.
 				</p>
@@ -586,9 +579,9 @@
 				<p class="tf-note">The <a href="../api/">API page</a> is the reference: every parameter, the 10,000-row result cap and its truncation headers, conditional requests, and the campaigns, counts, trends and IOC-lookup endpoints.</p>
 
 				<hr class="divider">
-				<h2 id="data" class="section-heading agt-block-head">Bulk data and discovery</h2>
+				<h2 id="data" class="section-heading tf-block-head">Bulk data and discovery</h2>
 				<p>For platforms that ingest files on a schedule instead of calling a tool per question.</p>
-				<h3 id="option-bulk" class="section-heading agt-sect-head">Bulk data formats</h3>
+				<h3 id="option-bulk" class="section-heading tf-sect-head">Bulk data formats</h3>
 				<p>
 					Static bundles for SIEM/Threat Intelligence platforms and incremental sync. All regenerated every 15 minutes from the same pipeline that feeds the API and MCP server.
 				</p>
@@ -600,8 +593,8 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th>Endpoint</th>
-								<th>Purpose</th>
+								<th scope="col">Endpoint</th>
+								<th scope="col">Purpose</th>
 							</tr>
 						</thead>
 						<tr>
@@ -623,7 +616,7 @@
 					</table>
 				</div>
 
-				<h3 id="discovery" class="section-heading agt-sect-head">Discovery endpoints</h3>
+				<h3 id="discovery" class="section-heading tf-sect-head">Discovery endpoints</h3>
 				<p>
 					Crawlers and agents can discover every integration from a single
 					<code>HEAD https://tweetfeed.live/</code>: the <code>Link</code> header carries
@@ -639,9 +632,9 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th>Path</th>
-								<th>Format</th>
-								<th class="d-none d-lg-table-cell">Spec</th>
+								<th scope="col">Path</th>
+								<th scope="col">Format</th>
+								<th scope="col" class="d-none d-lg-table-cell">Spec</th>
 							</tr>
 						</thead>
 						<tr>
@@ -668,7 +661,7 @@
 				</div>
 
 				<hr class="divider">
-				<h2 id="license" class="section-heading agt-block-head">License</h2>
+				<h2 id="license" class="section-heading tf-block-head">License</h2>
 				<p>
 					IOC data (feed rows, API responses, MCP tool outputs) is freely available; see the <a href="../tos/">Terms of Service</a> for license.
 					No attribution required, no warranty.

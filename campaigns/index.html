@@ -37,14 +37,12 @@
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
@@ -195,13 +193,10 @@
 			.tfc-headline-cell + .tfc-headline-cell { border-left: 0; border-top: 1px solid black; }
 			.tfc-headline-value { font-size: 24px; }
 		}
-		.tfc-card-header {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 0.5rem 0.6rem;
-			margin-bottom: 0.5rem;
-		}
+		/* Duplicate .tfc-card-header removed (dead - the later declaration
+		   below silently won on align-items/gap/margin-bottom); its
+		   flex-wrap: wrap was still live only because nothing re-declared
+		   it, so it moved into the surviving rule below to keep that. */
 		.tfc-name {
 			font-family: 'Rubik', sans-serif;
 			font-weight: 700;
@@ -362,6 +357,7 @@
 		   it is the number that orders the whole page. */
 		.tfc-card-header {
 			display: flex;
+			flex-wrap: wrap;
 			align-items: flex-start;
 			justify-content: space-between;
 			gap: 1rem;
@@ -891,7 +887,7 @@
 				<div class="tfc-stale-banner" id="staleBanner" style="display:none;" role="alert"></div>
 
 				<div id="campaignsLoading" class="text-center" style="padding:2rem 0;">
-					<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading">
+					<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
 				</div>
 
 				<div id="campaignsError" class="alert alert-danger" style="display:none;" role="alert">
@@ -1042,8 +1038,6 @@
 	</div>
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<script src="../js/sb-admin-2.min.js"></script>
 	<script src="../js/utils.js?v=4"></script>
 	<!-- Page level custom script: fetches the live production campaigns API
 	     directly (NOT TweetFeed.dataUrl(), which resolves to this repo's own data

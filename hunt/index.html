@@ -44,13 +44,12 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css" integrity="sha512-3xLMEigMNYLDJLAgaGlDSxpGykyb+nQnJBzbkQy2a0gyVKL2ZpNOPIj1rD8IPFaJbwAgId/atho1+LBpWu5DhA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js" integrity="sha512-MinqHeqca99q5bWxFNQEQpplMBFiUNrEwuuDj2rCSh1DgeeTXUgvgYIHZ1puBS9IKBkdfLMSk/ZWVDasa3Y/2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script>
@@ -306,7 +305,6 @@
 		   markup made recipe titles bold <p> text inside a hidden tab pane. */
 		.hnt-groups { margin-top: 1.5rem; }
 		.hnt-group { margin: 0 0 1.75rem; }
-		.hnt-group > .section-heading { font-size: 22px; margin: 0 0 0.35rem; }
 		.hnt-group-note {
 			font-family: 'Rubik', sans-serif;
 			font-size: 15px;
@@ -342,7 +340,7 @@
 			white-space: nowrap;
 		}
 		.hnt-title {
-			font-family: 'Segoe UI', Arial, sans-serif;
+			font-family: 'Rubik', sans-serif;
 			font-size: 1.05rem;
 			font-weight: 600;
 			color: #1c1c1c;
@@ -402,6 +400,8 @@
 		   chrome. */
 		.hnt-card,
 		.hnt-group > .section-heading { scroll-margin-top: 64px; }
+		/* Deliberately overrides the shared .tf-block-head 72px: the filter
+		   row is sticky and needs the larger offset. */
 		@media (min-width: 992px) {
 			.hnt-card,
 			.hnt-group > .section-heading { scroll-margin-top: 120px; }
@@ -581,7 +581,7 @@
 				<p class="hnt-status" id="hnt-status" hidden>Showing <b id="hnt-status-count">25 of 25</b> recipes. <button type="button" id="hnt-show-all">Show all</button></p>
 				<div class="hnt-groups">
 				<section class="hnt-group" id="quickstart" data-group="api">
-					<h2 class="section-heading" id="stack-api">Get the raw IOCs</h2>
+					<h2 class="section-heading tf-block-head" id="stack-api">Get the raw IOCs</h2>
 					<p class="hnt-group-note">Four ways to pull the feed itself. Everything below is free, unauthenticated and CC0.</p>
 					<article class="hnt-card" id="rest-api" data-stack="api">
 						<header class="hnt-head">
@@ -652,7 +652,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 				</section>
 				<section class="hnt-group" id="terminal" data-group="terminal">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-terminal">Terminal &amp; shell</h2>
+					<h2 class="section-heading tf-block-head" id="stack-terminal">Terminal &amp; shell</h2>
 					<p class="hnt-group-note">Recipes you can paste into a shell right now. All of them return clean stdout, ready to pipe.</p>
 					<article class="hnt-card" id="blocklist-cron" data-stack="terminal">
 						<header class="hnt-head">
@@ -715,7 +715,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 				</section>
 				<section class="hnt-group" id="siem" data-group="splunk">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-splunk">Splunk</h2>
+					<h2 class="section-heading tf-block-head" id="stack-splunk">Splunk</h2>
 					<p class="hnt-group-note">Keep a TweetFeed lookup table current, then join it against your indexes.</p>
 					<article class="hnt-card" id="splunk-lookup" data-stack="splunk">
 						<header class="hnt-head">
@@ -764,7 +764,7 @@ enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role
 				</section>
 				<section class="hnt-group" data-group="sentinel">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-sentinel">Microsoft Sentinel</h2>
+					<h2 class="section-heading tf-block-head" id="stack-sentinel">Microsoft Sentinel</h2>
 					<p class="hnt-group-note">No connector needed: <code>externaldata()</code> reads the CSV straight off the data repo at query time.</p>
 					<article class="hnt-card" id="sentinel-dns-hits" data-stack="sentinel">
 						<header class="hnt-head">
@@ -807,7 +807,7 @@ SecurityEvent
 				</section>
 				<section class="hnt-group" data-group="defender">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-defender">Microsoft Defender for Endpoint</h2>
+					<h2 class="section-heading tf-block-head" id="stack-defender">Microsoft Defender for Endpoint</h2>
 					<p class="hnt-group-note">Advanced hunting queries covering all four IOC types. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness-versus-coverage trade-off.</p>
 					<p class="hnt-links"><a href="https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview" target="_blank" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
 					<article class="hnt-card" id="mde-urls" data-stack="defender">
@@ -970,7 +970,7 @@ union (
 				</section>
 				<section class="hnt-group" data-group="elastic">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-elastic">Elastic Stack</h2>
+					<h2 class="section-heading tf-block-head" id="stack-elastic">Elastic Stack</h2>
 					<p class="hnt-group-note">Index the CSV every 15 minutes, then join it from Kibana with ES|QL or alert on it with Watcher.</p>
 					<p class="hnt-links"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-overview.html" target="_blank" rel="noopener noreferrer">ES|QL reference <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
 					<article class="hnt-card" id="elastic-ingest" data-stack="elastic">
@@ -1063,7 +1063,7 @@ output {
 				</section>
 				<section class="hnt-group" data-group="misp">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-misp">MISP &amp; TAXII</h2>
+					<h2 class="section-heading tf-block-head" id="stack-misp">MISP &amp; TAXII</h2>
 					<p class="hnt-group-note">Two standards-based ingest paths for Threat Intelligence platforms.</p>
 					<article class="hnt-card" id="misp-feed" data-stack="misp">
 						<header class="hnt-head">
@@ -1102,7 +1102,7 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
 				</section>
 				<section class="hnt-group" id="detection" data-group="sigma">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-sigma">Detection content</h2>
+					<h2 class="section-heading tf-block-head" id="stack-sigma">Detection content</h2>
 					<p class="hnt-group-note">A vendor-neutral rule template your Sigma pipeline can compile to any SIEM.</p>
 					<article class="hnt-card" id="sigma-rule" data-stack="sigma">
 						<header class="hnt-head">
@@ -1139,7 +1139,7 @@ tags:
 				</section>
 				<section class="hnt-group" data-group="agents">
 					<hr class="divider">
-					<h2 class="section-heading" id="stack-agents">AI agents</h2>
+					<h2 class="section-heading tf-block-head" id="stack-agents">AI agents</h2>
 					<p class="hnt-group-note">The same corpus over the Model Context Protocol, so an agent can query it as a tool.</p>
 					<article class="hnt-card" id="mcp-server" data-stack="agents">
 						<header class="hnt-head">
@@ -1289,10 +1289,6 @@ tags:
   <script src="../js/config.js"></script>
   <script src="../js/utils.js?v=4"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
 	<!-- Recipe filter. Progressive enhancement on purpose: the markup ships
 	     with every card visible, so with JS off (or before this runs) the page
 	     is the complete cookbook. Filtering only ever NARROWS it. -->

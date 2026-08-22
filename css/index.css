@@ -157,26 +157,6 @@ body {
     background-image: linear-gradient(rgb(0 0 0/15%) 0 0);
 }
 
-.info-span {
-    background-color: #7BC5F9;
-    /* Brighter shade of #29A6F3 */
-    color: black;
-    padding: 8px;
-    font-size: 14px;
-    font-family: 'Rubik', sans-serif;
-}
-
-.info-link {
-    color: #483D8B;
-    transition: color 0.2s ease;
-    /* This will animate the color change over 0.5 seconds */
-}
-
-.info-link:hover {
-    color: white;
-    text-decoration: none;
-}
-
 /* =========== TWEETS ======== */
 .grid-container {
     display: grid;

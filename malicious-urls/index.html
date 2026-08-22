@@ -46,13 +46,12 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=49" rel="stylesheet">
-	<link href="../css/tooltip.css" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=49" rel="stylesheet">
+	<link href="../css/index.css?v=50" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=50" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
 	<!-- Structured data -->
 	<script type="application/ld+json">
 	{
@@ -417,7 +416,7 @@
 				<!-- ============================================================ -->
 				<!-- COUNTS BY WINDOW                                              -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">URLs by window</h3>
+				<h3 class="section-heading tf-block-head">URLs by window</h3>
 				<div class="row">
 					<div class="col-6 col-xl-3">
 						<div class="card shadow mb-4 h-100">
@@ -468,7 +467,7 @@
 				<!-- ============================================================ -->
 				<!-- WHAT THIS LIST CONTAINS                                       -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">What this list contains</h3>
+				<h3 class="section-heading tf-block-head">What this list contains</h3>
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
@@ -483,7 +482,7 @@
 				<!-- ============================================================ -->
 				<!-- RECENT SAMPLES (LIVE FROM API)                                -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Recent samples</h3>
+				<h3 class="section-heading tf-block-head">Recent samples</h3>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 URLs from the past 7 days. Live from <a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/week/url</code></a>.</p>
@@ -500,10 +499,10 @@
 								</colgroup>
 								<thead>
 									<tr>
-										<th>Date</th>
-										<th>URL</th>
-										<th>Tags</th>
-										<th>Source</th>
+										<th scope="col">Date</th>
+										<th scope="col">URL</th>
+										<th scope="col">Tags</th>
+										<th scope="col">Source</th>
 									</tr>
 								</thead>
 								<tbody></tbody>
@@ -518,7 +517,7 @@
 				<!-- ============================================================ -->
 				<!-- TOP TAGS FOR MALICIOUS URLS                                   -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Top tags for malicious URLs</h3>
+				<h3 class="section-heading tf-block-head">Top tags for malicious URLs</h3>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Filter the URL feed by malware family or category. Each tag has its own landing page with recent samples and context.</p>
@@ -536,13 +535,13 @@
 				<!-- ============================================================ -->
 				<!-- FAQ                                                           -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">Formats and how to use</h3>
+				<h3 class="section-heading tf-block-head">Formats and how to use</h3>
 				<div class="card mb-4">
 					<div class="card-body">
 						<p style="margin-bottom:0.85rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious URLs are available in four formats:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem; font-family:'Rubik',sans-serif; font-size:14px;">
-								<thead><tr><th>Format</th><th>Where</th><th>Best for</th></tr></thead>
+								<thead><tr><th scope="col">Format</th><th scope="col">Where</th><th scope="col">Best for</th></tr></thead>
 								<tbody>
 									<tr><td><b>JSON API</b></td><td><a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/&lt;window&gt;/url</code></a></td><td>SOAR / SIEM enrichment, scripts</td></tr>
 									<tr><td><b>CSV</b></td><td><a href="../feeds/" class="text-decoration-none">today / week / month / year .csv</a></td><td>bulk import, spreadsheets, blocklists</td></tr>
@@ -593,7 +592,7 @@
 				<!-- ============================================================ -->
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading">License</h3>
+				<h3 class="section-heading tf-block-head">License</h3>
 				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
@@ -701,10 +700,6 @@
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
 	<script src="../js/utils.js?v=4"></script>
