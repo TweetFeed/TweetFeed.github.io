@@ -914,11 +914,77 @@ def check_runtime_applied_classes() -> list[str]:
 
 
 # Whole-repo invariants that take no page list.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Hardcoded "past year" counts in meta/og/twitter descriptions
+# ─────────────────────────────────────────────────────────────────────────────
+# Measured 2026-08-22: three of the four pages that quote a year-window count
+# were OVERSTATING it in the SERP snippet. /malicious-ips/ claimed "20k+ past
+# year" against a real 9,625; MD5 claimed 3.4k+ against 2,486; URLs claimed
+# 58k+ against 53,667. SHA-256 was stale the other way (1.3k+ vs 2,675).
+# Nobody noticed because the numbers were typed by hand once and the feed kept
+# moving. A threat feed overstating its own corpus in a search result is the
+# kind of error that costs more than it gains, so it gets a gate.
+#
+# Deliberately tolerant in one direction only: understating is allowed (it is
+# merely stale), overstating fails. Network failure SKIPS rather than fails,
+# so an offline local run of this script stays useful.
+_YEAR_CSV = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"
+_YEAR_CLAIM_PAGES = {
+    "malicious-domains/index.html": "domain",
+    "malicious-urls/index.html": "url",
+    "malicious-ips/index.html": "ip",
+    "malicious-hashes-md5/index.html": "md5",
+    "malicious-hashes-sha256/index.html": "sha256",
+}
+_YEAR_CLAIM_RE = re.compile(r"([0-9]+(?:\.[0-9]+)?)k\+[^\"<]{0,24}past year")
+
+
+def _fetch_year_counts() -> Counter | None:
+    """Rows per IOC type in the rolling year feed, or None if unreachable."""
+    import urllib.request
+    try:
+        req = urllib.request.Request(_YEAR_CSV, headers={"User-Agent": "tweetfeed-consistency-check"})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            body = r.read().decode("utf-8", "replace")
+    except Exception:
+        return None
+    counts: Counter = Counter()
+    for line in body.splitlines():
+        parts = line.split(",")
+        if len(parts) > 2:
+            counts[parts[2].strip()] += 1
+    return counts or None
+
+
+def check_year_counts() -> list[str]:
+    real = _fetch_year_counts()
+    if real is None:
+        print("  (skipped: year.csv unreachable, offline run)")
+        return []
+    failures: list[str] = []
+    for page, ioc_type in _YEAR_CLAIM_PAGES.items():
+        html = read(page)
+        claims = {m.group(1) for m in _YEAR_CLAIM_RE.finditer(html)}
+        if not claims:
+            failures.append(f"{page}: no 'Nk+ ... past year' claim found; the check has drifted from the copy")
+            continue
+        actual = real.get(ioc_type, 0)
+        for c in claims:
+            claimed = int(float(c) * 1000)
+            if claimed > actual:
+                failures.append(
+                    f"{page}: claims {c}k+ {ioc_type} in the past year, real count is {actual:,}"
+                )
+    return failures
+
+
 GLOBAL_CHECKS = [
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
     ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),
     ("Templates include the shell partials", check_templates_include_shell),
+    ("Year-window counts in descriptions are not overstated", check_year_counts),
 ]
 
 
