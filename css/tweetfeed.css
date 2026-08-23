@@ -494,6 +494,13 @@ hr.divider {
 	font-size: 16px;
 	font-family: 'Rubik', sans-serif;
 }
+/* Measure. The three .tf-prose pages ran their body text the full 1152px of
+   the column, about 110 characters a line, while the other 43 pages of the
+   site cap at 72ch through .docs-content p. Same cap here, with the same two
+   exemptions, so a centred line or a campaign block keeps its own width. */
+.tf-prose p:not(.text-center):not([class*="tfc-"]) {
+	max-width: 72ch;
+}
 /* Caveats, edge cases and "recommended validator" asides: 14px inline before. */
 .tf-prose .tf-note {
 	font-size: 14px;
