@@ -15,6 +15,8 @@ pattern on agents.html at creation (2026-04-19).
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 import re
 import sys
@@ -655,6 +657,8 @@ MACHINE_SURFACE_FILES = [
     "openapi.yaml",
     ".well-known/mcp/server-card.json",
     ".well-known/agent-skills/index.json",
+    ".well-known/agent-skills/tweetfeed-ioc-lookup/SKILL.md",
+    ".well-known/agent-skills/tweetfeed-iocs/SKILL.md",
     "AGENTS.md",
     "llms.txt",
     "llms-full.txt",
@@ -695,6 +699,92 @@ def check_machine_surfaces(pages: list[str]) -> list[str]:
             if "campaign" in line.lower() and seven_day_re.search(line):
                 failures.append(f"{name}:{i}: still claims a 7-day window: {line.strip()}")
 
+    return failures
+
+
+# Trigger substrings for anything that documents the /v1/ioc single-value
+# lookup (path, MCP tool name, skill slug, or schema name).
+IOC_LOOKUP_TRIGGERS = ("/v1/ioc", "enrich_ioc", "ioc-lookup", "IocLookupResult")
+
+
+def check_ioc_archive_surfaces(pages: list[str]) -> list[str]:
+    """The /v1/ioc archive block (added 2026-08-23: an additive `archive`
+    field on IocLookupResult covering everything published before the
+    365-day window, back to `first_date` in TweetFeed/archive/meta.json)
+    must be documented everywhere the live 365-day lookup is documented,
+    and the old "365 days is a hard ceiling" claim must not survive
+    anywhere. Sibling to check_machine_surfaces (which stays scoped to
+    /v1/campaigns per its own docstring - do not widen that one instead of
+    adding this). Offline, regex/line-scan based (no yaml import), same
+    style as the rest of this file.
+
+    The archive-mention check (b below) is file-level, not same-line: a
+    pretty-printed JSON manifest (index.json) splits `name`/`url` and
+    `description` across separate lines, so requiring the trigger and the
+    word `archive` on one physical line would false-fail there. What
+    matters is that a file which talks about /v1/ioc at all also talks
+    about archive somewhere."""
+    del pages  # fixed file set, not MAIN_PAGES
+    failures: list[str] = []
+    openapi = read("openapi.yaml")
+
+    # (a) IocLookupResult schema has an `archive` property, and the file
+    # carries the literal archive-window string.
+    m = re.search(
+        r"\n    IocLookupResult:\n(.*?)(?=\n    [A-Za-z_][A-Za-z0-9_]*:\n)",
+        openapi,
+        re.DOTALL,
+    )
+    lookup_schema = m.group(1) if m else ""
+    if not m or "archive:" not in lookup_schema:
+        failures.append("openapi.yaml: IocLookupResult schema is missing an `archive` property")
+    if "pre-365d" not in openapi:
+        failures.append("openapi.yaml: missing the literal `pre-365d` archive window string")
+
+    # (b) Any machine-surface file that documents the ioc-lookup surface at
+    # all must also mention `archive` somewhere in the same file.
+    for name in MACHINE_SURFACE_FILES:
+        text = read(name)
+        if any(t in text for t in IOC_LOOKUP_TRIGGERS) and "archive" not in text:
+            failures.append(f"{name}: documents the /v1/ioc lookup surface but never mentions `archive`")
+
+    # (c) The retired "365 days is a hard ceiling" claim must be gone.
+    for name in MACHINE_SURFACE_FILES:
+        for i, line in enumerate(read(name).splitlines(), start=1):
+            if "values older than that return" in line:
+                failures.append(f"{name}:{i}: retired 365-day-ceiling claim still present: {line.strip()}")
+
+    return failures
+
+
+def check_agent_skill_digests() -> list[str]:
+    """.well-known/agent-skills/index.json pins a sha256 digest per skill so a
+    consumer can cache-validate a SKILL.md without re-fetching it. Nothing
+    verified those pins actually matched the file on disk before this check -
+    a forgotten re-pin after editing a SKILL.md is silent, and the /v1/ioc
+    archive change (2026-08-23) touches two digests at once."""
+    failures: list[str] = []
+    manifest = json.loads(read(".well-known/agent-skills/index.json"))
+    marker = "/.well-known/agent-skills/"
+    for skill in manifest.get("skills", []):
+        name = skill.get("name", "<unnamed>")
+        url = skill.get("url", "")
+        digest = skill.get("digest", "")
+        idx = url.find(marker)
+        if idx == -1:
+            failures.append(f"agent-skills/index.json: {name}: cannot resolve a local path from url {url!r}")
+            continue
+        rel_path = marker.lstrip("/") + url[idx + len(marker):]
+        path = REPO_ROOT / rel_path
+        if not path.is_file():
+            failures.append(f"agent-skills/index.json: {name}: referenced file missing: {rel_path}")
+            continue
+        actual = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != digest:
+            failures.append(
+                f"agent-skills/index.json: {name}: digest mismatch "
+                f"(index.json has {digest}, {rel_path} hashes to {actual})"
+            )
     return failures
 
 
@@ -861,6 +951,7 @@ CHECKS = [
     ("Meta description length (80-160)", check_meta_description_length),
     ("Single <h1> per page", check_single_h1),
     ("Machine-facing campaigns contract (openapi + discovery docs)", check_machine_surfaces),
+    ("Machine-facing /v1/ioc archive contract (openapi + discovery docs)", check_ioc_archive_surfaces),
 ]
 
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on
@@ -963,6 +1054,7 @@ GLOBAL_CHECKS = [
     ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),
     ("Templates include the shell partials", check_templates_include_shell),
     ("Year-window counts in descriptions are not overstated", check_year_counts),
+    ("Agent Skills index.json digests match SKILL.md files on disk", check_agent_skill_digests),
 ]
 
 

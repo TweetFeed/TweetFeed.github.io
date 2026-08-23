@@ -338,6 +338,11 @@ paths:
         input (`hxxp://`, `[.]`, etc.); the value is normalised (refanged)
         server-side before the lookup, same as on ingest.
 
+        Also checked against the archive (everything published before the
+        365-day window, back to `first_date` in `TweetFeed/archive/meta.json`
+        - the coverage start moves daily); any hit comes back in the
+        optional `archive` block, additive to `found`/`records`.
+
         Also available as a path parameter: `/v1/ioc/{value}`.
       parameters:
         - $ref: "#/components/parameters/IocValueQuery"
@@ -346,8 +351,9 @@ paths:
       responses:
         "200":
           description: |
-            Lookup result. `found: false` with an empty `records` array when
-            there is no match.
+            Lookup result. `found: false` with an empty `records` array
+            means no match in the live 365-day window - check the optional
+            `archive` block before treating that as "never seen".
           headers:
             ETag:
               $ref: "#/components/headers/ETag"
@@ -366,7 +372,8 @@ paths:
       summary: Exact-match lookup for a single IOC (path form)
       description: |
         Same lookup as `/v1/ioc?value=...`, with the IOC value passed as a
-        path segment instead of a query parameter.
+        path segment instead of a query parameter, including the same
+        optional `archive` block.
       parameters:
         - $ref: "#/components/parameters/IocValuePath"
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -374,8 +381,9 @@ paths:
       responses:
         "200":
           description: |
-            Lookup result. `found: false` with an empty `records` array when
-            there is no match.
+            Lookup result. `found: false` with an empty `records` array
+            means no match in the live 365-day window - check the optional
+            `archive` block before treating that as "never seen".
           headers:
             ETag:
               $ref: "#/components/headers/ETag"
@@ -888,19 +896,63 @@ components:
             Optional. Other IOCs posted in the same source tweets as this one
             (sample, max 5). Absent when there are none.
 
+    IocArchiveRecord:
+      type: object
+      required: [type, value, first_seen, last_seen, count, tweet_id, tags]
+      description: |
+        A single hit from the archive index. Deliberately a reduced schema
+        versus IocRecord - no `users`, `tweets` or `related` - to keep the
+        4096-shard archive index small.
+      properties:
+        type:
+          type: string
+          enum: [url, domain, ip, sha256, md5]
+          description: IOC type.
+        value:
+          type: string
+          description: The IOC value, refanged (same normalisation as the main feed).
+        first_seen:
+          type: string
+          format: date-time
+          description: UTC timestamp of the earliest archived occurrence.
+        last_seen:
+          type: string
+          format: date-time
+          description: UTC timestamp of the most recent archived occurrence.
+        count:
+          type: integer
+          description: Total number of times this IOC was reported in the archive.
+        tweet_id:
+          type: string
+          description: |
+            Numeric id of the tweet that produced `first_seen`; rebuild the
+            URL as `https://x.com/i/status/<tweet_id>`. Can be an empty
+            string.
+        tags:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+          description: Up to 3 tags, keeping their leading `#`.
+
     IocLookupResult:
       type: object
       required: [found, query, window, records]
       properties:
         found:
           type: boolean
-          description: Whether at least one matching record was found.
+          description: |
+            Whether at least one matching record was found in the live
+            365-day window. Independent of the optional `archive` block -
+            `found: false` does not mean the value is absent from `archive`.
         query:
           type: string
           description: The normalised (refanged) value that was looked up.
         window:
           type: string
-          description: Retention window searched.
+          description: |
+            Retention window searched for `records`. The optional `archive`
+            block, when present, covers everything older.
           example: "365d"
         records:
           type: array
@@ -1082,6 +1134,29 @@ components:
               type: string
               format: date-time
               description: UTC timestamp the registration/DNS data was checked.
+        archive:
+          type: object
+          description: |
+            Optional. Hits in the archive (everything published before the
+            365-day window, back to `first_date` in
+            `TweetFeed/archive/meta.json` - the coverage start moves daily);
+            absent when there is no archive match. Additive to `found` and
+            `records`, never merged into them - `found: true` and `archive`
+            can both be present for the same value at once (their date
+            ranges are disjoint by construction); never sum `archive.total`
+            with the live-window `count`.
+          properties:
+            window:
+              type: string
+              description: Archive window searched.
+              example: "pre-365d"
+            total:
+              type: integer
+              description: Sum of `count` across `records`.
+            records:
+              type: array
+              items:
+                $ref: "#/components/schemas/IocArchiveRecord"
 
     TrendsDocument:
       type: object

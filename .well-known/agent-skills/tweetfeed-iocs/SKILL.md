@@ -62,7 +62,7 @@ curl -sL 'https://api.tweetfeed.live/v1/year' > year.csv
 
 ## Check if a specific IOC is in the feed
 
-There is a direct exact-match lookup over the full 365-day retention window:
+There is a direct exact-match lookup over the full 365-day retention window, plus a pre-365-day archive on top:
 
 ```bash
 curl -s 'https://api.tweetfeed.live/v1/ioc/example.com'
@@ -77,7 +77,7 @@ Response when there is no match:
 {"found": false, "query": "example.com", "window": "365d", "records": []}
 ```
 
-On a hit, `found` is `true` and `records` holds one entry per time the value was posted, with the same fields as the `/v1/{time}` rows. `query` echoes the normalised value that was actually looked up: defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so the defanged and plain forms behave the same. When a value has been annotated by the enrichment job the response also carries optional `ai` (summary, malware family, threat type), `external` (abuse.ch corroboration) and `net` (IP network metadata) blocks - those are sidecars, not canonical feed data, and are absent for most values.
+On a hit, `found` is `true` and `records` holds one aggregated entry per IOC type the value matched (`first_seen`, `last_seen`, `count`, `users`, `tags`, `tweets` - not one row per posting like the `/v1/{time}` rows). `query` echoes the normalised value that was actually looked up: defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so the defanged and plain forms behave the same. Optional sidecars, present only when data exists for that value: `ai` (summary/family/threat type), `external` (abuse.ch corroboration), `net` (IP network metadata), `reg` (RDAP registration, domain/url lookups only), and `archive` (hits older than the 365-day window, back to `first_date` in `archive/meta.json` - additive to `found`/`records`, never merged with them; can appear even when `found` is `false`, or alongside `found: true`).
 
 The lookup is exact, not a substring search. For partial matches (for example every URL on a given host) filter a window client-side instead:
 
@@ -86,7 +86,7 @@ curl -s 'https://api.tweetfeed.live/v1/month' \
   | jq --arg v 'suspicious-domain.com' '[.[] | select(.value | contains($v))]'
 ```
 
-MCP equivalent: `enrich_ioc` tool (same exact 365-day lookup, with a 30-day substring fallback on a miss).
+MCP equivalent: `enrich_ioc` tool (same exact 365-day-plus-archive lookup, with a 30-day substring fallback on a miss).
 
 ## Campaign clusters
 

@@ -28,12 +28,12 @@ TweetFeed is a free, community-sourced Threat Intelligence feed. It answers "has
 
 - `query_iocs(time, user?, tag?, type?)`: browse the feed by time window with optional filters. Returns date, researcher handle, type, value, tags, tweet URL.
 - `check_url(value)`: 30-day substring match against URL-type IOCs.
-- `check_ip(value)`: exact match over 365 days, falls back to a 30-day substring scan.
-- `check_hash(value)`: exact match over 365 days on MD5/SHA-256, type auto-detected from length.
+- `check_ip(value)`: exact match over 365 days, falls back to a 30-day substring scan; also flags older, pre-365-day archive history when it exists.
+- `check_hash(value)`: exact match over 365 days on MD5/SHA-256, type auto-detected from length; also flags older, pre-365-day archive history when it exists.
 - `list_recent_iocs(since, type?, tag?)`: delta-sync helper, IOCs added since a date, source window 30 days.
 - `get_tag_info(tag)`: aggregate counts across all four time windows plus recent IOCs for one tag.
 - `get_trending(window)`: top tags and IOC-type distribution for a window, from the live counts aggregate.
-- `enrich_ioc(value)`: auto-detects type, does the 365-day exact lookup, includes AI context when available.
+- `enrich_ioc(value)`: auto-detects type, does the 365-day exact lookup, includes AI context when available, and also returns an archive block for history older than 365 days.
 - `get_campaigns(brand?, min_confidence?, limit?)`: AI-clustered campaign groupings of the last 30 days.
 - `get_trends()`: 31-day daily volume, top movers, TLD distribution, novelty ratio.
 
@@ -50,8 +50,8 @@ Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X
 - **How fresh is the data?** The pipeline runs every 15 minutes, all day, every day.
 - **Can I train an LLM on this data?** Yes - it is CC0 and the site's Content-Signal header explicitly sets `ai-train=yes`.
 - **Is a TweetFeed IOC verified malicious?** No - TweetFeed is OSINT, not a sandbox or a detection engine. Every row reflects a public claim by an infosec researcher, deduplicated and tagged, not an automated verdict. Cross-reference VirusTotal, urlscan.io or a sandbox before blocking outright; false positives happen, especially for compromised legitimate domains hosting phishing kits temporarily.
-- **How do I check a single IOC?** `GET https://api.tweetfeed.live/v1/ioc?value=<value>` for an exact 365-day lookup, or the MCP `enrich_ioc` tool.
-- **What extra context can an IOC lookup return?** Optional sidecar fields, each present only once its own enrichment job has covered the value: `ai` (LLM-generated summary/family/confidence), `external` (cross-feed corroboration from abuse.ch - URLhaus/ThreatFox/MalwareBazaar), `net` (IP network metadata, IP lookups only), and `reg` (RDAP registrar/creation-date/nameservers plus resolved IP(s)/ASN at first-seen, domain/url lookups only, 30-day window).
+- **How do I check a single IOC?** `GET https://api.tweetfeed.live/v1/ioc?value=<value>` for an exact 365-day lookup, or the MCP `enrich_ioc` tool. A miss in that window (`found: false`) is not necessarily a miss overall - the response also checks the archive (everything published before the 365-day window) and surfaces any hit in an optional `archive` block, additive to `found`/`records` and never merged with them.
+- **What extra context can an IOC lookup return?** Optional sidecar fields, each present only once its own enrichment job has covered the value: `ai` (LLM-generated summary/family/confidence), `external` (cross-feed corroboration from abuse.ch - URLhaus/ThreatFox/MalwareBazaar), `net` (IP network metadata, IP lookups only), `reg` (RDAP registrar/creation-date/nameservers plus resolved IP(s)/ASN at first-seen, domain/url lookups only, 30-day window), and `archive` (pre-365-day history, see above).
 - **How do I get a ready-to-import blocklist?** Pull `https://api.tweetfeed.live/v1/blocklist/{domains,hosts,adguard,ips,rpz,dnsmasq,urls}.txt` - plain text, one indicator per line, 30-day rolling window, rebuilt every 15 minutes.
 - **What are TweetFeed campaigns?** Daily AI-clustered groupings of the last 30 days of IOCs that share infrastructure (registered domain, cross-domain URL path patterns) or a specific tag. The AI only names and describes a cluster; membership is always a subset of the verbatim feed. `GET https://api.tweetfeed.live/v1/campaigns`.
 - **How do I import TweetFeed into MISP, OpenCTI or Splunk?** MISP: under Sync Actions -> Feeds -> Add, set the feed URL to `https://tweetfeed.live/misp` (the feed directory, not the manifest file - MISP appends `/manifest.json` itself, so pointing it at the manifest URL produces a 404). OpenCTI/Splunk: point at the CSV feed URLs and schedule a periodic refresh, or use the TAXII 2.1 server at `https://api.tweetfeed.live/taxii2/` for incremental polling.
