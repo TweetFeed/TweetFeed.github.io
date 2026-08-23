@@ -503,7 +503,7 @@
 				<p class="tf-note"><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index. The most recent day is partial until 00:00 UTC. <code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</p>
 				<br>
 				<h3 id="ioc-lookup" class="section-heading tf-block-head">IOC lookup (exact match)</h3>
-				<p>Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>
+				<p>Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. Also checked against the pre-365-day archive, returned separately in the optional <code>archive</code> block. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/ioc?value=<span class="tf-ph"><b>{ioc}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/ioc?value={ioc}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
 				<span class="tf-code-label"><b>Response</b></span>
 				<pre class="code-block code-block-sm">{
@@ -521,9 +521,25 @@
             "tags": ["#phishing", "#scam"],
             "tweets": ["https://x.com/Coolcarlos17/status/2074241960101941737"]
         }
-    ]
+    ],
+    "archive": {
+        "window": "pre-365d",
+        "total": 1,
+        "records": [
+            {
+                "type": "url",
+                "value": "https://clicksafe.nl/",
+                "first_seen": "2022-01-01 00:09:03",
+                "last_seen": "2022-01-01 00:09:03",
+                "count": 1,
+                "tweet_id": "1477069322681991170",
+                "tags": ["#phishing"]
+            }
+        ]
+    }
 }</pre>
 				<p class="tf-note">Unknown values return <code>200</code> with <code>found: false</code>. Values containing <code>/</code> or <code>?</code> must use the <code>?value=</code> query form.</p>
+				<p class="tf-note">The optional <code>archive</code> block covers hits older than the live 365-day window, back to <code>first_date</code> in <code>TweetFeed/archive/meta.json</code>. It is additive to <code>found</code>/<code>records</code>, never merged into them - their date ranges are disjoint by construction, so never sum <code>archive.total</code> with a record's <code>count</code>. It can accompany <code>found: true</code> or <code>found: false</code> for the same queried value. An archive record is a reduced schema versus a live one: no <code>users</code>, <code>tweets</code> or <code>related</code>.</p>
 				<p class="tf-note">TweetFeed's own feed data and API responses are CC0; the optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0: abuse.ch (URLhaus / ThreatFox / MalwareBazaar, see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>), USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate), and <a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</p>
 				<p class="tf-note">The optional <code>net.drop</code> block is a separate case, IP lookups only: it annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a> - it does not mean the IOC value itself is listed anywhere. Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</p>
 				<br>

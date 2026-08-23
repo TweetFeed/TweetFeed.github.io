@@ -173,7 +173,7 @@
 				"name": "What does the IOC lookup search?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "The IOC lookup panel runs an exact match against TweetFeed's 365-day index via the api.tweetfeed.live/v1/ioc endpoint. Input is normalized server-side (defanged hxxp and [.], lowercase, scheme and trailing slashes stripped). This is different from the table below, which matches substrings across the last 7 days."
+					"text": "The IOC lookup panel runs an exact match against TweetFeed's 365-day index via the api.tweetfeed.live/v1/ioc endpoint, plus a pre-365-day archive for anything older. Input is normalized server-side (defanged hxxp and [.], lowercase, scheme and trailing slashes stripped). This is different from the table below, which matches substrings across the last 7 days."
 				}
 			},
 			{
@@ -740,7 +740,7 @@
 					     campaigns/index.html. -->
 					<div class="card shadow mb-4" id="iocLookupCard">
 						<div class="card-body">
-							<h3 class="section-heading tf-block-head">IOC lookup <span class="tfl-window-badge">last 365 days</span></h3>
+							<h3 class="section-heading tf-block-head">IOC lookup <span class="tfl-window-badge">365 days + archive</span></h3>
 							<form id="iocLookupForm" role="search" aria-label="IOC lookup (exact match, last 365 days)">
 								<label for="iocLookupInput" class="sr-only">Exact IOC value to look up</label>
 								<div class="input-group">
@@ -749,7 +749,7 @@
 										<button class="btn btn-tf" type="submit" aria-label="Search"><i class="fas fa-search"></i> Search</button>
 									</div>
 								</div>
-								<small class="form-text text-muted tfl-hint">Exact match against the 365-day index. Defanged input (<code>hxxp</code>, <code>[.]</code>) is normalized automatically. Same dataset as the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a> - see the <a href="../api/">API docs</a>.</small>
+								<small class="form-text text-muted tfl-hint">Exact match against the 365-day index, plus a pre-365-day archive for anything older. Defanged input (<code>hxxp</code>, <code>[.]</code>) is normalized automatically. Same dataset as the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a> - see the <a href="../api/">API docs</a>.</small>
 							</form>
 							<div id="iocLookupStatus" role="status" aria-live="polite"></div>
 							<div id="iocLookupResults" aria-live="polite"></div>
@@ -949,7 +949,7 @@
 						</details>
 						<details>
 							<summary>What does the IOC lookup search?</summary>
-							<p>The IOC lookup panel above runs an exact match against TweetFeed's 365-day index via the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">api.tweetfeed.live/v1/ioc</a> endpoint. Input is normalized server-side (defanged <code>hxxp</code> and <code>[.]</code>, lowercase, scheme and trailing slashes stripped) - don't normalize it yourself. This is different from the table below, which matches substrings across the last 7 days.</p>
+							<p>The IOC lookup panel above runs an exact match against TweetFeed's 365-day index via the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">api.tweetfeed.live/v1/ioc</a> endpoint, plus a pre-365-day archive for anything older. Input is normalized server-side (defanged <code>hxxp</code> and <code>[.]</code>, lowercase, scheme and trailing slashes stripped) - don't normalize it yourself. This is different from the table below, which matches substrings across the last 7 days.</p>
 						</details>
 						<details>
 							<summary>What is the AI context in lookup results?</summary>
@@ -1886,12 +1886,85 @@
 			);
 		}
 
-		function renderEmpty(query) {
+		// Pre-365-day archive (optional API field, added 2026-08-23). The live
+		// 365-day index is not TweetFeed's full history - 85.4% of published
+		// IOCs never reappear inside that trailing window - so the API also
+		// returns this additive `archive` block for anything older, back to
+		// `first_date` in TweetFeed/archive/meta.json. Sibling pattern to
+		// renderReg() above - reuses the tfl-net-* namespace as-is (a header
+		// plus N rows plus a small foot is this shape again), so zero new
+		// CSS. `archive` and `found`/`records` are separate populations with
+		// disjoint date ranges by construction - never merged, never summed
+		// - so this only ever renders alongside the found/empty branch in
+		// renderResults below, never in place of it. An archive record
+		// carries a reduced field set versus a live one (no
+		// users/tweets/related); every field is esc()'d.
+		function renderArchive(archive) {
+			if (!archive || typeof archive !== 'object' || Array.isArray(archive)) return '';
+			var records = Array.isArray(archive.records) ? archive.records : [];
+			if (!records.length) return '';
+
+			var rowsHtml = records.map(function(r) {
+				if (!r || typeof r !== 'object') return '';
+				var type = typeof r.type === 'string' ? r.type : '';
+				var value = typeof r.value === 'string' ? r.value : '';
+				var count = typeof r.count === 'number' ? r.count : 0;
+				var firstSeen = typeof r.first_seen === 'string' ? r.first_seen : '?';
+				var lastSeen = typeof r.last_seen === 'string' ? r.last_seen : '?';
+				var tags = Array.isArray(r.tags) ? r.tags : [];
+				var tweetId = typeof r.tweet_id === 'string' ? r.tweet_id : '';
+
+				var tagsHtml = tags.map(function(t) {
+					return '<span class="tfl-tag-chip">' + esc(t) + '</span>';
+				}).join('');
+
+				var tweetHtml = tweetId
+					? '<a class="tf-action tf-action-tweet" href="https://x.com/i/status/' + esc(tweetId) + '" target="_blank" rel="noopener noreferrer" title="Open source tweet" aria-label="Open source tweet">' + X_SVG + '</a>'
+					: '';
+
+				return (
+					'<div class="tfl-net-row">' +
+						'<span class="tfl-type-badge ' + typeClass(type) + '">' + esc(type || 'unknown') + '</span> ' +
+						'<code class="tfl-value">' + esc(value) + '</code> ' +
+						'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>' +
+						tweetHtml +
+						' &middot; seen ' + count + ' time' + (count === 1 ? '' : 's') +
+						' &middot; ' + esc(firstSeen) + ' to ' + esc(lastSeen) + ' UTC' +
+						(tagsHtml ? '<div class="tfl-tags">' + tagsHtml + '</div>' : '') +
+					'</div>'
+				);
+			}).join('');
+
+			return (
+				'<div class="tfl-net" role="note" aria-label="Pre-365-day archive">' +
+					'<div class="tfl-net-header"><i class="fas fa-archive"></i> Archive (older than 365 days)</div>' +
+					rowsHtml +
+					'<div class="tfl-net-foot">Published before the live 365-day window - a separate population, never merged or summed with a match above.</div>' +
+				'</div>'
+			);
+		}
+
+		// Three states, not two: a match in the live window (the found
+		// branch in renderResults below), a miss in the live window with
+		// history in the pre-365-day archive (archive present - most of the
+		// corpus, see the module comment on renderArchive above), and a
+		// genuine miss in both (archive absent/empty).
+		function renderEmpty(query, archive) {
+			var hasArchive = !!(archive && Array.isArray(archive.records) && archive.records.length > 0);
+			if (hasArchive) {
+				return (
+					'<div class="empty-state">' +
+						'<div class="empty-icon"><i class="far fa-eye-slash"></i></div>' +
+						'<div class="empty-message">Not in the last 365 days, but seen before</div>' +
+						'<div class="empty-hint">No match in the live 365-day index for <code>' + esc(query) + '</code> - TweetFeed published it earlier, see the archive below.</div>' +
+					'</div>'
+				);
+			}
 			return (
 				'<div class="empty-state">' +
 					'<div class="empty-icon"><i class="far fa-eye-slash"></i></div>' +
-					'<div class="empty-message">Not seen in the last 365 days</div>' +
-					'<div class="empty-hint">No exact match in the 365-day index for <code>' + esc(query) + '</code> - try the 7-day table below (substring, tags and reporters).</div>' +
+					'<div class="empty-message">No record of this IOC</div>' +
+					'<div class="empty-hint">No match in the 365-day index or the archive for <code>' + esc(query) + '</code> - try the 7-day table below (substring, tags and reporters).</div>' +
 				'</div>'
 			);
 		}
@@ -1907,9 +1980,10 @@
 				}
 				html += records.map(renderRecord).join('');
 			} else {
-				html += renderEmpty(query);
+				html += renderEmpty(query, data && data.archive);
 			}
 
+			html += renderArchive(data && data.archive);
 			html += renderExternal(data && data.external);
 			html += renderNet(data && data.net);
 			html += renderReg(data && data.reg);
@@ -1937,7 +2011,7 @@
 			inFlight = isLoading;
 			$submitBtn.prop('disabled', isLoading);
 			if (isLoading) {
-				$status.html('<span class="tfl-status-loading"><img loading="lazy" src="../img/loading.svg" alt="" width="18" height="18"> Searching 365-day index...</span>');
+				$status.html('<span class="tfl-status-loading"><img loading="lazy" src="../img/loading.svg" alt="" width="18" height="18"> Searching 365-day index and archive...</span>');
 			} else {
 				$status.empty();
 			}

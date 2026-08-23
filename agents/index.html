@@ -427,16 +427,18 @@
 							<td><code>check_ip</code></td>
 							<td>
 								Check whether an IPv4 or IPv6 address appears in TweetFeed. Exact match
-								over the past 365 days, falling back to a 30-day substring match against
-								<code>type=ip</code> IOCs if there's no exact hit.
+								over the past 365 days plus the pre-365-day archive, falling back to a
+								30-day substring match against <code>type=ip</code> IOCs if there's no
+								exact hit.
 							</td>
 						</tr>
 						<tr>
 							<td><code>check_hash</code></td>
 							<td>
 								Check whether a file hash appears in TweetFeed. Exact match over the past
-								365 days, falling back to a 30-day window if there's no exact hit. Type
-								auto-detected from length (32 hex = MD5, 64 hex = SHA-256), hex required.
+								365 days plus the pre-365-day archive, falling back to a 30-day window if
+								there's no exact hit. Type auto-detected from length (32 hex = MD5, 64
+								hex = SHA-256), hex required.
 							</td>
 						</tr>
 						<tr>
@@ -469,9 +471,10 @@
 							<td><code>enrich_ioc</code></td>
 							<td>
 								Auto-detects IOC type (URL / domain / IP / MD5 / SHA-256) from the value.
-								Exact match over the past 365 days first, falling back to a 30-day
-								substring scan if there's no exact hit. Saves the agent from picking the
-								right <code>check_*</code> tool when the type is uncertain.
+								Exact match over the past 365 days plus the pre-365-day archive first,
+								falling back to a 30-day substring scan if there's no exact hit. Saves
+								the agent from picking the right <code>check_*</code> tool when the type
+								is uncertain.
 							</td>
 						</tr>
 						<tr>
@@ -531,7 +534,7 @@
 						</tr>
 						<tr>
 							<td><a href="/.well-known/agent-skills/tweetfeed-ioc-lookup/SKILL.md"><code>tweetfeed-ioc-lookup</code></a></td>
-							<td>Exact-match lookup for one specific IOC over the full 365-day window: first/last seen, reporters, optional AI context.</td>
+							<td>Exact-match lookup for one specific IOC over the full 365-day window plus the pre-365-day archive: first/last seen, reporters, optional AI context.</td>
 						</tr>
 						<tr>
 							<td><a href="/.well-known/agent-skills/tweetfeed-blocklists/SKILL.md"><code>tweetfeed-blocklists</code></a></td>
