@@ -24,6 +24,8 @@ Each campaign:
   "context": "...",
   "confidence": "high",
   "targeted_brand": "...",
+  "targeted_sector": "...",
+  "targeted_country": "...",
   "first_seen": "...",
   "last_seen": "...",
   "ioc_count": 0,
@@ -39,7 +41,7 @@ Each campaign:
 }
 ```
 
-`confidence` is `high` / `medium` / `low`. `targeted_brand` is present only when one was identified. `iocs` is capped at 25 sample rows per campaign even if the cluster has more members.
+`confidence` is `high` / `medium` / `low`. `targeted_brand` is present only when one was identified. `targeted_sector` (STIX 2.1 `industry-sector-ov` slug, e.g. `financial-services`) and `targeted_country` (ISO 3166-1 alpha-2, e.g. `BR`) are AI-inferred the same way and may be `null`. `iocs` is capped at 25 sample rows per campaign even if the cluster has more members.
 
 `ioc_count_1d`/`ioc_count_7d`/`ioc_count_30d` are optional ints: IOCs seen in the last 1/7/30 days respectively (`ioc_count` stays the total across the full window, unchanged). They may be absent on older documents - treat a missing `ioc_count_7d` as "currently active" rather than as zero. `ioc_count_7d > 0` is what identifies a campaign as currently active; the human page at `/campaigns/` uses exactly that check to default to "active this week" and hide campaigns that have gone quiet.
 

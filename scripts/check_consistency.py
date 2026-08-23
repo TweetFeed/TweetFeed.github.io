@@ -460,7 +460,17 @@ def check_orphan_pages() -> list[str]:
 
     Footer parity alone only guarantees every page is equally wrong. This is
     the check that would have caught /malicious-urls/, /malicious-hashes-md5/
-    and /malicious-hashes-sha256/ sitting in no footer at all."""
+    and /malicious-hashes-sha256/ sitting in no footer at all.
+
+    Depth 2 (`*/*/index.html`) is checked too, added 2026-08-23. `tag/<slug>/`
+    subdirs get a pass: they are reachable from /tag/ (a real hub page with
+    real <a href> links to each) and regenerated daily. Nothing else at depth
+    2 gets a pass - in particular campaigns/tfc-*/ permalink pages are NOT
+    reached through /campaigns/, despite what the old comment here claimed:
+    that hub only ever writes `#tfc-<id>` in-page anchors for its own
+    scrollIntoView deep-linking, never an `<a href="tfc-.../">` to a separate
+    permalink page, so a stale campaigns/tfc-*/ directory with no other
+    inbound link is a true orphan."""
     reachable = set(ia.internal_footer_targets())
     reachable |= {l.href for l in ia.NAV_PRIMARY}
     reachable |= {l.href for l in ia.nav_more_links() if not l.external}
@@ -470,10 +480,16 @@ def check_orphan_pages() -> list[str]:
         d = path.parent.name + "/"
         if d in reachable:
             continue
-        # tag/ and campaigns/ subtrees are reached through their hub pages.
+        # tag/ subtree is reached through its hub page.
         if d in ("tag/",):
             continue
         failures.append(f"/{d} exists but is linked from neither the nav nor the footer")
+    for path in sorted(REPO_ROOT.glob("*/*/index.html")):
+        parent = path.parent.parent.name + "/"
+        d = parent + path.parent.name + "/"
+        if parent == "tag/":
+            continue
+        failures.append(f"/{d} exists at depth 2 but is not reachable (only tag/<slug>/ is allowed there)")
     return failures
 
 
@@ -665,16 +681,39 @@ MACHINE_SURFACE_FILES = [
 ]
 
 
+# Fields campaigns/index.html actually reads off a Campaign object (grep the
+# page's JS for `c.<field>`/`c['<field>']` before trusting this list - it is
+# hand-maintained, not derived). Added 2026-08-23 alongside the honesty-label
+# batch (member_cluster_ids/anchors render the "merged from N pre-clusters"
+# and evidence blocks; targeted_sector/targeted_country render in the
+# apparent-target chip/line) so the openapi Campaign schema can never again
+# document less than the page consumes.
+CAMPAIGN_PAGE_FIELDS = (
+    "id", "name", "context", "confidence", "targeted_brand", "targeted_sector",
+    "targeted_country", "first_seen", "last_seen", "ioc_count", "ioc_count_1d",
+    "ioc_count_7d", "ioc_count_30d", "types", "tags", "reporters", "iocs",
+    "member_cluster_ids", "anchors",
+)
+
+# Fields the same page reads off each sampled Ioc object inside a campaign
+# (c.iocs[i].<field>) - same freshness caveat as CAMPAIGN_PAGE_FIELDS above.
+IOC_PAGE_FIELDS = ("date", "user", "type", "value", "tags", "tweet")
+
+
 def check_machine_surfaces(pages: list[str]) -> list[str]:
     """The /v1/campaigns contract must stay in sync across openapi.yaml and
     the machine-facing discovery docs: (1) the Campaigns `window` enum must
     be exactly `month` (it was `week` before 2026-08-13); (2) the Campaign
-    schema must expose the per-window `ioc_count_1d/7d/30d` activity fields;
-    (3) no campaign-related line may still claim a 7-day window - scoped to
-    lines mentioning 'campaign' so the legitimate 7-day /v1/week endpoint
-    docs are left alone. Offline, regex/line-scan based (no yaml import,
-    matching the rest of this file - openapi.yaml is not valid enough JSON
-    to abuse a JSON parser on, and a real YAML parser is not a stdlib dep)."""
+    schema must document every field campaigns/index.html actually consumes
+    (CAMPAIGN_PAGE_FIELDS), and the Ioc schema every field it reads off a
+    sampled campaign IOC (IOC_PAGE_FIELDS) - added 2026-08-23 after
+    targeted_sector/targeted_country/tweet shipped on the page ahead of the
+    schema; (3) no campaign-related line may still claim a 7-day window -
+    scoped to lines mentioning 'campaign' so the legitimate 7-day /v1/week
+    endpoint docs are left alone. Offline, regex/line-scan based (no yaml
+    import, matching the rest of this file - openapi.yaml is not valid
+    enough JSON to abuse a JSON parser on, and a real YAML parser is not a
+    stdlib dep)."""
     del pages  # fixed file set, not MAIN_PAGES
     failures: list[str] = []
     openapi = read("openapi.yaml")
@@ -689,9 +728,21 @@ def check_machine_surfaces(pages: list[str]) -> list[str]:
 
     idx = openapi.find("\n    Campaign:\n")
     campaign_schema = openapi[idx:] if idx != -1 else ""
-    for field in ("ioc_count_1d", "ioc_count_7d", "ioc_count_30d"):
+    for field in CAMPAIGN_PAGE_FIELDS:
         if not re.search(rf"^        {field}:", campaign_schema, re.MULTILINE):
-            failures.append(f"openapi.yaml: Campaign schema missing `{field}` property")
+            failures.append(f"openapi.yaml: Campaign schema missing `{field}` property (consumed by campaigns/index.html)")
+
+    ioc_idx = openapi.find("\n    Ioc:\n")
+    # Bounded to the next schema key (IocRecord immediately follows Ioc in
+    # openapi.yaml) - unlike campaign_schema above, Ioc is NOT the last
+    # schema in the file, and IocRecord/IocLookupResult both redeclare
+    # `type`/`value`/`tags`, so an unbounded slice would let a field missing
+    # from Ioc itself pass by matching one of those instead.
+    ioc_end = openapi.find("\n    IocRecord:\n")
+    ioc_schema = openapi[ioc_idx:ioc_end] if ioc_idx != -1 and ioc_end != -1 else ""
+    for field in IOC_PAGE_FIELDS:
+        if not re.search(rf"^        {field}:", ioc_schema, re.MULTILINE):
+            failures.append(f"openapi.yaml: Ioc schema missing `{field}` property (consumed by campaigns/index.html sample IOCs)")
 
     seven_day_re = re.compile(r"7[- ]day", re.IGNORECASE)
     for name in MACHINE_SURFACE_FILES:

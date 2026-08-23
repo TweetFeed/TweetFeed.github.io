@@ -799,7 +799,7 @@ components:
   schemas:
     Ioc:
       type: object
-      required: [date, user, type, value, tags]
+      required: [date, user, type, value, tags, tweet]
       properties:
         date:
           type: string
@@ -813,7 +813,7 @@ components:
             When the reporting tweet is a quote-tweet, the IOC is extracted
             from the QUOTED tweet but stamped with the QUOTING tweet's time,
             so that a re-share lands in the day it was re-shared. `user` and
-            `tweet_url` then point at the quoted tweet while `date` points at
+            `tweet` then point at the quoted tweet while `date` points at
             the quoting one, and `date` can be much newer than the tweet the
             IOC first appeared in.
           example: "2026-05-21 09:13:00"
@@ -842,6 +842,11 @@ components:
             applicable). Current taxonomy: 92 tags. Full list at
             https://tweetfeed.live/tags/.
           example: ["phishing", "scam"]
+        tweet:
+          type: string
+          format: uri
+          description: URL of the tweet that reported the IOC.
+          example: "https://x.com/malwrhunterteam/status/1234567890123456789"
 
     IocRecord:
       type: object
@@ -1282,8 +1287,11 @@ components:
         stale_since:
           type: string
           nullable: true
-          format: date
-          description: Date of the last successful run. Only set when `stale` is `true`, `null` otherwise.
+          format: date-time
+          description: |
+            Timestamp (`generated_at`) of the last successful run before
+            staleness began. Only set when `stale` is `true`, `null`
+            otherwise.
           example: null
         campaign_count:
           type: integer
@@ -1297,8 +1305,9 @@ components:
     Campaign:
       type: object
       required:
-        [id, name, context, confidence, targeted_brand, first_seen, last_seen,
-         ioc_count, types, tags, reporters, iocs, member_cluster_ids, anchors]
+        [id, name, context, confidence, targeted_brand, targeted_sector, targeted_country,
+         first_seen, last_seen, ioc_count, types, tags, reporters, iocs,
+         member_cluster_ids, anchors]
       properties:
         id:
           type: string
@@ -1324,6 +1333,22 @@ components:
           type: string
           nullable: true
           description: Brand or organization the campaign appears to target, when identifiable. `null` otherwise.
+        targeted_sector:
+          type: string
+          nullable: true
+          description: |
+            Industry sector the campaign appears to target, AI-inferred from
+            the clustered IOCs. Values are STIX 2.1 `industry-sector-ov` slugs
+            (e.g. `financial-services`). `null` when no sector is identifiable.
+          example: "financial-services"
+        targeted_country:
+          type: string
+          nullable: true
+          description: |
+            Country the campaign appears to target, AI-inferred from the
+            clustered IOCs. ISO 3166-1 alpha-2. `null` when no country is
+            identifiable.
+          example: "BR"
         first_seen:
           type: string
           format: date
