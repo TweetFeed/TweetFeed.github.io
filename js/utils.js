@@ -229,7 +229,14 @@
         }
       }
     };
-    return $.ajax({
+    // `dataType` is opt-in and matters for one reason: raw.githubusercontent
+    // serves .json as text/plain, so jQuery's content-type sniffing hands the
+    // callback a STRING. That is the root cause of the bug that left /feeds/
+    // months without its counts, and it was papered over with a
+    // `typeof x === 'string'` guard duplicated in /feeds/ and /graphs/.
+    // Callers fetching JSON pass dataType: 'json'; the CSV callers pass
+    // nothing and keep getting text, which is what they want.
+    var cfg = {
       url: url,
       type: 'GET',
       timeout: options.timeout || 30000,
@@ -237,7 +244,9 @@
       error: function(xhr, status, err) {
         onError(status + ': ' + (err || 'unknown error'));
       }
-    });
+    };
+    if (options.dataType) cfg.dataType = options.dataType;
+    return $.ajax(cfg);
   }
 
   // ─── DataTable helpers (safe destroy before reinit) ────────────────────────

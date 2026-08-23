@@ -47,8 +47,8 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=54" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=54" rel="stylesheet">
+	<link href="../css/index.css?v=55" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=55" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -1075,7 +1075,7 @@
 	<!-- js/demo/datatables-demo.js removed: targets #dataTable, which does not exist on this page (graphs uses #dataTableType*/#dataTableTag* tables, initialized in its own inline script below); confirmed no-op here -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=4"></script>
+	<script defer src="../js/utils.js?v=5"></script>
 	<!-- Page level custom scripts -->
 	<script defer src="../vendor/chart.js/Chart.min.js"></script>
 	<script>
@@ -1161,8 +1161,7 @@
 		}});
 		// Year window: use counts.json (~5 KB) instead of year.csv (~16 MB).
 		// Parsing year.csv on the main thread blocks LCP.
-		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { errorTarget: '#loadingYear', success: function(counts) {
-			if (typeof counts === 'string') counts = JSON.parse(counts);
+		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { dataType: 'json', errorTarget: '#loadingYear', success: function(counts) {
 			let yr = counts.windows.year;
 			$(".lastDateYearFrom").fadeOut(function() {
 				$(this).text("From: " + formatDateLong(yr.first_date)).fadeIn(2000);

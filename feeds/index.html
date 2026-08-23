@@ -46,8 +46,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=54" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=54" rel="stylesheet">
+	<link href="../css/index.css?v=55" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=55" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -949,7 +949,7 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=4"></script>
+	<script src="../js/utils.js?v=5"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// One counts.json fetch feeds both the headline figures and the four
@@ -963,8 +963,7 @@
 	// has carried the same guard since it moved onto counts.json; this page
 	// never got it, so its four cards spun forever in production.
 	$(window).on('load', function() {
-		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { errorTarget: '#feedsCountsError', success: function(counts) {
-			if (typeof counts === 'string') counts = JSON.parse(counts);
+		TweetFeed.safeGet(TweetFeed.dataUrl('counts.json'), { dataType: 'json', errorTarget: '#feedsCountsError', success: function(counts) {
 			const windows = (counts && counts.windows) || {};
 			const TYPES = ['url', 'domain', 'ip', 'sha256', 'md5'];
 			// Date only. formatDateLong's "August 19th, 2026 00:52:38 UTC" is 36

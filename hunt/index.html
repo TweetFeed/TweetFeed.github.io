@@ -44,8 +44,8 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=54" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=54" rel="stylesheet">
+	<link href="../css/index.css?v=55" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=55" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -266,18 +266,10 @@
 			.hnt-filter { flex-wrap: nowrap; overflow-x: auto; }
 			.hnt-chip { flex-shrink: 0; }
 		}
-		.hnt-chip {
-			font-family: 'Rubik', sans-serif;
-			font-size: 13px;
-			line-height: 1.5;
-			padding: 4px 12px;
-			border: 1px solid black;
-			border-radius: 4px;
-			background: #fff;
-			color: #000;
-			cursor: pointer;
-		}
-		.hnt-chip:hover { background: #3a6f96; color: #fff; }
+		/* Resting appearance comes from .page-toc-chip in tweetfeed.css, which
+		   this used to duplicate declaration for declaration. What stays is what
+		   a toggle <button> needs and a nav <a> does not. */
+		.hnt-chip { cursor: pointer; }
 		.hnt-chip:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 		.hnt-chip[aria-pressed="true"] { background: #1178b3; color: #fff; font-weight: 600; }
 		.hnt-chip-n { opacity: 0.7; margin-left: 4px; font-variant-numeric: tabular-nums; }
@@ -1270,7 +1262,7 @@ tags:
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../js/config.js"></script>
-  <script src="../js/utils.js?v=4"></script>
+  <script src="../js/utils.js?v=5"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Recipe filter. Progressive enhancement on purpose: the markup ships
 	     with every card visible, so with JS off (or before this runs) the page

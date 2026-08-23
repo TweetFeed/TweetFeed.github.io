@@ -265,7 +265,17 @@ hr.divider {
 /* In-page section TOC chip row (hunt.html, feeds.html). Black border +
    steel-blue hover matches the heavy-box design language. */
 .page-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
-.page-toc-chip {
+/* The resting chip. /hunt/ had a byte-for-byte copy of these declarations under
+   its own .hnt-chip prefix - same family, size, line-height, padding, border,
+   radius, colours and the same hover. Only the parts that are genuinely its own
+   stay local to that page: it is a <button> with an aria-pressed state, so
+   cursor, :focus-visible, the pressed treatment and the count span live there.
+   `display` and `text-decoration` are no-ops on a <button> and harmless.
+   NOT merged here: .tfc-filter-chip (11px, 600, uppercase, grey, opacity .75)
+   and .tfl-tag-chip (11px pill, radius 12) are different controls that happen
+   to be called chips - folding them in would flatten three designs into one. */
+.page-toc-chip,
+.hnt-chip {
 	display: inline-block;
 	padding: 4px 12px;
 	border: 1px solid black;
@@ -277,7 +287,8 @@ hr.divider {
 	text-decoration: none;
 	line-height: 1.5;
 }
-.page-toc-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
+.page-toc-chip:hover,
+.hnt-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
 
 /* Uppercase eyebrow that groups the chips above into named runs. Promoted
    from /feeds/, which was the only page that had it. */
