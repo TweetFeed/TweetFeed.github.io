@@ -2,31 +2,39 @@ table {
   table-layout: fixed;
 }
 
-table th:nth-child(1) {
+/* The seven-column IOC table: date / user / type / value / tags / source / copy.
+   These proportions are that table's, and until 2026-08-23 they were written as
+   a bare `table th:nth-child(N)`, so every <table> on the site inherited them.
+   Most tables were saved only because they carry a <colgroup>, which wins under
+   table-layout:fixed; the two that did not (docs/ and threat-intelligence-guide/)
+   were rendering a four-column documentation table with a 54.5% last column and
+   a 10.4% third one. Scoped to the three tables that own the shape: the home
+   feed, and the lookup and explorer tables of /search/. */
+#dataTable th:nth-child(1), #feedExplorerTable th:nth-child(1), #dataTableFull th:nth-child(1) {
   width: 14%;
 }
 
-table th:nth-child(2) {
+#dataTable th:nth-child(2), #feedExplorerTable th:nth-child(2), #dataTableFull th:nth-child(2) {
   width: 13%;
 }
 
-table th:nth-child(3) {
+#dataTable th:nth-child(3), #feedExplorerTable th:nth-child(3), #dataTableFull th:nth-child(3) {
   width: 8%;
 }
 
-table th:nth-child(4) {
+#dataTable th:nth-child(4), #feedExplorerTable th:nth-child(4), #dataTableFull th:nth-child(4) {
   width: 42%;
 }
 
-table th:nth-child(5) {
+#dataTable th:nth-child(5), #feedExplorerTable th:nth-child(5), #dataTableFull th:nth-child(5) {
   width: 10%;
 }
 
-table th:nth-child(6) {
+#dataTable th:nth-child(6), #feedExplorerTable th:nth-child(6), #dataTableFull th:nth-child(6) {
   width: 6%;
 }
 
-table th:nth-child(7) {
+#dataTable th:nth-child(7), #feedExplorerTable th:nth-child(7), #dataTableFull th:nth-child(7) {
   width: 7%;
 }
 

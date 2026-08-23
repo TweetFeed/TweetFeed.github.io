@@ -46,8 +46,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=52" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=52" rel="stylesheet">
+	<link href="../css/index.css?v=53" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=53" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -204,26 +204,6 @@
 
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
-	<style>
-		.skip-link {
-			position: absolute;
-			top: -40px;
-			left: 0;
-			background: #000;
-			color: #fff;
-			padding: 8px 16px;
-			z-index: 10000;
-			text-decoration: none;
-			font-family: 'Rubik', sans-serif;
-			font-size: 14px;
-			border-radius: 0 0 4px 0;
-		}
-		.skip-link:focus {
-			top: 0;
-			outline: 2px solid #3a6f96;
-			outline-offset: -2px;
-		}
-	</style>
 		<style>
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
 		   it, so every anchor on this page used to land underneath it. Same
@@ -549,6 +529,11 @@
 				<p>Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered tf-doc-table" style="border:none;width:100%;">
+						<colgroup>
+							<col span="1" style="width: 22%;">
+							<col span="1" style="width: 48%;">
+							<col span="1" style="width: 30%;">
+						</colgroup>
 						<thead>
 							<tr>
 								<th scope="col">Format</th>

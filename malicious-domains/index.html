@@ -46,8 +46,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=52" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=52" rel="stylesheet">
+	<link href="../css/index.css?v=53" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=53" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -231,26 +231,6 @@
 
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
-	<style>
-		.skip-link {
-			position: absolute;
-			top: -40px;
-			left: 0;
-			background: #000;
-			color: #fff;
-			padding: 8px 16px;
-			z-index: 10000;
-			text-decoration: none;
-			font-family: 'Rubik', sans-serif;
-			font-size: 14px;
-			border-radius: 0 0 4px 0;
-		}
-		.skip-link:focus {
-			top: 0;
-			outline: 2px solid #3a6f96;
-			outline-offset: -2px;
-		}
-	</style>
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Content Wrapper -->
@@ -547,6 +527,11 @@
 						<p style="margin-bottom:0.85rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious domains are available in four formats:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem; font-family:'Rubik',sans-serif; font-size:14px;">
+								<colgroup>
+									<col span="1" style="width: 20%;">
+									<col span="1" style="width: 34%;">
+									<col span="1" style="width: 46%;">
+								</colgroup>
 								<thead><tr><th scope="col">Format</th><th scope="col">Where</th><th scope="col">Best for</th></tr></thead>
 								<tbody>
 									<tr><td><b>JSON API</b></td><td><a href="https://api.tweetfeed.live/v1/week/domain" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/&lt;window&gt;/domain</code></a></td><td>SOAR / SIEM enrichment, scripts</td></tr>

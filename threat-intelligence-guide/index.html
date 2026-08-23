@@ -44,8 +44,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=52" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=52" rel="stylesheet">
+	<link href="../css/index.css?v=53" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=53" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -143,26 +143,6 @@
 
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
-	<style>
-		.skip-link {
-			position: absolute;
-			top: -40px;
-			left: 0;
-			background: #000;
-			color: #fff;
-			padding: 8px 16px;
-			z-index: 10000;
-			text-decoration: none;
-			font-family: 'Rubik', sans-serif;
-			font-size: 14px;
-			border-radius: 0 0 4px 0;
-		}
-		.skip-link:focus {
-			top: 0;
-			outline: 2px solid #3a6f96;
-			outline-offset: -2px;
-		}
-	</style>
 		<style>
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
 		   it, so every anchor on this page used to land underneath it. Same
@@ -379,6 +359,12 @@
 						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;">An <b>indicator of compromise</b> is an artefact observed during or after an intrusion that suggests malicious activity. The four types you will meet most often:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
+								<colgroup>
+									<col span="1" style="width: 18%;">
+									<col span="1" style="width: 20%;">
+									<col span="1" style="width: 16%;">
+									<col span="1" style="width: 46%;">
+								</colgroup>
 								<thead>
 									<tr>
 										<th scope="col">IOC type</th>
@@ -416,6 +402,11 @@
 						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;">There is no single best feed. Most mature SOCs ingest both OSINT and commercial intelligence; the trick is matching feed properties to the use case.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
+								<colgroup>
+									<col span="1" style="width: 22%;">
+									<col span="1" style="width: 39%;">
+									<col span="1" style="width: 39%;">
+								</colgroup>
 								<thead>
 									<tr>
 										<th scope="col">Property</th>

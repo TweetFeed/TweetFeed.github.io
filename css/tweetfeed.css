@@ -1567,3 +1567,27 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 .tf-agent-pill.is-copied .tf-agent-pill-spark { color: #86efac; }
 .tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
 @media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 14px; gap: 7px; font-size: 13px; } }
+
+/* Skip link. Lived inline in a <style> of its own in all 60 pages until
+   2026-08-23, byte-identical in every one - 19 lines x 60 files that no page
+   could change without changing 59 others. It is off-canvas until focused, so
+   a page that loses the rule shows a stray link above its header: the move and
+   the ?v= bump have to ship together. */
+.skip-link {
+	position: absolute;
+	top: -40px;
+	left: 0;
+	background: #000;
+	color: #fff;
+	padding: 8px 16px;
+	z-index: 10000;
+	text-decoration: none;
+	font-family: 'Rubik', sans-serif;
+	font-size: 14px;
+	border-radius: 0 0 4px 0;
+}
+.skip-link:focus {
+	top: 0;
+	outline: 2px solid #3a6f96;
+	outline-offset: -2px;
+}
