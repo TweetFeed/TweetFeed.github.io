@@ -48,8 +48,8 @@
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="css/table.css?v=4" rel="stylesheet">
-	<link href="css/index.css?v=55" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=55" rel="stylesheet">
+	<link href="css/index.css?v=56" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=56" rel="stylesheet">
 	<style>
 		/* CLS fix: reserve the today-counts row height. countTypes() fills the
 		   empty .row.today with one line of bold counts after the today.csv
@@ -422,53 +422,32 @@
 							</div> <!-- table-responsive -->
 						</div> <!-- Card body -->
 					</div><!-- Card -->
-					<hr>
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col text-center" style="color: grey; margin-bottom: 12px;font-size: 14px;font-family: 'Rubik', sans-serif;font-weight: 600;">
-								Integrated in services like:
-							</div>
+					<section class="tf-integrations-wrap" aria-labelledby="tf-int-label">
+						<h2 class="tf-integrations-label" id="tf-int-label">Integrated in</h2>
+						<div class="tf-integrations">
+							<a class="tf-integration" href="https://hub.filigran.io/en/cybersecurity-solutions/opencti-integrations/tweetfeed" target="_blank" rel="noopener noreferrer">
+								<img loading="lazy" src="img/logo_opencti.png" alt="OpenCTI, threat intelligence platform with an official TweetFeed connector" width="282" height="60">
+							</a>
+							<a class="tf-integration" href="https://medium.com/@s.lontzetidis/integrating-tweetfeed-into-misp-using-python-e0a94e01fec2" target="_blank" rel="noopener noreferrer">
+								<img loading="lazy" class="tf-int-lockup" src="img/logo_misp.png" alt="MISP, threat intelligence sharing platform, fed with TweetFeed via Python" width="214" height="60">
+							</a>
+							<a class="tf-integration" href="https://github.com/debugactiveprocess/TweetFeed2Splunk" target="_blank" rel="noopener noreferrer">
+								<img loading="lazy" src="img/logo_splunk.png" alt="Splunk, fed with TweetFeed by the TweetFeed2Splunk script" width="200" height="60">
+							</a>
+							<a class="tf-integration" href="https://github.com/intelowlproject/IntelOwl" target="_blank" rel="noopener noreferrer">
+								<img loading="lazy" src="img/logo_intelowl.png" alt="IntelOwl, threat intelligence platform with a built-in TweetFeed analyzer" width="321" height="60">
+							</a>
 						</div>
-						<div class="row justify-content-center">
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_opencti.png" alt="OpenCTI Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://medium.com/@s.lontzetidis/integrating-tweetfeed-into-misp-using-python-e0a94e01fec2" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_misp.png" alt="MISP Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/debugactiveprocess/TweetFeed2Splunk?tab=readme-ov-file" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_splunk.png" alt="Splunk Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/fastfire/deepdarkCTI" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_deepdark.png" alt="deepdarkCTI Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://www.urlvoid.com" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_urlvoid.png" alt="urlvoid Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/intelowlproject/IntelOwl" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_intelowl.png" alt="IntelOwl Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-							<div class="col-12 col-md-auto d-flex justify-content-center mb-3 mb-md-0">
-								<a href="https://github.com/alan7s/TweetFeed2QRadar" target="_blank" rel="noopener noreferrer">
-									<img loading="lazy" src="img/logo_qradar.png" alt="QRadar Logo" width="150" height="46" style="border-radius: 10px">
-								</a>
-							</div>
-						</div>
-					</div>
-					
-					<hr>
+						<p class="tf-integrations-label">Also used by</p>
+						<p class="tf-integrations-more">
+							<a href="https://github.com/alan7s/TweetFeed2QRadar" target="_blank" rel="noopener noreferrer">IBM QRadar</a><span class="tf-int-sep" aria-hidden="true">&middot;</span>
+							<a href="https://github.com/fastfire/deepdarkCTI/blob/main/others.md" target="_blank" rel="noopener noreferrer">deepdarkCTI</a><span class="tf-int-sep" aria-hidden="true">&middot;</span>
+							<a href="https://www.urlvoid.com/about-us/" target="_blank" rel="noopener noreferrer">URLVoid</a><span class="tf-int-sep" aria-hidden="true">&middot;</span>
+							<a href="https://github.com/hagezi/dns-blocklists/blob/main/sources.md" target="_blank" rel="noopener noreferrer">HaGeZi DNS Blocklists</a><span class="tf-int-sep" aria-hidden="true">&middot;</span>
+							<a href="https://github.com/cybercdh/kitphishr" target="_blank" rel="noopener noreferrer">kitphishr</a><span class="tf-int-sep" aria-hidden="true">&middot;</span>
+							<a href="https://github.com/ninoseki/miteru" target="_blank" rel="noopener noreferrer">Miteru</a>
+						</p>
+					</section>
 					<div class="alert alert-secondary" role="alert" style="color: #737373;font-size: 15px;font-family: 'Rubik', sans-serif;">
 						Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
 					</div>

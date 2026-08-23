@@ -359,6 +359,93 @@ hr.divider {
 	.tf-headline-value { font-size: 24px; }
 }
 
+/* Integrations band on the home ("Integrated in" / "Also used by"). Same
+   bordered-grid idiom as .tf-headline above, for the same reason: it is a row
+   of N equal cells and the site already answers that shape one way. Until
+   2026-08-23 this band was the only shared component that never got promoted
+   out of index.html, and the four defects that cost were all measured, not
+   guessed: the seven logos were Bootstrap .col-md-auto, so the strip needed a
+   ~1520px viewport to hold one line and orphaned 6+1 at 1440 and 5+2 at 1366
+   with mb-md-0 zeroing the row gap; every logo was forced into one 150x46 box
+   across aspect ratios from 2.43 to 4.75, stretching OpenCTI 46% and squashing
+   QRadar 25%, because no sheet on the site sets object-fit; the label was an
+   inline `grey` at 3.54:1, the only eyebrow off the 11px/700/uppercase token;
+   and the seven PNGs weighed 181 KB for a 46px-tall strip.
+   Two tiers on purpose: four of the ten entries have usable light-background
+   artwork and six do not (deepdarkCTI and URLVoid publish only dark plates,
+   HaGeZi/kitphishr/Miteru publish none at all, and the QRadar asset's swirl is
+   #a8c078 = 2.14:1 on white). Rather than invent wordmarks for them, the ones
+   with a real mark get a cell and the rest get a text line. Four cells also
+   divide cleanly at every breakpoint, which five never could. */
+/* The band's own bottom margin: the last child is a <p> at margin 0 and the
+   disclaimer that follows carries no top margin, so without this the two sit
+   at a 0px gap. 1.5rem is the site's rhythm, the same 24px as .card.mb-4. */
+.tf-integrations-wrap { margin: 0 0 1.5rem; }
+.tf-integrations-label {
+	font-family: 'Rubik', sans-serif;
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #4b5563;
+	text-align: center;
+	margin: 0 0 0.5rem;
+}
+.tf-integrations {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #fff;
+	margin: 0 0 1.25rem;
+}
+.tf-integration {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 68px;
+	padding: 0.75rem 0.9rem;
+	background: #fff;
+	transition: background-color 0.15s ease;
+}
+.tf-integration + .tf-integration { border-left: 1px solid black; }
+/* Same #f8f9fa the FAQ uses for an opened <details>: the site's one active
+   surface, not a second invented tone. */
+.tf-integration:hover,
+.tf-integration:focus-visible { background: #f8f9fa; }
+.tf-integration:focus-visible { outline: 2px solid #3a6f96; outline-offset: -2px; }
+.tf-integration img {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 28px;
+	object-fit: contain;
+}
+/* Optical balance, measured against the four side by side: a lockup carrying a
+   subtitle line reads smaller than a bare wordmark at the same box height, so
+   MISP gets a taller cap. Only the modifier moves; the box does not. */
+.tf-integration img.tf-int-lockup { max-height: 34px; }
+.tf-integrations-more {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: baseline;
+	gap: 4px 8px;
+	margin: 0;
+	font-family: 'Rubik', sans-serif;
+	font-size: 13px;
+}
+.tf-integrations-more a { color: #3a6f96; }
+.tf-integrations-more .tf-int-sep { color: #9aa0a6; }
+@media (max-width: 575.98px) {
+	.tf-integrations { grid-template-columns: repeat(2, 1fr); }
+	.tf-integration { min-height: 60px; }
+	.tf-integration:nth-child(odd) { border-left: 0; }
+	.tf-integration:nth-child(n+3) { border-top: 1px solid black; }
+}
+
 /* Documentation tables (/agents/, /api/). Three problems, all measured.
    (1) The cells hold prose and endpoint paths, not IOC values, but
    table.css centres every .table cell and sizes it with a clamp() meant for
