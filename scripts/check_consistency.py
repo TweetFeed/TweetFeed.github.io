@@ -18,7 +18,6 @@ from __future__ import annotations
 import os
 import re
 import sys
-from collections import Counter
 from pathlib import Path
 
 # The 22 user-facing main pages - the ones that share nav, footer, analytics,
@@ -52,6 +51,7 @@ CHOOSER_URL_FRAGMENT = "issues/new/" + "choose"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import site_ia as ia  # noqa: E402
 from render_shell import close_element  # noqa: E402
+from year_counts import YEAR_CLAIM_PAGES, YEAR_CLAIM_RE, fetch_year_counts  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # Only the prod repo (TweetFeed.github.io) carries a CNAME file; the stage
@@ -929,43 +929,21 @@ def check_runtime_applied_classes() -> list[str]:
 # Deliberately tolerant in one direction only: understating is allowed (it is
 # merely stale), overstating fails. Network failure SKIPS rather than fails,
 # so an offline local run of this script stays useful.
-_YEAR_CSV = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv"
-_YEAR_CLAIM_PAGES = {
-    "malicious-domains/index.html": "domain",
-    "malicious-urls/index.html": "url",
-    "malicious-ips/index.html": "ip",
-    "malicious-hashes-md5/index.html": "md5",
-    "malicious-hashes-sha256/index.html": "sha256",
-}
-_YEAR_CLAIM_RE = re.compile(r"([0-9]+(?:\.[0-9]+)?)k\+[^\"<]{0,24}past year")
-
-
-def _fetch_year_counts() -> Counter | None:
-    """Rows per IOC type in the rolling year feed, or None if unreachable."""
-    import urllib.request
-    try:
-        req = urllib.request.Request(_YEAR_CSV, headers={"User-Agent": "tweetfeed-consistency-check"})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            body = r.read().decode("utf-8", "replace")
-    except Exception:
-        return None
-    counts: Counter = Counter()
-    for line in body.splitlines():
-        parts = line.split(",")
-        if len(parts) > 2:
-            counts[parts[2].strip()] += 1
-    return counts or None
-
-
+#
+# The feed URL, the page->type map and the claim regex moved to
+# scripts/year_counts.py on 2026-08-23, so bake_year_counts.py generates the
+# copy from EXACTLY what this gate reads. They used to be duplicated, which is
+# the general shape of the bug that took the daily workflow down that morning:
+# a number produced by one code path and judged by another.
 def check_year_counts() -> list[str]:
-    real = _fetch_year_counts()
+    real = fetch_year_counts()
     if real is None:
         print("  (skipped: year.csv unreachable, offline run)")
         return []
     failures: list[str] = []
-    for page, ioc_type in _YEAR_CLAIM_PAGES.items():
+    for page, ioc_type in YEAR_CLAIM_PAGES.items():
         html = read(page)
-        claims = {m.group(1) for m in _YEAR_CLAIM_RE.finditer(html)}
+        claims = {m.group(1) for m in YEAR_CLAIM_RE.finditer(html)}
         if not claims:
             failures.append(f"{page}: no 'Nk+ ... past year' claim found; the check has drifted from the copy")
             continue

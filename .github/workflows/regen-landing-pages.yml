@@ -56,6 +56,14 @@ jobs:
       - name: Bake freshness (malicious-* + trends)
         run: python3 scripts/bake_freshness.py
 
+      # Keeps each /malicious-*/ page's "Nk+ ... past year" claim true against
+      # the rolling 365-day feed. Added 2026-08-23 after the gate below took
+      # the whole daily commit down: the claim was hand-typed from a real
+      # count that then moved, which is a scheduled failure, not a one-off.
+      # Must run BEFORE the gate, and reads the same source it does.
+      - name: Bake year-window counts (malicious-*)
+        run: python3 scripts/bake_year_counts.py
+
       # Fails the run (nothing gets pushed) if the regenerated pages break a
       # site invariant, e.g. a footer-breakpoint regression baked into a template.
       - name: Consistency gate
