@@ -222,6 +222,12 @@ body {
 /* Copy-to-clipboard icons - prevent blue flash on click */
 .tf-copy { cursor: pointer; color: inherit; }
 .tf-copy:active, .tf-copy:focus { color: inherit; outline: none; }
+/* ...but the icons are role="button" tabindex="0", so outline:none on :focus
+   left 300+ keyboard-reachable controls with no visible state at all. The
+   comment above says the intent was the click flash, which is :active. Same
+   specificity as the rule above, declared later, so it wins for keyboard focus
+   only. Ring token reused from .tf-live / .hnt-chip / .fds-typetile. */
+.tf-copy:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 
 /* Footer link colors: RETIRED 2026-08-18. The regenerated footers use
    .tf-foot-link / .tf-mfoot-link (see tweetfeed.css) and no longer carry

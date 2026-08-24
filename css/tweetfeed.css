@@ -89,12 +89,6 @@
    colour so the utility is not needed and cannot out-!important it. */
 .tf-graph-card-title { font-size: 1rem; color: #1178b3; }
 
-/* Tweet column wrapper (responsive 1/2/3/4 grid). 8 px padding so the
-   embedded iframes don't touch each other on the dashboard. */
-.tweet-col { padding: 8px; }
-.tweet-col > .twitter-tweet-rendered,
-.tweet-col > iframe { width: 100% !important; }
-
 /* Unified controls toolbar: one rounded row holding autorefresh switch,
    progress bar, and action buttons. Replaces the legacy 3-card flex-row
    pattern used pre-refresh on dashboard / index / search / feeds /
@@ -145,7 +139,6 @@
 	color: #6c757d;
 	font-size: 13px;
 }
-.form-check.tag-hidden { display: none; }
 
 /* ─── Quick-win utility classes (Fase 2) ─────────────────────────── */
 
@@ -508,7 +501,18 @@ hr.divider {
    values). #c2185b keeps the hue and gives 5.87:1 and 5.25:1. The site's
    own #1178b3 was measured and rejected: 4.30:1 on the striped rows, and it
    collides with the links living in the same cells. */
-.tf-prose table code { color: #c2185b; font-size: 13px; }
+.tf-prose table code { font-size: 13px; }
+/* Site-wide, not only inside tables. Bootstrap's default code{color:#e83e8c}
+   measures 3.82:1 on white - under the 4.5:1 AA floor - and it was still
+   reaching the inline <code> of the PROSE, which is where most of them live:
+   105 on /api/ alone, plus /agents/, /hunt/, /feeds/ and /blocklists/.
+   #c2185b keeps the hue at 5.87:1. The three places that already declare
+   their own code colour keep it, and all three outrank this rule:
+   .tf-doc-table td:first-child code (#1c1c1c), .agent-option-card code
+   (#1178b3) and .faq-section details > p code (#3a6f96, measured 5.3:1 on
+   its own tinted ground). .code-block code.hljs -> inherit also still wins,
+   so the highlighted blocks of /hunt/ are untouched. */
+code { color: #c2185b; }
 
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
@@ -606,8 +610,12 @@ hr.divider {
 /* Placeholder token in an endpoint pattern - {time}, {filter1}, {ISO8601} -
    and the same grey in the Details table. Was `color: grey` / `color:gray`
    inline 17 times across /api/. */
+/* #808080 measured 2.94:1 on the .code-block ground (#DEDEDE) and 3.95:1 on
+   white in the Details table, both under the 4.5:1 AA floor. #5a5a5a is the
+   grey this sheet already uses for .code-block .hljs-comment on the same
+   ground: 5.13:1 on #DEDEDE, 7.0:1 on white. */
 .tf-ph {
-	color: #808080;
+	color: #5a5a5a;
 }
 /* JSON response samples run longer than the endpoint one-liners, so they are
    set a step down. Was `style="font-size: 12px"` on 6 .code-blocks. */
@@ -686,18 +694,48 @@ p.agent-option-note {
 }
 /* Standing disclaimer above the FAQ on /api/: community IOCs are not
    blocklist-ready. Sits at 15px, between body prose and .tf-note. */
+/* #737373 on .alert-secondary's own #e7e7ea ground measured 3.84:1, under the
+   4.5:1 AA floor - the rule set the ink but never the ground it lands on.
+   #5a5a5a gives 5.59:1 there. */
 .tf-disclaimer {
-	color: #737373;
+	color: #5a5a5a;
 	font-size: 15px;
 	font-family: 'Rubik', sans-serif;
 }
-/* Caption that introduces a .code-block. The inline version also carried
-   align-self:flex-end plus an .align-self-bottom class that is declared in no
-   stylesheet; #content is display:block, so neither ever applied to anything
-   (verified in the browser against live /api/). Both dropped. */
+/* Caption that introduces a .code-block. It is now the header band OF that
+   block, not a line floating above it: measured live, it used to compute
+   display:inline / 16px / #6b6d7c, which is darker than the .tf-prose p it sits
+   between (#737373) and the same size, so it read as one more paragraph. An
+   11px uppercase eyebrow was tried and rejected: 17 of the 18 labels are
+   sentence-shaped ("Example 1: IOCs posted today"). The inline version also
+   carried align-self:flex-end plus an .align-self-bottom class that is declared
+   in no stylesheet; #content is display:block, so neither ever applied to
+   anything (verified in the browser against live /api/). Both dropped. */
 .tf-code-label {
-	font-size: 16px;
+	display: block;
+	font-size: 14px;
+	line-height: 1.45;
 	font-family: 'Rubik', sans-serif;
+	color: #4b5563;
+	background: #f8f9fa;
+	border: 1px solid #000;
+	border-bottom: 0;
+	padding: 0.45rem 1rem;
+	margin: 1.5rem 0 0 0;
+}
+.tf-code-label b { font-weight: 600; color: #1c1c1c; }
+.tf-code-label + .code-block { margin-top: 0; }
+/* The one label that heads a table instead of a .code-block (agents/, "Available
+   tools"): .table-responsive:has(> .tf-doc-table) caps at 900px, so without this
+   the band overhangs the table it belongs to by 340px at 1440. */
+.tf-code-label:has(+ .table-responsive) {
+	max-width: 900px;
+	border-radius: 3px 3px 0 0;
+}
+.tf-code-label + .table-responsive:has(> .tf-doc-table) {
+	margin-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }
 
 /* FAQ accordion - heavy black border + steel-blue left accent.

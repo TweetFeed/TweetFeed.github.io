@@ -46,8 +46,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=4" rel="stylesheet">
-	<link href="../css/index.css?v=56" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=56" rel="stylesheet">
+	<link href="../css/index.css?v=57" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=57" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -718,7 +718,7 @@
 				<!-- Technical reference content intentionally uses heading, lead and list rather than .card or .faq-grid: this is feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="misp" class="section-heading tf-sect-head">MISP feed</h3>
 				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
-				<p class="tf-code-label">Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
+				<p>Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
 				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL" title="Copy"></i></pre>
 				<ul class="fds-facts">
 					<li>Point MISP at the directory, not at <code>manifest.json</code>. Giving it the manifest file makes it fetch <code>/misp/manifest.json/manifest.json</code>, which does not exist.</li>
