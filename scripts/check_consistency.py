@@ -296,8 +296,8 @@ def check_analytics(pages: list[str]) -> list[str]:
         html = read(p)
         if "<!-- 100% privacy-first analytics -->" not in html:
             failures.append(f"{p}: missing '<!-- 100% privacy-first analytics -->' anchor")
-        if "cloud.umami.is" not in html:
-            failures.append(f"{p}: missing Umami script (cloud.umami.is)")
+        if "s.tweetfeed.live" not in html:
+            failures.append(f"{p}: missing Umami script (s.tweetfeed.live)")
         if "analytics.ahrefs.com" not in html:
             failures.append(f"{p}: missing Ahrefs script (analytics.ahrefs.com)")
     return failures
