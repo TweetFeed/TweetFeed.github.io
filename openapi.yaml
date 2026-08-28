@@ -1349,6 +1349,37 @@ components:
             clustered IOCs. ISO 3166-1 alpha-2. `null` when no country is
             identifiable.
           example: "BR"
+        ttps:
+          type: array
+          maxItems: 4
+          items:
+            type: string
+            enum:
+              - T1036.005
+              - T1071.001
+              - T1102
+              - T1195.001
+              - T1204.004
+              - T1557
+              - T1566.002
+              - T1567.004
+              - T1568
+              - T1583.001
+              - T1583.006
+              - T1583.008
+              - T1585.001
+              - T1588.001
+              - T1588.002
+              - T1608.001
+              - T1657
+              - T1684.001
+          description: |
+            MITRE ATT&CK Enterprise technique ids the campaign's
+            infrastructure appears to exercise, AI-inferred from the
+            clustered IOCs - infrastructure-only, not full attribution.
+            Always an array with 0 to 4 ids, never `null`; may be an empty
+            array. May be absent entirely on an older cached document.
+          example: ["T1566.002", "T1583.006"]
         first_seen:
           type: string
           format: date

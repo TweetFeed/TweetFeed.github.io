@@ -36,8 +36,8 @@
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=57" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=57" rel="stylesheet">
+	<link href="../css/index.css?v=58" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=58" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -247,6 +247,27 @@
 			line-height: 1.6;
 		}
 		.tfc-meta-line b { color: #1c1c1c; }
+		.tfc-ttp-chip {
+			display: inline-block;
+			padding: 1px 7px;
+			margin: 0 4px 2px 0;
+			border: 1px solid #c9c9c9;
+			border-radius: 10px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+			text-decoration: none;
+		}
+		a.tfc-ttp-chip:hover {
+			background: #1c1c1c;
+			color: #fff;
+			text-decoration: none;
+		}
+		.tfc-ttp-chip-unknown {
+			border-style: dashed;
+			color: #737373;
+		}
 		.tfc-tags {
 			display: flex;
 			flex-wrap: wrap;
@@ -1312,6 +1333,70 @@
 			return parts;
 		}
 
+		// ttps: MITRE ATT&CK Enterprise technique ids the campaign's
+		// infrastructure appears to exercise, AI-inferred, 0-4 per campaign.
+		// This map is COMPLETE (the vocabulary is closed - verified against
+		// the official STIX bundle 2026-08-28, ATT&CK Enterprise v19.2), but
+		// an id that isn't in it still has to render gracefully - as escaped
+		// text, never a link - in case a future id ships before this map is
+		// updated.
+		var TTP_LABELS = {
+			'T1036.005': { name: 'Match Legitimate Resource Name or Location', tactic: 'Stealth' },
+			'T1071.001': { name: 'Web Protocols', tactic: 'Command and Control' },
+			'T1102': { name: 'Web Service', tactic: 'Command and Control' },
+			'T1195.001': { name: 'Compromise Software Dependencies and Development Tools', tactic: 'Initial Access' },
+			'T1204.004': { name: 'Malicious Copy and Paste', tactic: 'Execution' },
+			'T1557': { name: 'Adversary-in-the-Middle', tactic: 'Credential Access' },
+			'T1566.002': { name: 'Spearphishing Link', tactic: 'Initial Access' },
+			'T1567.004': { name: 'Exfiltration Over Webhook', tactic: 'Exfiltration' },
+			'T1568': { name: 'Dynamic Resolution', tactic: 'Command and Control' },
+			'T1583.001': { name: 'Acquire Infrastructure: Domains', tactic: 'Resource Development' },
+			'T1583.006': { name: 'Acquire Infrastructure: Web Services', tactic: 'Resource Development' },
+			'T1583.008': { name: 'Acquire Infrastructure: Malvertising', tactic: 'Resource Development' },
+			'T1585.001': { name: 'Establish Accounts: Social Media Accounts', tactic: 'Resource Development' },
+			'T1588.001': { name: 'Obtain Capabilities: Malware', tactic: 'Resource Development' },
+			'T1588.002': { name: 'Obtain Capabilities: Tool', tactic: 'Resource Development' },
+			'T1608.001': { name: 'Stage Capabilities: Upload Malware', tactic: 'Resource Development' },
+			'T1657': { name: 'Financial Theft', tactic: 'Impact' },
+			'T1684.001': { name: 'Social Engineering: Impersonation', tactic: 'Stealth' }
+		};
+		// Builds the ATT&CK technique page URL by string manipulation:
+		// "T1566.002" -> ".../techniques/T1566/002/", "T1102" -> ".../techniques/T1102/".
+		// Returns '' if the id doesn't even match the T<digits>[.<digits>] shape.
+		function ttpUrl(id) {
+			var m = /^T(\d+)(?:\.(\d+))?$/.exec(id);
+			if (!m) return '';
+			return 'https://attack.mitre.org/techniques/T' + m[1] + '/' + (m[2] ? m[2] + '/' : '');
+		}
+		// Human-readable names for the search haystack (buildHaystacks below) -
+		// unknown ids fall back to the bare id so they're still findable.
+		function ttpNames(c) {
+			var ttps = (c && Array.isArray(c.ttps)) ? c.ttps : [];
+			return ttps.map(function(id) {
+				var meta = TTP_LABELS[String(id || '')];
+				return meta ? meta.name : String(id || '');
+			});
+		}
+		// Renders the technique chips for the meta line. Ids are validated
+		// against TTP_LABELS before a URL is ever built - an id not in the
+		// closed vocabulary renders as escaped text in a plain span, never
+		// as a link.
+		function renderTtpChips(ttps) {
+			var esc = TweetFeed.escapeHtml;
+			return (ttps || []).map(function(id) {
+				var safeId = String(id || '');
+				var meta = TTP_LABELS[safeId];
+				if (!meta) {
+					return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
+				}
+				var url = ttpUrl(safeId);
+				if (!url) {
+					return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
+				}
+				return '<a class="tfc-ttp-chip" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" title="' + esc(safeId + ' - ' + meta.tactic) + '">' + esc(meta.name) + '</a>';
+			}).join('');
+		}
+
 		// Stacked proportion bar for c.types. Replaces the comma list
 		// ("domain 35, ip 14, md5 5, sha256 12, url 70"), which was data
 		// pretending to be prose. Reuses IOC_TYPE_COLORS so a segment is the
@@ -1496,6 +1581,14 @@
 				? '<p class="tfc-meta-line"><b>Apparent target (AI-inferred):</b> ' + targetParts.map(esc).join(' &middot; ') + '</p>'
 				: '';
 
+			// ttps: sibling meta line for MITRE ATT&CK techniques, same
+			// omit-when-empty rule as targetLine above. `ttps` may be absent
+			// entirely on an older cached document, so tolerate undefined.
+			var ttps = Array.isArray(c.ttps) ? c.ttps : [];
+			var ttpsLine = ttps.length
+				? '<p class="tfc-meta-line"><b>Techniques (AI-inferred):</b> ' + renderTtpChips(ttps) + '</p>'
+				: '';
+
 			// C1: honesty label on the context paragraph - it's the one
 			// piece of free-text prose on the card, AI-written from the
 			// clustered IOCs, and previously indistinguishable from the
@@ -1503,6 +1596,7 @@
 			var aiLabel = '<span class="tfc-ai-label" title="Written by the AI clustering layer from the underlying IOCs">AI summary</span>';
 			return (
 				targetLine +
+				ttpsLine +
 				'<p class="tfc-context">' + aiLabel + esc(c.context || '') + '</p>' +
 				renderTypeBar(c.types, typeBarWidthPct) +
 				renderEvidence(c) +
@@ -1812,7 +1906,7 @@
 		// and every published sample's value+user.
 		function buildHaystacks(campaigns) {
 			haystacks = campaigns.map(function(c) {
-				var parts = [c.name || '', c.context || ''].concat(targetLabel(c));
+				var parts = [c.name || '', c.context || ''].concat(targetLabel(c), ttpNames(c));
 				parts = parts.concat(c.tags || [], c.reporters || []);
 				var anchors = c.anchors || {};
 				ANCHOR_ORDER.forEach(function(key) {

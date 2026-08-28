@@ -34,7 +34,7 @@
       "type": "skill-md",
       "description": "Query TweetFeed's AI-clustered campaign groupings: related IOCs from the last 30 days grouped by shared infrastructure or tag, then named/described by an AI layer that never adds or removes IOCs. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-campaigns/SKILL.md",
-      "digest": "sha256:952f3d1488cdf565c4caa8338cb7276a15e86839823c28397db5efab0a4ee0ae"
+      "digest": "sha256:3393257ba33c28c2c95ac19d51a3f66a5ed40d17f30b433c8707fd533da86a16"
     }
   ]
 }

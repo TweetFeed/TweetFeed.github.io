@@ -690,7 +690,7 @@ MACHINE_SURFACE_FILES = [
 # document less than the page consumes.
 CAMPAIGN_PAGE_FIELDS = (
     "id", "name", "context", "confidence", "targeted_brand", "targeted_sector",
-    "targeted_country", "first_seen", "last_seen", "ioc_count", "ioc_count_1d",
+    "targeted_country", "ttps", "first_seen", "last_seen", "ioc_count", "ioc_count_1d",
     "ioc_count_7d", "ioc_count_30d", "types", "tags", "reporters", "iocs",
     "member_cluster_ids", "anchors",
 )
