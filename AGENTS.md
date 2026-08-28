@@ -7,7 +7,7 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 ## Preferred access (in order)
 
 1. **MCP server** - https://mcp.tweetfeed.live/ (JSON-RPC 2.0, Streamable HTTP, protocol version `2025-11-25`). Best for agents. Server card: https://tweetfeed.live/.well-known/mcp/server-card.json
-2. **REST API** - `https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}` (`time`: `today`/`week`/`month`/`year`; filters: IOC type, tag, or `@researcher`, order-independent). Single-IOC exact lookup: `https://api.tweetfeed.live/v1/ioc?value=<value>` (also checks the pre-365-day archive, optional `archive` block). Campaigns: `https://api.tweetfeed.live/v1/campaigns`. Trends: `https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/trends.json`. OpenAPI: https://tweetfeed.live/openapi.yaml
+2. **REST API** - `https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}` (`time`: `today`/`week`/`month`/`year`; filters: IOC type, tag, or `@researcher`, order-independent). Single-IOC exact lookup: `https://api.tweetfeed.live/v1/ioc?value=<value>` (also checks the pre-365-day archive, optional `archive` block). Campaigns: `https://api.tweetfeed.live/v1/campaigns`. Complete campaign IOC set (uncapped, no MCP tool): `https://api.tweetfeed.live/v1/campaigns/iocs`. Trends: `https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/trends.json`. OpenAPI: https://tweetfeed.live/openapi.yaml
 3. **Static feeds** - CSV (`/feeds/{today,week,month,year}.csv`), RSS (`/rss.xml` plus per-type/per-tag/per-user variants), MISP native events, STIX 2.1 bundles, TAXII 2.1 (`https://api.tweetfeed.live/taxii2/`), and plain-text blocklists (`https://api.tweetfeed.live/v1/blocklist/{domains,hosts,adguard,ips,rpz,dnsmasq,urls}.txt`).
 
 ## Tools (MCP)
@@ -22,7 +22,7 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 | `get_tag_info` | Aggregate counts across all time windows plus recent IOCs for one tag. |
 | `get_trending` | Top tags and IOC-type distribution for a window. |
 | `enrich_ioc` | Auto-detected-type 365-day exact lookup, with AI context when available; also returns pre-365-day archive hits. |
-| `get_campaigns` | AI-clustered campaign groupings of the last 30 days, filterable by brand/confidence. |
+| `get_campaigns` | AI-clustered campaign groupings of the last 30 days, filterable by brand/confidence; includes malware-family/threat-type rollups and an infra summary. |
 | `get_trends` | 31-day daily volume, top movers, TLD distribution, novelty ratio. |
 
 ## Data

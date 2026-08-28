@@ -11,21 +11,21 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Daily AI-clustered threat campaigns from TweetFeed IOCs: grouped infrastructure, confidence, targeted brand, tags, and source tweets.">
+	<meta name="description" content="Daily AI-clustered threat campaigns from TweetFeed IOCs: grouped infrastructure, cohesion, targeted brand, tags, and source tweets.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="threat campaigns,ai threat clustering,ioc campaign tracking,malware campaign feed,phishing campaign feed,tweetfeed campaigns">
 	<link rel="canonical" href="https://tweetfeed.live/campaigns/">
 	<title>AI Campaigns - TweetFeed</title>
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="AI Campaigns - TweetFeed">
-	<meta name="twitter:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta name="twitter:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with cohesion and targeted brand.">
 	<meta name="twitter:url" content="https://tweetfeed.live/campaigns/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
 	<meta property="og:url" content="https://tweetfeed.live/campaigns/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="AI Campaigns - TweetFeed">
-	<meta property="og:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with confidence and targeted brand.">
+	<meta property="og:description" content="AI-generated threat campaign clusters from the last 30 days of TweetFeed IOCs, with cohesion and targeted brand.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -84,10 +84,11 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the confidence score and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed."}},
-			{"@type": "Question", "name": "How is campaign confidence calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Confidence (high, medium, low) is the AI's assessment of how cohesive the cluster is - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low confidence as a lead to verify, not a verdict."}},
-			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows campaigns still active this week by default - switch to 'All (30 days)' to see the full window. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
-			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}}
+			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the cohesion rating and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed."}},
+			{"@type": "Question", "name": "How is campaign cohesion calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Cohesion (high, medium, low) is the AI's assessment of how tightly the cluster holds together - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low cohesion as a lead to verify, not a verdict. The API field is still named confidence."}},
+			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows every campaign in the 30-day window by default - use the More control to narrow to campaigns still active this week. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
+			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}},
+			{"@type": "Question", "name": "Why does a campaign show only 25 of 412 IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Each campaign publishes a sample of up to 25 IOCs to keep the response small; ioc_count is the real total. When a campaign has more IOCs than the sample, the Indicators panel says so honestly, offers a 'Load all' button where available, and the Reach the rest panel links out to the campaign's own domains and tags via Search so you can find the remaining IOCs today."}}
 		]
 	}
 	</script>
@@ -99,10 +100,16 @@
 		/* Page-specific rules for /campaigns/. Kept inline per the pattern
 		   already used on about/index.html and index.html rather than adding
 		   to the shared css/tweetfeed.css (avoids a site-wide ?v= bump for
-		   rules only this page uses). Confidence colours reuse two shades
-		   already established in the changelog palette (.cl-tag-launch,
-		   .cl-tag-tags); IOC-type colours reuse the exact url/domain/ip/md5/
-		   sha256 palette from ioc-types/feeds so the type badges feel native. */
+		   rules only this page uses). IOC-type colours reuse the exact
+		   url/domain/ip/md5/sha256 palette from ioc-types/feeds so the type
+		   badges feel native. Rebuilt 2026-08-29 as a uniform accordion list
+		   (see the design spec) - the old card/compact-row split, its
+		   position classes and its 992px 2-col grid are gone. Border ladder,
+		   applied everywhere below: 1px solid black = structural frame only
+		   (list container, vitals strip, evidence panel, chips/selects);
+		   1px solid #e3e6f0 = inner division (row separators, pane divider,
+		   pane-head underline); no border = provenance/prose/captions. Never
+		   two black borders at adjacent nesting levels. */
 		.tfc-stale-banner {
 			background: #fff3cd;
 			border: 1px solid #f0ad4e;
@@ -119,16 +126,12 @@
 			font-family: 'Rubik', sans-serif;
 			margin: 0;
 		}
+
 		/* ── Lead stat strip ──────────────────────────────────────────────
-		   Replaces a 4-line prose paragraph. Measured 2026-08-19: that box
-		   was 187px tall and sat above 516px of dead space before the first
-		   campaign - 57% of a 900px viewport with zero data in it. The three
-		   numbers below come from the same payload the cards render from, so
-		   they cost no extra request; they get the same tabular-nums/
-		   Rubik-700 treatment as .tfc-count-num on the cards, because a count
-		   is a data element here, not decoration. Pattern lifted from
-		   trends/index.html's .trd-headline (2026-08-19, "lead with the
-		   numbers"): 1px black grid, cell dividers, no card shadow. */
+		   .tfc-lead / #campaignsHeadline / the two .tfc-generated-line
+		   paragraphs are now direct children of <main> - the wrapping
+		   `<div class="card mb-3"><div class="card-body">` is gone, per the
+		   spec ("removes a black box inside a black box"). */
 		.tfc-lead {
 			margin: 0 0 0.75rem;
 			color: #333;
@@ -172,548 +175,27 @@
 			.tfc-headline-cell + .tfc-headline-cell { border-left: 0; border-top: 1px solid black; }
 			.tfc-headline-value { font-size: 24px; }
 		}
-		/* Duplicate .tfc-card-header removed (dead - the later declaration
-		   below silently won on align-items/gap/margin-bottom); its
-		   flex-wrap: wrap was still live only because nothing re-declared
-		   it, so it moved into the surviving rule below to keep that. */
-		.tfc-name {
-			font-family: 'Rubik', sans-serif;
-			font-weight: 700;
-			font-size: 17px;
-			color: #1c1c1c;
-			margin: 0;
-			flex: 1 1 auto;
-			min-width: 200px;
-		}
-		.tfc-badge {
-			display: inline-block;
-			padding: 2px 9px;
-			border: 1px solid black;
-			border-radius: 3px;
-			font-size: 11px;
-			font-family: 'Rubik', sans-serif;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 0.03em;
-			line-height: 1.6;
-			white-space: nowrap;
-		}
-		.tfc-badge-high { background: #34e3a4; color: #0b3d2e; }
-		.tfc-badge-medium { background: #ffc591; color: #5c3d12; }
-		.tfc-badge-low { background: #e2e3e5; color: #41464b; }
-		.tfc-brand-chip {
-			display: inline-flex;
-			align-items: center;
-			gap: 4px;
-			padding: 2px 9px;
-			border: 1px solid black;
-			border-radius: 3px;
-			font-size: 11px;
-			font-family: 'Rubik', sans-serif;
-			background: #fff;
-			color: #1c1c1c;
-			white-space: nowrap;
-		}
-		.tfc-context {
-			color: #333;
-			font-size: 14.5px;
-			font-family: 'Rubik', sans-serif;
-			line-height: 1.6;
-			margin: 0 0 0.6rem 0;
-		}
-		/* C1: honesty label on the AI-written context paragraph. Small-caps/
-		   muted/1px-border on purpose - it should read as a provenance stamp,
-		   not another badge competing with confidence/target for attention. */
-		.tfc-ai-label {
-			display: inline-block;
-			margin-right: 6px;
-			padding: 1px 6px;
-			border: 1px solid #c9c9c9;
-			border-radius: 3px;
-			font-family: 'Rubik', sans-serif;
-			font-size: 10px;
-			font-weight: 600;
-			font-variant: small-caps;
-			letter-spacing: 0.03em;
-			color: #8a8a8a;
-			vertical-align: middle;
-			white-space: nowrap;
-		}
-		.tfc-meta-line {
-			color: #737373;
-			font-size: 12.5px;
-			font-family: 'Rubik', sans-serif;
-			margin: 0 0 0.6rem 0;
-			line-height: 1.6;
-		}
-		.tfc-meta-line b { color: #1c1c1c; }
-		.tfc-ttp-chip {
-			display: inline-block;
-			padding: 1px 7px;
-			margin: 0 4px 2px 0;
-			border: 1px solid #c9c9c9;
-			border-radius: 10px;
-			font-size: 11px;
-			font-family: 'Rubik', sans-serif;
-			background: #fff;
-			color: #1c1c1c;
-			text-decoration: none;
-		}
-		a.tfc-ttp-chip:hover {
-			background: #1c1c1c;
-			color: #fff;
-			text-decoration: none;
-		}
-		.tfc-ttp-chip-unknown {
-			border-style: dashed;
-			color: #737373;
-		}
-		.tfc-tags {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 6px;
-			margin: 0 0 0.7rem 0;
-		}
-		.tfc-tag-chip {
-			display: inline-block;
-			padding: 2px 9px;
-			border: 1px solid black;
-			border-radius: 12px;
-			font-size: 11px;
-			font-family: 'Rubik', sans-serif;
-			background: #fff;
-			color: #1c1c1c;
-			text-decoration: none;
-		}
-		a.tfc-tag-chip:hover {
-			background: #1c1c1c;
-			color: #fff;
-			text-decoration: none;
-		}
-		.tfc-iocs {
-			border-top: 1px solid #e1e4e8;
-			padding-top: 0.6rem;
-		}
-		.tfc-ioc-row {
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-			font-size: 12.5px;
-			margin-bottom: 0.4rem;
-			font-family: 'Rubik', sans-serif;
-		}
-		.tfc-ioc-type {
-			font-size: 10px;
-			padding: 1px 6px;
-			border-radius: 3px;
-			font-weight: 600;
-			text-transform: uppercase;
-			flex-shrink: 0;
-		}
-		.tfc-ioc-value {
-			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-			font-size: 12px;
-			background: #f5f5f5;
-			padding: 1px 6px;
-			border-radius: 3px;
-			word-break: break-all;
-			flex: 1 1 auto;
-			min-width: 0;
-		}
-		a.tfc-ioc-value {
-			color: inherit;
-			text-decoration: none;
-		}
-		a.tfc-ioc-value:hover {
-			background: #e2e2e2;
-			text-decoration: underline;
-		}
-		.tfc-ioc-row .tf-copy {
-			flex-shrink: 0;
-			cursor: pointer;
-			color: #555;
-		}
-		.tfc-ioc-row .tf-copy:hover { color: #000; }
-		.tfc-ioc-link {
-			flex-shrink: 0;
-			color: #1178b3;
-		}
-		.tfc-ioc-row .tf-action {
-			flex-shrink: 0;
-		}
-		/* Per-IOC date + reporter (B4). Date is muted/mono like every other
-		   timestamp on this page; the reporter link reuses the exact
-		   ../search/?user= idiom renderReporters() already uses below, so a
-		   click behaves identically whether it starts from the campaign
-		   footer or an individual sample row. Date drops on mobile at the
-		   same breakpoint .tfc-minibar already uses. */
-		.tfc-ioc-date {
-			flex-shrink: 0;
-			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-			font-size: 10.5px;
-			color: #9a9a9a;
-		}
-		.tfc-ioc-user {
-			flex-shrink: 0;
-			max-width: 110px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			font-size: 11.5px;
-			color: #6c757d;
-			text-decoration: none;
-		}
-		.tfc-ioc-user:hover { color: #1178b3; text-decoration: underline; }
-		/* Two IOC columns once the content column is wide enough. Each
-		   .tfc-ioc-row is already a self-contained flex row, so this needs no
-		   change to the JS card builder. Measured before: the page was
-		   11,601px tall (13 screens) with 462 IOC rows stacked one per line in
-		   an 800px column whose text used under half the width. */
-		@media (min-width: 1200px) {
-			.tfc-iocs {
-				display: grid;
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 0.35rem 1.25rem;
-			}
-			.tfc-more-iocs { grid-column: 1 / -1; }
-		}
-		.tfc-more-iocs {
-			font-size: 12px;
-			color: #737373;
-			margin-top: 0.2rem;
-		}
-		.tfc-anchor-link {
-			color: #9a9a9a;
-			font-size: 13px;
-			line-height: 1.6;
-		}
-		.tfc-anchor-link:hover { color: #1178b3; }
-		/* Confidence filter chips: reuse the exact tfc-badge-high/medium/low
-		   palette for the active state so chip colour == badge colour on the
-		   cards below; inactive chips drop to a muted grey outline so on/off
-		   reads unambiguously at a glance. Plain <button> + delegated click,
-		   no inline onclick. */
-		/* ── Card header: name left, size right ──────────────────────────
-		   ioc_count was buried mid-way through a grey run-on line even though
-		   it is the number that orders the whole page. */
-		.tfc-card-header {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: flex-start;
-			justify-content: space-between;
-			gap: 1rem;
-			margin-bottom: 0.6rem;
-		}
-		.tfc-head-main { min-width: 0; flex: 1 1 auto; }
-		.tfc-head-chips {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			gap: 0.4rem;
-			margin-top: 0.35rem;
-		}
-		.tfc-count {
-			flex: 0 0 auto;
-			text-align: right;
-			font-family: 'Rubik', sans-serif;
-			line-height: 1.1;
-		}
-		.tfc-count-num {
-			display: block;
-			font-size: 26px;
-			font-weight: 600;
-			color: #1c1c1c;
-			font-variant-numeric: tabular-nums;
-		}
-		.tfc-count-unit {
-			display: block;
-			font-size: 11px;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #737373;
-		}
-		.tfc-count-sub { display: block; margin-top: 3px; font-size: 12px; color: #6c757d; }
 
-		/* ── Type proportion bar ─────────────────────────────────────────
-		   Replaces "domain 35, ip 14, md5 5, sha256 12, url 70". Segment
-		   colours are IOC_TYPE_COLORS, the same ones the type badges use on
-		   the IOC rows below, so the bar and the rows agree.
-		   Width is set inline by renderFullCard(), proportional to
-		   ioc_count / max ioc_count among full cards (405 IOCs -> 100%, 50
-		   IOCs -> ~12%, measured 2026-08-19). Before this the bar was always
-		   100% wide regardless of campaign size, so 8 cards spanning 8.1x in
-		   IOCs (405 vs 50) all drew an identical-width bar. Only full cards
-		   get this treatment: an expanded compact row calls the same
-		   renderBody() with no width argument and keeps the bar at 100%,
-		   since the tail's mini-bar (below) already carries its size signal. */
-		.tfc-typebar {
-			display: flex;
-			width: 100%;
-			height: 8px;
-			border: 1px solid black;
-			border-radius: 2px;
-			overflow: hidden;
-			margin: 0.5rem 0 0.35rem;
-		}
-		.tfc-typebar-seg { display: block; height: 100%; }
-		.tfc-typebar-legend {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.35rem 0.9rem;
-			font-family: 'Rubik', sans-serif;
-			font-size: 12px;
-			color: #555;
-			margin-bottom: 0.7rem;
-		}
-		.tfc-typebar-key { display: inline-flex; align-items: center; gap: 5px; }
-		.tfc-typebar-dot {
-			width: 9px; height: 9px;
-			border: 1px solid black;
-			border-radius: 2px;
-			display: inline-block;
-		}
-
-		/* ── Evidence: why these IOCs are one campaign ───────────────────
-		   Sourced from c.anchors, which the page never rendered before even
-		   though it is the clustering key set: the actual reason the group
-		   exists. Values are attacker-authored, so they are escaped text and
-		   never links; the labels come from a fixed map in the script. */
-		.tfc-evidence {
-			border: 1px solid black;
-			border-radius: 3px;
-			background: #f8f9fa;
-			padding: 0.6rem 0.75rem;
-			margin: 0 0 0.75rem;
-		}
-		.tfc-ev-head {
-			margin: 0 0 0.4rem;
-			font-family: 'Rubik', sans-serif;
-			font-size: 11px;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #4b5563;
-		}
-		.tfc-ev-row {
-			display: flex;
-			align-items: baseline;
-			gap: 0.55rem;
-			padding: 3px 0;
-			font-family: 'Rubik', sans-serif;
-			font-size: 13px;
-			min-width: 0;
-		}
-		.tfc-ev-count {
-			flex: 0 0 auto;
-			min-width: 26px;
-			font-weight: 700;
-			color: #1c1c1c;
-			font-variant-numeric: tabular-nums;
-			text-align: right;
-		}
-		.tfc-ev-label { flex: 0 0 auto; color: #1c1c1c; }
-		.tfc-ev-value {
-			min-width: 0;
-			color: #6c757d;
-			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-			font-size: 11.5px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-		.tfc-ev-rest { color: #9aa0a6; }
-		/* C2: "merged from N pre-clusters" tail on the evidence head line.
-		   .tfc-ev-head is uppercase/bold/letter-spaced for its own label;
-		   this undoes all three so the count reads as an aside, not a
-		   second heading. */
-		.tfc-ev-merged {
-			text-transform: none;
-			font-weight: 400;
-			letter-spacing: normal;
-			color: #9aa0a6;
-		}
-
-		/* ── Tags + dates + reporters ────────────────────────────────────── */
-		.tfc-foot-line {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: space-between;
-			gap: 0.5rem 1rem;
-			margin-bottom: 0.6rem;
-		}
-		.tfc-foot-meta { font-family: 'Rubik', sans-serif; font-size: 12.5px; color: #6c757d; }
-		.tfc-reporters-toggle, .tfc-show-all, .tfc-copy-sample {
-			background: none;
-			border: 0;
-			padding: 0;
-			font-family: 'Rubik', sans-serif;
-			font-size: 12.5px;
-			color: #1178b3;
-			text-decoration: underline;
-			text-underline-offset: 2px;
-			cursor: pointer;
-		}
-		.tfc-reporters-toggle:hover, .tfc-show-all:hover, .tfc-copy-sample:hover { color: #0d5c8a; }
-		.tfc-reporters-toggle:focus-visible, .tfc-show-all:focus-visible, .tfc-copy-sample:focus-visible,
-		.tfc-row-head:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
-		.tfc-reporters-list { display: block; margin-top: 0.3rem; }
-		.tfc-reporter, .tfc-reporters-inline a { color: #6c757d; margin-right: 0.4rem; }
-		.tfc-iocs-foot {
-			display: flex;
-			align-items: baseline;
-			justify-content: space-between;
-			gap: 1rem;
-			margin-top: 0.4rem;
-		}
-		.tfc-iocs-actions { display: flex; align-items: baseline; gap: 0.75rem; flex-shrink: 0; }
-
-		/* ── Compact row for the tail ────────────────────────────────────
-		   Measured 2026-08-19: the 11 campaigns with <=22 IOCs were 10% of the
-		   data but half the page, because a 6-IOC campaign got the same
-		   324-375px card as a 401-IOC one. */
-		.tfc-divider {
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			margin: 1.75rem 0 0.75rem;
-			font-family: 'Rubik', sans-serif;
-			font-size: 12px;
-			text-transform: uppercase;
-			letter-spacing: 0.06em;
-			color: #737373;
-		}
-		.tfc-divider::before, .tfc-divider::after {
-			content: "";
-			flex: 1 1 auto;
-			border-top: 1px solid black;
-		}
-		.tfc-rows { border: 1px solid black; border-radius: 3px; background: #fff; margin-bottom: 1.5rem; }
-		.tfc-row { border-top: 1px solid black; }
-		/* Position classes below (.tfc-row-pos-first/-topline/-right) replace
-		   what used to be :nth-child/first-child selectors. Those counted DOM
-		   position, which broke as soon as a confidence/activity filter hid
-		   rows out of visual order - the visually-first item on screen could
-		   be any DOM child once earlier siblings are display:none. These
-		   classes are assigned at RUNTIME by updateRowPositions() (page
-		   script below), which walks the currently-visible rows in order and
-		   simulates the grid's own 2-column auto-placement; a markup/selector
-		   grep for them will find nothing here because they never appear in
-		   any HTML this file emits. */
-		.tfc-row-pos-first { border-top: 0; }
-		/* ── Two-column grid at >=992px ────────────────────────────────
-		   Measured 2026-08-19: 15 compact rows were 1058px wide and 44-45px
-		   tall each (674px total), with the row title ending near x=740 and
-		   ~700px of dead space before the mini-bar. Two columns fills that
-		   width and drops the same 15 rows to ~350px. Border placement can't
-		   use :nth-child/adjacent-sibling here (see updateRowPositions()
-		   comment above .tfc-row-pos-first) - every second visible item on
-		   the first visual line needs its top border dropped too, and every
-		   item landing in the right column needs a divider on its left. */
-		@media (min-width: 992px) {
-			.tfc-rows { display: grid; grid-template-columns: repeat(2, 1fr); }
-			.tfc-row-pos-topline { border-top: 0; }
-			.tfc-row-pos-right { border-left: 1px solid black; }
-			/* Grid items default to min-width:auto, which sizes a track by
-			   its content's min-content width, not the 1fr share. A long
-			   campaign name in .tfc-row-name (white-space:nowrap for the
-			   ellipsis) has a min-content width equal to its full unwrapped
-			   text, so without this the grid blew its own columns out to
-			   ~600px+~611px inside a 1059.5px container - measured as
-			   document.documentElement.scrollWidth going to 1511px against a
-			   1425px viewport (real horizontal scroll). min-width:0 lets the
-			   track shrink to its 1fr share and hands truncation back to
-			   .tfc-row-name's own overflow:hidden/ellipsis. */
-			.tfc-row { min-width: 0; }
-			/* An opened row's body (evidence + IOC list, same renderBody() as
-			   a full card) needs the whole row width, not a ~520px half
-			   column. The class comes from the click handler and the
-			   deep-link auto-open, not :has(), so both paths get it. */
-			.tfc-row.tfc-row-expanded { grid-column: 1 / -1; }
-		}
-		.tfc-row-head {
-			display: flex;
-			align-items: center;
-			gap: 0.7rem;
-			width: 100%;
-			min-height: 44px;
-			padding: 0.4rem 0.75rem;
-			background: none;
-			border: 0;
-			text-align: left;
-			font-family: 'Rubik', sans-serif;
-			cursor: pointer;
-		}
-		.tfc-row-head:hover { background: #f2f2f2; }
-		.tfc-row-caret { flex: 0 0 auto; font-size: 11px; color: #737373; transition: transform 0.15s; }
-		.tfc-row-head.is-open .tfc-row-caret { transform: rotate(90deg); }
-		.tfc-row-name {
-			flex: 1 1 auto;
-			min-width: 0;
-			font-size: 14px;
-			font-weight: 500;
-			color: #1c1c1c;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-		/* B1: single apparent-target value on the compact row head (brand, or
-		   sector when there's no brand). Kept to one short value on purpose -
-		   the full breakdown (brand + sector + country) only appears in the
-		   expanded body via renderBody(), where there's room for it. */
-		.tfc-row-target {
-			flex: 0 0 auto;
-			max-width: 140px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			font-size: 12px;
-			font-family: 'Rubik', sans-serif;
-			color: #737373;
-		}
-		/* Width used to be a fixed 60px, so a 38-IOC campaign and a 6-IOC one
-		   painted the exact same bar - the tail encoded composition but not
-		   size. JS now sets width inline, proportional to ioc_count against
-		   the largest campaign in the compact-row group (not the page max:
-		   scaling against an 405-IOC full card would flatten every tail bar
-		   to a sliver). max-width here is only the JS-off/error fallback. */
-		.tfc-minibar {
-			flex: 0 0 auto;
-			display: flex;
-			max-width: 60px;
-			height: 7px;
-			border: 1px solid black;
-			border-radius: 2px;
-			overflow: hidden;
-		}
-		.tfc-row-count {
-			flex: 0 0 auto;
-			min-width: 42px;
-			text-align: right;
-			font-size: 13px;
-			font-weight: 600;
-			color: #1c1c1c;
-			font-variant-numeric: tabular-nums;
-		}
-		.tfc-badge-sm { font-size: 10px; padding: 1px 6px; }
-		.tfc-row-body { padding: 0.25rem 0.75rem 0.9rem; border-top: 1px solid #e1e4e8; }
-
-		@media (max-width: 575.98px) {
-			.tfc-card-header { flex-direction: column; gap: 0.4rem; }
-			.tfc-count { text-align: left; }
-			.tfc-count-num { font-size: 22px; }
-			.tfc-minibar { display: none; }
-			.tfc-row-target { display: none; }
-			.tfc-ioc-date { display: none; }
-			.tfc-ev-value { white-space: normal; word-break: break-all; }
-		}
-
-		.tfc-filter-row {
+		/* ── Toolbar (one row) ────────────────────────────────────────────
+		   Cohesion chips + type/sort selects + More + shown-count, all in
+		   one flex line. Sector + activity move behind More (§9 open
+		   question 1: default activity flips to "All (30 days)" so nothing
+		   is hidden by default any more). */
+		.tfc-toolbar {
 			display: flex;
 			flex-wrap: wrap;
 			align-items: center;
 			gap: 0.5rem 0.6rem;
-			margin-bottom: 1rem;
+			margin: 0 0 0.35rem;
+		}
+		.tfc-toolbar .tfc-search-wrap {
+			margin-bottom: 0;
+			flex: 0 1 300px;
+			min-width: 180px;
+		}
+		.tfc-toolbar .tfc-search-wrap .tag-search {
+			width: 100%;
+			font-size: 12.5px;
 		}
 		.tfc-filter-label {
 			font-family: 'Rubik', sans-serif;
@@ -737,23 +219,10 @@
 			opacity: 0.75;
 		}
 		.tfc-filter-chip:hover { opacity: 1; }
-		.tfc-filter-chip.active {
-			border-color: black;
-			opacity: 1;
-		}
+		.tfc-filter-chip.active { border-color: black; opacity: 1; }
 		.tfc-filter-chip.active.tfc-filter-chip-high { background: #34e3a4; color: #0b3d2e; }
 		.tfc-filter-chip.active.tfc-filter-chip-medium { background: #ffc591; color: #5c3d12; }
 		.tfc-filter-chip.active.tfc-filter-chip-low { background: #e2e3e5; color: #41464b; }
-		/* Each activity chip states how many campaigns it selects. Measured over
-		   the week ioc_count_7d has existed in the published document, 6 of 7
-		   daily runs had ZERO campaigns with ioc_count_7d == 0 (the exception
-		   was 2026-08-17, 4 of 29): Stage 1 ranks candidates recency-first, so
-		   an inactive cluster is usually evicted by the 60-candidate cap before
-		   it ever reaches the page. The toggle therefore selects the same set
-		   on most days, and without these numbers it reads as a dead control -
-		   you click it and nothing moves. With them you can see both sides hold
-		   the same count, and on the days they differ the control earns its
-		   place. */
 		.tfc-chip-count {
 			margin-left: 4px;
 			opacity: 0.6;
@@ -761,18 +230,6 @@
 			font-variant-numeric: tabular-nums;
 		}
 		.tfc-filter-chip.active .tfc-chip-count { opacity: 0.8; }
-		.tfc-filter-count {
-			font-family: 'Rubik', sans-serif;
-			font-size: 12.5px;
-			color: #737373;
-			margin-left: auto;
-		}
-
-		/* B2 sort control: same 1px-border minimal treatment as the filter
-		   chips (border black, radius 3px, Rubik) rather than a bare bootstrap
-		   <select> - search/index.html's selects are plain .form-control in a
-		   form context this page doesn't have, so they aren't a fit here. */
-		.tfc-sort-wrap { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
 		.tfc-sort-select {
 			padding: 3px 8px;
 			border: 1px solid black;
@@ -782,38 +239,740 @@
 			line-height: 1.6;
 			background: #fff;
 			color: #1c1c1c;
+			max-width: 210px;
 		}
-
-		/* B3 search box: reuses dashboard/index.html's .tag-search-wrap markup
-		   and icon-inset pattern (see css/tweetfeed.css), just narrowed and
-		   stripped of its block margin so it sits inline in a filter row
-		   instead of stacking full-width above a checkbox column. */
-		.tfc-filter-row .tfc-search-wrap {
-			margin-bottom: 0;
-			flex: 0 1 260px;
-			min-width: 160px;
-		}
-		.tfc-filter-row .tfc-search-wrap .tag-search {
-			width: 100%;
+		.tfc-more-btn[aria-expanded="true"] { border-color: black; opacity: 1; }
+		.tfc-filter-count {
+			font-family: 'Rubik', sans-serif;
 			font-size: 12.5px;
+			color: #737373;
+			margin-left: 0.6rem;
+			white-space: nowrap;
 		}
-		.tfc-search-hint {
+		.tfc-toolbar-note {
 			font-family: 'Rubik', sans-serif;
 			font-size: 11.5px;
-			color: #9a9a9a;
-			margin: -0.4rem 0 1rem;
+			color: #9aa0a6;
+			margin: -0.15rem 0 0.75rem;
 		}
-		/* Sector chips are injected as raw .tfc-filter-chip buttons into this
-		   span at render time (built from the sectors actually present in the
-		   payload); display:contents lets them wrap as direct siblings in the
-		   flex filter row instead of as one block child. */
-		.tfc-sector-chips { display: contents; }
+		.tfc-hint-tok {
+			background: none;
+			border: 0;
+			padding: 0 2px;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 11px;
+			color: #6c757d;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-hint-tok:hover { color: #1178b3; }
+
+		/* More panel: in-flow, never a floating popover. */
+		.tfc-more-panel {
+			border: 1px solid #e3e6f0;
+			border-radius: 3px;
+			padding: 0.6rem 0.75rem;
+			margin-bottom: 0.75rem;
+		}
+		.tfc-more-group {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.5rem 0.6rem;
+			margin-bottom: 0.5rem;
+		}
+		.tfc-more-group:last-of-type { margin-bottom: 0; }
+		.tfc-more-clear {
+			background: none;
+			border: 1px solid #9a9a9a;
+			border-radius: 3px;
+			padding: 3px 12px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			color: #555;
+			cursor: pointer;
+		}
+		.tfc-more-clear:hover { color: #000; border-color: #000; }
+
+		/* Echo strip: only rendered when a More-panel filter is off default. */
+		.tfc-echo {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.4rem;
+			margin: -0.35rem 0 0.75rem;
+		}
+		.tfc-echo-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			background: none;
+			border: 1px solid #e3e6f0;
+			border-radius: 10px;
+			padding: 2px 8px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			color: #6c757d;
+			cursor: pointer;
+		}
+		.tfc-echo-chip:hover { border-color: #9aa0a6; color: #1c1c1c; }
+
+		/* ── Column header strip ──────────────────────────────────────────
+		   Shares the row's own grid template (declared once, see .tfc-listhead,
+		   .tfc-head below) so labels sit exactly over their cells. */
+		.tfc-listhead {
+			position: relative;
+			height: 26px;
+			border-bottom: 1px solid #e3e6f0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #737373;
+		}
+		.tfc-lh-num { text-align: right; }
+		.tfc-lh-conf { text-align: right; cursor: help; }
+		.tfc-expand-all {
+			margin-left: auto;
+			background: none;
+			border: 1px solid #9a9a9a;
+			border-radius: 3px;
+			padding: 1px 8px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 10.5px;
+			font-weight: 600;
+			text-transform: none;
+			letter-spacing: normal;
+			color: #555;
+			cursor: pointer;
+		}
+		.tfc-expand-all:hover { color: #000; border-color: #000; }
+		.tfc-listhead-note {
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			color: #737373;
+			margin: 0.5rem 0 1.25rem;
+		}
+
+		/* ── The list and the row ─────────────────────────────────────────
+		   Grid declared once for both selectors so the header strip's
+		   labels can never drift out of alignment with the row cells. */
+		.tfc-listhead, .tfc-head {
+			display: grid;
+			grid-template-columns: 18px minmax(0,1fr) 104px 76px 64px 72px;
+			column-gap: 12px;
+			padding: 11px 12px;
+			align-items: center;
+		}
+		.tfc-head {
+			grid-template-rows: auto auto;
+			row-gap: 2px;
+			min-height: 64px;
+			width: 100%;
+			text-align: left;
+			background: none;
+			border: 0;
+			font-family: 'Rubik', sans-serif;
+			cursor: pointer;
+		}
+		.tfc-head:hover { background: #f8f9fa; }
+		.tfc-head[aria-expanded="true"] { background: #f8f9fa; }
+		.tfc-h-caret {
+			grid-column: 1;
+			grid-row: 1 / span 2;
+			font-size: 11px;
+			color: #737373;
+			transition: transform 0.15s;
+		}
+		.tfc-head[aria-expanded="true"] .tfc-h-caret { transform: rotate(90deg); }
+		.tfc-h-name {
+			grid-column: 2;
+			grid-row: 1;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 15.5px;
+			font-weight: 600;
+			color: #1c1c1c;
+			line-height: 1.35;
+		}
+		.tfc-h-new {
+			display: inline-block;
+			margin-left: 6px;
+			padding: 1px 6px;
+			border: 1px solid #1c1c1c;
+			border-radius: 3px;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			background: #34e3a4;
+			color: #0b3d2e;
+			vertical-align: 1px;
+		}
+		.tfc-h-gist {
+			grid-column: 2;
+			grid-row: 2;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 12.5px;
+			color: #6c757d;
+			line-height: 1.4;
+		}
+		.tfc-gist-conf { display: none; font-weight: 600; color: #1c1c1c; }
+		.tfc-gist-activity { display: none; }
+		.tfc-h-mix, .tfc-h-act, .tfc-h-num, .tfc-h-conf { grid-row: 1 / span 2; }
+		.tfc-h-mix, .tfc-h-act { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+		.tfc-mix, .tfc-act-track, .tfc-act-hist {
+			display: flex;
+			width: 100%;
+			height: 8px;
+			border: 1px solid black;
+			border-radius: 2px;
+			overflow: hidden;
+		}
+		.tfc-mix-seg { display: block; height: 100%; }
+		.tfc-act-hist { align-items: flex-end; }
+		.tfc-act-col { flex: 1 1 0; min-width: 1px; background: #1c1c1c; height: 0; }
+		.tfc-act-fill { display: block; height: 100%; background: #1c1c1c; }
+		.tfc-mix-cap, .tfc-act-cap {
+			font-size: 11px;
+			color: #9aa0a6;
+			white-space: nowrap;
+		}
+		.tfc-act-cap { color: #6c757d; font-size: 11.5px; }
+		.tfc-h-num {
+			text-align: right;
+			font-size: 15px;
+			font-weight: 700;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+		}
+		.tfc-num-unit {
+			display: block;
+			font-size: 10px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #9aa0a6;
+		}
+		.tfc-h-conf { text-align: right; }
+		/* Cohesion badge. The base rules below were dropped in the 2026-08-29
+		   rebuild while the markup kept emitting the classes, so every row's
+		   cohesion rendered as unstyled 16px black text. Values are the locked
+		   pairs also used by the toolbar chips and the changelog palette. */
+		.tfc-badge {
+			display: inline-block;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			line-height: 1.6;
+			white-space: nowrap;
+		}
+		.tfc-badge-high { background: #34e3a4; color: #0b3d2e; }
+		.tfc-badge-medium { background: #ffc591; color: #5c3d12; }
+		.tfc-badge-low { background: #e2e3e5; color: #41464b; }
+		.tfc-h-conf .tfc-badge { font-size: 10px; padding: 1px 6px; }
+
+		.tfc-list {
+			border: 1px solid black;
+			border-top: 0;
+			border-radius: 3px;
+			background: #fff;
+			overflow: hidden;
+		}
+		.tfc-item { border-top: 1px solid #e3e6f0; }
+		.tfc-item:first-child { border-top: 1px solid black; }   /* fallback only */
+		.tfc-item.tfc-first { border-top-color: black; }
+		.tfc-list .tfc-head:focus-visible { outline: 2px solid #3a6f96; outline-offset: -2px; }
+
+		.tfc-body { padding: 0.25rem 12px 1rem; border-top: 1px solid #e3e6f0; }
+
+		/* ── Skeleton (loading state) ─────────────────────────────────────
+		   8 rows at exactly 64px, same shape as .tfc-list, so there is no
+		   spinner-to-list layout jump. */
+		.tfc-skel { border: 1px solid black; border-radius: 3px; overflow: hidden; }
+		.tfc-skel-row {
+			height: 64px;
+			padding: 11px 12px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+		}
+		.tfc-skel-row + .tfc-skel-row { border-top: 1px solid #e3e6f0; }
+		.tfc-skel-bar {
+			height: 10px;
+			border-radius: 2px;
+			background: linear-gradient(90deg, #eef0f3 25%, #f8f9fa 37%, #eef0f3 63%);
+			background-size: 400% 100%;
+			animation: tfcShimmer 1.4s ease infinite;
+		}
+		.tfc-skel-name { flex: 1 1 auto; max-width: 420px; height: 12px; }
+		.tfc-skel-num { width: 40px; }
+		@keyframes tfcShimmer {
+			0% { background-position: 100% 50%; }
+			100% { background-position: 0 50%; }
+		}
+
+		/* ── Expanded body ─────────────────────────────────────────────── */
+		.tfc-panes {
+			display: grid;
+			grid-template-columns: minmax(0,1.35fr) minmax(0,1fr);
+			column-gap: 28px;
+			margin: 0.75rem 0;
+		}
+		.tfc-pane-b { border-left: 1px solid #e3e6f0; padding-left: 28px; }
+		.tfc-pane-head {
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+			border-bottom: 1px solid #e3e6f0;
+			padding-bottom: 4px;
+			margin-bottom: 0.6rem;
+		}
+		.tfc-context {
+			color: #333;
+			font-size: 15px;
+			font-family: 'Rubik', sans-serif;
+			line-height: 1.7;
+			margin: 0 0 0.7rem 0;
+		}
+		.tfc-ai-label {
+			display: inline-block;
+			margin-right: 6px;
+			padding: 1px 6px;
+			border: 1px solid #c9c9c9;
+			border-radius: 3px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 10px;
+			font-weight: 600;
+			font-variant: small-caps;
+			letter-spacing: 0.03em;
+			color: #8a8a8a;
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+		.tfc-attr {
+			display: grid;
+			grid-template-columns: 92px minmax(0,1fr);
+			row-gap: 5px;
+			column-gap: 8px;
+		}
+		.tfc-attr-k { font-size: 12px; color: #737373; }
+		.tfc-attr-v { font-size: 13.5px; color: #1c1c1c; }
+		.tfc-attr-denom { color: #9aa0a6; font-size: 12px; }
+		.tfc-brand-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			padding: 2px 9px;
+			border: 1px solid black;
+			border-radius: 3px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+			white-space: nowrap;
+		}
+		.tfc-ttp-chip {
+			display: inline-block;
+			padding: 1px 7px;
+			margin: 0 4px 2px 0;
+			border: 1px solid #c9c9c9;
+			border-radius: 10px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+			text-decoration: none;
+		}
+		a.tfc-ttp-chip:hover { background: #1c1c1c; color: #fff; text-decoration: none; }
+		.tfc-ttp-chip-unknown { border-style: dashed; color: #737373; }
+		.tfc-tag-chip {
+			display: inline-block;
+			padding: 2px 9px;
+			margin: 0 4px 4px 0;
+			border: 1px solid black;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'Rubik', sans-serif;
+			background: #fff;
+			color: #1c1c1c;
+			text-decoration: none;
+		}
+		a.tfc-tag-chip:hover { background: #1c1c1c; color: #fff; text-decoration: none; }
+
+		/* ── Evidence + infrastructure (why these are one campaign) ──────── */
+		.tfc-evidence {
+			border: 1px solid black;
+			border-radius: 3px;
+			background: #f8f9fa;
+			padding: 0.6rem 0.75rem;
+			margin: 0 0 0.6rem;
+		}
+		.tfc-ev-head {
+			margin: 0 0 0.4rem;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+		}
+		.tfc-ev-row {
+			display: flex;
+			align-items: baseline;
+			gap: 0.55rem;
+			padding: 3px 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			min-width: 0;
+		}
+		.tfc-ev-count {
+			flex: 0 0 auto;
+			min-width: 22px;
+			font-weight: 700;
+			color: #1c1c1c;
+			font-variant-numeric: tabular-nums;
+			text-align: right;
+		}
+		.tfc-ev-label { flex: 0 0 auto; color: #1c1c1c; }
+		.tfc-ev-value {
+			min-width: 0;
+			flex: 1 1 auto;
+			color: #6c757d;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 11.5px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.tfc-ev-rest { color: #9aa0a6; }
+		.tfc-ev-merged { text-transform: none; font-weight: 400; letter-spacing: normal; color: #9aa0a6; }
+		.tfc-copy {
+			flex-shrink: 0;
+			background: none;
+			border: 0;
+			padding: 0 2px;
+			cursor: pointer;
+			color: #555;
+			font-size: 12px;
+		}
+		.tfc-copy:hover { color: #000; }
+		.tfc-copy-ok { color: green; }
+		.tfc-infra {
+			border-top: 1px solid #e3e6f0;
+			margin-top: 0.6rem;
+			padding-top: 0.5rem;
+		}
+		.tfc-infra-head {
+			font-family: 'Rubik', sans-serif;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+			margin-bottom: 0.3rem;
+		}
+		.tfc-infra-row {
+			display: flex;
+			align-items: baseline;
+			gap: 0.55rem;
+			padding: 2px 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #1c1c1c;
+		}
+		.tfc-infra-count { flex: 0 0 auto; min-width: 20px; text-align: right; color: #737373; font-variant-numeric: tabular-nums; }
+		.tfc-infra-org { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+		.tfc-infra-country { flex: 0 0 auto; color: #9aa0a6; }
+		.tfc-reporters-toggle {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-reporters-toggle:hover { color: #0d5c8a; }
+		.tfc-reporters-toggle:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+		.tfc-reporters-list { display: block; margin-top: 0.3rem; }
+		.tfc-reporter, .tfc-reporters-inline a { color: #6c757d; margin-right: 0.4rem; }
+		.tfc-reporters-line { margin-top: 0.6rem; font-size: 12.5px; color: #6c757d; font-family: 'Rubik', sans-serif; }
+
+		/* ── Indicators ────────────────────────────────────────────────── */
+		.tfc-ind-foot {
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 0.4rem 1rem;
+			margin-bottom: 0.5rem;
+		}
+		.tfc-ind-count { font-size: 12.5px; color: #737373; font-family: 'Rubik', sans-serif; }
+		.tfc-iocs {
+			border-top: 1px solid #e3e6f0;
+			padding-top: 0.6rem;
+		}
+		@media (min-width: 1200px) {
+			.tfc-iocs {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 0.35rem 1.25rem;
+			}
+			.tfc-ind-note { grid-column: 1 / -1; }
+		}
+		.tfc-ioc-wrap { min-width: 0; margin-bottom: 0.4rem; }
+		.tfc-ioc-row {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 12.5px;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfc-ioc-type {
+			font-size: 10px;
+			padding: 1px 6px;
+			border-radius: 3px;
+			font-weight: 600;
+			text-transform: uppercase;
+			flex-shrink: 0;
+		}
+		.tfc-ioc-value {
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 12px;
+			background: #f5f5f5;
+			padding: 1px 6px;
+			border-radius: 3px;
+			word-break: break-all;
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+		a.tfc-ioc-value { color: inherit; text-decoration: none; }
+		a.tfc-ioc-value:hover { background: #e2e2e2; text-decoration: underline; }
+		.tfc-ioc-row .tf-copy { flex-shrink: 0; cursor: pointer; color: #555; }
+		.tfc-ioc-row .tf-copy:hover { color: #000; }
+		.tfc-ioc-link { flex-shrink: 0; color: #1178b3; }
+		.tfc-ioc-row .tf-action { flex-shrink: 0; }
+		.tfc-ioc-date {
+			flex-shrink: 0;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			font-size: 10.5px;
+			color: #9a9a9a;
+		}
+		.tfc-ioc-user {
+			flex-shrink: 0;
+			max-width: 110px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 11.5px;
+			color: #6c757d;
+			text-decoration: none;
+		}
+		.tfc-ioc-user:hover { color: #1178b3; text-decoration: underline; }
+		.tfc-ioc-tags-line { margin: 2px 0 0 42px; }
+		.tfc-ioc-tag {
+			display: inline-block;
+			margin: 0 4px 2px 0;
+			padding: 0 6px;
+			border: 1px solid #e3e6f0;
+			border-radius: 10px;
+			font-size: 10px;
+			font-family: 'Rubik', sans-serif;
+			color: #737373;
+		}
+		.tfc-ioc-tag-ai { border-color: #c9c9c9; color: #4b5563; }
+		.tfc-ind-note { font-size: 12px; color: #737373; margin-top: 0.3rem; }
+		.tfc-load-all {
+			background: none;
+			border: 1px solid black;
+			border-radius: 3px;
+			padding: 2px 10px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			font-weight: 600;
+			color: #1c1c1c;
+			cursor: pointer;
+		}
+		.tfc-load-all:hover { background: #f2f2f2; }
+		.tfc-load-all:disabled { opacity: 0.6; cursor: default; }
+		.tfc-load-failed { font-size: 11.5px; color: #9aa0a6; }
+		.tfc-copy-sample {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-copy-sample:hover { color: #0d5c8a; }
+		.tfc-ind-actions { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+
+		/* ── Reach the rest ───────────────────────────────────────────────
+		   Same-site /search/ pivots only, never a link to attacker
+		   infrastructure. */
+		.tfc-reach {
+			border-top: 1px solid #e3e6f0;
+			margin-top: 1rem;
+			padding-top: 0.75rem;
+		}
+		.tfc-reach-note {
+			font-size: 13px;
+			color: #333;
+			font-family: 'Rubik', sans-serif;
+			margin: 0 0 0.5rem;
+		}
+		.tfc-reach-group { margin-bottom: 0.4rem; }
+		.tfc-reach-label { font-size: 11px; color: #9aa0a6; margin-right: 4px; }
+		.tfc-reach-chip {
+			display: inline-block;
+			margin: 0 4px 4px 0;
+			padding: 2px 9px;
+			border: 1px solid #e3e6f0;
+			border-radius: 12px;
+			font-size: 11px;
+			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+			color: #6c757d;
+			text-decoration: none;
+		}
+		.tfc-reach-chip:hover { border-color: #1c1c1c; color: #1c1c1c; text-decoration: none; }
+
+		/* ── Provenance footer ────────────────────────────────────────────── */
+		.tfc-prov {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.4rem 0.6rem;
+			border-top: 1px solid #e3e6f0;
+			padding-top: 0.5rem;
+			margin-top: 0.75rem;
+			font-size: 12px;
+			color: #9aa0a6;
+			font-family: 'Rubik', sans-serif;
+		}
+		.tfc-prov-id { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+		.tfc-prov a { color: #9aa0a6; text-decoration: underline; text-underline-offset: 2px; }
+		.tfc-prov a:hover { color: #1178b3; }
+
+		/* ── Empty / filter-count text ────────────────────────────────────── */
+		.tfc-listhead-note ~ .tfc-empty-note,
+		.tfc-empty-note { font-size: 13px; color: #6c757d; font-family: 'Rubik', sans-serif; }
+		.tfc-empty-actions { margin-top: 0.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+		.tfc-empty-actions button {
+			background: none;
+			border: 1px solid black;
+			border-radius: 3px;
+			padding: 3px 10px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 11.5px;
+			font-weight: 600;
+			color: #1c1c1c;
+			cursor: pointer;
+		}
+		.tfc-empty-actions button:hover { background: #f2f2f2; }
+		.tfc-aged-out {
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #7a5b12;
+			background: #fff3cd;
+			border: 1px solid #f0ad4e;
+			border-radius: 4px;
+			padding: 0.5rem 0.75rem;
+			margin-bottom: 0.75rem;
+		}
+
+		/* Generic focus rings for the new controls (outside .tfc-list, so
+		   the standard +2px offset - see the -2px rule above for inside). */
+		.tfc-filter-chip:focus-visible, .tfc-sort-select:focus-visible, .tfc-more-clear:focus-visible,
+		.tfc-hint-tok:focus-visible, .tfc-echo-chip:focus-visible, .tfc-expand-all:focus-visible,
+		.tfc-copy:focus-visible, .tfc-tag-chip:focus-visible, .tfc-reach-chip:focus-visible,
+		.tfc-load-all:focus-visible, .tfc-copy-sample:focus-visible, .tfc-ioc-value:focus-visible {
+			outline: 2px solid #3a6f96;
+			outline-offset: 2px;
+		}
+
+		/* ── Responsive tiers ──────────────────────────────────────────────
+		   Tier A (this file's default, >=1280px viewport): full rail.
+		   Tier B, 992-1279px: drop the MIX column. */
+		@media (min-width: 992px) and (max-width: 1279.98px) {
+			.tfc-listhead, .tfc-head { grid-template-columns: 18px minmax(0,1fr) 76px 64px 72px; }
+			.tfc-h-mix, .tfc-lh-mix { display: none; }
+			.tfc-h-act, .tfc-lh { grid-column: 3; }
+			.tfc-h-num { grid-column: 4; }
+			.tfc-h-conf { grid-column: 5; }
+		}
+		/* Tier C, 576-991.98px: caret/name-gist/count/cohesion only; header
+		   strip hidden; activity joins the gist as text. */
+		@media (max-width: 991.98px) {
+			.tfc-listhead { display: none; }
+			.tfc-listhead-note { margin-top: 0; }
+			.tfc-listhead, .tfc-head { grid-template-columns: 16px minmax(0,1fr) 64px 68px; }
+			.tfc-h-mix, .tfc-h-act { display: none; }
+			.tfc-h-num { grid-column: 3; }
+			.tfc-h-conf { grid-column: 4; }
+			.tfc-gist-activity { display: inline; }
+			.tfc-panes { grid-template-columns: 1fr; }
+			.tfc-pane-b { border-left: 0; padding-left: 0; margin-top: 1rem; }
+			.tfc-toolbar .tfc-search-wrap { flex-basis: 100%; }
+			.tfc-expand-all { margin-left: 0; }
+			.tfc-filter-count { margin-left: 0.6rem; }
+		}
+		/* Tier D, <576px: caret/name/count only; cohesion becomes the first
+		   token of the gist line as text; name/gist clamp to 2 lines
+		   instead of ellipsising at one. On small screens drop GRAPHICS,
+		   never WORDS. */
+		@media (max-width: 575.98px) {
+			.tfc-listhead, .tfc-head { grid-template-columns: 14px minmax(0,1fr) 52px; }
+			.tfc-h-conf { display: none; }
+			.tfc-h-num { grid-column: 3; }
+			.tfc-gist-conf { display: inline; }
+			.tfc-head { min-height: 56px; }
+			/* -webkit-line-clamp DOES work here: this Chrome reports
+			   display:flow-root for a -webkit-box + line-clamp element (its
+			   standardized line-clamp implementation), which looks inert but
+			   is not - verified at 360px that an 81-char name truncates at a
+			   word boundary with ~30px reserved for the ellipsis. Do not
+			   "fix" the computed display. max-height is the hard floor for
+			   any engine that really does ignore the clamp. */
+			.tfc-h-name, .tfc-h-gist {
+				white-space: normal;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				max-height: 2.7em;
+			}
+			.tfc-ioc-row { flex-wrap: wrap; }
+			.tfc-ioc-value { flex-basis: 100%; order: 3; word-break: break-all; }
+			.tfc-ioc-date { order: 1; }
+			.tfc-ioc-user { order: 2; margin-left: auto; }
+			.tfc-ioc-link, .tfc-ioc-row .tf-copy, .tfc-ioc-row .tf-action { order: 4; }
+		}
 
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
-		   it, so every campaign anchor landed underneath it (verified by
-		   clicking: the target came to rest at top 0). The ids are written by
-		   JS at render time from the API, never by this file, so the rule has
-		   to match them by prefix rather than one by one. */
+		   it, so every campaign anchor landed underneath it. The ids are
+		   written by JS at render time from the API, never by this file, so
+		   the rule has to match them by prefix rather than one by one. */
 		@media (min-width: 992px) {
 			#content [id^="tfc-"] { scroll-margin-top: 72px; }
 		}
@@ -980,35 +1139,41 @@
 				</div>
 				<hr class="divider">
 
-				<div class="card mb-3">
-					<div class="card-body">
-						<p class="tfc-lead">AI clusters IOCs from the last 30 days into campaign narratives: shared infrastructure, malware family or targeted brand.</p>
-						<div class="tfc-headline" id="campaignsHeadline">
-							<div class="tfc-headline-cell">
-								<div class="tfc-headline-value" id="tfcHlShown">-</div>
-								<div class="tfc-headline-label">campaigns shown</div>
-								<div class="tfc-headline-sub" id="tfcHlShownSub"></div>
-							</div>
-							<div class="tfc-headline-cell">
-								<div class="tfc-headline-value" id="tfcHlIocs">-</div>
-								<div class="tfc-headline-label">IOCs clustered</div>
-								<div class="tfc-headline-sub" id="tfcHlIocsSub"></div>
-							</div>
-							<div class="tfc-headline-cell">
-								<div class="tfc-headline-value" id="tfcHlHead">-</div>
-								<div class="tfc-headline-label" id="tfcHlHeadLabel">in top campaigns</div>
-								<div class="tfc-headline-sub" id="tfcHlHeadSub"></div>
-							</div>
-						</div>
-						<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
-						<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
+				<p class="tfc-lead">AI clusters IOCs from the last 30 days into campaign narratives: shared infrastructure, malware family or targeted brand.</p>
+				<div class="tfc-headline" id="campaignsHeadline">
+					<div class="tfc-headline-cell">
+						<div class="tfc-headline-value" id="tfcHlShown">-</div>
+						<div class="tfc-headline-label">campaigns</div>
+						<div class="tfc-headline-sub">last 30 days</div>
+					</div>
+					<div class="tfc-headline-cell">
+						<div class="tfc-headline-value" id="tfcHlIocs">-</div>
+						<div class="tfc-headline-label">IOCs clustered</div>
+						<div class="tfc-headline-sub" id="tfcHlIocsSub"></div>
+					</div>
+					<div class="tfc-headline-cell">
+						<div class="tfc-headline-value" id="tfcHlHead">-</div>
+						<div class="tfc-headline-label">active this week</div>
+						<div class="tfc-headline-sub" id="tfcHlHeadSub"></div>
 					</div>
 				</div>
+				<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
+				<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
 
 				<div class="tfc-stale-banner" id="staleBanner" style="display:none;" role="alert"></div>
 
-				<div id="campaignsLoading" class="text-center" style="padding:2rem 0;">
-					<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60">
+				<div id="campaignsLoading">
+					<div class="tfc-skel" aria-hidden="true">
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+						<div class="tfc-skel-row"><span class="tfc-skel-bar tfc-skel-name"></span><span class="tfc-skel-bar tfc-skel-num"></span></div>
+					</div>
+					<noscript><div class="text-center" style="padding:2rem 0;"><img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading" width="60" height="60"></div></noscript>
 				</div>
 
 				<div id="campaignsError" class="alert alert-danger" style="display:none;" role="alert">
@@ -1022,73 +1187,88 @@
 					<div class="empty-hint">Check back soon - campaigns are recomputed daily from the last 30 days of IOCs.</div>
 				</div>
 
-				<div class="tfc-filter-row" id="campaignsActivityRow" style="display:none;">
-					<span class="tfc-filter-label">Show:</span>
-					<button type="button" class="tfc-filter-chip" data-activity="day" aria-pressed="false">Last 24h <span class="tfc-chip-count"></span></button>
-					<button type="button" class="tfc-filter-chip active" data-activity="week" aria-pressed="true">Active this week <span class="tfc-chip-count"></span></button>
-					<button type="button" class="tfc-filter-chip" data-activity="all" aria-pressed="false">All (30 days) <span class="tfc-chip-count"></span></button>
-					<div class="tfc-sort-wrap">
-						<label class="tfc-filter-label" for="campaignsSort">Sort:</label>
-						<select id="campaignsSort" class="tfc-sort-select" aria-label="Sort campaigns by">
-							<option value="total">Total IOCs</option>
-							<option value="recent">Recent activity</option>
-							<option value="lastseen">Last seen</option>
-							<option value="confidence">Confidence</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="tfc-filter-row" id="campaignsFilterRow" style="display:none;">
-					<span class="tfc-filter-label">Filter by confidence:</span>
-					<button type="button" class="tfc-filter-chip tfc-filter-chip-high active" data-confidence="high" aria-pressed="true">High</button>
-					<button type="button" class="tfc-filter-chip tfc-filter-chip-medium active" data-confidence="medium" aria-pressed="true">Medium</button>
-					<button type="button" class="tfc-filter-chip tfc-filter-chip-low active" data-confidence="low" aria-pressed="true">Low</button>
-					<button type="button" class="tfc-filter-chip" id="campaignsClearFilters" style="display:none;">Clear</button>
-					<span class="tfc-filter-count" id="campaignsFilterCount"></span>
-				</div>
-
-				<div class="tfc-filter-row" id="campaignsSearchRow" style="display:none;">
+				<div class="tfc-toolbar" id="campaignsToolbar" style="display:none;">
 					<div class="tag-search-wrap tfc-search-wrap">
 						<i class="fas fa-search tag-search-icon" aria-hidden="true"></i>
 						<input type="text" class="tag-search" id="campaignsSearch" placeholder="Search campaigns&hellip;" aria-label="Search campaigns">
 					</div>
-					<span class="tfc-filter-label">Type:</span>
-					<button type="button" class="tfc-filter-chip active" data-ioctype="any" aria-pressed="true">Any</button>
-					<button type="button" class="tfc-filter-chip" data-ioctype="url" aria-pressed="false">URL</button>
-					<button type="button" class="tfc-filter-chip" data-ioctype="domain" aria-pressed="false">Domain</button>
-					<button type="button" class="tfc-filter-chip" data-ioctype="ip" aria-pressed="false">IP</button>
-					<button type="button" class="tfc-filter-chip" data-ioctype="md5" aria-pressed="false">MD5</button>
-					<button type="button" class="tfc-filter-chip" data-ioctype="sha256" aria-pressed="false">SHA256</button>
-					<span class="tfc-filter-label">Sector:</span>
-					<span id="campaignsSectorChips" class="tfc-sector-chips"></span>
+					<span class="tfc-filter-label">Cohesion:</span>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-high active" data-confidence="high" aria-pressed="true">High <span class="tfc-chip-count"></span></button>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-medium active" data-confidence="medium" aria-pressed="true">Medium <span class="tfc-chip-count"></span></button>
+					<button type="button" class="tfc-filter-chip tfc-filter-chip-low active" data-confidence="low" aria-pressed="true">Low <span class="tfc-chip-count"></span></button>
+					<label class="tfc-filter-label" for="campaignsType">Type:</label>
+					<select id="campaignsType" class="tfc-sort-select" aria-label="Filter by IOC type"><option value="any">Any type</option></select>
+					<label class="tfc-filter-label" for="campaignsSort">Sort:</label>
+					<select id="campaignsSort" class="tfc-sort-select" aria-label="Sort campaigns by">
+						<option value="total">Total IOCs</option>
+						<option value="recent">Recent activity</option>
+						<option value="lastseen">Last seen</option>
+						<option value="confidence">Cohesion</option>
+					</select>
+					<button type="button" class="tfc-filter-chip tfc-more-btn" id="campaignsMore" aria-expanded="false" aria-controls="campaignsMorePanel">More <span class="tfc-chip-count" id="campaignsMoreCount"></span></button>
+					<button type="button" class="tfc-expand-all" id="campaignsExpandAll" aria-pressed="false">Expand all</button>
+					<span class="tfc-filter-count" id="campaignsFilterCount"></span>
 				</div>
-				<p class="tfc-search-hint" id="campaignsSearchHint" style="display:none;">Searches names, AI context, targets, tags, reporters and the published sample/anchors only.</p>
+				<p class="tfc-toolbar-note" id="campaignsToolbarNote" style="display:none;">try <button type="button" class="tfc-hint-tok" data-hint="tag:kimsuky">tag:kimsuky</button> <button type="button" class="tfc-hint-tok" data-hint="type:md5">type:md5</button> <button type="button" class="tfc-hint-tok" data-hint="brand:binance">brand:binance</button> <button type="button" class="tfc-hint-tok" data-hint="text:loader">text:loader</button></p>
 
-				<div id="campaignsList" style="display:none;"></div>
+				<div id="campaignsMorePanel" class="tfc-more-panel" hidden>
+					<div class="tfc-more-group">
+						<span class="tfc-filter-label">Activity:</span>
+						<button type="button" class="tfc-filter-chip active" data-activity="all" aria-pressed="true">All 30 days <span class="tfc-chip-count"></span></button>
+						<button type="button" class="tfc-filter-chip" data-activity="week" aria-pressed="false">Active this week <span class="tfc-chip-count"></span></button>
+					</div>
+					<div class="tfc-more-group">
+						<label class="tfc-filter-label" for="campaignsSector">Sector:</label>
+						<select id="campaignsSector" class="tfc-sort-select" aria-label="Filter by target sector"><option value="any">Any target</option></select>
+						<button type="button" class="tfc-more-clear" id="campaignsClearAll">Clear all</button>
+					</div>
+				</div>
+				<div id="campaignsEcho" class="tfc-echo"></div>
+
+				<div id="campaignsAgedOut" class="tfc-aged-out" style="display:none;" role="status"></div>
+
+				<div class="tfc-listhead" id="campaignsListHead" hidden>
+					<span></span>
+					<span>Campaign</span>
+					<span class="tfc-lh-mix">Mix</span>
+					<span>Activity</span>
+					<span class="tfc-lh-num">IOCs</span>
+					<span class="tfc-lh-conf" title="AI confidence that these IOCs are one campaign - not a maliciousness score">Cohesion</span>
+				</div>
+
+				<div class="tfc-list" id="campaignsList" hidden></div>
+				<p class="tfc-listhead-note" id="campaignsListNote" hidden>Cohesion is how sure the AI is that these IOCs are ONE campaign. It is not a maliciousness score.</p>
 
 				<div class="empty-state" id="campaignsFilterEmpty" style="display:none;">
 					<div class="empty-icon"><i class="fas fa-filter"></i></div>
-					<div class="empty-message">No campaigns match this filter</div>
-					<div class="empty-hint">Try loosening a filter above, or hit Clear to reset search/type/sector.</div>
+					<div class="empty-message" id="campaignsFilterEmptyMsg">No campaigns match this filter</div>
+					<div class="tfc-empty-actions">
+						<button type="button" id="campaignsEmptyClearSearch">Clear search</button>
+						<button type="button" id="campaignsEmptyShowAllConf">Show all cohesion levels</button>
+					</div>
 				</div>
 
 				<section class="faq-section">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an AI campaign on TweetFeed?</summary>
-						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the confidence score and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed.</p>
+						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the cohesion rating and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed.</p>
 					</details>
 					<details>
-						<summary>How is campaign confidence calculated?</summary>
-						<p>Confidence (high, medium, low) is the AI's assessment of how cohesive the cluster is - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low confidence as a lead to verify, not a verdict.</p>
+						<summary>How is campaign cohesion calculated?</summary>
+						<p>Cohesion (high, medium, low) is the AI's assessment of how tightly the cluster holds together - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low cohesion as a lead to verify, not a verdict. The API field is still named confidence.</p>
 					</details>
 					<details>
 						<summary>How often is the campaign data refreshed?</summary>
-						<p>Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows campaigns still active this week by default - switch to 'All (30 days)' to see the full window. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
+						<p>Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows every campaign in the 30-day window by default - use the More control to narrow to campaigns still active this week. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
 					</details>
 					<details>
 						<summary>Where does the underlying IOC data come from?</summary>
 						<p>The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed.</p>
+					</details>
+					<details>
+						<summary>Why does a campaign show only 25 of 412 IOCs?</summary>
+						<p>Each campaign publishes a sample of up to 25 IOCs to keep the response small; ioc_count is the real total. When a campaign has more IOCs than the sample, the Indicators panel says so honestly, offers a 'Load all' button where available, and the Reach the rest panel links out to the campaign's own domains and tags via Search so you can find the remaining IOCs today.</p>
 					</details>
 				</section>
 
@@ -1195,1079 +1375,1443 @@
 	     repo CSVs - this endpoint is a separate, already-live prod service). -->
 	<script>
 	(function() {
-		'use strict';
+	'use strict';
 
-		var CAMPAIGNS_URL = 'https://api.tweetfeed.live/v1/campaigns';
-		// The raw campaign array from the last successful render, indexed the
-		// same way as each card/row's data-idx attribute. applyFilters() reads
-		// back through this to recompute the headline stats over only the
-		// currently-visible campaigns, without re-parsing the DOM it just
-		// filtered.
-		var allCampaigns = [];
-		// B3: lowercase search haystacks, one per campaign, indexed the same
-		// way as allCampaigns/data-idx. Built once per render in
-		// buildHaystacks() below rather than re-derived from the DOM on every
-		// keystroke - 60 campaigns' worth of joined text is cheap to build
-		// once and cheap to indexOf() against, so no debounce is needed either.
-		var haystacks = [];
-		// B2: the entries currently backing #campaignsList, in their
-		// DELIVERED (unsorted) order, tagged with which size group each one
-		// belongs to. Set once per render in renderCampaigns() and never
-		// mutated afterwards - the sort <select> always re-sorts a COPY of
-		// this pristine list, so switching sort modes is never cumulative and
-		// "Total IOCs" can always restore the original order exactly.
-		var originalEntries = [];
-		var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
-		var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
-		// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars,
-		// see tweetfeed-campaigns/campaigns/ids.py). Any id used as a DOM id
-		// or in a selector/hash comparison MUST pass this check first - it's
-		// the sanitizer, not TweetFeed.escapeHtml (which only protects HTML
-		// text/attribute context, not id/selector context).
-		var CAMPAIGN_ID_RE = /^tfc-[0-9a-f]{12}$/;
+	var CAMPAIGNS_URL = 'https://api.tweetfeed.live/v1/campaigns';
+	// Override 1: sidecar route that (once it ships - it may 404 for a while,
+	// since it ships before the generator does) serves the COMPLETE IOC set
+	// per campaign. Fetched at most once per page load, on the first "Load
+	// all" click, cached in the module-level vars below. It must never be
+	// load-bearing: generated_at is compared against the main document's own
+	// timestamp, and on any mismatch/404/error the page silently keeps the
+	// inline sample with its honest wording.
+	var SIDECAR_URL = 'https://api.tweetfeed.live/v1/campaigns/iocs';
+	var sidecarState = 'idle'; // idle | loading | ready | mismatch | failed
+	var sidecarCampaigns = null; // { "tfc-...": [ {date,user,type,value,tags,tweet}, ... ] }
+	var sidecarCallbacks = [];
+	var docGeneratedAt = null;
 
-		function renderIocRow(ioc) {
-			var esc = TweetFeed.escapeHtml;
-			var type = ioc.type || '';
-			var bg = IOC_TYPE_COLORS[type] || '#737373';
-			var color = IOC_TYPE_DARK_TEXT[type] ? '#1c1c1c' : '#fff';
-			var value = ioc.value || '';
-			// Scheme guard: tweet URLs come from feed data; only http(s) may
-			// land in an href (escapeHtml alone would still let javascript:
-			// URLs through as valid link targets).
-			var tweetUrl = (typeof ioc.tweet === 'string' && /^https?:\/\//i.test(ioc.tweet)) ? ioc.tweet : '';
-			var tweetLink = tweetUrl
-				? '<a class="tfc-ioc-link" href="' + esc(tweetUrl) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
-				: '';
-			// VirusTotal pivot: encodeURIComponent on every type (not just
-			// "url"), matching the safer of index.html's/search's two existing
-			// patterns (see search/index.html vtCell()).
-			var vtLink = '<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>';
-			// B4: first 10 chars of "YYYY-MM-DD HH:MM:SS" is the date alone.
-			var dateStr = (typeof ioc.date === 'string') ? ioc.date.slice(0, 10) : '';
-			var dateSpan = dateStr ? '<span class="tfc-ioc-date">' + esc(dateStr) + '</span>' : '';
-			// Same ../search/?user= idiom as renderReporters() below: strip a
-			// leading @ before encoding, since the API can ship either form.
-			var userRaw = (typeof ioc.user === 'string') ? ioc.user.replace(/^@/, '') : '';
-			var userLink = userRaw
-				? '<a class="tfc-ioc-user" href="../search/?user=' + esc(encodeURIComponent(userRaw)) + '">@' + esc(userRaw) + '</a>'
-				: '';
-			return (
-				'<div class="tfc-ioc-row">' +
-					'<span class="tfc-ioc-type" style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
-					dateSpan +
-					'<a class="tfc-ioc-value" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="Search this value on TweetFeed">' + esc(value) + '</a>' +
-					userLink +
-					'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
-					tweetLink +
-					vtLink +
-				'</div>'
-			);
-		}
+	// The raw campaign array from the last successful render, indexed the
+	// same way as each row's data-idx attribute. applyFilters() reads back
+	// through this to recompute the headline stats over only the currently
+	// visible campaigns, and buildBody()/renderIndicators() use it to look
+	// up the full campaign object for a row on first expand.
+	var allCampaigns = [];
+	// Two-haystack search index (see buildHaystacks below), one entry per
+	// campaign, indexed the same way as allCampaigns/data-idx: { facts,
+	// prose, scoped }. Built once per render, not re-derived per keystroke.
+	var haystacks = [];
+	// The entries currently backing #campaignsList, in DELIVERED (unsorted)
+	// order - the sort <select> always re-sorts a COPY of this, so switching
+	// sort modes is never cumulative and "Total IOCs" always restores the
+	// original order exactly.
+	var originalEntries = [];
 
-		// Size threshold that decides card vs compact row. A threshold on SIZE,
-		// not on rank: a 200-IOC campaign should not be demoted just because
-		// eight others happen to be bigger this week. FULL_CARD_FLOOR keeps the
-		// page from degenerating into nothing but rows on a quiet week.
-		//
-		// 50 sits in the natural gap in the size distribution (2026-08-19:
-		// ...89, 60, 53 | 38, 37, 31...) and gives 7 cards carrying 81% of all
-		// IOCs, with the 15-campaign tail as rows.
-		var FULL_CARD_MIN_IOCS = 50;
-		var FULL_CARD_FLOOR = 3;
+	var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
+	var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
+	var IOC_TYPE_ABBR = { url: 'url', domain: 'dom', ip: 'ip', md5: 'md5', sha256: 'sha256' };
+	// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars, see
+	// tweetfeed-campaigns/campaigns/ids.py). Any id used as a DOM id, in a
+	// selector, in a hash comparison or in a data-copy-raw URL MUST pass this
+	// check first - it is the sanitizer, not TweetFeed.escapeHtml (which only
+	// protects HTML text/attribute context, not id/selector context).
+	var CAMPAIGN_ID_RE = /^tfc-[0-9a-f]{12}$/;
 
-		// Bounds for the two size-encoded bars below (type bar on full cards,
-		// mini-bar on compact rows). A floor keeps the smallest campaign in
-		// each group visible as a bar rather than a sliver; the ceiling is
-		// the width the bar always used to render at before this change.
-		var TYPEBAR_MIN_PCT = 8;
-		var MINIBAR_MAX_PX = 60;
-		var MINIBAR_MIN_PX = 10;
+	var MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	function shortDate(s) {
+		if (typeof s !== 'string') return '?';
+		var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+		if (!m) return s;
+		var mon = MONTH_ABBR[(+m[2]) - 1] || m[2];
+		return mon + ' ' + (+m[3]);
+	}
+	function parseDateOnly(s) {
+		var m = typeof s === 'string' && /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+		if (!m) return null;
+		return new Date(Date.UTC(+m[1], (+m[2]) - 1, +m[3]));
+	}
+	function nf(n) { return TweetFeed.numberFormat(typeof n === 'number' ? n : 0); }
 
-		// Fixed label vocabulary for the evidence block. The VALUES in
-		// c.anchors are attacker-authored strings, so they are escaped and
-		// rendered as plain text, never as links or labels. Only these keys are
-		// surfaced; an unknown key from a future API version is ignored rather
-		// than printed raw.
-		var ANCHOR_LABELS = {
-			registered_domains: ['shared domain', 'shared domains'],
-			url_path_patterns: ['shared URL path', 'shared URL paths'],
-			tags: ['shared tag', 'shared tags']
-		};
-		var ANCHOR_ORDER = ['registered_domains', 'url_path_patterns', 'tags'];
+	// Gist date range: "Aug 14 - Aug 21", or "Aug 23 (one day)" when
+	// first_seen === last_seen (fixes the same-date-twice render on 7 of 20).
+	function dateRangeText(c) {
+		if (!c.first_seen || !c.last_seen) return '';
+		if (c.first_seen === c.last_seen) return shortDate(c.first_seen) + ' (one day)';
+		return shortDate(c.first_seen) + ' – ' + shortDate(c.last_seen);
+	}
 
-		// C3: the generator caps every published anchor list at 50
-		// (MAX_PUBLISHED_LIST in the tweetfeed-campaigns repo's
-		// assemble.py:21). An anchor array at that length is a capped
-		// list, not necessarily the true membership count, so it renders
-		// as "50+" rather than a false-precision "50".
-		var MAX_PUBLISHED_LIST = 50;
-
-		// B1: apparent target. targeted_sector arrives as a STIX vocabulary
-		// slug ("financial-services", "government-national") - readable to a
-		// machine, not to a reader. The awkward ones get a hand-written label;
-		// anything else falls back to a generic slug->Title Case so a future
-		// STIX value never renders unmapped or raw.
-		var SECTOR_LABELS = {
-			'government-national': 'Government (national)',
-			'financial-services': 'Financial services'
-		};
-		function prettySector(slug) {
-			if (!slug || typeof slug !== 'string') return '';
-			if (SECTOR_LABELS[slug]) return SECTOR_LABELS[slug];
-			var words = slug.split('-').filter(Boolean);
-			if (!words.length) return '';
-			words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-			return words.join(' ');
-		}
-		// Returns the RAW (unescaped) parts of "who this campaign appears to
-		// target" - brand, prettified sector, country - so every caller
-		// (chip, row label, meta line, haystack) escapes/joins them the same
-		// way instead of three slightly different implementations.
-		function targetLabel(c) {
-			var parts = [];
-			if (c && c.targeted_brand) parts.push(String(c.targeted_brand));
-			var sector = c && prettySector(c.targeted_sector);
-			if (sector) parts.push(sector);
-			if (c && c.targeted_country) parts.push(String(c.targeted_country));
-			return parts;
-		}
-
-		// ttps: MITRE ATT&CK Enterprise technique ids the campaign's
-		// infrastructure appears to exercise, AI-inferred, 0-4 per campaign.
-		// This map is COMPLETE (the vocabulary is closed - verified against
-		// the official STIX bundle 2026-08-28, ATT&CK Enterprise v19.2), but
-		// an id that isn't in it still has to render gracefully - as escaped
-		// text, never a link - in case a future id ships before this map is
-		// updated.
-		var TTP_LABELS = {
-			'T1036.005': { name: 'Match Legitimate Resource Name or Location', tactic: 'Stealth' },
-			'T1071.001': { name: 'Web Protocols', tactic: 'Command and Control' },
-			'T1102': { name: 'Web Service', tactic: 'Command and Control' },
-			'T1195.001': { name: 'Compromise Software Dependencies and Development Tools', tactic: 'Initial Access' },
-			'T1204.004': { name: 'Malicious Copy and Paste', tactic: 'Execution' },
-			'T1557': { name: 'Adversary-in-the-Middle', tactic: 'Credential Access' },
-			'T1566.002': { name: 'Spearphishing Link', tactic: 'Initial Access' },
-			'T1567.004': { name: 'Exfiltration Over Webhook', tactic: 'Exfiltration' },
-			'T1568': { name: 'Dynamic Resolution', tactic: 'Command and Control' },
-			'T1583.001': { name: 'Acquire Infrastructure: Domains', tactic: 'Resource Development' },
-			'T1583.006': { name: 'Acquire Infrastructure: Web Services', tactic: 'Resource Development' },
-			'T1583.008': { name: 'Acquire Infrastructure: Malvertising', tactic: 'Resource Development' },
-			'T1585.001': { name: 'Establish Accounts: Social Media Accounts', tactic: 'Resource Development' },
-			'T1588.001': { name: 'Obtain Capabilities: Malware', tactic: 'Resource Development' },
-			'T1588.002': { name: 'Obtain Capabilities: Tool', tactic: 'Resource Development' },
-			'T1608.001': { name: 'Stage Capabilities: Upload Malware', tactic: 'Resource Development' },
-			'T1657': { name: 'Financial Theft', tactic: 'Impact' },
-			'T1684.001': { name: 'Social Engineering: Impersonation', tactic: 'Stealth' }
-		};
-		// Builds the ATT&CK technique page URL by string manipulation:
-		// "T1566.002" -> ".../techniques/T1566/002/", "T1102" -> ".../techniques/T1102/".
-		// Returns '' if the id doesn't even match the T<digits>[.<digits>] shape.
-		function ttpUrl(id) {
-			var m = /^T(\d+)(?:\.(\d+))?$/.exec(id);
-			if (!m) return '';
-			return 'https://attack.mitre.org/techniques/T' + m[1] + '/' + (m[2] ? m[2] + '/' : '');
-		}
-		// Human-readable names for the search haystack (buildHaystacks below) -
-		// unknown ids fall back to the bare id so they're still findable.
-		function ttpNames(c) {
-			var ttps = (c && Array.isArray(c.ttps)) ? c.ttps : [];
-			return ttps.map(function(id) {
-				var meta = TTP_LABELS[String(id || '')];
-				return meta ? meta.name : String(id || '');
-			});
-		}
-		// Renders the technique chips for the meta line. Ids are validated
-		// against TTP_LABELS before a URL is ever built - an id not in the
-		// closed vocabulary renders as escaped text in a plain span, never
-		// as a link.
-		function renderTtpChips(ttps) {
-			var esc = TweetFeed.escapeHtml;
-			return (ttps || []).map(function(id) {
-				var safeId = String(id || '');
-				var meta = TTP_LABELS[safeId];
-				if (!meta) {
-					return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
-				}
-				var url = ttpUrl(safeId);
-				if (!url) {
-					return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
-				}
-				return '<a class="tfc-ttp-chip" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" title="' + esc(safeId + ' - ' + meta.tactic) + '">' + esc(meta.name) + '</a>';
-			}).join('');
-		}
-
-		// Stacked proportion bar for c.types. Replaces the comma list
-		// ("domain 35, ip 14, md5 5, sha256 12, url 70"), which was data
-		// pretending to be prose. Reuses IOC_TYPE_COLORS so a segment is the
-		// same colour as the type badge on the IOC rows below it.
-		// widthPct (0-100) is only ever passed by renderFullCard(): it scales
-		// the whole bar against the largest full card, so a 50-IOC card draws
-		// a ~12% bar next to a 405-IOC card at 100% (measured 2026-08-19).
-		// Segment widths inside stay percentages of the bar's OWN width, so
-		// the type composition still reads correctly at any scale. Omitted
-		// (compact-row bodies) the bar keeps its original 100%.
-		function renderTypeBar(types, widthPct) {
-			var esc = TweetFeed.escapeHtml;
-			var keys = Object.keys(types || {}).filter(function(t) { return types[t] > 0; });
-			if (!keys.length) return '';
-			var total = keys.reduce(function(a, t) { return a + types[t]; }, 0);
-			if (!total) return '';
-			keys.sort(function(a, b) { return types[b] - types[a]; });
-			var segs = keys.map(function(t) {
-				var pct = (types[t] / total) * 100;
-				var bg = IOC_TYPE_COLORS[t] || '#737373';
-				return '<span class="tfc-typebar-seg" style="width:' + pct.toFixed(2) + '%;background:' + bg + ';"></span>';
-			}).join('');
-			var legend = keys.map(function(t) {
-				var bg = IOC_TYPE_COLORS[t] || '#737373';
-				return '<span class="tfc-typebar-key"><span class="tfc-typebar-dot" style="background:' + bg + ';"></span>' +
-					esc(t) + ' ' + esc(TweetFeed.numberFormat(types[t])) + '</span>';
-			}).join('');
-			var barStyle = (typeof widthPct === 'number') ? ' style="width:' + widthPct.toFixed(1) + '%;"' : '';
-			return (
-				'<div class="tfc-typebar"' + barStyle + ' role="img" aria-label="IOC types: ' + esc(keys.map(function(t) { return t + ' ' + types[t]; }).join(', ')) + '">' + segs + '</div>' +
-				'<div class="tfc-typebar-legend">' + legend + '</div>'
-			);
-		}
-
-		// The evidence block: what actually made these IOCs one campaign.
-		// c.anchors is the clustering key set (shared registered domains,
-		// shared URL path patterns, shared tags) and was previously not
-		// rendered anywhere, even though it is the one thing that separates
-		// this page from a plain IOC list.
-		function renderEvidence(c) {
-			var esc = TweetFeed.escapeHtml;
-			var anchors = c.anchors || {};
-			var rows = ANCHOR_ORDER.map(function(key) {
-				var vals = anchors[key];
-				if (!Array.isArray(vals) || !vals.length) return '';
-				var labels = ANCHOR_LABELS[key];
-				var label = vals.length === 1 ? labels[0] : labels[1];
-				var sample = vals.slice(0, 3).map(function(v) { return esc(String(v)); }).join(' &middot; ');
-				var restCount = vals.length - Math.min(3, vals.length);
-				// C3: a capped list (>= MAX_PUBLISHED_LIST) gets "50+" instead
-				// of an exact count, and its tail states the cap explicitly
-				// instead of "+47" (which reads as "47 more exist", when the
-				// truth is only 50 were ever published to begin with).
-				var capped = vals.length >= MAX_PUBLISHED_LIST;
-				var countText = capped ? (MAX_PUBLISHED_LIST + '+') : esc(TweetFeed.numberFormat(vals.length));
-				var restHtml = capped
-					? ' <span class="tfc-ev-rest">showing ' + MAX_PUBLISHED_LIST + ' published (list capped)</span>'
-					: (restCount ? ' <span class="tfc-ev-rest">+' + restCount + '</span>' : '');
-				return (
-					'<div class="tfc-ev-row">' +
-						'<span class="tfc-ev-count">' + countText + '</span>' +
-						'<span class="tfc-ev-label">' + esc(label) + '</span>' +
-						'<span class="tfc-ev-value">' + sample + restHtml + '</span>' +
-					'</div>'
-				);
-			}).filter(Boolean).join('');
-			if (!rows) return '';
-			// C2: when the AI layer merged more than one deterministic
-			// pre-cluster into this campaign, say so on the evidence head
-			// line - the anchor rows below already show WHAT ties the IOCs
-			// together, this states that the AI did some of the grouping
-			// work itself, on top of the deterministic anchors.
-			var mergedHtml = '';
-			if (Array.isArray(c.member_cluster_ids) && c.member_cluster_ids.length > 1) {
-				mergedHtml = ' <span class="tfc-ev-merged" title="deterministic pre-grouping clusters merged into this campaign by the AI layer">&middot; merged from ' +
-					esc(TweetFeed.numberFormat(c.member_cluster_ids.length)) + ' pre-clusters</span>';
+	// B1: apparent target. targeted_sector arrives as a STIX vocabulary slug
+	// ("financial-services") - readable to a machine, not to a reader. The
+	// awkward ones get a hand-written label; anything else falls back to a
+	// generic slug->Title Case so a future STIX value never renders unmapped
+	// or raw.
+	var SECTOR_LABELS = {
+		'government-national': 'Government (national)',
+		'financial-services': 'Financial services'
+	};
+	function prettySector(slug) {
+		if (!slug || typeof slug !== 'string') return '';
+		if (SECTOR_LABELS[slug]) return SECTOR_LABELS[slug];
+		var words = slug.split('-').filter(Boolean);
+		if (!words.length) return '';
+		words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+		return words.join(' ');
+	}
+	// Returns the RAW (unescaped) parts of "who this campaign appears to
+	// target" - brand, prettified sector, country, and (override 2) the top
+	// enrichment family when present - so every caller escapes/joins them
+	// the same way instead of several slightly different implementations.
+	function targetLabel(c) {
+		var parts = [];
+		if (c && c.targeted_brand) parts.push(String(c.targeted_brand));
+		var sector = c && prettySector(c.targeted_sector);
+		if (sector) parts.push(sector);
+		if (c && c.targeted_country) parts.push(String(c.targeted_country));
+		return parts;
+	}
+	// Override 2: enrichment families/threat_types are OPTIONAL and absent
+	// from every campaign in the live payload today - every read here is
+	// behind a presence check, and the page renders identically to before
+	// when they're missing.
+	function topFamilyName(c) {
+		if (c && c.families && typeof c.families === 'object' && !Array.isArray(c.families)) {
+			var fk = Object.keys(c.families);
+			if (fk.length) {
+				fk.sort(function(a, b) { return (c.families[b] || 0) - (c.families[a] || 0); });
+				return fk[0];
 			}
+		}
+		return '';
+	}
+
+	// ttps: MITRE ATT&CK Enterprise technique ids the campaign's
+	// infrastructure appears to exercise, AI-inferred, 0-4 per campaign. May
+	// be absent entirely on an older cached document - every reader here
+	// tolerates that.
+	var TTP_LABELS = {
+		'T1036.005': { name: 'Match Legitimate Resource Name or Location', tactic: 'Stealth' },
+		'T1071.001': { name: 'Web Protocols', tactic: 'Command and Control' },
+		'T1102': { name: 'Web Service', tactic: 'Command and Control' },
+		'T1195.001': { name: 'Compromise Software Dependencies and Development Tools', tactic: 'Initial Access' },
+		'T1204.004': { name: 'Malicious Copy and Paste', tactic: 'Execution' },
+		'T1557': { name: 'Adversary-in-the-Middle', tactic: 'Credential Access' },
+		'T1566.002': { name: 'Spearphishing Link', tactic: 'Initial Access' },
+		'T1567.004': { name: 'Exfiltration Over Webhook', tactic: 'Exfiltration' },
+		'T1568': { name: 'Dynamic Resolution', tactic: 'Command and Control' },
+		'T1583.001': { name: 'Acquire Infrastructure: Domains', tactic: 'Resource Development' },
+		'T1583.006': { name: 'Acquire Infrastructure: Web Services', tactic: 'Resource Development' },
+		'T1583.008': { name: 'Acquire Infrastructure: Malvertising', tactic: 'Resource Development' },
+		'T1585.001': { name: 'Establish Accounts: Social Media Accounts', tactic: 'Resource Development' },
+		'T1588.001': { name: 'Obtain Capabilities: Malware', tactic: 'Resource Development' },
+		'T1588.002': { name: 'Obtain Capabilities: Tool', tactic: 'Resource Development' },
+		'T1608.001': { name: 'Stage Capabilities: Upload Malware', tactic: 'Resource Development' },
+		'T1657': { name: 'Financial Theft', tactic: 'Impact' },
+		'T1684.001': { name: 'Social Engineering: Impersonation', tactic: 'Stealth' }
+	};
+	function ttpUrl(id) {
+		var m = /^T(\d+)(?:\.(\d+))?$/.exec(id);
+		if (!m) return '';
+		return 'https://attack.mitre.org/techniques/T' + m[1] + '/' + (m[2] ? m[2] + '/' : '');
+	}
+	function ttpNames(c) {
+		var ttps = (c && Array.isArray(c.ttps)) ? c.ttps : [];
+		return ttps.map(function(id) {
+			var meta = TTP_LABELS[String(id || '')];
+			return meta ? meta.name : String(id || '');
+		});
+	}
+	function renderTtpChips(ttps) {
+		var esc = TweetFeed.escapeHtml;
+		return (ttps || []).map(function(id) {
+			var safeId = String(id || '');
+			var meta = TTP_LABELS[safeId];
+			if (!meta) return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
+			var url = ttpUrl(safeId);
+			if (!url) return '<span class="tfc-ttp-chip tfc-ttp-chip-unknown">' + esc(safeId) + '</span>';
+			return '<a class="tfc-ttp-chip" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" title="' + esc(safeId + ' - ' + meta.tactic) + '">' + esc(meta.name) + '</a>';
+		}).join('');
+	}
+
+	// Fixed label vocabulary for the evidence block. Values in c.anchors are
+	// attacker-authored strings, so they are escaped and rendered as plain
+	// text, never as links.
+	var ANCHOR_LABELS = {
+		registered_domains: ['shared domain', 'shared domains'],
+		url_path_patterns: ['shared URL path', 'shared URL paths'],
+		tags: ['shared tag', 'shared tags']
+	};
+	// Priority order for the gist's anchor pick (tags -> paths -> domains):
+	// the rare categories discriminate; "N shared domains" reads the same on
+	// every row, so it's the fallback, not the first choice.
+	var ANCHOR_GIST_ORDER = ['tags', 'url_path_patterns', 'registered_domains'];
+	var ANCHOR_ORDER = ['registered_domains', 'url_path_patterns', 'tags'];
+	// The generator caps every published anchor list at 50 - an anchor array
+	// at that length is a capped list, not necessarily the true membership
+	// count, so it renders as "50+" rather than a false-precision "50".
+	var MAX_PUBLISHED_LIST = 50;
+
+	// Gist composition: target (+ top family) . up to 2 anchor picks .
+	// (tier C/D only) activity phrase . date range. gistPieces() returns
+	// RAW (unescaped) text, split into pieces rather than one pre-joined
+	// string, for two reasons: (1) the activity phrase is CSS-hidden at
+	// tier A/B (see .tfc-gist-activity) - joining it into the same " · "
+	// -delimited array as the always-visible pieces would leave a stray
+	// double middle-dot where its own separator surrounds an invisible
+	// span; (2) keeping the text raw here and escaping exactly once in
+	// each of gistHtml()/gistTitle() below avoids double-escaping entities
+	// (escaping twice turns "&" into "&amp;amp;").
+	function gistPieces(c) {
+		var lead = [];
+		var targetParts = targetLabel(c);
+		var fam = topFamilyName(c);
+		if (fam && targetParts.indexOf(fam) === -1) targetParts = targetParts.concat([fam]);
+		lead.push(targetParts.length ? targetParts.join(' · ') : '');
+
+		var anchors = c.anchors || {};
+		ANCHOR_GIST_ORDER.forEach(function(key) {
+			if (lead.length >= 3) return; // target + up to 2 anchor picks
+			var vals = anchors[key];
+			if (!Array.isArray(vals) || !vals.length) return;
+			if (key === 'tags' || key === 'url_path_patterns') {
+				lead.push(String(vals[0]));
+			} else {
+				var capped = vals.length >= MAX_PUBLISHED_LIST;
+				lead.push((capped ? (MAX_PUBLISHED_LIST + '+') : nf(vals.length)) + ' shared domain' + (vals.length === 1 ? '' : 's'));
+			}
+		});
+
+		return { lead: lead, activity: activityPhrase(c), date: dateRangeText(c) };
+	}
+	function activityPhrase(c) {
+		var w = (typeof c.ioc_count_7d === 'number') ? c.ioc_count_7d : null;
+		if (w === null) return '';
+		if (w === 0) return 'last ' + shortDate(c.last_seen);
+		return nf(w) + ' this wk';
+	}
+	// Plain-text version for the title tooltip - always includes the
+	// activity phrase regardless of viewport, since a title attribute has
+	// no responsive tiers of its own.
+	function gistTitle(c) {
+		var esc = TweetFeed.escapeHtml;
+		var p = gistPieces(c);
+		var plain = p.lead.slice();
+		if (!plain[0]) plain[0] = 'no target inferred';
+		if (p.activity) plain.push(p.activity);
+		if (p.date) plain.push(p.date);
+		return esc(plain.join(' · '));
+	}
+	function gistHtml(c) {
+		var esc = TweetFeed.escapeHtml;
+		var p = gistPieces(c);
+		var confText = (c.confidence || 'low').toUpperCase() + ' cohesion · ';
+		var leadHtml = p.lead.map(function(v, i) {
+			if (i === 0 && !v) return '<span style="color:#9aa0a6">no target inferred</span>';
+			return esc(v);
+		}).join(' · ');
+		var html = '<span class="tfc-gist-conf">' + esc(confText) + '</span>' + leadHtml;
+		if (p.activity) html += '<span class="tfc-gist-activity"> · ' + esc(p.activity) + '</span>';
+		if (p.date) html += ' · ' + esc(p.date);
+		return html;
+	}
+
+	// Evidence block: what actually made these IOCs one campaign. Values are
+	// attacker-authored, escaped, never links. Each row also carries a
+	// page-local .tfc-copy button (data-copy-raw, newline-joined FULL list -
+	// not just the published sample) - see the utils.js:304 note on .tf-copy.
+	function renderEvidence(c) {
+		var esc = TweetFeed.escapeHtml;
+		var anchors = c.anchors || {};
+		var rows = ANCHOR_ORDER.map(function(key) {
+			var vals = anchors[key];
+			if (!Array.isArray(vals) || !vals.length) return '';
+			var labels = ANCHOR_LABELS[key];
+			var label = vals.length === 1 ? labels[0] : labels[1];
+			var sample = vals.slice(0, 3).map(function(v) { return esc(String(v)); }).join(' · ');
+			var restCount = vals.length - Math.min(3, vals.length);
+			var capped = vals.length >= MAX_PUBLISHED_LIST;
+			var countText = capped ? (MAX_PUBLISHED_LIST + '+') : esc(nf(vals.length));
+			var restHtml = capped
+				? ' <span class="tfc-ev-rest">showing ' + MAX_PUBLISHED_LIST + ' published (list capped)</span>'
+				: (restCount ? ' <span class="tfc-ev-rest">+' + restCount + '</span>' : '');
+			var copyRaw = esc(vals.map(function(v) { return String(v); }).join('\n'));
 			return (
-				'<div class="tfc-evidence">' +
-					'<p class="tfc-ev-head">Why these are one campaign' + mergedHtml + '</p>' +
-					rows +
+				'<div class="tfc-ev-row">' +
+					'<span class="tfc-ev-count">' + countText + '</span>' +
+					'<span class="tfc-ev-label">' + esc(label) + '</span>' +
+					'<span class="tfc-ev-value">' + sample + restHtml + '</span>' +
+					'<button type="button" class="tfc-copy" data-copy-raw="' + copyRaw + '" aria-label="Copy ' + esc(label) + '"><i class="far fa-copy"></i></button>' +
 				'</div>'
 			);
+		}).filter(Boolean).join('');
+		if (!rows) return '';
+		// The enclosing pane already carries the "Why these are one campaign"
+		// heading, so this box must NOT repeat it - it did, and the label
+		// rendered twice, once as the pane head and once inside the box.
+		// All that is left worth saying here is the merge provenance, and
+		// only the ~1-in-20 campaigns that are actually a merge have any.
+		var mergedHtml = '';
+		if (Array.isArray(c.member_cluster_ids) && c.member_cluster_ids.length > 1) {
+			mergedHtml = '<p class="tfc-ev-head"><span class="tfc-ev-merged" title="deterministic pre-grouping clusters merged into this campaign by the AI layer">merged from ' +
+				esc(nf(c.member_cluster_ids.length)) + ' pre-clusters</span></p>';
 		}
+		return (
+			'<div class="tfc-evidence">' +
+				mergedHtml +
+				rows +
+			'</div>'
+		);
+	}
 
-		// Reporters collapse to a count. Campaigns with 13 reporters spent two
-		// full lines on @handles and drowned the numbers next to them.
-		function renderReporters(c) {
-			var esc = TweetFeed.escapeHtml;
-			var reps = c.reporters || [];
-			if (!reps.length) return '';
-			var list = reps.map(function(r) {
-				var clean = String(r).replace(/^@/, '');
-				return '<a class="tfc-reporter" href="../search/?user=' + esc(encodeURIComponent(clean)) + '">@' + esc(clean) + '</a>';
-			}).join(' ');
-			if (reps.length <= 2) return '<span class="tfc-reporters-inline">' + list + '</span>';
+	// Override 2: infra is OPTIONAL (build-time ASN join) - an array of
+	// {org, ip_count, country}, absent from every campaign today. Renders
+	// nothing when absent.
+	function renderInfra(c) {
+		var esc = TweetFeed.escapeHtml;
+		if (!Array.isArray(c.infra) || !c.infra.length) return '';
+		var rows = c.infra.slice(0, 8).map(function(row) {
+			if (!row || typeof row !== 'object') return '';
+			var org = row.org ? String(row.org) : 'Unknown org';
+			var ips = (typeof row.ip_count === 'number') ? row.ip_count : null;
+			var country = row.country ? String(row.country) : '';
 			return (
-				'<span class="tfc-reporters">' +
-					'<button type="button" class="tfc-reporters-toggle" aria-expanded="false">' +
-						esc(TweetFeed.numberFormat(reps.length)) + ' researchers' +
-					'</button>' +
-					'<span class="tfc-reporters-list" hidden>' + list + '</span>' +
+				'<div class="tfc-infra-row">' +
+					'<span class="tfc-infra-count">' + (ips !== null ? esc(nf(ips)) : '') + '</span>' +
+					'<span class="tfc-infra-org">' + esc(org) + '</span>' +
+					(country ? '<span class="tfc-infra-country">' + esc(country) + '</span>' : '') +
+				'</div>'
+			);
+		}).join('');
+		if (!rows) return '';
+		return '<div class="tfc-infra"><p class="tfc-infra-head">Infrastructure</p>' + rows + '</div>';
+	}
+
+	// Override 2: enrichment Families row - enriched_count/threat_types/
+	// families are all OPTIONAL and absent today. Falls back to threat_types
+	// when a campaign has no named family (e.g. pure phishing, no malware).
+	function renderFamiliesRow(c) {
+		var esc = TweetFeed.escapeHtml;
+		var names = [];
+		if (c.families && typeof c.families === 'object' && !Array.isArray(c.families)) {
+			names = Object.keys(c.families).filter(function(k) { return c.families[k] > 0; })
+				.sort(function(a, b) { return c.families[b] - c.families[a]; });
+		}
+		if (!names.length && c.threat_types && typeof c.threat_types === 'object' && !Array.isArray(c.threat_types)) {
+			names = Object.keys(c.threat_types).filter(function(k) { return c.threat_types[k] > 0; })
+				.sort(function(a, b) { return c.threat_types[b] - c.threat_types[a]; });
+		}
+		if (!names.length) return '';
+		var denom = '';
+		if (typeof c.enriched_count === 'number' && typeof c.ioc_count === 'number' && c.ioc_count > 0) {
+			denom = ' <span class="tfc-attr-denom">(' + esc(nf(c.enriched_count)) + ' of ' + esc(nf(c.ioc_count)) + ' IOCs enriched)</span>';
+		}
+		return attrRow('Families', names.map(esc).join(', ') + denom);
+	}
+	function attrRow(label, valueHtml) {
+		return '<span class="tfc-attr-k">' + TweetFeed.escapeHtml(label) + '</span><span class="tfc-attr-v">' + valueHtml + '</span>';
+	}
+
+	// Reporters collapse to a count once there are more than 2.
+	function renderReporters(c) {
+		var esc = TweetFeed.escapeHtml;
+		var reps = c.reporters || [];
+		if (!reps.length) return '';
+		var list = reps.map(function(r) {
+			var clean = String(r).replace(/^@/, '');
+			return '<a class="tfc-reporter" href="../search/?user=' + esc(encodeURIComponent(clean)) + '">@' + esc(clean) + '</a>';
+		}).join(' ');
+		if (reps.length <= 2) return '<span class="tfc-reporters-inline">' + list + '</span>';
+		return (
+			'<span class="tfc-reporters">' +
+				'<button type="button" class="tfc-reporters-toggle" aria-expanded="false">' + esc(nf(reps.length)) + ' researchers</button>' +
+				'<span class="tfc-reporters-list" hidden>' + list + '</span>' +
+			'</span>'
+		);
+	}
+
+	// Row-level fixed 104x8 mix track + 11px caption (first 3 type keys,
+	// abbreviated). Always 100% of its own fixed-size box - no more
+	// width-encodes-campaign-size scaling.
+	function renderMix(c) {
+		var esc = TweetFeed.escapeHtml;
+		var types = c.types || {};
+		var keys = Object.keys(types).filter(function(t) { return types[t] > 0; });
+		if (!keys.length) return '<span class="tfc-h-mix"></span>';
+		var total = keys.reduce(function(a, t) { return a + types[t]; }, 0);
+		keys.sort(function(a, b) { return types[b] - types[a]; });
+		var segs = keys.map(function(t) {
+			var pct = total > 0 ? (types[t] / total) * 100 : 0;
+			return '<span class="tfc-mix-seg" style="width:' + pct.toFixed(2) + '%;background:' + (IOC_TYPE_COLORS[t] || '#737373') + ';"></span>';
+		}).join('');
+		var cap = keys.slice(0, 3).map(function(t) { return IOC_TYPE_ABBR[t] || t; }).join(' ');
+		var label = keys.map(function(t) { return t + ' ' + types[t]; }).join(', ');
+		return (
+			'<span class="tfc-h-mix">' +
+				'<span class="tfc-mix" role="img" aria-label="IOC types: ' + esc(label) + '">' + segs + '</span>' +
+				'<span class="tfc-mix-cap">' + esc(cap) + '</span>' +
+			'</span>'
+		);
+	}
+
+	// Activity cell: override 2 per-day histogram when c.activity is
+	// present (a sparse {date: count} map), else the cross-visible-row
+	// normalised fill bar (maxWeek recomputed in applyFilters()).
+	function activeDaysInfo(c, genAtDate) {
+		if (!c.activity || typeof c.activity !== 'object' || Array.isArray(c.activity)) return null;
+		var end = genAtDate || new Date();
+		var active = 0;
+		for (var i = 0; i < 30; i++) {
+			var d = new Date(end.getTime() - i * 86400000);
+			var key = d.toISOString().slice(0, 10);
+			if (c.activity[key] > 0) active++;
+		}
+		return { active: active, total: 30 };
+	}
+	function renderActHistogram(c, genAtDate) {
+		var esc = TweetFeed.escapeHtml;
+		var end = genAtDate || new Date();
+		var days = [];
+		for (var i = 29; i >= 0; i--) {
+			var d = new Date(end.getTime() - i * 86400000);
+			var key = d.toISOString().slice(0, 10);
+			days.push(c.activity[key] > 0 ? c.activity[key] : 0);
+		}
+		var max = Math.max.apply(null, days);
+		var bars = days.map(function(n) {
+			var h = max > 0 ? Math.max(n > 0 ? 10 : 0, Math.round((n / max) * 100)) : 0;
+			return '<i class="tfc-act-col" style="height:' + h + '%"></i>';
+		}).join('');
+		var w = (typeof c.ioc_count_7d === 'number') ? c.ioc_count_7d : days.slice(-7).reduce(function(a, b) { return a + b; }, 0);
+		return (
+			'<span class="tfc-h-act">' +
+				'<span class="tfc-act-hist" role="img" aria-label="' + esc(nf(w)) + ' IOCs in the last 7 days, peak day ' + esc(nf(max)) + '">' + bars + '</span>' +
+				'<span class="tfc-act-cap">' + esc(nf(w)) + ' this wk · pk ' + esc(nf(max)) + '</span>' +
+			'</span>'
+		);
+	}
+	function renderAct(c, maxWeek, genAtDate) {
+		var esc = TweetFeed.escapeHtml;
+		if (c.activity && typeof c.activity === 'object' && !Array.isArray(c.activity)) {
+			return renderActHistogram(c, genAtDate);
+		}
+		var w = (typeof c.ioc_count_7d === 'number') ? c.ioc_count_7d : null;
+		if (w === null) return '<span class="tfc-h-act"></span>';
+		if (w === 0) {
+			return (
+				'<span class="tfc-h-act">' +
+					'<span class="tfc-act-track" role="img" aria-label="0 IOCs in the last 7 days"></span>' +
+					'<span class="tfc-act-cap">last ' + esc(shortDate(c.last_seen)) + '</span>' +
 				'</span>'
 			);
 		}
+		var px = maxWeek > 0 ? Math.max(4, Math.round((w / maxWeek) * 76)) : 4;
+		return (
+			'<span class="tfc-h-act">' +
+				'<span class="tfc-act-track" role="img" aria-label="' + esc(nf(w)) + ' IOCs in the last 7 days"><i class="tfc-act-fill" style="width:' + px + 'px"></i></span>' +
+				'<span class="tfc-act-cap">' + esc(nf(w)) + ' this wk</span>' +
+			'</span>'
+		);
+	}
 
-		// IOC block. Two counts matter and they are not the same number: the
-		// API ships at most 25 IOCs per campaign, while ioc_count is the real
-		// total. The old "+N more" was computed from the 25-item slice, so
-		// every card said "+20 more" whether the campaign had 401 IOCs or 60.
-		function renderIocBlock(c) {
-			var esc = TweetFeed.escapeHtml;
-			var iocs = c.iocs || [];
-			if (!iocs.length) return '';
-			var total = (typeof c.ioc_count === 'number' && c.ioc_count > 0) ? c.ioc_count : iocs.length;
-			var sampleCount = iocs.length;
-			var head = iocs.slice(0, 5).map(renderIocRow).join('');
-			var rest = iocs.slice(5).map(renderIocRow).join('');
-			var moreAfterHead = Math.max(total - Math.min(5, sampleCount), 0);
-			var moreAfterAll = Math.max(total - sampleCount, 0);
-
-			// B4: when the API shipped every IOC the campaign has (no gap
-			// between the published sample and the real total), "S published
-			// samples of T total IOCs" would read as S of T with S === T - a
-			// distinction that doesn't exist for this campaign. Keep the
-			// original pre-B4 "+N more" wording for that case (moreAfterAll is
-			// 0 once fully expanded, so the expanded text is empty, exactly as
-			// it was before this change).
-			var sampleCapped = moreAfterAll > 0;
-			var collapsedText = sampleCapped
-				? (moreAfterHead ? '+' + esc(TweetFeed.numberFormat(moreAfterHead)) + ' more published sample' + (moreAfterHead === 1 ? '' : 's') + ' &middot; ' + esc(TweetFeed.numberFormat(total)) + ' total IOCs' : '')
-				: (moreAfterHead ? '+' + esc(TweetFeed.numberFormat(moreAfterHead)) + ' more IOC' + (moreAfterHead === 1 ? '' : 's') + ' in this campaign' : '');
-			var expandedText = sampleCapped
-				? (esc(TweetFeed.numberFormat(sampleCount)) + ' published sample' + (sampleCount === 1 ? '' : 's') + ' of ' + esc(TweetFeed.numberFormat(total)) + ' total IOCs')
-				: (moreAfterAll ? '+' + esc(TweetFeed.numberFormat(moreAfterAll)) + ' more IOC' + (moreAfterAll === 1 ? '' : 's') + ' in this campaign' : '');
-
-			// data-more-head/data-more-all are gone: the click handler now
-			// swaps between the two precomputed strings on .tfc-more-iocs
-			// itself (data-collapsed-text/data-expanded-text below) instead
-			// of recomputing wording from raw counts on every toggle.
-			var expandBtn = rest
-				? '<button type="button" class="tfc-show-all" data-total="' + iocs.length + '" aria-expanded="false">Show all ' + esc(String(iocs.length)) + '</button>'
-				: '';
-
-			// Copy-all-samples button: data-copy carries every published
-			// sample value, newline-separated - the .tf-copy delegation in
-			// utils.js handles the click/feedback, no handler added here.
-			var sampleValues = iocs.map(function(ioc) { return (ioc && ioc.value) ? String(ioc.value) : ''; }).filter(Boolean);
-			var copyBtn = sampleValues.length
-				? '<button type="button" class="tf-copy tfc-copy-sample" data-copy="' + esc(sampleValues.join('\n')) + '">Copy ' + esc(TweetFeed.numberFormat(sampleValues.length)) + ' samples</button>'
-				: '';
-
-			return (
-				'<div class="tfc-iocs">' + head +
-					(rest ? '<div class="tfc-iocs-rest" hidden>' + rest + '</div>' : '') +
-				'</div>' +
-				'<div class="tfc-iocs-foot">' +
-					'<span class="tfc-more-iocs" data-collapsed-text="' + collapsedText + '" data-expanded-text="' + expandedText + '">' + collapsedText + '</span>' +
-					'<span class="tfc-iocs-actions">' + copyBtn + expandBtn + '</span>' +
-				'</div>'
-			);
-		}
-
-		// Shared body for both wrappers: a full card and an expanded compact
-		// row render exactly the same thing, so there is one generator.
-		// typeBarWidthPct only ever arrives from renderFullCard(); a compact
-		// row's expanded body leaves it undefined and keeps the 100% bar,
-		// since the row's own mini-bar (collapsed state) already carries the
-		// size signal for that group.
-		function renderBody(c, typeBarWidthPct) {
-			var esc = TweetFeed.escapeHtml;
-			var tagsHtml = (c.tags || []).map(function(t) {
-				var clean = String(t).replace(/^#/, '');
-				return '<a class="tfc-tag-chip" href="../search/?tag=' + esc(encodeURIComponent(clean.toLowerCase())) + '" title="Search ' + esc(t) + ' on TweetFeed">' + esc(t) + '</a>';
-			}).join('');
-			var reportersHtml = renderReporters(c);
-			var dates = esc(c.first_seen || '?') + ' &ndash; ' + esc(c.last_seen || '?');
-			// B1: full apparent-target line (brand + sector + country), omitted
-			// entirely when the campaign carries none of the three.
-			var targetParts = targetLabel(c);
-			var targetLine = targetParts.length
-				? '<p class="tfc-meta-line"><b>Apparent target (AI-inferred):</b> ' + targetParts.map(esc).join(' &middot; ') + '</p>'
-				: '';
-
-			// ttps: sibling meta line for MITRE ATT&CK techniques, same
-			// omit-when-empty rule as targetLine above. `ttps` may be absent
-			// entirely on an older cached document, so tolerate undefined.
-			var ttps = Array.isArray(c.ttps) ? c.ttps : [];
-			var ttpsLine = ttps.length
-				? '<p class="tfc-meta-line"><b>Techniques (AI-inferred):</b> ' + renderTtpChips(ttps) + '</p>'
-				: '';
-
-			// C1: honesty label on the context paragraph - it's the one
-			// piece of free-text prose on the card, AI-written from the
-			// clustered IOCs, and previously indistinguishable from the
-			// deterministic fields around it.
-			var aiLabel = '<span class="tfc-ai-label" title="Written by the AI clustering layer from the underlying IOCs">AI summary</span>';
-			return (
-				targetLine +
-				ttpsLine +
-				'<p class="tfc-context">' + aiLabel + esc(c.context || '') + '</p>' +
-				renderTypeBar(c.types, typeBarWidthPct) +
-				renderEvidence(c) +
-				'<div class="tfc-foot-line">' +
-					(tagsHtml ? '<span class="tfc-tags">' + tagsHtml + '</span>' : '<span></span>') +
-					'<span class="tfc-foot-meta">' + dates + (reportersHtml ? ' &middot; ' + reportersHtml : '') + '</span>' +
-				'</div>' +
-				renderIocBlock(c)
-			);
-		}
-
-		// Shared attributes so a compact row is filtered exactly like a card.
-		// idx is this campaign's position in the `campaigns` array as delivered
-		// by the API (set on allCampaigns in renderCampaigns) - carried as
-		// data-idx so applyFilters() can map a visible card/row straight back
-		// to its source object without re-deriving it from rendered text.
-		function campaignAttrs(c, idx) {
-			var esc = TweetFeed.escapeHtml;
-			var conf = (c.confidence || 'low').toLowerCase();
-			if (['high', 'medium', 'low'].indexOf(conf) === -1) conf = 'low';
-			var rawId = typeof c.id === 'string' ? c.id : '';
-			var validId = CAMPAIGN_ID_RE.test(rawId) ? rawId : '';
-			var isActive = (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
-			// B2: same degrade-gracefully rule as ioc_count_7d above, applied to
-			// the new "Last 24h" activity chip - an older API payload without
-			// ioc_count_1d counts every campaign as active for that chip too.
-			var isActive1d = (typeof c.ioc_count_1d === 'number') ? (c.ioc_count_1d > 0) : true;
-			var safeIdx = (typeof idx === 'number' && idx >= 0) ? idx : -1;
-			return {
-				conf: conf,
-				validId: validId,
-				idAttr: validId ? ' id="' + esc(validId) + '"' : '',
-				isActive: isActive,
-				isActive1d: isActive1d,
-				dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '" data-active-1d="' + (isActive1d ? '1' : '0') + '" data-idx="' + safeIdx + '"'
-			};
-		}
-
-		// maxIocs is the largest ioc_count among the full-card group (7 cards,
-		// 2026-08-19); the type bar below scales against it, not the page max.
-		// idx is the campaign's index into allCampaigns - see campaignAttrs().
-		function renderFullCard(c, maxIocs, idx) {
-			var esc = TweetFeed.escapeHtml;
-			var a = campaignAttrs(c, idx);
-			var anchorLink = a.validId
-				? '<a class="tfc-anchor-link" href="#' + esc(a.validId) + '" title="Direct link to this campaign" aria-label="Direct link to this campaign"><i class="fas fa-link"></i></a>'
-				: '';
-			// B1: the brand-only chip is now the fuller "apparent target" chip
-			// (brand + sector + country), still riding .tfc-brand-chip so the
-			// visual language doesn't change - just what it can say.
-			var targetParts = targetLabel(c);
-			var targetChip = targetParts.length
-				? '<span class="tfc-brand-chip" title="AI-inferred from the clustered IOCs"><i class="fas fa-bullseye"></i> ' + targetParts.map(esc).join(' &middot; ') + '</span>'
-				: '';
-			// B2: "N today - M this week", shown honestly even at N=0 (after
-			// the 06:25 UTC daily run every campaign legitimately has 1d=0).
-			// Falls back to the pre-B2 week-only line when ioc_count_1d isn't
-			// in the payload (older API version), matching campaignAttrs()'s
-			// own degrade-gracefully rule for the same field.
-			var dayN = (typeof c.ioc_count_1d === 'number') ? c.ioc_count_1d : null;
-			var weekN = (typeof c.ioc_count_7d === 'number') ? c.ioc_count_7d : null;
-			var countSub = '';
-			if (dayN !== null) {
-				countSub = esc(TweetFeed.numberFormat(dayN)) + ' today';
-				if (weekN !== null) countSub += ' &middot; ' + esc(TweetFeed.numberFormat(weekN)) + ' this week';
-			} else if (weekN !== null) {
-				countSub = esc(TweetFeed.numberFormat(weekN)) + ' this week';
-			}
-			var weekLine = countSub ? '<span class="tfc-count-sub">' + countSub + '</span>' : '';
-			var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
-			var typeBarPct = maxIocs > 0 ? Math.max(TYPEBAR_MIN_PCT, Math.min(100, (n / maxIocs) * 100)) : 100;
-
-			return (
-				'<div class="card tfc-card mb-4"' + a.dataAttrs + a.idAttr + '><div class="card-body">' +
-					'<div class="tfc-card-header">' +
-						'<div class="tfc-head-main">' +
-							'<h3 class="tfc-name">' + esc(c.name || 'Untitled campaign') + '</h3>' +
-							'<div class="tfc-head-chips">' +
-								'<span class="tfc-badge tfc-badge-' + a.conf + '">' + esc(a.conf) + ' confidence</span>' +
-								targetChip +
-								anchorLink +
-							'</div>' +
-						'</div>' +
-						'<div class="tfc-count">' +
-							'<span class="tfc-count-num">' + esc(TweetFeed.numberFormat(c.ioc_count || 0)) + '</span>' +
-							'<span class="tfc-count-unit">IOCs</span>' +
-							weekLine +
-						'</div>' +
-					'</div>' +
-					renderBody(c, typeBarPct) +
-				'</div></div>'
-			);
-		}
-
-		// Compact row for the tail. Measured 2026-08-19: the 11 campaigns with
-		// <=22 IOCs were 10% of the data but half the page height, because every
-		// card was the same size regardless of campaign size.
-		// maxIocs is the largest ioc_count within the compact-row group itself
-		// (not the page max): scaling a 38-IOC row's bar against a 405-IOC
-		// card would flatten every row in the tail to the same sliver.
-		function renderCompactRow(c, maxIocs, idx) {
-			var esc = TweetFeed.escapeHtml;
-			var a = campaignAttrs(c, idx);
-			var types = c.types || {};
-			var keys = Object.keys(types).filter(function(t) { return types[t] > 0; });
-			var total = keys.reduce(function(acc, t) { return acc + types[t]; }, 0);
-			keys.sort(function(x, y) { return types[y] - types[x]; });
-			var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
-			var barWidth = maxIocs > 0
-				? Math.max(MINIBAR_MIN_PX, Math.round(MINIBAR_MAX_PX * (n / maxIocs)))
-				: MINIBAR_MIN_PX;
-			var miniBar = total ? '<span class="tfc-minibar" style="width:' + barWidth + 'px;">' + keys.map(function(t) {
-				return '<span style="width:' + ((types[t] / total) * 100).toFixed(2) + '%;background:' + (IOC_TYPE_COLORS[t] || '#737373') + ';"></span>';
-			}).join('') + '</span>' : '';
-			// B1: one short value only - brand if present, else the sector.
-			// The full breakdown lives in the expanded body's meta line below.
-			var rowTargetVal = c.targeted_brand ? String(c.targeted_brand) : prettySector(c.targeted_sector);
-			var rowTargetHtml = rowTargetVal ? '<span class="tfc-row-target">' + esc(rowTargetVal) + '</span>' : '';
-
-			return (
-				'<div class="tfc-row"' + a.dataAttrs + a.idAttr + '>' +
-					'<button type="button" class="tfc-row-head" aria-expanded="false">' +
-						'<i class="fas fa-chevron-right tfc-row-caret" aria-hidden="true"></i>' +
-						'<span class="tfc-row-name">' + esc(c.name || 'Untitled campaign') + '</span>' +
-						rowTargetHtml +
-						miniBar +
-						'<span class="tfc-row-count">' + esc(TweetFeed.numberFormat(c.ioc_count || 0)) + '</span>' +
-						'<span class="tfc-badge tfc-badge-' + a.conf + ' tfc-badge-sm">' + esc(a.conf) + '</span>' +
-					'</button>' +
-					'<div class="tfc-row-body" hidden>' + renderBody(c) + '</div>' +
-				'</div>'
-			);
-		}
-
-		// Border classes for the compact-row grid are assigned here instead of
-		// via :nth-child (see the CSS comment above .tfc-row-pos-first),
-		// because filtering can hide any row out of DOM order. This simulates
-		// the same 2-column auto-placement the grid itself performs: a normal
-		// row occupies the next open column (0/1, alternating); a row that is
-		// currently expanded (.tfc-row-expanded, grid-column:1/-1) spans the
-		// full line by itself, so it closes whatever line it's on and the row
-		// after it restarts at column 0. Called after every pass that can
-		// change which rows are visible or which one is expanded.
-		function updateRowPositions() {
-			var $rows = $('.tfc-rows .tfc-row');
-			$rows.removeClass('tfc-row-pos-first tfc-row-pos-topline tfc-row-pos-right');
-			var col = 0;
-			var visibleIndex = 0;
-			var firstExpanded = false;
-			$rows.each(function() {
-				var $row = $(this);
-				if ($row.css('display') === 'none') return;
-				var expanded = $row.hasClass('tfc-row-expanded');
-				if (visibleIndex === 0) {
-					$row.addClass('tfc-row-pos-first');
-					firstExpanded = expanded;
-				} else if (visibleIndex === 1 && !firstExpanded) {
-					$row.addClass('tfc-row-pos-topline');
-				}
-				if (expanded) {
-					col = 0;
-				} else {
-					if (col === 1) $row.addClass('tfc-row-pos-right');
-					col = col === 0 ? 1 : 0;
-				}
-				visibleIndex++;
-			});
-			// Below 992px .tfc-row-pos-topline/-right don't exist in any
-			// stylesheet rule (they're declared inside that media block), and
-			// the single column means every row is "first on its own line", so
-			// .tfc-row-pos-first alone (assigned above, unconditionally) already
-			// gives every viewport the border-top:0 it needs on row 1 - no
-			// separate mobile branch required here.
-		}
-
-		// Filtering: client-side show/hide only, no re-fetch. Reads current
-		// state straight from the chip DOM (.active class) rather than
-		// tracking a parallel JS state object. A card shows only if its
-		// confidence chip is active AND (the activity chip is "all" OR the
-		// card's data-active is "1").
-		function applyFilters() {
-			var activeConfidences = {};
-			$('.tfc-filter-chip[data-confidence]').each(function() {
-				var $chip = $(this);
-				activeConfidences[$chip.data('confidence')] = $chip.hasClass('active');
-			});
-			// B2: 3-way activity, up from the old 2-way "week"/"all" toggle.
-			// Reads the currently-active chip's value straight off the DOM,
-			// same pattern the confidence loop above uses - no parallel JS
-			// state to keep in sync.
-			var activityMode = $('.tfc-filter-chip[data-activity].active').data('activity') || 'week';
-			// B3: search/type/sector predicates, AND-ed with confidence and
-			// activity below. Each reads its current value off the DOM chips/
-			// input the same way, for the same reason.
-			var searchQuery = ($('#campaignsSearch').val() || '').trim().toLowerCase();
-			var typeFilter = $('.tfc-filter-chip[data-ioctype].active').data('ioctype') || 'any';
-			var sectorFilter = $('.tfc-filter-chip[data-sector].active').data('sector') || 'any';
-			// Both wrappers carry the same data-confidence/data-active(-1d), so
-			// one pass filters full cards and compact rows alike.
-			var $items = $('#campaignsList').find('.tfc-card, .tfc-row');
-			var shown = 0;
-			var rowsShown = 0;
-			var visibleIocSum = 0;
-			var visibleSizesDesc = [];
-			$items.each(function() {
-				var $item = $(this);
-				var conf = $item.attr('data-confidence') || 'low';
-				var confOk = activeConfidences[conf] !== false;
-				var activityOk = activityMode === 'all' ? true :
-					(activityMode === 'day' ? $item.attr('data-active-1d') !== '0' : $item.attr('data-active') !== '0');
-				var idx = +$item.attr('data-idx');
-				var c = allCampaigns[idx];
-				var searchOk = !searchQuery || (haystacks[idx] || '').indexOf(searchQuery) !== -1;
-				var typeOk = typeFilter === 'any' || !!(c && c.types && c.types[typeFilter] > 0);
-				var sectorOk = sectorFilter === 'any' || !!(c && c.targeted_sector === sectorFilter);
-				var visible = confOk && activityOk && searchOk && typeOk && sectorOk;
-				$item.toggle(visible);
-				if (visible) {
-					shown++;
-					if ($item.hasClass('tfc-row')) rowsShown++;
-					if (c) {
-						var iocN = (typeof c.ioc_count_30d === 'number') ? c.ioc_count_30d : (c.ioc_count || 0);
-						visibleIocSum += iocN;
-						visibleSizesDesc.push(iocN);
-					}
-				}
-			});
-			$('#campaignsFilterCount').text(shown + ' shown');
-			$('#campaignsFilterEmpty').toggle(shown === 0);
-			// Clear button only earns its place once one of the three B3
-			// filters has actually moved off its default.
-			$('#campaignsClearFilters').toggle(!!searchQuery || typeFilter !== 'any' || sectorFilter !== 'any');
-			// The divider (and the bordered box it introduces) count what is
-			// actually visible below it, so neither ever promises rows the
-			// filters have hidden - and the box itself disappears rather than
-			// sitting there empty when every compact row is filtered out.
-			$('.tfc-divider').toggle(rowsShown > 0)
-				.find('.tfc-divider-count').text(rowsShown + ' smaller campaign' + (rowsShown === 1 ? '' : 's'));
-			$('.tfc-rows').toggle(rowsShown > 0);
-			$('#tfcHlShown').text(TweetFeed.numberFormat(shown));
-
-			// "IOCs clustered" and "head weight" follow the same rule: they
-			// used to be computed once in renderCampaigns() over the full
-			// unfiltered payload, which meant the numbers stopped matching the
-			// cards as soon as a reader touched a confidence/activity chip.
-			// Recomputed here, every pass, over only what's currently visible.
-			visibleSizesDesc.sort(function(x, y) { return y - x; });
-			$('#tfcHlIocs').text(TweetFeed.numberFormat(visibleIocSum));
-			$('#tfcHlIocsSub').text('across ' + TweetFeed.numberFormat(shown) + ' campaign' + (shown === 1 ? '' : 's'));
-			var headN = Math.min(2, visibleSizesDesc.length);
-			var headSum = visibleSizesDesc.slice(0, headN).reduce(function(sum, n) { return sum + n; }, 0);
-			var headPct = (headN && visibleIocSum > 0) ? Math.round((headSum / visibleIocSum) * 100) : null;
-			$('#tfcHlHead').text(headPct === null ? '-' : headPct + '%');
-			$('#tfcHlHeadLabel').text('in top ' + headN + ' campaign' + (headN === 1 ? '' : 's'));
-			$('#tfcHlHeadSub').text(headN ? (TweetFeed.numberFormat(headSum) + ' of ' + TweetFeed.numberFormat(visibleIocSum) + ' IOCs') : '');
-
-			updateRowPositions();
-		}
-
-		// Activity chip group behaves like a 2-way radio (unlike the
-		// independently-toggleable confidence chips): selecting one always
-		// deselects the other, so exactly one of "week"/"all" is active.
-		function setActivityChip(value) {
-			$('.tfc-filter-chip[data-activity]').each(function() {
-				var $chip = $(this);
-				var isMatch = $chip.data('activity') === value;
-				$chip.toggleClass('active', isMatch);
-				$chip.attr('aria-pressed', isMatch ? 'true' : 'false');
-			});
-		}
-
-		// Deep-link scroll: only ever acts on a hash that passes the same
-		// fixed-shape check used to build the ids in the first place - a
-		// missing/junk/foreign hash is a silent no-op, never a DOM lookup on
-		// unsanitized input. If the target campaign exists but is hidden by
-		// the default "active this week" filter, switch to "All (30 days)"
-		// first so the deep link still lands on the card instead of
-		// scrolling to nothing.
-		function scrollToHashCampaign() {
-			var hash = window.location.hash || '';
-			if (hash.charAt(0) === '#') hash = hash.slice(1);
-			if (!CAMPAIGN_ID_RE.test(hash)) return;
-			var el = document.getElementById(hash);
-			if (!el) return;
-			if (el.style.display === 'none') {
-				setActivityChip('all');
-				applyFilters();
-			}
-			// A deep link can land on a campaign that is now a compact row;
-			// open it, or the link scrolls to a one-line heading.
-			var $row = $(el);
-			if ($row.hasClass('tfc-row')) {
-				$row.find('.tfc-row-body').prop('hidden', false);
-				$row.find('.tfc-row-head').attr('aria-expanded', 'true').addClass('is-open');
-				$row.addClass('tfc-row-expanded');
-				updateRowPositions();
-			}
-			if (typeof el.scrollIntoView === 'function') {
-				el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}
-		}
-
-		// B3: search haystacks, rebuilt from scratch on every render (the API
-		// is only ever fetched once per page load, or again on retry after an
-		// error - never on a timer), one lowercase blob per campaign covering
-		// name, context, apparent target, tags, reporters, every anchor value
-		// and every published sample's value+user.
-		function buildHaystacks(campaigns) {
-			haystacks = campaigns.map(function(c) {
-				var parts = [c.name || '', c.context || ''].concat(targetLabel(c), ttpNames(c));
-				parts = parts.concat(c.tags || [], c.reporters || []);
-				var anchors = c.anchors || {};
-				ANCHOR_ORDER.forEach(function(key) {
-					var vals = anchors[key];
-					if (Array.isArray(vals)) parts = parts.concat(vals);
-				});
-				(c.iocs || []).forEach(function(ioc) {
-					if (ioc && ioc.value) parts.push(String(ioc.value));
-					if (ioc && ioc.user) parts.push(String(ioc.user));
-				});
-				return parts.join(' ').toLowerCase();
-			});
-		}
-
-		// B3: sector chip roster built from what's actually IN the payload
-		// today, not a hardcoded list that would drift from the data (and
-		// would show empty sectors, or hide new ones the classifier starts
-		// emitting). "Any" always comes first and starts active.
-		function renderSectorChips(campaigns) {
-			var esc = TweetFeed.escapeHtml;
-			var seen = {};
-			var slugs = [];
-			campaigns.forEach(function(c) {
-				var s = c.targeted_sector;
-				if (s && typeof s === 'string' && !seen[s]) {
-					seen[s] = true;
-					slugs.push(s);
-				}
-			});
-			slugs.sort(function(a, b) { return prettySector(a).localeCompare(prettySector(b)); });
-			var html = '<button type="button" class="tfc-filter-chip active" data-sector="any" aria-pressed="true">Any</button>';
-			html += slugs.map(function(s) {
-				return '<button type="button" class="tfc-filter-chip" data-sector="' + esc(s) + '" aria-pressed="false">' + esc(prettySector(s)) + '</button>';
-			}).join('');
-			$('#campaignsSectorChips').html(html);
-		}
-
-		// B2: renders #campaignsList from a list of {c, i, big} entries -
-		// membership (big vs small) travels WITH each entry, so this never
-		// needs to recompute the size split; it only needs to know, per
-		// entry, which of the two renderers to use. Called once on initial
-		// load and again (with a re-sorted copy) on every sort change.
-		function renderList(entries) {
-			var big = entries.filter(function(e) { return e.big; });
-			var small = entries.filter(function(e) { return !e.big; });
-			// Each group's own max, not the page max - see the comments on
-			// renderFullCard/renderCompactRow.
-			var maxBigIocCount = big.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
-			var maxSmallIocCount = small.reduce(function(m, e) { return Math.max(m, e.c.ioc_count || 0); }, 0);
-			var html = big.map(function(e) { return renderFullCard(e.c, maxBigIocCount, e.i); }).join('');
-			if (small.length) {
-				html += '<div class="tfc-divider"><span class="tfc-divider-count">' +
-					small.length + ' smaller campaign' + (small.length === 1 ? '' : 's') +
-					'</span></div>';
-				html += '<div class="tfc-rows">' + small.map(function(e) { return renderCompactRow(e.c, maxSmallIocCount, e.i); }).join('') + '</div>';
-			}
-			$('#campaignsList').html(html).show();
-			// Copy buttons/row toggles/etc need no re-init: utils.js attaches
-			// document-level .tf-copy delegation once at page load, and every
-			// other control below is delegated on document too.
-		}
-
-		// B2 sort: ties always fall back to ioc_count desc, via the same
-		// comparator every mode below calls last.
-		function sortTieBreak(a, b) {
-			var an = (typeof a.c.ioc_count === 'number') ? a.c.ioc_count : 0;
-			var bn = (typeof b.c.ioc_count === 'number') ? b.c.ioc_count : 0;
-			return bn - an;
-		}
-		var CONFIDENCE_RANK = { high: 3, medium: 2, low: 1 };
-		// "total" (delivered order) needs no comparator - it's handled as a
-		// special case in the change handler below, restoring originalEntries
-		// as-is rather than sorting a copy of it.
-		var SORT_COMPARATORS = {
-			recent: function(a, b) {
-				var a1 = (typeof a.c.ioc_count_1d === 'number') ? a.c.ioc_count_1d : -1;
-				var b1 = (typeof b.c.ioc_count_1d === 'number') ? b.c.ioc_count_1d : -1;
-				if (a1 !== b1) return b1 - a1;
-				var a7 = (typeof a.c.ioc_count_7d === 'number') ? a.c.ioc_count_7d : -1;
-				var b7 = (typeof b.c.ioc_count_7d === 'number') ? b.c.ioc_count_7d : -1;
-				if (a7 !== b7) return b7 - a7;
-				return sortTieBreak(a, b);
-			},
-			lastseen: function(a, b) {
-				var av = a.c.last_seen || '';
-				var bv = b.c.last_seen || '';
-				if (av !== bv) return av < bv ? 1 : -1;
-				return sortTieBreak(a, b);
-			},
-			confidence: function(a, b) {
-				var av = CONFIDENCE_RANK[(a.c.confidence || 'low').toLowerCase()] || 1;
-				var bv = CONFIDENCE_RANK[(b.c.confidence || 'low').toLowerCase()] || 1;
-				if (av !== bv) return bv - av;
-				return sortTieBreak(a, b);
-			}
+	// Shared attributes for a row/item. idx is this campaign's position in
+	// allCampaigns, carried as data-idx so applyFilters()/buildBody() can map
+	// a visible row straight back to its source object.
+	function campaignAttrs(c, idx) {
+		var esc = TweetFeed.escapeHtml;
+		var conf = (c.confidence || 'low').toLowerCase();
+		if (['high', 'medium', 'low'].indexOf(conf) === -1) conf = 'low';
+		var rawId = typeof c.id === 'string' ? c.id : '';
+		var validId = CAMPAIGN_ID_RE.test(rawId) ? rawId : '';
+		var isActive = (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
+		var safeIdx = (typeof idx === 'number' && idx >= 0) ? idx : -1;
+		return {
+			conf: conf,
+			validId: validId,
+			idAttr: validId ? ' id="' + esc(validId) + '"' : '',
+			isActive: isActive,
+			dataAttrs: ' data-confidence="' + conf + '" data-active="' + (isActive ? '1' : '0') + '" data-idx="' + safeIdx + '"'
 		};
+	}
 
-		function renderCampaigns(data) {
-			$('#campaignsLoading').hide();
+	// New badge: first_seen within 2 days of the document's generated_at.
+	function isNewCampaign(c) {
+		var fs = parseDateOnly(c.first_seen);
+		var gen = parseDateOnly(docGeneratedAt);
+		if (!fs || !gen) return false;
+		var diffDays = Math.round((gen.getTime() - fs.getTime()) / 86400000);
+		return diffDays >= 0 && diffDays <= 2;
+	}
 
-			// A malformed payload (wrong content-type sniffed as something
-			// else, an API error body, a future breaking schema change) used
-			// to be masked by `(data && data.campaigns) || []`, which rendered
-			// a silent, unexplained "no campaigns" empty state instead of
-			// surfacing the failure. Fail loudly through the same error UI a
-			// network failure already uses.
-			if (!data || !Array.isArray(data.campaigns)) {
-				showError('unexpected payload shape (data.campaigns is missing or not an array)');
-				return;
-			}
+	function renderHead(c, idx, maxWeek, genAtDate) {
+		var esc = TweetFeed.escapeHtml;
+		var a = campaignAttrs(c, idx);
+		var name = esc(c.name || 'Untitled campaign');
+		var newBadge = isNewCampaign(c) ? '<span class="tfc-h-new">New</span>' : '';
+		var fullTitle = esc(c.name || 'Untitled campaign');
+		return (
+			'<button type="button" class="tfc-head" aria-expanded="false" aria-controls="body-' + (a.validId || ('idx-' + idx)) + '">' +
+				'<i class="fas fa-chevron-right tfc-h-caret" aria-hidden="true"></i>' +
+				'<span class="tfc-h-name" title="' + fullTitle + '">' + name + newBadge + '</span>' +
+				'<span class="tfc-h-gist" title="' + gistTitle(c) + '">' + gistHtml(c) + '</span>' +
+				renderMix(c) +
+				renderAct(c, maxWeek, genAtDate) +
+				'<span class="tfc-h-num">' + esc(nf(c.ioc_count || 0)) + '<span class="tfc-num-unit">IOCs</span></span>' +
+				'<span class="tfc-h-conf"><span class="tfc-badge tfc-badge-' + a.conf + '">' + esc(a.conf) + '</span></span>' +
+			'</button>'
+		);
+	}
 
-			var campaigns = data.campaigns;
-			// Kept at module scope so applyFilters() can map a visible card/row
-			// (via its data-idx) back to the campaign object it was rendered
-			// from, to recompute the headline stats over only what's visible.
-			allCampaigns = campaigns;
-			// Degrades gracefully when ioc_count_7d is absent from the doc
-			// (older API version): every campaign counts as active in that
-			// case, matching renderCampaignCard's data-active default.
-			var activeCount = campaigns.filter(function(c) {
-				return (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true;
-			}).length;
-			// B2: same degrade-gracefully rule, for the new "Last 24h" chip.
-			var active1dCount = campaigns.filter(function(c) {
-				return (typeof c.ioc_count_1d === 'number') ? (c.ioc_count_1d > 0) : true;
-			}).length;
+	function renderItem(c, idx, maxWeek, genAtDate) {
+		var a = campaignAttrs(c, idx);
+		var bodyId = 'body-' + (a.validId || ('idx-' + idx));
+		return (
+			'<div class="tfc-item"' + a.dataAttrs + a.idAttr + '>' +
+				renderHead(c, idx, maxWeek, genAtDate) +
+				'<div class="tfc-body" id="' + bodyId + '" hidden></div>' +
+			'</div>'
+		);
+	}
 
-			var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs';
-			if (data && data.generated_at) {
-				genLine += ' &middot; last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(data.generated_at));
-			}
-			$('#generatedLine').html(genLine);
+	// ── Expanded body ──────────────────────────────────────────────────────
 
-			// Headline stat strip: the "shown/tracked" and window numbers that
-			// used to close out genLine above now live here instead, at the
-			// same type scale as .tfc-count-num on the cards - stated once, not
-			// twice at two different sizes. The other two numbers (total IOCs,
-			// head weight) are new: neither existed anywhere on the page before.
-			var totalTracked = (data && typeof data.campaign_count === 'number') ? data.campaign_count : campaigns.length;
-			// Same week/month -> days mapping trends/index.html uses for its
-			// own novelty.window field, so the two pages describe a window
-			// the same way. Falls back to the raw value for anything else.
-			var apiWindow = data && data.window;
-			var windowLabel = 'last ' + (apiWindow === 'week' ? '7 days' : (apiWindow === 'month' ? '30 days' : (apiWindow || '30 days')));
-			$('#tfcHlShown').text(TweetFeed.numberFormat(activeCount));
-			$('#tfcHlShownSub').text(TweetFeed.numberFormat(totalTracked) + ' tracked, ' + windowLabel);
-			// "IOCs clustered" and "head weight" (how concentrated the volume
-			// is in the top 2 campaigns) used to be computed once, right here,
-			// over the full unfiltered payload. They now live in applyFilters()
-			// instead, recomputed every pass over only the currently-visible
-			// cards/rows, because a reader toggling the confidence/activity
-			// chips should never see numbers that describe campaigns the page
-			// just hid. applyFilters() runs unconditionally below.
+	function renderVitals(c) {
+		var esc = TweetFeed.escapeHtml;
+		var total = (typeof c.ioc_count === 'number') ? c.ioc_count : (c.iocs || []).length;
+		// Uses the EFFECTIVE row count (sample, or the sidecar's full/capped
+		// set once "Load all" has resolved for this campaign) rather than
+		// always the raw 25-sample length, so this sub-line is not stale on
+		// a first build that happens to land after the sidecar is already
+		// ready. refreshBuiltIndicators() re-patches it (via
+		// .tfc-vitals-published) when the sidecar resolves for an
+		// already-built item.
+		var sampleLen = getEffectiveIocs(c).rows.length;
 
-			if (data && data.stale) {
-				var since = data.stale_since ? TweetFeed.formatDateLong(data.stale_since) : 'unknown';
-				$('#staleBanner').html(
-					'<i class="fas fa-exclamation-triangle"></i> Campaign clustering data is stale (last successful run: ' +
-					TweetFeed.escapeHtml(since) +
-					'). Showing the most recent available snapshot.'
-				).show();
-			}
-
-			if (!campaigns.length) {
-				$('#campaignsEmpty').show();
-				return;
-			}
-
-			// Campaigns already arrive sorted by ioc_count desc from the API;
-			// render in that delivered order by default. Split by size: the
-			// big ones keep the full card, the tail becomes one-line rows
-			// that expand. Before this split every card was 324-375px tall
-			// whether the campaign had 401 IOCs or 6, so 10% of the data took
-			// half the page.
-			//
-			// B2: membership in the "big" group is now a RANK against
-			// ioc_count (top FULL_CARD_FLOOR by size, or over the flat 50-IOC
-			// threshold), computed independently of `campaigns`' own array
-			// order - not "i < FULL_CARD_FLOOR" any more. The split has to
-			// survive the sort <select> re-ordering these same entries later,
-			// so it can never be a function of delivered position.
-			var byIocDesc = campaigns.map(function(c, i) {
-				return { i: i, n: (typeof c.ioc_count === 'number') ? c.ioc_count : 0 };
-			}).sort(function(a, b) { return b.n - a.n; });
-			var floorIdxSet = {};
-			byIocDesc.slice(0, FULL_CARD_FLOOR).forEach(function(e) { floorIdxSet[e.i] = true; });
-
-			// Each entry keeps its original index into `campaigns` (== the
-			// index applyFilters()/haystacks will later find it at on
-			// allCampaigns) alongside the campaign itself and its big/small
-			// membership, since both the size split and the sort control
-			// reorder relative to the API's delivered order.
-			originalEntries = campaigns.map(function(c, i) {
-				var n = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
-				return { c: c, i: i, big: (n >= FULL_CARD_MIN_IOCS || !!floorIdxSet[i]) };
-			});
-			buildHaystacks(campaigns);
-			renderSectorChips(campaigns);
-			renderList(originalEntries);
-
-			// Set BEFORE the row is revealed, so the chips never flash a
-			// countless state. activeCount/active1dCount are the same numbers
-			// applyFilters() would land on for "week"/"day"; campaigns.length
-			// is what "all" holds.
-			$('.tfc-filter-chip[data-activity="day"] .tfc-chip-count')
-				.text(TweetFeed.numberFormat(active1dCount));
-			$('.tfc-filter-chip[data-activity="week"] .tfc-chip-count')
-				.text(TweetFeed.numberFormat(activeCount));
-			$('.tfc-filter-chip[data-activity="all"] .tfc-chip-count')
-				.text(TweetFeed.numberFormat(campaigns.length));
-
-			$('#campaignsActivityRow').show();
-			$('#campaignsFilterRow').show();
-			$('#campaignsSearchRow').show();
-			$('#campaignsSearchHint').show();
-			applyFilters();
-			scrollToHashCampaign();
+		var genAt = parseDateOnly(docGeneratedAt);
+		var lastSeen = parseDateOnly(c.last_seen);
+		var daysSince = (genAt && lastSeen) ? Math.max(0, Math.round((genAt.getTime() - lastSeen.getTime()) / 86400000)) : null;
+		var actInfo = activeDaysInfo(c, genAt);
+		var sinceSub = '';
+		if (actInfo) {
+			sinceSub = esc(nf(actInfo.active)) + ' active days of ' + actInfo.total;
+		} else if (typeof c.ioc_count_7d === 'number') {
+			sinceSub = esc(nf(c.ioc_count_7d)) + ' in last 7 days';
 		}
 
-		function showError(msg) {
-			$('#campaignsLoading').hide();
-			$('#campaignsError').show();
-			console.error('[TweetFeed] campaigns fetch failed:', msg);
+		var span = (c.first_seen && c.last_seen) ? (Math.round(((parseDateOnly(c.last_seen) || 0) - (parseDateOnly(c.first_seen) || 0)) / 86400000) + 1) : null;
+		var targetParts = targetLabel(c);
+		var targetVal = targetParts.length ? targetParts[0] : 'None inferred';
+		var targetSub = targetParts.length > 1 ? targetParts.slice(1).join(' · ') : 'AI-inferred';
+
+		return (
+			'<div class="tf-headline">' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value">' + esc(nf(total)) + '</div><div class="tf-headline-label">IOCs</div>' +
+					'<div class="tf-headline-sub tfc-vitals-published">' + esc(nf(sampleLen)) + ' published below</div></div>' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (daysSince === null ? '–' : esc(String(daysSince))) + '</div><div class="tf-headline-label">Days since last IOC</div>' +
+					'<div class="tf-headline-sub">' + sinceSub + '</div></div>' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (span === null ? '–' : esc(String(span))) + '</div><div class="tf-headline-label">Day span</div>' +
+					'<div class="tf-headline-sub">' + esc(dateRangeText(c)) + '</div></div>' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value" style="font-size:15px;font-weight:600;">' + esc(targetVal) + '</div><div class="tf-headline-label">Apparent target</div>' +
+					'<div class="tf-headline-sub">' + esc(targetSub) + '</div></div>' +
+			'</div>'
+		);
+	}
+
+	function renderPanes(c) {
+		var esc = TweetFeed.escapeHtml;
+		var aiLabel = '<span class="tfc-ai-label" title="Written by the AI clustering layer from the underlying IOCs">AI summary</span>';
+		var targetParts = targetLabel(c);
+		var attrRows = '';
+		if (targetParts.length) {
+			attrRows += attrRow('Target', '<span class="tfc-brand-chip"><i class="fas fa-bullseye"></i> ' + targetParts.map(esc).join(' · ') + '</span>');
 		}
+		var ttps = Array.isArray(c.ttps) ? c.ttps : [];
+		if (ttps.length) attrRows += attrRow('Techniques', renderTtpChips(ttps));
+		var tagsHtml = (c.tags || []).map(function(t) {
+			var clean = String(t).replace(/^#/, '');
+			return '<a class="tfc-tag-chip" href="../search/?tag=' + esc(encodeURIComponent(clean.toLowerCase())) + '" title="Search ' + esc(t) + ' on TweetFeed">' + esc(t) + '</a>';
+		}).join('');
+		if (tagsHtml) attrRows += attrRow('Tags', tagsHtml);
+		attrRows += renderFamiliesRow(c);
+		var a = campaignAttrs(c, -1);
+		attrRows += attrRow('Cohesion', '<span class="tfc-badge tfc-badge-' + a.conf + '">' + esc(a.conf) + '</span>');
 
-		// Extracted from the page-load $(function(){...}) below so the retry
-		// button can call the exact same fetch, not a copy of it. Resets the
-		// error/loading UI first so a retry after a failure doesn't show both
-		// states stacked on top of each other.
-		function loadCampaigns() {
-			$('#campaignsError').hide();
-			$('#campaignsLoading').show();
-			TweetFeed.safeGet(CAMPAIGNS_URL, {
-				success: renderCampaigns,
-				error: showError
-			});
+		var reportersHtml = renderReporters(c);
+		var paneA = (
+			'<div class="tfc-pane-a">' +
+				'<p class="tfc-pane-head">What the AI says</p>' +
+				'<p class="tfc-context">' + aiLabel + esc(c.context || '') + '</p>' +
+				'<div class="tfc-attr">' + attrRows + '</div>' +
+			'</div>'
+		);
+		var paneB = (
+			'<div class="tfc-pane-b">' +
+				'<p class="tfc-pane-head">Why these are one campaign</p>' +
+				renderEvidence(c) +
+				renderInfra(c) +
+				(reportersHtml ? '<p class="tfc-reporters-line">Reporters ' + reportersHtml + '</p>' : '') +
+			'</div>'
+		);
+		return '<div class="tfc-panes">' + paneA + paneB + '</div>';
+	}
+
+	// Override 1: which IOC rows to render for this campaign - the inline
+	// sample (c.iocs, up to 25) unless the sidecar has been loaded AND its
+	// generated_at matches the main document, in which case the campaign's
+	// full set is used (capped at 500 rendered rows).
+	function getEffectiveIocs(c) {
+		if (sidecarState === 'ready' && sidecarCampaigns && CAMPAIGN_ID_RE.test(c.id) &&
+			Array.isArray(sidecarCampaigns[c.id])) {
+			var full = sidecarCampaigns[c.id];
+			return { rows: full.slice(0, 500), full: true, totalFull: full.length, cappedAt500: full.length > 500 };
 		}
+		return { rows: c.iocs || [], full: false };
+	}
 
-		$(function() {
-			loadCampaigns();
+	function renderIocRow(ioc) {
+		var esc = TweetFeed.escapeHtml;
+		var type = ioc.type || '';
+		var bg = IOC_TYPE_COLORS[type] || '#737373';
+		var color = IOC_TYPE_DARK_TEXT[type] ? '#1c1c1c' : '#fff';
+		var value = ioc.value || '';
+		var tweetUrl = (typeof ioc.tweet === 'string' && /^https?:\/\//i.test(ioc.tweet)) ? ioc.tweet : '';
+		var tweetLink = tweetUrl
+			? '<a class="tfc-ioc-link" href="' + esc(tweetUrl) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
+			: '';
+		var vtLink = '<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>';
+		var dateStr = (typeof ioc.date === 'string') ? ioc.date.slice(0, 10) : '';
+		var dateSpan = dateStr ? '<span class="tfc-ioc-date">' + esc(dateStr) + '</span>' : '';
+		var userRaw = (typeof ioc.user === 'string') ? ioc.user.replace(/^@/, '') : '';
+		var userLink = userRaw
+			? '<a class="tfc-ioc-user" href="../search/?user=' + esc(encodeURIComponent(userRaw)) + '">@' + esc(userRaw) + '</a>'
+			: '';
+		// Override 2: optional per-IOC net {org, country} - a tooltip on the
+		// type badge, never new visual weight on the row.
+		var netTitle = '';
+		if (ioc.net && typeof ioc.net === 'object' && (ioc.net.org || ioc.net.country)) {
+			netTitle = ' title="' + esc([ioc.net.org, ioc.net.country].filter(Boolean).join(' · ')) + '"';
+		}
+		var row = (
+			'<div class="tfc-ioc-row">' +
+				'<span class="tfc-ioc-type"' + netTitle + ' style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
+				dateSpan +
+				'<a class="tfc-ioc-value" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="Search this value on TweetFeed">' + esc(value) + '</a>' +
+				userLink +
+				'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
+				tweetLink +
+				vtLink +
+			'</div>'
+		);
+		// Override 2: iocs[].tags micro-chips (up to 2) + ai.threat_type,
+		// both optional, on a second line inside the same wrapper so the
+		// 2-column IOC grid keeps pairing correctly.
+		var chips = [];
+		if (Array.isArray(ioc.tags)) {
+			ioc.tags.slice(0, 2).forEach(function(t) { chips.push('<span class="tfc-ioc-tag">' + esc(String(t)) + '</span>'); });
+		}
+		if (ioc.ai && typeof ioc.ai === 'object' && ioc.ai.threat_type) {
+			chips.push('<span class="tfc-ioc-tag tfc-ioc-tag-ai">' + esc(String(ioc.ai.threat_type)) + '</span>');
+		}
+		var chipsLine = chips.length ? '<div class="tfc-ioc-tags-line">' + chips.join('') + '</div>' : '';
+		return '<div class="tfc-ioc-wrap">' + row + chipsLine + '</div>';
+	}
 
-			$(document).on('click', '.tfc-retry', loadCampaigns);
-
-			// Delegated on document, like the chips: the list is rebuilt from
-			// scratch on render, and the repo forbids inline onclick=.
-			$(document).on('click', '.tfc-row-head', function() {
-				var $btn = $(this);
-				var open = $btn.attr('aria-expanded') === 'true';
-				$btn.attr('aria-expanded', open ? 'false' : 'true').toggleClass('is-open', !open);
-				$btn.siblings('.tfc-row-body').prop('hidden', open);
-				// Span both grid columns while open - see .tfc-row-expanded in
-				// the <style> block above.
-				$btn.closest('.tfc-row').toggleClass('tfc-row-expanded', !open);
-				// Expanding/collapsing a row can shift every row after it onto
-				// a different visual line - see updateRowPositions().
-				updateRowPositions();
-			});
-
-			$(document).on('click', '.tfc-show-all', function() {
-				var $btn = $(this);
-				var open = $btn.attr('aria-expanded') === 'true';
-				var $block = $btn.closest('.card-body, .tfc-row-body');
-				$block.find('.tfc-iocs-rest').prop('hidden', open);
-				$btn.attr('aria-expanded', open ? 'false' : 'true');
-				$btn.text(open ? ('Show all ' + $btn.data('total')) : 'Show fewer');
-				// B4: the foot line has to follow the toggle too - collapsed it
-				// reads "+N more published samples - T total IOCs" (or the
-				// pre-B4 "+N more IOCs" wording when there's no sample/total
-				// gap to report), expanded it reads "S published samples of T
-				// total IOCs". Both strings were precomputed once in
-				// renderIocBlock() and stashed on the span itself, so this
-				// handler only ever swaps between them - it never recomputes
-				// the wording logic.
-				var $more = $block.find('.tfc-more-iocs');
-				$more.text(open ? $more.data('collapsed-text') : $more.data('expanded-text'));
-			});
-
-			$(document).on('click', '.tfc-reporters-toggle', function() {
-				var $btn = $(this);
-				var open = $btn.attr('aria-expanded') === 'true';
-				$btn.attr('aria-expanded', open ? 'false' : 'true');
-				$btn.siblings('.tfc-reporters-list').prop('hidden', open);
-			});
-
-			$(document).on('click', '.tfc-filter-chip[data-confidence]', function() {
-				var $chip = $(this).toggleClass('active');
-				$chip.attr('aria-pressed', $chip.hasClass('active') ? 'true' : 'false');
-				applyFilters();
-			});
-
-			$(document).on('click', '.tfc-filter-chip[data-activity]', function() {
-				var $chip = $(this);
-				if ($chip.hasClass('active')) return;
-				setActivityChip($chip.data('activity'));
-				applyFilters();
-			});
-
-			// B3: type/sector chips behave like the activity group above - a
-			// 1-of-N radio, not the independently-toggleable confidence chips.
-			$(document).on('click', '.tfc-filter-chip[data-ioctype]', function() {
-				var $chip = $(this);
-				if ($chip.hasClass('active')) return;
-				$('.tfc-filter-chip[data-ioctype]').removeClass('active').attr('aria-pressed', 'false');
-				$chip.addClass('active').attr('aria-pressed', 'true');
-				applyFilters();
-			});
-			// Delegated on document like every other control here: the sector
-			// roster itself is rebuilt from scratch by renderSectorChips() on
-			// each render, so a handler bound to the chips directly would be
-			// lost the moment the page re-renders.
-			$(document).on('click', '.tfc-filter-chip[data-sector]', function() {
-				var $chip = $(this);
-				if ($chip.hasClass('active')) return;
-				$('.tfc-filter-chip[data-sector]').removeClass('active').attr('aria-pressed', 'false');
-				$chip.addClass('active').attr('aria-pressed', 'true');
-				applyFilters();
-			});
-
-			// B3: free-text search. 60 campaigns max, so a plain per-keystroke
-			// pass over the precomputed haystacks needs no debounce.
-			$(document).on('input', '#campaignsSearch', function() {
-				applyFilters();
-			});
-
-			// B3: resets only the three non-default filters (search/type/
-			// sector) - confidence and activity are left exactly as the
-			// reader set them.
-			$(document).on('click', '#campaignsClearFilters', function() {
-				$('#campaignsSearch').val('');
-				$('.tfc-filter-chip[data-ioctype]').removeClass('active').attr('aria-pressed', 'false');
-				$('.tfc-filter-chip[data-ioctype="any"]').addClass('active').attr('aria-pressed', 'true');
-				$('.tfc-filter-chip[data-sector]').removeClass('active').attr('aria-pressed', 'false');
-				$('.tfc-filter-chip[data-sector="any"]').addClass('active').attr('aria-pressed', 'true');
-				applyFilters();
-			});
-
-			// B2: re-sorts a COPY of originalEntries within each of big/small
-			// independently (renderList() itself splits by e.big, so passing
-			// it a differently-ORDERED-but-same-membership array is exactly
-			// what "independently" means here) and re-renders. "total" is the
-			// delivered order - restoring originalEntries as-is rather than
-			// running it through a comparator keeps that mode a true no-op.
-			// Always sorts from the pristine originalEntries, never from
-			// whatever's currently on screen, so switching between sort modes
-			// is never cumulative.
-			$(document).on('change', '#campaignsSort', function() {
-				var mode = $(this).val();
-				var cmp = SORT_COMPARATORS[mode];
-				var sorted;
-				if (!cmp) {
-					sorted = originalEntries.slice();
+	function renderIndicators(c, idx) {
+		var esc = TweetFeed.escapeHtml;
+		var total = (typeof c.ioc_count === 'number' && c.ioc_count > 0) ? c.ioc_count : (c.iocs || []).length;
+		var eff = getEffectiveIocs(c);
+		var rows = eff.rows;
+		var countLine = '';
+		var loadHtml = '';
+		if (eff.full) {
+			if (eff.cappedAt500) {
+				countLine = '500 of ' + esc(nf(eff.totalFull)) + ' shown – download the CSV below for the rest';
+			} else {
+				countLine = esc(nf(rows.length)) + ' of ' + esc(nf(total)) + (rows.length >= total ? ' – complete list' : '');
+			}
+		} else {
+			var sample = c.iocs || [];
+			if (sample.length < total) {
+				countLine = esc(nf(sample.length)) + ' published sample of ' + esc(nf(total)) + ' total IOCs';
+				if (sidecarState === 'failed' || sidecarState === 'mismatch') {
+					loadHtml = '<span class="tfc-load-failed">Could not load the full set right now.</span>';
 				} else {
-					var big = originalEntries.filter(function(e) { return e.big; }).slice().sort(cmp);
-					var small = originalEntries.filter(function(e) { return !e.big; }).slice().sort(cmp);
-					sorted = big.concat(small);
+					var loading = sidecarState === 'loading';
+					loadHtml = '<button type="button" class="tfc-load-all" data-idx="' + idx + '"' + (loading ? ' disabled' : '') + '>' +
+						(loading ? 'Loading…' : ('Load all ' + esc(nf(total)))) + '</button>';
 				}
-				renderList(sorted);
-				applyFilters();
+			} else {
+				countLine = esc(nf(sample.length)) + ' of ' + esc(nf(total)) + ' – complete list';
+			}
+		}
+
+		var iocHtml = rows.map(renderIocRow).join('');
+		var capNote = eff.full && eff.cappedAt500
+			? '<p class="tfc-ind-note">Showing the first 500 of ' + esc(nf(eff.totalFull)) + ' - the CSV download below has every one.</p>'
+			: '';
+
+		var allValues = rows.map(function(ioc) { return (ioc && ioc.value) ? String(ioc.value) : ''; }).filter(Boolean);
+		var copyBtn = allValues.length
+			? '<button type="button" class="tf-copy tfc-copy-sample" data-copy="' + esc(allValues.join('\n')) + '">Copy ' + esc(nf(allValues.length)) + ' values</button>'
+			: '';
+		var csvBtn = allValues.length
+			? '<button type="button" class="tfc-load-all tfc-csv-btn" data-idx="' + idx + '">Download CSV</button>'
+			: '';
+
+		return (
+			'<div class="tfc-indicators">' +
+				'<p class="tfc-pane-head">Indicators</p>' +
+				'<div class="tfc-ind-foot">' +
+					'<span class="tfc-ind-count">' + countLine + '</span>' +
+					loadHtml +
+				'</div>' +
+				'<div class="tfc-iocs">' + iocHtml + capNote + '</div>' +
+				'<div class="tfc-ind-actions">' + copyBtn + csvBtn + '</div>' +
+			'</div>'
+		);
+	}
+
+	// Override 1's honest sample wording drives this: only rendered when the
+	// rendered set (sample or capped-full) is still short of the true total.
+	function renderReach(c) {
+		var esc = TweetFeed.escapeHtml;
+		var total = (typeof c.ioc_count === 'number') ? c.ioc_count : (c.iocs || []).length;
+		var eff = getEffectiveIocs(c);
+		var shortfall = eff.full ? (eff.cappedAt500 ? (eff.totalFull - 500) : 0) : Math.max(0, total - (c.iocs || []).length);
+		if (shortfall <= 0) return '';
+		var anchors = (c.anchors && c.anchors.registered_domains) || [];
+		var domainChips = anchors.slice(0, 6).map(function(d) {
+			return '<a class="tfc-reach-chip" href="../search/?q=' + esc(encodeURIComponent(String(d))) + '">' + esc(String(d)) + '</a>';
+		}).join('');
+		var moreDomains = anchors.length > 6 ? '<span class="tfc-reach-label">+' + (anchors.length - 6) + '</span>' : '';
+		var tagChips = (c.tags || []).map(function(t) {
+			var clean = String(t).replace(/^#/, '');
+			return '<a class="tfc-reach-chip" href="../search/?tag=' + esc(encodeURIComponent(clean.toLowerCase())) + '">' + esc(t) + '</a>';
+		}).join('');
+		return (
+			'<div class="tfc-reach">' +
+				'<p class="tfc-pane-head">Reach the rest</p>' +
+				'<p class="tfc-reach-note">' + esc(nf(shortfall)) + ' more IOC' + (shortfall === 1 ? '' : 's') + ' in this campaign are not rendered above. Pivot on this campaign’s own infrastructure (365-day index):</p>' +
+				(domainChips ? '<div class="tfc-reach-group"><span class="tfc-reach-label">domains</span>' + domainChips + moreDomains + '</div>' : '') +
+				(tagChips ? '<div class="tfc-reach-group"><span class="tfc-reach-label">tags</span>' + tagChips + '</div>' : '') +
+			'</div>'
+		);
+	}
+
+	function renderProvenance(c) {
+		var esc = TweetFeed.escapeHtml;
+		var a = campaignAttrs(c, -1);
+		var idHtml = a.validId
+			? '<span class="tfc-prov-id">' + esc(a.validId) + '</span><button type="button" class="tfc-copy" data-copy-raw="' + esc(a.validId) + '" aria-label="Copy campaign id"><i class="far fa-copy"></i></button>'
+			: '';
+		var snap = docGeneratedAt ? esc(TweetFeed.formatDateLong(docGeneratedAt)) : '';
+		var linkBtn = a.validId
+			? '<button type="button" class="tfc-copy" data-copy-raw="' + esc('https://tweetfeed.live/campaigns/#' + a.validId) + '">Copy link</button>'
+			: '';
+		return (
+			'<div class="tfc-prov">' +
+				idHtml +
+				(snap ? '<span>snapshot ' + snap + '</span>' : '') +
+				linkBtn +
+				'<a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">raw JSON</a>' +
+			'</div>'
+		);
+	}
+
+	function renderBody(c, idx) {
+		return renderVitals(c) + renderPanes(c) + renderIndicators(c, idx) + renderReach(c) + renderProvenance(c);
+	}
+
+	// Lazy body build - the real perf win: initial DOM drops from ~1500
+	// nodes (every campaign's body pre-rendered, hidden) to ~450 (heads
+	// only). Called once per item, guarded by the item's data-built flag.
+	function buildBody(idx) {
+		var c = allCampaigns[idx];
+		if (!c) return;
+		var $item = $('.tfc-list > .tfc-item[data-idx="' + idx + '"]');
+		if (!$item.length || $item.data('built')) return;
+		$item.find('.tfc-body').html(renderBody(c, idx));
+		// Both the jQuery data cache (fast internal reads/writes above and
+		// in the click handler below) AND the real data-built="1" DOM
+		// attribute (so the plain CSS attribute selector in
+		// refreshBuiltIndicators() can find built items - jQuery's .data()
+		// only reflects an attribute that was already present at parse
+		// time, it never writes one back for a value set via .data()).
+		$item.data('built', true).attr('data-built', '1');
+	}
+
+	function buildAllBodies() {
+		$('.tfc-list > .tfc-item').each(function() {
+			var $item = $(this);
+			var idx = +$item.attr('data-idx');
+			if (!$item.data('built')) buildBody(idx);
+			$item.find('.tfc-head').attr('aria-expanded', 'true');
+			$item.find('.tfc-body').prop('hidden', false);
+		});
+		$('#campaignsExpandAll').text('Collapse all').attr('aria-pressed', 'true');
+	}
+
+	function collapseAll() {
+		$('.tfc-list > .tfc-item').each(function() {
+			var $item = $(this);
+			$item.find('.tfc-head').attr('aria-expanded', 'false');
+			$item.find('.tfc-body').prop('hidden', true);
+		});
+		$('#campaignsExpandAll').text('Expand all').attr('aria-pressed', 'false');
+		syncHash('');
+	}
+
+	// Re-renders the Indicators panel of every item that has already been
+	// built, after the Override-1 sidecar resolves (ready/mismatch/failed) -
+	// plus the one vitals sub-line that also depends on the effective row
+	// count. These are the only two pieces of the body that can change
+	// post-load.
+	function refreshBuiltIndicators() {
+		$('.tfc-list > .tfc-item[data-built]').each(function() {
+			var $item = $(this);
+			var idx = +$item.attr('data-idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			$item.find('.tfc-indicators').replaceWith(renderIndicators(c, idx));
+			$item.find('.tfc-reach').remove();
+			var reach = renderReach(c);
+			if (reach) $item.find('.tfc-indicators').after(reach);
+			$item.find('.tfc-vitals-published').text(nf(getEffectiveIocs(c).rows.length) + ' published below');
+		});
+	}
+
+	function ensureSidecar(cb) {
+		if (sidecarState === 'ready' || sidecarState === 'mismatch' || sidecarState === 'failed') { cb(); return; }
+		if (sidecarState === 'loading') { sidecarCallbacks.push(cb); return; }
+		sidecarState = 'loading';
+		sidecarCallbacks = [cb];
+		refreshBuiltIndicators();
+		var finish = function() {
+			var cbs = sidecarCallbacks;
+			sidecarCallbacks = [];
+			refreshBuiltIndicators();
+			cbs.forEach(function(fn) { fn(); });
+		};
+		if (typeof fetch !== 'function') { sidecarState = 'failed'; finish(); return; }
+		fetch(SIDECAR_URL).then(function(r) {
+			if (!r.ok) throw new Error('status ' + r.status);
+			return r.json();
+		}).then(function(data) {
+			if (!data || typeof data !== 'object' || !data.campaigns || typeof data.campaigns !== 'object' ||
+				data.generated_at !== docGeneratedAt) {
+				sidecarState = 'mismatch';
+			} else {
+				sidecarCampaigns = data.campaigns;
+				sidecarState = 'ready';
+			}
+		}).catch(function() {
+			sidecarState = 'failed';
+		}).then(finish);
+	}
+
+	// ── Filtering, sorting, search ──────────────────────────────────────────
+
+	var FIELD_RE = /^(tag|brand|sector|type|user|conf|domain|text):(.+)$/i;
+
+	function buildHaystacks(campaigns) {
+		haystacks = campaigns.map(function(c) {
+			var factsParts = [c.name || ''].concat(targetLabel(c), c.tags || [], c.reporters || []);
+			var anchors = c.anchors || {};
+			ANCHOR_ORDER.forEach(function(key) {
+				var vals = anchors[key];
+				if (Array.isArray(vals)) factsParts = factsParts.concat(vals);
+			});
+			(c.iocs || []).forEach(function(ioc) {
+				if (ioc && ioc.value) factsParts.push(String(ioc.value));
+				if (ioc && ioc.user) factsParts.push(String(ioc.user));
+			});
+			var facts = factsParts.join(' ').toLowerCase();
+			var prose = ([c.context || ''].concat(ttpNames(c))).join(' ').toLowerCase();
+			var scoped = {
+				tag: (c.tags || []).map(function(t) { return String(t).replace(/^#/, ''); }).join(' ').toLowerCase(),
+				brand: String(c.targeted_brand || '').toLowerCase(),
+				sector: (String(c.targeted_sector || '') + ' ' + prettySector(c.targeted_sector)).toLowerCase(),
+				user: (c.reporters || []).concat((c.iocs || []).map(function(i) { return (i && i.user) ? String(i.user) : ''; }))
+					.join(' ').replace(/@/g, '').toLowerCase(),
+				domain: ((anchors.registered_domains || []).join(' ') + ' ' +
+					(c.iocs || []).filter(function(i) { return i && (i.type === 'domain' || i.type === 'url'); })
+						.map(function(i) { return i.value || ''; }).join(' ')).toLowerCase()
+			};
+			return { facts: facts, prose: prose, scoped: scoped };
+		});
+	}
+
+	function parseQuery(q) { return (q || '').trim().split(/\s+/).filter(Boolean); }
+
+	function tokenMatches(c, h, tok, useProse) {
+		var m = FIELD_RE.exec(tok);
+		if (!m) {
+			var bare = tok.replace(/^[#@]/, '').toLowerCase();
+			if (!bare) return true;
+			return useProse ? (h.facts.indexOf(bare) !== -1 || h.prose.indexOf(bare) !== -1) : h.facts.indexOf(bare) !== -1;
+		}
+		var field = m[1].toLowerCase();
+		var val = m[2].replace(/^[#@]/, '').toLowerCase();
+		if (!val) return true;
+		if (field === 'type') return !!(c.types && c.types[val] > 0);
+		if (field === 'conf') return (c.confidence || '').toLowerCase() === val;
+		if (field === 'text') return h.prose.indexOf(val) !== -1;
+		var blob = h.scoped[field];
+		return blob ? blob.indexOf(val) !== -1 : false;
+	}
+	function campaignMatchesTokens(c, idx, tokens, useProse) {
+		var h = haystacks[idx];
+		if (!h) return false;
+		return tokens.every(function(tok) { return tokenMatches(c, h, tok, useProse); });
+	}
+
+	function setActivityChip(value) {
+		$('#campaignsMorePanel .tfc-filter-chip[data-activity]').each(function() {
+			var $chip = $(this);
+			var isMatch = $chip.data('activity') === String(value);
+			$chip.toggleClass('active', isMatch);
+			$chip.attr('aria-pressed', isMatch ? 'true' : 'false');
+		});
+	}
+
+	function offDefaultCount() {
+		var n = 0;
+		if (($('#campaignsMorePanel .tfc-filter-chip[data-activity].active').data('activity') || 'all') !== 'all') n++;
+		if (($('#campaignsSector').val() || 'any') !== 'any') n++;
+		return n;
+	}
+
+	function renderEcho() {
+		var esc = TweetFeed.escapeHtml;
+		var chips = [];
+		var activityMode = $('#campaignsMorePanel .tfc-filter-chip[data-activity].active').data('activity') || 'all';
+		if (activityMode !== 'all') {
+			chips.push('<button type="button" class="tfc-echo-chip" data-reset="activity">Active this week <span aria-hidden="true">×</span></button>');
+		}
+		var sectorVal = $('#campaignsSector').val() || 'any';
+		if (sectorVal !== 'any') {
+			var label = sectorVal === '__none__' ? 'No target inferred' : ($('#campaignsSector option:selected').text() || sectorVal);
+			chips.push('<button type="button" class="tfc-echo-chip" data-reset="sector">Sector: ' + esc(label) + ' <span aria-hidden="true">×</span></button>');
+		}
+		$('#campaignsEcho').html(chips.join(''));
+	}
+
+	function applyFilters() {
+		var activeConfidences = {};
+		$('#campaignsToolbar .tfc-filter-chip[data-confidence]').each(function() {
+			var $chip = $(this);
+			activeConfidences[$chip.data('confidence')] = $chip.hasClass('active');
+		});
+		var activityMode = $('#campaignsMorePanel .tfc-filter-chip[data-activity].active').data('activity') || 'all';
+		var typeFilter = $('#campaignsType').val() || 'any';
+		var sectorFilter = $('#campaignsSector').val() || 'any';
+		var rawQuery = ($('#campaignsSearch').val() || '');
+		var tokens = parseQuery(rawQuery);
+
+		var searchMode = 'facts';
+		if (tokens.length) {
+			var factsHits = 0;
+			for (var i = 0; i < allCampaigns.length; i++) {
+				if (campaignMatchesTokens(allCampaigns[i], i, tokens, false)) factsHits++;
+			}
+			if (factsHits === 0) searchMode = 'prose';
+		}
+
+		var $items = $('#campaignsList > .tfc-item');
+		var shown = 0;
+		var visibleIocSum = 0;
+		var visibleSizesDesc = [];
+		var visibleWeeks = [];
+		$items.removeClass('tfc-first');
+		var firstVisible = null;
+		$items.each(function() {
+			var $item = $(this);
+			var conf = $item.attr('data-confidence') || 'low';
+			var confOk = activeConfidences[conf] !== false;
+			var activityOk = activityMode === 'all' ? true : $item.attr('data-active') !== '0';
+			var idx = +$item.attr('data-idx');
+			var c = allCampaigns[idx];
+			var searchOk = !tokens.length || campaignMatchesTokens(c, idx, tokens, searchMode === 'prose');
+			var typeOk = typeFilter === 'any' || !!(c && c.types && c.types[typeFilter] > 0);
+			var sectorOk;
+			if (sectorFilter === 'any') sectorOk = true;
+			else if (sectorFilter === '__none__') sectorOk = !!(c && !c.targeted_brand && !c.targeted_sector && !c.targeted_country);
+			else sectorOk = !!(c && c.targeted_sector === sectorFilter);
+			var visible = confOk && activityOk && searchOk && typeOk && sectorOk;
+			$item.toggle(visible);
+			if (visible) {
+				shown++;
+				if (!firstVisible) firstVisible = $item;
+				if (c) {
+					var iocN = (typeof c.ioc_count === 'number') ? c.ioc_count : 0;
+					visibleIocSum += iocN;
+					visibleSizesDesc.push(iocN);
+					if (typeof c.ioc_count_7d === 'number') visibleWeeks.push(c.ioc_count_7d);
+				}
+			}
+		});
+		if (firstVisible) firstVisible.addClass('tfc-first');
+		window.TFC_MAX_WEEK = Math.max.apply(null, visibleWeeks.length ? visibleWeeks : [0]);
+
+		// The activity/mix/count bars were rendered once at list-build time
+		// against the maxWeek known then; re-render just the activity fill
+		// of already-rendered heads so cross-row normalisation always
+		// reflects the currently visible set (a fast pass: <=30 heads).
+		$items.each(function() {
+			var $item = $(this);
+			if ($item.css('display') === 'none') return;
+			var idx = +$item.attr('data-idx');
+			var c = allCampaigns[idx];
+			if (!c || (c.activity && typeof c.activity === 'object')) return; // histogram doesn't depend on maxWeek
+			$item.find('.tfc-h-act').replaceWith(renderAct(c, window.TFC_MAX_WEEK, parseDateOnly(docGeneratedAt)));
+		});
+
+		// .prop('hidden', ...), not .toggle()/.show(): the element starts
+		// with the `hidden` CONTENT ATTRIBUTE in the markup, and Chromium's
+		// UA stylesheet applies `[hidden] { display: none !important }` -
+		// that beats an inline style.display jQuery's .toggle()/.show()
+		// would set, so the list would render its 20 items into the DOM
+		// and never actually become visible. Verified against a live
+		// browser load 2026-08-29.
+		$('#campaignsList').prop('hidden', shown === 0);
+		$('#campaignsListHead').prop('hidden', shown === 0);
+		$('#campaignsListNote').prop('hidden', shown === 0);
+
+		if (searchMode === 'prose' && tokens.length) {
+			$('#campaignsFilterCount').text('0 exact matches · ' + shown + ' campaign' + (shown === 1 ? '' : 's') + ' mention this in their AI summary');
+		} else {
+			$('#campaignsFilterCount').text(shown + ' shown');
+		}
+
+		if (shown === 0) {
+			$('#campaignsFilterEmpty').show();
+			var msg = 'No campaigns match';
+			if (rawQuery.trim()) msg += ' "' + TweetFeed.escapeHtml(rawQuery.trim()) + '"';
+			var confLabels = ['high', 'medium', 'low'].filter(function(k) { return activeConfidences[k]; });
+			if (confLabels.length && confLabels.length < 3) {
+				msg += (rawQuery.trim() ? ' with ' : ' with ') + confLabels.map(function(k) { return k.charAt(0).toUpperCase() + k.slice(1); }).join('/') + ' cohesion only';
+			}
+			$('#campaignsFilterEmptyMsg').text(msg);
+		} else {
+			$('#campaignsFilterEmpty').hide();
+		}
+
+		$('#campaignsMoreCount').text(offDefaultCount() ? ('(' + offDefaultCount() + ')') : '');
+		renderEcho();
+
+		$('#tfcHlShown').text(nf(shown));
+		$('#tfcHlIocs').text(nf(visibleIocSum));
+		$('#tfcHlIocsSub').text('across ' + nf(shown) + ' campaign' + (shown === 1 ? '' : 's'));
+		visibleSizesDesc.sort(function(x, y) { return y - x; });
+		var topPct = (visibleSizesDesc.length && visibleIocSum > 0) ? Math.round((visibleSizesDesc[0] / visibleIocSum) * 100) : null;
+		$('#tfcHlHead').text(nf(visibleWeeks.filter(function(n) { return n > 0; }).length));
+		$('#tfcHlHeadSub').text(topPct === null ? '' : ('top campaign = ' + topPct + '% of IOCs'));
+	}
+
+	function sortTieBreak(a, b) {
+		var an = (typeof a.c.ioc_count === 'number') ? a.c.ioc_count : 0;
+		var bn = (typeof b.c.ioc_count === 'number') ? b.c.ioc_count : 0;
+		return bn - an;
+	}
+	var CONFIDENCE_RANK = { high: 3, medium: 2, low: 1 };
+	var SORT_COMPARATORS = {
+		recent: function(a, b) {
+			var a1 = (typeof a.c.ioc_count_1d === 'number') ? a.c.ioc_count_1d : -1;
+			var b1 = (typeof b.c.ioc_count_1d === 'number') ? b.c.ioc_count_1d : -1;
+			if (a1 !== b1) return b1 - a1;
+			var a7 = (typeof a.c.ioc_count_7d === 'number') ? a.c.ioc_count_7d : -1;
+			var b7 = (typeof b.c.ioc_count_7d === 'number') ? b.c.ioc_count_7d : -1;
+			if (a7 !== b7) return b7 - a7;
+			return sortTieBreak(a, b);
+		},
+		lastseen: function(a, b) {
+			var av = a.c.last_seen || '';
+			var bv = b.c.last_seen || '';
+			if (av !== bv) return av < bv ? 1 : -1;
+			return sortTieBreak(a, b);
+		},
+		confidence: function(a, b) {
+			var av = CONFIDENCE_RANK[(a.c.confidence || 'low').toLowerCase()] || 1;
+			var bv = CONFIDENCE_RANK[(b.c.confidence || 'low').toLowerCase()] || 1;
+			if (av !== bv) return bv - av;
+			return sortTieBreak(a, b);
+		}
+	};
+
+	function renderList(entries) {
+		var maxWeek = entries.reduce(function(m, e) {
+			var w = (typeof e.c.ioc_count_7d === 'number') ? e.c.ioc_count_7d : 0;
+			return Math.max(m, w);
+		}, 0);
+		var genAtDate = parseDateOnly(docGeneratedAt);
+		var html = entries.map(function(e) { return renderItem(e.c, e.i, maxWeek, genAtDate); }).join('');
+		$('#campaignsList').html(html);
+	}
+
+	function renderTypeSelect(campaigns) {
+		var esc = TweetFeed.escapeHtml;
+		var counts = {};
+		campaigns.forEach(function(c) {
+			var types = c.types || {};
+			Object.keys(types).forEach(function(t) {
+				if (types[t] > 0) counts[t] = (counts[t] || 0) + 1;
 			});
 		});
-	})();
+		var order = ['url', 'domain', 'ip', 'md5', 'sha256'];
+		var opts = '<option value="any">Any type</option>';
+		order.forEach(function(t) {
+			if (!counts[t]) return;
+			opts += '<option value="' + esc(t) + '">' + esc(t.toUpperCase()) + ' (' + counts[t] + ')</option>';
+		});
+		$('#campaignsType').html(opts);
+	}
+
+	function renderSectorSelect(campaigns) {
+		var esc = TweetFeed.escapeHtml;
+		var counts = {};
+		var noneCount = 0;
+		campaigns.forEach(function(c) {
+			if (c.targeted_sector && typeof c.targeted_sector === 'string') {
+				counts[c.targeted_sector] = (counts[c.targeted_sector] || 0) + 1;
+			} else if (!c.targeted_brand && !c.targeted_sector && !c.targeted_country) {
+				noneCount++;
+			}
+		});
+		var slugs = Object.keys(counts).sort(function(a, b) { return prettySector(a).localeCompare(prettySector(b)); });
+		var opts = '<option value="any">Any target</option>';
+		opts += slugs.map(function(s) {
+			return '<option value="' + esc(s) + '">' + esc(prettySector(s)) + ' (' + counts[s] + ')</option>';
+		}).join('');
+		if (noneCount) opts += '<option value="__none__">No target inferred (' + noneCount + ')</option>';
+		$('#campaignsSector').html(opts);
+	}
+
+	// ── Deep linking ─────────────────────────────────────────────────────
+
+	var syncHashTimer = null;
+	function syncHash(id) {
+		if (syncHashTimer) clearTimeout(syncHashTimer);
+		syncHashTimer = setTimeout(function() {
+			var target = id ? ('#' + id) : ' ';
+			try {
+				if (id) history.replaceState(null, '', '#' + id);
+				else history.replaceState(null, '', window.location.pathname + window.location.search);
+			} catch (e) { /* Safari SecurityError past the call-rate cap - non-fatal, URL just won't update this once */ }
+		}, 300);
+	}
+
+	function openItemById(id, scroll) {
+		if (!CAMPAIGN_ID_RE.test(id)) return false;
+		var $item = $('#' + id);
+		if (!$item.length || !$item.hasClass('tfc-item')) return false;
+		var idx = +$item.attr('data-idx');
+		buildBody(idx);
+		$item.find('.tfc-head').attr('aria-expanded', 'true');
+		$item.find('.tfc-body').prop('hidden', false);
+		if (scroll && typeof $item[0].scrollIntoView === 'function') {
+			$item[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+		return true;
+	}
+
+	function openFromHash() {
+		var hash = window.location.hash || '';
+		if (hash.charAt(0) === '#') hash = hash.slice(1);
+		if (!CAMPAIGN_ID_RE.test(hash)) return;
+		$('#campaignsAgedOut').hide();
+		var $item = $('#' + hash);
+		if (!$item.length || !$item.hasClass('tfc-item')) {
+			$('#campaignsAgedOut').text('Campaign ' + hash + ' is not in the current 30-day window. Campaigns age out as their IOCs leave the window.').show();
+			return;
+		}
+		if ($item.css('display') === 'none') {
+			$('#campaignsSearch').val('');
+			$('#campaignsToolbar .tfc-filter-chip[data-confidence]').addClass('active').attr('aria-pressed', 'true');
+			$('#campaignsType').val('any');
+			$('#campaignsSector').val('any');
+			setActivityChip('all');
+			applyFilters();
+		}
+		openItemById(hash, true);
+	}
+
+	// ── Keyboard ─────────────────────────────────────────────────────────
+
+	function visibleHeads() {
+		return $('#campaignsList > .tfc-item').filter(function() { return $(this).css('display') !== 'none'; }).find('.tfc-head');
+	}
+	function moveFocus(dir) {
+		var $heads = visibleHeads();
+		if (!$heads.length) return;
+		var idx = $heads.index(document.activeElement);
+		var next;
+		if (dir === 'home') next = 0;
+		else if (dir === 'end') next = $heads.length - 1;
+		else {
+			next = idx === -1 ? 0 : idx + dir;
+			next = Math.max(0, Math.min($heads.length - 1, next));
+		}
+		$heads.eq(next).trigger('focus');
+	}
+
+	// ── Loading / error ──────────────────────────────────────────────────
+
+	function showError(msg) {
+		$('#campaignsLoading').hide();
+		$('#campaignsError').show();
+		console.error('[TweetFeed] campaigns fetch failed:', msg);
+	}
+
+	function renderCampaigns(data) {
+		$('#campaignsLoading').hide();
+
+		if (!data || !Array.isArray(data.campaigns)) {
+			showError('unexpected payload shape (data.campaigns is missing or not an array)');
+			return;
+		}
+
+		var campaigns = data.campaigns;
+		allCampaigns = campaigns;
+		docGeneratedAt = (data && data.generated_at) || null;
+
+		var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs';
+		if (docGeneratedAt) genLine += ' · last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(docGeneratedAt));
+		$('#generatedLine').html(genLine);
+
+		if (data && data.stale) {
+			var since = data.stale_since ? TweetFeed.formatDateLong(data.stale_since) : 'unknown';
+			$('#staleBanner').html(
+				'<i class="fas fa-exclamation-triangle"></i> Campaign clustering data is stale (last successful run: ' +
+				TweetFeed.escapeHtml(since) + '). Showing the most recent available snapshot.'
+			).show();
+		}
+
+		if (!campaigns.length) {
+			$('#campaignsEmpty').show();
+			return;
+		}
+
+		originalEntries = campaigns.map(function(c, i) { return { c: c, i: i }; });
+		buildHaystacks(campaigns);
+		renderTypeSelect(campaigns);
+		renderSectorSelect(campaigns);
+		renderList(originalEntries);
+
+		var weekCounts = { high: 0, medium: 0, low: 0 };
+		campaigns.forEach(function(c) {
+			var conf = (c.confidence || 'low').toLowerCase();
+			if (weekCounts[conf] === undefined) conf = 'low';
+			weekCounts[conf]++;
+		});
+		$('#campaignsToolbar .tfc-filter-chip[data-confidence="high"] .tfc-chip-count').text(nf(weekCounts.high));
+		$('#campaignsToolbar .tfc-filter-chip[data-confidence="medium"] .tfc-chip-count').text(nf(weekCounts.medium));
+		$('#campaignsToolbar .tfc-filter-chip[data-confidence="low"] .tfc-chip-count').text(nf(weekCounts.low));
+		var activeCount = campaigns.filter(function(c) { return (typeof c.ioc_count_7d === 'number') ? (c.ioc_count_7d > 0) : true; }).length;
+		$('#campaignsMorePanel .tfc-filter-chip[data-activity="all"] .tfc-chip-count').text(nf(campaigns.length));
+		$('#campaignsMorePanel .tfc-filter-chip[data-activity="week"] .tfc-chip-count').text(nf(activeCount));
+
+		$('#campaignsToolbar').show();
+		$('#campaignsToolbarNote').show();
+		applyFilters();
+		openFromHash();
+	}
+
+	function loadCampaigns() {
+		$('#campaignsError').hide();
+		$('#campaignsLoading').show();
+		TweetFeed.safeGet(CAMPAIGNS_URL, {
+			success: renderCampaigns,
+			error: showError
+		});
+	}
+
+	// ── Copy affordance (page-local, .tfc-copy) ─────────────────────────
+	// utils.js:304 treats a data-copy value starting with "#" as a jQuery
+	// selector - anchor tags and campaign ids are "#"/"tfc-"-adjacent
+	// strings that must never go through .tf-copy's data-copy attribute.
+	// This delegated handler is a page-local sibling using data-copy-raw,
+	// mirroring the same clipboard + fallback + green-tick feedback.
+	function tfcCopy(text, $btn) {
+		var done = function(ok) {
+			if (!ok || !$btn || !$btn.length) return;
+			var $icon = $btn.find('i');
+			var hadIcon = $icon.length > 0;
+			if (hadIcon) $icon.removeClass('fa-copy').addClass('fa-check tfc-copy-ok');
+			else $btn.addClass('tfc-copy-ok');
+			setTimeout(function() {
+				if (hadIcon) $icon.removeClass('fa-check tfc-copy-ok').addClass('fa-copy');
+				else $btn.removeClass('tfc-copy-ok');
+			}, 1000);
+		};
+		if (navigator.clipboard && navigator.clipboard.writeText) {
+			navigator.clipboard.writeText(text).then(function() { done(true); }, function() { tfcFallbackCopy(text, done); });
+		} else {
+			tfcFallbackCopy(text, done);
+		}
+	}
+	function tfcFallbackCopy(text, cb) {
+		var ta = document.createElement('textarea');
+		ta.value = text;
+		ta.style.position = 'fixed';
+		ta.style.opacity = '0';
+		document.body.appendChild(ta);
+		ta.focus();
+		ta.select();
+		var ok = false;
+		try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+		document.body.removeChild(ta);
+		if (cb) cb(ok);
+	}
+
+	// ── Wiring ───────────────────────────────────────────────────────────
+
+	$(function() {
+		loadCampaigns();
+
+		$(document).on('click', '.tfc-retry', loadCampaigns);
+
+		$(document).on('click', '.tfc-copy[data-copy-raw]', function(e) {
+			e.preventDefault();
+			var $btn = $(this);
+			tfcCopy($btn.attr('data-copy-raw') || '', $btn);
+		});
+
+		$(document).on('click', '.tfc-head', function() {
+			var $btn = $(this);
+			var $item = $btn.closest('.tfc-item');
+			var open = $btn.attr('aria-expanded') === 'true';
+			if (!open) {
+				var idx = +$item.attr('data-idx');
+				buildBody(idx);
+			}
+			$btn.attr('aria-expanded', open ? 'false' : 'true');
+			$item.find('.tfc-body').prop('hidden', open);
+			var id = $item.attr('id');
+			if (!open && id) syncHash(id);
+			else if (open && ($btn.attr('id') || id) === (window.location.hash || '').slice(1)) syncHash('');
+		});
+
+		$(document).on('click', '.tfc-reporters-toggle', function() {
+			var $btn = $(this);
+			var open = $btn.attr('aria-expanded') === 'true';
+			$btn.attr('aria-expanded', open ? 'false' : 'true');
+			$btn.siblings('.tfc-reporters-list').prop('hidden', open);
+		});
+
+		$(document).on('click', '#campaignsExpandAll', function() {
+			var pressed = $(this).attr('aria-pressed') === 'true';
+			if (pressed) collapseAll(); else buildAllBodies();
+		});
+
+		$(document).on('click', '.tfc-load-all:not(.tfc-csv-btn)', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			$btn.prop('disabled', true).text('Loading…');
+			ensureSidecar(function() {});
+		});
+
+		$(document).on('click', '.tfc-csv-btn', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var eff = getEffectiveIocs(c);
+			var rows = [['type', 'value', 'date', 'user', 'tweet']].concat(eff.rows.map(function(ioc) {
+				return [ioc.type || '', ioc.value || '', ioc.date || '', ioc.user || '', ioc.tweet || ''];
+			}));
+			var idPart = campaignAttrs(c, -1).validId || ('idx-' + idx);
+			TweetFeed.downloadCSV('campaign-' + idPart + '.csv', rows);
+		});
+
+		$(document).on('click', '.tfc-filter-chip[data-confidence]', function() {
+			var $chip = $(this).toggleClass('active');
+			$chip.attr('aria-pressed', $chip.hasClass('active') ? 'true' : 'false');
+			applyFilters();
+		});
+
+		$(document).on('click', '#campaignsMorePanel .tfc-filter-chip[data-activity]', function() {
+			var $chip = $(this);
+			if ($chip.hasClass('active')) return;
+			setActivityChip($chip.data('activity'));
+			applyFilters();
+		});
+
+		$(document).on('change', '#campaignsType, #campaignsSector', applyFilters);
+		$(document).on('input', '#campaignsSearch', applyFilters);
+
+		$(document).on('click', '.tfc-hint-tok', function() {
+			$('#campaignsSearch').val($(this).data('hint')).trigger('input').trigger('focus');
+		});
+
+		$(document).on('click', '#campaignsMore', function() {
+			var $panel = $('#campaignsMorePanel');
+			var open = !$panel.prop('hidden');
+			$panel.prop('hidden', open);
+			$(this).attr('aria-expanded', open ? 'false' : 'true');
+		});
+
+		$(document).on('click', '#campaignsClearAll', function() {
+			$('#campaignsSearch').val('');
+			$('#campaignsType').val('any');
+			$('#campaignsSector').val('any');
+			setActivityChip('all');
+			applyFilters();
+		});
+
+		$(document).on('click', '.tfc-echo-chip', function() {
+			var reset = $(this).data('reset');
+			if (reset === 'activity') setActivityChip('all');
+			else if (reset === 'sector') $('#campaignsSector').val('any');
+			applyFilters();
+		});
+
+		$(document).on('click', '#campaignsEmptyClearSearch', function() {
+			$('#campaignsSearch').val('');
+			applyFilters();
+		});
+		$(document).on('click', '#campaignsEmptyShowAllConf', function() {
+			$('#campaignsToolbar .tfc-filter-chip[data-confidence]').addClass('active').attr('aria-pressed', 'true');
+			applyFilters();
+		});
+
+		$(document).on('change', '#campaignsSort', function() {
+			var mode = $(this).val();
+			var cmp = SORT_COMPARATORS[mode];
+			var sorted = cmp ? originalEntries.slice().sort(cmp) : originalEntries.slice();
+			renderList(sorted);
+			applyFilters();
+		});
+
+		// Keyboard: arrow/home/end move focus among visible heads inside the
+		// list; Escape collapses the focused row and keeps focus on it; "/"
+		// focuses search unless focus is already in a form control.
+		$(document).on('keydown', '#campaignsList .tfc-head', function(e) {
+			if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(1); }
+			else if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(-1); }
+			else if (e.key === 'Home') { e.preventDefault(); moveFocus('home'); }
+			else if (e.key === 'End') { e.preventDefault(); moveFocus('end'); }
+			else if (e.key === 'Escape') {
+				var $btn = $(this);
+				if ($btn.attr('aria-expanded') === 'true') {
+					e.preventDefault();
+					$btn.trigger('click');
+					$btn.trigger('focus');
+				}
+			}
+		});
+		$(document).on('keydown', function(e) {
+			if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+				var tag = (document.activeElement && document.activeElement.tagName || '').toLowerCase();
+				if (tag !== 'input' && tag !== 'textarea' && tag !== 'select') {
+					e.preventDefault();
+					$('#campaignsSearch').trigger('focus');
+				}
+			}
+			if ((e.key === 'f' || e.key === 'F') && (e.metaKey || e.ctrlKey)) {
+				buildAllBodies();
+			}
+		});
+		window.addEventListener('beforeprint', buildAllBodies);
+	});
+})();
 	</script>
 </body>
 

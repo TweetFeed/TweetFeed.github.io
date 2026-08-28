@@ -100,7 +100,11 @@ Each campaign clusters related IOCs from a rolling 30-day window by shared infra
 
 Each campaign also carries optional `ioc_count_1d`/`ioc_count_7d`/`ioc_count_30d` int fields (IOCs seen in the last 1/7/30 days; `ioc_count` stays the total across the full window). They may be absent on older documents - a missing `ioc_count_7d` should be treated as "currently active", not as zero. `ioc_count_7d > 0` is what identifies a campaign as currently active.
 
-MCP equivalent: `get_campaigns` tool, optional `brand` (substring match on `targeted_brand`), `min_confidence` (`low`/`medium`/`high`), `limit` (1-50, default 20).
+Each campaign also carries optional rollups over its full membership (not just the sampled `iocs`): `enriched_count` (how many of the campaign's IOCs have an AI enrichment entry - the denominator for the next two), `threat_types` (e.g. `{"phishing": 172, "cryptoscam": 100}`), `families` (malware family counts, usually empty since attribution is sparse), and `infra` (present only when the campaign has an `ip`-type IOC: ASN/org, IP count and country per network, sorted by IP count descending - the ASN is embedded in `org`, there's no separate `asn` field). `activity`, a sparse per-day IOC histogram, is also on the raw endpoint but the MCP tool drops it for token economy. All of these may be absent on an older cached or stale-fallback document. Each `iocs` row may also carry optional `ai` (`{"threat_type": "...", "family": "..."}`) and `net` (`{"org": "...", "country": "..."}`, `ip`-type only) fields, mirroring the same-named objects `GET /v1/ioc` returns.
+
+The inline `iocs` array is a stratified 25-row sample (across sub-clusters and eTLD+1 buckets, not just the newest 25), not a complete list. For the full uncapped IOC set of every campaign, fetch `https://api.tweetfeed.live/v1/campaigns/iocs`: same cache policy, `generated_at` matches the main document - compare the two and fall back to the inline sample on a mismatch.
+
+MCP equivalent: `get_campaigns` tool, optional `brand` (substring match on `targeted_brand`), `min_confidence` (`low`/`medium`/`high`), `limit` (1-50, default 20); ships `families`/`threat_types`/`enriched_count`/`infra` per campaign but drops `activity`.
 
 Human page: `https://tweetfeed.live/campaigns/`.
 

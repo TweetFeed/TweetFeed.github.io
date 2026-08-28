@@ -693,11 +693,23 @@ CAMPAIGN_PAGE_FIELDS = (
     "targeted_country", "ttps", "first_seen", "last_seen", "ioc_count", "ioc_count_1d",
     "ioc_count_7d", "ioc_count_30d", "types", "tags", "reporters", "iocs",
     "member_cluster_ids", "anchors",
+    # Added 2026-08-29 for the accordion-list redesign: all five are OPTIONAL
+    # (build-time ASN join / enrichment rollups), absent from every campaign
+    # in the live payload as of this date, and every read on the page is
+    # behind a presence check - see campaigns/index.html's renderAct/
+    # renderFamiliesRow/renderInfra.
+    "activity", "enriched_count", "threat_types", "families", "infra",
 )
 
 # Fields the same page reads off each sampled Ioc object inside a campaign
 # (c.iocs[i].<field>) - same freshness caveat as CAMPAIGN_PAGE_FIELDS above.
-IOC_PAGE_FIELDS = ("date", "user", "type", "value", "tags", "tweet")
+IOC_PAGE_FIELDS = (
+    "date", "user", "type", "value", "tags", "tweet",
+    # Added 2026-08-29: optional per-IOC enrichment mirrors of GET /v1/ioc's
+    # `ai`/`net` objects, same presence-check discipline as the campaign
+    # fields above.
+    "ai", "net",
+)
 
 
 def check_machine_surfaces(pages: list[str]) -> list[str]:

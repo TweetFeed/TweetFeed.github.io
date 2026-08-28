@@ -847,6 +847,34 @@ components:
           format: uri
           description: URL of the tweet that reported the IOC.
           example: "https://x.com/malwrhunterteam/status/1234567890123456789"
+        ai:
+          type: object
+          nullable: true
+          description: |
+            Optional per-IOC AI enrichment, mirroring the `ai` object `GET
+            /v1/ioc` returns. Present only once the value's own enrichment
+            job has covered it; absent (not `null`) otherwise.
+          properties:
+            threat_type:
+              type: string
+              example: "phishing"
+            family:
+              type: string
+              description: Malware family, when identified. Omitted when unknown.
+              example: "Joker"
+        net:
+          type: object
+          nullable: true
+          description: |
+            Optional per-IOC network metadata, mirroring the `net` object
+            `GET /v1/ioc` returns. `ip`-type IOCs only.
+          properties:
+            org:
+              type: string
+              example: "AS13335 Cloudflare, Inc."
+            country:
+              type: string
+              example: "US"
 
     IocRecord:
       type: object
@@ -1414,6 +1442,64 @@ components:
           additionalProperties:
             type: integer
           example: {"domain": 53, "ip": 32, "md5": 17, "sha256": 15, "url": 81}
+        activity:
+          type: object
+          description: |
+            Optional sparse per-day IOC histogram, chronologically sorted
+            keys (`YYYY-MM-DD`), counting every row in the campaign - not
+            just the published `iocs` sample. May be absent entirely on an
+            older cached or stale-fallback document.
+          additionalProperties:
+            type: integer
+          example: {"2026-08-14": 205, "2026-08-19": 202}
+        enriched_count:
+          type: integer
+          description: |
+            Optional: how many of the campaign's IOCs (across the full
+            membership, not just the sample) have an AI enrichment entry.
+            The denominator for `threat_types` and `families` below. May be
+            absent entirely on an older cached document.
+          example: 182
+        threat_types:
+          type: object
+          description: |
+            Optional rollup of AI-inferred threat types over the campaign's
+            full membership (not just the sample), keyed by type with a
+            count. May be absent entirely on an older cached document.
+          additionalProperties:
+            type: integer
+          example: {"phishing": 172, "cryptoscam": 100}
+        families:
+          type: object
+          description: |
+            Optional rollup of AI-inferred malware families over the
+            campaign's full membership (not just the sample), keyed by
+            family name with a count. Usually empty or absent since family
+            attribution is sparse. May be absent entirely on an older
+            cached document.
+          additionalProperties:
+            type: integer
+          example: {"Joker": 10}
+        infra:
+          type: array
+          description: |
+            Optional build-time ASN join, present only when the campaign
+            has at least one `ip`-type IOC. Sorted by `ip_count` descending.
+            The ASN is embedded in `org` - there is no separate `asn`
+            field. May be absent entirely on an older cached document or on
+            a campaign with no IP IOCs.
+          items:
+            type: object
+            properties:
+              org:
+                type: string
+                example: "AS13335 Cloudflare, Inc."
+              ip_count:
+                type: integer
+                example: 3
+              country:
+                type: string
+                example: "US"
         tags:
           type: array
           items:
