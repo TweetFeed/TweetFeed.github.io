@@ -662,6 +662,7 @@
 		}
 		.tfc-ev-rest { color: #9aa0a6; }
 		.tfc-ev-merged { text-transform: none; font-weight: 400; letter-spacing: normal; color: #9aa0a6; }
+		.tfc-ev-value code { font: inherit; color: #1c1c1c; padding: 0; }
 		.tfc-copy {
 			flex-shrink: 0;
 			background: none;
@@ -714,7 +715,7 @@
 		.tfc-reporters-toggle:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 		.tfc-reporters-list { display: block; margin-top: 0.3rem; }
 		.tfc-reporter, .tfc-reporters-inline a { color: #6c757d; margin-right: 0.4rem; }
-		.tfc-reporters-line { margin-top: 0.6rem; font-size: 12.5px; color: #6c757d; font-family: 'Rubik', sans-serif; }
+		.tfc-reporters-line, .tfc-related-line { margin-top: 0.6rem; font-size: 12.5px; color: #6c757d; font-family: 'Rubik', sans-serif; }
 
 		/* ── Indicators ────────────────────────────────────────────────── */
 		.tfc-ind-foot {
@@ -1806,15 +1807,19 @@
 	// attacker-authored strings, so they are escaped and rendered as plain
 	// text, never as links.
 	var ANCHOR_LABELS = {
+		families: ['shared family', 'shared families'],
 		registered_domains: ['shared domain', 'shared domains'],
 		url_path_patterns: ['shared URL path', 'shared URL paths'],
 		tags: ['shared tag', 'shared tags']
 	};
-	// Priority order for the gist's anchor pick (tags -> paths -> domains):
-	// the rare categories discriminate; "N shared domains" reads the same on
-	// every row, so it's the fallback, not the first choice.
-	var ANCHOR_GIST_ORDER = ['tags', 'url_path_patterns', 'registered_domains'];
-	var ANCHOR_ORDER = ['registered_domains', 'url_path_patterns', 'tags'];
+	// Priority order for the gist's anchor pick (families -> tags -> paths
+	// -> domains): the rare categories discriminate; "N shared domains"
+	// reads the same on every row, so it's the fallback, not the first
+	// choice. `families` is carried only by an orphan hash/IP bucket that
+	// local enrichment attributed to one malware family - such a bucket
+	// has no domain/path/tag anchor at all, the family IS its anchor.
+	var ANCHOR_GIST_ORDER = ['families', 'tags', 'url_path_patterns', 'registered_domains'];
+	var ANCHOR_ORDER = ['families', 'registered_domains', 'url_path_patterns', 'tags'];
 	// The generator caps every published anchor list at 50 - an anchor array
 	// at that length is a capped list, not necessarily the true membership
 	// count, so it renders as "50+" rather than a false-precision "50".
@@ -1842,7 +1847,13 @@
 			if (lead.length >= 3) return; // target + up to 2 anchor picks
 			var vals = anchors[key];
 			if (!Array.isArray(vals) || !vals.length) return;
-			if (key === 'tags' || key === 'url_path_patterns') {
+			if (key === 'families') {
+				// Skip when topFamilyName() already put the same family in
+				// the target piece - both come from the same canonical name.
+				var famVal = String(vals[0]);
+				var famDup = targetParts.some(function(t) { return String(t).toLowerCase() === famVal.toLowerCase(); });
+				if (!famDup) lead.push(famVal);
+			} else if (key === 'tags' || key === 'url_path_patterns') {
 				lead.push(String(vals[0]));
 			} else {
 				var capped = vals.length >= MAX_PUBLISHED_LIST;
@@ -1913,6 +1924,28 @@
 				'</div>'
 			);
 		}).filter(Boolean).join('');
+		// Naming patterns (optional, campaigns/patterns.py): up to 3
+		// deterministic regexes over the campaign's own registered domains,
+		// each with evidence counts. Absent on most documents today (shadow
+		// upstream) - a campaign without the key renders exactly as before.
+		// The regex is attacker-derived text: escaped, never a link.
+		var patternRows = (Array.isArray(c.patterns) ? c.patterns : []).map(function(p) {
+			if (!p || typeof p !== 'object' || !p.regex) return '';
+			var n = (typeof p.domain_count === 'number') ? p.domain_count : 0;
+			var outside = (typeof p.domains_elsewhere_30d === 'number') ? p.domains_elsewhere_30d : 0;
+			var regex = String(p.regex);
+			return (
+				'<div class="tfc-ev-row">' +
+					'<span class="tfc-ev-count"></span>' +
+					'<span class="tfc-ev-label">naming pattern</span>' +
+					'<span class="tfc-ev-value"><code>' + esc(regex) + '</code> - ' + esc(nf(n)) + ' domain' + (n === 1 ? '' : 's') +
+						(outside > 0 ? ' <span class="tfc-ev-rest">(+' + esc(nf(outside)) + ' outside this campaign)</span>' : '') +
+					'</span>' +
+					'<button type="button" class="tfc-copy" data-copy-raw="' + esc(regex) + '" aria-label="Copy naming pattern"><i class="far fa-copy"></i></button>' +
+				'</div>'
+			);
+		}).filter(Boolean).join('');
+		rows += patternRows;
 		if (!rows) return '';
 		// The enclosing pane already carries the "Why these are one campaign"
 		// heading, so this box must NOT repeat it - it did, and the label
@@ -1953,6 +1986,18 @@
 		}).join('');
 		if (!rows) return '';
 		return '<div class="tfc-infra"><p class="tfc-infra-head">Infrastructure</p>' + rows + '</div>';
+	}
+
+	// related (optional, campaigns/phishunt.py): how many of phishunt.io's
+	// currently active detections sit on this campaign's domains or match
+	// its naming patterns. Never members, never in ioc_count - omitted
+	// upstream when nothing matches, so absent means "none today". Plain
+	// text, count only: the matched domains are live attacker infrastructure.
+	function renderRelatedLine(c) {
+		var esc = TweetFeed.escapeHtml;
+		var r = c.related;
+		if (!r || typeof r !== 'object' || typeof r.match_count !== 'number') return '';
+		return '<p class="tfc-related-line">on phishunt.io today: ' + esc(nf(r.match_count)) + '</p>';
 	}
 
 	// Override 2: enrichment Families row - enriched_count/threat_types/
@@ -2167,6 +2212,19 @@
 		}
 
 		var span = (c.first_seen && c.last_seen) ? (Math.round(((parseDateOnly(c.last_seen) || 0) - (parseDateOnly(c.first_seen) || 0)) / 86400000) + 1) : null;
+		// history (optional, campaigns/history.py): the 365-day evidence
+		// behind this 30-day card. Absent when the yearly scan failed or
+		// timed out, and then this sub-line is simply not rendered. The raw
+		// YYYY-MM-DD is kept on purpose: shortDate() drops the year, and a
+		// months-old first sighting needs it.
+		var historySub = '';
+		if (c.history && typeof c.history === 'object' && typeof c.history.first_seen_365d === 'string' && c.history.first_seen_365d) {
+			historySub = 'seen since ' + c.history.first_seen_365d;
+			var before = c.history.iocs_before_window;
+			if (typeof before === 'number' && before > 0) {
+				historySub += ' - ' + nf(before) + ' IOC' + (before === 1 ? '' : 's') + ' before this window';
+			}
+		}
 		var targetParts = targetLabel(c);
 		var targetVal = targetParts.length ? targetParts[0] : 'None inferred';
 		var targetSub = targetParts.length > 1 ? targetParts.slice(1).join(' · ') : 'AI-inferred';
@@ -2178,7 +2236,8 @@
 				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (daysSince === null ? '–' : esc(String(daysSince))) + '</div><div class="tf-headline-label">Days since last IOC</div>' +
 					'<div class="tf-headline-sub">' + sinceSub + '</div></div>' +
 				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (span === null ? '–' : esc(String(span))) + '</div><div class="tf-headline-label">Day span</div>' +
-					'<div class="tf-headline-sub">' + esc(dateRangeText(c)) + '</div></div>' +
+					'<div class="tf-headline-sub">' + esc(dateRangeText(c)) + '</div>' +
+					(historySub ? '<div class="tf-headline-sub">' + esc(historySub) + '</div>' : '') + '</div>' +
 				'<div class="tf-headline-cell"><div class="tf-headline-value" style="font-size:15px;font-weight:600;">' + esc(targetVal) + '</div><div class="tf-headline-label">Apparent target</div>' +
 					'<div class="tf-headline-sub">' + esc(targetSub) + '</div></div>' +
 			'</div>'
@@ -2217,6 +2276,7 @@
 				'<p class="tfc-pane-head">Why these are one campaign</p>' +
 				renderEvidence(c) +
 				renderInfra(c) +
+				renderRelatedLine(c) +
 				(reportersHtml ? '<p class="tfc-reporters-line">Reporters ' + reportersHtml + '</p>' : '') +
 			'</div>'
 		);

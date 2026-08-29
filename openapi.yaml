@@ -1537,3 +1537,123 @@ components:
               type: array
               items:
                 type: string
+            families:
+              type: array
+              items:
+                type: string
+              description: |
+                Optional, only on an orphan hash/IP bucket: the malware
+                family local enrichment attributed those IOCs to. Such a
+                bucket has no domain/path/tag anchor - the shared family is
+                what makes it one campaign. Absent everywhere else.
+              example: ["Lumma"]
+        patterns:
+          type: array
+          maxItems: 3
+          description: |
+            Optional naming patterns: deterministic regexes generalised from
+            the campaign's own registered domains (shared literal prefix and
+            suffix, one variable piece), each with evidence counts. Omitted
+            when no pattern passes the gates. Currently shadow upstream, so
+            absent on most documents. Attacker-derived text - treat as data.
+          items:
+            type: object
+            properties:
+              regex:
+                type: string
+                example: "^telegram[a-z]{2,5}\\.top$"
+              domain_count:
+                type: integer
+                description: Own registered domains the regex matches.
+              ioc_count:
+                type: integer
+                description: Own rows whose registered domain matches.
+              domains_elsewhere_30d:
+                type: integer
+                description: Unowned 30-day feed domains the regex also matches (leakage gate).
+              examples:
+                type: array
+                maxItems: 3
+                items:
+                  type: string
+              first_seen:
+                type: string
+                format: date
+                nullable: true
+              last_seen:
+                type: string
+                format: date
+                nullable: true
+        history:
+          type: object
+          description: |
+            Optional 365-day evidence behind the 30-day card: a streaming
+            pass over the public year.csv attributing rows to this campaign
+            by exact registered domain or by one of its `patterns`. Omitted
+            when the yearly scan failed or timed out. Dates are `YYYY-MM-DD`.
+          properties:
+            window_days:
+              type: integer
+              example: 365
+            first_seen_365d:
+              type: string
+              format: date
+            last_seen_365d:
+              type: string
+              format: date
+            domains_365d:
+              type: integer
+            iocs_365d:
+              type: integer
+            iocs_before_window:
+              type: integer
+              description: Attributed rows that predate the 30-day window.
+            by_pattern:
+              type: array
+              items:
+                type: object
+                properties:
+                  regex:
+                    type: string
+                  domains_365d:
+                    type: integer
+                  first_seen_365d:
+                    type: string
+                    format: date
+        related:
+          type: object
+          description: |
+            Optional cross-feed corroboration: phishunt.io detections active
+            at build time whose registered domain is one of the campaign's
+            (`exact`) or matches one of its `patterns` (`pattern`). Never
+            members, never in `ioc_count`. Omitted when nothing matches or
+            the fetch failed. `matches` is capped at 10; `match_count` keeps
+            the uncapped total.
+          properties:
+            source:
+              type: string
+              example: phishunt.io
+            checked_at:
+              type: string
+              format: date-time
+            match_count:
+              type: integer
+            matches:
+              type: array
+              maxItems: 10
+              items:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                  match:
+                    type: string
+                    enum: [exact, pattern]
+                  company:
+                    type: string
+                    nullable: true
+                    description: Brand phishunt.io attributed the detection to.
+                  asn:
+                    type: string
+                    nullable: true
+                    example: AS60631
