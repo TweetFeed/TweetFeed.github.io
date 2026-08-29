@@ -477,11 +477,19 @@ hr.divider {
 	line-height: 1.55;
 }
 .table.tf-doc-table tbody tr:first-child td { border-top: 0; }
-/* Long unbroken values (feed URLs, blocklist paths, header names) in the doc
-   tables. Lived inline in agents/index.html only, so /api/ - which uses the
-   same class - asked for 420px inside 338 at a 360px viewport and had to be
-   dragged sideways. Shared here so both pages get it. */
-.tf-doc-table td, .tf-doc-table th { word-break: break-word; overflow-wrap: anywhere; }
+/* Long unbroken values (feed URLs, blocklist paths, well-known paths, media
+   types) in the two documentation tables. Lived inline in agents/index.html
+   only, so /api/ - which uses the same class - asked for 420px inside 338 at
+   a 360px viewport and had to be dragged sideways.
+   KEPT AT THE SAME BREAKPOINT the inline copy used, deliberately: above 992
+   the wrapper caps at 900px via .table-responsive:has(> .tf-doc-table), and
+   the longest unbreakable token on either page
+   (/.well-known/agent-skills/index.json, ~281px in a 332px column) already
+   fits. Unscoping it is a no-op today but throws away that measurement and
+   changes min-content contributions the moment the tables grow. */
+@media (max-width: 991.98px) {
+	.tf-doc-table td, .tf-doc-table th { word-break: break-word; overflow-wrap: anywhere; }
+}
 .table.tf-doc-table tbody tr:nth-of-type(odd),
 .table.tf-doc-table tbody tr:nth-of-type(even) { background-color: transparent; }
 /* The identifier is not the same kind of thing as the tokens quoted inside
