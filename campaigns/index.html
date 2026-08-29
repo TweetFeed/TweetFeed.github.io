@@ -730,22 +730,88 @@
 			border-top: 1px solid #e3e6f0;
 			padding-top: 0.6rem;
 		}
-		@media (min-width: 1200px) {
-			.tfc-iocs {
-				display: grid;
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 0.35rem 1.25rem;
-			}
-			.tfc-ind-note { grid-column: 1 / -1; }
+		.tfc-ioc-prov {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: baseline;
+			gap: 0.35rem 0.5rem;
+			font-size: 12px;
+			color: #737373;
+			margin: 0 0 0.5rem;
 		}
-		.tfc-ioc-wrap { min-width: 0; margin-bottom: 0.4rem; }
-		.tfc-ioc-row {
+		.tfc-ioc-provuser { color: #1178b3; text-decoration: none; }
+		.tfc-ioc-provuser:hover { text-decoration: underline; }
+		.tfc-ioc-srclist {
+			list-style: none;
+			margin: 0.25rem 0 0.5rem;
+			padding: 0;
+			font-size: 11.5px;
+			color: #737373;
+		}
+		.tfc-ioc-bar {
+			display: flex;
+			align-items: baseline;
+			flex-wrap: wrap;
+			gap: 0.4rem 0.9rem;
+			margin-bottom: 0.4rem;
+		}
+		.tfc-ioc-find {
+			border: 0;
+			border-bottom: 1px solid #e3e6f0;
+			background: transparent;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			padding: 2px 0;
+			min-width: 220px;
+			flex: 1 1 220px;
+		}
+		.tfc-ioc-shown { font-size: 12px; color: #737373; font-variant-numeric: tabular-nums; }
+		.tfc-ioc-typetoggle, .tfc-ioc-dupes {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12px;
+			color: #737373;
+			text-decoration: none;
+			cursor: pointer;
+			font-variant-numeric: tabular-nums;
+		}
+		.tfc-ioc-typetoggle[aria-pressed="true"], .tfc-ioc-dupes[aria-pressed="true"] {
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+		}
+		.tfc-ioc-sort {
+			border: 0;
+			border-bottom: 1px solid #e3e6f0;
+			background: transparent;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12px;
+			color: #4b5563;
+		}
+		.tfc-ioc-list { list-style: none; margin: 0; padding: 0; }
+		.tfc-ioc-line {
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
+			min-height: 26px;
+			padding: 1px 4px;
 			font-size: 12.5px;
 			font-family: 'Rubik', sans-serif;
 		}
+		.tfc-ioc-line:hover, .tfc-ioc-line:focus-within { background: #f5f5f5; }
+		/* The tint is the only background these links ever sit on, and
+		   #1178b3 drops to 4.42:1 against it. #0d5c8a - already this
+		   file's link-hover colour - is 6.61:1, and hover/focus is
+		   exactly when the row's controls are about to be used. */
+		.tfc-ioc-line:hover .tfc-ioc-link,
+		.tfc-ioc-line:focus-within .tfc-ioc-link,
+		.tfc-ioc-line:hover .tfc-ioc-unfold,
+		.tfc-ioc-line:focus-within .tfc-ioc-unfold,
+		.tfc-ioc-line:hover .tfc-ioc-mark a,
+		.tfc-ioc-line:focus-within .tfc-ioc-mark a { color: #0d5c8a; }
+		.tfc-ioc-child { padding-left: 1.6rem; }
 		.tfc-ioc-type {
 			font-size: 10px;
 			padding: 1px 6px;
@@ -753,41 +819,57 @@
 			font-weight: 600;
 			text-transform: uppercase;
 			flex-shrink: 0;
+			width: 58px;
+			text-align: center;
+			box-sizing: border-box;
 		}
 		.tfc-ioc-value {
 			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 			font-size: 12px;
-			background: #f5f5f5;
-			padding: 1px 6px;
-			border-radius: 3px;
-			word-break: break-all;
 			flex: 1 1 auto;
 			min-width: 0;
-		}
-		a.tfc-ioc-value { color: inherit; text-decoration: none; }
-		a.tfc-ioc-value:hover { background: #e2e2e2; text-decoration: underline; }
-		.tfc-ioc-row .tf-copy { flex-shrink: 0; cursor: pointer; color: #555; }
-		.tfc-ioc-row .tf-copy:hover { color: #000; }
-		.tfc-ioc-link { flex-shrink: 0; color: #1178b3; }
-		.tfc-ioc-row .tf-action { flex-shrink: 0; }
-		.tfc-ioc-date {
-			flex-shrink: 0;
-			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-			font-size: 10.5px;
-			color: #9a9a9a;
-		}
-		.tfc-ioc-user {
-			flex-shrink: 0;
-			max-width: 110px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			font-size: 11.5px;
-			color: #6c757d;
+			color: inherit;
 			text-decoration: none;
 		}
-		.tfc-ioc-user:hover { color: #1178b3; text-decoration: underline; }
-		.tfc-ioc-tags-line { margin: 2px 0 0 42px; }
+		.tfc-ioc-value:hover { text-decoration: underline; }
+		.tfc-ioc-mark {
+			margin-left: auto;
+			font-size: 11px;
+			color: #4b5563;
+			display: flex;
+			align-items: center;
+			gap: 0.35rem;
+			flex-shrink: 0;
+		}
+		.tfc-ioc-unfold {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-size: 11px;
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-ioc-link { flex-shrink: 0; color: #1178b3; }
+		/* .tf-action is a 32x30 button site-wide, and one of those per line
+		   sets the height of every line in the ledger: it alone took the
+		   line from 26px to 32px, i.e. +1,240px over a 207-line campaign.
+		   All three controls are pinned to 24x24 instead - the WCAG 2.5.8
+		   target-size floor, so this is the smallest they may legally be,
+		   and it holds at every width rather than only below 576px. */
+		.tfc-ioc-line .tf-copy,
+		.tfc-ioc-line .tfc-ioc-link,
+		.tfc-ioc-line .tf-action {
+			flex-shrink: 0;
+			width: 24px;
+			height: 24px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.tfc-ioc-line .tf-copy { cursor: pointer; color: #555; }
+		.tfc-ioc-line .tf-copy:hover { color: #000; }
 		.tfc-ioc-tag {
 			display: inline-block;
 			margin: 0 4px 2px 0;
@@ -799,7 +881,100 @@
 			color: #737373;
 		}
 		.tfc-ioc-tag-ai { border-color: #c9c9c9; color: #4b5563; }
-		.tfc-ind-note { font-size: 12px; color: #737373; margin-top: 0.3rem; }
+		/* "most" hedges a mode that is not near-universal, and "no tags"
+		   keeps an unmarked line unambiguous: both are words about the
+		   data, so they read muted next to the chips they qualify. */
+		.tfc-ioc-hedge { font-size: 11px; color: #737373; margin-right: 0.15rem; }
+		/* #6b6b6b, not the #737373 used on white elsewhere: this one only
+		   ever sits on a line, and #737373 measures 4.35:1 against the
+		   #f5f5f5 hover tint - under AA. #6b6b6b is 4.89:1 there and
+		   5.28:1 at rest, so it passes in both states without needing a
+		   second, state-dependent colour. */
+		.tfc-ioc-notag { font-size: 11px; color: #6b6b6b; font-style: italic; }
+		/* Without a base rule a <button> renders with the UA default
+		   `2px outset` black border, which would put a black box at the
+		   innermost nesting level of the row - the one thing the border
+		   ladder forbids. Every borderless button in this block needs its
+		   own reset, not just a :focus-visible entry. */
+		.tfc-ioc-src-toggle {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12px;
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-ioc-src-toggle:hover { color: #0d5c8a; }
+		.tfc-ioc-grouphead { display: flex; align-items: baseline; gap: 0.5rem; margin: 0.5rem 0 0.15rem; }
+		.tfc-ioc-group {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-size: 11px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+			color: #4b5563;
+			cursor: pointer;
+		}
+		/* A collapsed group is otherwise indistinguishable from a label
+		   sitting above the list it does not contain. The marker is
+		   decorative - aria-expanded is what carries the state. */
+		.tfc-ioc-group::before {
+			content: '\25B8';
+			display: inline-block;
+			width: 0.85em;
+			margin-right: 0.15em;
+			font-weight: 400;
+			color: #737373;
+		}
+		.tfc-ioc-group[aria-expanded="true"]::before { content: '\25BE'; }
+		.tfc-ioc-groupcount { font-size: 11px; color: #737373; font-variant-numeric: tabular-nums; }
+		/* An explicit `display` beats the UA's [hidden]{display:none}, so
+		   the window kept its stale "Showing 100 of 100" text on screen
+		   after Show-all had made it irrelevant. Any rule that sets
+		   display on an element this code toggles with .prop('hidden')
+		   has to opt back out. */
+		.tfc-ioc-window[hidden] { display: none; }
+		.tfc-ioc-window {
+			display: flex;
+			align-items: baseline;
+			flex-wrap: wrap;
+			gap: 0.4rem 0.9rem;
+			margin: 0.5rem 0;
+			font-size: 12px;
+			color: #737373;
+		}
+		.tfc-ioc-more, .tfc-ioc-all, .tfc-ioc-clear {
+			background: none;
+			border: 0;
+			padding: 0;
+			font-family: 'Rubik', sans-serif;
+			font-size: 12.5px;
+			color: #1178b3;
+			text-decoration: underline;
+			text-underline-offset: 2px;
+			cursor: pointer;
+		}
+		.tfc-ioc-more:hover, .tfc-ioc-all:hover, .tfc-ioc-clear:hover { color: #0d5c8a; }
+		.tfc-ioc-empty, .tfc-ioc-loading { font-size: 12.5px; color: #737373; padding: 0.4rem 4px; }
+		@media (min-width: 992px) {
+			.tfc-ioc-value { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+		}
+		@media (max-width: 991.98px) {
+			.tfc-ioc-value { overflow-wrap: anywhere; }
+		}
+		@media (max-width: 575.98px) {
+			.tfc-ioc-line { flex-wrap: wrap; min-height: 32px; }
+			.tfc-ioc-value { flex-basis: 100%; order: 2; }
+			.tfc-ioc-mark { order: 3; margin-left: 0; }
+			.tfc-ioc-line .tf-copy, .tfc-ioc-line .tfc-ioc-link, .tfc-ioc-line .tf-action { order: 4; }
+			.tfc-ioc-find { flex-basis: 100%; }
+			.tfc-ioc-sort { flex-basis: 100%; }
+		}
 		.tfc-load-all {
 			background: none;
 			border: 1px solid black;
@@ -906,7 +1081,11 @@
 		.tfc-filter-chip:focus-visible, .tfc-sort-select:focus-visible, .tfc-more-clear:focus-visible,
 		.tfc-hint-tok:focus-visible, .tfc-echo-chip:focus-visible, .tfc-expand-all:focus-visible,
 		.tfc-copy:focus-visible, .tfc-tag-chip:focus-visible, .tfc-reach-chip:focus-visible,
-		.tfc-load-all:focus-visible, .tfc-copy-sample:focus-visible, .tfc-ioc-value:focus-visible {
+		.tfc-load-all:focus-visible, .tfc-copy-sample:focus-visible, .tfc-ioc-value:focus-visible,
+		.tfc-ioc-find:focus-visible, .tfc-ioc-sort:focus-visible, .tfc-ioc-typetoggle:focus-visible,
+		.tfc-ioc-dupes:focus-visible, .tfc-ioc-unfold:focus-visible, .tfc-ioc-group:focus-visible,
+		.tfc-ioc-more:focus-visible, .tfc-ioc-all:focus-visible, .tfc-ioc-clear:focus-visible,
+		.tfc-ioc-src-toggle:focus-visible {
 			outline: 2px solid #3a6f96;
 			outline-offset: 2px;
 		}
@@ -962,11 +1141,6 @@
 				overflow: hidden;
 				max-height: 2.7em;
 			}
-			.tfc-ioc-row { flex-wrap: wrap; }
-			.tfc-ioc-value { flex-basis: 100%; order: 3; word-break: break-all; }
-			.tfc-ioc-date { order: 1; }
-			.tfc-ioc-user { order: 2; margin-left: auto; }
-			.tfc-ioc-link, .tfc-ioc-row .tf-copy, .tfc-ioc-row .tf-action { order: 4; }
 		}
 
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
@@ -1407,8 +1581,30 @@
 	// original order exactly.
 	var originalEntries = [];
 
+	// Per-campaign Indicators panel state (search/filter/sort/grouping/
+	// window position), keyed by c.id. Lives here in the closure, never on
+	// the DOM: refreshBuiltIndicators() replaces a campaign's whole
+	// .tfc-indicators subtree on every sidecar resolution, which would wipe
+	// any state parked in a data- attribute on a node about to be thrown
+	// away.
+	var iocState = {};
+	function iocStateFor(id) {
+		if (!iocState[id]) {
+			iocState[id] = { q: '', types: {}, dupes: false, sort: 'az',
+			                  closedGroups: {}, unfolded: {}, windowN: (window.innerWidth < 576 ? 40 : 60) };
+		}
+		return iocState[id];
+	}
+	// One pending debounce timer per campaign idx, for the .tfc-ioc-find
+	// input handler below.
+	var iocFindTimers = {};
+
 	var IOC_TYPE_COLORS = { url: '#0026E6', domain: '#3399FF', ip: '#02bf0f', md5: '#FFC34D', sha256: '#FFC34D' };
-	var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true };
+	// domain/ip joined md5/sha256 here 2026-08-29: white-on-#3399FF measures
+	// 2.94:1 and white-on-#02bf0f 2.48:1, both fail AA; #1c1c1c on those
+	// same fills is 5.80:1 and 6.87:1. Fill colours (IOC_TYPE_COLORS) are
+	// untouched - only which ones get dark vs. light text.
+	var IOC_TYPE_DARK_TEXT = { md5: true, sha256: true, domain: true, ip: true };
 	var IOC_TYPE_ABBR = { url: 'url', domain: 'dom', ip: 'ip', md5: 'md5', sha256: 'sha256' };
 	// Campaign ids are a fixed-shape fingerprint ("tfc-" + 12 hex chars, see
 	// tweetfeed-campaigns/campaigns/ids.py). Any id used as a DOM id, in a
@@ -1416,6 +1612,80 @@
 	// check first - it is the sanitizer, not TweetFeed.escapeHtml (which only
 	// protects HTML text/attribute context, not id/selector context).
 	var CAMPAIGN_ID_RE = /^tfc-[0-9a-f]{12}$/;
+
+	// ── Host/apex helpers para el ledger de indicadores ──────────────
+	// Todo se deriva en render de los 6 campos planos que el sidecar SI
+	// trae, que es lo que hace que el plegado y la agrupacion se comporten
+	// igual antes y despues de "Load all".
+	var FOLD_BARE_URLS = true;
+	var IPV4_RE = /^(\d{1,3}\.){3}\d{1,3}$/;
+	// Sufijos ICANN de dos etiquetas. Deliberadamente NO es la PSL entera:
+	// solo hace falta para no cortar un apex por la mitad, y de estos hoy
+	// se toca uno solo (com.br). Ampliar si aparece un falso agrupamiento.
+	var MULTI_LABEL_SUFFIXES = {
+		'com.br':1,'com.au':1,'com.mx':1,'com.ar':1,'com.co':1,'com.pe':1,'com.ve':1,
+		'com.ec':1,'com.uy':1,'com.do':1,'com.gt':1,'com.bo':1,'com.py':1,'com.tr':1,
+		'com.cn':1,'com.hk':1,'com.tw':1,'com.sg':1,'com.my':1,'com.ph':1,'com.vn':1,
+		'com.pk':1,'com.ng':1,'com.eg':1,'com.sa':1,'com.ru':1,'com.es':1,'com.pl':1,
+		'com.ua':1,'co.uk':1,'co.jp':1,'co.kr':1,'co.in':1,'co.za':1,'co.nz':1,
+		'co.il':1,'co.th':1,'co.id':1,'co.ke':1,'ac.uk':1,'gov.uk':1,'org.uk':1,
+		'net.au':1,'org.au':1,'net.br':1,'org.br':1,'ne.jp':1,'or.jp':1,'net.cn':1,
+		'org.cn':1,'gov.cn':1,'edu.cn':1
+	};
+	function normHost(h) {
+		h = String(h || '').trim().toLowerCase();
+		if (!h) return '';
+		if (h.charAt(0) === '[') return h;          // literal IPv6, se deja tal cual
+		return h.replace(/\.+$/, '');               // punto final
+	}
+	// Devuelve {host, bare, port} de una fila url; {} si no parsea.
+	function parseUrlRow(value) {
+		var s = String(value || '').trim();
+		if (!s) return {};
+		if (!/^[a-z][a-z0-9+.\-]*:\/\//i.test(s)) s = 'http://' + s;
+		try {
+			var u = new URL(s);
+			return {
+				host: normHost(u.hostname),
+				port: u.port || '',
+				bare: (u.pathname === '' || u.pathname === '/') && !u.search && !u.hash
+			};
+		} catch (e) { return {}; }
+	}
+	// La clave por la que un indicador ocupa UNA linea.
+	function lineKeyOf(row) {
+		if (!row) return '';
+		if (row.type === 'domain' || row.type === 'ip') return normHost(row.value) || String(row.value || '');
+		if (row.type === 'url') {
+			var p = parseUrlRow(row.value);
+			if (p.host) return p.host + (p.port ? ':' + p.port : '');
+		}
+		return String(row.value || '');
+	}
+	function tagKeyOf(row) {
+		var t = (row && Array.isArray(row.tags)) ? row.tags.slice() : [];
+		return t.map(function(x) { return String(x); }).sort().join('|');
+	}
+	function dayOf(row) {
+		return (row && typeof row.date === 'string') ? row.date.slice(0, 10) : '';
+	}
+	// Apex registrable, reglas ICANN (NO privadas): queremos que los ~100
+	// subdominios de typedream.app caigan en UN grupo, que es justo lo
+	// contrario de lo que da tldextract con include_psl_private_domains.
+	function apexOf(host) {
+		var h = normHost(host);
+		if (!h || IPV4_RE.test(h) || h.charAt(0) === '[') return h;
+		var p = h.split('.');
+		if (p.length < 3) return h;
+		if (MULTI_LABEL_SUFFIXES[p.slice(-2).join('.')] && p.length >= 3) return p.slice(-3).join('.');
+		return p.slice(-2).join('.');
+	}
+	// Etiquetas invertidas: ordenar por esto deja los mismos apex juntos.
+	function sortKeyOf(host) {
+		var h = normHost(host);
+		if (!h || IPV4_RE.test(h)) return h;
+		return h.split('.').reverse().join('.');
+	}
 
 	var MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	function shortDate(s) {
@@ -1956,62 +2226,450 @@
 	// Override 1: which IOC rows to render for this campaign - the inline
 	// sample (c.iocs, up to 25) unless the sidecar has been loaded AND its
 	// generated_at matches the main document, in which case the campaign's
-	// full set is used (capped at 500 rendered rows).
+	// full set is used. No 500-row cap here any more: buildIocModel() below
+	// folds duplicate bare-URL rows into their parent line before anything
+	// reaches the DOM, so the record count and the rendered line count are
+	// two different numbers and the cap that protected the old flat list
+	// against a 400-row campaign is not what protects this one.
 	function getEffectiveIocs(c) {
 		if (sidecarState === 'ready' && sidecarCampaigns && CAMPAIGN_ID_RE.test(c.id) &&
 			Array.isArray(sidecarCampaigns[c.id])) {
-			var full = sidecarCampaigns[c.id];
-			return { rows: full.slice(0, 500), full: true, totalFull: full.length, cappedAt500: full.length > 500 };
+			return { rows: sidecarCampaigns[c.id], full: true };
 		}
 		return { rows: c.iocs || [], full: false };
 	}
 
-	function renderIocRow(ioc) {
+	// One O(n) pass over the effective rows (sample, or the full sidecar
+	// set once "Load all" resolves) that folds a bare "http://" + a host
+	// already present in the same set into that host's own line, and
+	// tallies which of user/tagset/day are common enough across the whole
+	// set to hoist into one shared provenance line instead of repeating on
+	// every row. Memoized on c.__iocModel; refreshBuiltIndicators() clears
+	// the memo the instant the sidecar resolves, so the full set gets
+	// exactly one pass rather than one per re-render.
+	function buildIocModel(c, rows) {
+		if (c.__iocModel) return c.__iocModel;
+		rows = rows || [];
+
+		// Two DIFFERENT keys are at work here and conflating them loses
+		// rows. lineKeyOf() is the FOLD key - host[:port], deliberately
+		// blind to the path, because that is what a bare "http://host" has
+		// to match against. Line IDENTITY is the whole value: two urls on
+		// one host with different paths are two artifacts, and keying
+		// lines by host collapsed them into one and dropped the second
+		// (measured on the live set: 21 records lost in the sidecar and 14
+		// in the samples, among them same-host-different-path urls and
+		// hosts independently reported by two people on different days).
+		//
+		// Children are held in a map local to this pass, never written
+		// back onto the row objects: ensureSidecar() calls
+		// refreshBuiltIndicators() twice (once to paint "Loading...", once
+		// on resolve) and each call nulls the memo, so a mutation on the
+		// shared row would push the same child a second time whenever the
+		// two passes see the same array - which is exactly what happens
+		// while loading, and permanently if the fetch then fails.
+		var byKey = {};
+		rows.forEach(function(row) {
+			if (row && (row.type === 'domain' || row.type === 'ip')) {
+				var k = lineKeyOf(row);
+				if (k && !byKey[k]) byKey[k] = row;
+			}
+		});
+
+		var lines = [];
+		var linesById = {};       // "type|value" -> line
+		var childrenByHost = {};  // fold key -> [row, ...]
+		var recordCount = 0;
+		var foldedCount = 0;
+		var dedupedCount = 0;
+		var typeCounts = {};
+
+		function identityOf(row) {
+			return row.type + '|' + String(row.value || '').trim().toLowerCase();
+		}
+
+		rows.forEach(function(row) {
+			if (!row) return;
+			recordCount++;
+			typeCounts[row.type] = (typeCounts[row.type] || 0) + 1;
+
+			if (FOLD_BARE_URLS && row.type === 'url') {
+				var p = parseUrlRow(row.value);
+				if (p.host && p.bare && !p.port) {
+					var parent = byKey[p.host];
+					if (parent && parent.user === row.user && dayOf(parent) === dayOf(row) &&
+						tagKeyOf(parent) === tagKeyOf(row)) {
+						(childrenByHost[p.host] = childrenByHost[p.host] || []).push(row);
+						foldedCount++;
+						return;
+					}
+				}
+			}
+
+			// Exact same type AND same value: one artifact reported twice.
+			// Counted, not dropped, so the footer arithmetic still closes.
+			var id = identityOf(row);
+			var existing = linesById[id];
+			if (existing) {
+				existing.dupRecords++;
+				dedupedCount++;
+				return;
+			}
+
+			var host = '';
+			if (row.type === 'domain' || row.type === 'ip') {
+				host = normHost(row.value);
+			} else if (row.type === 'url') {
+				var pu = parseUrlRow(row.value);
+				if (pu.host) host = pu.host;
+			}
+			var line = {
+				row: row,
+				key: lineKeyOf(row),
+				host: host,
+				apex: host ? apexOf(host) : '',
+				sortKey: host ? sortKeyOf(host) : String(row.value || '').toLowerCase(),
+				dupRecords: 0,
+				children: []
+			};
+			linesById[id] = line;
+			lines.push(line);
+		});
+
+		// Attach the folded children now that every line exists, so the
+		// pass never depends on a parent being reached before its twins.
+		lines.forEach(function(line) {
+			if ((line.row.type === 'domain' || line.row.type === 'ip') && childrenByHost[line.key]) {
+				line.children = childrenByHost[line.key];
+			}
+		});
+
+		if (lines.length + foldedCount + dedupedCount !== recordCount) {
+			// Should never happen - every row above either folds, dedups,
+			// or opens a new line. Non-fatal: worst case is an undercount
+			// in the footer text, never a wrong/missing row.
+			console.warn('buildIocModel: line accounting mismatch for', c.id);
+		}
+
+		// Modal channels, over every raw record (not lines). The mode is
+		// hoisted whenever two or more rows share it, and the LINES only
+		// print the channel when they deviate from it - never as a
+		// fallback for a mode that missed a threshold. Falling back to
+		// per-line was measured to be the worst of both worlds: on a
+		// campaign whose modal tagset covers 48% of rows it redrew
+		// "#Remcos #Xworm #opendir" on 12 of 21 lines, which is exactly
+		// the constant column this redesign exists to delete. When the
+		// mode is not near-universal the fix is to HEDGE it in words
+		// ("most rows"), not to repeat it 12 times.
+		function modeOf(fn) {
+			var counts = {};
+			var bestKey = null, bestN = 0;
+			rows.forEach(function(row) {
+				var v = fn(row);
+				var n = (counts[v] = (counts[v] || 0) + 1);
+				if (n > bestN) { bestN = n; bestKey = v; }
+			});
+			if (bestN < 2) return null;   // every row distinct: nothing to hoist
+			return { key: bestKey, n: bestN, share: bestN / rows.length };
+		}
+		var hoistUser = modeOf(function(row) { return row && row.user; });
+		var hoistTagKey = modeOf(tagKeyOf);
+		var hoistTags = null;
+		if (hoistTagKey && hoistTagKey.key) {
+			var withTags = null;
+			for (var i = 0; i < rows.length; i++) {
+				if (tagKeyOf(rows[i]) === hoistTagKey.key) { withTags = rows[i]; break; }
+			}
+			hoistTags = (withTags && Array.isArray(withTags.tags)) ? withTags.tags : [];
+		}
+
+		// c.threat_types is a campaign-level tally and survives "Load all"
+		// untouched - row.ai.threat_type does not, since the sidecar never
+		// carries `ai` on any row (see this file's SPEC header). Reading
+		// row.ai here is exactly the bug this redesign fixes: the chip
+		// would vanish the moment the full set loads.
+		var hoistThreatType = null;
+		if (c.threat_types && typeof c.threat_types === 'object') {
+			var ttKeys = Object.keys(c.threat_types);
+			if (ttKeys.length) {
+				ttKeys.sort(function(a, b) { return (c.threat_types[b] || 0) - (c.threat_types[a] || 0); });
+				hoistThreatType = ttKeys[0];
+			}
+		}
+
+		var tweetMap = {};
+		var tweets = [];
+		rows.forEach(function(row) {
+			var t = row && row.tweet;
+			if (typeof t !== 'string' || !/^https?:\/\//i.test(t)) return;
+			if (!tweetMap[t]) {
+				tweetMap[t] = { url: t, day: dayOf(row), count: 0 };
+				tweets.push(tweetMap[t]);
+			}
+			tweetMap[t].count++;
+		});
+		tweets.sort(function(a, b) { return b.count - a.count; });
+
+		// "+url" is a channel like any other, and it hoists by the same
+		// >=80% rule. Measured over the live set the ratio is cleanly
+		// bimodal: on full campaigns it is 98% / 100% / 86% / 100% / 96%
+		// (every host has a bare twin, so the button says nothing about
+		// THIS line and just rebuilds a constant column) or 58% / 50% /
+		// 0% (genuinely per-line information). When it is uniform the
+		// per-line button is dropped - the count line's "N bare URLs
+		// folded" and the "bare URLs N" toggle in the bar already carry
+		// the fact, and the toggle unfolds every one of them at once.
+		var hostLines = 0, linesWithChild = 0;
+		lines.forEach(function(line) {
+			if (line.row.type !== 'domain' && line.row.type !== 'ip') return;
+			hostLines++;
+			if (line.children.length) linesWithChild++;
+		});
+		var foldUniform = hostLines >= 5 && (linesWithChild / hostLines) >= 0.8;
+
+		// The type toggles filter LINES, so they must be labelled with line
+		// counts. Labelling them with record counts read as a bug: "url
+		// 201" filtered down to 5, because 196 of those 201 records are
+		// folded twins living on a domain line. typeCounts stays on the
+		// model for the record-level tallies.
+		var lineTypeCounts = {};
+		lines.forEach(function(line) {
+			var t = line.row.type;
+			lineTypeCounts[t] = (lineTypeCounts[t] || 0) + 1;
+		});
+
+		var model = {
+			lines: lines,
+			lineTypeCounts: lineTypeCounts,
+			recordCount: recordCount,
+			foldedCount: foldedCount,
+			foldUniform: foldUniform,
+			typeCounts: typeCounts,
+			hoist: { user: hoistUser, tagKey: hoistTagKey, tags: hoistTags, threatType: hoistThreatType },
+			tweets: tweets
+		};
+		c.__iocModel = model;
+		return model;
+	}
+
+	// Day formatting for the Indicators panel specifically: day-then-month
+	// ("19 Aug"), the reverse of shortDate()/dateRangeText() above ("Aug
+	// 19"). Kept separate rather than reordering those - renderVitals'
+	// "Day span" sub-line still depends on the existing order.
+	function iocDay(s) {
+		var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || '');
+		return m ? String(+m[3]) : '';
+	}
+	function iocMonth(s) {
+		var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || '');
+		return m ? (MONTH_ABBR[(+m[2]) - 1] || m[2]) : '';
+	}
+	function iocDayLabel(s) {
+		var d = iocDay(s), mo = iocMonth(s);
+		return d ? (d + ' ' + mo) : '';
+	}
+	function iocDayRangeLabel(minS, maxS) {
+		if (!minS) return '';
+		if (!maxS || minS === maxS) return iocDayLabel(minS);
+		if (iocMonth(minS) === iocMonth(maxS)) return iocDay(minS) + '-' + iocDay(maxS) + ' ' + iocMonth(maxS);
+		return iocDayLabel(minS) + ' - ' + iocDayLabel(maxS);
+	}
+	// "https://x.com/user/status/1234567890" -> "x.com/user/status/123…" -
+	// display only, the href always carries the full untruncated url.
+	function tweetShortLabel(url) {
+		var s = String(url || '').replace(/^https?:\/\//i, '');
+		var m = /^([^\/]+\/[^\/]+\/status\/)(\d+)/.exec(s);
+		if (m) return m[1] + (m[2].length > 3 ? m[2].slice(0, 3) + '…' : m[2]);
+		return s.length > 40 ? s.slice(0, 40) + '…' : s;
+	}
+
+	// The four per-record affordances (type badge, value link, copy icon,
+	// tweet link, VirusTotal link) shared by a top-level line and an
+	// unfolded child - construction copied verbatim from the per-row
+	// renderer this replaced, only the title on the value link changes
+	// (the full value, not a static string) because .tfc-ioc-value now
+	// ellipsis-truncates at >=992px and needs a tooltip to make up for it.
+	function iocRowAfford(row) {
 		var esc = TweetFeed.escapeHtml;
-		var type = ioc.type || '';
+		var type = row.type || '';
 		var bg = IOC_TYPE_COLORS[type] || '#737373';
 		var color = IOC_TYPE_DARK_TEXT[type] ? '#1c1c1c' : '#fff';
-		var value = ioc.value || '';
-		var tweetUrl = (typeof ioc.tweet === 'string' && /^https?:\/\//i.test(ioc.tweet)) ? ioc.tweet : '';
+		var value = row.value || '';
+		var tweetUrl = (typeof row.tweet === 'string' && /^https?:\/\//i.test(row.tweet)) ? row.tweet : '';
 		var tweetLink = tweetUrl
 			? '<a class="tfc-ioc-link" href="' + esc(tweetUrl) + '" target="_blank" rel="noopener noreferrer" title="Source tweet" aria-label="Open source tweet"><i class="fas fa-external-link-alt"></i></a>'
 			: '';
 		var vtLink = '<a class="tf-action tf-action-vt" href="https://www.virustotal.com/gui/search/' + esc(encodeURIComponent(value)) + '" target="_blank" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>';
-		var dateStr = (typeof ioc.date === 'string') ? ioc.date.slice(0, 10) : '';
-		var dateSpan = dateStr ? '<span class="tfc-ioc-date">' + esc(dateStr) + '</span>' : '';
-		var userRaw = (typeof ioc.user === 'string') ? ioc.user.replace(/^@/, '') : '';
-		var userLink = userRaw
-			? '<a class="tfc-ioc-user" href="../search/?user=' + esc(encodeURIComponent(userRaw)) + '">@' + esc(userRaw) + '</a>'
-			: '';
-		// Override 2: optional per-IOC net {org, country} - a tooltip on the
-		// type badge, never new visual weight on the row.
 		var netTitle = '';
-		if (ioc.net && typeof ioc.net === 'object' && (ioc.net.org || ioc.net.country)) {
-			netTitle = ' title="' + esc([ioc.net.org, ioc.net.country].filter(Boolean).join(' · ')) + '"';
+		if (row.net && typeof row.net === 'object' && (row.net.org || row.net.country)) {
+			netTitle = ' title="' + esc([row.net.org, row.net.country].filter(Boolean).join(' · ')) + '"';
 		}
-		var row = (
-			'<div class="tfc-ioc-row">' +
-				'<span class="tfc-ioc-type"' + netTitle + ' style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>' +
-				dateSpan +
-				'<a class="tfc-ioc-value" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="Search this value on TweetFeed">' + esc(value) + '</a>' +
-				userLink +
-				'<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>' +
-				tweetLink +
-				vtLink +
-			'</div>'
+		return {
+			badge: '<span class="tfc-ioc-type"' + netTitle + ' style="background:' + bg + ';color:' + color + ';">' + esc(type) + '</span>',
+			value: '<a class="tfc-ioc-value" href="../search/?q=' + esc(encodeURIComponent(value)) + '" title="' + esc(value) + '">' + esc(value) + '</a>',
+			copy: '<i class="tf-copy far fa-copy" data-copy="' + esc(value) + '" role="button" tabindex="0" aria-label="Copy IOC value"></i>',
+			tweetLink: tweetLink,
+			vtLink: vtLink
+		};
+	}
+	// The .tfc-ioc-mark contents that are specific to THIS row: only the
+	// channels that differ from the campaign-wide hoisted value are worth
+	// repeating per line - that's the whole point of hoisting.
+	function iocLineMarkers(row, model) {
+		var esc = TweetFeed.escapeHtml;
+		var bits = [];
+		var hu = model.hoist.user, ht = model.hoist.tagKey;
+		var userRaw = (typeof row.user === 'string') ? row.user.replace(/^@/, '') : '';
+		if (userRaw && (!hu || hu.key !== row.user)) {
+			bits.push('<a href="../search/?user=' + esc(encodeURIComponent(userRaw)) + '">@' + esc(userRaw) + '</a>');
+		}
+		if (!ht || tagKeyOf(row) !== ht.key) {
+			var ownTags = Array.isArray(row.tags) ? row.tags : [];
+			if (ownTags.length) {
+				ownTags.forEach(function(t) { bits.push('<span class="tfc-ioc-tag">' + esc(String(t)) + '</span>'); });
+			} else if (ht) {
+				// An unmarked line means "same as the line above the list".
+				// A row with no tags at all has to say so, or it would read
+				// as carrying the hoisted set.
+				bits.push('<span class="tfc-ioc-notag">no tags</span>');
+			}
+		}
+		// No per-line day marker, deliberately. Measured over the live
+		// set: the day is NOT a lopsided channel like user (99%) and
+		// tagset (99%) are - campaigns carry 3, 4, 8, even 13 distinct
+		// days and the modal day covers only 50% / 53% / 74% / 17% of
+		// their rows. Marking every deviation would tag 33% of all rows,
+		// i.e. rebuild the column of repeated dates this redesign
+		// deleted. The day stays reachable losslessly: the range (and
+		// day count) in the line above, the Newest sort, and the CSV.
+		return bits.join('');
+	}
+
+	// Sentinel apex key for the "one member per apex" catch-all bucket -
+	// opaque, never collides with a real hostname, and lines with no host
+	// at all (md5/sha256, which have apex '') are routed straight into it
+	// rather than forming their own blank-titled group.
+	var GROUP_SINGLES_KEY = '*';
+
+	function renderIocLineHtml(line, idx, model, childrenToShow) {
+		var esc = TweetFeed.escapeHtml;
+		var row = line.row;
+		var af = iocRowAfford(row);
+		var markBits = [];
+		// A line still gets its own button when it carries MORE than one
+		// twin: that is a real difference from the uniform case even when
+		// having a twin at all is not.
+		var showUnfold = line.children.length && (!model.foldUniform || line.children.length > 1 || childrenToShow.length);
+		if (showUnfold) {
+			var label = line.children.length === 1 ? '+url' : ('+' + line.children.length + ' urls');
+			markBits.push('<button type="button" class="tfc-ioc-unfold" data-idx="' + idx + '" data-key="' + esc(line.key) + '" aria-expanded="' + (childrenToShow.length ? 'true' : 'false') + '">' + esc(label) + '</button>');
+		}
+		var ownMarks = iocLineMarkers(row, model);
+		if (ownMarks) markBits.push(ownMarks);
+		var markSpan = markBits.length ? '<span class="tfc-ioc-mark">' + markBits.join('') + '</span>' : '';
+		var childrenHtml = childrenToShow.map(function(ch) {
+			var chAf = iocRowAfford(ch);
+			var chMarks = iocLineMarkers(ch, model);
+			var chMarkSpan = chMarks ? '<span class="tfc-ioc-mark">' + chMarks + '</span>' : '';
+			return '<li class="tfc-ioc-line tfc-ioc-child">' + chAf.badge + chAf.value + chMarkSpan + chAf.copy + chAf.tweetLink + chAf.vtLink + '</li>';
+		}).join('');
+		return '<li class="tfc-ioc-line">' + af.badge + af.value + markSpan + af.copy + af.tweetLink + af.vtLink + '</li>' + childrenHtml;
+	}
+
+	function iocGroupHeaderHtml(idx, apexKey, count, expanded) {
+		var esc = TweetFeed.escapeHtml;
+		if (apexKey === GROUP_SINGLES_KEY) {
+			return (
+				'<li class="tfc-ioc-grouphead">' +
+					'<button type="button" class="tfc-ioc-group" data-idx="' + idx + '" data-apex="' + esc(apexKey) + '" aria-expanded="' + (expanded ? 'true' : 'false') + '">' + esc(nf(count) + ' hosts, one per apex') + '</button>' +
+				'</li>'
+			);
+		}
+		return (
+			'<li class="tfc-ioc-grouphead">' +
+				'<button type="button" class="tfc-ioc-group" data-idx="' + idx + '" data-apex="' + esc(apexKey) + '" aria-expanded="' + (expanded ? 'true' : 'false') + '">' + esc(apexKey) + '</button>' +
+				'<span class="tfc-ioc-groupcount">' + esc(nf(count) + (count === 1 ? ' host' : ' hosts')) + '</span>' +
+			'</li>'
 		);
-		// Override 2: iocs[].tags micro-chips (up to 2) + ai.threat_type,
-		// both optional, on a second line inside the same wrapper so the
-		// 2-column IOC grid keeps pairing correctly.
-		var chips = [];
-		if (Array.isArray(ioc.tags)) {
-			ioc.tags.slice(0, 2).forEach(function(t) { chips.push('<span class="tfc-ioc-tag">' + esc(String(t)) + '</span>'); });
+	}
+
+	// b) provenance/hoist line: one paragraph, every segment optional,
+	// joined by " · " - omitted entirely when every channel is null.
+	function renderIocProv(model, eff, rows) {
+		var esc = TweetFeed.escapeHtml;
+		var h = model.hoist;
+		var segs = [];
+		// "most" is the honest word whenever the mode is not near-universal:
+		// it is what lets the mode be stated ONCE instead of being redrawn
+		// on every line that happens to carry it.
+		function hedge(m) { return (m && m.share < 0.8) ? '<span class="tfc-ioc-hedge">most</span>' : ''; }
+		if (h.user && h.user.key) {
+			segs.push(hedge(h.user) + '<a class="tfc-ioc-provuser" href="../search/?user=' + esc(encodeURIComponent(h.user.key)) + '">@' + esc(h.user.key) + '</a>');
 		}
-		if (ioc.ai && typeof ioc.ai === 'object' && ioc.ai.threat_type) {
-			chips.push('<span class="tfc-ioc-tag tfc-ioc-tag-ai">' + esc(String(ioc.ai.threat_type)) + '</span>');
+		if (h.tagKey && h.tags && h.tags.length) {
+			segs.push(hedge(h.tagKey) + h.tags.map(function(t) { return '<span class="tfc-ioc-tag">' + esc(String(t)) + '</span>'; }).join(''));
 		}
-		var chipsLine = chips.length ? '<div class="tfc-ioc-tags-line">' + chips.join('') + '</div>' : '';
-		return '<div class="tfc-ioc-wrap">' + row + chipsLine + '</div>';
+		if (h.threatType) {
+			segs.push('<span class="tfc-ioc-tag tfc-ioc-tag-ai">' + esc(String(h.threatType)) + '</span>');
+		}
+		var days = rows.map(dayOf).filter(Boolean).sort();
+		if (days.length) {
+			var minDay = days[0], maxDay = days[days.length - 1];
+			if (!eff.full || minDay !== maxDay) {
+				// The count matters as much as the range: "14-19 Aug" over
+				// three reporting days and over six are different shapes,
+				// and with no per-line day this is the only place it shows.
+				var distinct = 0, prev = null;
+				for (var di = 0; di < days.length; di++) { if (days[di] !== prev) { distinct++; prev = days[di]; } }
+				var label = iocDayRangeLabel(minDay, maxDay);
+				if (distinct > 2) label += ' (' + nf(distinct) + ' days)';
+				segs.push(esc(label));
+			}
+		}
+		if (model.tweets.length === 1) {
+			segs.push('<a class="tfc-ioc-link" href="' + esc(model.tweets[0].url) + '" target="_blank" rel="noopener noreferrer">source tweet</a>');
+		} else if (model.tweets.length > 1) {
+			var items = model.tweets.map(function(t) {
+				return '<li><a href="' + esc(t.url) + '" target="_blank" rel="noopener noreferrer">' + esc(tweetShortLabel(t.url)) + '</a> · ' + esc(iocDayLabel(t.day)) + ' · ' + esc(nf(t.count)) + ' records</li>';
+			}).join('');
+			segs.push(
+				'<button type="button" class="tfc-ioc-src-toggle" aria-expanded="false">' + esc(nf(model.tweets.length)) + ' source tweets</button>' +
+				'<ul class="tfc-ioc-srclist" hidden>' + items + '</ul>'
+			);
+		}
+		if (!segs.length) return '';
+		return '<p class="tfc-ioc-prov">' + segs.join(' · ') + '</p>';
+	}
+
+	// c) search/filter/sort bar - a static shell; every count and pressed
+	// state gets (re)synced by renderIocList on every state change.
+	function renderIocBar(idx, model, eff, total, state) {
+		var esc = TweetFeed.escapeHtml;
+		var placeholder = eff.full
+			? ('Find in ' + nf(model.recordCount) + ' indicators…')
+			: ('Find in ' + nf(model.recordCount) + ' published (' + nf(total) + ' total)…');
+		// Value/pressed/selected all seeded from `state` (not just the
+		// bare defaults) so a refreshBuiltIndicators() replaceWith - which
+		// throws away this whole shell - doesn't silently drop an
+		// in-progress search/filter/sort the user already had going.
+		var input = '<input type="search" class="tfc-ioc-find" data-idx="' + idx + '" placeholder="' + esc(placeholder) + '" aria-label="Find in indicators" value="' + esc(state.q) + '">';
+		var shown = '<span class="tfc-ioc-shown" aria-live="polite"></span>';
+		var typeBtns = Object.keys(model.lineTypeCounts)
+			.sort(function(a, b) { return model.lineTypeCounts[b] - model.lineTypeCounts[a]; })
+			.map(function(t) {
+				return '<button type="button" class="tfc-ioc-typetoggle" data-idx="' + idx + '" data-type="' + esc(t) + '" aria-pressed="' + (state.types[t] ? 'true' : 'false') + '">' + esc(t) + ' ' + nf(model.lineTypeCounts[t]) + '</button>';
+			}).join('');
+		var dupesBtn = model.foldedCount > 0
+			? '<button type="button" class="tfc-ioc-dupes" data-idx="' + idx + '" aria-pressed="' + (state.dupes ? 'true' : 'false') + '">bare URLs ' + nf(model.foldedCount) + '</button>'
+			: '';
+		var sortSelect = (
+			'<select class="tfc-ioc-sort" data-idx="' + idx + '" aria-label="Sort indicators">' +
+				'<option value="az"' + (state.sort === 'az' ? ' selected' : '') + '>A-Z</option>' +
+				'<option value="new"' + (state.sort === 'new' ? ' selected' : '') + '>Newest</option>' +
+				'<option value="type"' + (state.sort === 'type' ? ' selected' : '') + '>Type</option>' +
+			'</select>'
+		);
+		return '<div class="tfc-ioc-bar">' + input + shown + typeBtns + dupesBtn + sortSelect + '</div>';
 	}
 
 	function renderIndicators(c, idx) {
@@ -2019,18 +2677,28 @@
 		var total = (typeof c.ioc_count === 'number' && c.ioc_count > 0) ? c.ioc_count : (c.iocs || []).length;
 		var eff = getEffectiveIocs(c);
 		var rows = eff.rows;
-		var countLine = '';
-		var loadHtml = '';
-		if (eff.full) {
-			if (eff.cappedAt500) {
-				countLine = '500 of ' + esc(nf(eff.totalFull)) + ' shown – download the CSV below for the rest';
-			} else {
-				countLine = esc(nf(rows.length)) + ' of ' + esc(nf(total)) + (rows.length >= total ? ' – complete list' : '');
-			}
+		var model = buildIocModel(c, rows);
+		var state = iocStateFor(c.id);
+
+		// a) totals line + the Load-all/Loading/failed control, unchanged
+		// from the pre-redesign version.
+		var footParts = [];
+		// A campaign at or under MAX_IOCS publishes every one of its rows
+		// in the main document, so calling that "a published sample of N"
+		// would be false - and it is the majority case, 14 of the 22.
+		if (eff.full || model.recordCount >= total) {
+			footParts.push(nf(model.recordCount) + ' record' + (model.recordCount === 1 ? '' : 's'));
 		} else {
+			footParts.push(nf(model.recordCount) + ' published sample of ' + nf(total) + ' total IOCs');
+		}
+		if (model.lines.length !== model.recordCount) footParts.push(nf(model.lines.length) + ' lines');
+		if (model.foldedCount > 0) footParts.push(nf(model.foldedCount) + ' bare URL' + (model.foldedCount === 1 ? '' : 's') + ' folded');
+		var countLine = esc(footParts.join(' · '));
+
+		var loadHtml = '';
+		if (!eff.full) {
 			var sample = c.iocs || [];
 			if (sample.length < total) {
-				countLine = esc(nf(sample.length)) + ' published sample of ' + esc(nf(total)) + ' total IOCs';
 				if (sidecarState === 'failed' || sidecarState === 'mismatch') {
 					loadHtml = '<span class="tfc-load-failed">Could not load the full set right now.</span>';
 				} else {
@@ -2038,17 +2706,29 @@
 					loadHtml = '<button type="button" class="tfc-load-all" data-idx="' + idx + '"' + (loading ? ' disabled' : '') + '>' +
 						(loading ? 'Loading…' : ('Load all ' + esc(nf(total)))) + '</button>';
 				}
-			} else {
-				countLine = esc(nf(sample.length)) + ' of ' + esc(nf(total)) + ' – complete list';
 			}
 		}
 
-		var iocHtml = rows.map(renderIocRow).join('');
-		var capNote = eff.full && eff.cappedAt500
-			? '<p class="tfc-ind-note">Showing the first 500 of ' + esc(nf(eff.totalFull)) + ' - the CSV download below has every one.</p>'
-			: '';
+		var provHtml = renderIocProv(model, eff, rows);
+		var barHtml = renderIocBar(idx, model, eff, total, state);
+		// d) the <ul> starts empty - renderIocList (called by buildBody /
+		// refreshBuiltIndicators right after this HTML lands in the DOM)
+		// does the one-shot innerHTML write into it.
+		var listHtml = '<ul class="tfc-ioc-list" data-idx="' + idx + '"></ul>';
+		// e) window controls - hidden until renderIocList finds more than
+		// one screenful of matches.
+		var windowHtml = (
+			'<div class="tfc-ioc-window" hidden>' +
+				'<span class="tfc-ioc-winnote"></span>' +
+				'<button type="button" class="tfc-ioc-more" data-idx="' + idx + '"></button>' +
+				'<button type="button" class="tfc-ioc-all" data-idx="' + idx + '"></button>' +
+			'</div>'
+		);
 
-		var allValues = rows.map(function(ioc) { return (ioc && ioc.value) ? String(ioc.value) : ''; }).filter(Boolean);
+		// f) actions - Copy starts out covering every raw record pre-fold,
+		// same as the pre-redesign button; renderIocList re-labels/
+		// re-targets it (and only it) the moment a filter narrows the set.
+		var allValues = rows.map(function(r) { return (r && r.value) ? String(r.value) : ''; }).filter(Boolean);
 		var copyBtn = allValues.length
 			? '<button type="button" class="tf-copy tfc-copy-sample" data-copy="' + esc(allValues.join('\n')) + '">Copy ' + esc(nf(allValues.length)) + ' values</button>'
 			: '';
@@ -2063,19 +2743,238 @@
 					'<span class="tfc-ind-count">' + countLine + '</span>' +
 					loadHtml +
 				'</div>' +
-				'<div class="tfc-iocs">' + iocHtml + capNote + '</div>' +
+				'<div class="tfc-iocs">' +
+					provHtml +
+					barHtml +
+					listHtml +
+					windowHtml +
+				'</div>' +
 				'<div class="tfc-ind-actions">' + copyBtn + csvBtn + '</div>' +
 			'</div>'
 		);
 	}
 
-	// Override 1's honest sample wording drives this: only rendered when the
-	// rendered set (sample or capped-full) is still short of the true total.
+	// The only function in this file that runs on every keystroke: filter
+	// -> sort -> group -> window -> write. One innerHTML scoped to the
+	// <ul> (never a replaceWith of .tfc-indicators, which would blow away
+	// the input the user is mid-keystroke in), plus separate direct
+	// updates to the count spans and the bar's own controls.
+	function renderIocList(c, idx) {
+		var esc = TweetFeed.escapeHtml;
+		var $ul = $('.tfc-ioc-list[data-idx="' + idx + '"]');
+		if (!$ul.length) return;
+		var $panel = $ul.closest('.tfc-indicators');
+		var state = iocStateFor(c.id);
+		var eff = getEffectiveIocs(c);
+		var rows = eff.rows;
+		var model = buildIocModel(c, rows);
+
+		// Captured before ensureSidecar's synchronous 'loading' transition
+		// (which itself triggers a nested refreshBuiltIndicators/
+		// renderIocList pass) can change sidecarState out from under this
+		// call - see the loading <li> below.
+		var needsLoad = sidecarState === 'idle' && state.q.length >= 2;
+		if (needsLoad) ensureSidecar(function() {});
+
+		var qLower = state.q.trim().toLowerCase();
+		var typeKeys = Object.keys(state.types);
+
+		var filtered = model.lines.filter(function(line) {
+			if (typeKeys.length && !state.types[line.row.type]) return false;
+			if (!qLower) return true;
+			if (String(line.row.value || '').toLowerCase().indexOf(qLower) !== -1) return true;
+			return line.children.some(function(ch) { return String(ch.value || '').toLowerCase().indexOf(qLower) !== -1; });
+		});
+
+		var sorted = filtered.slice();
+		if (state.sort === 'new') {
+			sorted.sort(function(a, b) {
+				var ad = a.row.date || '', bd = b.row.date || '';
+				return ad === bd ? 0 : (ad > bd ? -1 : 1);
+			});
+		} else if (state.sort === 'type') {
+			sorted.sort(function(a, b) {
+				if (a.row.type !== b.row.type) return a.row.type < b.row.type ? -1 : 1;
+				return a.sortKey < b.sortKey ? -1 : (a.sortKey > b.sortKey ? 1 : 0);
+			});
+		} else {
+			sorted.sort(function(a, b) { return a.sortKey < b.sortKey ? -1 : (a.sortKey > b.sortKey ? 1 : 0); });
+		}
+
+		// Group by apex only for the default A-Z sort and only once there
+		// are enough lines that apex clusters are worth the extra
+		// headers - grouping while sorting by date would contradict the
+		// sort the user just asked for.
+		var groups = null;
+		if (state.sort === 'az' && sorted.length > 20) {
+			var byApex = {};
+			var apexOrder = [];
+			var singles = [];
+			sorted.forEach(function(line) {
+				if (!line.apex) { singles.push(line); return; }
+				if (!byApex[line.apex]) { byApex[line.apex] = []; apexOrder.push(line.apex); }
+				byApex[line.apex].push(line);
+			});
+			var multi = [];
+			apexOrder.forEach(function(apex) {
+				var members = byApex[apex];
+				if (members.length >= 2) multi.push({ apex: apex, lines: members });
+				else singles.push(members[0]);
+			});
+			if (multi.length) {
+				multi.sort(function(a, b) {
+					if (a.lines.length !== b.lines.length) return b.lines.length - a.lines.length;
+					return a.apex < b.apex ? -1 : (a.apex > b.apex ? 1 : 0);
+				});
+				singles.sort(function(a, b) { return a.sortKey < b.sortKey ? -1 : (a.sortKey > b.sortKey ? 1 : 0); });
+				groups = multi;
+				if (singles.length) groups.push({ apex: GROUP_SINGLES_KEY, lines: singles });
+				// One section holding everything is not a grouping, it is a
+				// title - and a >20-member one is collapsed by default, so
+				// it rendered the whole Indicators list as a single closed
+				// header with nothing under it (hit live on the campaign
+				// whose 25 hosts all sit under b-cdn.net).
+				if (groups.length < 2) groups = null;
+			}
+		}
+
+		// Flatten into render units so windowing (below) can walk headers
+		// and lines in one pass regardless of whether grouping kicked in.
+		var units = [];
+		if (groups) {
+			groups.forEach(function(g) {
+				var closed = Object.prototype.hasOwnProperty.call(state.closedGroups, g.apex)
+					? state.closedGroups[g.apex]
+					: (g.apex === GROUP_SINGLES_KEY ? false : g.lines.length > 20);
+				units.push({ kind: 'header', apex: g.apex, count: g.lines.length, closed: closed });
+				if (!closed) {
+					g.lines.forEach(function(line) { units.push({ kind: 'line', line: line }); });
+				}
+			});
+			// Backstop: whatever the defaults and the user's own toggles
+			// add up to, the panel never renders zero lines while it holds
+			// some. Opens the largest section, which is the one the
+			// default-collapse rule closed first.
+			var anyLine = units.some(function(u) { return u.kind === 'line'; });
+			if (!anyLine && groups.length) {
+				units.length = 0;
+				groups.forEach(function(g, gi) {
+					var closed = gi !== 0;
+					units.push({ kind: 'header', apex: g.apex, count: g.lines.length, closed: closed });
+					if (!closed) g.lines.forEach(function(line) { units.push({ kind: 'line', line: line }); });
+				});
+			}
+		} else {
+			sorted.forEach(function(line) { units.push({ kind: 'line', line: line }); });
+		}
+
+		// Window: cut LINES (not headers) to state.windowN. Lines inside a
+		// collapsed group were never added to `units` above, so they can
+		// never consume budget. Once the budget is spent, stop outright -
+		// no dangling header with nothing rendered under it.
+		var windowN = state.windowN;
+		var rendered = [];
+		var lineBudget = 0;
+		for (var i = 0; i < units.length; i++) {
+			if (lineBudget >= windowN) break;
+			rendered.push(units[i]);
+			if (units[i].kind === 'line') lineBudget++;
+		}
+
+		var liParts = rendered.map(function(u) {
+			if (u.kind === 'header') return iocGroupHeaderHtml(idx, u.apex, u.count, !u.closed);
+			var line = u.line;
+			var childrenToShow = [];
+			if (line.children.length) {
+				if (state.dupes || state.unfolded[line.key]) {
+					childrenToShow = line.children;
+				} else if (qLower && String(line.row.value || '').toLowerCase().indexOf(qLower) === -1) {
+					// Only reveal a twin the query found on its OWN value.
+					// When the query already matched the parent (searching
+					// "trezor" matches both "x.typedream.app" and
+					// "http://x.typedream.app") revealing it puts the two
+					// back-to-back and undoes the fold inside the results.
+					childrenToShow = line.children.filter(function(ch) { return String(ch.value || '').toLowerCase().indexOf(qLower) !== -1; });
+				}
+			}
+			return renderIocLineHtml(line, idx, model, childrenToShow);
+		});
+
+		if (!filtered.length) {
+			var emptyMsg = qLower
+				? ('No indicator matches "' + esc(state.q.trim()) + '".')
+				: 'No indicators match these filters.';
+			liParts = ['<li class="tfc-ioc-empty">' + emptyMsg + ' <button type="button" class="tfc-ioc-clear" data-idx="' + idx + '">Clear</button></li>'];
+		}
+		if (needsLoad) {
+			liParts.push('<li class="tfc-ioc-loading">Loading the full set…</li>');
+		}
+
+		$ul.html(liParts.join(''));
+
+		$panel.find('.tfc-ioc-shown').text(nf(filtered.length) + ' shown');
+		$panel.find('.tfc-ioc-typetoggle').each(function() {
+			var $b = $(this);
+			$b.attr('aria-pressed', state.types[$b.data('type')] ? 'true' : 'false');
+		});
+		$panel.find('.tfc-ioc-dupes').attr('aria-pressed', state.dupes ? 'true' : 'false');
+		$panel.find('.tfc-ioc-sort').val(state.sort);
+
+		// The window can only ever reach lines in an EXPANDED section, so
+		// that - not filtered.length - is what it must count. Counting all
+		// filtered lines made the note claim "Showing 120 of 205" while
+		// 100 were on screen and 105 sat inside a collapsed group, and it
+		// made "Show all 205 lines" look inert: it lifted the line budget
+		// but left the group shut.
+		var reachable = 0;
+		units.forEach(function(u) { if (u.kind === 'line') reachable++; });
+		var hidden = filtered.length - reachable;
+		var $win = $panel.find('.tfc-ioc-window');
+		if (reachable <= windowN && !hidden) {
+			$win.prop('hidden', true);
+		} else {
+			$win.prop('hidden', false);
+			var step = window.innerWidth < 576 ? 40 : 60;
+			var note = 'Showing ' + nf(Math.min(windowN, reachable)) + ' of ' + nf(reachable) + ' lines';
+			if (hidden > 0) note += ' · ' + nf(hidden) + ' more inside collapsed groups';
+			$win.find('.tfc-ioc-winnote').text(note);
+			$win.find('.tfc-ioc-more').text('Show ' + step + ' more').prop('hidden', reachable <= windowN);
+			$win.find('.tfc-ioc-all').text('Show all ' + nf(filtered.length) + ' lines');
+		}
+
+		// Copy button: every raw record pre-fold with no filter active
+		// (byte-identical to the pre-redesign button), or the matching
+		// records - line + its folded children - once a filter narrows
+		// the set. "Filter" here means query/type, never the dupes
+		// toggle: unfolding duplicates doesn't remove anything from the
+		// match set, it only changes what's currently painted.
+		var filterActive = !!qLower || typeKeys.length > 0;
+		var copyValues;
+		if (filterActive) {
+			copyValues = [];
+			filtered.forEach(function(line) {
+				if (line.row && line.row.value) copyValues.push(String(line.row.value));
+				line.children.forEach(function(ch) { if (ch && ch.value) copyValues.push(String(ch.value)); });
+			});
+		} else {
+			copyValues = rows.map(function(r) { return (r && r.value) ? String(r.value) : ''; }).filter(Boolean);
+		}
+		var $copyBtn = $panel.find('.tfc-ind-actions .tfc-copy-sample');
+		if ($copyBtn.length) {
+			$copyBtn.attr('data-copy', copyValues.join('\n'));
+			$copyBtn.text('Copy ' + nf(copyValues.length) + (filterActive ? ' matching values' : ' values'));
+		}
+	}
+
+	// Override 1's honest sample wording drives this: only rendered when
+	// the rendered set is still short of the true total. With no 500-row
+	// cap any more, that can only happen in the sample (pre "Load all")
+	// state - the full sidecar set is never short.
 	function renderReach(c) {
 		var esc = TweetFeed.escapeHtml;
 		var total = (typeof c.ioc_count === 'number') ? c.ioc_count : (c.iocs || []).length;
 		var eff = getEffectiveIocs(c);
-		var shortfall = eff.full ? (eff.cappedAt500 ? (eff.totalFull - 500) : 0) : Math.max(0, total - (c.iocs || []).length);
+		var shortfall = eff.full ? 0 : Math.max(0, total - (c.iocs || []).length);
 		if (shortfall <= 0) return '';
 		var anchors = (c.anchors && c.anchors.registered_domains) || [];
 		var domainChips = anchors.slice(0, 6).map(function(d) {
@@ -2129,6 +3028,11 @@
 		var $item = $('.tfc-list > .tfc-item[data-idx="' + idx + '"]');
 		if (!$item.length || $item.data('built')) return;
 		$item.find('.tfc-body').html(renderBody(c, idx));
+		// renderIndicators() above left the <ul class="tfc-ioc-list"> empty
+		// by design - this is the one-time fill for a first build (see the
+		// matching call in refreshBuiltIndicators() for the post-sidecar
+		// case).
+		renderIocList(c, idx);
 		// Both the jQuery data cache (fast internal reads/writes above and
 		// in the click handler below) AND the real data-built="1" DOM
 		// attribute (so the plain CSS attribute selector in
@@ -2163,19 +3067,36 @@
 	// built, after the Override-1 sidecar resolves (ready/mismatch/failed) -
 	// plus the one vitals sub-line that also depends on the effective row
 	// count. These are the only two pieces of the body that can change
-	// post-load.
+	// post-load. renderIndicators() replaces the whole .tfc-indicators
+	// subtree (including the search input), which would normally steal
+	// focus/caret out from under a mid-keystroke user - the auto-fetch in
+	// renderIocList() is triggered by typing, so that is not a theoretical
+	// case. Capture/restore around the loop fixes it.
 	function refreshBuiltIndicators() {
+		var $focused = $(document.activeElement);
+		var restore = $focused.hasClass('tfc-ioc-find')
+			? { idx: $focused.data('idx'), value: $focused.val(), pos: $focused[0].selectionStart }
+			: null;
 		$('.tfc-list > .tfc-item[data-built]').each(function() {
 			var $item = $(this);
 			var idx = +$item.attr('data-idx');
 			var c = allCampaigns[idx];
 			if (!c) return;
+			c.__iocModel = null; // full set just landed (or failed/mismatched) - force one rebuild
 			$item.find('.tfc-indicators').replaceWith(renderIndicators(c, idx));
+			renderIocList(c, idx);
 			$item.find('.tfc-reach').remove();
 			var reach = renderReach(c);
 			if (reach) $item.find('.tfc-indicators').after(reach);
-			$item.find('.tfc-vitals-published').text(nf(getEffectiveIocs(c).rows.length) + ' published below');
+			$item.find('.tfc-vitals-published').text(nf(getEffectiveIocs(c).rows.length) + ' records published below');
 		});
+		if (restore) {
+			var $again = $('.tfc-ioc-find[data-idx="' + restore.idx + '"]');
+			if ($again.length) {
+				$again.val(restore.value).trigger('focus');
+				try { $again[0].setSelectionRange(restore.pos, restore.pos); } catch (e) { /* input type=search may reject it in some browsers */ }
+			}
+		}
 	}
 
 	function ensureSidecar(cb) {
@@ -2719,6 +3640,138 @@
 			}));
 			var idPart = campaignAttrs(c, -1).validId || ('idx-' + idx);
 			TweetFeed.downloadCSV('campaign-' + idPart + '.csv', rows);
+		});
+
+		// ── Indicators panel: search/filter/sort/group/window ────────────
+		// Every handler below reads its own data-idx, looks up the
+		// campaign, mutates iocStateFor(c.id), and calls renderIocList -
+		// never a full renderIndicators rebuild, so none of this can steal
+		// focus out of the search input.
+		$(document).on('input', '.tfc-ioc-find', function() {
+			var $inp = $(this);
+			var idx = +$inp.data('idx');
+			clearTimeout(iocFindTimers[idx]);
+			iocFindTimers[idx] = setTimeout(function() {
+				var c = allCampaigns[idx];
+				if (!c) return;
+				iocStateFor(c.id).q = $inp.val() || '';
+				renderIocList(c, idx);
+			}, 120);
+		});
+
+		$(document).on('keydown', '.tfc-ioc-find', function(e) {
+			if (e.key !== 'Escape') return;
+			var $inp = $(this);
+			var idx = +$inp.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			clearTimeout(iocFindTimers[idx]);
+			$inp.val('');
+			iocStateFor(c.id).q = '';
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-typetoggle', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			var t = $btn.data('type');
+			if (state.types[t]) delete state.types[t]; else state.types[t] = true;
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-dupes', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			state.dupes = !state.dupes;
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-unfold', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			var key = $btn.data('key');
+			state.unfolded[key] = !state.unfolded[key];
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-group', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			var apex = String($btn.data('apex'));
+			var currentlyOpen = $btn.attr('aria-expanded') === 'true';
+			state.closedGroups[apex] = currentlyOpen; // storing the NEW (post-click) closed state
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-more', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			state.windowN += (window.innerWidth < 576 ? 40 : 60);
+			renderIocList(c, idx);
+		});
+
+		// "Show all N lines" means all N, so it has to open every group as
+		// well as lift the line budget - a collapsed group holds lines the
+		// budget alone can never reach.
+		$(document).on('click', '.tfc-ioc-all', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			state.windowN = Infinity;
+			$btn.closest('.tfc-indicators').find('.tfc-ioc-group').each(function() {
+				state.closedGroups[$(this).data('apex')] = false;
+			});
+			renderIocList(c, idx);
+		});
+
+		$(document).on('click', '.tfc-ioc-clear', function() {
+			var $btn = $(this);
+			var idx = +$btn.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			var state = iocStateFor(c.id);
+			state.q = '';
+			state.types = {};
+			state.dupes = false;
+			$('.tfc-ioc-find[data-idx="' + idx + '"]').val('');
+			renderIocList(c, idx);
+		});
+
+		$(document).on('change', '.tfc-ioc-sort', function() {
+			var $sel = $(this);
+			var idx = +$sel.data('idx');
+			var c = allCampaigns[idx];
+			if (!c) return;
+			iocStateFor(c.id).sort = $sel.val();
+			renderIocList(c, idx);
+		});
+
+		// Pure local toggle, same pattern as .tfc-reporters-toggle above -
+		// the source-tweets list is part of .tfc-ioc-prov, which
+		// renderIocList never rewrites, so there is nothing to persist in
+		// iocState for it.
+		$(document).on('click', '.tfc-ioc-src-toggle', function() {
+			var $btn = $(this);
+			var open = $btn.attr('aria-expanded') === 'true';
+			$btn.attr('aria-expanded', open ? 'false' : 'true');
+			$btn.siblings('.tfc-ioc-srclist').prop('hidden', open);
 		});
 
 		$(document).on('click', '.tfc-filter-chip[data-confidence]', function() {
