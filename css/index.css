@@ -220,7 +220,36 @@ body {
    .tf-menu-item in tweetfeed.css. */
 
 /* Copy-to-clipboard icons - prevent blue flash on click */
-.tf-copy { cursor: pointer; color: inherit; }
+.tf-copy { cursor: pointer; color: inherit; position: relative; }
+/* The glyph itself renders about 11x13px, well under the 24x24 minimum for a
+   pointer target (WCAG 2.5.8), and these are real controls: role="button"
+   tabindex="0" with a click handler delegated in js/utils.js.
+   The hit area is grown with a centred ::after overlay instead of padding or
+   a negative margin, for three reasons measured on 2026-08-29:
+     - `<i>` is INLINE, so vertical padding never grows the line box but
+       horizontal padding does shift following text - the icons would move.
+     - 178 of the 234 plain icons carry an inline `style="margin-right:0.4rem"`,
+       which beats any margin declared here, so `margin:-4px` would apply on
+       three sides only and drag each icon 4px left.
+     - ::after costs zero layout: it is out of flow, so nothing reflows.
+   Font Awesome draws its glyph in ::before, so ::after is free.
+   Measured by hit-testing with elementFromPoint on 2026-08-29: /api/ and
+   /feeds/ go from 11x13 to a full 24x24.
+   KNOWN LIMIT: inside the home DataTable the icon sits in a
+   `<span style="...overflow:hidden">`, which clips the overlay vertically to
+   the line box - measured 22x18 there, up from 10.5x12. Those icons are one per
+   row and far apart, so they already met 2.5.8 through the spacing exception
+   anyway. Growing them further would mean a taller table row, which is a
+   redesign of the home, not an accessibility fix. */
+.tf-copy::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 24px;
+	height: 24px;
+	transform: translate(-50%, -50%);
+}
 .tf-copy:active, .tf-copy:focus { color: inherit; outline: none; }
 /* ...but the icons are role="button" tabindex="0", so outline:none on :focus
    left 300+ keyboard-reachable controls with no visible state at all. The
