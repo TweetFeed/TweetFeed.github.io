@@ -45,7 +45,7 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=4" rel="stylesheet">
+	<link href="../css/table.css?v=5" rel="stylesheet">
 	<link href="../css/index.css?v=60" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=60" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -825,6 +825,15 @@
 							<div id="feResultsWrap" style="display:none;">
 								<div class="table-responsive table-responsive-sm">
 									<table class="table table-borderless" id="feedExplorerTable" style="width:98%; box-sizing: inherit;">
+										<colgroup>
+											<col span="1" style="width: 14%;"> <!-- Date -->
+											<col span="1" style="width: 13%;"> <!-- User -->
+											<col span="1" style="width: 8%;"> <!-- Type -->
+											<col span="1" style="width: 42%;"> <!-- Value -->
+											<col span="1" style="width: 10%;"> <!-- Tags -->
+											<col span="1" style="width: 6%;"> <!-- X -->
+											<col span="1" style="width: 7%;"> <!-- VT -->
+										</colgroup>
 										<thead>
 											<tr>
 												<th scope="col" class="text-nowrap">Date (UTC)</th>
@@ -912,6 +921,15 @@
 						<div class="card-body">
 							<div class="table-responsive table-responsive-sm">
 								<table class="table table-borderless" id="dataTableFull" style="width:98%; box-sizing: inherit;">
+									<colgroup>
+										<col span="1" style="width: 14%;"> <!-- Date -->
+										<col span="1" style="width: 13%;"> <!-- User -->
+										<col span="1" style="width: 8%;"> <!-- Type -->
+										<col span="1" style="width: 42%;"> <!-- Value -->
+										<col span="1" style="width: 10%;"> <!-- Tags -->
+										<col span="1" style="width: 6%;"> <!-- X -->
+										<col span="1" style="width: 7%;"> <!-- VT -->
+									</colgroup>
 									<thead>
 										<tr>
 											<th scope="col" class="d-none d-lg-table-cell text-nowrap">Date (UTC) <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Date the Tweet was posted"></i></th>

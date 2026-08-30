@@ -2,41 +2,14 @@ table {
   table-layout: fixed;
 }
 
-/* The seven-column IOC table: date / user / type / value / tags / source / copy.
-   These proportions are that table's, and until 2026-08-23 they were written as
-   a bare `table th:nth-child(N)`, so every <table> on the site inherited them.
-   Most tables were saved only because they carry a <colgroup>, which wins under
-   table-layout:fixed; the two that did not (docs/ and threat-intelligence-guide/)
-   were rendering a four-column documentation table with a 54.5% last column and
-   a 10.4% third one. Scoped to the three tables that own the shape: the home
-   feed, and the lookup and explorer tables of /search/. */
-#dataTable th:nth-child(1), #feedExplorerTable th:nth-child(1), #dataTableFull th:nth-child(1) {
-  width: 14%;
-}
-
-#dataTable th:nth-child(2), #feedExplorerTable th:nth-child(2), #dataTableFull th:nth-child(2) {
-  width: 13%;
-}
-
-#dataTable th:nth-child(3), #feedExplorerTable th:nth-child(3), #dataTableFull th:nth-child(3) {
-  width: 8%;
-}
-
-#dataTable th:nth-child(4), #feedExplorerTable th:nth-child(4), #dataTableFull th:nth-child(4) {
-  width: 42%;
-}
-
-#dataTable th:nth-child(5), #feedExplorerTable th:nth-child(5), #dataTableFull th:nth-child(5) {
-  width: 10%;
-}
-
-#dataTable th:nth-child(6), #feedExplorerTable th:nth-child(6), #dataTableFull th:nth-child(6) {
-  width: 6%;
-}
-
-#dataTable th:nth-child(7), #feedExplorerTable th:nth-child(7), #dataTableFull th:nth-child(7) {
-  width: 7%;
-}
+/* Los anchos de las tres tablas IOC (home #dataTable, /search/ #dataTableFull y
+   #feedExplorerTable) viven en su <colgroup>, NO aqui. DataTables mide los anchos sobre un
+   clon al que le hace removeAttr("id"), asi que una regla acotada por #id es invisible
+   durante esa medida: mide entonces los <input> del filtro (size=20, mas el input{width:105%}
+   de mas abajo), le salen siete columnas iguales y escribe width:152px inline en cada <th>,
+   que gana a la hoja. Eso es lo que paso entre el 2026-08-23 y el 2026-08-31, con las siete
+   columnas a 194px y la de Value cortada. El <col> si sobrevive al clon y gana al inline bajo
+   table-layout:fixed, que es ademas como lo hacen las otras treinta tablas del sitio. */
 
 .table tr,
 .table td {
