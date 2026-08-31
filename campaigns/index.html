@@ -1111,7 +1111,13 @@
 			.tfc-h-num { grid-column: 3; }
 			.tfc-h-conf { grid-column: 4; }
 			.tfc-gist-activity { display: inline; }
-			.tfc-panes { grid-template-columns: 1fr; }
+			/* minmax(0,...) rather than a bare 1fr: 1fr means minmax(auto,1fr), and
+			   that automatic minimum floors the track at the pane's min-content
+			   (~1130px regardless of viewport), which .tfc-list then silently clips
+			   with overflow:hidden - every line of the expanded pane was cut
+			   mid-word below 992px. The desktop rule above already guards this the
+			   same way; this override had dropped the guard. Fixed 2026-08-31. */
+			.tfc-panes { grid-template-columns: minmax(0,1fr); }
 			.tfc-pane-b { border-left: 0; padding-left: 0; margin-top: 1rem; }
 			.tfc-toolbar .tfc-search-wrap { flex-basis: 100%; }
 			.tfc-expand-all { margin-left: 0; }
