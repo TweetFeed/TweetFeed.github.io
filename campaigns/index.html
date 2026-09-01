@@ -663,6 +663,31 @@
 		.tfc-ev-rest { color: #9aa0a6; }
 		.tfc-ev-merged { text-transform: none; font-weight: 400; letter-spacing: normal; color: #9aa0a6; }
 		.tfc-ev-value code { font: inherit; color: #1c1c1c; padding: 0; }
+		/* The pattern row wraps at EVERY width, not just on mobile. The
+		   evidence pane is narrow at any viewport - measured 2026-09-01 on
+		   the first document that ever published patterns, the value column
+		   is 152px at a 1280px viewport, 310px at 1920px and 127px at
+		   390px, against regexes of 207px and 228px - so the ellipsis above
+		   cut BOTH of them on a 1280px desktop and one of the two even at
+		   1920px. patterns.MAX_REGEX_LEN is 120 chars upstream, so a longer
+		   one is allowed to exist and would clip anywhere.
+		   Why this row and not the others: a clipped domain sample is still
+		   a sample, and its "+N" says so. A regex is a hunting instruction -
+		   read half of it by eye and you have the WRONG pattern, not less of
+		   the right one. Same wrap idiom as .tfc-ioc-line further down
+		   (flex-wrap + flex-basis 100% + order); the copy button stays on
+		   the first line via order, and always carried the full regex
+		   regardless of what was visible. */
+		.tfc-ev-row-pattern { flex-wrap: wrap; }
+		.tfc-ev-row-pattern .tfc-ev-value {
+			flex-basis: 100%;
+			order: 2;
+			overflow: visible;
+			text-overflow: clip;
+			white-space: normal;
+			word-break: break-all;
+		}
+		.tfc-ev-row-pattern .tfc-copy { order: 1; margin-left: auto; }
 		.tfc-copy {
 			flex-shrink: 0;
 			background: none;
@@ -1942,7 +1967,7 @@
 			var outside = (typeof p.domains_elsewhere_30d === 'number') ? p.domains_elsewhere_30d : 0;
 			var regex = String(p.regex);
 			return (
-				'<div class="tfc-ev-row">' +
+				'<div class="tfc-ev-row tfc-ev-row-pattern">' +
 					'<span class="tfc-ev-count"></span>' +
 					'<span class="tfc-ev-label">naming pattern</span>' +
 					'<span class="tfc-ev-value"><code>' + esc(regex) + '</code> - ' + esc(nf(n)) + ' domain' + (n === 1 ? '' : 's') +
