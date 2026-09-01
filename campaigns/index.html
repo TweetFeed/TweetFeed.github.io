@@ -1932,8 +1932,9 @@
 		}).filter(Boolean).join('');
 		// Naming patterns (optional, campaigns/patterns.py): up to 3
 		// deterministic regexes over the campaign's own registered domains,
-		// each with evidence counts. Absent on most documents today (shadow
-		// upstream) - a campaign without the key renders exactly as before.
+		// each with evidence counts. Live upstream since 2026-09-01 but
+		// earned by a minority of campaigns (4 of 36 the day it flipped) -
+		// a campaign without the key renders exactly as before.
 		// The regex is attacker-derived text: escaped, never a link.
 		var patternRows = (Array.isArray(c.patterns) ? c.patterns : []).map(function(p) {
 			if (!p || typeof p !== 'object' || !p.regex) return '';
