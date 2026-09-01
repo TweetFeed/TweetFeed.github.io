@@ -1961,17 +1961,51 @@
 		// earned by a minority of campaigns (4 of 36 the day it flipped) -
 		// a campaign without the key renders exactly as before.
 		// The regex is attacker-derived text: escaped, never a link.
+		// history.by_pattern (phase F5) carries the 365-day reach of THIS
+		// regex, which nothing else on the card shows: the campaign-level
+		// "seen since" further down is computed from the exact anchor
+		// domains, never from the pattern. Indexed by regex here, once per
+		// campaign, and rendered on the same row as the regex that earned
+		// it. Absent whenever the yearly scan failed, and inert while F4
+		// was in shadow - the regexes are compiled off the ASSEMBLED
+		// document upstream, so before 2026-09-01 by_pattern was always [].
+		var byPattern = {};
+		if (c.history && typeof c.history === 'object' && Array.isArray(c.history.by_pattern)) {
+			c.history.by_pattern.forEach(function(b) {
+				if (b && typeof b === 'object' && typeof b.regex === 'string') byPattern[b.regex] = b;
+			});
+		}
 		var patternRows = (Array.isArray(c.patterns) ? c.patterns : []).map(function(p) {
 			if (!p || typeof p !== 'object' || !p.regex) return '';
 			var n = (typeof p.domain_count === 'number') ? p.domain_count : 0;
 			var outside = (typeof p.domains_elsewhere_30d === 'number') ? p.domains_elsewhere_30d : 0;
 			var regex = String(p.regex);
+			// The 365d COUNT only when the year found more domains than this
+			// 30-day window did - that is the entire signal ("this family
+			// reaches back past the card"), and the two were equal in 6 of
+			// the 7 patterns the first live document published, so printing
+			// it always would be noise. The date always: for a campaign
+			// whose window is a single day it is what separates a brand-new
+			// family from a resurgence. Raw YYYY-MM-DD on purpose, same as
+			// the historySub line further down - shortDate() drops the year
+			// and a months-old first sighting needs it.
+			var hist = byPattern[regex];
+			var histHtml = '';
+			if (hist) {
+				var d365 = (typeof hist.domains_365d === 'number') ? hist.domains_365d : null;
+				var since = (typeof hist.first_seen_365d === 'string') ? hist.first_seen_365d : '';
+				var bits = [];
+				if (d365 !== null && d365 > n) bits.push(esc(nf(d365)) + ' over 365d');
+				if (since) bits.push('since ' + esc(since));
+				if (bits.length) histHtml = ' <span class="tfc-ev-rest">- ' + bits.join(', ') + '</span>';
+			}
 			return (
 				'<div class="tfc-ev-row tfc-ev-row-pattern">' +
 					'<span class="tfc-ev-count"></span>' +
 					'<span class="tfc-ev-label">naming pattern</span>' +
 					'<span class="tfc-ev-value"><code>' + esc(regex) + '</code> - ' + esc(nf(n)) + ' domain' + (n === 1 ? '' : 's') +
 						(outside > 0 ? ' <span class="tfc-ev-rest">(+' + esc(nf(outside)) + ' outside this campaign)</span>' : '') +
+						histHtml +
 					'</span>' +
 					'<button type="button" class="tfc-copy" data-copy-raw="' + esc(regex) + '" aria-label="Copy naming pattern"><i class="far fa-copy"></i></button>' +
 				'</div>'
