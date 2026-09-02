@@ -44,8 +44,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=60" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=60" rel="stylesheet">
+	<link href="../css/index.css?v=61" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=61" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -502,7 +502,7 @@
 								<div class="card-body">
 									<!-- freshness:count:start -->
 									<p class="trd-generated-line" id="trendsGeneratedLine">Last updated: September 2nd, 2026 10:45:14 UTC</p>
-									<!-- freshness:count:end --><p class="trd-generated-line" id="trendsGeneratedLine"></p>
+									<!-- freshness:count:end -->
 									<div class="chart-area">
 										<canvas id="trendsVolumeChart" role="img" aria-label="Daily IOC volume for the last 30 days, by type"></canvas>
 									</div>
@@ -1092,20 +1092,21 @@
 		}
 
 		$(function() {
-			$.get(TweetFeed.dataUrl('trends.json'))
-				.done(function(response) {
-					var data = (typeof response === 'string') ? JSON.parse(response) : response;
+			TweetFeed.safeGet(TweetFeed.dataUrl('trends.json'), {
+				dataType: 'json',
+				success: function(data) {
 					try {
 						renderTrends(data);
 					} catch (e) {
 						console.error('[TweetFeed] trends render failed:', e);
 						showTrendsFailure();
 					}
-				})
-				.fail(function(xhr, status, err) {
-					console.error('[TweetFeed] trends.json fetch failed:', status, err);
+				},
+				error: function(msg) {
+					console.error('[TweetFeed] trends.json fetch failed:', msg);
 					showTrendsFailure();
-				});
+				}
+			});
 		});
 	})();
 	</script>
