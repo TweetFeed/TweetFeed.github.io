@@ -665,6 +665,28 @@ def check_single_h1(pages: list[str]) -> list[str]:
     return failures
 
 
+def check_duplicate_ids(pages: list[str]) -> list[str]:
+    """Every id="..." on a page must be unique - duplicate ids break
+    getElementById/jQuery id selectors, which silently resolve to only the
+    first match and leave any duplicate untouched. Caught trends/index.html
+    shipping a second, empty <p id="trendsGeneratedLine"> glued onto the
+    freshness comment (2026-09-02): $('#trendsGeneratedLine') only ever
+    reached the first element, so prod painted a stray empty paragraph."""
+    # (?<![-\w]) and not \b: `\bid="` matches INSIDE `data-website-id="`,
+    # because the hyphen before it is a word boundary. That would fold the
+    # Umami site id into the id namespace of every page.
+    id_re = re.compile(r'(?<![-\w])id="([^"]+)"')
+    failures: list[str] = []
+    for p in pages:
+        counts: dict[str, int] = {}
+        for m in id_re.finditer(read(p)):
+            counts[m.group(1)] = counts.get(m.group(1), 0) + 1
+        for i, n in sorted(counts.items()):
+            if n > 1:
+                failures.append(f"{p}: id \"{i}\" appears {n} times")
+    return failures
+
+
 # Files describing the /v1/campaigns machine-facing contract (schema +
 # discovery docs). Kept in sync by hand - added 2026-08-16 after the
 # 2026-08-13 window change (7d -> 30d) shipped in the API but left these
@@ -1031,6 +1053,7 @@ SHELL_CHECKS = [
     ("Docs sidebar matches site_ia", check_docs_sidebar),
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
     ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
+    ("Duplicate HTML ids", check_duplicate_ids),
 ]
 
 
