@@ -408,18 +408,27 @@ hr.divider {
    subtitle line reads smaller than a bare wordmark at the same box height, so
    MISP gets a taller cap. Only the modifier moves; the box does not. */
 .tf-integration img.tf-int-lockup { max-height: 34px; }
+/* Centred inline text, NOT flex. As a flex container each separator was its
+   own flex item, so a wrapped line could start with a dangling "· Miteru"
+   (same defect fixed on the sibling site when its row went to five names).
+   Inline text breaks only at collapsible whitespace, and the markup has none
+   between a name and the separator that follows it: `</a><span>·</span>`
+   are glued, the newline after the separator is the only break opportunity.
+   The air around the dot therefore has to come from CSS, not from spaces -
+   a space before it would hand the browser back the break it must not have.
+   line-height 17px = 13px font + the 4px row gap the old `gap: 4px 8px` gave;
+   the 8px column half lives in .tf-int-sep's margins below. */
 .tf-integrations-more {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: baseline;
-	gap: 4px 8px;
+	text-align: center;
+	line-height: 17px;
 	margin: 0;
 	font-family: 'Rubik', sans-serif;
 	font-size: 13px;
 }
 .tf-integrations-more a { color: #3a6f96; }
-.tf-integrations-more .tf-int-sep { color: #9aa0a6; }
+/* 8px to the left of the dot; to its right 4px plus the ~3.6px of the collapsed
+   newline, which comes to the same 8px the flex gap used to give both sides. */
+.tf-integrations-more .tf-int-sep { color: #9aa0a6; margin: 0 4px 0 8px; }
 @media (max-width: 575.98px) {
 	.tf-integrations { grid-template-columns: repeat(2, 1fr); }
 	.tf-integration { min-height: 60px; }
