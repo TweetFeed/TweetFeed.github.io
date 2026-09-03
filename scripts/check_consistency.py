@@ -1134,6 +1134,33 @@ def check_year_counts() -> list[str]:
     return failures
 
 
+def check_integration_anchors() -> list[str]:
+    """Every internal INTEGRATIONS/INTEGRATIONS_MORE href that carries a
+    #fragment must resolve: the target file must exist AND contain that
+    literal id="...".
+
+    The "Integrated in" band used to be hardcoded HTML on the home page, with
+    nothing checking that its links still pointed at a real heading. Once
+    OpenCTI/IntelOwl started pointing at our own /hunt/ recipes instead of
+    third-party URLs (2026-09-03), a renamed or removed id="stack-..." would
+    have rotted the link silently - the band still renders, it just points at
+    nothing. This check makes that impossible to ship unnoticed."""
+    failures: list[str] = []
+    entries = [(i.name, i.href) for i in ia.INTEGRATIONS]
+    entries += [(l.label, l.href) for l in ia.INTEGRATIONS_MORE]
+    for name, href in entries:
+        if href.startswith(("http://", "https://")) or "#" not in href:
+            continue
+        path, frag = href.split("#", 1)
+        target = Path(path) if path.endswith(".html") else Path(path) / "index.html"
+        if not (REPO_ROOT / target).is_file():
+            failures.append(f"{name} ({href}): target file {target} does not exist")
+            continue
+        if f'id="{frag}"' not in read(str(target)):
+            failures.append(f'{name} ({href}): {target} has no id="{frag}"')
+    return failures
+
+
 GLOBAL_CHECKS = [
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
@@ -1141,6 +1168,7 @@ GLOBAL_CHECKS = [
     ("Templates include the shell partials", check_templates_include_shell),
     ("Year-window counts in descriptions are not overstated", check_year_counts),
     ("Agent Skills index.json digests match SKILL.md files on disk", check_agent_skill_digests),
+    ("Integration band anchors resolve (site_ia hrefs -> real id=\"...\")", check_integration_anchors),
 ]
 
 

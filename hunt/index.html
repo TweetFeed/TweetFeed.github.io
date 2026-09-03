@@ -11,9 +11,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="25 copy-paste IOC hunting recipes for terminal, Splunk, Sentinel, Defender, Elastic, MISP, TAXII 2.1, Sigma and MCP. Free, CC0, refreshed every 15 min.">
+	<meta name="description" content="29 copy-paste IOC recipes: terminal, Splunk, Sentinel, Defender, Elastic, QRadar, MISP, TAXII, OpenCTI, IntelOwl, Sigma, MCP. Free, CC0, refreshed every 15 min.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma">
+	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma,qradar,opencti,intelowl">
 	<link rel="canonical" href="https://tweetfeed.live/hunt/">
 	<title>Threat Hunting Cookbook: Copy-Paste IOC Recipes - TweetFeed</title>
 	<!-- Twitter Card -->
@@ -60,7 +60,7 @@
 		"@context": "https://schema.org",
 		"@type": "HowTo",
 		"name": "Hunt for IOCs from Twitter/X using TweetFeed",
-		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, MISP feed install and Sigma rule templates.",
+		"description": "Copy-paste recipes for terminal (bash + jq), Splunk SPL, Microsoft Sentinel KQL, Microsoft Defender for Endpoint, IBM QRadar AQL, MISP feed install, OpenCTI connector, IntelOwl analyzer and Sigma rule templates.",
 		"author": {"@id": "https://tweetfeed.live/#founder"},
 		"about": {"@id": "https://tweetfeed.live/#organization"},
 		"tool": [
@@ -69,13 +69,16 @@
 			{"@type": "HowToTool", "name": "Microsoft Sentinel"},
 			{"@type": "HowToTool", "name": "Microsoft Defender for Endpoint"},
 			{"@type": "HowToTool", "name": "Elastic Stack (Logstash + Elasticsearch + Kibana)"},
+			{"@type": "HowToTool", "name": "IBM QRadar"},
 			{"@type": "HowToTool", "name": "MISP"},
 			{"@type": "HowToTool", "name": "Sigma"},
 			{"@type": "HowToTool", "name": "TAXII 2.1"},
+			{"@type": "HowToTool", "name": "OpenCTI"},
+			{"@type": "HowToTool", "name": "IntelOwl"},
 			{"@type": "HowToTool", "name": "Model Context Protocol (MCP)"}
 		],
 		"step": [
-			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Every recipe is listed on one page with its own link. Filter the list by stack - raw feeds, terminal, Splunk, Sentinel, Defender, Elastic, MISP and TAXII, Sigma, or MCP agents."},
+			{"@type": "HowToStep", "name": "Pick a recipe by your tool", "text": "Every recipe is listed on one page with its own link. Filter the list by stack - raw feeds, terminal, Splunk, Sentinel, Defender, Elastic, QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma, or MCP agents."},
 			{"@type": "HowToStep", "name": "Configure the connector or lookup", "text": "Each recipe includes the exact ingest pattern: REST API calls, CSV download, RSS feed, MISP feed URL, KQL externaldata() block or Splunk inputlookup."},
 			{"@type": "HowToStep", "name": "Schedule the refresh", "text": "TweetFeed CSVs and the API refresh every 15 minutes. Match your pull cadence to your detection latency tolerance."},
 			{"@type": "HowToStep", "name": "Tune the allowlist for false positives", "text": "Every join recipe shows where to add an allowlist (KQL pack_array, SPL where clause) so trusted assets stop firing alerts."},
@@ -409,6 +412,9 @@
 		.hnt-badge-misp     { background: #a0dde6; }
 		.hnt-badge-sigma    { background: #FFCC99; }
 		.hnt-badge-agents   { background: #e6d3f7; }
+		.hnt-badge-qradar   { background: #f7c7d9; }
+		.hnt-badge-opencti  { background: #c9e4c5; }
+		.hnt-badge-intelowl { background: #f5e6a3; }
 	</style>
 </head>
 
@@ -535,19 +541,22 @@
 				</div>
 				<div class="tf-headline">
 					<div class="tf-headline-cell"><div class="tf-headline-value">25</div><div class="tf-headline-label">Recipes</div></div>
-					<div class="tf-headline-cell"><div class="tf-headline-value">9</div><div class="tf-headline-label">Stacks covered</div></div>
+					<div class="tf-headline-cell"><div class="tf-headline-value">12</div><div class="tf-headline-label">Stacks covered</div></div>
 					<div class="tf-headline-cell"><div class="tf-headline-value">15 min</div><div class="tf-headline-label">Feed refresh</div></div>
 					<div class="tf-headline-cell"><div class="tf-headline-value">CC0</div><div class="tf-headline-label">Public domain, no auth</div></div>
 				</div>
 				<div class="hnt-filter" id="hnt-filter" role="group" aria-label="Filter recipes by stack">
-					<button class="hnt-chip" type="button" data-stack="all" aria-pressed="true">All <span class="hnt-chip-n">25</span></button>
+					<button class="hnt-chip" type="button" data-stack="all" aria-pressed="true">All <span class="hnt-chip-n">29</span></button>
 					<button class="hnt-chip" type="button" data-stack="api" aria-pressed="false">Raw feeds <span class="hnt-chip-n">4</span></button>
 					<button class="hnt-chip" type="button" data-stack="terminal" aria-pressed="false">Terminal <span class="hnt-chip-n">5</span></button>
 					<button class="hnt-chip" type="button" data-stack="splunk" aria-pressed="false">Splunk <span class="hnt-chip-n">3</span></button>
 					<button class="hnt-chip" type="button" data-stack="sentinel" aria-pressed="false">Sentinel <span class="hnt-chip-n">2</span></button>
 					<button class="hnt-chip" type="button" data-stack="defender" aria-pressed="false">Defender <span class="hnt-chip-n">4</span></button>
 					<button class="hnt-chip" type="button" data-stack="elastic" aria-pressed="false">Elastic <span class="hnt-chip-n">3</span></button>
+					<button class="hnt-chip" type="button" data-stack="qradar" aria-pressed="false">QRadar <span class="hnt-chip-n">2</span></button>
 					<button class="hnt-chip" type="button" data-stack="misp" aria-pressed="false">MISP &amp; TAXII <span class="hnt-chip-n">2</span></button>
+					<button class="hnt-chip" type="button" data-stack="opencti" aria-pressed="false">OpenCTI <span class="hnt-chip-n">1</span></button>
+					<button class="hnt-chip" type="button" data-stack="intelowl" aria-pressed="false">IntelOwl <span class="hnt-chip-n">1</span></button>
 					<button class="hnt-chip" type="button" data-stack="sigma" aria-pressed="false">Sigma <span class="hnt-chip-n">1</span></button>
 					<button class="hnt-chip" type="button" data-stack="agents" aria-pressed="false">Agents <span class="hnt-chip-n">1</span></button>
 				</div>
@@ -1034,6 +1043,50 @@ output {
 						<p class="hnt-note">For detection rules, <code>tweetfeed-iocs-*</code> also works as a value list compatible with Elastic Security's <a href="https://www.elastic.co/guide/en/security/current/value-lists-exceptions.html" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
 					</article>
 				</section>
+				<section class="hnt-group" data-group="qradar">
+					<hr class="divider">
+					<h2 class="section-heading tf-block-head" id="stack-qradar">IBM QRadar</h2>
+					<p class="hnt-group-note">Two steps: load the IOCs into a reference set, then test your events against it in AQL.</p>
+					<article class="hnt-card" id="qradar-refset" data-stack="qradar">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-qradar">QRadar</span>
+							<h3 class="hnt-title">Load a reference set</h3>
+							<a class="hnt-anchor" href="#qradar-refset" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">QRadar holds the IOC list in a reference set. Create the set once, then refresh it from cron on the same 15 minute cadence as the feed.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Refresh: 15 min</span></p>
+						<pre id="qs-qradar-1" class="code-block"><code class="language-bash"># 1. Create the set once. FIRST_SEEN plus a 7 day TTL ages entries out on its own.
+curl -s -X POST -H &#34;SEC: $QRADAR_TOKEN&#34; -H &#39;Version: 13.1&#39; \
+  &#34;https://$CONSOLE/api/reference_data/sets?name=TweetFeed_IPs&amp;element_type=IP&amp;time_to_live=7%20days&amp;timeout_type=FIRST_SEEN&#34;
+
+# 2. Refresh it from the last 7 days. Run this from cron every 15 minutes.
+curl -s https://api.tweetfeed.live/v1/week/ip \
+  | jq &#39;[.[].value]&#39; \
+  | curl -s -X POST -H &#34;SEC: $QRADAR_TOKEN&#34; -H &#39;Version: 13.1&#39; \
+      -H &#39;Content-Type: application/json&#39; --data-binary @- \
+      &#34;https://$CONSOLE/api/reference_data/sets/bulk_load/TweetFeed_IPs&#34;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-1" title="Copy"></i></pre>
+						<p class="hnt-note">The set must exist before the first bulk load, or the API answers 404. The body is a bare JSON array, which is why <code>jq</code> wraps the values. Build one set per type: swap <code>ip</code> for <code>domain</code>, <code>url</code>, <code>sha256</code> or <code>md5</code>, and use <code>element_type=ALN</code> for anything that is not an address.</p>
+					</article>
+					<article class="hnt-card" id="qradar-aql" data-stack="qradar">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-qradar">QRadar</span>
+							<h3 class="hnt-title">Hunt events with AQL</h3>
+							<a class="hnt-anchor" href="#qradar-aql" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc"><code>REFERENCESETCONTAINS()</code> tests any Ariel field against the set, so one rule covers every log source that carries an address.</p>
+						<p class="hnt-meta"><span>Window: week</span><span>Lookback: 24h</span></p>
+						<pre id="qs-qradar-2" class="code-block"><code class="language-sql">SELECT
+  QIDNAME(qid) AS &#39;Event&#39;,
+  sourceip AS &#39;Source&#39;,
+  destinationip AS &#39;Destination&#39;,
+  username AS &#39;User&#39;
+FROM events
+WHERE REFERENCESETCONTAINS(&#39;TweetFeed_IPs&#39;, destinationip)
+LAST 24 HOURS</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-2" title="Copy"></i></pre>
+						<p class="hnt-note">Save it as a saved search, then build a rule on top of it to alert. The function takes an optional third argument for the domain ID on multi-tenant consoles.</p>
+						<p class="hnt-links"><a href="https://www.ibm.com/docs/SSKMKU/com.ibm.qradar.doc/r_aql_data_functions.html" target="_blank" rel="noopener noreferrer">AQL reference data functions</a></p>
+					</article>
+				</section>
 				<section class="hnt-group" data-group="misp">
 					<hr class="divider">
 					<h2 class="section-heading tf-block-head" id="stack-misp">MISP &amp; TAXII</h2>
@@ -1071,6 +1124,62 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
   -H &#39;Accept: application/taxii+json;version=2.1&#39;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-taxii-1" title="Copy"></i></pre>
 						<p class="hnt-note">Paginate with <code>limit</code> and <code>next</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references were created with the collection, so they fall outside any recent window. Fetch those once by id from <code>/objects/{id}/</code> so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
 						<p class="hnt-links"><a href="../api/#taxii">TAXII reference</a></p>
+					</article>
+				</section>
+				<section class="hnt-group" data-group="opencti">
+					<hr class="divider">
+					<h2 class="section-heading tf-block-head" id="stack-opencti">OpenCTI</h2>
+					<p class="hnt-group-note">There is an official connector in the OpenCTI catalogue, so this needs no custom code.</p>
+					<article class="hnt-card" id="opencti-connector" data-stack="opencti">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-opencti">OpenCTI</span>
+							<h3 class="hnt-title">Official connector</h3>
+							<a class="hnt-anchor" href="#opencti-connector" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">The <code>external-import/tweetfeed</code> connector reads the daily CSVs and writes Observables and Indicators, with the reporting researcher kept as the author organization.</p>
+						<p class="hnt-meta"><span>Window: 30 days by default</span><span>Type: external-import</span></p>
+						<pre id="qs-opencti-1" class="code-block"><code class="language-yaml">services:
+  connector-tweetfeed:
+    image: opencti/connector-tweetfeed:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=ChangeMe
+      - CONNECTOR_ID=ChangeMe
+      - CONNECTOR_NAME=Tweetfeed
+      - CONNECTOR_SCOPE=tweetfeed
+      - TWEETFEED_INTERVAL=1
+      - TWEETFEED_DAYS_BACK_IN_TIME=30
+      - TWEETFEED_CREATE_INDICATORS=true
+      - TWEETFEED_CREATE_OBSERVABLES=true
+      - TWEETFEED_CONFIDENCE_LEVEL=25
+    restart: always</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-opencti-1" title="Copy"></i></pre>
+						<p class="hnt-note"><code>TWEETFEED_INTERVAL</code> is in days, and <code>TWEETFEED_DAYS_BACK_IN_TIME</code> sets how far back the first run reaches. To force a poll, open <b>Data management &rarr; Connectors</b> and reset the connector state. If you prefer a standards-based path, the TAXII 2.1 collection above works in OpenCTI too.</p>
+						<p class="hnt-links"><a href="https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/tweetfeed" target="_blank" rel="noopener noreferrer">Connector source and configuration</a></p>
+					</article>
+				</section>
+				<section class="hnt-group" data-group="intelowl">
+					<hr class="divider">
+					<h2 class="section-heading tf-block-head" id="stack-intelowl">IntelOwl</h2>
+					<p class="hnt-group-note">TweetFeed ships as a built-in observable analyzer, enabled by default in the free playbook.</p>
+					<article class="hnt-card" id="intelowl-analyzer" data-stack="intelowl">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-intelowl">IntelOwl</span>
+							<h3 class="hnt-title">TweetFeed analyzer</h3>
+							<a class="hnt-anchor" href="#intelowl-analyzer" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">Ask IntelOwl whether an observable ever appeared in the feed, and get back the tags, the reporting handle and the original tweet.</p>
+						<p class="hnt-meta"><span>Observables: ip, url, domain, hash</span><span>Max TLP: CLEAR</span></p>
+						<pre id="qs-intelowl-1" class="code-block"><code class="language-plaintext">Analyzer:    TweetFeed
+Type:        observable
+Observables: ip, url, domain, hash
+Max TLP:     CLEAR
+
+Parameters (both optional):
+  time     today | week | month | year
+  filter1  a tag (phishing, ransomware, CobaltStrike)
+           or a handle (@1ZRR4H, @malwrhunterteam)</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-intelowl-1" title="Copy"></i></pre>
+						<p class="hnt-note">The analyzer keeps a local copy of the last 30 days and refreshes it daily, so lookups do not hit the API. Only <code>time: year</code> falls through to a live call.</p>
+						<p class="hnt-links"><a href="https://intelowlproject.github.io/docs/IntelOwl/usage/" target="_blank" rel="noopener noreferrer">IntelOwl analyzer configuration</a></p>
 					</article>
 				</section>
 				<section class="hnt-group" id="detection" data-group="sigma">

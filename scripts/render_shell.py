@@ -163,6 +163,10 @@ def shell_context(depth=0, active_key=None, link_base=None, indent=None, docs_ac
         "DOCS_SIDEBAR": ia.DOCS_SIDEBAR,
         "DOCS_SIDEBAR_CHILDREN": ia.DOCS_SIDEBAR_CHILDREN,
         "docs_active": docs_active,
+        "INTEGRATIONS": ia.INTEGRATIONS,
+        "INTEGRATIONS_MORE": ia.INTEGRATIONS_MORE,
+        "INTEGRATIONS_LABEL": ia.INTEGRATIONS_LABEL,
+        "INTEGRATIONS_MORE_LABEL": ia.INTEGRATIONS_MORE_LABEL,
         "FOOTER_MOBILE_COLUMNS": ia.FOOTER_MOBILE_COLUMNS,
         "FOOTER_MOBILE_LEGAL": ia.FOOTER_MOBILE_LEGAL,
         "FOOTER_SOCIAL": ia.FOOTER_SOCIAL,
@@ -192,6 +196,7 @@ def render_partial(name, ctx):
 # of content-level nav.page-toc elements).
 REGION_ANCHORS = {
     "sidebar_start": re.compile(r'<aside\b[^>]*\bdocs-sidebar\b[^>]*>', re.I),
+    "integrations_start": re.compile(r'<section\b[^>]*\btf-integrations-wrap\b[^>]*>', re.I),
     "nav_start": re.compile(r'<nav\b[^>]*\bnavbar-expand-lg\b[^>]*\bfixed-top\b[^>]*>', re.I),
     "nav_end": re.compile(r'<nav\b(?![^>]*\bnavbar-expand-lg\b)[^>]*\bnavbar-expand\b[^>]*\bd-lg-none\b[^>]*>', re.I),
     "foot_start": re.compile(r'<footer\b[^>]*\bd-none\b[^>]*\bd-lg-block\b[^>]*>', re.I),
@@ -242,6 +247,13 @@ def find_region(html, kind):
         if not m:
             raise ValueError("no docs sidebar found")
         end = close_element(html, m.start(), "aside")
+        return html.rfind("\n", 0, m.start()) + 1, end
+    if kind == "integrations":
+        # Same shape as "sidebar" above: ONE element, not a pair.
+        m = REGION_ANCHORS["integrations_start"].search(html)
+        if not m:
+            raise ValueError("no integrations band found")
+        end = close_element(html, m.start(), "section")
         return html.rfind("\n", 0, m.start()) + 1, end
     if kind == "nav":
         first, second, tag = REGION_ANCHORS["nav_start"], REGION_ANCHORS["nav_end"], "nav"
@@ -319,15 +331,18 @@ def render_for(page):
         depth=depth, active_key=active, link_base=link_base, docs_active=docs_active
     )
     sidebar = render_partial("_docs_sidebar.html.j2", ctx) if docs_active else None
+    # The "Integrated in" band exists on the home page only.
+    integrations = render_partial("_integrations.html.j2", ctx) if page == "index.html" else None
     return (
         render_partial("_nav.html.j2", ctx),
         render_partial("_footer.html.j2", ctx),
         sidebar,
+        integrations,
     )
 
 
 def rewrite(html, page):
-    nav, foot, sidebar = render_for(page)
+    nav, foot, sidebar, integrations = render_for(page)
     html = MARKER_LINE_RE.sub("", html)
     if sidebar is not None and REGION_ANCHORS["sidebar_start"].search(html):
         start, end = find_region(html, "sidebar")
@@ -337,6 +352,14 @@ def rewrite(html, page):
         html = (
             html[:start]
             + reindent(sidebar.rstrip("\n"), indent_of(html, start))
+            + html[end:]
+        )
+    if integrations is not None and REGION_ANCHORS["integrations_start"].search(html):
+        start, end = find_region(html, "integrations")
+        # Same no-trailing-newline rule as sidebar above (ends at </section>).
+        html = (
+            html[:start]
+            + reindent(integrations.rstrip("\n"), indent_of(html, start))
             + html[end:]
         )
     for kind, block in (("nav", nav), ("foot", foot)):

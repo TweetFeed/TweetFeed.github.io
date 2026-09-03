@@ -1,0 +1,33 @@
+{#- "Integrated in" band. Single source of truth: scripts/site_ia.py
+    (INTEGRATIONS + INTEGRATIONS_MORE). Rendered into index.html ONLY by
+    scripts/render_shell.py: the "integrations" region is OPTIONAL, exactly
+    like sidebar_start, because no other page carries this section.
+
+    Two rows with different meanings, both declared in site_ia:
+      * INTEGRATIONS (logo grid) - products that ship a TweetFeed integration.
+      * INTEGRATIONS_MORE (text list) - third-party projects that consume the
+        feed. Items are glued to a <span class="tf-int-sep"> with NO
+        whitespace in between, and the LAST item carries no trailing
+        separator.
+
+    scripts/check_consistency.py check_integration_anchors() asserts every
+    internal #fragment href here resolves to a real id="..." in the target
+    page, so hunt/#stack-opencti (etc.) cannot silently rot if that heading's
+    id is ever renamed.
+-#}
+<section class="tf-integrations-wrap" aria-labelledby="tf-int-label">
+	<h2 class="tf-integrations-label" id="tf-int-label">{{ INTEGRATIONS_LABEL }}</h2>
+	<div class="tf-integrations">
+{%- for item in INTEGRATIONS %}
+		<a class="tf-integration" href="{{ url(item) }}"{% if item.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+			<img loading="lazy"{% if item.lockup %} class="tf-int-lockup"{% endif %} src="{{ item.img }}" alt="{{ item.alt }}" width="{{ item.width }}" height="{{ item.height }}">
+		</a>
+{%- endfor %}
+	</div>
+	<p class="tf-integrations-label">{{ INTEGRATIONS_MORE_LABEL }}</p>
+	<p class="tf-integrations-more">
+{%- for link in INTEGRATIONS_MORE %}
+		<a href="{{ url(link) }}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ link.label }}</a>{% if not loop.last %}<span class="tf-int-sep" aria-hidden="true">&middot;</span>{% endif %}
+{%- endfor %}
+	</p>
+</section>

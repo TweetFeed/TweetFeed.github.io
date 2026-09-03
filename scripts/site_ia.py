@@ -242,6 +242,68 @@ def docs_sidebar_links():
     return [l for _, links in DOCS_SIDEBAR for l in links]
 
 
+# --- Home page: "Integrated in" band ----------------------------------------
+# Rendered by _integrations.html.j2 into index.html ONLY: render_shell's
+# "integrations" region is OPTIONAL, exactly like sidebar_start, because no
+# other page carries this band. Two rows with different meanings:
+#   * INTEGRATIONS (logo grid, heading "Integrated in") - products that ship
+#     a TweetFeed integration.
+#   * INTEGRATIONS_MORE (text list, heading "Also used by") - third-party
+#     projects that consume the feed. These document external consumers, not
+#     our own recipes, so their hrefs stay external even where a project also
+#     happens to be covered in /hunt/ (e.g. QRadar).
+# check_consistency.check_integration_anchors() asserts every internal
+# #fragment href below resolves to a literal id="..." in the target page, so
+# a heading id rename (or a dead recipe) can no longer rot silently.
+INTEGRATIONS_LABEL = "Integrated in"
+INTEGRATIONS_MORE_LABEL = "Also used by"
+
+
+class Integration(NamedTuple):
+    name: str           # display name; used in check failures, not rendered as text
+    href: str           # site-relative ("hunt/#stack-splunk") or absolute (external)
+    img: str            # img/logo_X.png
+    alt: str
+    width: int
+    height: int
+    external: bool = False
+    lockup: bool = False   # tf-int-lockup class; MISP only
+
+
+INTEGRATIONS = [
+    Integration(
+        "OpenCTI", "hunt/#stack-opencti", "img/logo_opencti.png",
+        "OpenCTI, threat intelligence platform with an official TweetFeed connector",
+        282, 60,
+    ),
+    Integration(
+        "MISP", "feeds/#misp", "img/logo_misp.png",
+        "MISP, threat intelligence sharing platform: add the native TweetFeed MISP feed",
+        214, 60,
+        lockup=True,
+    ),
+    Integration(
+        "Splunk", "hunt/#stack-splunk", "img/logo_splunk.png",
+        "Splunk: saved searches and SPL recipes for hunting with TweetFeed",
+        200, 60,
+    ),
+    Integration(
+        "IntelOwl", "hunt/#stack-intelowl", "img/logo_intelowl.png",
+        "IntelOwl, threat intelligence platform with a built-in TweetFeed analyzer",
+        321, 60,
+    ),
+]
+
+INTEGRATIONS_MORE = [
+    Link("IBM QRadar", "https://github.com/alan7s/TweetFeed2QRadar", external=True),
+    Link("deepdarkCTI", "https://github.com/fastfire/deepdarkCTI/blob/main/others.md", external=True),
+    Link("URLVoid", "https://www.urlvoid.com/about-us/", external=True),
+    Link("HaGeZi DNS Blocklists", "https://github.com/hagezi/dns-blocklists/blob/main/sources.md", external=True),
+    Link("kitphishr", "https://github.com/cybercdh/kitphishr", external=True),
+    Link("Miteru", "https://github.com/ninoseki/miteru", external=True),
+]
+
+
 def docs_sidebar_active_for(page: str):
     """Which sidebar entry a page should highlight, or None if the page has no
     sidebar. A tag page highlights the tag index; a campaign permalink
