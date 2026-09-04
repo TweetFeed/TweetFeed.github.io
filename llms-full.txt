@@ -1,6 +1,6 @@
 # TweetFeed - full AI reference (llms-full.txt)
 
-> TweetFeed is a free, real-time Indicators of Compromise (IOC) aggregator that scrapes the infosec community on Twitter/X. Founded and maintained by Daniel López (Cyber Threat Researcher, 10+ years in cybersecurity). Every data output - feeds, REST API, MCP server, blocklists - is CC0 1.0 Universal (public domain). Coverage starts 2021-01-01.
+> TweetFeed is a free, real-time Indicators of Compromise (IOC) aggregator that scrapes the infosec community on Twitter/X. Founded and maintained by Daniel López (Cyber Threat Researcher, 10+ years in cybersecurity). Every data output - feeds, REST API, MCP server, blocklists - is CC0 1.0 Universal (public domain). Coverage starts 2021-08-09.
 
 ## At a glance
 

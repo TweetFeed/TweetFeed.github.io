@@ -8,15 +8,15 @@ info:
 
     The dataset is refreshed every 15 minutes by scraping RSS feeds from a curated
     list of ~95 security researchers plus security-related hashtags. Coverage starts
-    2021-01-01. All data is released under CC0 1.0 Universal (public domain
+    2021-08-09. All data is released under CC0 1.0 Universal (public domain
     dedication) - no attribution required, no warranty.
 
     All endpoints:
     - Require no authentication.
     - Set `Access-Control-Allow-Origin: *` (CORS open).
     - Cache responses at the CF edge: 60 s for `/v1/{time}`, `/v1/ioc`, `/v1/campaigns`,
-      `/v1/trends` and `/v1/counts`; 30 s for `/v1/since`; 15 min for `/v1/blocklist`
-      (all with `stale-while-revalidate`).
+      `/v1/campaigns/iocs`, `/v1/trends` and `/v1/counts`; 30 s for `/v1/since`; 15 min
+      for `/v1/blocklist` (all with `stale-while-revalidate`).
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
@@ -426,6 +426,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CampaignsDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
+
+  /v1/campaigns/iocs:
+    get:
+      operationId: getCampaignIocs
+      summary: Full IOC membership of every campaign
+      description: |
+        Returns the complete per-campaign IOC list for the campaigns returned
+        by `/v1/campaigns` - same generator, same daily regeneration, same
+        campaign ids. Served separately so the `/v1/campaigns` document stays
+        small (that endpoint only ships a 25-IOC sample per campaign); every
+        IOC here is verbatim from the feed.
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
+      responses:
+        "200":
+          description: Campaign IOC membership document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignIocsDocument"
         "304":
           $ref: "#/components/responses/NotModified"
 
@@ -1329,6 +1357,38 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Campaign"
+
+    CampaignIocsDocument:
+      type: object
+      required: [version, generated_at, campaigns]
+      properties:
+        version:
+          type: integer
+          description: Schema version of the campaign IOCs document. Currently `1`.
+          example: 1
+        generated_at:
+          type: string
+          format: date-time
+          description: UTC timestamp of the clustering run that produced this document.
+          example: "2026-09-04T06:56:16Z"
+        campaigns:
+          type: object
+          description: |
+            Full IOC membership, keyed by campaign id (matching `/v1/campaigns`'
+            `id`). Unlike `Campaign.iocs`, which caps at a 25-row sample, each
+            value here is the complete, unsampled list.
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/Ioc"
+          example:
+            tfc-0eebc91ceb12:
+              - date: "2026-08-25 13:42:00"
+                tags: ["#stealer"]
+                tweet: "https://x.com/suyog41/status/2092246114179432584"
+                type: "domain"
+                user: "suyog41"
+                value: "lewokodwqko.icu"
 
     Campaign:
       type: object

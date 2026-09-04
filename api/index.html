@@ -381,7 +381,7 @@
 				<!-- -->
 				<br>
 				<h2 id="result-cap" class="section-heading tf-block-head">Result cap</h2>
-				<p>A response is capped at <b>10,000 rows</b>, truncated from the oldest end so you keep the most recent data. In practice only the unfiltered <code>/v1/month</code> exceeds it - that window holds about 15,000 rows, so roughly its first ten days are dropped. <code>today</code>, <code>week</code> and every filtered variant stay below the cap.</p>
+				<p>A response is capped at <b>10,000 rows</b>, truncated from the oldest end so you keep the most recent data. In practice only the unfiltered <code>/v1/month</code> can exceed it, and only in high-volume months: when it does, the oldest days of the window are dropped and the response carries <code>X-Result-Truncated: true</code>. <code>today</code>, <code>week</code> and every filtered variant stay below the cap.</p>
 				<p>Truncation is never silent. Every <code>200</code> reports what you actually received:</p>
 				<ul>
 					<li><code>X-Result-Count</code> - rows in this response.</li>
@@ -458,6 +458,34 @@
 }</pre>
 				<p class="tf-note"><code>stale: true</code> means the daily clustering run failed and this document is the previous day's snapshot (<code>stale_since</code> holds the date of the last successful run). Human page: <a href="../campaigns/">tweetfeed.live/campaigns/</a>.</p>
 				<p class="tf-note">Four newer optional keys, each omitted when empty. <code>patterns</code> (optional, max 3): deterministic regexes generalised from the campaign's own registered domains, each with <code>domain_count</code>, <code>ioc_count</code>, <code>domains_elsewhere_30d</code> (unowned 30-day feed domains the regex also matches), up to 3 <code>examples</code> and <code>first_seen</code>/<code>last_seen</code>; omitted when no pattern passes the gates, and currently shadow upstream so absent on most documents. <code>history</code> (optional): 365-day evidence behind the 30-day card, from a scan of the public <code>year.csv</code> - <code>window_days</code>, <code>first_seen_365d</code>/<code>last_seen_365d</code>, <code>domains_365d</code>, <code>iocs_365d</code>, <code>iocs_before_window</code> and <code>by_pattern</code> (<code>{"regex", "domains_365d", "first_seen_365d"}</code> per naming pattern); omitted when the yearly scan failed or timed out. <code>related</code> (optional): phishunt.io detections active at build time on the campaign's domains (<code>exact</code>) or naming patterns (<code>pattern</code>) - <code>source</code>, <code>checked_at</code>, <code>match_count</code> and up to 10 <code>matches</code> of <code>{"domain", "match", "company", "asn"}</code>; never members, never in <code>ioc_count</code>, omitted when nothing matches or the fetch failed. <code>anchors.families</code> (optional): only on an orphan hash/IP bucket that local enrichment attributed to one malware family - such a bucket has no domain/path/tag anchor, the shared family is what makes it one campaign.</p>
+				<p>The document above lists each campaign's metadata plus a 25-IOC sample. Full IOC membership - every IOC in every campaign, verbatim from the feed - is served separately by this endpoint, so the hot <code>/v1/campaigns</code> document stays small. Same campaign ids, regenerated daily alongside it.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns/iocs <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns/iocs" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<span class="tf-code-label"><b>Response (trimmed)</b></span>
+				<pre class="code-block code-block-sm">{
+    "version": 1,
+    "generated_at": "2026-09-04T06:56:16Z",
+    "campaigns": {
+        "tfc-0eebc91ceb12": [
+            {
+                "date": "2026-08-25 13:42:00",
+                "tags": ["#stealer"],
+                "tweet": "https://x.com/suyog41/status/2092246114179432584",
+                "type": "domain",
+                "user": "suyog41",
+                "value": "lewokodwqko.icu"
+            },
+            {
+                "date": "2026-08-25 13:42:00",
+                "tags": ["#stealer"],
+                "tweet": "https://x.com/suyog41/status/2092246114179432584",
+                "type": "url",
+                "user": "suyog41",
+                "value": "http://lewokodwqko.icu"
+            },
+            "..."
+        ]
+    }
+}</pre>
 				<br>
 				<h2 id="counts" class="section-heading tf-block-head">Counts</h2>
 				<p>Pre-aggregated totals for each time window: overall count, a per-type breakdown, a per-tag breakdown, and the first/last IOC timestamp - without fetching and parsing the full <code>year</code> CSV. Regenerated every 15 minutes alongside the rest of the feed.</p>
