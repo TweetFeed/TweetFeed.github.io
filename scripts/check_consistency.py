@@ -485,6 +485,11 @@ def check_orphan_pages() -> list[str]:
             continue
         failures.append(f"/{d} exists but is linked from neither the nav nor the footer")
     for path in sorted(REPO_ROOT.glob("*/*/index.html")):
+        # Same skip as the page enumeration in main(): node_modules/ is
+        # gitignored dev tooling (bs-snippet-injector ships an index.html)
+        # and never deploys, so it can't be an orphan page.
+        if any(part in (".git", "node_modules") for part in path.parts):
+            continue
         parent = path.parent.parent.name + "/"
         d = parent + path.parent.name + "/"
         if parent == "tag/":
