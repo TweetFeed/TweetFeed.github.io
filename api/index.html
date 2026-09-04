@@ -175,6 +175,14 @@
 					"@type": "Answer",
 					"text": "Use conditional requests. Every 200 response carries an ETag and a Last-Modified header; send them back as If-None-Match or If-Modified-Since and get a 304 with an empty body when nothing changed. Works on every API route and on the static feed files."
 				}
+			},
+			{
+				"@type": "Question",
+				"name": "How do I use TweetFeed IOCs in my SIEM or threat intelligence platform?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "See the Hunt page (tweetfeed.live/hunt/): copy-paste recipes for the terminal, Splunk, Microsoft Sentinel and Defender, Elastic, IBM QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma detection content and AI agents. Every recipe uses the same free, unauthenticated, CC0 API described on this page."
+				}
 			}
 		]
 	}
@@ -746,6 +754,10 @@
 					<details>
 						<summary>How do I avoid re-downloading the whole feed?</summary>
 						<p>Use conditional requests: every <code>200</code> response carries an <code>ETag</code> and a <code>Last-Modified</code> header, send either one back and get a <code>304</code> with an empty body when nothing changed. See <a href="#caching">Caching and conditional requests</a> above.</p>
+					</details>
+					<details>
+						<summary>How do I use TweetFeed IOCs in my SIEM or threat intelligence platform?</summary>
+						<p>See <a href="../hunt/">Hunt</a>: copy-paste recipes for the terminal, Splunk, Microsoft Sentinel and Defender, Elastic, IBM QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma detection content and AI agents. Every recipe uses the same free, unauthenticated, CC0 API described on this page.</p>
 					</details>
 				</section>
 			</div>
