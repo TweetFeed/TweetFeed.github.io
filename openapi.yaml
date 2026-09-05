@@ -841,9 +841,12 @@ components:
         Transform: the scheme (`http://`, `https://`, `ftp://`, `ftps://`)
         becomes `hxxp://`, `hxxps://`, `fxp://`, `fxps://` (lowercased,
         only when followed by `://`); every literal `.` in the value
-        becomes `[.]`, in the host, path and query alike. Ports, `://` and
-        `@` are left untouched, and hashes are unaffected (no `.` to
-        defang). Reversible with CyberChef's "Defang URL" / "Refang"
+        becomes `[.]`, in the host, path and query alike. For example,
+        `https://evil.tld/a.php?id=1.2` becomes
+        `hxxps://evil[.]tld/a[.]php?id=1[.]2`, and `171.229.217.2` becomes
+        `171[.]229[.]217[.]2`. Ports, `://` and `@` are left untouched, and
+        hashes are unaffected (no `.` to defang). Reversible with
+        CyberChef's "Defang URL" / "Refang"
         recipes, or Python's `iocextract` (`refang_data` for URLs,
         `refang_data(no_scheme=True)` for bare domains, `refang_ipv4` for
         IPs) - a value that already contains `[` or `]` is lossy under
@@ -863,7 +866,7 @@ components:
         response.
       schema:
         type: string
-        enum: ["1", "true", "0", "false"]
+        enum: ["", "1", "true", "0", "false"]
       example: "1"
 
     IfNoneMatch:

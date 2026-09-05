@@ -6,14 +6,14 @@
       "type": "skill-md",
       "description": "Query TweetFeed for security IOCs (URLs, domains, IPs, MD5/SHA256 hashes) shared by the infosec community on Twitter/X, including single-IOC lookup against the live 365-day window plus the pre-365-day archive. Public HTTP API, no auth, CC0 licensed. Filter by @researcher, tag (malware family or category), and IOC type.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-iocs/SKILL.md",
-      "digest": "sha256:68681fc4fe34ed9b5c2ac9776ec3bfa3d596511f1d7c9f508bb3c7f5b725bd24"
+      "digest": "sha256:1c046ceaf6a7176be326890b93a60970fa190d2e590576812c443893423dd6a7"
     },
     {
       "name": "tweetfeed-ioc-lookup",
       "type": "skill-md",
       "description": "Look up one specific IOC (URL, domain, IP, MD5 or SHA-256 hash) in TweetFeed - the live 365-day window plus the pre-365-day archive - first/last seen, reporters, and optional AI context. Exact match, not a substring search. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-ioc-lookup/SKILL.md",
-      "digest": "sha256:5ac525e288167fc9a3464f29d4349e373df929ffe49bd103258b5c53b89ff9ca"
+      "digest": "sha256:0116590f27f95229412a78dc4e0a9894672f4bafc5d77ab805550a156c362e6a"
     },
     {
       "name": "tweetfeed-blocklists",

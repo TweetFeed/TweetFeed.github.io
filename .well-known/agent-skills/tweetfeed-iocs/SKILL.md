@@ -60,7 +60,7 @@ curl -s 'https://api.tweetfeed.live/v1/today'
 curl -sL 'https://api.tweetfeed.live/v1/year' > year.csv
 ```
 
-Add `?defang=1` to any of the routes above to get defanged values back (`hxxps://evil[.]tld`, `1[.]2[.]3[.]4`) - available for pasting into a ticket or report without triggering an auto-link:
+Add `?defang=1` to the JSON routes above (`/v1/today`, `/v1/week`, `/v1/month`, `/v1/since/...`, `/v1/ioc`) to get defanged values back (`hxxps://evil[.]tld`, `1[.]2[.]3[.]4`), for pasting into a ticket or report - `/v1/year` redirects to a raw CSV and is never defanged:
 
 ```bash
 curl -s 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1'
