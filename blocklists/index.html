@@ -102,7 +102,7 @@
 		"@type": "WebPage",
 		"name": "Blocklists",
 		"url": "https://tweetfeed.live/blocklists/",
-		"description": "Ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: domains, hosts, AdGuard, IPs, RPZ, dnsmasq and full URLs. Rolling 30-day window, rebuilt every 15 minutes.",
+		"description": "Ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: domains, hosts, AdGuard, IPs, RPZ, dnsmasq and full URLs, plus a Zeek intel file and Wazuh CDB lists. Rolling 30-day window, rebuilt every 15 minutes.",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
 		"about": {"@id": "https://tweetfeed.live/blocklists/#dataset"},
 		"inLanguage": "en"
@@ -116,7 +116,7 @@
 		"@id": "https://tweetfeed.live/blocklists/#dataset",
 		"name": "TweetFeed IOC Blocklists",
 		"alternateName": "TweetFeed blocklist exports",
-		"description": "Ready-to-import plain-text blocklist exports (domains, hosts, AdGuard, IPs, RPZ, dnsmasq, full URLs) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
+		"description": "Ready-to-import plain-text blocklist exports (domains, hosts, AdGuard, IPs, RPZ, dnsmasq, full URLs, plus a Zeek intel file and Wazuh CDB lists) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
 		"url": "https://tweetfeed.live/blocklists/",
 		"sameAs": "https://github.com/0xDanielLopez/TweetFeed",
 		"keywords": ["blocklist", "pi-hole", "adguard", "dnsmasq", "rpz", "dns firewall", "ioc feed", "Threat Intelligence", "OSINT"],
@@ -161,7 +161,7 @@
 				"name": "Which format should I use?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt."
+					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt. Zeek's Intelligence Framework takes zeek-intel.txt. A Wazuh manager takes wazuh-domains.txt and wazuh-ips.txt as CDB lists."
 				}
 			},
 			{
@@ -470,7 +470,7 @@
 				<!-- IDS AND SIEM                                                  -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">IDS and SIEM</h3>
-				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a Zeek Intelligence Framework file and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
+				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a tab-separated Zeek Intelligence Framework file (<code>meta.source</code> always <code>tweetfeed.live</code>) and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100">
@@ -503,7 +503,7 @@
 						</div>
 					</div>
 				</div>
-				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval - the content changes at most every 15 minutes. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
+				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval; the file changes at most every 15 minutes, so polling faster buys little. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
 
 				<!-- ============================================================ -->
 				<!-- RESPONSE FORMAT SAMPLE                                        -->
@@ -511,7 +511,7 @@
 				<h3 class="section-heading tf-block-head">What a response looks like</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Every file opens with a header comment giving its own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here. <code>rpz.txt</code> is a BIND zone file instead of a flat list; <code>zeek-intel.txt</code> opens with a single <code>#fields</code> line instead; the <code>wazuh-*.txt</code> files carry no header at all, since a <code>#</code> would compile as a literal CDB key.</p>
+						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Most files open with a header comment giving their own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here. <code>rpz.txt</code> is a BIND zone file instead of a flat list; <code>zeek-intel.txt</code> opens with a single tab-separated <code>#fields</code> line instead; the <code>wazuh-*.txt</code> files carry no header at all, since a <code>#</code> would compile as a literal CDB key.</p>
 						<pre class="code-block code-block-sm"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days
 # Entries: 4877
@@ -551,7 +551,7 @@
 					</details>
 					<details>
 						<summary>Which format should I use?</summary>
-						<p>Pi-hole and most DNS sinkholes take <code>domains.txt</code>. AdGuard Home and uBlock-style filter lists take <code>adguard.txt</code>. dnsmasq, including OpenWrt and pfSense, takes <code>dnsmasq.txt</code>. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes <code>rpz.txt</code>. A firewall or edge ACL takes <code>ips.txt</code>. Anything that reads a plain hosts file, including some routers, takes <code>hosts.txt</code>. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes <code>urls.txt</code>.</p>
+						<p>Pi-hole and most DNS sinkholes take <code>domains.txt</code>. AdGuard Home and uBlock-style filter lists take <code>adguard.txt</code>. dnsmasq, including OpenWrt and pfSense, takes <code>dnsmasq.txt</code>. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes <code>rpz.txt</code>. A firewall or edge ACL takes <code>ips.txt</code>. Anything that reads a plain hosts file, including some routers, takes <code>hosts.txt</code>. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes <code>urls.txt</code>. Zeek's Intelligence Framework takes <code>zeek-intel.txt</code>. A Wazuh manager takes <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> as CDB lists.</p>
 					</details>
 					<details>
 						<summary>How often are the blocklists updated?</summary>

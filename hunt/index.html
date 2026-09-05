@@ -618,9 +618,9 @@ wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv<
 							<h3 class="hnt-title">Plain-text blocklists</h3>
 							<a class="hnt-anchor" href="#blocklists" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">Seven ready-to-consume exports of the last 30 days, one indicator per line, for Pi-hole, AdGuard Home, hosts files, dnsmasq, BIND RPZ and firewalls.</p>
+						<p class="hnt-desc">Ready-to-consume exports of the last 30 days, one indicator per line, for Pi-hole, AdGuard Home, hosts files, dnsmasq, BIND RPZ, firewalls and IDS/SIEM tooling.</p>
 						<p class="hnt-meta"><span>Window: 30 days</span><span>Refresh: 15 min</span></p>
-						<pre id="qs-blocklist-1" class="code-block"><code class="language-bash"># Seven plain-text exports, rolling 30-day window, one indicator per line
+						<pre id="qs-blocklist-1" class="code-block"><code class="language-bash"># Plain-text exports, rolling 30-day window, one indicator per line
 curl -sfL https://api.tweetfeed.live/v1/blocklist/domains.txt   # bare domains (Pi-hole)
 curl -sfL https://api.tweetfeed.live/v1/blocklist/hosts.txt     # 0.0.0.0 hosts file
 curl -sfL https://api.tweetfeed.live/v1/blocklist/adguard.txt   # AdGuard Home

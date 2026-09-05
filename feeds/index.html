@@ -601,9 +601,9 @@
 					These are community-reported IOCs and their confidence is not always 100%, so adding them straight to a blocklist is not recommended. Run your own analysis first. They work better as a <b>Watchlist</b> or as input to <b>Threat Hunting</b>.
 				</div>
 				<h3 id="blocklist" class="section-heading tf-sect-head">Blocklists</h3>
-				<p>Plain-text exports, one indicator per line, 30-day window, rebuilt every 15 minutes.</p>
+				<p>Plain-text exports, one indicator per line (the Zeek file adds two metadata columns), 30-day window, rebuilt every 15 minutes.</p>
 				<ul class="fds-facts">
-					<li>Drop-in for Pi-hole, AdGuard Home, hosts files, firewalls, proxies and IDS.</li>
+					<li>Drop-in for Pi-hole, AdGuard Home, hosts files, firewalls, proxies, IDS and SIEMs.</li>
 					<li><code>urls.txt</code> carries the full URL instead of just the host, so it also covers indicators sitting on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</li>
 					<li>A 1:1 mirror of the feed, with no extra quality gate beyond the standard pipeline.</li>
 				</ul>

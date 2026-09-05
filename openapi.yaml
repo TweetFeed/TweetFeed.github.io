@@ -759,15 +759,18 @@ components:
         Policy Zone (exact and wildcard `CNAME .` records, SOA serial =
         the epoch of the last content change) for BIND, Unbound and
         PowerDNS Recursor. `dnsmasq.txt` uses the `address=/<domain>/0.0.0.0`
-        format. `urls.txt` is the only URL-level export: full URLs, not just
-        hosts, for `url`-type IOCs on shared/legitimate infrastructure that
-        host/DNS blocking can't safely cover. `zeek-intel.txt` is a Zeek
-        Intelligence Framework file (a `#fields` column-header line, then
-        domains as `Intel::DOMAIN`, IPs as `Intel::ADDR`/`Intel::SUBNET`, and
-        schemeless URLs as `Intel::URL`). `wazuh-domains.txt` and
-        `wazuh-ips.txt` are Wazuh CDB lists (`key:tweetfeed` per line, no
-        header; IPv6 keys in `wazuh-ips.txt` are double-quoted, and CIDR
-        values are omitted since Wazuh's CDB has no subnet matching).
+        format. `urls.txt` is the only flat URL-level export: full URLs, not
+        just hosts, for `url`-type IOCs on shared/legitimate infrastructure
+        that host/DNS blocking can't safely cover. `zeek-intel.txt` is a
+        Zeek Intelligence Framework file: a tab-separated `#fields`
+        column-header line (`indicator`, `indicator_type`, `meta.source`,
+        the last always `tweetfeed.live`), then domains as `Intel::DOMAIN`,
+        IPs as `Intel::ADDR`/`Intel::SUBNET`, and schemeless URLs as
+        `Intel::URL`. `wazuh-domains.txt` and `wazuh-ips.txt` are Wazuh CDB
+        lists (`key:tweetfeed` per line, no header; IPv6 keys in
+        `wazuh-ips.txt` are double-quoted, and CIDR values are omitted
+        because Wazuh matches subnets by dotted-prefix key (`192.168.`),
+        so a `1.2.3.0/24` key would never match).
       schema:
         type: string
         enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt]

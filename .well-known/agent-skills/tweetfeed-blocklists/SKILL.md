@@ -5,7 +5,7 @@ description: Fetch ready-made plain-text blocklists built from TweetFeed's rolli
 
 # TweetFeed Blocklists
 
-Plain-text exports, one indicator per line, rolling 30-day window, rebuilt every 15 minutes. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk. Base: `https://api.tweetfeed.live/v1/blocklist/`.
+Plain-text exports, one indicator per line (the Zeek file adds two metadata columns), rolling 30-day window, rebuilt every 15 minutes. These are a 1:1 mirror of the feed with no additional quality gate beyond the standard pipeline - community-reported IOCs, use at your own risk. Base: `https://api.tweetfeed.live/v1/blocklist/`.
 
 ## Formats
 
@@ -41,7 +41,7 @@ Every response supports conditional requests (`ETag` / `Last-Modified`); send `I
 
 ## Why `urls.txt` is separate
 
-Every other format is host-level (domain or IP), so it can only block a whole site. `urls.txt` carries the full path, which is the only way to block a phishing kit sitting on a compromised or shared host (Google Sites, GitHub Pages, cloud-storage buckets) where blocking the domain would take down legitimate content too.
+Every other flat list is host-level (domain or IP), so it can only block a whole site (`zeek-intel.txt` carries URL indicators too, but as Zeek intel rather than a blocklist). `urls.txt` carries the full path, which is the only way to block a phishing kit sitting on a compromised or shared host (Google Sites, GitHub Pages, cloud-storage buckets) where blocking the domain would take down legitimate content too.
 
 ## Gotchas
 
