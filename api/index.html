@@ -639,6 +639,19 @@
             "tweets": ["https://x.com/Coolcarlos17/status/2074241960101941737"]
         }
     ],
+    "reg": {
+        "apex": "praserfelizlu.site",
+        "registrar": "NameSilo, LLC",
+        "created": "2026-07-04T18:02:11Z",
+        "ns": ["ns1.dns-parking.com", "ns2.dns-parking.com"],
+        "ips": ["203.0.113.10"],
+        "asn": "AS13335",
+        "org": "Cloudflare, Inc.",
+        "status": "ok",
+        "checked_at": "2026-07-06T21:30:00Z",
+        "age_days_at_report": 2,
+        "newly_registered": true
+    },
     "archive": {
         "window": "pre-365d",
         "total": 1,
@@ -670,6 +683,7 @@
 				<p class="tf-note">The optional <code>campaigns</code> block (max 3, newest <code>last_seen</code> first) lists the published campaigns this IOC belongs to, independent of <code>found</code> - a value can be in a campaign while missing from the live 365-day window. Each entry links to <code>/campaigns/#&lt;id&gt;</code> on the campaign explorer for the full context, targeted brand/sector/country and IOC sample.</p>
 				<p class="tf-note">TweetFeed's own feed data and API responses are CC0; the optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0: abuse.ch (URLhaus / ThreatFox / MalwareBazaar, see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>), USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate), and <a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</p>
 				<p class="tf-note">The optional <code>net.drop</code> block is a separate case, IP lookups only: it annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a> - it does not mean the IOC value itself is listed anywhere. Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</p>
+				<p class="tf-note"><code>reg</code> is optional (domain/url lookups): RDAP registration metadata plus <code>age_days_at_report</code>, the domain's age in UTC days when TweetFeed first reported it, and <code>newly_registered</code> (<code>true</code> when that age is 30 days or less). Both age fields are omitted when the creation date is unknown.</p>
 				<br>
 				<h2 id="blocklists" class="section-heading tf-block-head">Blocklists</h2>
 				<p>Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>

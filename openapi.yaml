@@ -1262,6 +1262,21 @@ components:
               type: string
               nullable: true
               description: Domain creation date from RDAP. `null` when unavailable.
+            age_days_at_report:
+              type: integer
+              minimum: 0
+              description: |
+                Optional. UTC calendar days between `created` and the earliest
+                `first_seen` TweetFeed has for this value (live window and
+                archive). Omitted when `created` is unavailable or when the
+                domain was registered more than 24h after the first report.
+                `0` = registered the same day it was first reported.
+            newly_registered:
+              type: boolean
+              description: |
+                Optional. `true` when `age_days_at_report` is 30 or less
+                (same threshold as phishunt.io). Present only alongside
+                `age_days_at_report`.
             ns:
               type: array
               nullable: true

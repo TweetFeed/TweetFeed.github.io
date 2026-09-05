@@ -1853,6 +1853,8 @@
 		// as an object-shape guard and as the "nothing to show yet" case).
 		// Every field is esc()'d. A confirmed-unregistered lookup renders a
 		// single muted line instead of the card - no other copy is added.
+		// Also renders the domain's age at first report (age_days_at_report)
+		// and a monochrome NEWLY REGISTERED chip when newly_registered is true.
 		function renderReg(reg) {
 			if (!reg || typeof reg !== 'object' || Array.isArray(reg)) return '';
 
@@ -1866,7 +1868,8 @@
 			var hasIps = Array.isArray(reg.ips) && reg.ips.length > 0;
 			var hasAsn = typeof reg.asn === 'string' && reg.asn;
 			var hasOrg = typeof reg.org === 'string' && reg.org;
-			if (!hasRegistrar && !hasCreated && !hasNs && !hasIps && !hasAsn && !hasOrg) return '';
+			var hasAge = typeof reg.age_days_at_report === 'number' && isFinite(reg.age_days_at_report) && reg.age_days_at_report >= 0;
+			if (!hasRegistrar && !hasCreated && !hasNs && !hasIps && !hasAsn && !hasOrg && !hasAge) return '';
 
 			var rows = [];
 			if (hasRegistrar) {
@@ -1874,6 +1877,21 @@
 					(hasCreated ? ' (registered ' + esc(reg.created.slice(0, 10)) + ')' : ''));
 			} else if (hasCreated) {
 				rows.push('Registered: ' + esc(reg.created.slice(0, 10)));
+			}
+			if (hasAge) {
+				var ageDays = Math.floor(reg.age_days_at_report);
+				var ageLine;
+				if (ageDays === 0) {
+					ageLine = 'Registered the same day it was first reported here';
+				} else if (ageDays === 1) {
+					ageLine = 'Registered 1 day before it was first reported here';
+				} else {
+					ageLine = 'Registered ' + esc(String(ageDays)) + ' days before it was first reported here';
+				}
+				if (reg.newly_registered === true) {
+					ageLine += ' <span class="tfl-corro-chip" data-toggle="tooltip" data-placement="top" title="Registered 30 days or less before its first TweetFeed report">NEWLY REGISTERED</span>';
+				}
+				rows.push(ageLine);
 			}
 			if (hasNs) {
 				rows.push('Nameservers: ' + reg.ns.map(esc).join(', '));
