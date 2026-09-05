@@ -508,6 +508,13 @@ paths:
 
         Rebuilt every 15 minutes, but a file's content (and its `# Updated:`
         header) only changes when its entries actually change.
+
+        `zeek-intel.txt`, `wazuh-domains.txt` and `wazuh-ips.txt` carry no `#`
+        comment header at all: `zeek-intel.txt` opens with a single `#fields`
+        column-header line instead, and the two Wazuh files have no header
+        line, since a `#` would compile as a literal CDB key. Check freshness
+        for these three with `/v1/manifest` or the response's `Last-Modified`
+        header instead of the `# Updated:` line.
       parameters:
         - $ref: "#/components/parameters/BlocklistFile"
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -754,10 +761,16 @@ components:
         PowerDNS Recursor. `dnsmasq.txt` uses the `address=/<domain>/0.0.0.0`
         format. `urls.txt` is the only URL-level export: full URLs, not just
         hosts, for `url`-type IOCs on shared/legitimate infrastructure that
-        host/DNS blocking can't safely cover.
+        host/DNS blocking can't safely cover. `zeek-intel.txt` is a Zeek
+        Intelligence Framework file (a `#fields` column-header line, then
+        domains as `Intel::DOMAIN`, IPs as `Intel::ADDR`/`Intel::SUBNET`, and
+        schemeless URLs as `Intel::URL`). `wazuh-domains.txt` and
+        `wazuh-ips.txt` are Wazuh CDB lists (`key:tweetfeed` per line, no
+        header; IPv6 keys in `wazuh-ips.txt` are double-quoted, and CIDR
+        values are omitted since Wazuh's CDB has no subnet matching).
       schema:
         type: string
-        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt]
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt]
 
     IocValueQuery:
       name: value

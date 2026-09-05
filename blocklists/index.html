@@ -102,7 +102,7 @@
 		"@type": "WebPage",
 		"name": "Blocklists",
 		"url": "https://tweetfeed.live/blocklists/",
-		"description": "Seven ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: domains, hosts, AdGuard, IPs, RPZ, dnsmasq and full URLs. Rolling 30-day window, rebuilt every 15 minutes.",
+		"description": "Ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: domains, hosts, AdGuard, IPs, RPZ, dnsmasq and full URLs. Rolling 30-day window, rebuilt every 15 minutes.",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
 		"about": {"@id": "https://tweetfeed.live/blocklists/#dataset"},
 		"inLanguage": "en"
@@ -116,7 +116,7 @@
 		"@id": "https://tweetfeed.live/blocklists/#dataset",
 		"name": "TweetFeed IOC Blocklists",
 		"alternateName": "TweetFeed blocklist exports",
-		"description": "Seven ready-to-import plain-text blocklist exports (domains, hosts, AdGuard, IPs, RPZ, dnsmasq, full URLs) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
+		"description": "Ready-to-import plain-text blocklist exports (domains, hosts, AdGuard, IPs, RPZ, dnsmasq, full URLs) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
 		"url": "https://tweetfeed.live/blocklists/",
 		"sameAs": "https://github.com/0xDanielLopez/TweetFeed",
 		"keywords": ["blocklist", "pi-hole", "adguard", "dnsmasq", "rpz", "dns firewall", "ioc feed", "Threat Intelligence", "OSINT"],
@@ -136,7 +136,10 @@
 			{"@type": "DataDownload", "name": "Blocklist - IPs",             "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - DNS RPZ zone",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/rpz.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - dnsmasq config",  "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - full URLs",       "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - full URLs",       "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - Zeek intel file", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - Wazuh domains CDB", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - Wazuh IPs CDB",   "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"}
 		]
 	}
 	</script>
@@ -150,7 +153,7 @@
 				"name": "What is an IOC blocklist?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "An IOC blocklist is a plain-text export of malicious indicators formatted for direct import into one specific tool: a DNS sinkhole, an ad blocker, a resolver zone file or a firewall rule set. TweetFeed publishes seven such exports, rebuilt every 15 minutes from the same underlying feed the rest of the site uses."
+					"text": "An IOC blocklist is a plain-text export of malicious indicators formatted for direct import into one specific tool: a DNS sinkhole, an ad blocker, a resolver zone file or a firewall rule set. TweetFeed publishes several such exports, rebuilt every 15 minutes from the same underlying feed the rest of the site uses."
 				}
 			},
 			{
@@ -385,9 +388,9 @@
 				<p class="text-center" style="font-size:13px;color:#737373;margin:0 0 1.25rem;"><strong>Related Threat Intelligence feeds:</strong> <a href="../malicious-domains/">malicious domains</a> &middot; <a href="../malicious-urls/">URLs</a> &middot; <a href="../malicious-ips/">malicious IP list</a> &middot; <a href="../feeds/">CSV/JSON feeds</a> &middot; <a href="../ioc-types/">All IOC types</a></p>
 
 				<!-- ============================================================ -->
-				<!-- THE SEVEN FORMATS                                             -->
+				<!-- THE BLOCKLIST FORMATS                                         -->
 				<!-- ============================================================ -->
-				<h3 class="section-heading tf-block-head">The seven formats</h3>
+				<h3 class="section-heading tf-block-head">The blocklist formats</h3>
 				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Every file is CC0 with no API key or sign-up - these are the same community-reported IOCs as the rest of TweetFeed, with no additional quality gate.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
@@ -461,7 +464,46 @@
 						</div>
 					</div>
 				</div>
-				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">The first six block at DNS or host level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</p>
+				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</p>
+
+				<!-- ============================================================ -->
+				<!-- IDS AND SIEM                                                  -->
+				<!-- ============================================================ -->
+				<h3 class="section-heading tf-block-head">IDS and SIEM</h3>
+				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a Zeek Intelligence Framework file and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
+				<div class="row">
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Zeek intel file <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Zeek</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Zeek's Intelligence Framework, loaded with <code>redef Intel::read_files</code>.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/zeek-intel.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh domains CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="match_key"</code> on a domain field.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/wazuh-domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh IPs CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="address_match_key"</code> on <code>srcip</code>/<code>dstip</code>.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/wazuh-ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval - the content changes at most every 15 minutes. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
 
 				<!-- ============================================================ -->
 				<!-- RESPONSE FORMAT SAMPLE                                        -->
@@ -469,7 +511,7 @@
 				<h3 class="section-heading tf-block-head">What a response looks like</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Every file opens with a header comment giving its own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here; <code>rpz.txt</code> is the one exception, formatted as a full BIND zone file instead of a flat list.</p>
+						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Every file opens with a header comment giving its own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here. <code>rpz.txt</code> is a BIND zone file instead of a flat list; <code>zeek-intel.txt</code> opens with a single <code>#fields</code> line instead; the <code>wazuh-*.txt</code> files carry no header at all, since a <code>#</code> would compile as a literal CDB key.</p>
 						<pre class="code-block code-block-sm"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days
 # Entries: 4877
@@ -505,7 +547,7 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an IOC blocklist?</summary>
-						<p>An IOC blocklist is a plain-text export of malicious indicators formatted for direct import into one specific tool: a DNS sinkhole, an ad blocker, a resolver zone file or a firewall rule set. TweetFeed publishes seven such exports, rebuilt every 15 minutes from the same underlying feed the rest of the site uses.</p>
+						<p>An IOC blocklist is a plain-text export of malicious indicators formatted for direct import into one specific tool: a DNS sinkhole, an ad blocker, a resolver zone file or a firewall rule set. TweetFeed publishes several such exports, rebuilt every 15 minutes from the same underlying feed the rest of the site uses.</p>
 					</details>
 					<details>
 						<summary>Which format should I use?</summary>

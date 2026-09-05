@@ -159,7 +159,10 @@
 			{"@type": "DataDownload", "name": "Blocklist - ips (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - rpz (TXT)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/rpz.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - dnsmasq (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - urls (TXT)",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - urls (TXT)",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - zeek-intel (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - wazuh-domains (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - wazuh-ips (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"}
 		]
 	}
 	</script>
@@ -669,6 +672,36 @@
 								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies, IDS and enrichment"></i>
 								<hr>
 								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/urls.txt" data-umami-event="download-blocklist-urls" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> urls.txt</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="fds-grid-label">IDS and SIEM</p>
+				<div class="row">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Zeek</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Zeek Intelligence Framework file, loaded via redef Intel::read_files"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt" data-umami-event="download-blocklist-zeek-intel" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> zeek-intel.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Wazuh domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Wazuh CDB list, lookup=match_key on a domain field"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt" data-umami-event="download-blocklist-wazuh-domains" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> wazuh-domains.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Wazuh IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Wazuh CDB list, lookup=address_match_key on srcip/dstip"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" data-umami-event="download-blocklist-wazuh-ips" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> wazuh-ips.txt</a>
 							</div>
 						</div>
 					</div>
