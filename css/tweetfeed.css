@@ -246,6 +246,13 @@ hr.divider {
 .cl-tag-feature { background: #a0dde6; }
 .cl-tag-tags    { background: #ffc591; }
 .cl-tag-status  { background: #FFCC99; }
+/* Freshness pill on /feeds/ (headline cell fourth slot, fed live from
+   /v1/status). Same bordered-badge idiom as .cl-tag above - reused rather
+   than duplicated - just with its own two-state palette: green means the
+   top-level `stale` boolean from the API is false, amber means true. */
+.tf-fresh, .tf-stale { display: inline-block; padding: 1px 8px; border: 1px solid black; border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: #000; line-height: 1.5; vertical-align: middle; }
+.tf-fresh { background: #34e3a4; }
+.tf-stale { background: #ffb454; }
 .cl-title { font-size: 1.2rem; margin: 0 0 0.6rem 0; }
 .cl-body { color: #1c1c1c; font-size: 15px; line-height: 1.6; }
 .cl-body p { margin: 0 0 0.5rem 0; }

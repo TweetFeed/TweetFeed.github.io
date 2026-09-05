@@ -847,6 +847,73 @@ def check_ioc_archive_surfaces(pages: list[str]) -> list[str]:
     return failures
 
 
+# Files that genuinely ENUMERATE the REST surface (a route list a human or
+# agent would read to discover what exists), as opposed to files that only
+# mention one endpoint in passing. Deliberately NOT the same set as
+# MACHINE_SURFACE_FILES - added 2026-09-05 alongside /v1/status and
+# /v1/manifest, after checking each candidate file by hand (see the task
+# report for the read-and-decide trail):
+#   - .well-known/mcp/server-card.json documents MCP TOOLS (a different
+#     abstraction over the same data), not a literal REST path list -
+#     forcing every /v1/... path into its tool descriptions would fight
+#     the file's own design rather than fix a real gap.
+#   - .well-known/agent-skills/index.json and the individual SKILL.md files
+#     are single-capability deep-dives (one endpoint each), not general
+#     endpoint enumerations - there is no "every route should be mentioned
+#     here" invariant to check on any one of them.
+API_SURFACE_FILES = [
+    "AGENTS.md",
+    "llms.txt",
+    "llms-full.txt",
+]
+
+# Matches a literal path key at the top level of `paths:` in openapi.yaml,
+# e.g. "  /v1/counts:" - two-space indent, ends the line right after the
+# colon (the nested `get:` etc. sit on following lines, more indented).
+API_PATH_KEY_RE = re.compile(r"^  (/v1/\S*):$", re.MULTILINE)
+
+
+def check_api_surface_parity(pages: list[str]) -> list[str]:
+    """Every /v1/... path documented in openapi.yaml must also be
+    mentioned (as a substring) in every file in API_SURFACE_FILES - added
+    2026-09-05 alongside /v1/status and /v1/manifest, so a route that ships
+    in the spec but never reaches the discovery docs (or a doc that
+    name-drops a route the spec doesn't have) cannot go unnoticed. Reversing
+    either edit - remove a path from openapi.yaml, or from one of these
+    files - must make this check fail; that is the check's own regression
+    test, run once by hand and reverted (see the task report).
+
+    Path templates (a key containing `{`) are reduced to their literal
+    prefix before the first `{`, with any trailing `/` stripped - e.g.
+    `/v1/since/{datetime}` -> `/v1/since`, `/v1/ioc/{value}` -> `/v1/ioc`.
+    The trailing-slash strip specifically matters for `/v1/ioc/{value}`:
+    every doc describes that same logical endpoint via its query-string
+    sibling (`/v1/ioc?value=...`), never the `/{value}` path form, so
+    requiring the slash would fail on pre-existing, correct documentation
+    that predates this check. `/v1/{time}` and its filtered variants all
+    reduce to the same generic `/v1` prefix, which is present everywhere
+    that mentions any `/v1/...` route at all - a trivial pass, not a hole
+    in the check."""
+    del pages  # fixed file set, not MAIN_PAGES
+    failures: list[str] = []
+    openapi = read("openapi.yaml")
+
+    requirements: set[str] = set()
+    for path in API_PATH_KEY_RE.findall(openapi):
+        if "{" in path:
+            path = path.split("{", 1)[0].rstrip("/")
+        if path:
+            requirements.add(path)
+
+    for name in API_SURFACE_FILES:
+        text = read(name)
+        for req in sorted(requirements):
+            if req not in text:
+                failures.append(f"{name}: does not mention `{req}` (documented as a path in openapi.yaml)")
+
+    return failures
+
+
 def check_agent_skill_digests() -> list[str]:
     """.well-known/agent-skills/index.json pins a sha256 digest per skill so a
     consumer can cache-validate a SKILL.md without re-fetching it. Nothing
@@ -1042,6 +1109,7 @@ CHECKS = [
     ("Single <h1> per page", check_single_h1),
     ("Machine-facing campaigns contract (openapi + discovery docs)", check_machine_surfaces),
     ("Machine-facing /v1/ioc archive contract (openapi + discovery docs)", check_ioc_archive_surfaces),
+    ("API surface parity (openapi.yaml paths vs discovery docs)", check_api_surface_parity),
 ]
 
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on

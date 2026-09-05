@@ -45,8 +45,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=61" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=61" rel="stylesheet">
+	<link href="../css/index.css?v=62" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=62" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -347,6 +347,8 @@
 					<a class="page-toc-chip" href="#diff">Diff endpoint</a>
 					<a class="page-toc-chip" href="#campaigns">Campaigns</a>
 					<a class="page-toc-chip" href="#counts">Counts</a>
+					<a class="page-toc-chip" href="#status">Status</a>
+					<a class="page-toc-chip" href="#manifest">Manifest</a>
 					<a class="page-toc-chip" href="#trends">Trends</a>
 					<a class="page-toc-chip" href="#ioc-lookup">IOC lookup</a>
 					<a class="page-toc-chip" href="#blocklists">Blocklists</a>
@@ -514,6 +516,84 @@
     }
 }</pre>
 				<p class="tf-note"><code>months</code> (only present on <code>year</code>) is indexed by calendar month, not relative to the window - index <code>0</code> is always January, index <code>11</code> is always December. Any window with no IOCs reports <code>first_date</code>/<code>last_date</code> as <code>null</code>.</p>
+				<br>
+				<h2 id="status" class="section-heading tf-block-head">Status</h2>
+				<p>Freshness facts for every published artifact plus a per-request verdict: is the pipeline stale, how old is each file, and (for the raw feed files) how old is the newest row inside it. Computed fresh on every request, never served from the response cache - poll this instead of re-cloning the data repo to find out if anything moved. The <a href="../feeds/">/feeds/</a> headline chip reads this endpoint.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/status <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/status" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<span class="tf-code-label"><b>Response (trimmed)</b></span>
+				<pre class="code-block code-block-sm">{
+    "schema_version": 1,
+    "generated_at": "2026-09-05T14:45:56Z",
+    "pipeline": { "interval_seconds": 900, "stale_after_seconds": 1800 },
+    "artifacts": {
+        "today.csv": {
+            "kind": "tick",
+            "updated_at": "2026-09-05T14:45:56Z",
+            "rows": 28,
+            "last_row": "2026-09-05 14:32:24",
+            "data_stale_after_seconds": 28800,
+            "age_seconds": 122,
+            "stale": false,
+            "data_age_seconds": 934,
+            "data_stale": false
+        },
+        "archive": {
+            "kind": "change-driven",
+            "updated_at": "2026-09-05T14:45:54Z",
+            "stale_after_seconds": null,
+            "note": "generated_at moves only when the archive corpus changes (at most daily); pipeline freshness is the signal",
+            "age_seconds": 124,
+            "stale": false
+        },
+        "campaigns.json": {
+            "kind": "own-clock",
+            "updated_at": "2026-09-05T06:43:57Z",
+            "interval_seconds": 86400,
+            "stale_after_seconds": 93600,
+            "age_seconds": 29041,
+            "stale": false
+        },
+        "...": "one entry per published artifact - today/week/month/year.csv, rss.xml, counts.json, trends.json, campaigns.json, external/ipmeta/enrichment/domainmeta.json, misp/, stix/, blocklists/, lookup/"
+    },
+    "checked_at": "2026-09-05T14:47:58Z",
+    "age_seconds": 122,
+    "stale": false,
+    "any_stale": false
+}</pre>
+				<p class="tf-note">Top-level <code>stale: true</code> means the pipeline document itself is older than <code>stale_after_seconds</code> - the same signal the <a href="../feeds/">/feeds/</a> freshness chip renders. Per-artifact <code>stale</code> is scoped to that one file; <code>any_stale</code> is true if any single artifact is stale even while the top-level pipeline is fresh. <code>kind: "change-driven"</code> artifacts (<code>archive</code>, <code>domainmeta.json</code>) carry <code>stale_after_seconds: null</code> - their <code>generated_at</code> only moves when the underlying content changes, so there is no fixed staleness window for them; watch the pipeline-level fields instead. <code>kind: "tick"</code> artifacts share the pipeline's own clock and additionally expose <b>data</b> freshness via <code>last_row</code> and <code>data_stale</code> - the newest row inside a file can be older than the file itself, e.g. a quiet tag.</p>
+				<p class="tf-note">Never conditional: this document is computed fresh on every request, so its <code>ETag</code> changes every time and <code>If-None-Match</code> will never return a <code>304</code> here. Cache it with <code>cache-control: public, max-age=60</code> instead. Headers <code>X-Feed-Stale</code> (<code>"true"</code>/<code>"false"</code>) and <code>X-Feed-Age-Seconds</code> mirror the top-level verdict without parsing the body. The underlying <code>status.json</code> is itself re-read from the data repo every 15 minutes (up to 60 minutes if GitHub raw is failing), so right after a real recovery this can still report <code>stale: true</code> for a few minutes.</p>
+				<br>
+				<h2 id="manifest" class="section-heading tf-block-head">Manifest</h2>
+				<p>Every published artifact in one document: byte size, row count, SHA-256, last-updated timestamp, plus both the raw GitHub URL and (where one exists) the API URL. Diff the <code>sha256</code> against your last pull instead of re-downloading files that haven't changed.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/manifest <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/manifest" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<span class="tf-code-label"><b>Response (trimmed)</b></span>
+				<pre class="code-block code-block-sm">{
+    "schema_version": 1,
+    "generated_at": "2026-09-05T14:45:56Z",
+    "base_url": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/",
+    "api_base": "https://api.tweetfeed.live",
+    "artifacts": [
+        {
+            "name": "today.csv",
+            "format": "csv",
+            "window": "today",
+            "bytes": 3742,
+            "rows": 28,
+            "sha256": "deba6834e29dcaaa889b7a30952f1ddd14aeb184e6ffdb6284285ab265f588c5",
+            "updated_at": "2026-09-05T14:45:56Z",
+            "url": "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv",
+            "api_url": "https://api.tweetfeed.live/v1/today"
+        },
+        "...": "..."
+    ],
+    "families": [
+        { "name": "lookup", "path": "lookup/", "shards": 256, "meta": "lookup/meta.json" },
+        { "name": "misp", "path": "misp/", "manifest": "misp/manifest.json" },
+        "..."
+    ]
+}</pre>
+				<p class="tf-note"><code>families</code> covers sharded/multi-file surfaces (<code>lookup/</code>, <code>misp/</code>, <code>stix/</code>, <code>archive/</code>, per-tag/type/user RSS) that don't reduce to one row - see their own sections above for shard layout. <code>sha256</code>/<code>bytes</code>/<code>rows</code> describe the files in the same data-repo commit as this manifest: the API resolves <code>master</code> fresh on every fetch, so across a tick boundary the hash you compute locally may not match what <code>/v1/*</code> happens to be serving at that instant.</p>
+				<p class="tf-note">Supports <code>ETag</code>/<code>304</code> like <a href="#counts">/v1/counts</a>: send <code>If-None-Match</code> back and get an empty <code>304</code> when nothing changed.</p>
 				<br>
 				<h2 id="trends" class="section-heading tf-block-head">Trends</h2>
 				<p>Aggregate analytics computed from the same 15-minute pipeline that feeds the raw IOC endpoints: a rolling 31-day daily IOC volume series with a per-type breakdown, week-over-week top-moving tags, the most-abused TLDs among malicious domains from the last 30 days, and the novelty rate (new vs. recurring share of this week's distinct IOC values). Human page: <a href="../trends/">tweetfeed.live/trends/</a>. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_trends</code> tool.</p>

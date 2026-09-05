@@ -45,8 +45,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=61" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=61" rel="stylesheet">
+	<link href="../css/index.css?v=62" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=62" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -495,7 +495,7 @@
 						<div class="tf-headline-sub">full archive</div>
 					</div>
 					<div class="tf-headline-cell">
-						<div class="tf-headline-value">15 min</div>
+						<div class="tf-headline-value" id="feedsFreshValue" style="font-size: 18px;">15 min</div>
 						<div class="tf-headline-label">refresh</div>
 						<div class="tf-headline-sub">CC0, no API key</div>
 					</div>
@@ -978,6 +978,56 @@
 					$('.' + key + '-' + t).text(TweetFeed.numberFormat((w.types && w.types[t]) || 0));
 				}
 			}
+		}});
+
+		// Live freshness chip: replaces the static "15 min" figure in the
+		// fourth headline cell with the pipeline's actual age, read straight
+		// off /v1/status (computed per request, never cache-served). Kept as
+		// a second, independent safeGet so a slow/failed status fetch can
+		// never block or blank the counts.json figures above - on error, or
+		// before this resolves, the cell keeps its static markup (no
+		// errorTarget, no red error text).
+		//
+		// formatAge is a pure function on purpose: <60s -> "just now",
+		// under 2h -> minutes, otherwise hours - verified with
+		// `node -e` before being wired to the DOM.
+		function formatAge(seconds) {
+			if (typeof seconds !== 'number' || !isFinite(seconds) || seconds < 0) return null;
+			if (seconds < 60) return 'just now';
+			const minutes = Math.round(seconds / 60);
+			if (minutes < 120) return minutes + ' min ago';
+			const hours = Math.round(seconds / 3600);
+			return hours + ' hour' + (hours === 1 ? '' : 's') + ' ago';
+		}
+
+		function buildStatusTitle(status) {
+			const pipelineWord = status.stale ? 'pipeline stale' : 'pipeline fresh';
+			const arts = status.artifacts || {};
+			let staleCount = 0;
+			for (const key of Object.keys(arts)) {
+				const a = arts[key];
+				if (a && (a.stale || a.data_stale)) staleCount += 1;
+			}
+			const detail = staleCount > 0
+				? staleCount + ' artifact' + (staleCount === 1 ? '' : 's') + ' stale'
+				: 'all artifacts fresh';
+			const checked = status.checked_at ? '; checked ' + status.checked_at : '';
+			return pipelineWord + '; ' + detail + checked;
+		}
+
+		TweetFeed.safeGet('https://api.tweetfeed.live/v1/status', { dataType: 'json', timeout: 8000, success: function(status) {
+			if (!status || typeof status.age_seconds !== 'number') return;
+			const ageText = formatAge(status.age_seconds);
+			if (!ageText) return;
+			const pillClass = status.stale ? 'tf-stale' : 'tf-fresh';
+			const pillText = status.stale ? 'stale' : 'fresh';
+			const title = buildStatusTitle(status);
+			const html = TweetFeed.escapeHtml('Updated ' + ageText) +
+				' <span class="' + pillClass + '" title="' + TweetFeed.escapeHtml(title) + '">' + pillText + '</span>';
+			$('#feedsFreshValue').html(html);
+		}, error: function() {
+			// Static "15 min" content stays untouched - intentionally no
+			// errorTarget wiring here.
 		}});
 	});
 	</script>

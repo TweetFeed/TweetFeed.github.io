@@ -15,8 +15,11 @@ info:
     - Require no authentication.
     - Set `Access-Control-Allow-Origin: *` (CORS open).
     - Cache responses at the CF edge: 60 s for `/v1/{time}`, `/v1/ioc`, `/v1/campaigns`,
-      `/v1/campaigns/iocs`, `/v1/trends` and `/v1/counts`; 30 s for `/v1/since`; 15 min
-      for `/v1/blocklist` (all with `stale-while-revalidate`).
+      `/v1/campaigns/iocs`, `/v1/trends`, `/v1/counts` and `/v1/manifest` (same
+      conditional-request behaviour as `/v1/counts`); 30 s for `/v1/since`; 15 min
+      for `/v1/blocklist` (all with `stale-while-revalidate`). `/v1/status` is the
+      exception: it is computed fresh on every request, never served from cache,
+      and never conditional - `max-age=60` only, no `ETag`-based revalidation.
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
@@ -602,6 +605,83 @@ paths:
         "304":
           $ref: "#/components/responses/NotModified"
 
+  /v1/status:
+    get:
+      operationId: getStatus
+      summary: Per-artifact freshness facts plus a per-request verdict
+      description: |
+        Freshness facts for every published artifact plus a per-request
+        verdict: whether the pipeline is stale, how old each artifact is,
+        and (for tick artifacts) how old the newest row inside it is.
+
+        Computed fresh on every request - never served from the response
+        cache. That also means it is never conditional: there is no
+        `If-None-Match`/`If-Modified-Since` support and no `304` here
+        (its `ETag` changes on every request). Cache with `cache-control:
+        public, max-age=60` instead.
+
+        The underlying `status.json` is itself re-read from the data repo
+        every 15 minutes (up to 60 minutes if GitHub raw is failing), so
+        right after a real recovery this can still report `stale: true`
+        for a few minutes.
+      responses:
+        "200":
+          description: Status document.
+          headers:
+            X-Feed-Stale:
+              $ref: "#/components/headers/FeedStale"
+            X-Feed-Age-Seconds:
+              $ref: "#/components/headers/FeedAgeSeconds"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusDocument"
+        "503":
+          description: The upstream status.json document is unavailable.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [error]
+                properties:
+                  error:
+                    type: string
+
+  /v1/manifest:
+    get:
+      operationId: getManifest
+      summary: Every published artifact - size, row count, checksum, URLs
+      description: |
+        Lists every published artifact: byte size, row count, SHA-256,
+        last-updated timestamp, the raw GitHub URL and (where one exists)
+        the API URL, plus a `families` list for sharded/multi-file
+        surfaces (`lookup/`, `misp/`, `stix/`, `archive/`, per-tag/type/
+        user RSS) that don't reduce to one row.
+
+        `sha256`/`bytes`/`rows` describe the files in the same data-repo
+        commit as this manifest - the API resolves `master` fresh on
+        every fetch, so across a tick boundary the hash you compute
+        locally may not match what `/v1/*` is serving at that instant.
+
+        Same cache/conditional-request behaviour as `/v1/counts`.
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
+      responses:
+        "200":
+          description: Manifest document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManifestDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
+
 components:
   parameters:
     Time:
@@ -755,6 +835,25 @@ components:
       schema:
         type: string
       example: "Sun, 06 Jul 2026 08:49:37 GMT"
+
+    FeedStale:
+      description: |
+        Mirrors the top-level `stale` boolean from the `/v1/status` body
+        as a string, so a client can branch on the verdict without
+        parsing JSON.
+      schema:
+        type: string
+        enum: ["true", "false"]
+      example: "false"
+
+    FeedAgeSeconds:
+      description: |
+        Mirrors the top-level `age_seconds` from the `/v1/status` body
+        (seconds since the pipeline document was generated). May be
+        empty if the age could not be computed.
+      schema:
+        type: string
+      example: "122"
 
     ResultCount:
       description: Number of rows in this response.
@@ -1757,3 +1856,242 @@ components:
                     type: string
                     nullable: true
                     example: AS60631
+
+    StatusDocument:
+      type: object
+      required: [schema_version, generated_at, pipeline, artifacts, checked_at, age_seconds, stale, any_stale]
+      description: |
+        Freshness facts for every published artifact plus a per-request
+        verdict. Computed fresh on every request - see the `/v1/status`
+        path description for caching/conditional-request notes.
+      properties:
+        schema_version:
+          type: integer
+          example: 1
+        generated_at:
+          type: string
+          format: date-time
+          description: UTC timestamp the underlying `status.json` document was generated.
+          example: "2026-09-05T14:45:56Z"
+        pipeline:
+          type: object
+          description: The main 15-minute pipeline's own cadence.
+          properties:
+            interval_seconds:
+              type: integer
+              example: 900
+            stale_after_seconds:
+              type: integer
+              example: 1800
+        contract:
+          type: object
+          description: Static licensing/retention facts, unrelated to freshness.
+          additionalProperties: true
+          example:
+            license: CC0-1.0
+            tlp: CLEAR
+            live_window_days: 365
+            archive: all history
+            docs: "https://tweetfeed.live/api/"
+            data_repo: "https://github.com/0xDanielLopez/TweetFeed"
+        artifacts:
+          type: object
+          description: |
+            One entry per published artifact (`today.csv`, `week.csv`,
+            `month.csv`, `year.csv`, `rss.xml`, `counts.json`, `misp`,
+            `stix`, `blocklists`, `lookup`, `trends.json`, `archive`,
+            `external.json`, `ipmeta.json`, `enrichment.json`,
+            `campaigns.json`, `domainmeta.json`), keyed by artifact name.
+          additionalProperties:
+            $ref: "#/components/schemas/StatusArtifact"
+        checked_at:
+          type: string
+          format: date-time
+          description: UTC timestamp this specific request was evaluated at.
+          example: "2026-09-05T14:47:58Z"
+        age_seconds:
+          type: integer
+          description: Seconds since `generated_at` (top-level pipeline age).
+          example: 122
+        stale:
+          type: boolean
+          description: |
+            Top-level verdict: `true` if the pipeline document itself is
+            older than the pipeline's `stale_after_seconds`. Mirrored in
+            the `X-Feed-Stale` response header.
+        any_stale:
+          type: boolean
+          description: |
+            `true` if ANY single artifact entry is stale, even while the
+            top-level `stale` is `false`.
+
+    StatusArtifact:
+      type: object
+      required: [kind, path, updated_at, age_seconds, stale]
+      description: |
+        Freshness facts for one artifact. Shape varies by `kind` - fields
+        beyond the common ones below are additive and kind-dependent
+        (e.g. `last_row`/`data_stale` only on `kind: tick`,
+        `stale_after_seconds: null` plus a `note` on `kind:
+        change-driven`), so this schema stays permissive.
+      properties:
+        kind:
+          type: string
+          enum: [tick, own-clock, change-driven]
+          description: |
+            `tick`: shares the main pipeline's own clock (today/week/
+            month/year.csv, rss.xml, counts.json, misp, stix,
+            blocklists). `own-clock`: refreshed on its own schedule,
+            slower than the main pipeline (lookup, trends.json,
+            external.json, ipmeta.json, enrichment.json,
+            campaigns.json). `change-driven`: `generated_at` only moves
+            when the content itself changes, so `stale_after_seconds` is
+            `null` (archive, domainmeta.json).
+        path:
+          type: string
+          example: today.csv
+        updated_at:
+          type: string
+          format: date-time
+        interval_seconds:
+          type: integer
+          description: Expected refresh cadence for this artifact, in seconds.
+        stale_after_seconds:
+          type: integer
+          nullable: true
+          description: |
+            Threshold past `age_seconds` that flips this artifact's
+            `stale` to `true`. `null` on `kind: change-driven` artifacts,
+            which have no fixed staleness window.
+        age_seconds:
+          type: integer
+          description: Seconds since this artifact's `updated_at`.
+        stale:
+          type: boolean
+          description: This one artifact's own freshness verdict.
+        rows:
+          type: integer
+          description: Row count, only present on CSV-shaped artifacts.
+        first_row:
+          type: string
+          description: Timestamp of the oldest row, only on CSV-shaped tick artifacts.
+        last_row:
+          type: string
+          description: |
+            Timestamp of the newest row, only on CSV-shaped tick
+            artifacts - the basis for `data_age_seconds`/`data_stale`.
+        data_stale_after_seconds:
+          type: integer
+          description: Threshold for `data_age_seconds`, tick artifacts only.
+        data_age_seconds:
+          type: integer
+          description: Seconds since `last_row` (the data itself, not the file). Tick artifacts only.
+        data_stale:
+          type: boolean
+          description: |
+            `true` if the newest row is older than
+            `data_stale_after_seconds` even though the file itself was
+            just rewritten (e.g. a quiet tag/window). Tick artifacts only.
+        note:
+          type: string
+          description: Human-readable caveat, present on some `own-clock`/`change-driven` artifacts.
+        shards:
+          type: integer
+          description: Present only on the `lookup` artifact.
+        upstream_stale:
+          type: boolean
+          description: Present only on `campaigns.json`.
+        upstream_stale_since:
+          type: string
+          nullable: true
+          description: Present only on `campaigns.json`.
+      additionalProperties: true
+
+    ManifestDocument:
+      type: object
+      required: [schema_version, generated_at, base_url, api_base, artifacts, families]
+      properties:
+        schema_version:
+          type: integer
+          example: 1
+        generated_at:
+          type: string
+          format: date-time
+          example: "2026-09-05T14:45:56Z"
+        base_url:
+          type: string
+          description: Raw GitHub base every artifact `url` below is relative to.
+          example: "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/"
+        api_base:
+          type: string
+          example: "https://api.tweetfeed.live"
+        note:
+          type: string
+        artifacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/ManifestArtifact"
+        families:
+          type: array
+          description: |
+            Sharded/multi-file surfaces that don't reduce to one row
+            (`lookup`, `misp`, `stix`, `archive`, per-tag/type/user RSS).
+          items:
+            type: object
+            required: [name, path]
+            properties:
+              name:
+                type: string
+              path:
+                type: string
+              shards:
+                type: integer
+              meta:
+                type: string
+              manifest:
+                type: string
+            additionalProperties: true
+
+    ManifestArtifact:
+      type: object
+      required: [name, path, format, bytes, sha256, updated_at, url]
+      description: |
+        `sha256`/`bytes`/`rows` describe the file in the same data-repo
+        commit as the manifest document itself - see the `/v1/manifest`
+        path description for the tick-boundary caveat.
+      properties:
+        name:
+          type: string
+          example: today.csv
+        path:
+          type: string
+          description: Path inside the data repo (differs from `name` for blocklist files).
+          example: today.csv
+        format:
+          type: string
+          enum: [csv, json, rss, txt]
+        window:
+          type: string
+          nullable: true
+          enum: [today, week, month, year, null]
+        bytes:
+          type: integer
+        rows:
+          type: integer
+          nullable: true
+          description: Row count. Null for non-row-shaped formats (rss, most json).
+        sha256:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+        url:
+          type: string
+          description: Raw GitHub URL for this exact file.
+        api_url:
+          type: string
+          nullable: true
+          description: |
+            API-fronted URL, `null` when this artifact has no `/v1/*`
+            route of its own.
+      additionalProperties: true
