@@ -2071,8 +2071,7 @@ components:
           type: string
           enum: [csv, json, rss, txt]
         window:
-          type: string
-          nullable: true
+          type: [string, "null"]
           enum: [today, week, month, year, null]
         bytes:
           type: integer

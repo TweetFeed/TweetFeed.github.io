@@ -874,14 +874,21 @@ API_PATH_KEY_RE = re.compile(r"^  (/v1/\S*):$", re.MULTILINE)
 
 
 def check_api_surface_parity(pages: list[str]) -> list[str]:
-    """Every /v1/... path documented in openapi.yaml must also be
-    mentioned (as a substring) in every file in API_SURFACE_FILES - added
-    2026-09-05 alongside /v1/status and /v1/manifest, so a route that ships
-    in the spec but never reaches the discovery docs (or a doc that
-    name-drops a route the spec doesn't have) cannot go unnoticed. Reversing
-    either edit - remove a path from openapi.yaml, or from one of these
-    files - must make this check fail; that is the check's own regression
-    test, run once by hand and reverted (see the task report).
+    """One direction only: openapi.yaml is the source of truth, and every
+    /v1/... path documented there must also be mentioned (as a substring)
+    in every file in API_SURFACE_FILES - added 2026-09-05 alongside
+    /v1/status and /v1/manifest, so a route that ships in the spec but
+    never reaches the discovery docs cannot go unnoticed.
+
+    This does NOT check the reverse. Removing a path from openapi.yaml
+    does not make this check fail - the requirement it would have checked
+    disappears along with the path key, since requirements are extracted
+    FROM openapi.yaml on every run (reproduced by hand: deleting
+    `/v1/manifest`'s path item yields 0 failures here). Nor does it flag a
+    doc that name-drops a route the spec doesn't have. The regression test
+    that IS valid - removing a path's mention from one of the
+    API_SURFACE_FILES while leaving it in openapi.yaml - was run once by
+    hand and reverted (see the task report).
 
     Path templates (a key containing `{`) are reduced to their literal
     prefix before the first `{`, with any trailing `/` stripped - e.g.

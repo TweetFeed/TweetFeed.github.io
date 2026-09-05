@@ -338,6 +338,12 @@ hr.divider {
 	color: #1c1c1c;
 	font-variant-numeric: tabular-nums;
 }
+/* Modifier for the /feeds/ freshness cell: applied by JS ONLY once the live
+   "Updated N min ago" + pill content replaces the static "15 min" fallback
+   - that text is much longer than every other .tf-headline-value (a plain
+   number or "15 min"), so it needs a smaller size, but the fallback itself
+   must keep the normal 30px/24px sizing untouched. */
+.tf-headline-value-sm { font-size: 15px; }
 .tf-headline-label { margin-top: 2px; }
 .tf-headline-sub { font-size: 12px; color: #737373; }
 @media (max-width: 767.98px) {
@@ -345,6 +351,7 @@ hr.divider {
 	.tf-headline-cell:nth-child(3) { border-left: 0; }
 	.tf-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
 	.tf-headline-value { font-size: 24px; }
+	.tf-headline-value-sm { font-size: 13px; }
 }
 
 /* Integrations band on the home ("Integrated in" / "Also used by"). Same

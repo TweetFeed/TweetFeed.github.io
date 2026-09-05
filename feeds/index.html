@@ -495,7 +495,7 @@
 						<div class="tf-headline-sub">full archive</div>
 					</div>
 					<div class="tf-headline-cell">
-						<div class="tf-headline-value" id="feedsFreshValue" style="font-size: 18px;">15 min</div>
+						<div class="tf-headline-value" id="feedsFreshValue">15 min</div>
 						<div class="tf-headline-label">refresh</div>
 						<div class="tf-headline-sub">CC0, no API key</div>
 					</div>
@@ -1015,6 +1015,11 @@
 			return pipelineWord + '; ' + detail + checked;
 		}
 
+		// No `error` key here on purpose: safeGet's own default error
+		// handler already does the right thing when there is no
+		// errorTarget - it just console.error()s and leaves the DOM alone,
+		// so the static "15 min" content stays untouched without this
+		// callback needing to say so itself.
 		TweetFeed.safeGet('https://api.tweetfeed.live/v1/status', { dataType: 'json', timeout: 8000, success: function(status) {
 			if (!status || typeof status.age_seconds !== 'number') return;
 			const ageText = formatAge(status.age_seconds);
@@ -1024,10 +1029,10 @@
 			const title = buildStatusTitle(status);
 			const html = TweetFeed.escapeHtml('Updated ' + ageText) +
 				' <span class="' + pillClass + '" title="' + TweetFeed.escapeHtml(title) + '">' + pillText + '</span>';
-			$('#feedsFreshValue').html(html);
-		}, error: function() {
-			// Static "15 min" content stays untouched - intentionally no
-			// errorTarget wiring here.
+			// .tf-headline-value-sm only gets applied here, once the longer
+			// live text actually replaces the static "15 min" - the
+			// fallback keeps the cell's normal 30px/24px sizing.
+			$('#feedsFreshValue').addClass('tf-headline-value-sm').html(html);
 		}});
 	});
 	</script>
