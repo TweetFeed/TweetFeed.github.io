@@ -620,10 +620,10 @@ paths:
         (its `ETag` changes on every request). Cache with `cache-control:
         public, max-age=60` instead.
 
-        The underlying `status.json` is itself re-read from the data repo
-        every 15 minutes (up to 60 minutes if GitHub raw is failing), so
-        right after a real recovery this can still report `stale: true`
-        for a few minutes.
+        The underlying `status.json` is re-read from the data repo at most
+        every 5 minutes, with no stale-while-revalidate; once that window
+        expires the request blocks on a fresh read, falling back to the
+        last cached copy only if that read fails.
       responses:
         "200":
           description: Status document.
@@ -1911,6 +1911,7 @@ components:
           example: "2026-09-05T14:47:58Z"
         age_seconds:
           type: integer
+          nullable: true
           description: Seconds since `generated_at` (top-level pipeline age).
           example: 122
         stale:
@@ -1953,6 +1954,7 @@ components:
         updated_at:
           type: string
           format: date-time
+          nullable: true
         interval_seconds:
           type: integer
           description: Expected refresh cadence for this artifact, in seconds.
@@ -1965,18 +1967,22 @@ components:
             which have no fixed staleness window.
         age_seconds:
           type: integer
+          nullable: true
           description: Seconds since this artifact's `updated_at`.
         stale:
           type: boolean
           description: This one artifact's own freshness verdict.
         rows:
           type: integer
+          nullable: true
           description: Row count, only present on CSV-shaped artifacts.
         first_row:
           type: string
+          nullable: true
           description: Timestamp of the oldest row, only on CSV-shaped tick artifacts.
         last_row:
           type: string
+          nullable: true
           description: |
             Timestamp of the newest row, only on CSV-shaped tick
             artifacts - the basis for `data_age_seconds`/`data_stale`.
@@ -2075,15 +2081,18 @@ components:
           enum: [today, week, month, year, null]
         bytes:
           type: integer
+          nullable: true
         rows:
           type: integer
           nullable: true
           description: Row count. Null for non-row-shaped formats (rss, most json).
         sha256:
           type: string
+          nullable: true
         updated_at:
           type: string
           format: date-time
+          nullable: true
         url:
           type: string
           description: Raw GitHub URL for this exact file.
