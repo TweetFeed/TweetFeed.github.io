@@ -334,7 +334,7 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Defang option on the JSON endpoints</h3>
-							<div class="cl-body"><p>Added <a href="../api/#endpoint"><code>?defang=1</code></a> to every <code>/v1/{time}...</code>, <code>/v1/since/...</code> and <code>/v1/ioc</code> route: IOC values come back as <code>hxxps://evil[.]tld</code> and <code>1[.]2[.]3[.]4</code> instead of live values, for pasting into a ticket or chat tool that auto-links URLs. Off by default - <code>0</code>, <code>false</code> or no parameter returns the same response as today. Never applied to <code>tweet</code>/<code>user</code>, <code>net.*</code>, <code>ai.summary</code> or the <code>/v1/campaigns</code> routes.</p></div>
+							<div class="cl-body"><p>Added <a href="../api/#endpoint"><code>?defang=1</code></a> to the JSON routes (<code>/v1/today</code>, <code>/v1/week</code>, <code>/v1/month</code>, <code>/v1/since/...</code>, <code>/v1/ioc</code>; <code>/v1/year</code> redirects to a raw CSV and is never defanged): IOC values come back as <code>hxxps://evil[.]tld</code> and <code>1[.]2[.]3[.]4</code> instead of live values, for pasting into a ticket or chat tool. Off by default - <code>0</code>, <code>false</code> or no parameter returns the same response as today. Never applied to <code>tweet</code>/<code>user</code>, <code>net.*</code>, <code>ai.summary</code> or the <code>/v1/campaigns</code> routes.</p></div>
 						</div>
 					</article>
 					<article class="card cl-entry">
