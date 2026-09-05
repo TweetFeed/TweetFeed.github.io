@@ -18,6 +18,12 @@ curl -s 'https://api.tweetfeed.live/v1/ioc?value=example.com'
 
 Defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so `example[.]com` and `example.com` return the same result. `http://` and `https://` variants of a URL are treated the same way.
 
+Add `?defang=1` to get defanged values back instead (`hxxps://evil[.]tld`) - available for pasting into a ticket or report without triggering an auto-link:
+
+```bash
+curl -s 'https://api.tweetfeed.live/v1/ioc?value=example.com&defang=1'
+```
+
 ## Response shape
 
 No match:

@@ -68,9 +68,11 @@ paths:
 
         Note: `year` returns `302` to the raw CSV on GitHub because the full year
         dataset exceeds the 10 ms CPU budget of the underlying Cloudflare Worker
-        on the Free plan. Clients should follow redirects.
+        on the Free plan. Clients should follow redirects; the redirect target
+        is a raw CSV, never defanged, regardless of `?defang=1`.
       parameters:
         - $ref: "#/components/parameters/Time"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -110,6 +112,8 @@ paths:
                 example: https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/year.csv
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/{time}/{filter1}:
     get:
@@ -125,6 +129,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/Time"
         - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -151,6 +156,8 @@ paths:
                   $ref: "#/components/schemas/Ioc"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/{time}/{filter1}/{filter2}:
     get:
@@ -165,6 +172,7 @@ paths:
         - $ref: "#/components/parameters/Time"
         - $ref: "#/components/parameters/Filter1"
         - $ref: "#/components/parameters/Filter2"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -191,6 +199,8 @@ paths:
                   $ref: "#/components/schemas/Ioc"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/since/{datetime}:
     get:
@@ -205,7 +215,7 @@ paths:
         local-time forms are rejected). Edge cases:
         - Future timestamp - `200` with `[]` body.
         - Timestamp older than 365 days - `410 Gone`.
-        - Malformed - `400`.
+        - Malformed, or `defang` present but not `1`/`true`/`0`/`false` - `400`.
 
         **Reaches back 30 days, not 365.** This endpoint is served from the
         30-day window file; the full year is too large to scan inside the
@@ -225,6 +235,7 @@ paths:
         repeat until the header stops appearing.
       parameters:
         - $ref: "#/components/parameters/DateTime"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -254,7 +265,10 @@ paths:
         "304":
           $ref: "#/components/responses/NotModified"
         "400":
-          description: Malformed ISO 8601 timestamp.
+          description: |
+            Malformed ISO 8601 timestamp, or `defang` present but not `1`,
+            `true`, `0` or `false` (in the latter case, JSON body
+            `{"error": "defang must be 1 or 0"}`).
         "410":
           description: Timestamp older than the 365 day retention window.
 
@@ -265,6 +279,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/DateTime"
         - $ref: "#/components/parameters/Filter1"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -293,6 +308,8 @@ paths:
                   $ref: "#/components/schemas/Ioc"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/since/{datetime}/{filter1}/{filter2}:
     get:
@@ -302,6 +319,7 @@ paths:
         - $ref: "#/components/parameters/DateTime"
         - $ref: "#/components/parameters/Filter1"
         - $ref: "#/components/parameters/Filter2"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -330,6 +348,8 @@ paths:
                   $ref: "#/components/schemas/Ioc"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/ioc:
     get:
@@ -349,6 +369,7 @@ paths:
         Also available as a path parameter: `/v1/ioc/{value}`.
       parameters:
         - $ref: "#/components/parameters/IocValueQuery"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -368,6 +389,8 @@ paths:
                 $ref: "#/components/schemas/IocLookupResult"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/ioc/{value}:
     get:
@@ -377,8 +400,15 @@ paths:
         Same lookup as `/v1/ioc?value=...`, with the IOC value passed as a
         path segment instead of a query parameter, including the same
         optional `archive` block.
+
+        `?defang=1` is supported on this path form too. Fixed alongside
+        adding it: the query string used to get folded into the looked-up
+        `{value}` path segment itself, so `/v1/ioc/example.com?defang=1`
+        looked up the literal string `example.com?defang=1` instead of
+        `example.com`.
       parameters:
         - $ref: "#/components/parameters/IocValuePath"
+        - $ref: "#/components/parameters/Defang"
         - $ref: "#/components/parameters/IfNoneMatch"
         - $ref: "#/components/parameters/IfModifiedSince"
       responses:
@@ -398,6 +428,8 @@ paths:
                 $ref: "#/components/schemas/IocLookupResult"
         "304":
           $ref: "#/components/responses/NotModified"
+        "400":
+          $ref: "#/components/responses/DefangInvalid"
 
   /v1/campaigns:
     get:
@@ -795,6 +827,45 @@ components:
       schema:
         type: string
 
+    Defang:
+      name: defang
+      in: query
+      required: false
+      description: |
+        Defang IOC values in the response body: `hxxps://evil[.]tld` and
+        `1[.]2[.]3[.]4` instead of live, clickable values. `1` or `true`
+        turns it on; absent, empty, `0` or `false` leaves the response
+        byte-identical to the same request with no `defang` parameter. Any
+        other value returns `400` with `{"error": "defang must be 1 or 0"}`.
+
+        Transform: the scheme (`http://`, `https://`, `ftp://`, `ftps://`)
+        becomes `hxxp://`, `hxxps://`, `fxp://`, `fxps://` (lowercased,
+        only when followed by `://`); every literal `.` in the value
+        becomes `[.]`, in the host, path and query alike. Ports, `://` and
+        `@` are left untouched, and hashes are unaffected (no `.` to
+        defang). Reversible with CyberChef's "Defang URL" / "Refang"
+        recipes, or Python's `iocextract` (`refang_data` for URLs,
+        `refang_data(no_scheme=True)` for bare domains, `refang_ipv4` for
+        IPs) - a value that already contains `[` or `]` is lossy under
+        `iocextract`, a pre-existing library behaviour, not something this
+        parameter introduces.
+
+        Applies only to the fields that carry a live IOC value on each
+        route (see each field's own description below); never to
+        `tweet`/`user`, `external[].link`, `net.*`, or `ai.summary` (which
+        may still name a live hostname in prose). Accepted and validated
+        on every route, but has no effect on the body of `/v1/campaigns`,
+        `/v1/campaigns/iocs`, the blocklists, the RSS/CSV feeds, or
+        TAXII/STIX.
+
+        Same cache lifetime as the equivalent request without `defang` -
+        `?defang=1` is cached as its own entry, separate from the plain
+        response.
+      schema:
+        type: string
+        enum: ["1", "true", "0", "false"]
+      example: "1"
+
     IfNoneMatch:
       name: If-None-Match
       in: header
@@ -939,6 +1010,20 @@ components:
         Last-Modified:
           $ref: "#/components/headers/LastModified"
 
+    DefangInvalid:
+      description: |
+        `defang` was present but not `1`, `true`, `0` or `false`.
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [error]
+            properties:
+              error:
+                type: string
+          example:
+            error: "defang must be 1 or 0"
+
   schemas:
     Ioc:
       type: object
@@ -974,6 +1059,8 @@ components:
             The IOC value itself. URLs/domains are emitted refanged (the original
             tweet may have defanged them with `[.]` or `hxxp` - the pipeline
             normalises to refanged form on emit). File hashes are lowercase hex.
+            Defanged instead when the request carries `?defang=1`; hashes are
+            unaffected either way (no `.` to defang).
           example: "http://example.malicious/path"
         tags:
           type: array
@@ -1029,7 +1116,9 @@ components:
           description: IOC type.
         value:
           type: string
-          description: The IOC value, refanged (same normalisation as the main feed).
+          description: |
+            The IOC value, refanged (same normalisation as the main feed).
+            Defanged instead when the request carries `?defang=1`.
         first_seen:
           type: string
           format: date-time
@@ -1067,7 +1156,9 @@ components:
             maxItems: 2
             items:
               type: string
-            description: A `[type, value]` pair.
+            description: |
+              A `[type, value]` pair; `value` (index 1) is defanged too
+              when the request carries `?defang=1`.
           description: |
             Optional. Other IOCs posted in the same source tweets as this one
             (sample, max 5). Absent when there are none.
@@ -1086,7 +1177,9 @@ components:
           description: IOC type.
         value:
           type: string
-          description: The IOC value, refanged (same normalisation as the main feed).
+          description: |
+            The IOC value, refanged (same normalisation as the main feed).
+            Defanged instead when the request carries `?defang=1`.
         first_seen:
           type: string
           format: date-time
@@ -1123,7 +1216,9 @@ components:
             `found: false` does not mean the value is absent from `archive`.
         query:
           type: string
-          description: The normalised (refanged) value that was looked up.
+          description: |
+            The normalised (refanged) value that was looked up. Defanged
+            instead when the request carries `?defang=1`.
         window:
           type: string
           description: |
@@ -1143,7 +1238,11 @@ components:
           properties:
             summary:
               type: string
-              description: AI-generated one-line summary of the IOC's context (<=200 chars).
+              description: |
+                AI-generated one-line summary of the IOC's context
+                (<=200 chars). Never defanged, even with `?defang=1` -
+                it is prose, not a field, and may still name a live
+                hostname.
             family:
               type: string
               nullable: true
@@ -1269,7 +1368,9 @@ components:
           properties:
             apex:
               type: string
-              description: Registered/apex domain the lookup value resolves under.
+              description: |
+                Registered/apex domain the lookup value resolves under.
+                Defanged instead when the request carries `?defang=1`.
             registrar:
               type: string
               nullable: true
@@ -1298,13 +1399,19 @@ components:
               nullable: true
               items:
                 type: string
-              description: Nameservers from RDAP. `null` when unavailable.
+              description: |
+                Nameservers from RDAP. `null` when unavailable. Defanged
+                (dots only - nameservers carry no scheme) instead when the
+                request carries `?defang=1`.
             ips:
               type: array
               nullable: true
               items:
                 type: string
-              description: IP addresses the domain resolved to at first-seen. `null` when unavailable.
+              description: |
+                IP addresses the domain resolved to at first-seen. `null`
+                when unavailable. Defanged instead when the request
+                carries `?defang=1`.
             asn:
               type: string
               nullable: true

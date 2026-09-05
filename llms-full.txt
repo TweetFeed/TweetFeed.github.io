@@ -21,7 +21,7 @@ TweetFeed is a free, community-sourced Threat Intelligence feed. It answers "has
 ## How to use it (agents first)
 
 1. **MCP (best for agents)**: https://mcp.tweetfeed.live/ - JSON-RPC 2.0, streamable HTTP, protocol version 2025-11-25, 10 tools (listed below). Fastest self-configure path: fetch https://tweetfeed.live/agent-setup/prompt.md and follow it.
-2. **REST API**: https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2} - `time` is `today`/`week`/`month`/`year`; filters are IOC type, tag, or `@researcher`, order-independent, ANDed. No auth, CORS open, JSON only. Also: delta sync at `/v1/since/{ISO8601}` and the trend analytics document at `/v1/trends`.
+2. **REST API**: https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2} - `time` is `today`/`week`/`month`/`year`; filters are IOC type, tag, or `@researcher`, order-independent, ANDed. No auth, CORS open, JSON only. Also: delta sync at `/v1/since/{ISO8601}` and the trend analytics document at `/v1/trends`. Add `?defang=1` to any of these JSON routes, or to `/v1/ioc`, to get defanged values back (`hxxps://evil[.]tld`, `1[.]2[.]3[.]4`) instead of live ones - never applied to `tweet`/`user`, `net.*`, `ai.summary`, or `/v1/campaigns*`.
 3. **Static feeds**: CSV (`/feeds/{today,week,month,year}.csv`), RSS (`/rss.xml` and per-type/per-tag/per-user variants), MISP native events, STIX 2.1 bundles, TAXII 2.1 server, and plain-text blocklists (domains/hosts/AdGuard/IPs/RPZ/dnsmasq/URLs/Zeek-intel/Wazuh-domains/Wazuh-IPs) for direct import into DNS firewalls, Pi-hole-style blockers, and IDS/SIEM tooling.
 
 ## MCP tools

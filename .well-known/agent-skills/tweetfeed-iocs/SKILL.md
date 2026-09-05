@@ -60,6 +60,12 @@ curl -s 'https://api.tweetfeed.live/v1/today'
 curl -sL 'https://api.tweetfeed.live/v1/year' > year.csv
 ```
 
+Add `?defang=1` to any of the routes above to get defanged values back (`hxxps://evil[.]tld`, `1[.]2[.]3[.]4`) - available for pasting into a ticket or report without triggering an auto-link:
+
+```bash
+curl -s 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1'
+```
+
 ## Check if a specific IOC is in the feed
 
 There is a direct exact-match lookup over the full 365-day retention window, plus a pre-365-day archive on top:
