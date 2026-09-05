@@ -1195,6 +1195,46 @@ components:
               type: string
               format: date-time
               description: UTC timestamp the registration/DNS data was checked.
+        campaigns:
+          type: array
+          maxItems: 3
+          description: |
+            Optional. Published campaigns this IOC belongs to, newest
+            `last_seen` first (max 3). Present only when the IOC belongs to
+            at least one published campaign, independent of `found` - a
+            value can be in a campaign while missing from the live 365-day
+            window (see `archive`). This is a small sidecar reference, not
+            the full campaign document - see `Campaign` for `context`,
+            `targeted_brand` and the rest.
+          items:
+            type: object
+            required: [id, name, confidence, threat_types, ioc_count, last_seen]
+            properties:
+              id:
+                type: string
+                description: Stable campaign identifier - `tfc-` followed by 12 hex chars.
+                example: "tfc-6d1f6fb9260c"
+              name:
+                type: string
+                description: Short AI-generated campaign name.
+              confidence:
+                type: string
+                enum: [high, medium, low]
+                description: How strongly related the campaign's underlying IOCs are.
+              threat_types:
+                type: array
+                items:
+                  type: string
+                description: AI-inferred threat types seen across the campaign.
+                example: ["phishing"]
+              ioc_count:
+                type: integer
+                description: Total IOCs in the campaign.
+                example: 198
+              last_seen:
+                type: string
+                description: UTC timestamp of the campaign's most recent IOC.
+                example: "2026-09-05 14:30:00"
         archive:
           type: object
           description: |

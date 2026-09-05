@@ -1903,6 +1903,55 @@
 			);
 		}
 
+		// Campaign membership (optional API field, added 2026-09-05). Sibling
+		// pattern to renderReg() above - reuses the tfl-net-* namespace as-is
+		// (header + N rows is this shape again), so zero new CSS. Each name
+		// links to the campaign's page on /campaigns/, which reads the id
+		// from the URL hash - the id is validated against TFC_ID_RE first so
+		// a malformed id from the API never becomes a link. Called
+		// unconditionally in renderResults below, right after the
+		// found/empty branch and before renderArchive - so it also renders
+		// after the "no record" message when an IOC is in a published
+		// campaign but outside the live 365-day index.
+		var TFC_ID_RE = /^tfc-[0-9a-f]{12}$/;
+
+		function renderCampaigns(campaigns) {
+			var entries = (Array.isArray(campaigns) ? campaigns : []).filter(function(c) {
+				return c && typeof c === 'object' && typeof c.id === 'string' && TFC_ID_RE.test(c.id) &&
+					typeof c.name === 'string' && c.name;
+			}).slice(0, 3);
+			if (!entries.length) return '';
+
+			var title = entries.length > 1 ? 'Part of ' + entries.length + ' campaigns' : 'Part of campaign';
+
+			var rowsHtml = entries.map(function(c) {
+				var confidence = typeof c.confidence === 'string' ? c.confidence : '';
+				var iocCount = typeof c.ioc_count === 'number' ? c.ioc_count : 0;
+				var lastSeen = typeof c.last_seen === 'string' ? c.last_seen : '?';
+				var threatTypes = (Array.isArray(c.threat_types) ? c.threat_types : []).slice(0, 3);
+
+				var typesHtml = threatTypes.map(function(t) {
+					return '<span class="tfl-tag-chip">' + esc(t) + '</span>';
+				}).join('');
+
+				return (
+					'<div class="tfl-net-row">' +
+						'<a href="../campaigns/#' + esc(c.id) + '">' + esc(c.name) + '</a>' +
+						(confidence ? ' <span class="tfl-tag-chip">' + esc(confidence) + '</span>' : '') +
+					'</div>' +
+					'<div class="tfl-meta">' + iocCount + ' IOC' + (iocCount === 1 ? '' : 's') + ' &middot; last seen ' + esc(lastSeen) + '</div>' +
+					(typesHtml ? '<div class="tfl-tags">' + typesHtml + '</div>' : '')
+				);
+			}).join('');
+
+			return (
+				'<div class="tfl-net" role="note" aria-label="Campaign membership">' +
+					'<div class="tfl-net-header"><i class="fas fa-sitemap"></i> ' + esc(title) + '</div>' +
+					rowsHtml +
+				'</div>'
+			);
+		}
+
 		// Pre-365-day archive (optional API field, added 2026-08-23). The live
 		// 365-day index is not TweetFeed's full history - 85.4% of published
 		// IOCs never reappear inside that trailing window - so the API also
@@ -2000,6 +2049,7 @@
 				html += renderEmpty(query, data && data.archive);
 			}
 
+			html += renderCampaigns(data && data.campaigns);
 			html += renderArchive(data && data.archive);
 			html += renderExternal(data && data.external);
 			html += renderNet(data && data.net);

@@ -63,6 +63,7 @@ Every static file below supports conditional requests (`wget --timestamping` / `
 - IOC lookup responses also carry an optional `external` field: cross-feed corroboration from public abuse.ch feeds (URLhaus/ThreatFox/MalwareBazaar); absent when no match or the sidecar is unavailable.
 - IOC lookup responses also carry an optional `net` field for IP lookups: network metadata (org/ASN, country, city, or a `bogon` flag for reserved ranges) from ipinfo.io, refreshed every 6h; absent for non-IP lookups or when unavailable.
 - IOC lookup responses also carry an optional `reg` field for domain/url lookups: RDAP registrar/creation-date/nameservers plus the IP(s)/ASN resolved at first-seen; covers the 30-day window only, absent when not yet enriched or out of coverage.
+- IOC lookup responses also carry an optional `campaigns` field (max 3, newest last-seen first): id, name, confidence, threat_types, ioc_count and last_seen for each published campaign the IOC belongs to, present regardless of `found`; the MCP `enrich_ioc` tool surfaces it too.
 - Raw sidecar: [enrichment.json](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json) (rolling 30 days, keyed by normalized IOC value, CC0).
 
 ## MCP integration (for AI agents)

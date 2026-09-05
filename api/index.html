@@ -573,10 +573,21 @@
                 "tags": ["#phishing"]
             }
         ]
-    }
+    },
+    "campaigns": [
+        {
+            "id": "tfc-6d1f6fb9260c",
+            "name": "Multi-family RAT/stealer C2 on compromised and DDNS hosts",
+            "confidence": "high",
+            "threat_types": ["phishing"],
+            "ioc_count": 198,
+            "last_seen": "2026-09-05 14:30:00"
+        }
+    ]
 }</pre>
 				<p class="tf-note">Unknown values return <code>200</code> with <code>found: false</code>. Values containing <code>/</code> or <code>?</code> must use the <code>?value=</code> query form.</p>
 				<p class="tf-note">The optional <code>archive</code> block covers hits older than the live 365-day window, back to <code>first_date</code> in <code>TweetFeed/archive/meta.json</code>. It is additive to <code>found</code>/<code>records</code>, never merged into them - their date ranges are disjoint by construction, so never sum <code>archive.total</code> with a record's <code>count</code>. It can accompany <code>found: true</code> or <code>found: false</code> for the same queried value. An archive record is a reduced schema versus a live one: no <code>users</code>, <code>tweets</code> or <code>related</code>.</p>
+				<p class="tf-note">The optional <code>campaigns</code> block (max 3, newest <code>last_seen</code> first) lists the published campaigns this IOC belongs to, independent of <code>found</code> - a value can be in a campaign while missing from the live 365-day window. Each entry links to <code>/campaigns/#&lt;id&gt;</code> on the campaign explorer for the full context, targeted brand/sector/country and IOC sample.</p>
 				<p class="tf-note">TweetFeed's own feed data and API responses are CC0; the optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0: abuse.ch (URLhaus / ThreatFox / MalwareBazaar, see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>), USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate), and <a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</p>
 				<p class="tf-note">The optional <code>net.drop</code> block is a separate case, IP lookups only: it annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a> - it does not mean the IOC value itself is listed anywhere. Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</p>
 				<br>

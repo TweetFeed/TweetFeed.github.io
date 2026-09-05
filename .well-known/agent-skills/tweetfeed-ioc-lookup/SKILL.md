@@ -36,6 +36,7 @@ Optional sidecar fields, present only when data exists for that value:
 - `net`: for IP lookups only - network metadata (org/ASN, country, city, or a `bogon` flag for reserved ranges) from ipinfo.io, refreshed every 6h.
 - `reg`: for domain/url lookups only - RDAP registrar/creation-date/nameservers plus the IP(s)/ASN resolved at first-seen, covering the 30-day window.
 - `archive`: hits older than the 365-day window, back to `first_date` in `TweetFeed/archive/meta.json` (coverage start moves daily). Reduced record schema - no `users`/`tweets`/`related` - each record has `type`, `value`, `first_seen`, `last_seen`, `count`, `tweet_id` (rebuild as `https://x.com/i/status/<tweet_id>`, can be empty) and up to 3 `tags` keeping their leading `#`; the block itself carries `window: "pre-365d"` and `total` (sum of the records' `count`). Additive to `found`/`records`, never merged with them - `found: true` and `archive` can both be present for the same value at once, with disjoint date ranges.
+- `campaigns`: up to 3 published campaigns this IOC belongs to, newest `last_seen` first - each entry has `id` (`tfc-<12hex>`), `name`, `confidence` (`high`/`medium`/`low`), `threat_types`, `ioc_count` and `last_seen`. Present regardless of `found` - a value can be in a campaign while missing from the live 365-day window. Fetch `https://tweetfeed.live/campaigns/#<id>` for the full campaign document.
 
 ## Exact match, not substring
 
