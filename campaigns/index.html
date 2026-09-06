@@ -1364,7 +1364,7 @@
 					</div>
 				</div>
 				<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
-				<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/">API docs</a></p>
+				<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/#campaign-export">per-campaign export (JSON/CSV/STIX)</a> &middot; <a href="../api/">API docs</a></p>
 
 				<div class="tfc-stale-banner" id="staleBanner" style="display:none;" role="alert"></div>
 
@@ -3136,7 +3136,9 @@
 				idHtml +
 				(snap ? '<span>snapshot ' + snap + '</span>' : '') +
 				linkBtn +
-				'<a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">raw JSON</a>' +
+				(a.validId
+					? ('<span>Download: <a href="https://api.tweetfeed.live/v1/campaigns/' + esc(a.validId) + '" target="_blank" rel="noopener noreferrer">JSON</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/' + esc(a.validId) + '.csv" target="_blank" rel="noopener noreferrer">CSV</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/' + esc(a.validId) + '.stix.json" target="_blank" rel="noopener noreferrer">STIX 2.1</a></span>')
+					: '<a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">raw JSON</a>') +
 			'</div>'
 		);
 	}

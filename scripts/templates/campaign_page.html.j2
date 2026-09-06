@@ -253,6 +253,7 @@
 					<div class="card-body">
 						{% if iocs %}
 						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Showing up to 25 IOCs (the campaigns API caps each campaign's published list at 25). Live JSON: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/campaigns</code></a>.</p>
+						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Download this campaign: <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}" target="_blank" rel="noopener noreferrer">JSON</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.csv" target="_blank" rel="noopener noreferrer">CSV</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.stix.json" target="_blank" rel="noopener noreferrer">STIX 2.1</a>.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:720px; margin-bottom:0;">
 								<colgroup>

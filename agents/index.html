@@ -482,6 +482,19 @@
 							</td>
 						</tr>
 						<tr>
+							<td><code>get_campaign_iocs</code></td>
+							<td>
+								Full IOC membership of one AI-clustered campaign: header (name,
+								context, ATT&amp;CK <code>ttps</code>, targeted sector/country,
+								<code>ioc_count</code>) plus its rows (date, type, value, researcher
+								handle, tags, source tweet URL). Required <code>campaign_id</code>
+								(from <code>get_campaigns</code>), optional <code>type</code> filter and
+								<code>limit</code> (1-500, default 100). Same data as
+								<code>/v1/campaigns/&lt;id&gt;</code> (<code>.csv</code> /
+								<code>.stix.json</code> variants also exist).
+							</td>
+						</tr>
+						<tr>
 							<td><code>get_trends</code></td>
 							<td>
 								Community IOC trend analytics: 31-day daily volume by type, top moving

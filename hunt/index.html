@@ -1125,6 +1125,18 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
 						<p class="hnt-note">Paginate with <code>limit</code> and <code>next</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references were created with the collection, so they fall outside any recent window. Fetch those once by id from <code>/objects/{id}/</code> so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
 						<p class="hnt-links"><a href="../api/#taxii">TAXII reference</a></p>
 					</article>
+					<article class="hnt-card" id="campaign-stix-import" data-stack="misp">
+						<header class="hnt-head">
+							<span class="hnt-badge hnt-badge-misp">MISP / OpenCTI</span>
+							<h3 class="hnt-title">Import one campaign as STIX 2.1</h3>
+							<a class="hnt-anchor" href="#campaign-stix-import" aria-label="Link to this recipe">#</a>
+						</header>
+						<p class="hnt-desc">One AI-clustered campaign, full IOC membership, as a self-contained STIX 2.1 bundle - Identity, TLP:CLEAR marking, one Indicator per IOC. MISP: <b>Sync Actions &rarr; Import &rarr; Import from... STIX 2.x</b>. OpenCTI: <b>Data &rarr; Import</b>.</p>
+						<p class="hnt-meta"><span>Window: 30 days</span><span>Media type: stix+json 2.1</span></p>
+						<pre id="qs-campaign-stix-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json -o campaign.stix.json</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-campaign-stix-1" title="Copy"></i></pre>
+						<p class="hnt-note">Get campaign ids from <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>/v1/campaigns</code></a> or the <a href="../campaigns/">campaigns page</a>. Deterministic bundle id - reimporting the same campaign later does not duplicate objects in a platform that dedupes by id.</p>
+						<p class="hnt-links"><a href="../api/#campaign-export">Per-campaign export reference</a></p>
+					</article>
 				</section>
 				<section class="hnt-group" data-group="opencti">
 					<hr class="divider">

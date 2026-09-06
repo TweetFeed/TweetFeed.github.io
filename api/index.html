@@ -491,6 +491,15 @@
     }
 }</pre>
 				<br>
+				<h2 id="campaign-export" class="section-heading tf-block-head">Per-campaign export</h2>
+				<p>Need the full record for one campaign - header plus every member IOC, no 25-row sample cap - without the ~231&nbsp;KB shared <code>/v1/campaigns/iocs</code> document? Fetch it directly by campaign id, in JSON, CSV, or a ready-to-import STIX 2.1 bundle.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns/<span class="tf-ph"><b>{id}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns/{id}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<span class="tf-code-label"><b>Examples</b></span>
+				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.csv <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.csv" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<p class="tf-note"><code>{id}</code> matches <code>^tfc-[0-9a-f]{12}$</code> - get valid ids from <code>/v1/campaigns</code>. The <code>.csv</code> mirrors the same 6 columns as <code>today.csv</code>; the <code>.stix.json</code> is a self-contained STIX 2.1 bundle (Identity, TLP:CLEAR marking, one Indicator per IOC). Unknown or expired id returns <code>404</code> with a JSON <code>{"error": "..."}</code> body; same ETag/Last-Modified conditional-request support as every route above. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaign_iocs</code> tool.</p>
+				<br>
 				<h2 id="counts" class="section-heading tf-block-head">Counts</h2>
 				<p>Pre-aggregated totals for each time window: overall count, a per-type breakdown, a per-tag breakdown, and the first/last IOC timestamp - without fetching and parsing the full <code>year</code> CSV. Regenerated every 15 minutes alongside the rest of the feed.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/counts <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/counts" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>

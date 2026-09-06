@@ -78,9 +78,21 @@ curl -s https://api.tweetfeed.live/v1/campaigns | jq '.campaigns[] | select(.tar
 curl -s https://api.tweetfeed.live/v1/campaigns/iocs | jq '.campaigns["tfc-a1b2c3d4e5f6"]'
 ```
 
-Shape: `{"version": 1, "generated_at": "...", "campaigns": {"<campaign id>": [ <full IOC rows> ], ...}}`. Rows carry the same six fields as the inline `iocs` sample, including the optional `ai`/`net` fields. `generated_at` matches the main `/v1/campaigns` document - compare the two and fall back to the inline sample on a mismatch. ~231 KB uncapped. Same cache policy as `/v1/campaigns`: `max-age=60, stale-while-revalidate=600, stale-if-error=86400`.
+Shape: `{"version": 1, "generated_at": "...", "campaigns": {"<campaign id>": [ <full IOC rows> ], ...}}`. Rows carry the same six fields as the inline `iocs` sample, including the optional `ai`/`net` fields. `generated_at` matches the main `/v1/campaigns` document - compare the two and fall back to the inline sample on a mismatch. ~231 KB uncapped. Same cache policy as `/v1/campaigns`: `max-age=300, stale-while-revalidate=600, stale-if-error=86400`.
 
 No MCP tool wraps this endpoint - a 231 KB document doesn't fit a tool response. Fetch it directly with `curl`/`fetch` if you need full membership.
+
+## Per-campaign export
+
+Full record for one campaign - header plus every member IOC, no 25-row cap - fetched directly by id:
+
+```bash
+curl -s https://api.tweetfeed.live/v1/campaigns/tfc-a1b2c3d4e5f6
+curl -s https://api.tweetfeed.live/v1/campaigns/tfc-a1b2c3d4e5f6.csv
+curl -s https://api.tweetfeed.live/v1/campaigns/tfc-a1b2c3d4e5f6.stix.json
+```
+
+Shape: `{"generated_at": "...", "campaign": {<same shape as one /v1/campaigns entry>}, "iocs": [<complete, unsampled rows>]}`. The `.csv` mirrors the same 6 columns as `today.csv`; the `.stix.json` is a self-contained STIX 2.1 bundle (Identity, TLP:CLEAR marking, one Indicator per IOC, deterministic bundle id). Unknown or expired id returns `404` with `{"error": "..."}`. Same cache policy as `/v1/campaigns`, `max-age=300`.
 
 ## Human page
 
@@ -89,6 +101,8 @@ No MCP tool wraps this endpoint - a 231 KB document doesn't fit a tool response.
 ## MCP equivalent
 
 `get_campaigns` tool - optional `brand` (substring match on `targeted_brand`), `min_confidence` (`low`/`medium`/`high`), `limit` (1-50, default 20). Same trimmed-sample shape as the raw endpoint, and ships `families`/`threat_types`/`enriched_count`/`infra` per campaign, but drops `activity` (token economy - `ioc_count_1d`/`_7d`/`_30d` already answer "how recent"). It also forwards `patterns`, `history` and `anchors.families`, but not `related`.
+
+`get_campaign_iocs` tool - `campaign_id` required, optional `type`, `limit` (1-500, default 100): full IOC membership of one campaign, the tool-sized equivalent of `/v1/campaigns/<id>`.
 
 ## Gotchas
 
