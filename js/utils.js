@@ -365,10 +365,15 @@
   // (DataTables on search/researchers, etc.). Runs callback once when target
   // enters the viewport with a rootMargin preload buffer. Falls back to
   // immediate execution when IntersectionObserver isn't available.
+  // Returns the IntersectionObserver instance (so a caller that tears down a
+  // batch of these early, e.g. a grid rebuild, can call .disconnect() on the
+  // ones that never fired) or null when the callback already ran synchronously
+  // (no element, or no IntersectionObserver support). Existing callers that
+  // ignore the return value are unaffected.
   function lazyInViewport(elementOrId, callback, rootMargin) {
     var el = typeof elementOrId === 'string'
       ? document.getElementById(elementOrId) : elementOrId;
-    if (!el || !('IntersectionObserver' in window)) { callback(); return; }
+    if (!el || !('IntersectionObserver' in window)) { callback(); return null; }
     var done = false;
     var obs = new IntersectionObserver(function(entries) {
       if (done) return;
@@ -382,6 +387,7 @@
       }
     }, { rootMargin: rootMargin || '300px' });
     obs.observe(el);
+    return obs;
   }
 
   // ─── Umami custom events ───────────────────────────────────────────────────

@@ -38,7 +38,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/graphs/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -290,7 +290,7 @@
   </url>
 <url>
     <loc>https://tweetfeed.live/tos/</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

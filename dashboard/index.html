@@ -556,7 +556,7 @@
 	<!-- vendor/datatables/*.js + js/demo/datatables-demo.js removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=5"></script>
+	<script defer src="../js/utils.js?v=6"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// Tweet rendering queue: loadData() may run before platform widgets.js
@@ -927,8 +927,35 @@
 
 			var tfdCurCols = null;
 			var tfdLastLines = [];
+			// IntersectionObservers created for the current grid's cells (one per
+			// not-yet-rendered tweet). Torn down at the top of every rebuild so a
+			// cell that never scrolled into view can't fire renderTweet() into a
+			// detached element after the grid has moved on.
+			var tfdGridObservers = [];
+
+			function tfdTeardownGridObservers() {
+				tfdGridObservers.forEach(function(o) {
+					if (o && typeof o.disconnect === 'function') o.disconnect();
+				});
+				tfdGridObservers = [];
+			}
+
+			// Paints the skeleton immediately (reserves the cell's height, so
+			// deferring the embed below doesn't add layout shift) and defers the
+			// actual widgets.js embed until the cell is near the viewport. Without
+			// this, tfdBuildGrid used to call renderTweet() for every tweet in the
+			// window at once, so widgets.js created every iframe on initial load
+			// (PSI mobile perf 40, ~1.2-1.5 MB / ~2.5 s of third-party script).
+			function tfdSetupCell(statusId, cell) {
+				cell.appendChild(__tfBuildSkeleton());
+				var obs = TweetFeed.lazyInViewport(cell, function() {
+					renderTweet(statusId, cell);
+				}, '600px');
+				if (obs) tfdGridObservers.push(obs);
+			}
 
 			function tfdBuildGrid(lines) {
+				tfdTeardownGridObservers();
 				var nCols = colCount();
 				tfdCurCols = nCols;
 				var grid = document.getElementById('tfdGrid');
@@ -946,7 +973,7 @@
 					cell.className = 'tfd-cell';
 					cell.id = 'tweet-col-' + statusId;
 					cols[i % nCols].appendChild(cell);
-					renderTweet(statusId, cell);
+					tfdSetupCell(statusId, cell);
 				}
 			}
 
