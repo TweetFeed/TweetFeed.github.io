@@ -728,7 +728,7 @@
 							<tr>
 								<td>AdGuard rules</td>
 								<td><code>/v1/blocklist/adguard.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
-								<td>AdGuard Home</td>
+								<td>AdGuard Home, uBlock Origin - valid filter list with a <code>!</code> metadata header</td>
 							</tr>
 							<tr>
 								<td>IP list</td>
@@ -780,10 +780,25 @@
 								<td><code>/v1/blocklist/urls-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>Subset of urls.txt also listed by URLhaus/ThreatFox/MalwareBazaar/USOM/IPsum</td>
 							</tr>
+							<tr>
+								<td>SHA-256 hashes</td>
+								<td><code>/v1/blocklist/sha256.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/sha256.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Microsoft Defender for Endpoint Indicators import, CrowdStrike IOC management, EDR/AV bulk import</td>
+							</tr>
+							<tr>
+								<td>MD5 hashes</td>
+								<td><code>/v1/blocklist/md5.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/md5.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Same use case as sha256.txt for tools keyed on MD5</td>
+							</tr>
+							<tr>
+								<td>Newly registered domains</td>
+								<td><code>/v1/blocklist/nrd-domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Subset of domains.txt with RDAP apex age &lt;=30 days at first report - DNS filters wanting a high-signal NRD+reported list</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
-				<p class="tf-note">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach. <code>zeek-intel.txt</code>, <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> carry no <code>#</code> comment header at all - <code>zeek-intel.txt</code> opens with a tab-separated <code>#fields</code> line (<code>indicator</code>/<code>indicator_type</code>/<code>meta.source</code>, the last always <code>tweetfeed.live</code>) instead, and the two Wazuh files have no header line, since a <code>#</code> would compile as a literal CDB key - so check freshness for these three with <a href="#manifest">/v1/manifest</a> or the response's <code>Last-Modified</code> header. For Palo Alto Networks PAN-OS, point a Domain EDL at <code>domains.txt</code> and an IP EDL at <code>ips.txt</code>; do not use <code>urls.txt</code> as a URL EDL, since PAN-OS reads <code>? & = ; +</code> as token separators.</p>
+				<p class="tf-note">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach. <code>zeek-intel.txt</code>, <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> carry no <code>#</code> comment header at all - <code>zeek-intel.txt</code> opens with a tab-separated <code>#fields</code> line (<code>indicator</code>/<code>indicator_type</code>/<code>meta.source</code>, the last always <code>tweetfeed.live</code>) instead, and the two Wazuh files have no header line, since a <code>#</code> would compile as a literal CDB key - so check freshness for these three with <a href="#manifest">/v1/manifest</a> or the response's <code>Last-Modified</code> header. <code>adguard.txt</code> instead carries an AdGuard/uBlock filter-list metadata header (<code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.) rather than the generic <code>#</code> one, making it a valid filter list for AdGuard Home / uBlock Origin and filter-list registries. <code>nrd-domains.txt</code> adds extra header lines naming its base list and the RDAP cross-check's last refresh. For Palo Alto Networks PAN-OS, point a Domain EDL at <code>domains.txt</code> and an IP EDL at <code>ips.txt</code>; do not use <code>urls.txt</code> as a URL EDL, since PAN-OS reads <code>? & = ; +</code> as token separators.</p>
 				<span class="tf-code-label"><b>Response (header)</b></span>
 				<pre class="code-block code-block-sm"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days

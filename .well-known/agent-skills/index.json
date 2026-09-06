@@ -20,7 +20,7 @@
       "type": "skill-md",
       "description": "Fetch ready-made plain-text blocklists (domains, hosts-file, AdGuard, IPs, DNS RPZ, dnsmasq, full URLs, a Zeek Intelligence Framework file, Wazuh CDB lists) built from TweetFeed's rolling 30-day IOC window, for direct import into Pi-hole, AdGuard Home, firewalls, DNS resolvers, Zeek, Wazuh or another IDS/SIEM. Rebuilt every 15 minutes, CC0 licensed, no auth.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-blocklists/SKILL.md",
-      "digest": "sha256:398b2f7f83cbdc9fa72aba80ca51f6b60ba8b98fce1a94218098723dda9b4d9c"
+      "digest": "sha256:69db87ad972d33d9f5a45092ae08ca49087504c5628ab44c85a4e23305104ccd"
     },
     {
       "name": "tweetfeed-trends",

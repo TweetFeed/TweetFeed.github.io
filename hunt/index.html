@@ -628,7 +628,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt   # dnsmasq addres
 curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt       # BIND RPZ zone
 curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt       # bare IPs
 curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not just hosts</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-blocklist-1" title="Copy"></i></pre>
-						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist. If your change control won't deploy a single-reporter list, start with the <code>-corroborated</code> variant (<code>domains-corroborated.txt</code>, <code>ips-corroborated.txt</code>, <code>urls-corroborated.txt</code>) - the subset also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist. If your change control won't deploy a single-reporter list, start with the <code>-corroborated</code> variant (<code>domains-corroborated.txt</code>, <code>ips-corroborated.txt</code>, <code>urls-corroborated.txt</code>) - the subset also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum - or with <code>nrd-domains.txt</code>, the higher-signal subset of newly registered domains already reported malicious. <code>adguard.txt</code> now carries an AdGuard/uBlock filter-list metadata header (<code>!</code> comments) instead of the generic <code>#</code> one, so it drops straight into a custom filter list.</p>
 						<p class="hnt-links"><a href="../malicious-domains/">Bad domains list</a><a href="../malicious-ips/">Bad IPs list</a></p>
 					</article>
 				</section>
@@ -790,7 +790,7 @@ SecurityEvent
 				<section class="hnt-group" data-group="defender">
 					<hr class="divider">
 					<h2 class="section-heading tf-block-head" id="stack-defender">Microsoft Defender for Endpoint</h2>
-					<p class="hnt-group-note">Advanced hunting queries covering all four IOC types. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness-versus-coverage trade-off.</p>
+					<p class="hnt-group-note">Advanced hunting queries covering all four IOC types. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness-versus-coverage trade-off. For a direct Indicators bulk import instead of a KQL join, use <a href="../blocklists/">sha256.txt / md5.txt</a>.</p>
 					<p class="hnt-links"><a href="https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview" target="_blank" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
 					<article class="hnt-card" id="mde-urls" data-stack="defender">
 						<header class="hnt-head">

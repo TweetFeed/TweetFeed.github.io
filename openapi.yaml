@@ -685,6 +685,30 @@ paths:
         set membership only, not a quality score or a verdict. If the
         cross-check file is unavailable, these three files simply keep their
         last content.
+
+        `sha256.txt` and `md5.txt` are one lowercase hex hash per line (SHA-256
+        and MD5 respectively), same 30-day window and 15-minute regeneration
+        as the other files, for EDR/AV custom-indicator bulk import (Microsoft
+        Defender for Endpoint's Indicators CSV import, CrowdStrike IOC
+        management, etc.). Hash coverage is smaller than domains/URLs, since
+        researchers tweet fewer hashes.
+
+        `adguard.txt` carries AdGuard/uBlock filter-list metadata (`! Title:`,
+        `! Description:`, `! Homepage:`, `! License:`, `! Expires:`,
+        `! Last modified:`, `! Entries:`, `! Source:`, a poll-etiquette line)
+        instead of the generic `#` header used by the other files; the body
+        (`||domain^` lines) is unchanged. This makes it a valid filter list
+        for AdGuard Home, uBlock Origin custom lists and filter-list
+        registries.
+
+        `nrd-domains.txt` is the subset of `domains.txt` whose registrable
+        apex had an RDAP creation date 30 days or less before TweetFeed's
+        first report. It carries the standard `#` header plus two extra
+        lines: which base list it is derived from, and when the RDAP
+        cross-check was last refreshed. Two limits apply: only apexes with a
+        known RDAP creation date are considered (about 6 in 10 reported
+        domains), and a domain reported in the current tick can appear one
+        tick later, since the registration check runs after publish.
       parameters:
         - $ref: "#/components/parameters/BlocklistFile"
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -957,9 +981,13 @@ components:
         `domains.txt` / `ips.txt` / `urls.txt` also listed by at least one of
         URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last
         6-hourly cross-check - set membership only, not a quality score.
+        `sha256.txt` and `md5.txt` are one lowercase hex hash per line, for
+        EDR/AV bulk import. `nrd-domains.txt` is the subset of `domains.txt`
+        whose registrable apex was created 30 days or less before TweetFeed's
+        first report (RDAP creation date).
       schema:
         type: string
-        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt, domains-corroborated.txt, ips-corroborated.txt, urls-corroborated.txt]
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt, domains-corroborated.txt, ips-corroborated.txt, urls-corroborated.txt, sha256.txt, md5.txt, nrd-domains.txt]
 
     IocValueQuery:
       name: value
