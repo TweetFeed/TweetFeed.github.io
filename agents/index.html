@@ -11,15 +11,15 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Connect Claude, Cursor, Zed or any MCP client to TweetFeed. Free MCP server, Agent Skills and discovery endpoints. CC0 IOC data, no auth.">
+	<meta name="description" content="Connect Claude, ChatGPT, Cursor, Zed or any MCP client to TweetFeed. Free MCP server, Agent Skills and discovery endpoints. CC0 IOC data, no auth.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="MCP,model context protocol,agents,AI,AI agents,Claude,Cursor,Zed,agent skills,API catalog,ioc,threat,osint,feed,CC0">
+	<meta name="keywords" content="MCP,model context protocol,agents,AI,AI agents,Claude,ChatGPT,Cursor,Zed,agent skills,API catalog,ioc,threat,osint,feed,CC0">
 	<link rel="canonical" href="https://tweetfeed.live/agents/">
 	<title>TweetFeed MCP Server for AI Agents - TweetFeed</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="TweetFeed for AI Agents - MCP, Skills, Discovery">
-	<meta name="twitter:description" content="Connect Claude Desktop, Cursor, Zed or any MCP client to the TweetFeed IOC feed. Free, no auth.">
+	<meta name="twitter:description" content="Connect Claude Desktop, ChatGPT, Cursor, Zed or any MCP client to the TweetFeed IOC feed. Free, no auth.">
 	<meta name="twitter:url" content="https://tweetfeed.live/agents/">
 	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta name="twitter:creator" content="@0xDanielLopez">
@@ -27,7 +27,7 @@
 	<meta property="og:url" content="https://tweetfeed.live/agents/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="TweetFeed for AI Agents - MCP, Skills, Discovery">
-	<meta property="og:description" content="Connect Claude Desktop, Cursor, Zed or any MCP client to the TweetFeed IOC feed. Free, no auth.">
+	<meta property="og:description" content="Connect Claude Desktop, ChatGPT, Cursor, Zed or any MCP client to the TweetFeed IOC feed. Free, no auth.">
 	<meta property="og:site_name" content="tweetfeed.live">
 	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
 	<meta property="og:image:width" content="1200">
@@ -114,7 +114,7 @@
 		"@context": "https://schema.org",
 		"@type": "TechArticle",
 		"headline": "TweetFeed for AI Agents",
-		"description": "How to connect Claude Desktop, Cursor, Zed and other AI agents to the TweetFeed IOC feed via Model Context Protocol, Agent Skills, and the REST API.",
+		"description": "How to connect Claude Desktop, ChatGPT, Cursor, Zed and other AI agents to the TweetFeed IOC feed via Model Context Protocol, Agent Skills, and the REST API.",
 		"url": "https://tweetfeed.live/agents/",
 		"author": {"@type": "Person", "name": "Daniel López", "url": "https://x.com/0xDanielLopez"},
 		"publisher": {"@type": "Organization", "name": "TweetFeed", "url": "https://tweetfeed.live/"},
@@ -266,7 +266,7 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true" style="vertical-align:-6px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> TweetFeed for AI Agents</h1>
-					<h2><em>Connect Claude Desktop, Cursor, Zed or any MCP client to the IOC feed <span style="font-size: 12px;">(free, no auth)</span></em></h2>
+					<h2><em>Connect Claude Desktop, ChatGPT, Cursor, Zed or any MCP client to the IOC feed <span style="font-size: 12px;">(free, no auth)</span></em></h2>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
@@ -372,7 +372,7 @@
 				<p>
 					Remote <b>Model Context Protocol</b> server at <code style="color:#1178b3;">https://mcp.tweetfeed.live/</code>
 					over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-11-25</code>). Works with Claude Desktop, Claude Code,
-					Cursor, Zed and any SDK-based MCP client.
+					ChatGPT, Cursor, Zed and any SDK-based MCP client.
 				</p>
 
 				<span class="tf-code-label"><b>Config</b> for Claude Desktop, Cursor, Zed</span>
@@ -383,6 +383,15 @@
     }
   }
 } <i class="tf-copy far fa-copy" data-copy='{&quot;mcpServers&quot;:{&quot;tweetfeed&quot;:{&quot;url&quot;:&quot;https://mcp.tweetfeed.live/&quot;}}}' role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+
+				<span class="tf-code-label"><b>ChatGPT</b> (connectors and deep research)</span>
+				<p>
+					In ChatGPT, go to Settings, Connectors, Create (or add a custom connector from
+					Deep research) and paste <code>https://mcp.tweetfeed.live/</code>, no
+					authentication needed. The server exposes the <code>search</code> and
+					<code>fetch</code> tools ChatGPT requires, alongside the typed tools below, and
+					every result carries a tweetfeed.live URL so answers cite the feed.
+				</p>
 
 				<span class="tf-code-label"><b>Or</b> add from the Claude Code CLI</span>
 				<pre class="code-block">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/ <i class="tf-copy far fa-copy" data-copy="claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
@@ -500,6 +509,26 @@
 								Community IOC trend analytics: 31-day daily volume by type, top moving
 								tags week-over-week, most-abused TLDs, and the new-vs-recurring novelty
 								ratio.
+							</td>
+						</tr>
+						<tr>
+							<td><code>search</code></td>
+							<td>
+								ChatGPT connector interface. One <code>query</code> string: an IOC
+								value, a tag, a campaign id or free text matched against campaign
+								names. Returns document ids (<code>ioc:</code>, <code>tag:</code>,
+								<code>campaign:</code>) with a tweetfeed.live URL each, as
+								<code>structuredContent</code>. When your client supports the typed
+								tools above, use those instead.
+							</td>
+						</tr>
+						<tr>
+							<td><code>fetch</code></td>
+							<td>
+								ChatGPT connector interface. Full document for one id from
+								<code>search</code>: the 365-day IOC lookup with context, a tag
+								overview with recent IOCs, or a campaign header with its IOC rows and
+								CSV/STIX links. Returns <code>{id, title, text, url, metadata}</code>.
 							</td>
 						</tr>
 					</table>
@@ -671,11 +700,11 @@
 					</details>
 					<details>
 						<summary>MCP server, Agent Skills or REST API - which one?</summary>
-						<p>If your client speaks Model Context Protocol (Claude Desktop, Claude Code, Cursor, Zed), use the <a href="#option-mcp" class="text-decoration-none">MCP server</a>: the agent gets 10 typed tools and chooses between them itself. If it consumes <a href="#option-skills" class="text-decoration-none">Agent Skills</a> instructions instead, point it at the skills manifest. If it is a script, or an n8n, Make or Zapier workflow, call the <a href="#option-api" class="text-decoration-none">REST API</a>. All three read the same rows.</p>
+						<p>If your client speaks Model Context Protocol (Claude Desktop, Claude Code, ChatGPT, Cursor, Zed), use the <a href="#option-mcp" class="text-decoration-none">MCP server</a>: the agent gets 13 tools and chooses between them itself. If it consumes <a href="#option-skills" class="text-decoration-none">Agent Skills</a> instructions instead, point it at the skills manifest. If it is a script, or an n8n, Make or Zapier workflow, call the <a href="#option-api" class="text-decoration-none">REST API</a>. All three read the same rows.</p>
 					</details>
 					<details>
 						<summary>Which clients work with the MCP server?</summary>
-						<p>Any client that speaks JSON-RPC 2.0 over HTTP at <code>protocolVersion 2025-11-25</code>. It is tested with Claude Desktop, Claude Code, Cursor and Zed. Nothing gets installed: the server is remote, so a URL in the client config is all it takes.</p>
+						<p>Any client that speaks JSON-RPC 2.0 over HTTP at <code>protocolVersion 2025-11-25</code>. It is tested with Claude Desktop, Claude Code, Cursor and Zed, and implements the ChatGPT connector interface (<code>search</code> / <code>fetch</code>). Nothing gets installed: the server is remote, so a URL in the client config is all it takes.</p>
 					</details>
 					<details>
 						<summary>How fresh is the data an agent sees?</summary>
