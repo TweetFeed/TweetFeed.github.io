@@ -115,6 +115,7 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
+		"dateModified": "2026-09-06T21:00:19Z",
 		"@type": "Dataset",
 		"name": "TweetFeed IOC Dataset",
 		"alternateName": "TweetFeed",
@@ -140,7 +141,7 @@
 		"variableMeasured": [
 			{"@type": "PropertyValue", "name": "date", "description": "Timestamp the IOC was shared on Twitter/X"},
 			{"@type": "PropertyValue", "name": "user", "description": "Twitter/X handle of the researcher who posted the IOC"},
-			{"@type": "PropertyValue", "name": "type", "description": "IOC type: url, domain, ip, md5, sha1, sha256, hashtag or wallet"},
+			{"@type": "PropertyValue", "name": "type", "description": "IOC type: url, domain, ip, sha256 or md5"},
 			{"@type": "PropertyValue", "name": "value", "description": "The indicator itself"},
 			{"@type": "PropertyValue", "name": "tags", "description": "Contextual tags such as #phishing, #malware, #CobaltStrike"}
 		],
@@ -163,7 +164,13 @@
 			{"@type": "DataDownload", "name": "Blocklist - urls (TXT)",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - zeek-intel (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - wazuh-domains (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - wazuh-ips (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - wazuh-ips (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - domains-corroborated (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - ips-corroborated (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - urls-corroborated (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - sha256 (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/sha256.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - md5 (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/md5.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - nrd-domains (TXT)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt"}
 		]
 	}
 	</script>
@@ -177,7 +184,7 @@
 				"name": "What is an IOC feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS."
+					"text": "An indicator of compromise (IOC) feed is a continuously updated list of malicious URLs, domains, IPs and file hashes used by security teams to detect threats. TweetFeed collects IOCs shared publicly by researchers on Twitter/X and republishes them every 15 minutes in CSV, JSON, TXT and RSS. New to IOCs? Read the IOC Threat Intelligence guide."
 				}
 			},
 			{
@@ -603,7 +610,7 @@
 					These are community-reported IOCs and their confidence is not always 100%, so adding them straight to a blocklist is not recommended. Run your own analysis first. They work better as a <b>Watchlist</b> or as input to <b>Threat Hunting</b>.
 				</div>
 				<h3 id="blocklist" class="section-heading tf-sect-head">Blocklists</h3>
-				<p>Plain-text exports, one indicator per line (the Zeek file adds two metadata columns), 30-day window, rebuilt every 15 minutes.</p>
+				<p>Plain-text exports, one indicator per line (the Zeek file adds two metadata columns), 30-day window, rebuilt every 15 minutes. Full format guide, sample output and FAQ on the <a href="../blocklists/">blocklists page</a>.</p>
 				<ul class="fds-facts">
 					<li>Drop-in for Pi-hole, AdGuard Home, hosts files, firewalls, proxies, IDS and SIEMs.</li>
 					<li><code>urls.txt</code> carries the full URL instead of just the host, so it also covers indicators sitting on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</li>
@@ -704,6 +711,66 @@
 								<span class="card-text cardTitle">Wazuh IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Wazuh CDB list, lookup=address_match_key on srcip/dstip"></i>
 								<hr>
 								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" data-umami-event="download-blocklist-wazuh-ips" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> wazuh-ips.txt</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="fds-grid-label">Corroborated subsets</p>
+				<div class="row">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">Domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of domains.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" data-umami-event="download-blocklist-domains-corroborated" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> domains-corroborated.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of ips.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" data-umami-event="download-blocklist-ips-corroborated" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> ips-corroborated.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of urls.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" data-umami-event="download-blocklist-urls-corroborated" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> urls-corroborated.txt</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="fds-grid-label">Hashes and newly-registered domains</p>
+				<div class="row">
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">SHA-256</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One lowercase hex SHA-256 per line, for EDR/AV bulk import"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/sha256.txt" data-umami-event="download-blocklist-sha256" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> sha256.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">MD5</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One lowercase hex MD5 per line, for EDR/AV bulk import"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/md5.txt" data-umami-event="download-blocklist-md5" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> md5.txt</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-xl-3">
+						<div class="card shadow mb-4 h-100">
+							<div class="card-header text-center">
+								<span class="card-text cardTitle">NRD domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of domains.txt with RDAP apex creation date 30 days or less before first report"></i>
+								<hr>
+								<a class="btn btn-tf btn-block" href="https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt" data-umami-event="download-blocklist-nrd-domains" target="_blank" role="button" rel="noopener noreferrer"><i class="fas fa-download" aria-hidden="true"></i> nrd-domains.txt</a>
 							</div>
 						</div>
 					</div>

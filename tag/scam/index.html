@@ -107,7 +107,7 @@
 			],
 			"sameAs": [
 				"https://attack.mitre.org/techniques/T1656/",
-				"https://www.ftc.gov/business-guidance/privacy-security/scams"
+				"https://consumer.ftc.gov/scams"
 			]
 		},
 		"inLanguage": "en"
@@ -149,7 +149,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Scam-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Scam-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -392,7 +392,7 @@
 							<li><b>Definition:</b> fraud infrastructure that does not necessarily steal credentials. Common types: fake e-commerce stores, fraudulent crypto-investment platforms, romance scams, fake giveaways, fake support hotlines, fake tech-support pop-ups.</li>
 							<li><b>Common variants:</b> fake Trezor / Ledger reset pages, fake X/Twitter promotion bots, fake DEX phishing dApps, AI-generated celebrity-deepfake giveaways, fake government/tax-refund sites.</li>
 							<li><b>Detection:</b> domain age + WHOIS lexical analysis, certificate transparency for impersonation, image-similarity matching against legitimate brand assets, and reverse-image search on profile pictures.</li>
-							<li><b>References:</b> <a href="https://attack.mitre.org/techniques/T1656/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1656 (Impersonation)</a> &middot; <a href="https://www.ftc.gov/business-guidance/privacy-security/scams" target="_blank" rel="noopener noreferrer">FTC scam advisories</a>.</li>
+							<li><b>References:</b> <a href="https://attack.mitre.org/techniques/T1656/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1656 (Impersonation)</a> &middot; <a href="https://consumer.ftc.gov/scams" target="_blank" rel="noopener noreferrer">FTC scam advisories</a>.</li>
 							
 						</ul>
 					</div>

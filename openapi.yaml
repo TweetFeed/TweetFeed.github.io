@@ -26,7 +26,7 @@ info:
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
-    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 10 tools).
+    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 13 tools).
   version: "1.0"
   contact:
     name: TweetFeed
@@ -126,7 +126,7 @@ paths:
         Same as `/v1/{time}` but filtered by one of:
         - **IOC type** - `url`, `domain`, `ip`, `sha256`, `md5`
         - **Tag** - e.g. `phishing`, `cobaltstrike`, `lockbit`, `ransomware` (full
-          taxonomy: 92 tags, see https://tweetfeed.live/tags/)
+          taxonomy: 93 tags, see https://tweetfeed.live/tags/)
         - **Researcher handle** - must include the leading `@`, e.g.
           `@malwrhunterteam`
       parameters:
@@ -1254,7 +1254,7 @@ components:
           description: |
             Tag labels (typically include the IOC category - `phishing`, `malware`,
             `ransomware`, etc. - plus malware-family or threat-actor labels when
-            applicable). Current taxonomy: 92 tags. Full list at
+            applicable). Current taxonomy: 93 tags. Full list at
             https://tweetfeed.live/tags/.
           example: ["phishing", "scam"]
         tweet:

@@ -111,7 +111,7 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"dateModified": "2026-09-06T10:30:17Z",
+		"dateModified": "2026-09-06T21:00:19Z",
 		"@type": "Dataset",
 		"@id": "https://tweetfeed.live/malicious-domains/#dataset",
 		"name": "TweetFeed Malicious Domains",
@@ -159,6 +159,22 @@
 			},
 			{
 				"@type": "Question",
+				"name": "Where can I download a bad domains list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What is a bad domain list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "A bad domain list (also called a malicious domain blocklist) aggregates hostnames reported as phishing, scam or malware infrastructure by the Threat Intelligence community. TweetFeed publishes its own bad domains list for free, updated every 15 minutes in CSV, JSON and API formats. The data is released under CC0, so there is no key, sign-up or rate limit to use it."
+				}
+			},
+			{
+				"@type": "Question",
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
@@ -195,22 +211,6 @@
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Import the domain list into your DNS firewall, secure web gateway or Pi-hole as a blocklist, or query the JSON API from your SOAR/SIEM to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives."
-				}
-			}
-			,{
-				"@type": "Question",
-				"name": "Where can I download a bad domains list?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Right here. This page is a live bad domains list: every entry was reported as phishing, scam, malware or C2 infrastructure by the infosec community on Twitter/X. Grab the CSV for your blocklist, query the JSON API from scripts, or subscribe to the RSS feed. It refreshes every 15 minutes and is CC0, so no key or sign-up is needed."
-				}
-			}
-			,{
-				"@type": "Question",
-				"name": "What is a bad domain list?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "A bad domain list (also called a malicious domain blocklist) aggregates hostnames reported as phishing, scam or malware infrastructure by the Threat Intelligence community. TweetFeed publishes its own bad domains list for free, updated every 15 minutes in CSV, JSON and API formats. The data is released under CC0, so there is no key, sign-up or rate limit to use it."
 				}
 			}
 		]
@@ -448,7 +448,7 @@
 				</div>
 
 				<!-- freshness:count:start -->
-				<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 2,696 malicious domains reported in the last 30 days. Data generated 2026-09-06 10:30 UTC.</p>
+				<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 2,705 malicious domains reported in the last 30 days. Data generated 2026-09-06 21:00 UTC.</p>
 				<!-- freshness:count:end --><!-- ============================================================ -->
 				<!-- WHAT THIS LIST CONTAINS                                       -->
 				<!-- ============================================================ -->

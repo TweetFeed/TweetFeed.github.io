@@ -102,7 +102,7 @@
 		"@type": "WebPage",
 		"name": "Blocklists",
 		"url": "https://tweetfeed.live/blocklists/",
-		"description": "Ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: domains, hosts, AdGuard, IPs, RPZ, dnsmasq and full URLs, plus a Zeek intel file and Wazuh CDB lists. Rolling 30-day window, rebuilt every 15 minutes.",
+		"description": "Ready-to-import plain-text blocklist exports built from the TweetFeed IOC feed: 16 formats covering domains, IPs, URLs, hashes and DNS/SIEM-specific syntaxes. Rolling 30-day window, rebuilt every 15 minutes.",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
 		"about": {"@id": "https://tweetfeed.live/blocklists/#dataset"},
 		"inLanguage": "en"
@@ -111,12 +111,12 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"dateModified": "2026-08-22T16:00:20Z",
+		"dateModified": "2026-09-06T21:00:19Z",
 		"@type": "Dataset",
 		"@id": "https://tweetfeed.live/blocklists/#dataset",
 		"name": "TweetFeed IOC Blocklists",
 		"alternateName": "TweetFeed blocklist exports",
-		"description": "Ready-to-import plain-text blocklist exports (domains, hosts, AdGuard, IPs, RPZ, dnsmasq, full URLs, plus a Zeek intel file and Wazuh CDB lists) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
+		"description": "Ready-to-import plain-text blocklist exports (16 formats covering domains, IPs, URLs, hashes and DNS/SIEM-specific syntaxes) built from the TweetFeed IOC dataset. Rolling 30-day window, rebuilt every 15 minutes, one indicator per line, no additional quality gate beyond the main feed.",
 		"url": "https://tweetfeed.live/blocklists/",
 		"sameAs": "https://github.com/0xDanielLopez/TweetFeed",
 		"keywords": ["blocklist", "pi-hole", "adguard", "dnsmasq", "rpz", "dns firewall", "ioc feed", "Threat Intelligence", "OSINT"],
@@ -167,7 +167,7 @@
 				"name": "Which format should I use?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt, now shipped as a valid AdGuard/uBlock filter list with a '!' metadata header (Title/Homepage/License/Expires) instead of the generic '#' one. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt. Zeek's Intelligence Framework takes zeek-intel.txt. A Wazuh manager takes wazuh-domains.txt and wazuh-ips.txt as CDB lists. If you want a smaller, corroborated starting point instead, the domains-corroborated.txt / ips-corroborated.txt / urls-corroborated.txt variants only keep entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum. EDR/AV bulk-import tools take sha256.txt / md5.txt (file hashes). DNS filters that want a newly-registered-plus-reported signal take nrd-domains.txt."
+					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt, a valid AdGuard/uBlock filter list with a! metadata header. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt. Zeek's Intelligence Framework takes zeek-intel.txt. A Wazuh manager takes wazuh-domains.txt and wazuh-ips.txt as CDB lists. If you want a smaller, corroborated starting point instead, see domains-corroborated.txt / ips-corroborated.txt / urls-corroborated.txt below. EDR/AV bulk import takes sha256.txt / md5.txt. A newly-registered-plus-reported DNS filter feed takes nrd-domains.txt."
 				}
 			},
 			{
@@ -207,7 +207,7 @@
 				"name": "Can I automate downloading these blocklists?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Yes. Each file supports conditional requests: send curl -z <local-file> or wget --timestamping and you get a 304 with no body when nothing has changed since your last pull, so a cron job can poll every 15 minutes without re-downloading the full file each time."
+					"text": "Yes. Each file supports conditional requests: send curl -z or wget --timestamping and you get a 304 with no body when nothing has changed since your last pull, so a cron job can poll every 15 minutes without re-downloading the full file each time."
 				}
 			}
 		]
@@ -400,7 +400,7 @@
 				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Every file is CC0 with no API key or sign-up - these are the same community-reported IOCs as the rest of TweetFeed, with no additional quality gate.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="domains">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Pi-hole</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Pi-hole, and anything that takes one bare domain per line.</p>
@@ -410,7 +410,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="hosts">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">hosts file <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">any /etc/hosts reader</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">/etc/hosts, Windows hosts file, some routers.</p>
@@ -420,7 +420,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="adguard">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">AdGuard rules <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">AdGuard</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">AdGuard Home and uBlock-style filter lists. Valid AdGuard/uBlock filter list with a <code>!</code> metadata header (Title/Homepage/License/Expires), not the generic <code>#</code> header the other files use.</p>
@@ -430,7 +430,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="ips">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">firewall</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Firewalls and edge ACLs.</p>
@@ -440,7 +440,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="rpz">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">DNS RPZ zone <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">RPZ resolver</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">BIND, Unbound, PowerDNS Recursor.</p>
@@ -450,7 +450,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="dnsmasq">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">dnsmasq config <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">dnsmasq</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">dnsmasq, including OpenWrt and pfSense.</p>
@@ -460,7 +460,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="urls">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">SIEM</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Proxies, IDS, SIEM/SOAR enrichment - matches on path, not just host.</p>
@@ -479,7 +479,7 @@
 				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a tab-separated Zeek Intelligence Framework file (<code>meta.source</code> always <code>tweetfeed.live</code>) and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="zeek-intel">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Zeek intel file <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Zeek</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Zeek's Intelligence Framework, loaded with <code>redef Intel::read_files</code>.</p>
@@ -489,7 +489,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="wazuh-domains">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh domains CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="match_key"</code> on a domain field.</p>
@@ -499,7 +499,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="wazuh-ips">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh IPs CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="address_match_key"</code> on <code>srcip</code>/<code>dstip</code>.</p>
@@ -513,7 +513,7 @@
 				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Subset of domains.txt / ips.txt / urls.txt: entries also listed by at least one of URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last 6-hourly cross-check. If your change control won't deploy a single-reporter community list, start here - the base lists above remain the full feed. Set membership only, not a quality score and not a verdict.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="domains-corroborated">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
@@ -523,7 +523,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="ips-corroborated">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">ips.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
@@ -533,7 +533,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="urls-corroborated">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">urls.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
@@ -549,7 +549,7 @@
 				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Two more angles on the same 30-day feed: file hashes for EDR/AV bulk import, and a newly-registered-plus-reported subset for DNS filters.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="sha256">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">SHA-256 hashes <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex SHA-256 per line. For Microsoft Defender for Endpoint's Indicators CSV import, CrowdStrike IOC management or any EDR/AV custom-indicator bulk import. About 300 hashes today - smaller than the domain/URL lists, since researchers tweet fewer hashes.</p>
@@ -559,7 +559,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="md5">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">MD5 hashes <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex MD5 per line, same use case as sha256.txt for tools that still key on MD5. About 130 hashes today.</p>
@@ -569,7 +569,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 col-12">
-						<div class="card mb-4 h-100">
+						<div class="card mb-4 h-100" id="nrd-domains">
 							<div class="card-body">
 								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Newly registered domains <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">NRD</span></h4>
 								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries whose registrable apex was created 30 days or less before TweetFeed's first report (RDAP creation date). Only apexes with a known RDAP creation date are considered (about 6 in 10 reported domains), and a domain reported this tick can appear one tick later since the registration check runs after publish - a supplement to domains.txt, not a complete NRD feed.</p>

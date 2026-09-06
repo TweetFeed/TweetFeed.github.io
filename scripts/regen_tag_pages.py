@@ -153,6 +153,22 @@ def build_webpage_jsonld(m, date_modified):
     return _dumps_tab_indented(payload)
 
 
+def faq_update_answer(m):
+    """Canonical visible wording for the 'How is this list updated?' FAQ answer.
+
+    Single source of truth for both the JSON-LD acceptedAnswer.text and the
+    rendered <p> in tag_page.html.j2, so the two can never drift again.
+    """
+    return (
+        "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public "
+        "Twitter/X security researcher accounts and lists, extracts IOCs, tags "
+        "them with the relevant malware family or threat actor, and republishes "
+        f"the result in CSV, JSON and RSS. {m['license_subject']}-tagged IOCs are "
+        "surfaced on this page within the next 15-minute tick. The page itself "
+        "is regenerated daily by a GitHub Action."
+    )
+
+
 def build_faq_jsonld(m):
     payload = {
         "@context": "https://schema.org",
@@ -161,7 +177,7 @@ def build_faq_jsonld(m):
             {"@type": "Question", "name": m["faq_q1"]["q"], "acceptedAnswer": {"@type": "Answer", "text": m["faq_q1"]["a"]}},
             {"@type": "Question", "name": m["faq_q2"]["q"], "acceptedAnswer": {"@type": "Answer", "text": m["faq_q2"]["a"]}},
             {"@type": "Question", "name": "How is this list updated?", "acceptedAnswer": {"@type": "Answer",
-                "text": f"Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. {m['license_subject']}-tagged IOCs are surfaced on this page within the next 15-minute tick."}},
+                "text": faq_update_answer(m)}},
             {"@type": "Question", "name": "What is the license? Can I use this commercially?", "acceptedAnswer": {"@type": "Answer",
                 "text": f"All TweetFeed IOC data, including this {m['license_subject']} subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."}},
         ],
@@ -193,6 +209,7 @@ def render_tag(m, env, counts, today_str):
         today_str=today_str,
         webpage_jsonld=build_webpage_jsonld(m, today_str),
         faq_jsonld=build_faq_jsonld(m),
+        faq_update_a=faq_update_answer(m),
         noindex=IS_STAGE,
         # The nav/footer come from scripts/templates/_nav.html.j2 and
         # _footer.html.j2 via {% include %}. Passing the shell context here is

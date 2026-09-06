@@ -107,7 +107,7 @@
 			"applicationCategory": "SecurityApplication",
 			"sameAs": [
 				"https://github.com/DeimosC2/DeimosC2",
-				"https://malpedia.caad.fkie.fraunhofer.de/details/win.deimosc2"
+				"https://malpedia.caad.fkie.fraunhofer.de/details/win.deimos_c2"
 			]
 		},
 		"inLanguage": "en"
@@ -149,7 +149,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Deimos-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Deimos-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -392,7 +392,7 @@
 							<li><b>Type:</b> open-source Go-based C2 framework with a web UI, multi-operator support, and cross-platform implants (Windows, Linux, macOS). Designed for collaborative red-team engagements; lower profile than Cobalt Strike, Sliver or Mythic.</li>
 							<li><b>Abuse pattern:</b> less common in mass campaigns than CobaltStrike or AsyncRAT. Appears in targeted intrusions where the operator wants a flexible, undocumented-by-default agent that blends in with legitimate Go binaries.</li>
 							<li><b>Detection signals:</b> Go-compiled implant binaries with embedded HTTPS C2 strings, distinctive default certificate fingerprints, web-UI default ports on the listener side.</li>
-							<li><b>References:</b> <a href="https://github.com/DeimosC2/DeimosC2" target="_blank" rel="noopener noreferrer">DeimosC2/DeimosC2 on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.deimosc2" target="_blank" rel="noopener noreferrer">Malpedia</a>.</li>
+							<li><b>References:</b> <a href="https://github.com/DeimosC2/DeimosC2" target="_blank" rel="noopener noreferrer">DeimosC2/DeimosC2 on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.deimos_c2" target="_blank" rel="noopener noreferrer">Malpedia</a>.</li>
 							
 						</ul>
 					</div>

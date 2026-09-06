@@ -111,7 +111,7 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"dateModified": "2026-09-06T10:30:17Z",
+		"dateModified": "2026-09-06T21:00:19Z",
 		"@type": "Dataset",
 		"@id": "https://tweetfeed.live/malicious-ips/#dataset",
 		"name": "TweetFeed Malicious IPs",
@@ -159,6 +159,14 @@
 			},
 			{
 				"@type": "Question",
+				"name": "Where can I download this malicious IP list?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Straight from this page. The malicious IP list is published as CSV (one IP per row with date, source and tags), as JSON through the free API, and as an RSS feed. It refreshes every 15 minutes, covers today, week and month windows, and is CC0 licensed, so you can feed it to your firewall or SIEM without a key or sign-up."
+				}
+			},
+			{
+				"@type": "Question",
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
@@ -195,14 +203,6 @@
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Load the IP list into your firewall or IDS/IPS as a deny rule, or query the JSON API from your SIEM. IP feeds carry higher false-positive risk on shared hosting, so scope blocks carefully. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives."
-				}
-			}
-			,{
-				"@type": "Question",
-				"name": "Where can I download this malicious IP list?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Straight from this page. The malicious IP list is published as CSV (one IP per row with date, source and tags), as JSON through the free API, and as an RSS feed. It refreshes every 15 minutes, covers today, week and month windows, and is CC0 licensed, so you can feed it to your firewall or SIEM without a key or sign-up."
 				}
 			}
 		]
@@ -440,7 +440,7 @@
 				</div>
 
 				<!-- freshness:count:start -->
-				<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 489 malicious IPs reported in the last 30 days. Data generated 2026-09-06 10:30 UTC.</p>
+				<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">Currently tracking 491 malicious IPs reported in the last 30 days. Data generated 2026-09-06 21:00 UTC.</p>
 				<!-- freshness:count:end --><!-- ============================================================ -->
 				<!-- WHAT THIS LIST CONTAINS                                       -->
 				<!-- ============================================================ -->

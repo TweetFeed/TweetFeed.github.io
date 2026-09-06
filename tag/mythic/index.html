@@ -105,8 +105,7 @@
 			],
 			"applicationCategory": "SecurityApplication",
 			"sameAs": [
-				"https://github.com/its-a-feature/Mythic",
-				"https://malpedia.caad.fkie.fraunhofer.de/details/win.mythic"
+				"https://github.com/its-a-feature/Mythic"
 			]
 		},
 		"inLanguage": "en"
@@ -148,7 +147,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -391,7 +390,7 @@
 							<li><b>Type:</b> open-source modular C2 framework maintained by SpecterOps. Designed around pluggable agents (<em>Apollo</em>, <em>Athena</em>, <em>Poseidon</em>, <em>Apfell</em>, <em>Medusa</em>) and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS) so operators can mix and match for the engagement.</li>
 							<li><b>Abuse pattern:</b> primarily a red-team / authorised-engagement tool, but the open-source nature means real-world intrusions occasionally surface (especially Apollo and Athena agents). Lower mass-volume than Sliver or Cobalt Strike but appears in higher-effort intrusions.</li>
 							<li><b>Detection signals:</b> agent-specific YARA (Apollo .NET, Athena .NET, Poseidon Go, Apfell macOS), default mTLS certificates, distinctive web-UI ports on listeners. JA3 / JA4 fingerprints depend on the chosen C2 profile.</li>
-							<li><b>References:</b> <a href="https://github.com/its-a-feature/Mythic" target="_blank" rel="noopener noreferrer">Mythic on GitHub</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.mythic" target="_blank" rel="noopener noreferrer">Malpedia</a>.</li>
+							<li><b>References:</b> <a href="https://github.com/its-a-feature/Mythic" target="_blank" rel="noopener noreferrer">Mythic on GitHub</a>.</li>
 							
 						</ul>
 					</div>

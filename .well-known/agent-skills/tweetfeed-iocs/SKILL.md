@@ -116,7 +116,7 @@ Human page: `https://tweetfeed.live/campaigns/`.
 
 ## Tag-family taxonomy
 
-92 tags in `tags.yaml` split by casing:
+93 tags in `tags.yaml` split by casing:
 - **PascalCase for malware families** (avoid substring collisions): `#CobaltStrike`, `#AkiraRansomware`, `#PlayRansomware`, `#Lockbit3`, `#Kimsuky`
 - **lowercase for generic categories**: `#phishing`, `#scam`, `#ransomware`, `#malware`, `#C2`, `#credtheft`
 

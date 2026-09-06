@@ -106,7 +106,7 @@
 			"applicationCategory": "SecurityApplication",
 			"sameAs": [
 				"https://attack.mitre.org/software/S0480/",
-				"https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupport_manager"
+				"https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupportmanager_rat"
 			]
 		},
 		"inLanguage": "en"
@@ -148,7 +148,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. NetSupport RAT-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. NetSupport RAT-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -391,7 +391,7 @@
 							<li><b>Type:</b> legitimate commercial remote-administration tool (NetSupport Manager) by NetSupport Ltd, repurposed by attackers for unauthorised remote access. The original tool is widely deployed in education and IT-support contexts, which helps it blend in to defender telemetry.</li>
 							<li><b>Abuse pattern:</b> delivered via SocGholish-style fake-browser-update lures, malvertising, and trojanised installers. Provides full RDP-like capabilities (screen, file, process, registry control) without the binary being immediately classified as malicious by default AV.</li>
 							<li><b>Detection signals:</b> <code>client32.exe</code>, <code>presentationsettings.exe</code> and <code>nsm.lic</code> license file in unusual user-profile paths; gateway connections to <code>geo.netsupportsoftware.com</code> from non-IT user accounts; HTTP POSTs to <code>fastpath/Gateway32.aspx</code>.</li>
-							<li><b>References:</b> <a href="https://attack.mitre.org/software/S0480/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0480</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupport_manager" target="_blank" rel="noopener noreferrer">Malpedia</a>.</li>
+							<li><b>References:</b> <a href="https://attack.mitre.org/software/S0480/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK S0480</a> &middot; <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.netsupportmanager_rat" target="_blank" rel="noopener noreferrer">Malpedia</a>.</li>
 							
 						</ul>
 					</div>

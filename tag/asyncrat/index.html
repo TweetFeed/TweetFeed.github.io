@@ -149,7 +149,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. AsyncRAT-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. AsyncRAT-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -502,6 +502,7 @@
 							<li><a class="btn btn-tf btn-sm" href="../malware/">#malware</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../c2/">#C2</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../phishing/">#phishing</a></li>
+							<li><a class="btn btn-tf btn-sm" href="../xworm/">#xworm</a></li>
 							</ul>
 						<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
 					</div>

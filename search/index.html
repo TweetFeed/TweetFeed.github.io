@@ -140,7 +140,7 @@
 				"name": "What's in the search index?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same week.csv exposed at https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv."
+					"text": "The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by ~95 infosec researchers on Twitter/X. The dataset is the same week.csv exposed at raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv."
 				}
 			},
 			{
@@ -148,7 +148,7 @@
 				"name": "How do I match values?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (such as #CobaltStrike or #phishing), and the researcher handle. The search is case-insensitive."
+					"text": "Type any string into the search box. Matches run against the IOC value (exact or substring), the tag (e.g. #CobaltStrike, #phishing), and the researcher handle. The search is case-insensitive."
 				}
 			},
 			{
@@ -164,7 +164,7 @@
 				"name": "What can I use this for?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Incident response triage, Threat Intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted."
+					"text": "Incident response triage, Threat Intelligence enrichment, and watchlist seeding for SIEM rule validation. Always verify each IOC before acting on it - confidence is community-sourced and not vetted (see the disclaimer in the API page)."
 				}
 			},
 			{
@@ -172,7 +172,7 @@
 				"name": "What does the IOC lookup search?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "The IOC lookup panel runs an exact match against TweetFeed's 365-day index via the api.tweetfeed.live/v1/ioc endpoint, plus a pre-365-day archive for anything older. Input is normalized server-side (defanged hxxp and [.], lowercase, scheme and trailing slashes stripped). This is different from the table below, which matches substrings across the last 7 days."
+					"text": "The IOC lookup panel above runs an exact match against TweetFeed's 365-day index via the api.tweetfeed.live/v1/ioc endpoint, plus a pre-365-day archive for anything older. Input is normalized server-side (defanged hxxp and [.], lowercase, scheme and trailing slashes stripped) - don't normalize it yourself. This is different from the table below, which matches substrings across the last 7 days."
 				}
 			},
 			{
@@ -667,7 +667,7 @@
 				<div id="presentationMobile">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
-					<p style="font-size: 14px;"><em>Search 7 days of IOCs from 90+ infosec researchers - or run an exact 365-day lookup</em></p>
+					<p style="font-size: 14px;"><em>Search 7 days of IOCs from ~95 infosec researchers - or run an exact 365-day lookup</em></p>
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
@@ -728,7 +728,7 @@
 				<div id="presentationSecondary" class="d-none d-lg-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
-					<h2><em>Search 7 days of IOCs from 90+ infosec researchers - or run an exact 365-day lookup with AI context</em></h2>
+					<h2><em>Search 7 days of IOCs from ~95 infosec researchers - or run an exact 365-day lookup with AI context</em></h2>
 					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<div class="container-fluid">
@@ -950,7 +950,7 @@
 						<h3 class="section-heading">Frequently asked questions</h3>
 						<details>
 							<summary>What's in the search index?</summary>
-							<p>The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by 90+ infosec researchers on Twitter/X. The dataset is the same <code>week.csv</code> exposed at <a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</a>.</p>
+							<p>The last 7 days of indicators of compromise (URLs, domains, IPs, SHA-256 and MD5 hashes) shared by ~95 infosec researchers on Twitter/X. The dataset is the same <code>week.csv</code> exposed at <a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv</a>.</p>
 						</details>
 						<details>
 							<summary>How do I match values?</summary>

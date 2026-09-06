@@ -119,7 +119,7 @@ Full list rendered in `/dashboard/` filter dropdown.
 - [/malicious-ips/](https://tweetfeed.live/malicious-ips/): IPs subset; C2 servers, scanners, abuse hosts. High FP risk on shared hosting.
 - [/malicious-hashes-md5/](https://tweetfeed.live/malicious-hashes-md5/): MD5 hashes of malware samples; cross-reference VirusTotal before action.
 - [/malicious-hashes-sha256/](https://tweetfeed.live/malicious-hashes-sha256/): SHA-256 hashes; preferred for forensic chain of custody.
-- [/blocklists/](https://tweetfeed.live/blocklists/): the ready-to-import plain-text blocklist exports (domains/hosts/adguard/ips/rpz/dnsmasq/urls/zeek-intel/wazuh-domains/wazuh-ips), one card per format with its endpoint and a paste-ready curl command.
+- [/blocklists/](https://tweetfeed.live/blocklists/): the ready-to-import plain-text blocklist exports, 16 formats, one card per format with its endpoint and a paste-ready curl command.
 - [/threat-intelligence-guide/](https://tweetfeed.live/threat-intelligence-guide/): pillar reference covering IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary.
 - [/tags/](https://tweetfeed.live/tags/): hub page indexing all 25 tag landing pages, grouped by APT groups / malware families / TTPs. Auto-regenerated daily.
 - [/ioc-types/](https://tweetfeed.live/ioc-types/): hub page indexing the 5 IOC-type landing pages (URLs / domains / IPs / MD5 / SHA-256).

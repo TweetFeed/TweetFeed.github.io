@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Bake a real IOC count and generation timestamp into the /malicious-*/
-pages, and the last build's generated_at into /trends/.
+pages, the last build's generated_at into /trends/ (JSON-LD, headline
+numbers and Dataset "dateModified"), and "dateModified" on the Dataset
+JSON-LD carried by blocklists/, feeds/ and the home page.
 
 Why this exists
 ----------------
@@ -85,6 +87,51 @@ MONTHS = [
     "July", "August", "September", "October", "November", "December",
 ]
 
+# Pages whose Dataset JSON-LD needs a script-maintained "dateModified" but
+# gets no baked count line (unlike MALICIOUS_PAGES above): the page content
+# genuinely doesn't change day to day, only the field asserting when the
+# feed behind it was last generated. Each entry is (page-relative path,
+# block_marker unique to that Dataset's <script> block, optional anchor -
+# see upsert_jsonld_field - for a Dataset nested inside an "@graph").
+#
+# blocklists/index.html carries a WebPage object whose "about" also
+# mentions the Dataset's own "@id" value, so the marker includes the
+# trailing comma that only the Dataset object's own "@id" line has (the
+# WebPage's nested mention is followed by "}", not ","); this disambiguates
+# the two <script> blocks without touching "@type": "Dataset" (which
+# happens to be unique here too, but pinning to the object's own identity
+# is the anchor this dict is meant to generalize to index.html below,
+# where "@type": "Dataset" alone would not tell upsert_jsonld_field which
+# node inside the shared @graph block to touch).
+DATASET_DATEMODIFIED_PAGES = [
+    (
+        "blocklists/index.html",
+        '"@id": "https://tweetfeed.live/blocklists/#dataset",',
+        None,
+    ),
+    (
+        "feeds/index.html",
+        '"name": "TweetFeed IOC Dataset"',
+        None,
+    ),
+    (
+        "index.html",
+        '"@id": "https://tweetfeed.live/#dataset"',
+        '"@id": "https://tweetfeed.live/#dataset"',
+    ),
+]
+
+# Order and wording for the /trends/ baked stats sentence - mirrors the
+# "Currently tracking N ... reported in the last 30 days" tone of the
+# malicious-* pages' baked line, one sentence covering all five IOC types.
+TRENDS_STATS_TYPES = [
+    ("url", "URLs"),
+    ("domain", "domains"),
+    ("ip", "IPs"),
+    ("sha256", "SHA-256"),
+    ("md5", "MD5"),
+]
+
 
 def _ordinal(day: int) -> str:
     if 11 <= day % 100 <= 13:
@@ -133,11 +180,21 @@ def set_between_markers(text: str, name: str, new_inner: str) -> str:
     return text[: m.start()] + block + text[m.end() :]
 
 
-def upsert_jsonld_field(html_text: str, block_marker: str, key: str, value: str) -> str:
+def upsert_jsonld_field(
+    html_text: str, block_marker: str, key: str, value: str, anchor: str | None = None
+) -> str:
     """Set html_text's `key` field to `value` inside the single JSON-LD
     <script> block whose body contains block_marker (e.g. '"@type":
     "Dataset"'). Replaces the value if the key is already present,
-    otherwise inserts it right after "@context" in that block only."""
+    otherwise inserts it right after "@context" in that block only.
+
+    anchor, if given, is a literal substring that appears on its own line
+    inside the matched block; the new key is inserted right after THAT
+    line instead of after "@context". Needed when the target object is
+    nested inside an "@graph" array sharing one script-wide "@context"
+    line - the plain @context fallback would attach the key to the graph
+    itself rather than to the specific node inside it. Existing callers
+    that do not pass anchor keep the exact behaviour they had before."""
     block_re = re.compile(r'(<script type="application/ld\+json">\n)(.*?)(\n\t</script>)', re.DOTALL)
 
     def _repl(m):
@@ -147,6 +204,13 @@ def upsert_jsonld_field(html_text: str, block_marker: str, key: str, value: str)
         key_re = re.compile(r'"' + re.escape(key) + r'"\s*:\s*"[^"]*"')
         if key_re.search(body):
             body = key_re.sub(f'"{key}": "{value}"', body, count=1)
+        elif anchor is not None:
+            anchor_re = re.compile(r'([ \t]*)' + re.escape(anchor) + r'[^\n]*\n')
+            am = anchor_re.search(body)
+            if not am:
+                raise ValueError(f"anchor {anchor!r} not found in block matched by {block_marker!r}")
+            indent = am.group(1)
+            body = body[: am.end()] + f'{indent}"{key}": "{value}",\n' + body[am.end() :]
         else:
             body = body.replace(
                 '"@context": "https://schema.org",',
@@ -191,7 +255,22 @@ def bake_malicious_page(dirname: str, noun: str, count: int, generated_dt: datet
     return iso_ts
 
 
-def bake_trends_page(generated_dt: datetime) -> str:
+def bake_dataset_datemodified(
+    rel_path: str, block_marker: str, generated_dt: datetime, anchor: str | None
+) -> str:
+    """Upsert "dateModified" on the Dataset JSON-LD object identified by
+    block_marker (and, for a Dataset nested inside an @graph, anchor - see
+    upsert_jsonld_field) in rel_path, without touching any baked count line
+    (these pages have none)."""
+    path = REPO_ROOT / rel_path
+    text = path.read_text(encoding="utf-8")
+    iso_ts = generated_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    text = upsert_jsonld_field(text, block_marker, "dateModified", iso_ts, anchor=anchor)
+    path.write_text(text, encoding="utf-8")
+    return iso_ts
+
+
+def bake_trends_page(generated_dt: datetime, types: dict) -> str:
     path = REPO_ROOT / "trends" / "index.html"
     text = path.read_text(encoding="utf-8")
     iso_ts = generated_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -215,6 +294,20 @@ def bake_trends_page(generated_dt: datetime) -> str:
     line = f'\t\t\t\t\t\t\t\t\t<p class="trd-generated-line" id="trendsGeneratedLine">Last updated: {long_date}</p>'
     text = set_between_markers(text, "count", line)
 
+    # Headline numbers for a non-JS crawler: #trendsContent (with the real
+    # per-type cards) is display:none until /v1/trends loads client-side, so
+    # without this a crawler sees zero numbers anywhere on the page. Summed
+    # the same way MALICIOUS_PAGES' counts are (31-day series, same off-by-
+    # one already documented above). Sits above #trendsContent and is never
+    # hidden once JS runs - it's a floor, not a placeholder the JS replaces.
+    counts = {t: sum(types.get(t, [])) for t, _ in TRENDS_STATS_TYPES}
+    stats_sentence = (
+        f"Last 30 days: {counts['url']:,} URLs, {counts['domain']:,} domains, "
+        f"{counts['ip']:,} IPs, {counts['sha256']:,} SHA-256 and {counts['md5']:,} MD5 hashes reported."
+    )
+    stats_line = f'\t\t\t\t<p class="trd-generated-line">{stats_sentence}</p>'
+    text = set_between_markers(text, "trendsstats", stats_line)
+
     path.write_text(text, encoding="utf-8")
     return iso_ts
 
@@ -230,7 +323,11 @@ def main() -> int:
         iso_ts = bake_malicious_page(dirname, noun, count, generated_dt)
         print(f"  [ok]   {dirname}/: {count:,} {noun} in last 30 days, dateModified={iso_ts}")
 
-    trends_iso = bake_trends_page(generated_dt)
+    for rel_path, block_marker, anchor in DATASET_DATEMODIFIED_PAGES:
+        iso_ts = bake_dataset_datemodified(rel_path, block_marker, generated_dt, anchor)
+        print(f"  [ok]   {rel_path}: dateModified={iso_ts}")
+
+    trends_iso = bake_trends_page(generated_dt, types)
     print(f"  [ok]   trends/: dateModified={trends_iso}")
 
     return 0

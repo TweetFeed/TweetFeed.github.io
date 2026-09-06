@@ -149,7 +149,7 @@
 				"name": "How do I query IOCs by type?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Call GET https://api.tweetfeed.live/v1/{time}/{type} where time is today, week or month and type is url, domain, ip, sha256 or md5. The response is a JSON array. The year window is different: it ignores any filters and returns a 302 redirect to the full year.csv on GitHub."
+					"text": "Call GET https://api.tweetfeed.live/v1/{time}/{type} where time is today, week or month and type is url, domain, ip, sha256 or md5. The response is JSON by default."
 				}
 			},
 			{
@@ -158,6 +158,14 @@
 				"acceptedAnswer": {
 					"@type": "Answer",
 					"text": "Yes. Chain a second filter: GET /v1/{time}/{filter1}/{filter2}. Filters can be an IOC type, a generic tag (phishing, malware) or a malware family (LockBit, RansomHub, and others)."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Does the year timeframe support type, tag or user filters?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "No. GET /v1/year (and any path under it) returns an HTTP 302 redirect to the full year.csv file - the last 365 days of IOCs, unfiltered. Filter it client-side after downloading, or use today, week or month for JSON responses with type, tag or user filtering."
 				}
 			},
 			{
@@ -173,7 +181,7 @@
 				"name": "How do I avoid re-downloading the whole feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Use conditional requests. Every 200 response carries an ETag and a Last-Modified header; send them back as If-None-Match or If-Modified-Since and get a 304 with an empty body when nothing changed. Works on every API route and on the static feed files."
+					"text": "Use conditional requests: every 200 response carries an ETag and a Last-Modified header, send either one back and get a 304 with an empty body when nothing changed. See Caching and conditional requests above."
 				}
 			},
 			{
@@ -181,7 +189,7 @@
 				"name": "How do I use TweetFeed IOCs in my SIEM or threat intelligence platform?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "See the Hunt page (tweetfeed.live/hunt/): copy-paste recipes for the terminal, Splunk, Microsoft Sentinel and Defender, Elastic, IBM QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma detection content and AI agents. Every recipe uses the same free, unauthenticated, CC0 API described on this page."
+					"text": "See Hunt: copy-paste recipes for the terminal, Splunk, Microsoft Sentinel and Defender, Elastic, IBM QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma detection content and AI agents. Every recipe uses the same free, unauthenticated, CC0 API described on this page."
 				}
 			}
 		]

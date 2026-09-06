@@ -107,7 +107,7 @@
 			],
 			"sameAs": [
 				"https://attack.mitre.org/groups/",
-				"https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors"
+				"https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors"
 			]
 		},
 		"inLanguage": "en"
@@ -149,7 +149,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs (URLs, domains, IPs, file hashes), tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. APT-tagged IOCs are surfaced on this page within the next 15-minute tick."
+					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. APT-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
 				}
 			},
 			{
@@ -392,7 +392,7 @@
 							<li><b>Definition:</b> umbrella tag for IOCs that researchers attribute to an Advanced Persistent Threat - typically a well-resourced, long-running adversary (nation-state-aligned or organised criminal) with mission-focused targeting and tradecraft.</li>
 							<li><b>Common attributed groups in corpus:</b> Kimsuky, Lazarus, APT29, APT41, FIN7, MuddyWater, Konni, OilRig and similar. Each has its own per-tag page when volume justifies it; see #Kimsuky and #Lazarus.</li>
 							<li><b>Detection:</b> behaviour-based detection (atypical lateral movement, persistence in unusual registry locations, custom protocols), Threat Intelligence-fed blocklists, and YARA on signature-light variants. Entry-point indicators are usually phishing or supply-chain compromise.</li>
-							<li><b>References:</b> <a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Groups</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/advanced-persistent-threats-and-nation-state-actors" target="_blank" rel="noopener noreferrer">CISA APT advisories</a>.</li>
+							<li><b>References:</b> <a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Groups</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors" target="_blank" rel="noopener noreferrer">CISA APT advisories</a>.</li>
 							
 						</ul>
 					</div>

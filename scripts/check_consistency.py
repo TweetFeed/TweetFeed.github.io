@@ -16,10 +16,12 @@ pattern on agents.html at creation (2026-04-19).
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import os
 import re
 import sys
+import yaml
 from pathlib import Path
 
 # The 22 user-facing main pages - the ones that share nav, footer, analytics,
@@ -692,6 +694,145 @@ def check_duplicate_ids(pages: list[str]) -> list[str]:
     return failures
 
 
+LDJSON_BLOCK_RE = re.compile(
+    r'<script type="application/ld\+json">(.*?)</script>', re.S
+)
+
+
+def _jsonld_nodes(text: str) -> list[dict]:
+    """Every JSON-LD node on a page: top-level objects, list items, and
+    anything nested under an "@graph" array (index.html's structured data is
+    one script block with Organization/Person/WebSite/Dataset all inside a
+    single @graph). A block that fails to parse is skipped, not raised - a
+    concurrently-edited page with momentarily invalid JSON-LD is the other
+    batches' problem (COMMON.md has them verify their own touched pages),
+    not a reason to crash every check that follows in this run."""
+    nodes: list[dict] = []
+    for block in LDJSON_BLOCK_RE.findall(text):
+        try:
+            data = json.loads(block)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(data, dict):
+            candidates = data.get("@graph", [data])
+        elif isinstance(data, list):
+            candidates = data
+        else:
+            continue
+        nodes.extend(c for c in candidates if isinstance(c, dict))
+    return nodes
+
+
+def _nodes_of_type(nodes: list[dict], type_name: str) -> list[dict]:
+    return [n for n in nodes if n.get("@type") == type_name]
+
+
+def check_jsonld_valid(pages: list[str]) -> list[str]:
+    """Every <script type="application/ld+json"> block on every page must be
+    valid JSON - the one P0-class SEO defect this site could ship (a broken
+    JSON-LD block makes Google silently drop ALL structured data on that
+    page - FAQ/Dataset/Organization included - with no visible symptom on
+    the rendered page itself). _jsonld_nodes() above deliberately SKIPS a
+    block that fails to parse, so one broken page can't crash every
+    downstream check that reads JSON-LD in the same run; this check is what
+    turns that skip into a reported failure instead of silence. Runs before
+    check_faq_parity/check_dataset_jsonld_freshness_fields (registration
+    order below) so a parse error is reported as itself, not misread by
+    them as a missing FAQ or Dataset block."""
+    failures: list[str] = []
+    for p in pages:
+        text = read(p)
+        for i, block in enumerate(LDJSON_BLOCK_RE.findall(text), start=1):
+            try:
+                json.loads(block)
+            except json.JSONDecodeError as e:
+                failures.append(
+                    f"{p}: ld+json block #{i} is invalid JSON at line {e.lineno} column {e.colno}: {e.msg}"
+                )
+    return failures
+
+
+FAQ_SECTION_RE = re.compile(
+    r'<section\b[^>]*\bclass="[^"]*\bfaq-section\b[^"]*"[^>]*>', re.I
+)
+FAQ_SUMMARY_RE = re.compile(r"<summary>(.*?)</summary>", re.S)
+
+
+def _norm_faq_text(s: str) -> str:
+    """html.unescape BEFORE stripping tags, then strip anything matching
+    `<[^>]+>` - applied identically to the JSON-LD side and the HTML side, so
+    a literal placeholder like `<local-file>` (typed as text, unescaped from
+    `&lt;local-file&gt;` in the HTML source) is dropped from BOTH sides the
+    same way instead of surviving in the JSON copy but vanishing from the
+    HTML copy (or vice versa), which would read as a false content mismatch
+    rather than the placeholder it actually is."""
+    s = html.unescape(s)
+    s = re.sub(r"<[^>]+>", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    # Tag-to-space substitution above leaves a spurious space when a tag
+    # boundary sits directly against punctuation (e.g. "<code>x</code>."
+    # -> "x ."); collapse that back to natural prose spacing on both sides
+    # of the comparison so acceptedAnswer.text can read normally instead of
+    # baking in this normalization artifact.
+    s = re.sub(r"\s+([.,;:!?)\]])", r"\1", s)
+    s = re.sub(r"([(\[])\s+", r"\1", s)
+    return s
+
+
+def check_faq_parity(pages: list[str]) -> list[str]:
+    """For every page carrying a FAQPage JSON-LD block, the SET of
+    mainEntity[].name must equal the SET of <summary> texts inside its
+    <section class="faq-section">, and every acceptedAnswer.text must be a
+    substring of that section's tag-stripped visible text - added 2026-09-06
+    after an SEO audit found JSON-LD and visible copy silently diverging
+    (about/index.html's third answer was rewritten in the JSON-LD but not in
+    the <details> body). Scoped to the faq-section element specifically:
+    the docs sidebar ships unrelated <details> elements outside it, and an
+    unscoped <summary> scan would pull those into the comparison."""
+    failures: list[str] = []
+    for p in pages:
+        text = read(p)
+        faqs = _nodes_of_type(_jsonld_nodes(text), "FAQPage")
+        if not faqs:
+            continue
+
+        m = FAQ_SECTION_RE.search(text)
+        if not m:
+            failures.append(f'{p}: has FAQPage JSON-LD but no <section class="faq-section"> found')
+            continue
+        try:
+            end = close_element(text, m.start(), "section")
+        except ValueError:
+            failures.append(f"{p}: <section class=\"faq-section\"> is not a balanced element")
+            continue
+        section_html = text[m.start():end]
+        visible_names = {_norm_faq_text(s) for s in FAQ_SUMMARY_RE.findall(section_html)}
+        visible_text = _norm_faq_text(section_html)
+
+        for faq in faqs:
+            questions = faq.get("mainEntity", [])
+            json_names = {_norm_faq_text(q.get("name", "")) for q in questions}
+            if json_names != visible_names:
+                only_json = sorted(json_names - visible_names)
+                only_html = sorted(visible_names - json_names)
+                first = (only_json or only_html)[0]
+                failures.append(
+                    f"{p}: FAQ question set mismatch (first diff: {first!r}); "
+                    f"JSON-LD-only={only_json or 'none'}, faq-section-only={only_html or 'none'}"
+                )
+                continue
+            for q in questions:
+                answer = q.get("acceptedAnswer", {}).get("text", "")
+                answer_norm = _norm_faq_text(answer)
+                if answer_norm and answer_norm not in visible_text:
+                    failures.append(
+                        f"{p}: acceptedAnswer for {q.get('name')!r} not found verbatim in "
+                        f"faq-section visible text (JSON-LD says: {answer_norm[:100]!r}...)"
+                    )
+                    break
+    return failures
+
+
 # Files describing the /v1/campaigns machine-facing contract (schema +
 # discovery docs). Kept in sync by hand - added 2026-08-16 after the
 # 2026-08-13 window change (7d -> 30d) shipped in the API but left these
@@ -921,6 +1062,263 @@ def check_api_surface_parity(pages: list[str]) -> list[str]:
     return failures
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Enumeration/parity gates (added 2026-09-06 after an SEO audit found 5-6
+# agent-facing surfaces quoting stale counts - blocklists 10 vs 16, MCP tools
+# 10 vs 13, tag pages 22 vs 25, taxonomy 92 vs 93, hunt recipes 29 vs 30 -
+# while every existing check above kept printing "All checks passed": they
+# gate paths and byte lengths, never counts or enumerations. Each check below
+# reads an in-repo source of truth and asserts every discovery doc agrees,
+# both on WHAT is listed and on any literal "N things" count phrase.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Files that enumerate the downloadable blocklist files for a human or agent.
+BLOCKLIST_ENUMERATION_FILES = [
+    "AGENTS.md",
+    "llms.txt",
+    "llms-full.txt",
+    "feeds/index.html",
+    "blocklists/index.html",
+    "api/index.html",
+    ".well-known/agent-skills/tweetfeed-blocklists/SKILL.md",
+]
+
+# Matches a literal "N blocklist(s)/pre-rendered/ready-made/format(s)" count
+# claim. The negative lookbehind excludes a digit that is part of a bigger
+# number or a dotted sequence - without it, `dnsmasq.txt`'s own
+# `address=/domain/0.0.0.0 format` example (0.0.0.0 followed by "format")
+# reads as a false "0 format" claim on every run.
+BLOCKLIST_COUNT_RE = re.compile(
+    r"(?<![\d.])(\d+)\s+(?:blocklists?|pre-rendered|ready-made|formats?)\b",
+    re.IGNORECASE,
+)
+
+# AGENTS.md and llms-full.txt name all 16 formats in one shell-style brace
+# path (`.../v1/blocklist/{domains,hosts,...,nrd-domains}.txt`) rather than
+# spelling out `domains.txt`, `hosts.txt`, etc. one by one - so no
+# `<name>.txt` substring exists there even though every format IS listed.
+# Fix round 1 (2026-09-06): expand every such `{a,b,c}.txt` into
+# `a.txt b.txt c.txt` before searching.
+BRACE_LIST_RE = re.compile(r"\{([^{}]+)\}(\.txt)")
+
+
+def _expand_brace_lists(text: str) -> str:
+    extra = []
+    for members, suffix in BRACE_LIST_RE.findall(text):
+        for member in members.split(","):
+            extra.append(member.strip() + suffix)
+    return text + " " + " ".join(extra) if extra else text
+
+
+def _mentions_blocklist_file(text: str, filename: str) -> bool:
+    """True if `filename` (e.g. "domains.txt") appears literally, or its
+    bare stem appears delimited on both sides by a character that is not
+    [A-Za-z0-9-] - e.g. a table cell or heading naming just "domains" with
+    no extension. The delimiter requirement is what keeps a bare-stem match
+    from firing on a DIFFERENT enum entry that merely contains this stem as
+    a substring: `domains` does not match inside `domains-corroborated` or
+    `nrd-domains` (hyphen is in the excluded class), nor does `ips` match
+    inside `wazuh-ips`."""
+    if filename in text:
+        return True
+    stem = filename.rsplit(".", 1)[0]
+    return re.search(rf"(?<![A-Za-z0-9-]){re.escape(stem)}(?![A-Za-z0-9-])", text) is not None
+
+
+def check_blocklist_enumeration() -> list[str]:
+    """Source of truth: the `BlocklistFile` path-parameter enum in
+    openapi.yaml - the literal list of `{file}` values `/v1/blocklist/{file}`
+    accepts. Every filename in it must be named in every file that documents
+    the blocklists surface, and no such file may claim a total blocklist/
+    format count that disagrees with the enum's length."""
+    failures: list[str] = []
+    try:
+        openapi = yaml.safe_load(read("openapi.yaml"))
+        enum = openapi["components"]["parameters"]["BlocklistFile"]["schema"]["enum"]
+    except (KeyError, TypeError) as e:
+        return [f"openapi.yaml: could not resolve components.parameters.BlocklistFile.schema.enum ({e})"]
+    if not enum:
+        return ["openapi.yaml: BlocklistFile enum is empty"]
+    count = len(enum)
+
+    for name in BLOCKLIST_ENUMERATION_FILES:
+        text = _expand_brace_lists(read(name))
+        for filename in enum:
+            if not _mentions_blocklist_file(text, filename):
+                failures.append(
+                    f"{name}: missing blocklist filename `{filename}` "
+                    f"(openapi.yaml BlocklistFile enum has {count} entries)"
+                )
+        for m in BLOCKLIST_COUNT_RE.finditer(text):
+            n = int(m.group(1))
+            if n != count:
+                failures.append(
+                    f"{name}: claims \"{m.group(0)}\" but the BlocklistFile enum has {count} entries"
+                )
+    return failures
+
+
+# Files that document the MCP tool surface for a human or agent (as opposed
+# to .well-known/agent-skills/*, which are single-capability deep-dives with
+# no "every tool should be named here" invariant).
+MCP_TOOL_PARITY_FILES = [
+    "AGENTS.md",
+    "llms.txt",
+    "llms-full.txt",
+    "hunt/index.html",
+    "agents/index.html",
+    "agent-setup/prompt.md",
+]
+
+# Spelled-out numbers ten..twenty, seen in prose ("Thirteen tools: ...").
+NUMBER_WORDS = {
+    "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
+    "nineteen": 19, "twenty": 20,
+}
+
+MCP_TOOL_COUNT_RE = re.compile(
+    r"(?<![\w.])(\d+|" + "|".join(NUMBER_WORDS) + r")\s+(?:mcp\s+)?tools\b",
+    re.IGNORECASE,
+)
+
+
+def check_mcp_tool_parity() -> list[str]:
+    """Source of truth: the tool names in .well-known/mcp/server-card.json.
+    Every tool name must appear in every discovery doc that enumerates the
+    MCP surface, and no file in that set (or openapi.yaml, which describes
+    the server but is not itself a tool-name enumeration) may claim a tool
+    count that disagrees - this catches both a name silently dropped from a
+    doc and a stale "N tools" figure like openapi.yaml's "10 tools" comment
+    that survived the 2026-09 MCP additions."""
+    failures: list[str] = []
+    card = json.loads(read(".well-known/mcp/server-card.json"))
+    tools = [t["name"] for t in card.get("tools", []) if t.get("name")]
+    if not tools:
+        return [".well-known/mcp/server-card.json: no tools listed"]
+    count = len(tools)
+
+    for name in MCP_TOOL_PARITY_FILES:
+        text = read(name)
+        for tool in tools:
+            if tool not in text:
+                failures.append(
+                    f"{name}: missing MCP tool name `{tool}` (server-card.json lists {count} tools)"
+                )
+
+    for name in MCP_TOOL_PARITY_FILES + ["openapi.yaml"]:
+        text = read(name)
+        for m in MCP_TOOL_COUNT_RE.finditer(text):
+            token = m.group(1).lower()
+            n = NUMBER_WORDS.get(token, None)
+            n = int(token) if n is None else n
+            if n != count:
+                failures.append(
+                    f"{name}: claims \"{m.group(0)}\" but server-card.json lists {count} tools"
+                )
+    return failures
+
+
+# "N curated tag landing pages" / "N per-tag landing pages" - the two
+# phrasings seen across the site for the tag-hub page count.
+TAG_PAGE_COUNT_RE = re.compile(
+    r"\b(\d+)\s+(?:curated|per-tag)\b[^.<]{0,40}(?:landing )?pages?",
+    re.IGNORECASE,
+)
+
+
+def check_tag_page_count() -> list[str]:
+    """Source of truth: the number of entries in scripts/tag_metadata.yaml
+    (one per rendered tag/<slug>/ page). Scans every HTML page site-wide
+    (excluding the tag pages themselves and 404.html, which never make this
+    claim) plus the three machine-facing discovery docs. Added after
+    ioc-types/index.html and llms-full.txt were caught quoting the pre-batch
+    "22" instead of the current 25 tag pages."""
+    tags = yaml.safe_load(read("scripts/tag_metadata.yaml"))
+    count = len(tags["tags"])
+    failures: list[str] = []
+
+    pages = [p for p in all_html_pages() if not p.startswith("tag/") and p != "404.html"]
+    for p in pages:
+        for m in TAG_PAGE_COUNT_RE.finditer(read(p)):
+            n = int(m.group(1))
+            if n != count:
+                failures.append(
+                    f"{p}: claims \"{m.group(0)}\" but tag_metadata.yaml lists {count} tags"
+                )
+
+    for name in ("llms.txt", "llms-full.txt", "AGENTS.md"):
+        for m in TAG_PAGE_COUNT_RE.finditer(read(name)):
+            n = int(m.group(1))
+            if n != count:
+                failures.append(
+                    f"{name}: claims \"{m.group(0)}\" but tag_metadata.yaml lists {count} tags"
+                )
+    return failures
+
+
+# The backend's tags.yaml (the full IOC-tag taxonomy, distinct from the 25
+# curated tag LANDING pages checked above) lives in the private backend repo,
+# not in this one, so it cannot be read in CI. Mirrors
+# ../backend/tweetfeed/resources/tags.yaml as of 2026-09-06 (93 tags) - bump
+# this by hand (and the comment/date) whenever a tag is added or removed
+# there, ideally in the same commit.
+TAXONOMY_TAG_COUNT = 93
+
+TAXONOMY_TAG_COUNT_FILES = [
+    "openapi.yaml",
+    "llms.txt",
+    "llms-full.txt",
+    "AGENTS.md",
+    "agents/index.html",
+]
+
+# Deliberately narrow: only phrases that state the SIZE of the full tag
+# taxonomy ("taxonomy: N tags", "all N tags", "catalog of N tags", "N tags
+# in ..."/"N tags exist"). Must NOT match "25 curated tag landing pages"
+# (check_tag_page_count's job, and phrased as "tag landing pages" not
+# "tags"), "top 10 tags" (a ranking, not the taxonomy size), or "Up to 3
+# tags" (openapi.yaml's per-IOC tag-array maxItems, an unrelated cap).
+TAXONOMY_TAG_COUNT_RE = re.compile(
+    r"(?:taxonomy:\s*|\ball\s+|\bcatalog of\s+)(\d+)\s+tags\b"
+    r"|\b(\d+)\s+tags\s+(?:exist\b|in\b)",
+    re.IGNORECASE,
+)
+
+
+def check_taxonomy_tag_count() -> list[str]:
+    """Source of truth: TAXONOMY_TAG_COUNT above (see its comment - the real
+    source, ../backend/tweetfeed/resources/tags.yaml, is a private repo not
+    checked out in CI). When that backend checkout IS present (a local run
+    next to a sibling backend/ clone), also verifies the constant itself
+    hasn't drifted from it."""
+    failures: list[str] = []
+
+    backend_tags = REPO_ROOT / ".." / "backend" / "tweetfeed" / "resources" / "tags.yaml"
+    if backend_tags.is_file():
+        real = yaml.safe_load(backend_tags.read_text(encoding="utf-8"))
+        real_count = len(real.get("tags", []))
+        if real_count != TAXONOMY_TAG_COUNT:
+            failures.append(
+                f"TAXONOMY_TAG_COUNT is {TAXONOMY_TAG_COUNT} but "
+                f"../backend/tweetfeed/resources/tags.yaml has {real_count} tags "
+                f"(update the constant + its comment in this file)"
+            )
+
+    skill_files = sorted(
+        str(p.relative_to(REPO_ROOT))
+        for p in (REPO_ROOT / ".well-known" / "agent-skills").glob("*/SKILL.md")
+    )
+    for name in TAXONOMY_TAG_COUNT_FILES + skill_files:
+        for m in TAXONOMY_TAG_COUNT_RE.finditer(read(name)):
+            n = int(m.group(1) or m.group(2))
+            if n != TAXONOMY_TAG_COUNT:
+                failures.append(
+                    f"{name}: matched \"{m.group(0)}\" but the taxonomy is {TAXONOMY_TAG_COUNT} tags"
+                )
+    return failures
+
+
 def check_agent_skill_digests() -> list[str]:
     """.well-known/agent-skills/index.json pins a sha256 digest per skill so a
     consumer can cache-validate a SKILL.md without re-fetching it. Nothing
@@ -1119,6 +1517,17 @@ CHECKS = [
     ("API surface parity (openapi.yaml paths vs discovery docs)", check_api_surface_parity),
 ]
 
+# Fixed-file-set enumeration/parity checks (added 2026-09-06): each reads an
+# in-repo source of truth and does not depend on MAIN_PAGES, so they take no
+# `pages` argument. Kept in their own list rather than folded into CHECKS
+# because main() calls every entry in CHECKS with `fn(MAIN_PAGES)`.
+ENUMERATION_CHECKS = [
+    ("Blocklist enumeration (openapi.yaml BlocklistFile enum vs discovery docs)", check_blocklist_enumeration),
+    ("MCP tool parity (server-card.json tools vs discovery docs)", check_mcp_tool_parity),
+    ("Tag page count (tag_metadata.yaml vs site-wide claims)", check_tag_page_count),
+    ("Taxonomy tag count (TAXONOMY_TAG_COUNT vs site-wide claims)", check_taxonomy_tag_count),
+]
+
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on
 # all of them, and the 25 tag pages, 10 campaign pages, tags/, ioc-types/ and
 # 404.html previously had no nav validation at all.
@@ -1134,6 +1543,8 @@ SHELL_CHECKS = [
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
     ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
     ("Duplicate HTML ids", check_duplicate_ids),
+    ("ld+json blocks parse as valid JSON", check_jsonld_valid),
+    ("FAQPage JSON-LD matches visible faq-section text", check_faq_parity),
 ]
 
 
@@ -1241,6 +1652,77 @@ def check_integration_anchors() -> list[str]:
     return failures
 
 
+def check_dataset_jsonld_freshness_fields() -> list[str]:
+    """Every JSON-LD node with "@type": "Dataset" (top-level or nested under
+    an "@graph", per _jsonld_nodes) must carry both "dateModified" and
+    "temporalCoverage" - the two fields a consumer needs to judge whether a
+    dataset listing is stale. Added 2026-09-06: feeds/index.html's Dataset
+    block had temporalCoverage but no dateModified, and index.html's
+    @graph-nested Dataset had neither."""
+    failures: list[str] = []
+    for p in all_html_pages():
+        for node in _nodes_of_type(_jsonld_nodes(read(p)), "Dataset"):
+            missing = [f for f in ("dateModified", "temporalCoverage") if f not in node]
+            if missing:
+                label = node.get("@id") or node.get("name") or "(unnamed Dataset)"
+                failures.append(f"{p}: Dataset {label!r} missing {', '.join(missing)}")
+    return failures
+
+
+HUNT_CARD_RE = re.compile(r'<article class="hnt-card"[^>]*\bdata-stack="([a-z0-9-]+)"', re.I)
+HUNT_META_DESC_RE = re.compile(r'<meta name="description" content="(\d+)\s+copy-paste IOC recipes')
+HUNT_CHIP_RE = re.compile(
+    r'data-stack="([a-z0-9-]+)"[^>]*>[^<]*<span class="hnt-chip-n">(\d+)</span>', re.I
+)
+
+
+def check_hunt_recipe_counts() -> list[str]:
+    """hunt/index.html hand-maintains three separate counts of the same
+    recipe cards: the meta description's leading "N copy-paste IOC recipes",
+    the "All" filter chip, and each per-stack filter chip. None of them is
+    derived from the actual <article class="hnt-card"> elements, so adding a
+    recipe and forgetting one of the three goes unnoticed - caught 2026-09-06
+    at 29 (meta+all chip) vs 30 (actual cards), and the MISP chip at 2 vs 3
+    actual misp-tagged cards."""
+    text = read("hunt/index.html")
+    failures: list[str] = []
+
+    stacks = HUNT_CARD_RE.findall(text)
+    total = len(stacks)
+    per_stack: dict[str, int] = {}
+    for s in stacks:
+        per_stack[s] = per_stack.get(s, 0) + 1
+
+    m = HUNT_META_DESC_RE.search(text)
+    if not m:
+        failures.append('hunt/index.html: meta description does not start with "N copy-paste IOC recipes"')
+    elif int(m.group(1)) != total:
+        failures.append(
+            f"hunt/index.html: meta description claims {m.group(1)} recipes, "
+            f'found {total} <article class="hnt-card"> elements'
+        )
+
+    chips = HUNT_CHIP_RE.findall(text)
+    if not chips:
+        failures.append('hunt/index.html: no data-stack chips with a <span class="hnt-chip-n"> count found')
+    for stack, n_str in chips:
+        n = int(n_str)
+        if stack == "all":
+            if n != total:
+                failures.append(
+                    f'hunt/index.html: chip data-stack="all" says {n}, '
+                    f'found {total} total <article class="hnt-card"> elements'
+                )
+        else:
+            expected = per_stack.get(stack, 0)
+            if n != expected:
+                failures.append(
+                    f'hunt/index.html: chip data-stack="{stack}" says {n}, '
+                    f'found {expected} <article class="hnt-card" data-stack="{stack}"> elements'
+                )
+    return failures
+
+
 GLOBAL_CHECKS = [
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
@@ -1249,6 +1731,8 @@ GLOBAL_CHECKS = [
     ("Year-window counts in descriptions are not overstated", check_year_counts),
     ("Agent Skills index.json digests match SKILL.md files on disk", check_agent_skill_digests),
     ("Integration band anchors resolve (site_ia hrefs -> real id=\"...\")", check_integration_anchors),
+    ("Dataset JSON-LD has dateModified + temporalCoverage", check_dataset_jsonld_freshness_fields),
+    ("Hunt recipe counts (meta description + chips vs actual cards)", check_hunt_recipe_counts),
 ]
 
 
@@ -1308,6 +1792,16 @@ def main() -> int:
         failures = fn(MAIN_PAGES)
         if not failures:
             print(f"[PASS] {label}: all {len(MAIN_PAGES)} pages OK")
+        else:
+            print(f"[FAIL] {label}: {len(failures)} issue(s)")
+            for f in failures:
+                print(f"  - {f}")
+            total_failures += len(failures)
+
+    for label, fn in ENUMERATION_CHECKS:
+        failures = fn()
+        if not failures:
+            print(f"[PASS] {label}: OK")
         else:
             print(f"[FAIL] {label}: {len(failures)} issue(s)")
             for f in failures:
