@@ -674,6 +674,17 @@ paths:
         line, since a `#` would compile as a literal CDB key. Check freshness
         for these three with `/v1/manifest` or the response's `Last-Modified`
         header instead of the `# Updated:` line.
+
+        `domains-corroborated.txt`, `ips-corroborated.txt` and
+        `urls-corroborated.txt` are the subset of `domains.txt` / `ips.txt` /
+        `urls.txt` also listed by at least one of TweetFeed's 6-hourly
+        cross-checked feeds (URLhaus, ThreatFox, MalwareBazaar, USOM, IPsum -
+        the same set `/v1/ioc`'s `external` array draws from). Same header
+        format plus three extra lines: which base list this is a subset of,
+        when the cross-check was last refreshed, and a reminder that this is
+        set membership only, not a quality score or a verdict. If the
+        cross-check file is unavailable, these three files simply keep their
+        last content.
       parameters:
         - $ref: "#/components/parameters/BlocklistFile"
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -941,10 +952,14 @@ components:
         lists (`key:tweetfeed` per line, no header; IPv6 keys in
         `wazuh-ips.txt` are double-quoted, and CIDR values are omitted
         because Wazuh matches subnets by dotted-prefix key (`192.168.`),
-        so a `1.2.3.0/24` key would never match).
+        so a `1.2.3.0/24` key would never match). `domains-corroborated.txt`,
+        `ips-corroborated.txt` and `urls-corroborated.txt` are the subset of
+        `domains.txt` / `ips.txt` / `urls.txt` also listed by at least one of
+        URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last
+        6-hourly cross-check - set membership only, not a quality score.
       schema:
         type: string
-        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt]
+        enum: [domains.txt, hosts.txt, adguard.txt, ips.txt, rpz.txt, dnsmasq.txt, urls.txt, zeek-intel.txt, wazuh-domains.txt, wazuh-ips.txt, domains-corroborated.txt, ips-corroborated.txt, urls-corroborated.txt]
 
     IocValueQuery:
       name: value
@@ -1437,6 +1452,15 @@ components:
                 description: |
                   Date the indicator was added to the source feed. Present
                   only for urlhaus/threatfox/malwarebazaar.
+        external_exclusive:
+          type: boolean
+          description: |
+            Optional. `false` when `external` has at least one entry;
+            `true` when the cross-check resolved and none of the 5 tracked
+            feeds (URLhaus, ThreatFox, MalwareBazaar, USOM, IPsum) lists
+            this value; absent when the cross-check could not be resolved
+            (unknown) or the value was not found. Set membership only - not
+            a quality score and not a verdict.
         net:
           type: object
           description: |

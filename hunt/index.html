@@ -628,7 +628,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt   # dnsmasq addres
 curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt       # BIND RPZ zone
 curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt       # bare IPs
 curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not just hosts</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-blocklist-1" title="Copy"></i></pre>
-						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist.</p>
+						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist. If your change control won't deploy a single-reporter list, start with the <code>-corroborated</code> variant (<code>domains-corroborated.txt</code>, <code>ips-corroborated.txt</code>, <code>urls-corroborated.txt</code>) - the subset also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
 						<p class="hnt-links"><a href="../malicious-domains/">Bad domains list</a><a href="../malicious-ips/">Bad IPs list</a></p>
 					</article>
 				</section>

@@ -139,7 +139,10 @@
 			{"@type": "DataDownload", "name": "Blocklist - full URLs",       "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - Zeek intel file", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt"},
 			{"@type": "DataDownload", "name": "Blocklist - Wazuh domains CDB", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt"},
-			{"@type": "DataDownload", "name": "Blocklist - Wazuh IPs CDB",   "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"}
+			{"@type": "DataDownload", "name": "Blocklist - Wazuh IPs CDB",   "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - domains (corroborated)", "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - IPs (corroborated)",     "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt"},
+			{"@type": "DataDownload", "name": "Blocklist - URLs (corroborated)",    "encodingFormat": "text/plain", "contentUrl": "https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt"}
 		]
 	}
 	</script>
@@ -161,7 +164,7 @@
 				"name": "Which format should I use?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt. Zeek's Intelligence Framework takes zeek-intel.txt. A Wazuh manager takes wazuh-domains.txt and wazuh-ips.txt as CDB lists."
+					"text": "Pi-hole and most DNS sinkholes take domains.txt. AdGuard Home and uBlock-style filter lists take adguard.txt. dnsmasq, including OpenWrt and pfSense, takes dnsmasq.txt. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes rpz.txt. A firewall or edge ACL takes ips.txt. Anything that reads a plain hosts file, including some routers, takes hosts.txt. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes urls.txt. Zeek's Intelligence Framework takes zeek-intel.txt. A Wazuh manager takes wazuh-domains.txt and wazuh-ips.txt as CDB lists. If you want a smaller, corroborated starting point instead, the domains-corroborated.txt / ips-corroborated.txt / urls-corroborated.txt variants only keep entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum."
 				}
 			},
 			{
@@ -503,6 +506,40 @@
 						</div>
 					</div>
 				</div>
+				<h3 class="section-heading tf-block-head">Corroborated subsets</h3>
+				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Subset of domains.txt / ips.txt / urls.txt: entries also listed by at least one of URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last 6-hourly cross-check. If your change control won't deploy a single-reporter community list, start here - the base lists above remain the full feed. Set membership only, not a quality score and not a verdict.</p>
+				<div class="row">
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/domains-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">ips.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/ips-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<div class="card mb-4 h-100">
+							<div class="card-body">
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">urls.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/urls-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
+								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
+							</div>
+						</div>
+					</div>
+				</div>
 				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval; the file changes at most every 15 minutes, so polling faster buys little. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
 
 				<!-- ============================================================ -->
@@ -551,7 +588,7 @@
 					</details>
 					<details>
 						<summary>Which format should I use?</summary>
-						<p>Pi-hole and most DNS sinkholes take <code>domains.txt</code>. AdGuard Home and uBlock-style filter lists take <code>adguard.txt</code>. dnsmasq, including OpenWrt and pfSense, takes <code>dnsmasq.txt</code>. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes <code>rpz.txt</code>. A firewall or edge ACL takes <code>ips.txt</code>. Anything that reads a plain hosts file, including some routers, takes <code>hosts.txt</code>. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes <code>urls.txt</code>. Zeek's Intelligence Framework takes <code>zeek-intel.txt</code>. A Wazuh manager takes <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> as CDB lists.</p>
+						<p>Pi-hole and most DNS sinkholes take <code>domains.txt</code>. AdGuard Home and uBlock-style filter lists take <code>adguard.txt</code>. dnsmasq, including OpenWrt and pfSense, takes <code>dnsmasq.txt</code>. A resolver that supports Response Policy Zones - BIND, Unbound, PowerDNS Recursor - takes <code>rpz.txt</code>. A firewall or edge ACL takes <code>ips.txt</code>. Anything that reads a plain hosts file, including some routers, takes <code>hosts.txt</code>. A SIEM, proxy or IDS that needs to match the full path, not just the host, takes <code>urls.txt</code>. Zeek's Intelligence Framework takes <code>zeek-intel.txt</code>. A Wazuh manager takes <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> as CDB lists. If you want a smaller, corroborated starting point instead, see <code>domains-corroborated.txt</code> / <code>ips-corroborated.txt</code> / <code>urls-corroborated.txt</code> below.</p>
 					</details>
 					<details>
 						<summary>How often are the blocklists updated?</summary>

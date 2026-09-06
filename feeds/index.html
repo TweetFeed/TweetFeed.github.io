@@ -149,6 +149,7 @@
 			{"@type": "DataDownload", "name": "Today (JSON)",      "encodingFormat": "application/json",    "contentUrl": "https://api.tweetfeed.live/v1/today"},
 			{"@type": "DataDownload", "name": "Week (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://tweetfeed.live/feeds/week.csv"},
 			{"@type": "DataDownload", "name": "Month (CSV)",       "encodingFormat": "text/csv",            "contentUrl": "https://tweetfeed.live/feeds/month.csv"},
+			{"@type": "DataDownload", "name": "Exclusive (CSV)",   "encodingFormat": "text/csv",            "contentUrl": "https://tweetfeed.live/feeds/exclusive.csv"},
 			{"@type": "DataDownload", "name": "Year (CSV)",        "encodingFormat": "text/csv",            "contentUrl": "https://tweetfeed.live/feeds/year.csv"},
 			{"@type": "DataDownload", "name": "RSS",               "encodingFormat": "application/rss+xml", "contentUrl": "https://tweetfeed.live/rss.xml"},
 			{"@type": "DataDownload", "name": "MISP Manifest",     "encodingFormat": "application/json",    "contentUrl": "https://tweetfeed.live/misp/manifest.json"},
@@ -597,6 +598,7 @@
 						</div>
 					</div>
 				</div>
+				<p class="tf-note">Also: <a href="https://tweetfeed.live/feeds/exclusive.csv" data-umami-event="download-csv-exclusive" target="_blank" rel="noopener noreferrer"><code>exclusive.csv</code></a> - the 30-day rows not corroborated by the 5 tracked feeds (URLhaus, ThreatFox, MalwareBazaar, USOM, IPsum) as of the last refresh. What TweetFeed has that the others do not have yet; not a quality tier. Same columns as month.csv, rebuilt every 15 minutes.</p>
 				<div class="alert alert-secondary tf-disclaimer" role="alert">
 					These are community-reported IOCs and their confidence is not always 100%, so adding them straight to a blocklist is not recommended. Run your own analysis first. They work better as a <b>Watchlist</b> or as input to <b>Threat Hunting</b>.
 				</div>

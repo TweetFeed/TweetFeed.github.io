@@ -1,6 +1,6 @@
 ---
 name: tweetfeed-blocklists
-description: Fetch ready-made plain-text blocklists built from TweetFeed's rolling 30-day IOC window - domains, hosts-file, AdGuard Home, IPs, DNS RPZ, dnsmasq, full URLs, a Zeek Intelligence Framework file, and Wazuh CDB lists for domains and IPs. Invoke when the user wants to import TweetFeed into Pi-hole, AdGuard Home, a firewall, DNS resolver, Zeek or Wazuh without parsing JSON or CSV themselves. Rebuilt every 15 minutes, one indicator per line, CC0 licensed, no auth.
+description: Fetch ready-made plain-text blocklists built from TweetFeed's rolling 30-day IOC window - domains, hosts-file, AdGuard Home, IPs, DNS RPZ, dnsmasq, full URLs, a Zeek Intelligence Framework file, Wazuh CDB lists for domains and IPs, plus corroborated subsets (domains/ips/urls also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum). Invoke when the user wants to import TweetFeed into Pi-hole, AdGuard Home, a firewall, DNS resolver, Zeek or Wazuh without parsing JSON or CSV themselves. Rebuilt every 15 minutes, one indicator per line, CC0 licensed, no auth.
 ---
 
 # TweetFeed Blocklists
@@ -21,6 +21,9 @@ Plain-text exports, one indicator per line (the Zeek file adds two metadata colu
 | `zeek-intel.txt` | Zeek Intelligence Framework: `#fields\tindicator\tindicator_type\tmeta.source` header, then rows only (no other comments) | Zeek, via `redef Intel::read_files` |
 | `wazuh-domains.txt` | `key:tweetfeed` per line, no header | Wazuh rule with `lookup="match_key"` |
 | `wazuh-ips.txt` | `key:tweetfeed` per line (IPv6 keys double-quoted, CIDR omitted), no header | Wazuh rule with `lookup="address_match_key"` on `srcip`/`dstip` |
+| `domains-corroborated.txt` | subset of domains.txt also listed by URLhaus/ThreatFox/MalwareBazaar/USOM/IPsum | conservative starting point when change control won't deploy a single-reporter list |
+| `ips-corroborated.txt` | same subset logic, for ips.txt | conservative starting point when change control won't deploy a single-reporter list |
+| `urls-corroborated.txt` | same subset logic, for urls.txt | conservative starting point when change control won't deploy a single-reporter list |
 
 ## Fetch
 
@@ -35,6 +38,9 @@ curl -s https://api.tweetfeed.live/v1/blocklist/urls.txt
 curl -s https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt
 curl -s https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt
 curl -s https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt
+curl -s https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt
+curl -s https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt
+curl -s https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt
 ```
 
 Every response supports conditional requests (`ETag` / `Last-Modified`); send `If-None-Match` or `If-Modified-Since` on a repeat fetch to get a `304` with no body instead of re-downloading unchanged data.

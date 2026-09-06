@@ -693,6 +693,7 @@
 				<p class="tf-note">The optional <code>archive</code> block covers hits older than the live 365-day window, back to <code>first_date</code> in <code>TweetFeed/archive/meta.json</code>. It is additive to <code>found</code>/<code>records</code>, never merged into them - their date ranges are disjoint by construction, so never sum <code>archive.total</code> with a record's <code>count</code>. It can accompany <code>found: true</code> or <code>found: false</code> for the same queried value. An archive record is a reduced schema versus a live one: no <code>users</code>, <code>tweets</code> or <code>related</code>.</p>
 				<p class="tf-note">The optional <code>campaigns</code> block (max 3, newest <code>last_seen</code> first) lists the published campaigns this IOC belongs to, independent of <code>found</code> - a value can be in a campaign while missing from the live 365-day window. Each entry links to <code>/campaigns/#&lt;id&gt;</code> on the campaign explorer for the full context, targeted brand/sector/country and IOC sample.</p>
 				<p class="tf-note">TweetFeed's own feed data and API responses are CC0; the optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0: abuse.ch (URLhaus / ThreatFox / MalwareBazaar, see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>), USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate), and <a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</p>
+				<p class="tf-note">The optional <code>external_exclusive</code> boolean is set membership only: <code>false</code> when <code>external</code> has at least one entry, <code>true</code> when the cross-check resolved and none of the 5 tracked feeds lists the value, and absent when the cross-check could not be resolved or the value was not found.</p>
 				<p class="tf-note">The optional <code>net.drop</code> block is a separate case, IP lookups only: it annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a> - it does not mean the IOC value itself is listed anywhere. Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</p>
 				<p class="tf-note"><code>reg</code> is optional (domain/url lookups): RDAP registration metadata plus <code>age_days_at_report</code>, the domain's age in UTC days when TweetFeed first reported it, and <code>newly_registered</code> (<code>true</code> when that age is 30 days or less). Both age fields are omitted when the creation date is unknown.</p>
 				<p class="tf-note">Add <code>?defang=1</code> to defang this response: <code>query</code>, <code>records[].value</code>, <code>records[].related[][1]</code>, <code>archive.records[].value</code>, <code>reg.apex</code>, <code>reg.ns[]</code> and <code>reg.ips[]</code> come back as <code>hxxps://evil[.]tld</code> / <code>1[.]2[.]3[.]4</code>; <code>ai.summary</code>, <code>external[].link</code> and <code>net.*</code> are never defanged (the first is prose, the other two are third-party sidecar fields).</p>
@@ -763,6 +764,21 @@
 								<td>Wazuh IPs CDB</td>
 								<td><code>/v1/blocklist/wazuh-ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
 								<td>Wazuh rule with <code>lookup="address_match_key"</code> on <code>srcip</code>/<code>dstip</code></td>
+							</tr>
+							<tr>
+								<td>Domains (corroborated)</td>
+								<td><code>/v1/blocklist/domains-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Subset of domains.txt also listed by URLhaus/ThreatFox/MalwareBazaar/USOM/IPsum</td>
+							</tr>
+							<tr>
+								<td>IPs (corroborated)</td>
+								<td><code>/v1/blocklist/ips-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Subset of ips.txt also listed by URLhaus/ThreatFox/MalwareBazaar/USOM/IPsum</td>
+							</tr>
+							<tr>
+								<td>URLs (corroborated)</td>
+								<td><code>/v1/blocklist/urls-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></td>
+								<td>Subset of urls.txt also listed by URLhaus/ThreatFox/MalwareBazaar/USOM/IPsum</td>
 							</tr>
 						</tbody>
 					</table>
