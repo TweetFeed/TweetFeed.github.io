@@ -19,8 +19,10 @@ import hashlib
 import html
 import json
 import os
+import random
 import re
 import sys
+import urllib.request
 import yaml
 from pathlib import Path
 
@@ -1507,6 +1509,96 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
 
 
 # Page-content checks: the 21 hand-written pages carrying real copy.
+RSS_LINK_RE = re.compile(
+    r'<link rel="alternate" type="application/rss\+xml"[^>]*href="([^"]+)"[^>]*>'
+)
+RSS_ALLOWED_HREFS = {"https://tweetfeed.live/rss.xml", "rss.xml"}
+RSS_ALLOWED_FAMILY_RE = re.compile(r"^rss/type/[\w-]+\.xml$")
+
+
+def check_rss_autodiscovery(pages: list[str]) -> list[str]:
+    """Every hand-written page should self-declare its RSS feed via a <link
+    rel="alternate" type="application/rss+xml"> in <head>, so feed readers
+    and crawlers can discover it without a user pasting the URL by hand.
+    Added 2026-09-07: feeds/index.html and index.html got one 2026-09-06;
+    the other 17 hand-written pages (about, agents, api, blocklists,
+    campaigns, changelog, dashboard, docs, graphs, hunt, ioc-types,
+    researchers, search, tags, threat-intelligence-guide, tos, trends) did
+    not."""
+    failures: list[str] = []
+    for p in pages:
+        matches = RSS_LINK_RE.findall(read(p))
+        if len(matches) != 1:
+            failures.append(f"{p}: expected exactly 1 RSS autodiscovery <link>, found {len(matches)}")
+            continue
+        href = matches[0]
+        if href in RSS_ALLOWED_HREFS or RSS_ALLOWED_FAMILY_RE.match(href):
+            continue
+        failures.append(f"{p}: RSS <link> href {href!r} is not rss.xml or a rss/type/<x>.xml path")
+    return failures
+
+
+STATUS_URL = "https://api.tweetfeed.live/v1/status"
+
+
+def _documented_status_artifact_keys(text: str) -> set[str] | None:
+    """Backtick-quoted artifact keys inside StatusDocument.artifacts'
+    description block in openapi.yaml, e.g. `today.csv`, `misp`,
+    `campaigns.json`. None if the block can't be located (schema reshaped)."""
+    m = re.search(
+        r"StatusDocument:.*?\n {8}artifacts:\n {10}type: object\n {10}description: \|\n(.*?)\n {10}additionalProperties:",
+        text,
+        re.S,
+    )
+    if not m:
+        return None
+    return set(re.findall(r"`([\w.\-]+)`", m.group(1)))
+
+
+def check_status_artifacts_documented() -> list[str]:
+    """openapi.yaml's StatusDocument.artifacts description hand-lists every
+    artifact key as backticked prose; the live /v1/status endpoint is the
+    source of truth. Added 2026-09-07 after exclusive.csv shipped without a
+    docs update (17 documented vs 18 live keys).
+
+    families (ManifestDocument.families / the /v1/manifest path description)
+    are deliberately NOT compared here: their description mixes backtick
+    fragments (`lookup/`, `misp/`, `stix/`, `archive/`, `campaigns/`) with
+    plain, non-backticked prose ("per-tag/type/user RSS") that does not parse
+    into the individual live family names (rss/tag, rss/type, rss/user) - not
+    a clean enumerable list, so a regex extraction would spuriously flag
+    those as "documented but not live" every run."""
+    text = read("openapi.yaml")
+    documented = _documented_status_artifact_keys(text)
+    if documented is None:
+        return ["openapi.yaml: could not locate StatusDocument.artifacts description block (schema reshaped?)"]
+
+    try:
+        req = urllib.request.Request(
+            f"{STATUS_URL}?cb={random.randint(0, 10 ** 9)}",
+            headers={"User-Agent": "tweetfeed-consistency-check"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as r:
+            live = json.loads(r.read().decode("utf-8", "replace"))
+    except Exception as e:
+        print(f"SKIP (offline): /v1/status unreachable ({e})", file=sys.stderr)
+        return []
+
+    live_keys = set(live.get("artifacts", {}).keys())
+    failures: list[str] = []
+    only_documented = documented - live_keys
+    only_live = live_keys - documented
+    if only_documented:
+        failures.append(
+            f"openapi.yaml StatusDocument.artifacts documents keys not in the live /v1/status: {sorted(only_documented)}"
+        )
+    if only_live:
+        failures.append(
+            f"openapi.yaml StatusDocument.artifacts is missing live /v1/status keys: {sorted(only_live)}"
+        )
+    return failures
+
+
 CHECKS = [
     ("Canonical URLs", check_canonicals),
     ("Analytics scripts (anchor + Umami + Ahrefs)", check_analytics),
@@ -1526,6 +1618,7 @@ ENUMERATION_CHECKS = [
     ("MCP tool parity (server-card.json tools vs discovery docs)", check_mcp_tool_parity),
     ("Tag page count (tag_metadata.yaml vs site-wide claims)", check_tag_page_count),
     ("Taxonomy tag count (TAXONOMY_TAG_COUNT vs site-wide claims)", check_taxonomy_tag_count),
+    ("Status artifacts documented (openapi.yaml StatusDocument vs live /v1/status)", check_status_artifacts_documented),
 ]
 
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on
@@ -1846,6 +1939,16 @@ def main() -> int:
         print(f"[PASS] Stylesheet link (site-wide): all {len(pages_css)} pages OK")
     else:
         print(f"[FAIL] Stylesheet link (site-wide): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    rss_pages = sorted(set(MAIN_PAGES) | {"tags/index.html", "ioc-types/index.html"})
+    failures = check_rss_autodiscovery(rss_pages)
+    if not failures:
+        print(f"[PASS] RSS autodiscovery <link> (hand-written pages): all {len(rss_pages)} pages OK")
+    else:
+        print(f"[FAIL] RSS autodiscovery <link> (hand-written pages): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)

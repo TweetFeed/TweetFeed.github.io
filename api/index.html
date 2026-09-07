@@ -15,6 +15,7 @@
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="api,free,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
 	<link rel="canonical" href="https://tweetfeed.live/api/">
+	<link rel="alternate" type="application/rss+xml" title="TweetFeed - all IOCs" href="https://tweetfeed.live/rss.xml">
 	<title>TweetFeed API - free, no-auth IOC feeds (URL/domain/IP/MD5/SHA256)</title>
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image">
@@ -572,7 +573,7 @@
             "age_seconds": 29041,
             "stale": false
         },
-        "...": "one entry per published artifact - today/week/month/year.csv, rss.xml, counts.json, trends.json, campaigns.json, external/ipmeta/enrichment/domainmeta.json, misp/, stix/, blocklists/, lookup/"
+        "...": "one entry per published artifact - today/week/month/year.csv, rss.xml, counts.json, trends.json, campaigns.json, external/ipmeta/enrichment/domainmeta.json, exclusive.csv, misp/, stix/, blocklists/, lookup/"
     },
     "checked_at": "2026-09-05T14:47:58Z",
     "age_seconds": 122,
@@ -611,7 +612,7 @@
         "..."
     ]
 }</pre>
-				<p class="tf-note"><code>families</code> covers sharded/multi-file surfaces (<code>lookup/</code>, <code>misp/</code>, <code>stix/</code>, <code>archive/</code>, per-tag/type/user RSS) that don't reduce to one row - see their own sections above for shard layout. <code>sha256</code>/<code>bytes</code>/<code>rows</code> describe the files in the same data-repo commit as this manifest: the API resolves <code>master</code> fresh on every fetch, so across a tick boundary the hash you compute locally may not match what <code>/v1/*</code> happens to be serving at that instant.</p>
+				<p class="tf-note"><code>families</code> covers sharded/multi-file surfaces (<code>lookup/</code>, <code>misp/</code>, <code>stix/</code>, <code>archive/</code>, <code>campaigns/</code>, per-tag/type/user RSS) that don't reduce to one row - see their own sections above for shard layout. <code>sha256</code>/<code>bytes</code>/<code>rows</code> describe the files in the same data-repo commit as this manifest: the API resolves <code>master</code> fresh on every fetch, so across a tick boundary the hash you compute locally may not match what <code>/v1/*</code> happens to be serving at that instant.</p>
 				<p class="tf-note">Supports <code>ETag</code>/<code>304</code> like <a href="#counts">/v1/counts</a>: send <code>If-None-Match</code> back and get an empty <code>304</code> when nothing changed.</p>
 				<br>
 				<h2 id="trends" class="section-heading tf-block-head">Trends</h2>

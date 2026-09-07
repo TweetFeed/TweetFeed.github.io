@@ -856,8 +856,8 @@ paths:
         Lists every published artifact: byte size, row count, SHA-256,
         last-updated timestamp, the raw GitHub URL and (where one exists)
         the API URL, plus a `families` list for sharded/multi-file
-        surfaces (`lookup/`, `misp/`, `stix/`, `archive/`, per-tag/type/
-        user RSS) that don't reduce to one row.
+        surfaces (`lookup/`, `misp/`, `stix/`, `archive/`, `campaigns/`,
+        per-tag/type/user RSS) that don't reduce to one row.
 
         `sha256`/`bytes`/`rows` describe the files in the same data-repo
         commit as this manifest - the API resolves `master` fresh on
@@ -2250,8 +2250,8 @@ components:
           description: |
             One entry per published artifact (`today.csv`, `week.csv`,
             `month.csv`, `year.csv`, `rss.xml`, `counts.json`, `misp`,
-            `stix`, `blocklists`, `lookup`, `trends.json`, `archive`,
-            `external.json`, `ipmeta.json`, `enrichment.json`,
+            `stix`, `blocklists`, `exclusive.csv`, `lookup`, `trends.json`,
+            `archive`, `external.json`, `ipmeta.json`, `enrichment.json`,
             `campaigns.json`, `domainmeta.json`), keyed by artifact name.
           additionalProperties:
             $ref: "#/components/schemas/StatusArtifact"
@@ -2293,7 +2293,7 @@ components:
           description: |
             `tick`: shares the main pipeline's own clock (today/week/
             month/year.csv, rss.xml, counts.json, misp, stix,
-            blocklists). `own-clock`: refreshed on its own schedule,
+            blocklists, exclusive.csv). `own-clock`: refreshed on its own schedule,
             slower than the main pipeline (lookup, trends.json,
             external.json, ipmeta.json, enrichment.json,
             campaigns.json). `change-driven`: `generated_at` only moves
@@ -2392,7 +2392,8 @@ components:
           type: array
           description: |
             Sharded/multi-file surfaces that don't reduce to one row
-            (`lookup`, `misp`, `stix`, `archive`, per-tag/type/user RSS).
+            (`lookup`, `misp`, `stix`, `archive`, `campaigns`,
+            per-tag/type/user RSS).
           items:
             type: object
             required: [name, path]
