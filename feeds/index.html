@@ -1103,24 +1103,46 @@
 			return hours + ' hour' + (hours === 1 ? '' : 's') + ' ago';
 		}
 
-		function buildStatusTitle(status) {
-			const pipelineWord = status.stale ? 'pipeline stale' : 'pipeline fresh';
+		// Tooltip copy for the chip, as plain-text lines. The caller escapes
+		// each line and joins them with <br> for a Bootstrap tooltip (html:
+		// true; Bootstrap's sanitizer keeps <br>). Pure on purpose, like
+		// formatAge: a native title= with the raw ISO timestamp and ';'
+		// separators was the first version and read as debug output.
+		function formatCheckedAt(iso) {
+			const d = new Date(iso || '');
+			if (isNaN(d.getTime())) return null;
+			const hh = String(d.getUTCHours()).padStart(2, '0');
+			const mm = String(d.getUTCMinutes()).padStart(2, '0');
+			return hh + ':' + mm + ' UTC';
+		}
+
+		function buildStatusLines(status) {
+			const lines = [];
+			const checked = formatCheckedAt(status.checked_at);
+			lines.push('Pipeline ' + (status.stale ? 'stale' : 'fresh') + (checked ? ' \u00b7 checked ' + checked : ''));
 			const arts = status.artifacts || {};
+			const keys = Object.keys(arts);
 			let staleCount = 0;
-			for (const key of Object.keys(arts)) {
+			for (const key of keys) {
 				const a = arts[key];
 				if (a && (a.stale || a.data_stale)) staleCount += 1;
 			}
-			const detail = staleCount > 0
-				? staleCount + ' artifact' + (staleCount === 1 ? '' : 's') + ' stale'
-				: 'all artifacts fresh';
-			const checked = status.checked_at ? '; checked ' + status.checked_at : '';
-			let sourcesNote = '';
-			if (status.sources && status.sources.dead > 0 && Array.isArray(status.sources.dead_ids)) {
-				sourcesNote = ' · ' + status.sources.dead + ' source' + (status.sources.dead === 1 ? '' : 's') +
-					' dead: ' + status.sources.dead_ids.join(', ');
+			if (keys.length > 0) {
+				lines.push(staleCount > 0
+					? staleCount + ' of ' + keys.length + ' artifacts stale'
+					: 'All ' + keys.length + ' artifacts fresh');
 			}
-			return pipelineWord + '; ' + detail + checked + sourcesNote;
+			// `sources` only exists on status documents from 2026-09-12 on;
+			// an older cached document just gets a two-line tooltip.
+			const src = status.sources;
+			if (src && typeof src.total === 'number') {
+				const dead = typeof src.dead === 'number' ? src.dead : 0;
+				const ids = Array.isArray(src.dead_ids) ? src.dead_ids : [];
+				lines.push(dead > 0
+					? dead + ' of ' + src.total + ' sources silent: ' + ids.join(', ')
+					: src.total + ' sources tracked, none silent');
+			}
+			return lines;
 		}
 
 		// No `error` key here on purpose: safeGet's own default error
@@ -1134,13 +1156,17 @@
 			if (!ageText) return;
 			const pillClass = status.stale ? 'tf-stale' : 'tf-fresh';
 			const pillText = status.stale ? 'stale' : 'fresh';
-			const title = buildStatusTitle(status);
+			const lines = buildStatusLines(status).map(TweetFeed.escapeHtml);
 			const html = TweetFeed.escapeHtml('Updated ' + ageText) +
-				' <span class="' + pillClass + '" title="' + TweetFeed.escapeHtml(title) + '">' + pillText + '</span>';
+				' <span class="' + pillClass + '" tabindex="0">' + pillText + '</span>';
 			// .tf-headline-value-sm only gets applied here, once the longer
 			// live text actually replaces the static "15 min" - the
 			// fallback keeps the cell's normal 30px/24px sizing.
 			$('#feedsFreshValue').addClass('tf-headline-value-sm').html(html);
+			// The chip lands after the page-level $('[data-toggle="tooltip"]')
+			// init has already run, so it gets its own tooltip here. Same
+			// Bootstrap bubble as the 28 other tooltips on this page.
+			$('#feedsFreshValue span').tooltip({ html: true, placement: 'bottom', title: lines.join('<br>') });
 		}});
 	});
 	</script>
