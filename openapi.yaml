@@ -26,7 +26,7 @@ info:
     - Return JSON arrays (one object per IOC), one schema for every route.
 
     For Threat Intelligence agent integrations there is also a Model Context Protocol
-    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 13 tools).
+    server at `https://mcp.tweetfeed.live/` (JSON-RPC 2.0, 14 tools).
   version: "1.0"
   contact:
     name: TweetFeed
@@ -825,6 +825,10 @@ paths:
         every 5 minutes, with no stale-while-revalidate; once that window
         expires the request blocks on a fresh read, falling back to the
         last cached copy only if that read fails.
+
+        Also carries `sources`: per-X-source facts (hashtag/account feeds,
+        rows attributed in the last 24h) with dead-account verdicts computed
+        per request, same as the top-level `stale`.
       responses:
         "200":
           description: Status document.
@@ -2276,6 +2280,90 @@ components:
           description: |
             `true` if ANY single artifact entry is stale, even while the
             top-level `stale` is `false`.
+        sources:
+          type: object
+          description: |
+            Per-X-source coverage: one entry per enabled hashtag/account
+            feed. The backend writes the facts (`newest_item_at`,
+            `rows_last_24h`); `age_seconds`, `dead`, `dead_ids`, `any_dead`
+            and `with_rows_last_24h` are verdicts computed fresh on every
+            request, like the top-level `stale`. Hashtags never get a
+            `dead` verdict (many tags are legitimately quiet for weeks) -
+            their `dead_after_seconds`/`dead` are always `null`. A single
+            IOC row tagged with two sources counts toward both; block-level
+            `rows_last_24h` counts distinct rows. Does not affect `stale`/
+            `any_stale` or the `x-feed-*` headers.
+          required: [total, hashtag, account, rows_last_24h, dead_after_seconds, with_rows_last_24h, dead, dead_ids, any_dead, items]
+          properties:
+            total:
+              type: integer
+              description: Total enabled X source feeds (hashtag + account).
+              example: 47
+            hashtag:
+              type: integer
+              example: 38
+            account:
+              type: integer
+              example: 9
+            rows_last_24h:
+              type: integer
+              description: Distinct IOC rows attributed to any source in the last 24h.
+              example: 105
+            dead_after_seconds:
+              type: object
+              description: Dead-verdict threshold per source kind (`null` = no verdict).
+              properties:
+                account:
+                  type: [integer, "null"]
+                  example: 259200
+                hashtag:
+                  type: [integer, "null"]
+                  example: null
+            with_rows_last_24h:
+              type: integer
+              description: Sources with at least one attributed row in the last 24h.
+              example: 31
+            dead:
+              type: integer
+              description: Count of account sources older than `dead_after_seconds`.
+              example: 3
+            dead_ids:
+              type: array
+              items:
+                type: string
+              example: ["500mk500", "byrne_emmy12099", "Fact_Finder03"]
+            any_dead:
+              type: boolean
+              example: true
+            items:
+              type: array
+              items:
+                type: object
+                required: [id, kind, newest_item_at, rows_last_24h, dead_after_seconds, age_seconds, dead]
+                properties:
+                  id:
+                    type: string
+                    description: The tag or handle, without `#`/`@`.
+                    example: phishing
+                  kind:
+                    type: string
+                    enum: [hashtag, account]
+                  newest_item_at:
+                    type: [string, "null"]
+                    format: date-time
+                    description: Newest post seen from this source; `null` when none recorded yet.
+                  rows_last_24h:
+                    type: integer
+                  dead_after_seconds:
+                    type: [integer, "null"]
+                  age_seconds:
+                    type: [integer, "null"]
+                    description: Seconds since `newest_item_at`; `null` when unknown.
+                  dead:
+                    type: [boolean, "null"]
+                    description: Verdict for accounts only; `null` for hashtags or when the age is unknown.
+                    nullable: true
+                    description: Verdict for `account` sources only; always `null` for `hashtag`.
 
     StatusArtifact:
       type: object
@@ -2384,6 +2472,19 @@ components:
           example: "https://api.tweetfeed.live"
         note:
           type: string
+        sources:
+          type: object
+          description: Source-coverage summary, mirroring the counts in `/v1/status`'s `sources`.
+          properties:
+            total:
+              type: integer
+              example: 47
+            hashtag:
+              type: integer
+              example: 38
+            account:
+              type: integer
+              example: 9
         artifacts:
           type: array
           items:

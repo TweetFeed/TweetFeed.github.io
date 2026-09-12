@@ -220,7 +220,7 @@
 
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
-		<style>
+	<style>
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
 		   it, so every anchor on this page used to land underneath it. Same
 		   fix as feeds/index.html. */
@@ -229,7 +229,7 @@
 			#content h2[id], #content h3[id], #content section[id] { scroll-margin-top: 72px; }
 		}
 	</style>
-<!-- Page Wrapper -->
+	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
 		<!-- End of Sidebar -->
@@ -578,9 +578,19 @@
     "checked_at": "2026-09-05T14:47:58Z",
     "age_seconds": 122,
     "stale": false,
-    "any_stale": false
+    "any_stale": false,
+    "sources": {
+        "total": 47, "hashtag": 38, "account": 9, "rows_last_24h": 105,
+        "dead_after_seconds": { "account": 259200, "hashtag": null },
+        "with_rows_last_24h": 31, "dead": 3, "dead_ids": ["500mk500", "byrne_emmy12099", "Fact_Finder03"], "any_dead": true,
+        "items": [
+            { "id": "phishing", "kind": "hashtag", "newest_item_at": "2026-09-10T20:05:12Z", "rows_last_24h": 30, "dead_after_seconds": null, "age_seconds": 240, "dead": null },
+            { "id": "Fact_Finder03", "kind": "account", "newest_item_at": "2026-09-02T09:20:00Z", "rows_last_24h": 0, "dead_after_seconds": 259200, "age_seconds": 731000, "dead": true }
+        ]
+    }
 }</pre>
 				<p class="tf-note">Top-level <code>stale: true</code> means the pipeline document itself is older than <code>stale_after_seconds</code> - the same signal the <a href="../feeds/">/feeds/</a> freshness chip renders. Per-artifact <code>stale</code> is scoped to that one file; <code>any_stale</code> is true if any single artifact is stale even while the top-level pipeline is fresh. <code>kind: "change-driven"</code> artifacts (<code>archive</code>, <code>domainmeta.json</code>) carry <code>stale_after_seconds: null</code> - their <code>generated_at</code> only moves when the underlying content changes, so there is no fixed staleness window for them; watch the pipeline-level fields instead. <code>kind: "tick"</code> artifacts share the pipeline's own clock and additionally expose <b>data</b> freshness via <code>last_row</code> and <code>data_stale</code> - the newest row inside a file can be older than the file itself, e.g. a quiet tag.</p>
+				<p class="tf-note"><code>sources</code> tracks per-X-source coverage: one <code>items</code> entry per enabled hashtag/account feed, with <code>newest_item_at</code> and <code>rows_last_24h</code> attributed to it (a row tagged with two sources counts toward both; the block-level <code>rows_last_24h</code> counts distinct rows). Only <code>account</code> sources get a <code>dead</code> verdict (age past <code>dead_after_seconds</code>, 72h) - hashtags carry <code>dead_after_seconds: null</code> and <code>dead: null</code> on purpose, since a quiet tag for weeks is normal. <code>age_seconds</code>/<code>dead</code>/<code>dead_ids</code>/<code>any_dead</code>/<code>with_rows_last_24h</code> are computed per request like the top-level <code>stale</code>; <code>sources</code> does not affect <code>stale</code>/<code>any_stale</code> or the <code>X-Feed-*</code> headers.</p>
 				<p class="tf-note">Never conditional: this document is computed fresh on every request, so its <code>ETag</code> changes every time and <code>If-None-Match</code> will never return a <code>304</code> here. Cache it with <code>cache-control: public, max-age=60</code> instead. Headers <code>X-Feed-Stale</code> (<code>"true"</code>/<code>"false"</code>) and <code>X-Feed-Age-Seconds</code> mirror the top-level verdict without parsing the body. The underlying <code>status.json</code> is re-read from the data repo at most every 5 minutes, with no stale-while-revalidate; once that window expires the request blocks on a fresh read, falling back to the last cached copy only if that read fails.</p>
 				<br>
 				<h2 id="manifest" class="section-heading tf-block-head">Manifest</h2>

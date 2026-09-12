@@ -532,6 +532,17 @@
 								CSV/STIX links. Returns <code>{id, title, text, url, metadata}</code>.
 							</td>
 						</tr>
+						<tr>
+							<td><code>get_feed_status</code></td>
+							<td>
+								Live health of the pipeline: a freshness verdict per artifact
+								(<code>stale</code>, <code>age_seconds</code>) and source coverage
+								(which hashtag/account X feeds delivered rows in the last 24h and
+								which account feeds are dead). No parameters. Call it before
+								trusting a feed pull, or when a lookup returns nothing, to tell
+								"no data" from "stale data".
+							</td>
+						</tr>
 					</table>
 				</div>
 
@@ -701,7 +712,7 @@
 					</details>
 					<details>
 						<summary>MCP server, Agent Skills or REST API - which one?</summary>
-						<p>If your client speaks Model Context Protocol (Claude Desktop, Claude Code, ChatGPT, Cursor, Zed), use the <a href="#option-mcp" class="text-decoration-none">MCP server</a>: the agent gets 13 tools and chooses between them itself. If it consumes <a href="#option-skills" class="text-decoration-none">Agent Skills</a> instructions instead, point it at the skills manifest. If it is a script, or an n8n, Make or Zapier workflow, call the <a href="#option-api" class="text-decoration-none">REST API</a>. All three read the same rows.</p>
+						<p>If your client speaks Model Context Protocol (Claude Desktop, Claude Code, ChatGPT, Cursor, Zed), use the <a href="#option-mcp" class="text-decoration-none">MCP server</a>: the agent gets 14 tools and chooses between them itself. If it consumes <a href="#option-skills" class="text-decoration-none">Agent Skills</a> instructions instead, point it at the skills manifest. If it is a script, or an n8n, Make or Zapier workflow, call the <a href="#option-api" class="text-decoration-none">REST API</a>. All three read the same rows.</p>
 					</details>
 					<details>
 						<summary>Which clients work with the MCP server?</summary>

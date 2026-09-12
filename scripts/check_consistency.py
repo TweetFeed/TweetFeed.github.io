@@ -1599,6 +1599,44 @@ def check_status_artifacts_documented() -> list[str]:
     return failures
 
 
+def check_status_top_level_documented() -> list[str]:
+    """openapi.yaml's StatusDocument schema enumerates top-level keys as
+    YAML `properties`; the live /v1/status endpoint is the source of truth.
+    Added 2026-09-10 alongside the `sources` block, so a future top-level
+    addition (or removal) can't silently drift the way
+    check_status_artifacts_documented already guards inside `artifacts`."""
+    try:
+        spec = yaml.safe_load(read("openapi.yaml"))
+        documented = set(spec["components"]["schemas"]["StatusDocument"]["properties"].keys())
+    except Exception as e:
+        return [f"openapi.yaml: could not read StatusDocument.properties ({e})"]
+
+    try:
+        req = urllib.request.Request(
+            f"{STATUS_URL}?cb={random.randint(0, 10 ** 9)}",
+            headers={"User-Agent": "tweetfeed-consistency-check"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as r:
+            live = json.loads(r.read().decode("utf-8", "replace"))
+    except Exception as e:
+        print(f"SKIP (offline): /v1/status unreachable ({e})", file=sys.stderr)
+        return []
+
+    live_keys = set(live.keys())
+    failures: list[str] = []
+    only_documented = documented - live_keys
+    only_live = live_keys - documented
+    if only_documented:
+        failures.append(
+            f"openapi.yaml StatusDocument documents top-level keys not (yet) live in /v1/status: {sorted(only_documented)}"
+        )
+    if only_live:
+        failures.append(
+            f"openapi.yaml StatusDocument is missing live /v1/status top-level keys: {sorted(only_live)}"
+        )
+    return failures
+
+
 CHECKS = [
     ("Canonical URLs", check_canonicals),
     ("Analytics scripts (anchor + Umami + Ahrefs)", check_analytics),
@@ -1619,6 +1657,7 @@ ENUMERATION_CHECKS = [
     ("Tag page count (tag_metadata.yaml vs site-wide claims)", check_tag_page_count),
     ("Taxonomy tag count (TAXONOMY_TAG_COUNT vs site-wide claims)", check_taxonomy_tag_count),
     ("Status artifacts documented (openapi.yaml StatusDocument vs live /v1/status)", check_status_artifacts_documented),
+    ("Status top-level keys documented (openapi.yaml StatusDocument.properties vs live /v1/status)", check_status_top_level_documented),
 ]
 
 # Shell checks run over EVERY html page, not just MAIN_PAGES. The shell is on

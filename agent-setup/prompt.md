@@ -50,10 +50,11 @@ rows. If you get that, the integration is live.
 Use the `week` window, not `today`. A day with zero IOCs is a legitimate state of this feed,
 so a `today` query is not a reliable health check.
 
-There are 13 tools. Besides `query_iocs`: `check_url`, `check_ip`, `check_hash`,
+There are 14 tools. Besides `query_iocs`: `check_url`, `check_ip`, `check_hash`,
 `list_recent_iocs`, `get_tag_info`, `get_trending`, `enrich_ioc`, `get_campaigns`,
 `get_campaign_iocs`, `get_trends`, plus `search` and `fetch` (the ChatGPT connector /
-deep research interface). Full descriptions: https://tweetfeed.live/.well-known/mcp/server-card.json
+deep research interface) and `get_feed_status` (pipeline health + source coverage).
+Full descriptions: https://tweetfeed.live/.well-known/mcp/server-card.json
 
 ## Step 3: if your client has no MCP support
 

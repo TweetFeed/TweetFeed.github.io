@@ -1115,7 +1115,12 @@
 				? staleCount + ' artifact' + (staleCount === 1 ? '' : 's') + ' stale'
 				: 'all artifacts fresh';
 			const checked = status.checked_at ? '; checked ' + status.checked_at : '';
-			return pipelineWord + '; ' + detail + checked;
+			let sourcesNote = '';
+			if (status.sources && status.sources.dead > 0 && Array.isArray(status.sources.dead_ids)) {
+				sourcesNote = ' · ' + status.sources.dead + ' source' + (status.sources.dead === 1 ? '' : 's') +
+					' dead: ' + status.sources.dead_ids.join(', ');
+			}
+			return pipelineWord + '; ' + detail + checked + sourcesNote;
 		}
 
 		// No `error` key here on purpose: safeGet's own default error
