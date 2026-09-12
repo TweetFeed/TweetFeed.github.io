@@ -359,6 +359,7 @@
 					<a class="page-toc-chip" href="#status">Status</a>
 					<a class="page-toc-chip" href="#manifest">Manifest</a>
 					<a class="page-toc-chip" href="#trends">Trends</a>
+					<a class="page-toc-chip" href="#contributors">Contributors</a>
 					<a class="page-toc-chip" href="#ioc-lookup">IOC lookup</a>
 					<a class="page-toc-chip" href="#blocklists">Blocklists</a>
 					<a class="page-toc-chip" href="#taxii">TAXII 2.1</a>
@@ -573,7 +574,7 @@
             "age_seconds": 29041,
             "stale": false
         },
-        "...": "one entry per published artifact - today/week/month/year.csv, rss.xml, counts.json, trends.json, campaigns.json, external/ipmeta/enrichment/domainmeta.json, exclusive.csv, misp/, stix/, blocklists/, lookup/"
+        "...": "one entry per published artifact - today/week/month/year.csv, rss.xml, counts.json, trends.json, contributors.json, campaigns.json, external/ipmeta/enrichment/domainmeta.json, exclusive.csv, misp/, stix/, blocklists/, lookup/"
     },
     "checked_at": "2026-09-05T14:47:58Z",
     "age_seconds": 122,
@@ -648,6 +649,29 @@
     "producers": { }
 }</pre>
 				<p class="tf-note"><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index. The most recent day is partial until 00:00 UTC. <code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</p>
+				<br>
+				<h2 id="contributors" class="section-heading tf-block-head">Contributors</h2>
+				<p>Per-window reporter leaderboard: today/week/month/year rankings of X/Twitter handles by IOCs reported, each entry carrying its top 3 IOC types and top 3 tags. Precomputed server-side every 15 minutes so <a href="../researchers/">tweetfeed.live/researchers/</a> renders all four windows from one fetch instead of ranking CSVs in the browser.</p>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/contributors <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/contributors" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<span class="tf-code-label"><b>Response (trimmed)</b></span>
+				<pre class="code-block code-block-sm">{
+    "schema_version": 1,
+    "generated_at": "2026-09-12T16:30:00Z",
+    "windows": {
+        "today": {
+            "first_date": "2026-09-12 00:01:00",
+            "last_date": "2026-09-12 16:15:00",
+            "rows": 31,
+            "users": 16,
+            "entries": [
+                { "user": "TKemmerling", "iocs": 6, "top_types": ["url", "domain"], "top_tags": ["phishing", "scam"], "first_seen": "2026-09-12 07:10:00", "last_seen": "2026-09-12 15:45:00" }
+            ]
+        },
+        "week": "...", "month": "...", "year": "..."
+    }
+}</pre>
+				<p class="tf-note"><code>entries</code> are pre-ranked by <code>iocs</code> descending, tie-broken by handle ascending - no client-side sorting needed. <code>top_types</code>/<code>top_tags</code> are capped at 3, most frequent first; tags carry no leading <code>#</code>. An empty window (no IOCs reported in that period) has <code>rows: 0</code>, <code>users: 0</code>, <code>entries: []</code> and both dates <code>null</code>. Handles are merged case-insensitively.</p>
+				<p class="tf-note">Supports <code>ETag</code>/<code>304</code> like <a href="#counts">/v1/counts</a>: send <code>If-None-Match</code> back and get an empty <code>304</code> when nothing changed.</p>
 				<br>
 				<h2 id="ioc-lookup" class="section-heading tf-block-head">IOC lookup (exact match)</h2>
 				<p>Checks whether a specific IOC appears in the trailing 365 days and returns one aggregated record per IOC type: first/last seen, times seen, reporters, tags and the latest source tweets. Also checked against the pre-365-day archive, returned separately in the optional <code>archive</code> block. URL-encode the value. Defanged input (<code>evil[.]tld</code>, <code>hxxps://</code>) and http/https variants resolve to the same record. Building an agent integration? The <a href="../agents/">MCP server</a> exposes this endpoint as the <code>enrich_ioc</code> tool.</p>

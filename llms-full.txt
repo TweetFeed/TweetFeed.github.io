@@ -70,7 +70,7 @@ Every 15 minutes, a pipeline polls RSS feeds generated from ~95 public Twitter/X
 - Tag index (25 curated landing pages covering APT groups, malware families and TTPs; all 93 tags are queryable via the API): https://tweetfeed.live/tags/
 - Threat Intelligence guide (IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary): https://tweetfeed.live/threat-intelligence-guide/
 - Campaigns (human page): https://tweetfeed.live/campaigns/ - Trends (human page): https://tweetfeed.live/trends/
-- Researcher directory: https://tweetfeed.live/researchers/ - Dashboard: https://tweetfeed.live/dashboard/
+- Researcher directory: https://tweetfeed.live/researchers/ (backed by [/v1/contributors](https://api.tweetfeed.live/v1/contributors), today/week/month/year rankings of reporting handles) - Dashboard: https://tweetfeed.live/dashboard/
 - API docs: https://tweetfeed.live/api/ - OpenAPI 3.1: https://tweetfeed.live/openapi.yaml
 - Agent guide: https://tweetfeed.live/agents/ - llms.txt: https://tweetfeed.live/llms.txt - AGENTS.md: https://tweetfeed.live/AGENTS.md
 - Discovery: Agent Skills index (v0.2.0): https://tweetfeed.live/.well-known/agent-skills/index.json - MCP server card: https://tweetfeed.live/.well-known/mcp/server-card.json - API catalog (RFC 9727): https://tweetfeed.live/.well-known/api-catalog

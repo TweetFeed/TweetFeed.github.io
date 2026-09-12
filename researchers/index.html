@@ -286,9 +286,9 @@
 					<li class="nav-item" role="presentation">
 						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-month-tab" data-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="false">Month</a>
 					</li>
-					<!--<li class="nav-item">
+					<li class="nav-item" role="presentation">
 						<a style="border-radius: 50px;border: 1px solid white;" class="nav-link" id="pills-year-tab" data-toggle="pill" href="#pills-year" role="tab" aria-controls="pills-year" aria-selected="false">Year</a>
-					</li> -->
+					</li>
 				</ul>
 				<div class="tab-content" id="nav-tabContent">
 					<div class="tab-pane fade show active" id="pills-today" role="tabpanel" aria-labelledby="pills-today-tab">
@@ -378,14 +378,14 @@
 							</div> <!-- Card body -->
 						</div><!-- Card -->
 					</div>
-					<!-- <div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-year-tab">
+					<div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-year-tab">
 						<div class="card shadow mb-4">
 							<div id="loadingYear" style="text-align: center;">
-								<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading icon">
+								<img loading="lazy" style="height: 60px;width:auto;" src="../img/loading.svg" alt="Loading icon" width="60" height="60">
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
-									<table class="table display compact tableResearchers" id="dataTableUsersYear" style="border:none;width:100%;">
+									<table class="table display compact tableResearchers" id="dataTableUsersYear" style="border:none;width:98%;">
 										<colgroup>
 											<col span="1" style="width: 8%;">
 											<col span="1" style="width: 20%;">
@@ -395,18 +395,18 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th>Number</th>
-												<th>User</th>
-												<th>IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in last 365 days"></i></th>
-												<th>Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
-												<th>Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
+												<th scope="col" class="col-lg-2 text-nowrap">Number</th>
+												<th scope="col" class="col-lg-2 text-nowrap">User</th>
+												<th scope="col" class="col-lg-3 text-nowrap">IOCs <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="IOCs posted in the last 365 days"></i></th>
+												<th scope="col" class="d-none d-lg-table-cell col-lg-4">Top types <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top types posted (3 max)"></i></th>
+												<th scope="col" class="d-none d-lg-table-cell col-lg-4">Top tags <i class="far fa-question-circle fa-sm" data-toggle="tooltip" data-placement="top" title="Top tags posted (3 max)"></i></th>
 											</tr>
 										</thead>
 									</table>
-								</div>
-							</div>
-						</div>
-					</div> -->
+								</div> <!-- table-responsive -->
+							</div> <!-- Card body -->
+						</div><!-- Card -->
+					</div>
 				</div> <!-- End nav -->
 			</div>
 			<!-- End of Main Content -->
@@ -542,193 +542,41 @@
 	// 'today' table inits synchronously (default-active tab, in initial
 	// viewport) - lazy-init here regressed CLS to 0.317 because the
 	// DataTables wrapper injects after paint and shifts layout.
-	// 'week' and 'month' live on inactive Bootstrap pills (display:none
-	// at load), so IntersectionObserver never fires until the user
-	// clicks the tab, deferring 2 CSV fetches + 2 DataTable inits without
-	// any CLS impact on the initial paint.
+	// 'week', 'month' and 'year' live on inactive Bootstrap pills
+	// (display:none at load), so their DataTable init waits for the pill's
+	// shown.bs.tab event, deferring it without any CLS impact on the initial
+	// paint. All four windows come from ONE
+	// /v1/contributors fetch below - lazy init here only defers rendering an
+	// already-fetched window, never a network request.
 	let tableUsersToday = $('#dataTableUsersToday').DataTable(researchersTableOpts);
-	let tableUsersWeek, tableUsersMonth;
+	let tableUsersWeek, tableUsersMonth, tableUsersYear;
 
-	$(function() {
-		TweetFeed.safeGet(TweetFeed.dataUrl('today.csv'), { errorTarget: '#loadingToday', success: function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[0][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
-			$(".lastDateTodayFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
-			});
-			$(".lastDateTodayTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
-			});
+	// Populated by the /v1/contributors fetch below. Whichever happens
+	// first - the fetch resolving, or the user clicking a tab and lazily
+	// initing its DataTable before the fetch has returned - is handled by
+	// renderWindowWhenReady() queuing the tab until contributorsDoc exists.
+	var contributorsDoc = null;
+	var pendingWindows = [];
 
-			$("#lastDateToday").show();
-			$("#loadingToday").hide();
-
-			countUsers(tableUsersToday, data);
-		}});
-
-		TweetFeed.lazyInViewport('dataTableUsersWeek', function() {
-			tableUsersWeek = $('#dataTableUsersWeek').DataTable(researchersTableOpts);
-			TweetFeed.safeGet(TweetFeed.dataUrl('week.csv'), { errorTarget: '#loadingWeek', success: function(response) {
-				let data = csvJSON(response);
-				var last_date = data[data.length - 1][0];
-				var first_date = data[0][0];
-				var date1 = formatDateLong(last_date);
-				var date2 = formatDateLong(first_date);
-				$(".lastDateWeekFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateWeekTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
-
-				$("#lastDateWeek").show();
-				$("#loadingWeek").hide();
-
-				countUsers(tableUsersWeek, data);
-			}});
+	// Rank = index into `entries` + 1 (the backend already ranks entries
+	// iocs desc, tie handle asc). table.clear() first makes this idempotent:
+	// a window can be rendered twice (fetch resolves after a lazy init
+	// already queued it) without ever duplicating rows.
+	function renderWindow(table, win) {
+		if (!table || !win) return;
+		var entries = win.entries || [];
+		var rows = entries.map(function(entry, i) {
+			return [
+				i + 1,
+				entry.user,
+				{ display: nFormatter(entry.iocs, 2), sort: entry.iocs },
+				(entry.top_types || []).join(' '),
+				renderTagPivots((entry.top_tags || []).map(function(t) { return '#' + t; }))
+			];
 		});
-
-		TweetFeed.lazyInViewport('dataTableUsersMonth', function() {
-			tableUsersMonth = $('#dataTableUsersMonth').DataTable(researchersTableOpts);
-			TweetFeed.safeGet(TweetFeed.dataUrl('month.csv'), { errorTarget: '#loadingMonth', success: function(response) {
-				let data = csvJSON(response);
-				var last_date = data[data.length - 1][0];
-				var first_date = data[0][0];
-				var date1 = formatDateLong(last_date);
-				var date2 = formatDateLong(first_date);
-				$(".lastDateMonthFrom").fadeOut(function() {
-					$(this).text("From: " + date2).fadeIn(2000);
-				});
-				$(".lastDateMonthTo").fadeOut(function() {
-					$(this).text("To: " + date1).fadeIn(2000);
-				});
-
-				$("#lastDateMonth").show();
-				$("#loadingMonth").hide();
-
-				countUsers(tableUsersMonth, data);
-			}});
-		});
-		/*
-		TweetFeed.safeGet(TweetFeed.dataUrl('year.csv'), { errorTarget: '#loadingYear', success: function(response) {
-			let data = csvJSON(response);
-			var last_date = data[data.length - 1][0];
-			var first_date = data[0][0];
-			var date1 = formatDateLong(last_date);
-			var date2 = formatDateLong(first_date);
-			$(".lastDateYearFrom").fadeOut(function() {
-				$(this).text("From: " + date2).fadeIn(2000);
-			});
-			$(".lastDateYearTo").fadeOut(function() {
-				$(this).text("To: " + date1).fadeIn(2000);
-			});
-
-			$("#lastDateYear").show();
-			$("#loadingYear").hide();
-
-			//$(".lastDateYearFrom").text("From: " + date2);
-			//$(".lastDateYearTo").text("To: " + date1);
-
-			countUsers(tableUsersYear, data);
-
-		}})*/
-	})
-
-	// Top tags -> /search/?tag=<tag> pivot (Feed explorer panel auto-runs on
-	// a ?tag= param - see search/index.html EXPLORER_PARAMS). Empty slots
-	// (topTags[1]/[2] default to "" when a researcher has <3 distinct tags)
-	// are dropped rather than rendered as dead links.
-	function renderTagPivots(tags) {
-		return tags.filter(function(t) { return t; }).map(function(t) {
-			var clean = String(t).replace(/^#/, '');
-			return '<a href="../search/?tag=' + encodeURIComponent(clean.toLowerCase()) + '" title="Search #' + escapeHtml(clean) + ' on TweetFeed">' + escapeHtml(t) + '</a>';
-		}).join(' ');
-	}
-
-	function countUsers(divAccess, jsonArr) {
-		let users = [],
-			count = [];
-		let keys = [];
-		let values = [];
-		for (var i = 0; i < jsonArr.length; i++) {
-			if (jsonArr[i][1].trim() != "") {
-				let newArr = jsonArr[i][1].split(" ");
-				for (var j = 0; j < newArr.length; j++) {
-					users.push(newArr[j]);
-				}
-			}
-		}
-
-		users.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
-		});
-
-		var tuples = [];
-
-		for (var key in count)
-			tuples.push([key, count[key]]);
-
-		tuples.sort(function(a, b) {
-			a = a[1];
-			b = b[1];
-
-			return a> b ? -1 : (a < b ? 1 : 0);
-		});
-		for (var i = 0; i < tuples.length; i++) {
-			keys.push(tuples[i][0]);
-			values.push(tuples[i][1]);
-		}
-
-		var result = [];
-		var obj = [];
-
-		//for (var i = 1; i <= 10; i++) {
-		for (var i = 1; i <= keys.length; i++) {
-			// Search most type of each user
-
-			var topTypesAux = countTypes(divAccess, jsonArr, keys[i - 1]);
-
-			// Remove undefined
-			var topTypesFiltered = topTypesAux.filter(function(x) {
-				return x !== undefined;
-			});
-
-			var topTypes = topTypesFiltered;
-
-			//var topTypes = [];
-			// Capitalize types
-			//for (var j = 0; j < topTypesFiltered.length; j++) {
-			//	if (topTypesFiltered[j] == "domain") {
-			//		topTypes.push(capitalize(topTypesFiltered[j]));
-			//	} else if (topTypesFiltered[j] == "url" || topTypesFiltered[j] == "ip" || topTypesFiltered[j] == "sha256" || topTypesFiltered[j] == "md5") {
-			//		topTypes.push(topTypesFiltered[j].toUpperCase());
-			//	}
-			//}
-
-			// Search most tag of each user
-			var topTags = countTags(divAccess, jsonArr, keys[i - 1])
-
-			if (topTags[0] == null) {
-				topTags[0] = "";
-			}
-
-			if (topTags[1] == null) {
-				topTags[1] = "";
-			}
-
-			if (topTags[2] == null) {
-				topTags[2] = "";
-			}
-
-			result.push([i, keys[i - 1], { display: nFormatter(values[i - 1], 2), sort: values[i - 1] }, topTypes.join(" "), renderTagPivots(topTags)]);
-
-		}
-
-		divAccess.rows.add(result).order([0, 'asc']).draw();
-		divAccess.rows().every(function() {
+		table.clear();
+		table.rows.add(rows).order([0, 'asc']).draw();
+		table.rows().every(function() {
 			var number = $(this.node()).find('td').eq(0).text().trim();
 			$(this.node()).find('td').eq(0).html('#' + number);
 
@@ -748,83 +596,85 @@
 			$(this.node()).find('td').eq(2).addClass('text-center');
 			$(this.node()).find('td').eq(3).addClass('d-none d-lg-table-cell text-center');
 			$(this.node()).find('td').eq(4).addClass('d-none d-lg-table-cell text-center');
-		})
+		});
 	}
 
-	function countTags(divAccess, jsonArr, user) {
-		let tags = [],
-			count = [];
-		let keys = [];
-		let values = [];
-		for (var i = 0; i < jsonArr.length; i++) {
-			if (jsonArr[i][4].trim() != "" && jsonArr[i][1] == user) {
-				let newArr = jsonArr[i][4].split(" ");
-				for (var j = 0; j < newArr.length; j++) {
-					tags.push(newArr[j]);
-				}
-			}
-		}
-
-		tags.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
+	// From/To labels + hide the loading spinner for one window. A null
+	// first_date/last_date (empty window: rows 0) leaves the label blank
+	// instead of rendering "From: Invalid Date".
+	function renderWindowDates(name, win) {
+		var Cap = name.charAt(0).toUpperCase() + name.slice(1);
+		var dateTo = (win && win.last_date) ? formatDateLong(win.last_date) : '';
+		var dateFrom = (win && win.first_date) ? formatDateLong(win.first_date) : '';
+		$('.lastDate' + Cap + 'From').fadeOut(function() {
+			$(this).text(dateFrom ? 'From: ' + dateFrom : '').fadeIn(2000);
 		});
-
-		var tuples = [];
-
-		for (var key in count)
-			tuples.push([key, count[key]]);
-
-		tuples.sort(function(a, b) {
-			a = a[1];
-			b = b[1];
-
-			return a> b ? -1 : (a < b ? 1 : 0);
+		$('.lastDate' + Cap + 'To').fadeOut(function() {
+			$(this).text(dateTo ? 'To: ' + dateTo : '').fadeIn(2000);
 		});
-		for (var i = 0; i < tuples.length; i++) {
-			keys.push(tuples[i][0]);
-			values.push(tuples[i][1]);
-		}
-
-		//return keys[0]
-		return [keys[0], keys[1], keys[2]]
+		$('#lastDate' + Cap).show();
+		$('#loading' + Cap).hide();
 	}
 
-	function countTypes(divAccess, jsonArr, user) {
-		let types = [],
-			count = [];
-		let keys = [];
-		let values = [];
-		for (var i = 0; i < jsonArr.length; i++) {
-			if (jsonArr[i][2].trim() != "" && jsonArr[i][1] == user) {
-				let newArr = jsonArr[i][2].split(" ");
-				for (var j = 0; j < newArr.length; j++) {
-					types.push(newArr[j]);
-				}
-			}
+	// Renders immediately if /v1/contributors already resolved, otherwise
+	// queues the [table, windowName] pair for the success callback below.
+	function renderWindowWhenReady(table, name) {
+		if (contributorsDoc) {
+			renderWindow(table, contributorsDoc.windows[name]);
+			renderWindowDates(name, contributorsDoc.windows[name]);
+		} else {
+			pendingWindows.push([table, name]);
 		}
+	}
 
-		types.forEach(function(i) {
-			count[i] = (count[i] || 0) + 1;
-		});
+	$(function() {
+		TweetFeed.safeGet('https://api.tweetfeed.live/v1/contributors', { dataType: 'json', timeout: 8000, errorTarget: '#loadingToday', error: function(msg) {
+			// Overriding safeGet's default `error` bypasses its own
+			// errorTarget handling, so this replicates that same markup
+			// for #loadingToday too, plus the three tabs that never had a
+			// fetch of their own to fail (single fetch feeds all windows).
+			console.error('[TweetFeed] Fetch failed:', 'https://api.tweetfeed.live/v1/contributors', msg);
+			var errHtml = '<p class="text-danger text-center" style="padding:1em;">⚠️ Error loading data. Please try again later.</p>';
+			$('#loadingToday, #loadingWeek, #loadingMonth, #loadingYear').html(errHtml);
+		}, success: function(doc) {
+			contributorsDoc = doc;
+			renderWindow(tableUsersToday, doc.windows.today);
+			renderWindowDates('today', doc.windows.today);
 
-		var tuples = [];
+			pendingWindows.forEach(function(pair) {
+				renderWindow(pair[0], doc.windows[pair[1]]);
+				renderWindowDates(pair[1], doc.windows[pair[1]]);
+			});
+			pendingWindows = [];
+		}});
 
-		for (var key in count)
-			tuples.push([key, count[key]]);
-
-		tuples.sort(function(a, b) {
-			a = a[1];
-			b = b[1];
-
-			return a> b ? -1 : (a < b ? 1 : 0);
-		});
-		for (var i = 0; i < tuples.length; i++) {
-			keys.push(tuples[i][0]);
-			values.push(tuples[i][1]);
+		// Bootstrap fires shown.bs.tab once the pane is visible; initialising
+		// the DataTable there keeps the CLS benefit (nothing injects into a
+		// hidden pane at load) without depending on IntersectionObserver, which
+		// never fires for a table inside a tab-pane that flips from
+		// display:none to visible (measured 2026-09-12 on the old page: the
+		// Week and Month tabs stayed empty in production).
+		function initWindowTabOnShow(pillId, tableId, name, assign) {
+			$('#' + pillId).one('shown.bs.tab', function() {
+				var table = $('#' + tableId).DataTable(researchersTableOpts);
+				assign(table);
+				renderWindowWhenReady(table, name);
+			});
 		}
+		initWindowTabOnShow('pills-week-tab', 'dataTableUsersWeek', 'week', function(t) { tableUsersWeek = t; });
+		initWindowTabOnShow('pills-month-tab', 'dataTableUsersMonth', 'month', function(t) { tableUsersMonth = t; });
+		initWindowTabOnShow('pills-year-tab', 'dataTableUsersYear', 'year', function(t) { tableUsersYear = t; });
+	});
 
-		//return keys[0]
-		return [keys[0], keys[1], keys[2]]
+	// Top tags -> /search/?tag=<tag> pivot (Feed explorer panel auto-runs on
+	// a ?tag= param - see search/index.html EXPLORER_PARAMS). Empty slots
+	// (topTags[1]/[2] default to "" when a researcher has <3 distinct tags)
+	// are dropped rather than rendered as dead links.
+	function renderTagPivots(tags) {
+		return tags.filter(function(t) { return t; }).map(function(t) {
+			var clean = String(t).replace(/^#/, '');
+			return '<a href="../search/?tag=' + encodeURIComponent(clean.toLowerCase()) + '" title="Search #' + escapeHtml(clean) + ' on TweetFeed">' + escapeHtml(t) + '</a>';
+		}).join(' ');
 	}
 	</script>
 	<script>

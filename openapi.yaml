@@ -647,6 +647,35 @@ paths:
         "304":
           $ref: "#/components/responses/NotModified"
 
+  /v1/contributors:
+    get:
+      operationId: getContributors
+      summary: Per-window reporter leaderboard
+      description: |
+        Returns the contributors document: today/week/month/year rankings of
+        X/Twitter handles by IOCs reported, each entry carrying its top 3 IOC
+        types and top 3 tags. Consumed by /researchers/ to render all four
+        windows from one fetch instead of ranking CSVs in the browser.
+        Refreshed every 15 minutes alongside the rest of the feed. Handles
+        only - no personal data beyond the public X handle.
+      parameters:
+        - $ref: "#/components/parameters/IfNoneMatch"
+        - $ref: "#/components/parameters/IfModifiedSince"
+      responses:
+        "200":
+          description: Contributors document.
+          headers:
+            ETag:
+              $ref: "#/components/headers/ETag"
+            Last-Modified:
+              $ref: "#/components/headers/LastModified"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContributorsDocument"
+        "304":
+          $ref: "#/components/responses/NotModified"
+
   /v1/blocklist/{file}:
     get:
       operationId: getBlocklist
@@ -1717,6 +1746,99 @@ components:
             Share of this week's distinct IOC values that are new versus
             recurring.
 
+    ContributorsDocument:
+      type: object
+      required: [schema_version, generated_at, windows]
+      description: |
+        Per-window reporter ranking document. Powers
+        https://tweetfeed.live/researchers/ - today/week/month/year rankings
+        of X/Twitter handles by IOCs reported, precomputed server-side every
+        15 minutes so the page renders four windows from one fetch instead
+        of ranking CSVs in the browser.
+      properties:
+        schema_version:
+          type: integer
+          example: 1
+        generated_at:
+          type: string
+          format: date-time
+          description: UTC timestamp this document was generated, `YYYY-MM-DDTHH:MM:SSZ`.
+          example: "2026-09-12T16:30:00Z"
+        windows:
+          type: object
+          description: Keyed by window name - `today`, `week`, `month`, `year`.
+          properties:
+            today:
+              $ref: "#/components/schemas/ContributorsWindow"
+            week:
+              $ref: "#/components/schemas/ContributorsWindow"
+            month:
+              $ref: "#/components/schemas/ContributorsWindow"
+            year:
+              $ref: "#/components/schemas/ContributorsWindow"
+
+    ContributorsWindow:
+      type: object
+      required: [first_date, last_date, rows, users, entries]
+      description: |
+        One ranking window. An empty window (no IOCs reported in that
+        period) has `rows: 0`, `users: 0`, `entries: []` and both dates null.
+      properties:
+        first_date:
+          type: [string, "null"]
+          description: Timestamp of the oldest row in this window, `YYYY-MM-DD HH:MM:SS` UTC.
+          example: "2026-09-12 00:01:00"
+        last_date:
+          type: [string, "null"]
+          description: Timestamp of the newest row in this window, `YYYY-MM-DD HH:MM:SS` UTC.
+          example: "2026-09-12 16:15:00"
+        rows:
+          type: integer
+          description: Total IOC rows in this window.
+        users:
+          type: integer
+          description: Distinct reporting handles in this window.
+        entries:
+          type: array
+          description: Ranked by `iocs` descending, tie-broken by handle ascending.
+          items:
+            $ref: "#/components/schemas/ContributorEntry"
+
+    ContributorEntry:
+      type: object
+      required: [user, iocs, top_types, top_tags, first_seen, last_seen]
+      properties:
+        user:
+          type: string
+          description: X/Twitter handle, merged case-insensitively.
+          example: "TKemmerling"
+        iocs:
+          type: integer
+          description: IOCs reported by this handle within the window.
+          example: 6
+        top_types:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+          description: Top IOC types reported, most frequent first (3 max).
+          example: ["url", "domain"]
+        top_tags:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+          description: Top tags reported, most frequent first (3 max), without a leading `#`.
+          example: ["phishing", "scam"]
+        first_seen:
+          type: string
+          description: Timestamp of this handle's oldest row in the window, `YYYY-MM-DD HH:MM:SS` UTC.
+          example: "2026-09-12 07:10:00"
+        last_seen:
+          type: string
+          description: Timestamp of this handle's newest row in the window, `YYYY-MM-DD HH:MM:SS` UTC.
+          example: "2026-09-12 15:45:00"
+
     CountsDocument:
       type: object
       required: [generated_at, windows]
@@ -2255,8 +2377,9 @@ components:
             One entry per published artifact (`today.csv`, `week.csv`,
             `month.csv`, `year.csv`, `rss.xml`, `counts.json`, `misp`,
             `stix`, `blocklists`, `exclusive.csv`, `lookup`, `trends.json`,
-            `archive`, `external.json`, `ipmeta.json`, `enrichment.json`,
-            `campaigns.json`, `domainmeta.json`), keyed by artifact name.
+            `contributors.json`, `archive`, `external.json`, `ipmeta.json`,
+            `enrichment.json`, `campaigns.json`, `domainmeta.json`), keyed
+            by artifact name.
           additionalProperties:
             $ref: "#/components/schemas/StatusArtifact"
         checked_at:
@@ -2381,7 +2504,7 @@ components:
           description: |
             `tick`: shares the main pipeline's own clock (today/week/
             month/year.csv, rss.xml, counts.json, misp, stix,
-            blocklists, exclusive.csv). `own-clock`: refreshed on its own schedule,
+            blocklists, exclusive.csv, contributors.json). `own-clock`: refreshed on its own schedule,
             slower than the main pipeline (lookup, trends.json,
             external.json, ipmeta.json, enrichment.json,
             campaigns.json). `change-driven`: `generated_at` only moves

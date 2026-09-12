@@ -338,6 +338,16 @@
 								<time datetime="2026-09-12">2026-09-12</time>
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
+							<h3 class="section-heading cl-title">Reporter leaderboard precomputed: /v1/contributors and the Year tab is back</h3>
+							<div class="cl-body"><p>A new <code>contributors.json</code> artifact is written every 15-minute tick: today/week/month/year rankings of reporting X/Twitter handles by IOCs, each entry with its top 3 IOC types and top 3 tags. <a href="../api/#contributors">/v1/contributors</a> passes it through, and <a href="../researchers/">/researchers/</a> now renders all four windows from that one fetch instead of ranking CSVs in the browser - the long-dormant Year tab is back too. Side effect: the Week and Month tabs load again (their lazy init relied on an IntersectionObserver that never fired inside a hidden tab pane, so they had been rendering empty).</p></div>
+						</div>
+					</article>
+					<article class="card cl-entry">
+						<div class="card-body">
+							<div class="cl-meta">
+								<time datetime="2026-09-12">2026-09-12</time>
+								<span class="cl-tag cl-tag-feature">Feature</span>
+							</div>
 							<h3 class="section-heading cl-title">Source coverage in /v1/status and the get_feed_status MCP tool</h3>
 							<div class="cl-body"><p><a href="../api/#status">/v1/status</a> now reports a <code>sources</code> block: per-X-source coverage (hashtag and account feeds), how many rows each attributed in the last 24h, and a dead-account verdict (no new post in 72h) with the offending handles listed. <a href="../api/#manifest">/v1/manifest</a> gets a matching <code>sources</code> summary (total/hashtag/account counts). The MCP server adds a 14th tool, <code>get_feed_status</code>, so an agent can check pipeline health and source coverage in one call before trusting a feed pull.</p></div>
 						</div>
