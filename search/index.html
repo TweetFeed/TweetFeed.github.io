@@ -837,13 +837,13 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th scope="col" class="text-nowrap">Date (UTC)</th>
+												<th scope="col" class="d-none d-lg-table-cell text-nowrap">Date (UTC)</th>
 												<th scope="col" class="text-nowrap">User</th>
-												<th scope="col" class="text-nowrap">Type</th>
+												<th scope="col" class="d-none d-lg-table-cell text-nowrap">Type</th>
 												<th scope="col" class="text-nowrap">Value</th>
-												<th scope="col" class="text-nowrap">Tags</th>
-												<th scope="col" class="text-nowrap">Tweet</th>
-												<th scope="col" class="text-nowrap">VT</th>
+												<th scope="col" class="d-none d-lg-table-cell text-nowrap">Tags</th>
+												<th scope="col" class="d-none d-lg-table-cell text-nowrap">Tweet</th>
+												<th scope="col" class="d-none d-lg-table-cell text-nowrap">VT</th>
 											</tr>
 										</thead>
 									</table>
@@ -2204,6 +2204,24 @@
 				language: {
 					emptyTable: EMPTY_HTML,
 					zeroRecords: EMPTY_HTML
+				},
+				// Same classic row format as the week table's loadData() below:
+				// the Type column's text becomes the row class (.url/.domain/
+				// .ip/.sha256/.md5 tints in css/tweetfeed.css, applied at runtime
+				// - see check_runtime_applied_classes), and Date/Type/Tags/Tweet/
+				// VT collapse on mobile exactly like the week table's cells.
+				// Missing since the explorer shipped: its rows rendered white
+				// (caught 2026-09-12 on ?tag=phishing&w=week).
+				createdRow: function(row, data) {
+					var type = String(data[2] || '');
+					$(row).addClass('newRow');
+					if (/^(url|domain|ip|sha256|md5)$/.test(type)) $(row).addClass(type);
+					var $td = $(row).find('td');
+					$td.eq(0).addClass('d-none d-lg-table-cell');
+					$td.eq(2).addClass('d-none d-lg-table-cell');
+					$td.eq(4).addClass('d-none d-lg-table-cell tableTags');
+					$td.eq(5).addClass('d-none d-lg-table-cell');
+					$td.eq(6).addClass('d-none d-lg-table-cell');
 				}
 			});
 			return feTable;
