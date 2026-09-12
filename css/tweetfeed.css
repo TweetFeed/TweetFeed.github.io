@@ -1783,3 +1783,14 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	outline: 2px solid #3a6f96;
 	outline-offset: -2px;
 }
+
+/* Status chip tooltip on /feeds/ (buildStatusLines): three short lines,
+   so wider than Bootstrap's 200px default and left-aligned like a small
+   card instead of centred wrapped prose. Attached via the tooltip's
+   `template` option, so the other tooltips keep the stock bubble. */
+.tf-status-tip .tooltip-inner {
+	max-width: 360px;
+	padding: 6px 10px;
+	text-align: left;
+	line-height: 1.45;
+}

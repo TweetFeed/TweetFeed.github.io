@@ -1166,7 +1166,10 @@
 			// The chip lands after the page-level $('[data-toggle="tooltip"]')
 			// init has already run, so it gets its own tooltip here. Same
 			// Bootstrap bubble as the 28 other tooltips on this page.
-			$('#feedsFreshValue span').tooltip({ html: true, placement: 'bottom', title: lines.join('<br>') });
+			$('#feedsFreshValue span').tooltip({
+				html: true, placement: 'bottom', title: lines.join('<br>'),
+				template: '<div class="tooltip tf-status-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+			});
 		}});
 	});
 	</script>
