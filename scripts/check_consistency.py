@@ -630,6 +630,29 @@ def check_no_chooser_link(pages: list[str]) -> list[str]:
     return failures
 
 
+# Regression guard (2026-09-12): raw.githubusercontent.com must never be the
+# target of a JS-initiated fetch (getJSON/ajax/fetch/safeGet). Every such
+# fetch site-wide has an api.tweetfeed.live route (ETag, max-age=300) and the
+# raw host has no cache story for browsers. TweetFeed.dataUrl(...) builds,
+# JSON-LD DataDownload metadata and human-facing <a href> links are exempt:
+# they do not originate a browser fetch call.
+RAW_GH_FETCH_RE = re.compile(
+    r"(?:\$\.getJSON|\$\.ajax|\bfetch\(|TweetFeed\.safeGet\()"
+    r"\s*\(?\s*['\"]https://raw\.githubusercontent\.com"
+)
+
+
+def check_no_raw_gh_fetch(pages: list[str]) -> list[str]:
+    """No JS fetch call may hit raw.githubusercontent.com directly."""
+    failures: list[str] = []
+    for p in pages:
+        text = read(p)
+        for m in RAW_GH_FETCH_RE.finditer(text):
+            line = text.count("\n", 0, m.start()) + 1
+            failures.append(f"{p}:{line}: JS fetch targets raw.githubusercontent.com directly")
+    return failures
+
+
 def check_stylesheet_present(pages: list[str]) -> list[str]:
     """Every page must link the shared css/tweetfeed.css. tos/index.html
     shipped without it and its nav CTA rendered as unstyled black text -
@@ -2012,6 +2035,15 @@ def main() -> int:
         print(f"[PASS] No raw feed handle in a URL/attribute (site-wide): all {len(pages_all)} pages OK")
     else:
         print(f"[FAIL] No raw feed handle in a URL/attribute (site-wide): {len(failures)} issue(s)")
+        for f in failures:
+            print(f"  - {f}")
+        total_failures += len(failures)
+
+    failures = check_no_raw_gh_fetch(pages_all)
+    if not failures:
+        print(f"[PASS] No JS fetch of raw.githubusercontent.com (site-wide): all {len(pages_all)} pages OK")
+    else:
+        print(f"[FAIL] No JS fetch of raw.githubusercontent.com (site-wide): {len(failures)} issue(s)")
         for f in failures:
             print(f"  - {f}")
         total_failures += len(failures)

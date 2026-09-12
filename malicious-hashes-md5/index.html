@@ -38,7 +38,6 @@
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
 	<link rel="preconnect" href="https://api.tweetfeed.live" crossorigin>
-	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
@@ -693,10 +692,9 @@
 	}
 	$(window).on('load', function() {
 		// counts.json populates the 4 window cards (URL count only).
-		// Hardcoded prod URL because counts.json is read-only public data and
-		// the data-stage repo no longer receives backend writes (run-stage.sh
-		// retired post-cutover 2026-04-10). Stage and prod fetch identical data.
-		$.getJSON('https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/counts.json', function(counts) {
+		// counts.json served by the API (byte-identical to the data-repo file, 5 min
+		// at the edge) so this page shares one origin with the /v1/week/* fetch below.
+		$.getJSON('https://api.tweetfeed.live/v1/counts', function(counts) {
 			for (const period of ['today','week','month','year']) {
 				const w = counts.windows && counts.windows[period];
 				if (!w || !w.types) continue;
