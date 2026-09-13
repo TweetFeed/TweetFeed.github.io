@@ -1,135 +1,71 @@
 # TweetFeed
 
-> TweetFeed is a free, real-time IOC (Indicators of Compromise) aggregator that scrapes the infosec community on Twitter/X. Founded by Daniel López. CC0 1.0 Universal license on every data output (TXT/JSON/CSV/RSS feeds, public REST API, MCP server). Updated every 15 minutes; coverage starts 2021-08-09.
+> TweetFeed is a free, real-time IOC (Indicators of Compromise) aggregator that scrapes the infosec community on Twitter/X, updated every 15 minutes. CC0 1.0 Universal license on every data output (feeds, REST API, MCP server); founded by Daniel López, coverage starts 2021-08-09.
 
 ## Feeds
 
-Every static file below supports conditional requests (`wget --timestamping` / `curl -z`) - a `304` with no body comes back when the file hasn't changed since your last download.
-
-- [Today's IOCs (CSV)](https://tweetfeed.live/feeds/today.csv): current UTC calendar day (from 00:00 UTC, not a rolling 24h), all IOC types.
-- [Past 7 days (CSV)](https://tweetfeed.live/feeds/week.csv): rolling 7d window.
-- [Past 30 days (CSV)](https://tweetfeed.live/feeds/month.csv): rolling 30d window.
-- [Not-yet-corroborated IOCs (CSV)](https://tweetfeed.live/feeds/exclusive.csv): last 30 days, rows not corroborated by the 5 tracked feeds (URLhaus, ThreatFox, MalwareBazaar, USOM, IPsum) as of the last refresh - what TweetFeed has that the others don't (yet), not a quality tier. Regenerated every 15 min.
-- [Past 365 days (CSV)](https://tweetfeed.live/feeds/year.csv): rolling year window (302 redirect to raw GitHub).
-- [RSS feed](https://tweetfeed.live/rss.xml): syndication-friendly.
-- [Per-type RSS](https://tweetfeed.live/rss/type/{url|domain|ip|sha256|md5}.xml): one feed per IOC type; always exists, subscribe to a single indicator type without polling the firehose.
-- [Per-user RSS](https://tweetfeed.live/rss/user/{handle}.xml): one feed per reporter active in the last 7 days; handle lowercase; unavailable (error response) for quiet/unknown users.
-- [MISP manifest](https://tweetfeed.live/misp/manifest.json): MISP feed integration; one event per day, 365 days of history. To subscribe, set the feed URL to `https://tweetfeed.live/misp` (the directory) - MISP appends `/manifest.json` itself.
-- [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{file}): plain-text exports for Pi-hole, AdGuard Home, hosts files, DNS resolvers, firewalls, proxies, IDS, SIEMs and EDR/AV - `domains.txt`, `hosts.txt`, `adguard.txt` (now ships an AdGuard/uBlock filter-list metadata header with `!` comments instead of the generic `#` one - `! Title:`/`! Homepage:`/`! License:`/`! Expires:`/etc - body unchanged), `ips.txt`, `rpz.txt` (DNS Response Policy Zone for BIND/Unbound/PowerDNS Recursor), `dnsmasq.txt` (dnsmasq address=/domain/0.0.0.0 format), `urls.txt` (full URL per line, not just the host, so it also covers `url`-type IOCs on shared/legitimate infrastructure DNS-level blocking can't safely reach), `zeek-intel.txt` (Zeek Intelligence Framework, `#fields` header line only), `wazuh-domains.txt`/`wazuh-ips.txt` (Wazuh CDB lists, `key:tweetfeed` per line, no header; IPv6 keys in `wazuh-ips.txt` double-quoted, CIDR omitted), three corroborated variants - `domains-corroborated.txt`, `ips-corroborated.txt`, `urls-corroborated.txt` - the subset of domains.txt/ips.txt/urls.txt also listed by at least one of TweetFeed's 6-hourly cross-checked feeds (URLhaus, ThreatFox, MalwareBazaar, USOM, IPsum); set membership only, not a quality score, `sha256.txt`/`md5.txt` (one lowercase hex hash per line, for EDR/AV custom-indicator bulk import such as Microsoft Defender for Endpoint's Indicators CSV import or CrowdStrike IOC management; coverage is smaller than domains/URLs since researchers tweet fewer hashes), and `nrd-domains.txt` (subset of domains.txt whose registrable apex had an RDAP creation date <=30 days before TweetFeed's first report; only ~6 in 10 reported domains have a known creation date, and a domain reported this tick can appear one tick later since the check runs post-publish) (16 files total). Rolling 30-day window, rebuilt every 15 minutes, 1:1 mirror of the feed with no additional quality gate; the headerless/lightly-headered files carry no `# Updated:` line, so check freshness via `/v1/manifest` or `Last-Modified` instead.
+- [Today's IOCs (CSV)](https://tweetfeed.live/feeds/today.csv): current UTC calendar day, all IOC types.
+- [Past 7 days (CSV)](https://tweetfeed.live/feeds/week.csv): rolling 7-day window.
+- [Past 30 days (CSV)](https://tweetfeed.live/feeds/month.csv): rolling 30-day window.
+- [Not-yet-corroborated (CSV)](https://tweetfeed.live/feeds/exclusive.csv): last 30 days, not yet seen on 5 tracked cross-check feeds.
+- [Past 365 days (CSV)](https://tweetfeed.live/feeds/year.csv): rolling year window, redirects to raw GitHub.
+- [RSS feed](https://tweetfeed.live/rss.xml): full firehose, syndication-friendly.
+- [Per-type RSS](https://tweetfeed.live/rss/type/{url|domain|ip|sha256|md5}.xml): one feed per IOC type.
+- [Per-user RSS](https://tweetfeed.live/rss/user/{handle}.xml): one feed per active reporter, lowercase handle.
+- [MISP manifest](https://tweetfeed.live/misp/manifest.json): native MISP feed, one event/day, 365 days of history.
+- [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{domains,hosts,adguard,ips,rpz,dnsmasq,urls,zeek-intel,wazuh-domains,wazuh-ips,domains-corroborated,ips-corroborated,urls-corroborated,sha256,md5,nrd-domains}.txt): 16 plain-text formats for Pi-hole, AdGuard, DNS/firewall/IDS/EDR import.
 - [Browseable feed page](https://tweetfeed.live/feeds/): HTML index with stats and download buttons.
 
 ## API
 
 - [API documentation](https://tweetfeed.live/api/): endpoints, examples, query syntax.
-- Conditional requests: every `200` response carries an `ETag` and a `Last-Modified` header; send `If-None-Match` or `If-Modified-Since` on the next request to get a `304` with an empty body instead of re-fetching. `If-None-Match` is the recommended validator (RFC 7232 section 6 precedence when both are sent). Works on every route and on the static feed files.
-- [OpenAPI 3.1 spec](https://tweetfeed.live/openapi.yaml): machine-readable schema covering every route, including `/v1/since/{ISO8601}` for delta sync.
-- [Status](https://api.tweetfeed.live/v1/status): per-artifact freshness facts plus a per-request stale/fresh verdict (`stale`, `age_seconds`, `checked_at`, `any_stale`) and per-source coverage under `sources` (hashtag/account X feed counts, rows attributed in the last 24h, dead-account verdicts). Computed fresh on every request, never served from cache and never conditional (`cache-control: max-age=60` only); headers `X-Feed-Stale`/`X-Feed-Age-Seconds` mirror the verdict without parsing the body.
-- [Manifest](https://api.tweetfeed.live/v1/manifest): every published artifact in one document - byte size, row count, SHA-256, last-updated timestamp, the raw GitHub URL and (where one exists) the API URL. Same `ETag`/`304` conditional-request behaviour as `/v1/counts`.
-- [TAXII 2.1 server](https://api.tweetfeed.live/taxii2/): read-only discovery endpoint for OpenCTI, ThreatQ, taxii2-client and other TIPs. One collection, `b7dc78af-1d12-5059-898c-3f0e77636204` ("TweetFeed IOCs (rolling 31 days)"), no auth, CC0. Poll incrementally with `added_after` on `/objects/`; that returns indicators only, so fetch the referenced `identity` and `marking-definition` objects once by id from `/objects/{id}/`.
-- Base URL: `https://api.tweetfeed.live/`
-- Path pattern: `/v1/{time_window}` or `/v1/{time}/{filter1}` or `/v1/{time}/{filter1}/{filter2}`
-- Time windows: `today`, `week`, `month`, `year`
-- Filters: IOC type (`url`, `domain`, `ip`, `sha256`, `md5`), tag (e.g. `phishing`, `cobaltstrike`, `lockbit`), researcher handle (`@malwrhunterteam`)
-- No authentication. CORS open. JSON only.
-- `?defang=1` on the JSON routes (`/v1/today`, `/v1/week`, `/v1/month`, `/v1/since/...`, `/v1/ioc`; `/v1/year` redirects to a raw CSV and is never defanged) returns defanged values (`hxxps://evil[.]tld`, `1[.]2[.]3[.]4`) instead of live ones - off by default (absent, empty, `0` or `false` leaves the response unchanged; any other value is `400`), and never applied to `tweet`/`user`, `net.*`, `ai.summary`, or `/v1/campaigns*`.
-- Client compatibility: Cloudflare's Browser Integrity Check returns `403` to requests sent with a bare `Python-urllib` or `libwww-perl` User-Agent, on both `tweetfeed.live` and `api.tweetfeed.live`. `requests`, `curl`, `wget`, `feedparser`, `taxii2-client` and browsers all work fine - avoid a bare `urllib.request` call.
-- `date` is the timestamp of the tweet that reported the IOC, not the quoted tweet's timestamp when the source tweet is a quote-tweet.
-- Result cap: 10,000 rows per response, truncated from the oldest end. Only the unfiltered `/v1/month` can exceed it, and only in high-volume months - when it does, the oldest days of the window are dropped and the response carries `X-Result-Truncated: true`. Every `200` carries `X-Result-Count`, `X-Result-Window-Start` and `X-Result-Window-End`, plus `X-Result-Truncated: true` when the cap was hit. For the complete 30-day window use `https://tweetfeed.live/feeds/month.csv`, which is served uncapped.
-- `/v1/since/{ISO8601}` has the same cap but truncates the newest rows instead, so the block you get always starts at your `since`. To page, re-request with `since` set to the returned `X-Result-Window-End` until `X-Result-Truncated` stops appearing.
-- `/v1/since` reaches back 30 days, not 365: it is served from the 30-day window file, since scanning the full year exceeds the Worker's CPU budget. An older `since` still returns `200` with those 30 days and declares the shortfall via `X-Result-Window-Incomplete: true` and `X-Result-Window-Start`. For a deeper backfill pull `https://tweetfeed.live/feeds/year.csv` once, then switch to this endpoint for incremental updates. Beyond 365 days it is `410`: outside the window this route can serve, not outside the dataset. For a single older value, use `/v1/ioc` instead, which also checks the pre-365-day archive.
-- Examples:
-    - `https://api.tweetfeed.live/v1/today` - all IOCs from the current UTC calendar day (since 00:00 UTC).
-    - `https://api.tweetfeed.live/v1/week/phishing/url` - phishing URLs from the last 7 days.
-    - `https://api.tweetfeed.live/v1/month/cobaltstrike` - Cobalt Strike IOCs from the last 30 days.
-    - `https://api.tweetfeed.live/v1/today/@malwrhunterteam/sha256` - SHA256 hashes from a specific researcher.
+- [OpenAPI 3.1 spec](https://tweetfeed.live/openapi.yaml): machine-readable schema, every route.
+- [Status](https://api.tweetfeed.live/v1/status): per-artifact freshness verdict, computed fresh every request.
+- [Manifest](https://api.tweetfeed.live/v1/manifest): every published artifact - size, row count, SHA-256, URLs.
+- [Counts](https://api.tweetfeed.live/v1/counts): live volume totals by window and IOC type.
+- [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com): exact match, 365-day window plus pre-365-day archive.
+- [Delta sync](https://api.tweetfeed.live/v1/since/2026-01-01T00:00:00Z): incremental pulls since a timestamp, 30-day window.
+- [TAXII 2.1 server](https://api.tweetfeed.live/taxii2/): read-only discovery for OpenCTI, ThreatQ, taxii2-client.
+- [Blocklists page](https://tweetfeed.live/blocklists/): human index of the 16 plain-text blocklist formats.
+- REST time windows: `/v1/{today,week,month,year}` plus type/tag/@researcher filters. No auth, CORS open, JSON only.
 
-## Campaigns
+## Campaigns and trends
 
-- [AI-clustered campaigns](https://tweetfeed.live/campaigns/): human page showing daily campaign groupings clustered from the last 30 days of community IOCs.
-- [Campaigns API](https://api.tweetfeed.live/v1/campaigns): JSON, CORS open, no auth, CC0. Returns `version`, `generated_at`, `window` (`month`), `stale`/`stale_since`, `campaign_count`, and a `campaigns` array. Each campaign has `id` (`tfc-<12hex>`), `name`, `context`, `confidence` (`high`/`medium`/`low`), `targeted_brand`, `targeted_sector` (STIX 2.1 industry-sector-ov slug, e.g. `financial-services`), `targeted_country` (ISO 3166-1 alpha-2, e.g. `BR`), `ttps` (0-4 MITRE ATT&CK Enterprise technique ids, e.g. `T1566.002`, AI-inferred infrastructure-only, always an array, may be empty or absent on an older cached document), `first_seen`/`last_seen`, `ioc_count`, `ioc_count_1d`/`ioc_count_7d`/`ioc_count_30d` activity counts, `activity` (an optional sparse per-day IOC histogram, e.g. `{"2026-08-14": 205}`, chronologically sorted, covering every row in the campaign), per-type `types` counts, `enriched_count` (optional int, how many of the campaign's IOCs have an AI enrichment entry - the denominator for `threat_types` and `families` below), `threat_types` and `families` (optional rollups over the full membership, e.g. `{"phishing": 172}` / `{"Joker": 10}`; `families` is usually empty since attribution is sparse), `infra` (optional, present only when the campaign has at least one `ip`-type IOC: `[{"org": "AS13335 Cloudflare, Inc.", "ip_count": 3, "country": "US"}]` sorted by `ip_count` descending, no separate `asn` field - the ASN is embedded in `org`), `tags`, `reporters`, a stratified 25-row sample `iocs` (same shape as the main feed, each row optionally also carrying `ai` (`{"threat_type": "...", "family": "..."}`) and `net` (`{"org": "...", "country": "..."}`) mirroring `GET /v1/ioc`), `member_cluster_ids`, and `anchors` (`registered_domains`, `url_path_patterns`, `tags` used for pre-grouping). Four newer optional keys, each omitted when empty: `patterns` (optional, max 3): deterministic regexes generalised from the campaign's own registered domains, each with `domain_count`, `ioc_count`, `domains_elsewhere_30d` (unowned 30-day feed domains the regex also matches), up to 3 `examples` and `first_seen`/`last_seen`; omitted when no pattern passes the gates, and currently shadow upstream so absent on most documents. `history` (optional): 365-day evidence behind the 30-day card, from a scan of the public `year.csv` - `window_days`, `first_seen_365d`/`last_seen_365d`, `domains_365d`, `iocs_365d`, `iocs_before_window` and `by_pattern` (`{"regex", "domains_365d", "first_seen_365d"}` per naming pattern); omitted when the yearly scan failed or timed out. `related` (optional): phishunt.io detections active at build time on the campaign's domains (`exact`) or naming patterns (`pattern`) - `source`, `checked_at`, `match_count` and up to 10 `matches` of `{"domain", "match", "company", "asn"}`; never members, never in `ioc_count`, omitted when nothing matches or the fetch failed. `anchors.families` (optional): only on an orphan hash/IP bucket that local enrichment attributed to one malware family - such a bucket has no domain/path/tag anchor, the shared family is what makes it one campaign. `name`/`context`/`confidence`, the three `targeted_*` fields and `ttps` are AI-inferred (the `targeted_*` ones may be `null`); counts, dates, types, anchors and the raw `iocs` are derived deterministically from the feed. All the newer campaign-level fields above (`activity`, `enriched_count`, `threat_types`, `families`, `infra`) are optional and may be absent on an older cached or stale-fallback document.
-- [Per-campaign export](https://api.tweetfeed.live/v1/campaigns/<id>): JSON, CORS open, no auth, CC0. The full record for one campaign, fetched directly by campaign id (`tfc-<12hex>`, from `/v1/campaigns`): the same object as one entry of `/v1/campaigns` under `campaign`, plus a complete, unsampled `iocs` array (no 25-row cap). Also available as `/v1/campaigns/<id>.csv` (same 6 columns as `today.csv`) and `/v1/campaigns/<id>.stix.json` (a self-contained STIX 2.1 bundle: Identity, TLP:CLEAR marking, one Indicator per IOC, deterministic bundle id). Unknown or expired id returns `404` with `{"error": "..."}`. Same cache policy as `/v1/campaigns` (`max-age=300, stale-while-revalidate=600, stale-if-error=86400`).
-- [Complete campaign IOC set](https://api.tweetfeed.live/v1/campaigns/iocs): JSON, CORS open, no auth, CC0. The inline `iocs` sample above caps at 25 stratified rows per campaign; this endpoint returns the full uncapped set for every campaign in the current document: `{"version": 1, "generated_at": "...", "campaigns": {"tfc-8fe36f50a145": [ <full IOC rows> ], ...}}`, same six fields per row as `iocs`. `generated_at` matches the main campaigns document - compare the two and fall back to the inline sample on a mismatch. ~231 KB. Same cache policy as `/v1/campaigns` (`max-age=300, stale-while-revalidate=600, stale-if-error=86400`). No MCP tool wraps it; fetch it directly.
-- Clustering is two-stage: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, or a shared specific tag), then AI naming and context generation. The AI only names and describes clusters - it never adds or removes IOCs; every `iocs` entry is verbatim from the feed.
-- Regenerated daily. If a run fails, `stale` is `true` and `stale_since` holds the date of the last successful run; the document falls back to that previous snapshot instead of going empty.
-- MCP tool: `get_campaigns` (optional `brand`, `min_confidence`, `limit`); ships `families`/`threat_types`/`enriched_count`/`infra` per campaign but drops `activity` (token economy - `ioc_count_1d`/`_7d`/`_30d` already answer "how recent"); also forwards `patterns`, `history` and `anchors.families`, but not `related`.
-- MCP tool: `get_campaign_iocs` (`campaign_id` required, optional `type`, `limit` 1-500 default 100): full IOC membership of one campaign (header + rows), the tool-sized equivalent of `/v1/campaigns/<id>`; CSV/STIX 2.1 variants at `/v1/campaigns/<id>.csv` / `.stix.json`.
-
-## Trends
-
-- [IOC trends](https://tweetfeed.live/trends/): human page charting daily IOC volume, top movers, TLD breakdown and novelty rate.
-- Raw data: [trends.json](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/trends.json) (CC0, regenerated with the rest of the feed). Same document, API-fronted: [/v1/trends](https://api.tweetfeed.live/v1/trends), with `ETag`/`304` support.
-- [Contributors](https://api.tweetfeed.live/v1/contributors): today/week/month/year rankings of reporting X/Twitter handles by IOCs, each entry with top 3 IOC types and top 3 tags. Powers [/researchers/](https://tweetfeed.live/researchers/). Same `ETag`/`304` support as `/v1/counts`.
-- `daily`: 31 days of totals plus a per-type breakdown (url/domain/ip/sha256/md5) for a rolling 30-day volume chart.
-- `movers`/`tlds`/`novelty`: current vs previous 7-day tag counts ranked by change magnitude, the top TLDs among malicious domains from the last 30 days, and the share of this week's distinct IOC values that are new versus recurring.
+- [AI-clustered campaigns](https://tweetfeed.live/campaigns/): human page, daily campaign groupings from the last 30 days.
+- [Campaigns API](https://api.tweetfeed.live/v1/campaigns): JSON campaign objects - confidence, TTPs, IOC counts, infra rollups.
+- [Per-campaign export](https://api.tweetfeed.live/v1/campaigns/<id>): full record plus uncapped IOCs; also `.csv` and `.stix.json`.
+- [Full campaign IOC set](https://api.tweetfeed.live/v1/campaigns/iocs): uncapped IOC rows for every campaign, no MCP wrapper.
+- [IOC trends](https://tweetfeed.live/trends/): human page, daily volume, top movers, TLD breakdown, novelty rate.
+- [Trends API](https://api.tweetfeed.live/v1/trends): same trends document, JSON, `ETag`/`304` support.
+- [Contributors](https://api.tweetfeed.live/v1/contributors): today/week/month/year rankings of reporting handles.
 
 ## AI IOC enrichment
 
-- Every 6h, an AI job annotates newly-published IOCs with per-IOC context generated from the source tweet: `summary` (<=200 chars), `family` (malware family or null), `threat_type`, `suggested_tags` (from the feed's tag vocabulary), `confidence` (0-1). The AI only describes - it never adds, removes, or alters IOC values or the canonical CSV feeds.
-- Exposed as the optional `ai` field in [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com) responses (`/v1/ioc?value=<urlencoded-ioc>`, exact match against the live 365-day window plus the pre-365-day archive) and inside the MCP `enrich_ioc` tool output.
-- IOC lookup records also carry an optional `related` field: other IOCs posted in the same source tweets as the looked-up value (sample, max 5); absent when there are none.
-- IOC lookup responses also carry an optional `external` field: cross-feed corroboration from public abuse.ch feeds (URLhaus/ThreatFox/MalwareBazaar); absent when no match or the sidecar is unavailable. A sibling `external_exclusive` boolean is `false` when `external` has entries, `true` when the cross-check resolved and none of the 5 tracked feeds (also USOM, IPsum) lists the value, and absent when unresolved or not found - set membership only, not a verdict.
-- IOC lookup responses also carry an optional `net` field for IP lookups: network metadata (org/ASN, country, city, or a `bogon` flag for reserved ranges) from ipinfo.io, refreshed every 6h; absent for non-IP lookups or when unavailable.
-- IOC lookup responses also carry an optional `reg` field for domain/url lookups: RDAP registrar/creation-date/nameservers plus the IP(s)/ASN resolved at first-seen, plus `age_days_at_report` (UTC days between registration and the first TweetFeed report) and `newly_registered` (true when 30 days or less); covers the 30-day window only, absent when not yet enriched or out of coverage.
-- IOC lookup responses also carry an optional `campaigns` field (max 3, newest last-seen first): id, name, confidence, threat_types, ioc_count and last_seen for each published campaign the IOC belongs to, present regardless of `found`; the MCP `enrich_ioc` tool surfaces it too.
-- Raw sidecar: [enrichment.json](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json) (rolling 30 days, keyed by normalized IOC value, CC0).
+- Every 6h, an AI job annotates new IOCs: summary, malware family, threat type, suggested tags, confidence. Never alters IOC values.
+- Exposed via the `ai` field on [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com) and the MCP `enrich_ioc` tool.
+- Optional sidecar fields on IOC lookup: `related`, `external` (abuse.ch corroboration), `net` (IP org/ASN), `reg` (RDAP), `campaigns`, `archive` (pre-365-day history).
+- [Enrichment sidecar](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json): raw 30-day data, CC0.
 
 ## MCP integration (for AI agents)
 
-- [Agent setup prompt](https://tweetfeed.live/agent-setup/prompt.md): fetch this file and follow it directly - it registers the MCP server, verifies the connection, and reports back. The fastest way for an agent to self-configure, no manual reading required.
-- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): Model Context Protocol server. JSON-RPC 2.0, protocol version 2025-11-25. Tools: `query_iocs`, `check_url`, `check_ip`, `check_hash` (auto-detects MD5/SHA-256), `list_recent_iocs` (date-bounded), `get_tag_info` (per-tag overview with counts + recent IOCs), `get_trending` (top tags / type distribution per window from counts.json), `enrich_ioc` (auto-detect type, 365-day lookup + AI context when available), `get_campaigns` (cluster search by brand/confidence, trimmed sample IOCs), `get_campaign_iocs` (full IOC membership of one campaign), `get_trends` (community trends: 31-day daily series, top movers, TLD distribution, novelty), `search` + `fetch` (ChatGPT connector / deep research interface: ids `ioc:<value>`, `tag:<tag>`, `campaign:<tfc-id>`, results carry tweetfeed.live URLs for citation), `get_feed_status` (live pipeline health: per-artifact freshness verdict plus per-source coverage, no parameters).
-- ChatGPT connector: add `https://mcp.tweetfeed.live/` as a custom connector (Settings > Connectors > Create, or from Deep research), no authentication; the server implements the required `search`/`fetch` pair.
-- [/agents/](https://tweetfeed.live/agents/): human-readable integration guide with config snippets for Claude Desktop, Cursor, Zed.
-- [llms-full.txt](https://tweetfeed.live/llms-full.txt): expanded single-file AI reference (definition, at-a-glance stats, MCP tools, methodology, FAQ optimized for passage extraction).
-- [AGENTS.md](https://tweetfeed.live/AGENTS.md): agents.md-convention guide (MCP-first access order, tool table, discovery links).
-- [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest, 5 skills (general queries, single-IOC lookup, blocklists, trends, campaigns).
-- [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.
+- [Agent setup prompt](https://tweetfeed.live/agent-setup/prompt.md): fetch and follow - registers the MCP server, verifies the connection.
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): MCP server, JSON-RPC 2.0. 14 tools: `query_iocs`, `check_url`, `check_ip`, `check_hash`, `list_recent_iocs`, `get_tag_info`, `get_trending`, `enrich_ioc`, `get_campaigns`, `get_campaign_iocs`, `get_trends`, `search`, `fetch`, `get_feed_status`.
+- [/agents/](https://tweetfeed.live/agents/): integration guide - config snippets for Claude Desktop, Cursor, Zed.
+- [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest, 5 skills.
 - [MCP server card](https://tweetfeed.live/.well-known/mcp/server-card.json): SEP-1649 metadata.
+- [API catalog](https://tweetfeed.live/.well-known/api-catalog): RFC 9727 linkset.
 
-## IOC types covered
+## Coverage
 
-- **URL**: full HTTP/HTTPS URLs flagged as malicious.
-- **Domain**: bare domain names (no scheme/path).
-- **IP**: IPv4 and IPv6 addresses associated with attacker infrastructure.
-- **SHA256**: file content hashes.
-- **MD5**: legacy file content hashes.
-
-## Tag taxonomy
-
-94 malware family / tactic tags including:
-- Malware families: `cobaltstrike`, `lockbit`, `redline`, `qakbot`, `emotet`, etc.
-- Tactic categories: `phishing`, `ransomware`, `c2`, `infostealer`, `loader`, `rat`, etc.
-- Source signal tags: `osint`, `ioc`, `malware`.
-
-Full list rendered in `/dashboard/` filter dropdown.
-
-## Researchers
-
-~95 vetted infosec researchers on Twitter/X feed into the aggregator. Coverage tilts toward English-speaking sources but includes multilingual contributors. See [/researchers/](https://tweetfeed.live/researchers/).
+- IOC types: URL, domain, IPv4/IPv6, SHA-256, MD5 - malicious infrastructure reported by the community.
+- Tag taxonomy: 94 tags across malware families and tactics; full list in the `/dashboard/` filter.
+- [Researchers](https://tweetfeed.live/researchers/): ~95 vetted infosec accounts on Twitter/X feed the aggregator.
 
 ## Use policy
 
-- **Reading / inference / live citation / training**: all allowed. CC0 1.0 means public-domain dedication; no attribution required.
-- **Rate limit**: none on read endpoints. Be reasonable.
-- **Robots.txt Content-Signal**: `search=yes, ai-input=yes, ai-train=yes` (intentional - the data is meant to be consumed).
-- **Contact**: feedback via [GitHub Issues](https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml) or DM @0xDanielLopez on X.
+- CC0 1.0 Universal (public domain, no attribution required); no authentication; no hard rate limit on read endpoints - be reasonable. [Feedback](https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml) via GitHub Issues.
 
-## Landing pages (SEO entry points)
+## More
 
-- [/malicious-urls/](https://tweetfeed.live/malicious-urls/): URLs subset; phishing, scam, malware-delivery, C2.
-- [/malicious-domains/](https://tweetfeed.live/malicious-domains/): domains subset; typo-squats, phishing kits, malware hosts.
-- [/malicious-ips/](https://tweetfeed.live/malicious-ips/): IPs subset; C2 servers, scanners, abuse hosts. High FP risk on shared hosting.
-- [/malicious-hashes-md5/](https://tweetfeed.live/malicious-hashes-md5/): MD5 hashes of malware samples; cross-reference VirusTotal before action.
-- [/malicious-hashes-sha256/](https://tweetfeed.live/malicious-hashes-sha256/): SHA-256 hashes; preferred for forensic chain of custody.
-- [/blocklists/](https://tweetfeed.live/blocklists/): the ready-to-import plain-text blocklist exports, 16 formats, one card per format with its endpoint and a paste-ready curl command.
-- [/threat-intelligence-guide/](https://tweetfeed.live/threat-intelligence-guide/): pillar reference covering IOC types, OSINT vs commercial feeds, MITRE ATT&CK basics, glossary.
-- [/tags/](https://tweetfeed.live/tags/): hub page indexing all 25 tag landing pages, grouped by APT groups / malware families / TTPs. Auto-regenerated daily.
-- [/ioc-types/](https://tweetfeed.live/ioc-types/): hub page indexing the 5 IOC-type landing pages (URLs / domains / IPs / MD5 / SHA-256).
-- Per-tag landing pages (25 total, all regenerated daily by GitHub Action):
-    - **APT groups**: [/tag/kimsuky/](https://tweetfeed.live/tag/kimsuky/) (G0094, DPRK), [/tag/lazarus/](https://tweetfeed.live/tag/lazarus/) (G0032, DPRK financial), [/tag/dprk/](https://tweetfeed.live/tag/dprk/) (umbrella), [/tag/apt/](https://tweetfeed.live/tag/apt/) (broad nation-state).
-    - **Malware families / C2 frameworks**: [/tag/cobaltstrike/](https://tweetfeed.live/tag/cobaltstrike/) (S0154), [/tag/sliver/](https://tweetfeed.live/tag/sliver/) (S1056), [/tag/mythic/](https://tweetfeed.live/tag/mythic/) (SpecterOps), [/tag/havoc/](https://tweetfeed.live/tag/havoc/) (C5pider), [/tag/deimos/](https://tweetfeed.live/tag/deimos/), [/tag/remcos/](https://tweetfeed.live/tag/remcos/) (S0332), [/tag/asyncrat/](https://tweetfeed.live/tag/asyncrat/), [/tag/njrat/](https://tweetfeed.live/tag/njrat/) (S0385), [/tag/netsupportrat/](https://tweetfeed.live/tag/netsupportrat/) (S0480), [/tag/lumma/](https://tweetfeed.live/tag/lumma/) (S1138 stealer), [/tag/interactsh/](https://tweetfeed.live/tag/interactsh/) (OAST canary), [/tag/xworm/](https://tweetfeed.live/tag/xworm/) (modular .NET RAT/stealer, leaked builder).
-    - **TTPs**: [/tag/phishing/](https://tweetfeed.live/tag/phishing/) (T1566), [/tag/c2/](https://tweetfeed.live/tag/c2/) (TA0011), [/tag/ransomware/](https://tweetfeed.live/tag/ransomware/) (T1486), [/tag/malware/](https://tweetfeed.live/tag/malware/), [/tag/scam/](https://tweetfeed.live/tag/scam/), [/tag/stealer/](https://tweetfeed.live/tag/stealer/) (T1555), [/tag/opendir/](https://tweetfeed.live/tag/opendir/), [/tag/malvertising/](https://tweetfeed.live/tag/malvertising/) (T1583.008), [/tag/clickfix/](https://tweetfeed.live/tag/clickfix/) (T1204.004).
-    - Each page has baked counts (today/week/month/year), top-10 recent IOCs from `api.tweetfeed.live/v1/month/<tag>`, About bullets with MITRE / Malpedia / CISA references, FAQ accordion + FAQPage schema, and links to related tags.
-
-## Sister project
-
-- [phishunt.io](https://phishunt.io/) - same author, complementary phishing-detection feed.
+- [Full reference](https://tweetfeed.live/llms-full.txt): everything above expanded, plus methodology, FAQ and every landing page.
+- [phishunt.io](https://phishunt.io/): sister project, same author, complementary phishing-detection feed.
