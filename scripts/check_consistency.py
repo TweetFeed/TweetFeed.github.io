@@ -1285,10 +1285,10 @@ def check_tag_page_count() -> list[str]:
 # The backend's tags.yaml (the full IOC-tag taxonomy, distinct from the 25
 # curated tag LANDING pages checked above) lives in the private backend repo,
 # not in this one, so it cannot be read in CI. Mirrors
-# ../backend/tweetfeed/resources/tags.yaml as of 2026-09-06 (93 tags) - bump
+# ../backend/tweetfeed/resources/tags.yaml as of 2026-09-13 (94 tags) - bump
 # this by hand (and the comment/date) whenever a tag is added or removed
 # there, ideally in the same commit.
-TAXONOMY_TAG_COUNT = 93
+TAXONOMY_TAG_COUNT = 94
 
 TAXONOMY_TAG_COUNT_FILES = [
     "openapi.yaml",
