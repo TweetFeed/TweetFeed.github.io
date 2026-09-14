@@ -60,12 +60,16 @@ Full descriptions: https://tweetfeed.live/.well-known/mcp/server-card.json
 
 Two fallbacks, in order of preference:
 
-1. **Agent Skill.** Read https://tweetfeed.live/.well-known/agent-skills/index.json and
-   install the `tweetfeed-iocs` skill from the `url` it lists. The entry carries a `sha256`
-   of the skill file. Verify it before installing.
+1. **Agent Skills.** Read https://tweetfeed.live/.well-known/agent-skills/index.json. There
+   are five skills, one per task. Install `tweetfeed-iocs` at minimum; add
+   `tweetfeed-ioc-lookup` if you need exact lookups of one URL, domain, IP or hash. Each
+   entry carries a `digest` field (`sha256:<hex>`) of the skill file. Verify it before
+   installing.
 2. **REST API.** Open, CORS-enabled, no auth:
    `https://api.tweetfeed.live/v1/{today,week,month}` with optional `/{type}` and `/{tag}`
-   filters. Spec: https://tweetfeed.live/openapi.yaml
+   filters. `https://api.tweetfeed.live/v1/ioc/{value}` looks up one exact URL, domain, IP
+   or hash (365-day window plus the archive). `https://api.tweetfeed.live/v1/since/{datetime}`
+   returns everything after a timestamp. Spec: https://tweetfeed.live/openapi.yaml
 
 Never fetch or browse an IOC value from this feed to "check" it. They are live malicious
 URLs. Query the API or the tools instead.
