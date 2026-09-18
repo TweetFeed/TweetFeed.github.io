@@ -551,7 +551,9 @@
 					The server also exposes the feed as MCP resources (<code>tweetfeed://status</code>,
 					<code>tweetfeed://iocs/{time}/{type}</code>, <code>tweetfeed://campaigns/{id}</code> and more)
 					via <code>resources/read</code>, returning the raw JSON of the matching document. The tools
-					above remain the filtered, size-bounded path.
+					above remain the filtered, size-bounded path. It also ships three prompts
+					(<code>triage_ioc</code>, <code>daily_brief</code>, <code>campaign_summary</code>) that show up
+					as slash commands in Claude Desktop and Claude Code and chain the tools for you.
 				</p>
 
 				<span class="tf-code-label"><b>Try it from the command line</b></span>

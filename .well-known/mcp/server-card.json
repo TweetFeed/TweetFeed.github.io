@@ -10,7 +10,8 @@
   },
   "capabilities": {
     "tools": {},
-    "resources": {}
+    "resources": {},
+    "prompts": {}
   },
   "protocolVersion": "2025-11-25",
   "license": "CC0-1.0 (data); MIT (server source)",
@@ -112,6 +113,30 @@
     {
       "uriTemplate": "tweetfeed://campaigns/{id}",
       "description": "One AI-clustered campaign by id (tfc- plus 12 hex chars); mirrors /v1/campaigns/{id}."
+    }
+  ],
+  "prompts": [
+    {
+      "name": "triage_ioc",
+      "description": "Step-by-step triage of one IOC (URL/domain/IP/MD5/SHA-256): enrichment, campaign membership, verdict and recommended action.",
+      "arguments": [
+        {"name": "ioc", "required": true},
+        {"name": "context", "required": false}
+      ]
+    },
+    {
+      "name": "daily_brief",
+      "description": "Short brief: feed health, volume and mix, moving tags, active high-confidence campaigns, abused TLDs.",
+      "arguments": [
+        {"name": "window", "required": false}
+      ]
+    },
+    {
+      "name": "campaign_summary",
+      "description": "Hand-off summary of one campaign: context, targeting, ATT&CK techniques, IOC breakdown, infrastructure, block-ready lists, CSV/STIX links.",
+      "arguments": [
+        {"name": "campaign_id", "required": true}
+      ]
     }
   ],
   "dataEndpoints": [

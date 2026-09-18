@@ -121,7 +121,7 @@
 		"url": "https://tweetfeed.live/changelog/",
 		"itemListOrder": "https://schema.org/ItemListOrderDescending",
 		"itemListElement": [
-			{"@type": "ListItem", "position": 1,  "item": {"@type": "BlogPosting", "headline": "MCP resources: the feed as raw JSON documents", "datePublished": "2026-09-18", "url": "https://tweetfeed.live/changelog/", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
+			{"@type": "ListItem", "position": 1,  "item": {"@type": "BlogPosting", "headline": "MCP resources and prompts: raw JSON documents and ready-made recipes", "datePublished": "2026-09-18", "url": "https://tweetfeed.live/changelog/", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
 			{"@type": "ListItem", "position": 2,  "item": {"@type": "BlogPosting", "headline": "ChatGPT connector: search and fetch tools in the MCP server", "datePublished": "2026-09-06", "url": "https://tweetfeed.live/changelog/", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
 			{"@type": "ListItem", "position": 3,  "item": {"@type": "BlogPosting", "headline": "Hash blocklists, newly-registered domains list and AdGuard metadata header", "datePublished": "2026-09-06", "url": "https://tweetfeed.live/changelog/", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
 			{"@type": "ListItem", "position": 4,  "item": {"@type": "BlogPosting", "headline": "Corroborated blocklists, exclusive.csv and external_exclusive", "datePublished": "2026-09-06", "url": "https://tweetfeed.live/changelog/", "author": {"@type": "Person", "name": "Daniel Lopez"}}},
@@ -339,8 +339,8 @@
 								<time datetime="2026-09-18">2026-09-18</time>
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
-							<h3 class="section-heading cl-title">MCP resources: the feed as raw JSON documents</h3>
-							<div class="cl-body"><p>The <a href="../agents/#option-mcp">MCP server</a> now exposes the feed as resources (<code>resources/list</code>, <code>resources/templates/list</code>, <code>resources/read</code>): <code>tweetfeed://status</code>, <code>tweetfeed://counts</code>, <code>tweetfeed://trends</code>, <code>tweetfeed://campaigns</code>, <code>tweetfeed://iocs/{today|week|month}</code>, plus the templates <code>tweetfeed://iocs/{time}/{type}</code> and <code>tweetfeed://campaigns/{id}</code>. Each read returns raw JSON, the same documents the REST API serves. The 14 tools stay the filtered, size-bounded path; resources are for clients that want a whole document (a status panel, a whole-window blocklist sync).</p></div>
+							<h3 class="section-heading cl-title">MCP resources and prompts: raw JSON documents and ready-made recipes</h3>
+							<div class="cl-body"><p>The <a href="../agents/#option-mcp">MCP server</a> now exposes the feed as resources (<code>resources/list</code>, <code>resources/templates/list</code>, <code>resources/read</code>): <code>tweetfeed://status</code>, <code>tweetfeed://counts</code>, <code>tweetfeed://trends</code>, <code>tweetfeed://campaigns</code>, <code>tweetfeed://iocs/{today|week|month}</code>, plus the templates <code>tweetfeed://iocs/{time}/{type}</code> and <code>tweetfeed://campaigns/{id}</code>. Each read returns raw JSON, the same documents the REST API serves. The 14 tools stay the filtered, size-bounded path; resources are for clients that want a whole document (a status panel, a whole-window blocklist sync). The server also ships three prompts (<code>triage_ioc</code>, <code>daily_brief</code>, <code>campaign_summary</code>), user-invoked recipes (slash commands in Claude Desktop and Claude Code) that chain the tools for an IOC triage, a threat brief and a campaign hand-off.</p></div>
 						</div>
 					</article>
 					<article class="card cl-entry">
