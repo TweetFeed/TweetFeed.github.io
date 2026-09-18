@@ -9,7 +9,8 @@
     "endpoint": "https://mcp.tweetfeed.live/"
   },
   "capabilities": {
-    "tools": {}
+    "tools": {},
+    "resources": {}
   },
   "protocolVersion": "2025-11-25",
   "license": "CC0-1.0 (data); MIT (server source)",
@@ -71,6 +72,46 @@
     {
       "name": "get_feed_status",
       "description": "Live health of the TweetFeed pipeline: a freshness verdict per artifact (stale, age_seconds) and source coverage (which hashtag/account X feeds delivered rows in the last 24h and which account feeds are dead). No parameters. Call it before trusting a feed pull, or when a lookup returns nothing, to tell 'no data' from 'stale data'."
+    }
+  ],
+  "resources": [
+    {
+      "uri": "tweetfeed://status",
+      "description": "Pipeline health plus per-source coverage (mirrors /v1/status, ~13 KB, refreshed every 15 min)."
+    },
+    {
+      "uri": "tweetfeed://counts",
+      "description": "Aggregate IOC counts per window/type/tag (mirrors /v1/counts, ~3 KB)."
+    },
+    {
+      "uri": "tweetfeed://trends",
+      "description": "31-day trend analytics (mirrors /v1/trends, ~4 KB, daily)."
+    },
+    {
+      "uri": "tweetfeed://campaigns",
+      "description": "AI-clustered campaigns of the trailing 30 days (mirrors /v1/campaigns, ~300 KB, daily)."
+    },
+    {
+      "uri": "tweetfeed://iocs/today",
+      "description": "Every IOC row shared today (mirrors /v1/today, 10-50 KB)."
+    },
+    {
+      "uri": "tweetfeed://iocs/week",
+      "description": "Last 7 days of IOCs (mirrors /v1/week, 100-300 KB)."
+    },
+    {
+      "uri": "tweetfeed://iocs/month",
+      "description": "Last 30 days of IOCs (mirrors /v1/month, 0.5-1 MB, API caps at 10,000 rows)."
+    }
+  ],
+  "resourceTemplates": [
+    {
+      "uriTemplate": "tweetfeed://iocs/{time}/{type}",
+      "description": "IOCs for a time window (today|week|month) and type (url|domain|ip|sha256|md5); mirrors /v1/{time}/{type}."
+    },
+    {
+      "uriTemplate": "tweetfeed://campaigns/{id}",
+      "description": "One AI-clustered campaign by id (tfc- plus 12 hex chars); mirrors /v1/campaigns/{id}."
     }
   ],
   "dataEndpoints": [

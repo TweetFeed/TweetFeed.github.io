@@ -547,6 +547,13 @@
 					</table>
 				</div>
 
+				<p>
+					The server also exposes the feed as MCP resources (<code>tweetfeed://status</code>,
+					<code>tweetfeed://iocs/{time}/{type}</code>, <code>tweetfeed://campaigns/{id}</code> and more)
+					via <code>resources/read</code>, returning the raw JSON of the matching document. The tools
+					above remain the filtered, size-bounded path.
+				</p>
+
 				<span class="tf-code-label"><b>Try it from the command line</b></span>
 				<pre class="code-block">curl -sX POST https://mcp.tweetfeed.live/ \
   -H 'content-type: application/json' \

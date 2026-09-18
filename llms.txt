@@ -49,7 +49,7 @@
 ## MCP integration (for AI agents)
 
 - [Agent setup prompt](https://tweetfeed.live/agent-setup/prompt.md): fetch and follow - registers the MCP server, verifies the connection.
-- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): MCP server, JSON-RPC 2.0. 14 tools: `query_iocs`, `check_url`, `check_ip`, `check_hash`, `list_recent_iocs`, `get_tag_info`, `get_trending`, `enrich_ioc`, `get_campaigns`, `get_campaign_iocs`, `get_trends`, `search`, `fetch`, `get_feed_status`.
+- [mcp.tweetfeed.live](https://mcp.tweetfeed.live/): MCP server, JSON-RPC 2.0. 14 tools: `query_iocs`, `check_url`, `check_ip`, `check_hash`, `list_recent_iocs`, `get_tag_info`, `get_trending`, `enrich_ioc`, `get_campaigns`, `get_campaign_iocs`, `get_trends`, `search`, `fetch`, `get_feed_status`. Also 7 resources (`tweetfeed://status`, `tweetfeed://counts`, `tweetfeed://trends`, `tweetfeed://campaigns`, `tweetfeed://iocs/{today|week|month}`) and 2 templates (`tweetfeed://iocs/{time}/{type}`, `tweetfeed://campaigns/{id}`) via resources/read: raw JSON of the same documents as the REST API.
 - [/agents/](https://tweetfeed.live/agents/): integration guide - config snippets for Claude Desktop, Cursor, Zed.
 - [Agent Skills index](https://tweetfeed.live/.well-known/agent-skills/index.json): RFC v0.2.0 manifest, 5 skills.
 - [MCP server card](https://tweetfeed.live/.well-known/mcp/server-card.json): SEP-1649 metadata.
