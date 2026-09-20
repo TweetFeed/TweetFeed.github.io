@@ -217,7 +217,7 @@
 				"name": "How do I import TweetFeed into MISP, OpenCTI or Splunk?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "For MISP, under Sync Actions, Feeds, Add, set the feed URL to https://tweetfeed.live/misp - the directory, not the manifest file, because MISP appends /manifest.json itself. It imports one native MISP event per day (365 days) automatically. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+					"text": "For MISP, under Sync Actions, Feeds, Add, set the feed URL to https://tweetfeed.live/misp - the directory, not the manifest file, because MISP appends /manifest.json itself. It imports one native MISP event per day (365 days) automatically. Since MISP 2.5.47 TweetFeed is also in MISP's default feed list: go to Sync Actions, List Feeds, click Load default feed metadata and enable TweetFeed. The TweetFeed Lookup module in misp-modules 3.0.10 or newer (expansion and hover, no API key) enriches IPs, domains, URLs and hashes with the reporter, source tweets, corroboration and campaign membership. For OpenCTI and Splunk, point at the CSV URL and schedule periodic refresh. The Threat Hunting page lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
 				}
 			}
 		]
@@ -807,12 +807,14 @@
 				<!-- Technical reference content intentionally uses heading, lead and list rather than .card or .faq-grid: this is feed documentation, not FAQ content. Reviewed 2026-08-12. -->
 				<h3 id="misp" class="section-heading tf-sect-head">MISP feed</h3>
 				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
+				<p><b>MISP 2.5.47 or newer</b> ships TweetFeed in the default feed list: go to <em>Sync Actions, List Feeds</em>, click <em>Load default feed metadata</em> and enable <b>TweetFeed</b>. Older instances add the feed by hand:</p>
 				<p>Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
 				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL" title="Copy"></i></pre>
 				<ul class="fds-facts">
 					<li>Point MISP at the directory, not at <code>manifest.json</code>. Giving it the manifest file makes it fetch <code>/misp/manifest.json/manifest.json</code>, which does not exist.</li>
 					<li>Only the current day's Event changes between pulls, so after the first sync your instance re-fetches one file.</li>
 					<li>Tags applied to every Event: <code>TweetFeed</code> &middot; <code>type:OSINT</code> &middot; <code>tlp:clear</code>.</li>
+					<li>Enrichment: the <b>TweetFeed Lookup</b> module in <a href="https://github.com/MISP/misp-modules" target="_blank" rel="noopener noreferrer external">misp-modules</a> 3.0.10 or newer (expansion and hover, no API key) adds the reporter, source tweets, corroboration and campaign membership to IP, domain, hostname, URL, MD5 and SHA-256 attributes. Enable <code>Plugin.Enrichment_tweetfeed_enabled</code> under Administration, Server Settings, Plugin settings.</li>
 				</ul>
 				<div class="row">
 					<div class="col-6 col-xl-3">
@@ -930,7 +932,7 @@
 					</details>
 					<details>
 						<summary>How do I import TweetFeed into MISP, OpenCTI or Splunk?</summary>
-						<p>For <b>MISP</b>, under <em>Sync Actions, Feeds, Add</em>, set the feed URL to <code>https://tweetfeed.live/misp</code> - the directory, not the manifest file, because MISP appends <code>/manifest.json</code> itself. It imports one native MISP event per day (365 days) automatically. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
+						<p>For <b>MISP</b>, under <em>Sync Actions, Feeds, Add</em>, set the feed URL to <code>https://tweetfeed.live/misp</code> - the directory, not the manifest file, because MISP appends <code>/manifest.json</code> itself. It imports one native MISP event per day (365 days) automatically. Since MISP 2.5.47 TweetFeed is also in MISP's default feed list: go to Sync Actions, List Feeds, click Load default feed metadata and enable TweetFeed. The TweetFeed Lookup module in misp-modules 3.0.10 or newer (expansion and hover, no API key) enriches IPs, domains, URLs and hashes with the reporter, source tweets, corroboration and campaign membership. For <b>OpenCTI</b> and <b>Splunk</b>, point at the CSV URL and schedule periodic refresh. The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> lists ready-to-copy configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
 					</details>
 				</section>
 			</div>

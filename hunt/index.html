@@ -1119,7 +1119,7 @@ LAST 24 HOURS</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="
 							<h3 class="hnt-title">MISP feed</h3>
 							<a class="hnt-anchor" href="#misp-feed" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">A MISP-format manifest with one Event per day and 365 days of history. In MISP go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b> and give it the feed <em>directory</em> - MISP appends <code>/manifest.json</code> itself.</p>
+						<p class="hnt-desc">A MISP-format manifest with one Event per day and 365 days of history. On MISP 2.5.47 or newer go to <b>Sync Actions &rarr; List Feeds</b>, click <b>Load default feed metadata</b> and enable <b>TweetFeed</b>. On older instances go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b> and give it the feed <em>directory</em> - MISP appends <code>/manifest.json</code> itself.</p>
 						<p class="hnt-meta"><span>Window: 365 days</span></p>
 						<pre id="qs-misp-1" class="code-block"><code class="language-plaintext">URL:           https://tweetfeed.live/misp
 Source format: misp
@@ -1127,6 +1127,7 @@ Provider:      TweetFeed
 Auto-pull:     yes
 Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1" title="Copy"></i></pre>
 						<p class="hnt-note">Save, click <b>Fetch and store all feed data</b> to seed it, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh.</p>
+						<p class="hnt-note">Enrichment: the <b>TweetFeed Lookup</b> module in misp-modules 3.0.10 or newer (expansion and hover, no API key) adds the reporter, source tweets, corroboration and campaign membership to IP, domain, hostname, URL, MD5 and SHA-256 attributes. Enable <code>Plugin.Enrichment_tweetfeed_enabled</code> under Administration &rarr; Server Settings &rarr; Plugin settings.</p>
 					</article>
 					<article class="hnt-card" id="taxii" data-stack="misp">
 						<header class="hnt-head">

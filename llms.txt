@@ -12,7 +12,7 @@
 - [RSS feed](https://tweetfeed.live/rss.xml): full firehose, syndication-friendly.
 - [Per-type RSS](https://tweetfeed.live/rss/type/{url|domain|ip|sha256|md5}.xml): one feed per IOC type.
 - [Per-user RSS](https://tweetfeed.live/rss/user/{handle}.xml): one feed per active reporter, lowercase handle.
-- [MISP manifest](https://tweetfeed.live/misp/manifest.json): native MISP feed, one event/day, 365 days of history.
+- [MISP manifest](https://tweetfeed.live/misp/manifest.json): native MISP feed, one event/day, 365 days of history; in MISP's default feed list since 2.5.47.
 - [Blocklists (TXT)](https://api.tweetfeed.live/v1/blocklist/{domains,hosts,adguard,ips,rpz,dnsmasq,urls,zeek-intel,wazuh-domains,wazuh-ips,domains-corroborated,ips-corroborated,urls-corroborated,sha256,md5,nrd-domains}.txt): 16 plain-text formats for Pi-hole, AdGuard, DNS/firewall/IDS/EDR import.
 - [Browseable feed page](https://tweetfeed.live/feeds/): HTML index with stats and download buttons.
 
