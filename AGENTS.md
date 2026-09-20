@@ -46,4 +46,5 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 - Agent Skills: https://tweetfeed.live/.well-known/agent-skills/index.json (5 skills: general queries, single-IOC lookup, blocklists, trends, campaigns)
 - API catalog (RFC 9727): https://tweetfeed.live/.well-known/api-catalog
 - Human guide: https://tweetfeed.live/agents/
+- Integration recipes (SIEM, EDR, TIP and AI-agent stacks, copy-paste): https://tweetfeed.live/hunt/
 - llms.txt: https://tweetfeed.live/llms.txt - llms-full.txt: https://tweetfeed.live/llms-full.txt

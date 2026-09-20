@@ -19,6 +19,7 @@
 ## API
 
 - [API documentation](https://tweetfeed.live/api/): endpoints, examples, query syntax.
+- [Integration recipes](https://tweetfeed.live/hunt/): copy-paste recipes for the terminal, Splunk, Microsoft Sentinel and Defender, Elastic, IBM QRadar, MISP and TAXII, OpenCTI, IntelOwl, Sigma detection content and AI agents.
 - [OpenAPI 3.1 spec](https://tweetfeed.live/openapi.yaml): machine-readable schema, every route.
 - [Status](https://api.tweetfeed.live/v1/status): per-artifact freshness verdict, computed fresh every request.
 - [Manifest](https://api.tweetfeed.live/v1/manifest): every published artifact - size, row count, SHA-256, URLs.
