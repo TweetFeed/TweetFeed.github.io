@@ -160,6 +160,15 @@
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
 	<style>
+		/* CLS guard (2026-09-20): this page builds its whole body from JS
+		   (#trendsContent 0 -> ~3.6k px on a 412 px phone), so at first paint #content is
+		   ~130 px tall and the sticky footer sits inside the first viewport;
+		   the fill then pushes it off-screen and Lighthouse scores that as
+		   CLS 0.35 (footer.sticky-footer is the shifted node). One viewport of
+		   min-height on #content puts the footer below the fold before JS
+		   runs. Real content is far taller than 100vh at every breakpoint,
+		   so this never adds blank space. */
+		#content { min-height: 100vh; }
 		/* Page-specific rules for /trends/. Kept inline per the pattern already
 		   used on campaigns/index.html rather than adding to the shared
 		   css/tweetfeed.css (avoids a site-wide ?v= bump for rules only this

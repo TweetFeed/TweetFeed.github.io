@@ -161,6 +161,15 @@
 		}
 	</style>
 	<style>
+		/* CLS guard (2026-09-20): this page builds its whole body from JS
+		   (#tfdGrid 0 -> ~2.7k px on a 412 px phone), so at first paint #content is
+		   ~130 px tall and the sticky footer sits inside the first viewport;
+		   the fill then pushes it off-screen and Lighthouse scores that as
+		   CLS 0.36 (footer.sticky-footer is the shifted node). One viewport of
+		   min-height on #content puts the footer below the fold before JS
+		   runs. Real content is far taller than 100vh at every breakpoint,
+		   so this never adds blank space. */
+		#content { min-height: 100vh; }
 		/* Type strip. Pattern copied from .tfc-headline (campaigns/index.html:161-190):
 		   grid with a black border and 1px dividers, tabular-nums figures. */
 		.tfd-types { display:grid; grid-template-columns:repeat(5,1fr); gap:0;

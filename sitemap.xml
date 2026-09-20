@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tweetfeed.live/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://tweetfeed.live/dashboard/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tweetfeed.live/feeds/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -100,7 +100,7 @@
   <!-- Pillar guide (added 2026-04-28) -->
 <url>
     <loc>https://tweetfeed.live/blocklists/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
