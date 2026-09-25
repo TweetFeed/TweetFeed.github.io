@@ -1,6 +1,6 @@
 ---
 name: tweetfeed-blocklists
-description: Fetch ready-made plain-text blocklists built from TweetFeed's rolling 30-day IOC window - domains, hosts-file, AdGuard Home (now with a `!` metadata header), IPs, DNS RPZ, dnsmasq, full URLs, a Zeek Intelligence Framework file, Wazuh CDB lists for domains and IPs, corroborated subsets (domains/ips/urls also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum), SHA-256/MD5 hash lists for EDR/AV bulk import, and a newly-registered-domains list. Invoke when the user wants to import TweetFeed into Pi-hole, AdGuard Home, a firewall, DNS resolver, Zeek, Wazuh or an EDR/AV console without parsing JSON or CSV themselves. Rebuilt every 15 minutes, one indicator per line, CC0 licensed, no auth.
+description: Fetch ready-made plain-text blocklists built from TweetFeed's rolling 30-day IOC window - domains, hosts-file, AdGuard Home (with a `!` metadata header), IPs, DNS RPZ, dnsmasq, full URLs, a Zeek Intelligence Framework file, Wazuh CDB lists for domains and IPs, corroborated subsets (domains/ips/urls also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum), SHA-256/MD5 hash lists for EDR/AV bulk import, and a newly-registered-domains list. Invoke when the user wants to import TweetFeed into Pi-hole, AdGuard Home, a firewall, DNS resolver, Zeek, Wazuh or an EDR/AV console without parsing JSON or CSV themselves. Rebuilt every 15 minutes, one indicator per line, CC0 licensed, no auth.
 ---
 
 # TweetFeed Blocklists

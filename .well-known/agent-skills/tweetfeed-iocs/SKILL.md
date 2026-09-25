@@ -5,7 +5,7 @@ description: Query TweetFeed (tweetfeed.live) for security IOCs shared by the in
 
 # TweetFeed IOC Queries
 
-Public API at `https://api.tweetfeed.live/v1` - no auth, no API key, ~100k req/day free-tier headroom (actual usage ~7k/day as of 2026-04-18). Cloudflare Worker backed, JSON response. Use plain `curl`.
+Public API at `https://api.tweetfeed.live/v1` - no auth, no API key, ~100k req/day free-tier headroom. Cloudflare Worker backed, JSON response. Use plain `curl`.
 
 ## Route pattern
 

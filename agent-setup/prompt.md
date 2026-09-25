@@ -76,9 +76,7 @@ URLs. Query the API or the tools instead.
 
 ## Report back
 
-> TweetFeed is connected. I registered the MCP server at `https://mcp.tweetfeed.live/` in
-> `<client>` and verified it by calling `query_iocs`, which returned `<N>` IOCs for the past
-> week. You can now ask me to look up a URL, domain, IP or file hash against the feed.
+Tell the user TweetFeed is connected: name the MCP endpoint (`https://mcp.tweetfeed.live/`), the client you registered it in, and the IOC count `query_iocs` returned for the past week. Mention that URL, domain, IP and file-hash lookups are now available.
 
 ## Optional: the companion feed
 
