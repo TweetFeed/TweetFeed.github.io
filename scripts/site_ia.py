@@ -278,7 +278,7 @@ INTEGRATIONS = [
     ),
     Integration(
         "MISP", "feeds/#misp", "img/logo_misp.png",
-        "MISP, threat intelligence sharing platform: add the native TweetFeed MISP feed",
+        "MISP, threat intelligence sharing platform with TweetFeed in its default feed list",
         214, 60,
         lockup=True,
     ),
