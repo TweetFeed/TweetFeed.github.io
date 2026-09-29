@@ -296,6 +296,7 @@ INTEGRATIONS = [
 
 INTEGRATIONS_MORE = [
     Link("IBM QRadar", "https://github.com/alan7s/TweetFeed2QRadar", external=True),
+    Link("Yeti", "https://github.com/yeti-platform/yeti", external=True),
     Link("deepdarkCTI", "https://github.com/fastfire/deepdarkCTI/blob/main/others.md", external=True),
     Link("URLVoid", "https://www.urlvoid.com/about-us/", external=True),
     Link("HaGeZi DNS Blocklists", "https://github.com/hagezi/dns-blocklists/blob/main/sources.md", external=True),
