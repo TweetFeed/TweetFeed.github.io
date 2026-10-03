@@ -1828,13 +1828,23 @@
 			hosting: ['rentable cloud hosting', 'rentable hosting']
 		};
 
+		// provider + service without the doubled word: provider alone when the
+		// service is empty or equals it, the service alone when it already
+		// starts with '<provider> ', else both. Region is appended by the caller.
+		function rangeName(provider, service) {
+			if (!provider) return service;
+			if (!service || service.toLowerCase() === provider.toLowerCase()) return provider;
+			if (service.toLowerCase().indexOf(provider.toLowerCase() + ' ') === 0) return service;
+			return provider + ' ' + service;
+		}
+
 		function renderNetRange(range, rangeProviders) {
 			if (!range || typeof range !== 'object' || Array.isArray(range)) return '';
 			var str = function (v) { return (typeof v === 'string' && v) ? v : ''; };
 			var kind = str(range.kind);
 			var known = !!kind && Object.prototype.hasOwnProperty.call(RANGE_KINDS, kind);
 			var provider = str(range.provider);
-			var name = [provider, str(range.service), str(range.region)].filter(Boolean).join(' ');
+			var name = [rangeName(provider, str(range.service)), str(range.region)].filter(Boolean).join(' ');
 			var text = [name, known ? RANGE_KINDS[kind][1] : kind]
 				.filter(Boolean).map(esc).join(' &middot; ');
 			if (!text) return '';
@@ -1845,7 +1855,7 @@
 			var also = Array.isArray(range.also)
 				? range.also.slice(0, 3).map(function (a) {
 						return (a && typeof a === 'object' && !Array.isArray(a))
-							? [str(a.provider), str(a.service)].filter(Boolean).join(' ')
+							? rangeName(str(a.provider), str(a.service))
 							: '';
 					}).filter(Boolean)
 				: [];
