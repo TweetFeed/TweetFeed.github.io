@@ -522,6 +522,9 @@
 		.tfl-net-drop-chip a {
 			color: #1178b3;
 		}
+		.tfl-net-range-chip {
+			cursor: help;
+		}
 
 		/* Feed explorer card (/search/) rules - same inline-per-page pattern as
 		   the .tfl- rules above (this panel is unique to /search/, avoids a
@@ -1804,19 +1807,82 @@
 			);
 		}
 
+		// Official provider IP range (optional net.range field, nested inside
+		// net below, IP lookups only - the ipmeta.json sidecar's `range` key).
+		// It describes the NETWORK (a published provider prefix that contains
+		// this IP), never the IOC value, and it is not a verdict: neutral chip,
+		// no verdict colors. Every value is esc()'d. The tooltip is a Bootstrap
+		// tooltip with data-html: each line is esc()'d once into the HTML string
+		// and the whole string is esc()'d again into the attribute (only <br>
+		// is markup). The worker forwards the per-IP entry only, not the
+		// sidecar-level sources.service_ranges block, so the fetch date shows
+		// only when a caller passes that block's `providers` map as
+		// rangeProviders (renderNet's 2nd argument); otherwise it is omitted.
+		var RANGE_KINDS = {
+			bot: ['crawler or monitor run by the provider', 'crawler'],
+			user_fetcher: ['fetches pages for any user of the provider', 'user fetcher'],
+			relay: ['privacy relay or proxy egress', 'relay'],
+			mail: ['mail sending service', 'mail sender'],
+			service: ['provider service infrastructure', 'service network'],
+			platform: ['shared platform that serves customer content', 'shared platform'],
+			hosting: ['rentable cloud hosting', 'rentable hosting']
+		};
+
+		function renderNetRange(range, rangeProviders) {
+			if (!range || typeof range !== 'object' || Array.isArray(range)) return '';
+			var str = function (v) { return (typeof v === 'string' && v) ? v : ''; };
+			var kind = str(range.kind);
+			var known = !!kind && Object.prototype.hasOwnProperty.call(RANGE_KINDS, kind);
+			var provider = str(range.provider);
+			var name = [provider, str(range.service), str(range.region)].filter(Boolean).join(' ');
+			var text = [name, known ? RANGE_KINDS[kind][1] : kind]
+				.filter(Boolean).map(esc).join(' &middot; ');
+			if (!text) return '';
+
+			var lines = [];
+			if (kind) lines.push('Range type: ' + (known ? RANGE_KINDS[kind][0] : kind) + '.');
+			if (str(range.prefix)) lines.push('Prefix ' + range.prefix);
+			var also = Array.isArray(range.also)
+				? range.also.slice(0, 3).map(function (a) {
+						return (a && typeof a === 'object' && !Array.isArray(a))
+							? [str(a.provider), str(a.service)].filter(Boolean).join(' ')
+							: '';
+					}).filter(Boolean)
+				: [];
+			if (also.length) lines.push('Also in: ' + also.join(', '));
+			if (provider) {
+				var src = str(range.source);
+				var meta = (src && rangeProviders && typeof rangeProviders === 'object' &&
+					Object.prototype.hasOwnProperty.call(rangeProviders, src))
+					? rangeProviders[src] : null;
+				var fetched = (meta && typeof meta === 'object' && typeof meta.fetched_at === 'string' && meta.fetched_at)
+					? meta.fetched_at.slice(0, 10) : '';
+				lines.push('Source: official ' + provider + ' list' + (fetched ? ', fetched ' + fetched : ''));
+			}
+			lines.push('This describes the network, not the IOC.');
+
+			return (
+				'<div class="tfl-net-drop">' +
+					'<span class="tfl-net-drop-chip tfl-net-range-chip" data-toggle="tooltip" data-placement="top" data-html="true" title="' +
+						esc(lines.map(esc).join('<br>')) + '">' + text + '</span>' +
+				'</div>'
+			);
+		}
+
 		// IP network metadata (ipinfo.io sidecar, optional API field, IP
 		// lookups only). Sibling pattern to renderExternal() above - own
 		// tfl-net- namespace, no verdict colors. Every field is esc()'d;
 		// renders only when net is a plain object with at least one of
-		// org/country/city/bogon/drop present.
-		function renderNet(net) {
+		// org/country/city/bogon/range/drop present.
+		function renderNet(net, rangeProviders) {
 			if (!net || typeof net !== 'object' || Array.isArray(net)) return '';
 			var hasOrg = typeof net.org === 'string' && net.org;
 			var hasCountry = typeof net.country === 'string' && net.country;
 			var hasCity = typeof net.city === 'string' && net.city;
 			var isBogon = net.bogon === true;
 			var dropHtml = renderNetDrop(net.drop);
-			if (!hasOrg && !hasCountry && !hasCity && !isBogon && !dropHtml) return '';
+			var rangeHtml = renderNetRange(net.range, rangeProviders);
+			if (!hasOrg && !hasCountry && !hasCity && !isBogon && !rangeHtml && !dropHtml) return '';
 
 			var line = isBogon
 				? 'bogon / reserved range'
@@ -1840,6 +1906,7 @@
 				'<div class="tfl-net" role="note" aria-label="IP network metadata">' +
 					'<div class="tfl-net-header"><i class="fas fa-network-wired"></i> Network</div>' +
 					lineHtml +
+					rangeHtml +
 					dropHtml +
 					ipinfoFootHtml +
 				'</div>'

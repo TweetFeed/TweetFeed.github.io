@@ -13,7 +13,7 @@
       "type": "skill-md",
       "description": "Look up one specific IOC (URL, domain, IP, MD5 or SHA-256 hash) in TweetFeed - the live 365-day window plus the pre-365-day archive - first/last seen, reporters, and optional AI context. Exact match, not a substring search. Public HTTP API, no auth, CC0 licensed.",
       "url": "https://tweetfeed.live/.well-known/agent-skills/tweetfeed-ioc-lookup/SKILL.md",
-      "digest": "sha256:e89b41d8c74232e6c7167e72ef68a86001f93ca0e54a2a41d638696d8f34fb17"
+      "digest": "sha256:3f34d4d0ac488442954434fc36dd608a47e9f63394bba0dfcc126dd9aa6e0a43"
     },
     {
       "name": "tweetfeed-blocklists",

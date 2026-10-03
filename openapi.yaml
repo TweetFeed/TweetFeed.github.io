@@ -1584,6 +1584,56 @@ components:
                       description: |
                         AS name as published by Spamhaus. May be absent even
                         when the asn block itself is present.
+            range:
+              type: object
+              description: |
+                Optional. The official published IP range of a known
+                provider (for example AWS EC2 or GitHub Actions) that
+                contains this IP. It describes the network, not the IOC,
+                and it is not a verdict. Absent means no known range
+                matched.
+              properties:
+                provider:
+                  type: string
+                  description: Provider name, e.g. "GitHub".
+                service:
+                  type: string
+                  description: Provider service the range belongs to, e.g. "actions".
+                region:
+                  type: string
+                  description: Provider region. Empty when the list gives none.
+                kind:
+                  type: string
+                  enum: [bot, user_fetcher, relay, mail, service, platform, hosting]
+                  description: |
+                    What the range is: `bot` (crawler or monitor run by the
+                    provider), `user_fetcher` (fetches pages for any user of
+                    the provider), `relay` (privacy relay or proxy egress),
+                    `mail` (mail sending service), `service` (provider service
+                    infrastructure), `platform` (shared platform that serves
+                    customer content), `hosting` (rentable cloud hosting).
+                source:
+                  type: string
+                  description: Id of the official list the range comes from.
+                prefix:
+                  type: string
+                  description: The published CIDR prefix that contains this IP.
+                  example: "172.168.0.0/15"
+                also:
+                  type: array
+                  maxItems: 3
+                  description: Optional. Other official ranges that also contain this IP.
+                  items:
+                    type: object
+                    properties:
+                      provider:
+                        type: string
+                      service:
+                        type: string
+                      kind:
+                        type: string
+                      source:
+                        type: string
         reg:
           type: object
           description: |

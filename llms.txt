@@ -44,7 +44,7 @@
 
 - Every 6h, an AI job annotates new IOCs: summary, malware family, threat type, suggested tags, confidence. Never alters IOC values.
 - Exposed via the `ai` field on [IOC lookup](https://api.tweetfeed.live/v1/ioc?value=example.com) and the MCP `enrich_ioc` tool.
-- Optional sidecar fields on IOC lookup: `related`, `external` (abuse.ch corroboration), `net` (IP org/ASN), `reg` (RDAP), `campaigns`, `archive` (pre-365-day history).
+- Optional sidecar fields on IOC lookup: `related`, `external` (abuse.ch corroboration), `net` (IP org/ASN, plus the official provider IP range that contains it), `reg` (RDAP), `campaigns`, `archive` (pre-365-day history).
 - [Enrichment sidecar](https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/enrichment.json): raw 30-day data, CC0.
 
 ## MCP integration (for AI agents)
