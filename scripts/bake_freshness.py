@@ -244,7 +244,7 @@ def bake_malicious_page(dirname: str, noun: str, count: int, generated_dt: datet
     # font-family is not set either: body is already Rubik, so it was a
     # redundant third copy of a value defined in the stylesheet.
     line = (
-        '\t\t\t\t<p style="color:#737373; font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">'
+        '\t\t\t\t<p style="color:var(--tf-fg-737373); font-size:13px; margin-top:0.75rem; margin-bottom:1.5rem;">'
         f"Currently tracking {count:,} {noun} reported in the last 30 days. "
         f"Data generated {date_str}.</p>"
     )

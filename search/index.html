@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="Search 7 days of TweetFeed IOC data, or run an exact 365-day IOC lookup with AI-generated threat context. Filter by type, tag or researcher.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="search,ioc,twitter,feed,phishing,scam,malware,osint,socmint,threat,malicious">
@@ -46,9 +65,9 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/table.css?v=6" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -201,14 +220,14 @@
 		.tfl-window-badge {
 			display: inline-block;
 			padding: 2px 9px;
-			border: 1px solid #9a9a9a;
+			border: 1px solid var(--tf-bd-9a9a9a);
 			border-radius: 3px;
 			font-size: 11px;
 			font-family: 'Rubik', sans-serif;
 			font-weight: 600;
 			text-transform: uppercase;
 			letter-spacing: 0.03em;
-			color: #555;
+			color: var(--tf-fg-555);
 			vertical-align: middle;
 			margin-left: 0.4rem;
 		}
@@ -221,18 +240,18 @@
 			align-items: center;
 			gap: 0.5rem;
 			padding: 0.75rem 0;
-			color: #555;
+			color: var(--tf-fg-555);
 			font-family: 'Rubik', sans-serif;
 			font-size: 14px;
 		}
 		.tfl-multi-note {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 12.5px;
 			font-family: 'Rubik', sans-serif;
 			margin: 0 0 0.6rem 0;
 		}
 		.tfl-record {
-			border: 1px solid #1c1c1c;
+			border: 1px solid var(--tf-bd-1c1c1c);
 			border-radius: 4px;
 			padding: 0.9rem 1rem;
 			margin-bottom: 0.9rem;
@@ -255,16 +274,16 @@
 			letter-spacing: 0.03em;
 			white-space: nowrap;
 		}
-		.tfl-type-url { background: #0026E6; color: #fff; }
-		.tfl-type-domain { background: #3399FF; color: #fff; }
-		.tfl-type-ip { background: #02bf0f; color: #fff; }
+		.tfl-type-url { background: var(--tf-bg-0026e6); color: var(--tf-fg-fff); }
+		.tfl-type-domain { background: var(--tf-bg-3399ff); color: var(--tf-fg-fff); }
+		.tfl-type-ip { background: var(--tf-bg-02bf0f); color: var(--tf-fg-fff); }
 		.tfl-type-md5,
-		.tfl-type-sha256 { background: #FFC34D; color: #5c3d12; }
-		.tfl-type-other { background: #e2e3e5; color: #41464b; }
+		.tfl-type-sha256 { background: var(--tf-bg-ffc34d); color: var(--tf-fg-5c3d12); }
+		.tfl-type-other { background: var(--tf-bg-e2e3e5); color: var(--tf-fg-41464b); }
 		.tfl-value {
 			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 			font-size: 13px;
-			background: #f5f5f5;
+			background: var(--tf-bg-f5f5f5);
 			padding: 2px 7px;
 			border-radius: 3px;
 			word-break: break-all;
@@ -274,17 +293,17 @@
 		.tfl-record-header .tf-copy {
 			flex-shrink: 0;
 			cursor: pointer;
-			color: #555;
+			color: var(--tf-fg-555);
 		}
-		.tfl-record-header .tf-copy:hover { color: #000; }
+		.tfl-record-header .tf-copy:hover { color: var(--tf-fg-000); }
 		.tfl-meta {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 12.5px;
 			font-family: 'Rubik', sans-serif;
 			margin: 0 0 0.5rem 0;
 			line-height: 1.6;
 		}
-		.tfl-meta a { color: #1178b3; }
+		.tfl-meta a { color: var(--tf-fg-1178b3); }
 		.tfl-tweets {
 			display: flex;
 			flex-wrap: wrap;
@@ -300,29 +319,29 @@
 		.tfl-tag-chip {
 			display: inline-block;
 			padding: 2px 9px;
-			border: 1px solid black;
+			border: 1px solid var(--tf-bd-000);
 			border-radius: 12px;
 			font-size: 11px;
 			font-family: 'Rubik', sans-serif;
-			background: #fff;
-			color: #1c1c1c;
+			background: var(--tf-bg-fff);
+			color: var(--tf-fg-1c1c1c);
 		}
 		.tfl-corro-chip {
 			display: inline-block;
 			padding: 2px 9px;
-			border: 1px solid #b3b3b3;
+			border: 1px solid var(--tf-bd-b3b3b3);
 			border-radius: 12px;
 			font-size: 11px;
 			font-family: 'Rubik', sans-serif;
-			background: #f5f5f5;
-			color: #595959;
+			background: var(--tf-bg-f5f5f5);
+			color: var(--tf-fg-595959);
 			cursor: help;
 			white-space: nowrap;
 		}
 		.tfl-ai {
-			background: #f8f9fa;
-			border: 1px solid #1c1c1c;
-			border-left: 3px solid #1178b3;
+			background: var(--tf-bg-f8f9fa);
+			border: 1px solid var(--tf-bd-1c1c1c);
+			border-left: 3px solid var(--tf-bd-1178b3);
 			border-radius: 0 4px 4px 0;
 			padding: 0.9rem 1rem;
 			margin-top: 0.4rem;
@@ -331,19 +350,19 @@
 			font-family: 'Rubik', sans-serif;
 			font-weight: 700;
 			font-size: 14px;
-			color: #1c1c1c;
+			color: var(--tf-fg-1c1c1c);
 			margin-bottom: 0.2rem;
 		}
 		.tfl-ai-disclaimer {
 			text-transform: uppercase;
 			font-size: 10.5px;
 			letter-spacing: 0.03em;
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 			font-family: 'Rubik', sans-serif;
 			margin-bottom: 0.6rem;
 		}
 		.tfl-ai-summary {
-			color: #333;
+			color: var(--tf-fg-333);
 			font-size: 14.5px;
 			font-family: 'Rubik', sans-serif;
 			line-height: 1.6;
@@ -352,22 +371,22 @@
 		.tfl-fp-row {
 			margin-top: 0.6rem;
 			padding-top: 0.5rem;
-			border-top: 1px solid #e0e0e0;
-			color: #8a8a8a;
+			border-top: 1px solid var(--tf-bd-e0e0e0);
+			color: var(--tf-fg-8a8a8a);
 			font-size: 12px;
 			font-family: 'Rubik', sans-serif;
 		}
-		.tfl-fp-row a { color: #1178b3; }
+		.tfl-fp-row a { color: var(--tf-fg-1178b3); }
 		.tfl-fp-row .tf-copy {
 			cursor: pointer;
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 		}
-		.tfl-fp-row .tf-copy:hover { color: #000; text-decoration: underline; }
+		.tfl-fp-row .tf-copy:hover { color: var(--tf-fg-000); text-decoration: underline; }
 		.tfl-related {
 			margin: 0 0 0.6rem 0;
 		}
 		.tfl-related-label {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 12.5px;
 			font-family: 'Rubik', sans-serif;
 			margin-bottom: 0.35rem;
@@ -390,26 +409,26 @@
 		.tfl-related-value {
 			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 			font-size: 12px;
-			background: #f5f5f5;
+			background: var(--tf-bg-f5f5f5);
 			padding: 1px 6px;
 			border-radius: 3px;
 			word-break: break-all;
 		}
 		.tfl-related-item .tf-copy {
 			cursor: pointer;
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 		}
-		.tfl-related-item .tf-copy:hover { color: #000; }
+		.tfl-related-item .tf-copy:hover { color: var(--tf-fg-000); }
 		.tfl-related-note {
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 			font-size: 11.5px;
 			font-family: 'Rubik', sans-serif;
 			margin-top: 0.3rem;
 		}
 		.tfl-ext {
-			background: #fff;
-			border: 1px solid #1c1c1c;
-			border-left: 3px solid #595959;
+			background: var(--tf-bg-fff);
+			border: 1px solid var(--tf-bd-1c1c1c);
+			border-left: 3px solid var(--tf-bd-595959);
 			border-radius: 0 4px 4px 0;
 			padding: 0.9rem 1rem;
 			margin-top: 0.4rem;
@@ -418,7 +437,7 @@
 			font-family: 'Rubik', sans-serif;
 			font-weight: 700;
 			font-size: 14px;
-			color: #1c1c1c;
+			color: var(--tf-fg-1c1c1c);
 			margin-bottom: 0.6rem;
 		}
 		.tfl-ext-row {
@@ -427,10 +446,10 @@
 			align-items: center;
 			gap: 0.5rem;
 			padding: 0.35rem 0;
-			border-top: 1px solid #e0e0e0;
+			border-top: 1px solid var(--tf-bd-e0e0e0);
 			font-family: 'Rubik', sans-serif;
 			font-size: 13px;
-			color: #333;
+			color: var(--tf-fg-333);
 		}
 		.tfl-ext-row:first-of-type {
 			border-top: none;
@@ -439,14 +458,14 @@
 		.tfl-ext-src {
 			display: inline-block;
 			padding: 2px 9px;
-			border: 1px solid #595959;
+			border: 1px solid var(--tf-bd-595959);
 			border-radius: 3px;
 			font-size: 11px;
 			font-weight: 600;
 			text-transform: uppercase;
 			letter-spacing: 0.03em;
-			color: #595959;
-			background: #f5f5f5;
+			color: var(--tf-fg-595959);
+			background: var(--tf-bg-f5f5f5);
 			white-space: nowrap;
 		}
 		.tfl-ext-threat {
@@ -455,12 +474,12 @@
 			word-break: break-word;
 		}
 		.tfl-ext-date {
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 			font-size: 12px;
 			white-space: nowrap;
 		}
 		.tfl-ext-link {
-			color: #1178b3;
+			color: var(--tf-fg-1178b3);
 			font-size: 12.5px;
 			white-space: nowrap;
 		}
@@ -468,16 +487,16 @@
 			text-transform: uppercase;
 			font-size: 10.5px;
 			letter-spacing: 0.03em;
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 			font-family: 'Rubik', sans-serif;
 			margin-top: 0.6rem;
 			padding-top: 0.5rem;
-			border-top: 1px solid #e0e0e0;
+			border-top: 1px solid var(--tf-bd-e0e0e0);
 		}
 		.tfl-net {
-			background: #fff;
-			border: 1px solid #1c1c1c;
-			border-left: 3px solid #595959;
+			background: var(--tf-bg-fff);
+			border: 1px solid var(--tf-bd-1c1c1c);
+			border-left: 3px solid var(--tf-bd-595959);
 			border-radius: 0 4px 4px 0;
 			padding: 0.9rem 1rem;
 			margin-top: 0.4rem;
@@ -486,18 +505,18 @@
 			font-family: 'Rubik', sans-serif;
 			font-weight: 700;
 			font-size: 14px;
-			color: #1c1c1c;
+			color: var(--tf-fg-1c1c1c);
 			margin-bottom: 0.4rem;
 		}
 		.tfl-net-row {
 			font-family: 'Rubik', sans-serif;
 			font-size: 13px;
-			color: #333;
+			color: var(--tf-fg-333);
 			word-break: break-word;
 		}
 		.tfl-net-foot {
 			font-size: 11px;
-			color: #8a8a8a;
+			color: var(--tf-fg-8a8a8a);
 			font-family: 'Rubik', sans-serif;
 			margin-top: 0.5rem;
 		}
@@ -511,16 +530,16 @@
 			display: inline-block;
 			max-width: 100%;
 			padding: 2px 9px;
-			border: 1px solid #595959;
+			border: 1px solid var(--tf-bd-595959);
 			border-radius: 3px;
 			font-family: 'Rubik', sans-serif;
 			font-size: 11.5px;
-			color: #333;
-			background: #f5f5f5;
+			color: var(--tf-fg-333);
+			background: var(--tf-bg-f5f5f5);
 			word-break: break-word;
 		}
 		.tfl-net-drop-chip a {
-			color: #1178b3;
+			color: var(--tf-fg-1178b3);
 		}
 		.tfl-net-range-chip {
 			cursor: help;
@@ -546,17 +565,17 @@
 			align-items: center;
 			gap: 0.5rem;
 			padding: 0.75rem 0;
-			color: #555;
+			color: var(--tf-fg-555);
 			font-family: 'Rubik', sans-serif;
 			font-size: 14px;
 		}
 		.tfe-permalink {
 			cursor: pointer;
-			color: #555;
+			color: var(--tf-fg-555);
 			font-size: 14px;
 			font-family: 'Rubik', sans-serif;
 		}
-		.tfe-permalink:hover { color: #000; }
+		.tfe-permalink:hover { color: var(--tf-fg-000); }
 		.tfe-truncate-notice { margin-top: 0.9rem; }
 	</style>
 	<!-- Page Wrapper -->
@@ -567,7 +586,7 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -624,10 +643,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -635,6 +657,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -676,44 +701,44 @@
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
 					<hr class="divider"> <!-- DIVIDER -->
-					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
+					<div class="d-flex justify-content-center"><span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: var(--tf-fg-0000ee);"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Starting 00:00 UTC"></i></span></div>
 					<br>
 					<div class="container" style="text-align: center;">
 						<div class="row h-100 align-items-center">
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
-								<i class="fas fa-link" style="color: #0026E6;font-size: 14px;"></i><br>
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+								<i class="fas fa-link" style="color: var(--tf-fg-0026e6);font-size: 14px;"></i><br>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
-								<i class="fas fa-globe" style="color: #3399FF;font-size: 14px;"></i><br>
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+								<i class="fas fa-globe" style="color: var(--tf-fg-3399ff);font-size: 14px;"></i><br>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
-								<i class="fas fa-map-marker-alt" style="color: #02bf0f;font-size: 14px;"></i><br>
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+								<i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f);font-size: 14px;"></i><br>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
-								<i class="fas fa-file-alt" style="color: #FFC34D;font-size: 14px;"></i><br>
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+								<i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);font-size: 14px;"></i><br>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
-								<i class="fas fa-file-alt" style="color: #ffc591;font-size: 14px;"></i><br>
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+								<i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);font-size: 14px;"></i><br>
 							</div>
 						</div>
 						<div class="row h-100 align-items-center">
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
 								<span>URLs</span>
 								<span class="today-url"></span>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
 								<span>Dom</span>
 								<span class="today-domain"></span>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
 								<span>IPs</span>
 								<span class="today-ip"></span>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
 								<span>SHA256</span>
 								<span class="today-sha256"></span>
 							</div>
-							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:black;">
+							<div class="col h-100 d-flex flex-column" style="font-size: 10px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
 								<span>MD5</span>
 								<span class="today-md5"></span>
 							</div>
@@ -868,7 +893,7 @@
 										</button>
 									</div>
 									<div class="col-6 align-self-center text-center">
-										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: #0000EE;"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Last 7 days"></i></span>
+										<span style="font-size: 14px;">Data from: <em style="font-size: 14px;color: var(--tf-fg-0000ee);"><a href="https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv" target="_blank" rel="noopener noreferrer">week.csv</a></em> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="top" title="Last 7 days"></i></span>
 										<br><br>
 										<div id="lastDateWeek" style="display:none">
 											<span class="card-text" style="font-size:12px;text-align: center;"><em class="lastDateWeekFrom"></em></span>
@@ -881,24 +906,24 @@
 										<br>
 										<div class="container">
 											<div class="row h-100 align-items-center text-center">
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-													<span><i class="fas fa-link" style="color: #0026E6;" data-toggle="tooltip" data-placement="top" title="URLs week"></i> URLs</span>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+													<span><i class="fas fa-link" style="color: var(--tf-fg-0026e6);" data-toggle="tooltip" data-placement="top" title="URLs week"></i> URLs</span>
 													<span class="week-url" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-													<span><i class="fas fa-globe" style="color: #3399FF;" data-toggle="tooltip" data-placement="top" title="Domains week"></i> Domains</span>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+													<span><i class="fas fa-globe" style="color: var(--tf-fg-3399ff);" data-toggle="tooltip" data-placement="top" title="Domains week"></i> Domains</span>
 													<span class="week-domain" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-													<span><i class="fas fa-map-marker-alt" style="color: #02bf0f;" data-toggle="tooltip" data-placement="top" title="IPs week"></i> IPs</span>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+													<span><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f);" data-toggle="tooltip" data-placement="top" title="IPs week"></i> IPs</span>
 													<span class="week-ip" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-													<span><i class="fas fa-file-alt" style="color: #FFC34D;" data-toggle="tooltip" data-placement="top" title="SHA256 hashes week"></i> SHA256</span>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+													<span><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);" data-toggle="tooltip" data-placement="top" title="SHA256 hashes week"></i> SHA256</span>
 													<span class="week-sha256" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
-												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:black;">
-													<span><i class="fas fa-file-alt" style="color: #ffc591;" data-toggle="tooltip" data-placement="top" title="MD5 hashes week"></i> MD5</span>
+												<div class="col h-100 d-flex flex-column" style="font-size: 15px;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">
+													<span><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);" data-toggle="tooltip" data-placement="top" title="MD5 hashes week"></i> MD5</span>
 													<span class="today-md5" style="font-family: 'Rubik', sans-serif;font-weight: 400;"></span>
 												</div>
 											</div> <!-- row -->
@@ -1086,7 +1111,7 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=6"></script>
+	<script src="../js/utils.js?v=8"></script>
 	<script src="../js/demo/datatables-full.js?v=2"></script>
 	<!-- Page level custom scripts -->
 	<script>
@@ -1197,7 +1222,7 @@
 								var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 								var picSrc = '../pics/' + safeUser + '.png';
 
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
+								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
 
 								var value = data[i][3];
 
@@ -1274,7 +1299,7 @@
 							var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 							var picSrc = '../pics/' + safeUser + '.png';
 
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
+							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
 
 							var value = $(this.node()).find('td').eq(3).text().trim();
 							var type = $(this.node()).find('td').eq(2).text().trim();
@@ -1317,19 +1342,19 @@
 			}
 
 			var myvar = '<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['url'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">' + nFormatter(type['url'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['domain'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">' + nFormatter(type['domain'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['ip'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">' + nFormatter(type['ip'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['sha256'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">' + nFormatter(type['sha256'], 2) + '</span>' +
 				'</div>' +
 				'<div class="col">' +
-				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:black;">' + nFormatter(type['md5'], 2) + '</span>' +
+				'<span style="font-size: 16px;font-weight: 600;font-family: \'Rubik\', sans-serif;color:var(--tf-fg-000);">' + nFormatter(type['md5'], 2) + '</span>' +
 				'</div>'
 			$(className).html(myvar);
 
@@ -2405,7 +2430,7 @@
 			var eu = esc(u);
 			var picSrc = '../pics/' + eu + '.png';
 			var fallback = 'https://unavatar.io/twitter/' + eu;
-			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: #1DA1F2;border-color: black;font-family: \'Rubik\', sans-serif;text-decoration: none;color: white;white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
+			return '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + eu + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'' + fallback + '\'" alt="' + eu + '">&nbsp;' + eu + '</a>';
 		}
 
 		// Same value-cell markup as the week table's loadData() above: copy

@@ -11,7 +11,26 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="IOCs tagged ransomware: URLs, domains, IPs and hashes linked to ransomware operators and affiliates. 636 hits last year. Updated every 15 min.">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
+	<meta name="description" content="IOCs tagged ransomware: URLs, domains, IPs and hashes linked to ransomware operators and affiliates. 638 hits last year. Updated every 15 min.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="ransomware,ransomware ioc,ransomware feed,ransomware hash,ransomware c2,t1486,osint,Threat Intelligence">
 	<link rel="canonical" href="https://tweetfeed.live/tag/ransomware/">
@@ -43,9 +62,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../../css/table.css?v=5" rel="stylesheet">
-	<link href="../../css/index.css?v=64" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../../css/table.css?v=6" rel="stylesheet">
+	<link href="../../css/index.css?v=73" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -172,7 +191,7 @@
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -229,10 +248,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -240,6 +262,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -297,10 +322,10 @@
 					</ul>
 				</details>
 				<script>
-					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=6
-					   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-					   56th) does not load it at all, so anything added there would never reach
-					   that page. Inline also means no FOUC.
+					/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+					   (it runs before first paint, js/utils.js loads at the end of <body>).
+					   js/utils.js now loads on every page, threat-intelligence-guide included
+					   (the dark-mode toggle handler lives there).
 					   The markup ships `open`, so desktop and any JS-disabled browser get the
 					   full list with no CSS trickery. CSS cannot close it: a closed <details>
 					   is hidden by the UA through its slot, and an author-level display:block
@@ -324,13 +349,13 @@
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #ransomware</h1>
 					<h2><em>Ransomware infrastructure (URLs, domains, IPs, hashes) extracted from public security researchers</em></h2>
-					<p style="font-size:14px;color:#737373;margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
+					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #ransomware</p>
 					<p style="font-size: 14px;"><em>Ransomware infrastructure (URLs, domains, IPs, hashes)</em></p>
-					<p style="font-size:13px;color:#737373;margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
+					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 
@@ -344,8 +369,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #ransomware</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">2</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #ransomware</p>
 							</div>
 						</div>
 					</div>
@@ -354,8 +379,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">23</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #ransomware</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">25</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #ransomware</p>
 							</div>
 						</div>
 					</div>
@@ -364,8 +389,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">85</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #ransomware</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">87</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #ransomware</p>
 							</div>
 						</div>
 					</div>
@@ -374,13 +399,13 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">636</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #ransomware</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">638</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #ransomware</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Counts as of 2026-10-03. Regenerated daily.</p>
+				<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Counts as of 2026-10-03. Regenerated daily.</p>
 
 				<!-- ============================================================ -->
 				<!-- ABOUT THIS TAG                                                -->
@@ -388,7 +413,7 @@
 				<h3 class="section-heading tf-block-head">About #ransomware</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Definition:</b> malware that encrypts victim data and demands payment for decryption, typically combined with data-theft extortion ("double extortion"). Encryption itself maps to MITRE ATT&amp;CK T1486 (Data Encrypted for Impact).</li>
 							<li><b>Common operators / families:</b> LockBit, BlackCat (ALPHV), Akira, Play, Royal, Hive, Conti (legacy), Clop, BianLian. The #ransomware tag covers infrastructure linked to any of these (intrusion C2, data-leak sites, ESXi-targeting components).</li>
 							<li><b>Detection:</b> EDR rules on file-encryption velocity, OS-vendor anti-tamper protections, immutable backups + air-gapped restore, and infrastructure blocklists for the C2/staging URLs and IPs that precede the encryption phase.</li>
@@ -405,7 +430,7 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 IOCs from the past 30 days. Live JSON: <a href="https://api.tweetfeed.live/v1/month/ransomware" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/month/ransomware</code></a>.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 IOCs from the past 30 days. Live JSON: <a href="https://api.tweetfeed.live/v1/month/ransomware" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/month/ransomware</code></a>.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:720px; margin-bottom:0;">
 								<colgroup>
@@ -424,64 +449,64 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 02:50</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 03, 15:10</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="update-ssl.netlify.app"><i class="tf-copy far fa-copy" data-copy="update-ssl.netlify.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>update-ssl.netlify.app</td>
+										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
+									</tr>
+									<tr>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 03, 15:10</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://update-ssl.netlify.app"><i class="tf-copy far fa-copy" data-copy="http://update-ssl.netlify.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://update-ssl.netlify.app</td>
+										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
+									</tr>
+									<tr>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 02:50</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="neww-project-pdffiles.vercel.app"><i class="tf-copy far fa-copy" data-copy="neww-project-pdffiles.vercel.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>neww-project-pdffiles.vercel.app</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 02:50</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 02:50</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://www.neww-project-pdffiles.vercel.app"><i class="tf-copy far fa-copy" data-copy="http://www.neww-project-pdffiles.vercel.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://www.neww-project-pdffiles.vercel.app</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="get-fix-here-got.vercel.app"><i class="tf-copy far fa-copy" data-copy="get-fix-here-got.vercel.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>get-fix-here-got.vercel.app</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 02, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://get-fix-here-got.vercel.app"><i class="tf-copy far fa-copy" data-copy="http://get-fix-here-got.vercel.app" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://get-fix-here-got.vercel.app</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7fyd.onion"><i class="tf-copy far fa-copy" data-copy="egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7fyd.onion" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7fyd.oni...</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/OpcodeIntel" target="_blank" rel="noopener noreferrer">@OpcodeIntel</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7fyd.onion"><i class="tf-copy far fa-copy" data-copy="http://egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7fyd.onion" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://egm34gsyx65wb6jyqds4esvkskl34barx4robuebjhqpc4dfeavg7...</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/OpcodeIntel" target="_blank" rel="noopener noreferrer">@OpcodeIntel</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 10:32</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-02bf0f); color:var(--tf-fg-fff); border-radius:3px;">ip</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="64.227.132.179"><i class="tf-copy far fa-copy" data-copy="64.227.132.179" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>64.227.132.179</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/OpcodeIntel" target="_blank" rel="noopener noreferrer">@OpcodeIntel</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 04:10</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 04:10</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev"><i class="tf-copy far fa-copy" data-copy="pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
-									</tr>
-									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 04:10</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
-										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev"><i class="tf-copy far fa-copy" data-copy="http://pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://pub-cfed504c29ce4abfb436fd9297bceb4e.r2.dev</td>
-										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/scanmalware" target="_blank" rel="noopener noreferrer">@scanmalware</a></td>
-									</tr>
-									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 30, 00:01</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
-										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="dr5beljvyqljgq5ppro57pgetg4yeslcsexmuhvv3p46wod3odsh3fid.onion"><i class="tf-copy far fa-copy" data-copy="dr5beljvyqljgq5ppro57pgetg4yeslcsexmuhvv3p46wod3odsh3fid.onion" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>dr5beljvyqljgq5ppro57pgetg4yeslcsexmuhvv3p46wod3odsh3fid.oni...</td>
-										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/RansoMonitor" target="_blank" rel="noopener noreferrer">@RansoMonitor</a></td>
 									</tr>
 									</tbody>
 							</table>
@@ -497,14 +522,14 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #ransomware.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #ransomware.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../cobaltstrike/">#CobaltStrike</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../c2/">#C2</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../malware/">#malware</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../stealer/">#stealer</a></li>
 							</ul>
-						<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
+						<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
 					</div>
 				</div>
 
@@ -535,7 +560,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">License</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Ransomware IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -644,7 +669,7 @@
 	<script src="../../vendor/jquery/jquery.min.js"></script>
 	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities (delegated tf-copy click handler) -->
-	<script src="../../js/utils.js?v=6"></script>
+	<script src="../../js/utils.js?v=8"></script>
 	<script>
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
 	</script>

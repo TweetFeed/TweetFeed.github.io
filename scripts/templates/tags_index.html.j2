@@ -11,6 +11,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{{ shell_theme_init }}
 	{%- if noindex %}
 	<meta name="robots" content="noindex, nofollow">
 	{%- endif %}
@@ -40,8 +41,8 @@
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -115,19 +116,19 @@
 				<hr class="divider">
 
 				{% for cat in categories %}
-				<h3 class="section-heading tf-block-head">{{ cat.heading }} <span style="font-size:14px; color:#737373; font-weight:400;">&middot; {{ cat.tags | length }}</span></h3>
+				<h3 class="section-heading tf-block-head">{{ cat.heading }} <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; {{ cat.tags | length }}</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">{{ cat.blurb }}</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">{{ cat.blurb }}</p>
 						<div class="row">
 							{% for t in cat.tags %}
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
-								<a href="../tag/{{ t.slug }}/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid #1c1c1c; border-radius:0; background:#fff;">
+								<a href="../tag/{{ t.slug }}/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; justify-content:space-between; align-items:baseline; gap:0.6rem;">
-										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:#1c1c1c;">#{{ t.display_tag }}</span>
-										<span style="font-size:11px; color:#737373; font-family:'Rubik',sans-serif; white-space:nowrap;">{{ t.year_count }} hits last year &middot; {{ t.month_count }} last month</span>
+										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#{{ t.display_tag }}</span>
+										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">{{ t.year_count }} hits last year &middot; {{ t.month_count }} last month</span>
 									</div>
-									<div style="font-size:12px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">{{ t.subtitle }}</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">{{ t.subtitle }}</div>
 								</a>
 							</div>
 							{% endfor %}
@@ -139,7 +140,7 @@
 				<h3 class="section-heading tf-block-head">Other reference</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
+						<p style="margin-bottom:0; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
 							<a href="../ioc-types/" class="text-decoration-none"><b>IOC types</b></a> &middot; the 5 type-specific hubs (URLs / domains / IPs / MD5 / SHA-256). <br>
 							<a href="../threat-intelligence-guide/" class="text-decoration-none"><b>Threat Intelligence guide</b></a> &middot; ~1,640-word pillar covering IOC types, OSINT vs commercial, MITRE ATT&amp;CK basics, glossary.
 						</p>
@@ -154,7 +155,7 @@
 	</div>
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=6"></script>
+	<script src="../js/utils.js?v=8"></script>
 </body>
 
 </html>

@@ -1,3 +1,244 @@
+/* ═════════════════════════════════════════════════════════════════════════
+   THEME TOKENS (dark mode, 2026-10).  LIGHT IS THE SOURCE OF TRUTH: every
+   value below is the exact hex/rgba that used to be hardcoded further down,
+   so the light rendering is byte-identical. Token name = role + the light
+   literal it carries (--tf-bg-f8f9fa is "a background that is #f8f9fa in
+   light"). The dark values live in ONE block at the end of this file:
+   :root[data-site-theme="dark"]. The attribute is set by the inline init
+   snippet (scripts/templates/_theme_init.html.j2) and flipped by js/utils.js;
+   no attribute (no JS, crawlers) = light, so never key dark CSS on the media
+   query alone.
+   Semantic aliases first (--tf-surface ... : used by the dark overrides of
+   SB Admin 2 / Bootstrap 4 / DataTables, which carry no variables).
+   ═════════════════════════════════════════════════════════════════════════ */
+:root {
+	/* Semantic palette. Light = the values the vendor skin already paints. */
+	--tf-bg: #f8f9fc;
+	--tf-surface: #fff;
+	--tf-surface-2: #f8f9fa;
+	--tf-surface-3: #f2f2f2;
+	--tf-border: #e3e6f0;
+	--tf-input-border: #d1d3e2;
+	--tf-box-border: #000;          /* the crisp 1px boxed border (cards, hr, toolbar, code-block) */
+	--tf-text: #1c1c1c;
+	--tf-text-body: #555;
+	--tf-text-2: #737373;
+	--tf-text-3: #9aa0a6;
+	--tf-accent: #3a6f96;
+	--tf-accent-h: #325d81;
+	--tf-heading: #1178b3;
+	--tf-brand: #1da1f2;
+	--tf-nav-bg: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);
+	--tf-nav-shadow: none;
+	--tf-nav-divider: #0f172a;
+	--tf-nav-hover-bg: #0f172a;
+	--tf-ioc-url: #0026E6;
+	--tf-ioc-domain: #3399FF;
+	--tf-ioc-ip: #02bf0f;
+	--tf-ioc-sha256: #FFC34D;
+	--tf-ioc-md5: #ffc591;
+	/* Backgrounds */
+	--tf-bg-c8f6fd: #c8f6fd;
+	--tf-bg-a0dde6: #a0dde6;
+	--tf-bg-34e3a4: #34e3a4;
+	--tf-bg-ffc591: #ffc591;
+	--tf-bg-ffcc99: #FFCC99;
+	--tf-bg-fff: #fff;
+	--tf-bg-shimmer: rgba(255,255,255,0.6);
+	--tf-bg-e6ecf0: #e6ecf0;
+	--tf-bg-f8f9fa: #f8f9fa;
+	--tf-bg-dedede: #DEDEDE;
+	--tf-bg-copy-btn: rgba(255, 255, 255, 0.9);
+	--tf-bg-ffb454: #ffb454;
+	--tf-bg-3a6f96: #3a6f96;
+	--tf-bg-code-inline: rgba(70, 130, 180, 0.08);
+	--tf-bg-325d81: #325d81;
+	--tf-bg-000: #000;
+	--tf-bg-394eff: #394eff;
+	--tf-bg-docs-hover: rgba(0,0,0,0.03);
+	--tf-bg-docs-active: rgba(29,161,242,0.05);
+	--tf-bg-f2f2f2: #f2f2f2;
+	--tf-bg-cad2e8: #cad2e8;
+	--tf-bg-e1e6f2: #e1e6f2;
+	--tf-bg-1da1f2: #1DA1F2;
+	--tf-bg-15202b: #15202B;
+	--tf-bg-1a394b: #1A394B;
+	--tf-bg-0d8ecf: #0d8ecf;
+	/* Text colours */
+	--tf-fg-1178b3: #1178b3;
+	--tf-fg-6c757d: #6c757d;
+	--tf-fg-555: #555;
+	--tf-fg-000: #000;
+	--tf-fg-5a5a5a: #5a5a5a;
+	--tf-fg-1c1c1c: #1c1c1c;
+	--tf-fg-737373: #737373;
+	--tf-fg-3c4043: #3c4043;
+	--tf-fg-fff: #fff;
+	--tf-fg-4b5563: #4b5563;
+	--tf-fg-3a6f96: #3a6f96;
+	--tf-fg-9aa0a6: #9aa0a6;
+	--tf-fg-c2185b: #c2185b;
+	--tf-fg-444: #444;
+	--tf-fg-222: #222;
+	--tf-fg-1da1f2: #1DA1F2;
+	--tf-fg-6b7280: #6b7280;
+	--tf-fg-6b6d7c: #6b6d7c;
+	--tf-fg-325d81: #325d81;
+	--tf-fg-0f172a: #0f172a;
+	--tf-fg-0000ee: #0000EE;
+	--tf-fg-474747: #474747;
+	/* Borders */
+	--tf-bd-e1e8ed: #e1e8ed;
+	--tf-bd-e1e4e8: #e1e4e8;
+	--tf-bd-ced4da: #ced4da;
+	--tf-bd-000: #000;
+	--tf-bd-e3e6f0: #e3e6f0;
+	--tf-bd-3a6f96: #3a6f96;
+	--tf-bd-code-inline: rgba(70, 130, 180, 0.25);
+	--tf-bd-325d81: #325d81;
+	--tf-bd-394eff: #394eff;
+	--tf-bd-1da1f2: #1DA1F2;
+	--tf-bd-e0e0e0: #e0e0e0;
+	--tf-bd-c0c0c0: #c0c0c0;
+	--tf-bd-1178b3: #1178b3;
+	--tf-bd-tweet-divider: rgba(255, 255, 255, 0.6);
+	--tf-bd-0d8ecf: #0d8ecf;
+	/* Focus outlines */
+	--tf-ol-3a6f96: #3a6f96;
+	/* Added with the inline <style>/style="" conversion of home, search, feeds, docs, about and the tag template */
+	--tf-bd-9a9a9a: #9a9a9a;
+	--tf-bd-1c1c1c: #1c1c1c;
+	--tf-bg-0026e6: #0026E6;
+	--tf-bg-3399ff: #3399FF;
+	--tf-bg-02bf0f: #02bf0f;
+	--tf-bg-ffc34d: #FFC34D;
+	--tf-fg-5c3d12: #5c3d12;
+	--tf-bg-e2e3e5: #e2e3e5;
+	--tf-fg-41464b: #41464b;
+	--tf-bg-f5f5f5: #f5f5f5;
+	--tf-bd-b3b3b3: #b3b3b3;
+	--tf-fg-595959: #595959;
+	--tf-fg-8a8a8a: #8a8a8a;
+	--tf-fg-333: #333;
+	--tf-bd-595959: #595959;
+	--tf-fg-0026e6: #0026E6;
+	--tf-fg-3399ff: #3399FF;
+	--tf-fg-02bf0f: #02bf0f;
+	--tf-fg-ffc34d: #FFC34D;
+	--tf-fg-ffc591: #ffc591;
+	--tf-bd-f0f0f0: #f0f0f0;
+	--tf-fg-777: #777;
+	--tf-bg-0f172a: #0f172a;
+	--tf-bg-1e293b: #1e293b;
+	--tf-bg-0d8bd9: #0d8bd9;
+	--tf-bg-255-255-255-08: rgba(255,255,255,.08);
+	--tf-bd-255-255-255-15: rgba(255,255,255,.15);
+	--tf-bg-255-255-255-15: rgba(255,255,255,.15);
+	/* Navbar (inside .navbar-nav / .nav-cta) */
+	--tf-nav-bd-0f172a: #0f172a;
+	--tf-nav-bg-0f172a: #0f172a;
+	--tf-nav-fg-f1f5f9: #f1f5f9;
+	--tf-nav-bg-1e293b: #1e293b;
+	--tf-nav-bd-1e293b: #1e293b;
+	--tf-nav-fg-fff: #fff;
+	--tf-nav-ol-fff: #fff;
+	--tf-nav-fg-7dd3fc: #7dd3fc;
+	--tf-nav-fg-0f172a: #0f172a;
+	--tf-nav-fg-000: #000;
+	--tf-nav-bg-hover: rgba(255, 255, 255, .28);
+	--tf-nav-bg-fff: #fff;
+	--tf-nav-bd-000: #000;
+	/* Agent-setup pill (.tf-agent-pill) */
+	--tf-pill-bd-0f172a: #0f172a;
+	--tf-pill-bg-0f172a: #0f172a;
+	--tf-pill-fg-f1f5f9: #f1f5f9;
+	--tf-pill-bg-1e293b: #1e293b;
+	--tf-pill-bd-1e293b: #1e293b;
+	--tf-pill-fg-7dd3fc: #7dd3fc;
+	--tf-pill-bg-166534: #166534;
+	--tf-pill-bd-166534: #166534;
+	--tf-pill-fg-ecfdf5: #ecfdf5;
+	--tf-pill-fg-86efac: #86efac;
+	/* Campaigns page (inline <style> converted) */
+	--tf-bg-fff3cd: #fff3cd;
+	--tf-bd-f0ad4e: #f0ad4e;
+	--tf-fg-7a5b12: #7a5b12;
+	--tf-fg-9a9a9a: #9a9a9a;
+	--tf-fg-0b3d2e: #0b3d2e;
+	--tf-bd-9aa0a6: #9aa0a6;
+	--tf-bg-1c1c1c: #1c1c1c;
+	--tf-fg-on-ink: #fff;           /* text on a --tf-bg-1c1c1c fill (hover chips) */
+	--tf-bg-eef0f3: #eef0f3;
+	--tf-bd-c9c9c9: #c9c9c9;
+	--tf-fg-0d5c8a: #0d5c8a;
+	--tf-fg-6b6b6b: #6b6b6b;
+	--tf-bg-737373: #737373;
+	/* T2: hunt / trends / graphs / dashboard / researchers (inline <style> converted) */
+	--tf-bg-f8f9fc: #f8f9fc;
+	--tf-bg-1178b3: #1178b3;
+	--tf-bg-d9d9d9: #d9d9d9;
+	--tf-bg-7bc5f9: #7BC5F9;
+	--tf-bg-cdd8fa: #cdd8fa;
+	--tf-bg-e6d3f7: #e6d3f7;
+	--tf-bg-f7c7d9: #f7c7d9;
+	--tf-bg-c9e4c5: #c9e4c5;
+	--tf-bg-f5e6a3: #f5e6a3;
+	--tf-fg-1a7a3d: #1a7a3d;
+	--tf-fg-b3261e: #b3261e;
+	--tf-bg-9aa0a6: #9aa0a6;
+	--tf-bg-e2574c: #e2574c;
+	--tf-bg-ffc94d: #ffc94d;
+	--tf-fg-4a3300: #4a3300;
+	--tf-bg-c62828: #c62828;
+	--tf-fg-ffffff: #ffffff;
+	--tf-bd-fff: #fff;
+	--tf-bd-0026e6: #0026E6;
+	--tf-bd-3399ff: #3399FF;
+	--tf-bd-02bf0f: #02bf0f;
+	--tf-bd-ffc34d: #FFC34D;
+	--tf-bd-4b5563: #4b5563;
+	--tf-bd-d6d6d6: #d6d6d6;
+	--tf-bd-e6e6e6: #e6e6e6;
+	--tf-fg-808080: #808080;       /* was `color: grey` */	/* Chart.js (trends, graphs): read through TweetFeed.chartTheme() in js/utils.js. Light = the literals the pages hard-coded. */
+	--tf-chart-text: #858796;
+	--tf-chart-title: #6e707e;
+	--tf-chart-grid: rgb(234, 236, 244);
+	--tf-chart-tip-bg: rgb(255,255,255);
+	--tf-chart-tip-border: #dddfeb;
+	--tf-chart-hover-border: rgba(234, 236, 244, 1);
+	--tf-chart-arc-border: #fff;
+	--tf-chart-line-rgb: 78, 115, 223;
+}
+
+/* Navbar skeleton, moved out of two inline style="" attributes of
+   _nav.html.j2 so the dark theme can override them. Light value unchanged:
+   the same gradient, and the mobile bar keeps its margin:0 / padding:0. The
+   desktop bar stays EXACTLY 56 px (8 + 40 + 8): the dark brand line is an
+   inset box-shadow, never a border. */
+.tf-navbar { background: var(--tf-nav-bg); box-shadow: var(--tf-nav-shadow); }
+.navbar.tf-navbar-mobile { margin: 0; padding: 0; }
+
+/* Inline style="" colours of index.html moved to classes (same light values) so
+   the dark theme can remap them. .tf-ink = was color:black; .tf-ink-2 = was
+   color:#737373; .tf-ink-link = was color:#0000EE; .tf-ioc-* = the per-type
+   icon colours. The profile chip (.twitterUser) carried its colours inline on
+   every JS-built row; !important keeps the exact precedence the inline style
+   had over Bootstrap's .btn-primary states. */
+.tf-ink { color: var(--tf-fg-000); }
+.tf-ink-2 { color: var(--tf-fg-737373); }
+.tf-ink-link { color: var(--tf-fg-0000ee); }
+.tf-ioc-url { color: var(--tf-ioc-url); }
+.tf-ioc-domain { color: var(--tf-ioc-domain); }
+.tf-ioc-ip { color: var(--tf-ioc-ip); }
+.tf-ioc-sha256 { color: var(--tf-ioc-sha256); }
+.tf-ioc-md5 { color: var(--tf-ioc-md5); }
+a.twitterUser.btn {
+	background-color: var(--tf-bg-1da1f2) !important;
+	border-color: var(--tf-bd-000) !important;
+	color: var(--tf-fg-fff) !important;
+	text-decoration: none;
+}
+
 /* Sticky-footer support: make #wrapper fill viewport so #content-wrapper's
    flex column (nav + #content with flex:1 + footer) pushes footer to bottom
    on short pages like /ioc-types/. SB Admin 2 ships #content { flex:1 0 auto }
@@ -17,11 +258,11 @@
    audit and the home table lost its row colours until the owner spotted it.
    check_runtime_applied_classes in scripts/check_consistency.py now fails the
    build if any of the five goes missing again. */
-.url { background-color: #c8f6fd; }
-.domain { background-color: #a0dde6; }
-.ip { background-color: #34e3a4; }
-.sha256 { background-color: #ffc591; }
-.md5 { background-color: #FFCC99; }
+.url { background-color: var(--tf-bg-c8f6fd); }
+.domain { background-color: var(--tf-bg-a0dde6); }
+.ip { background-color: var(--tf-bg-34e3a4); }
+.sha256 { background-color: var(--tf-bg-ffc591); }
+.md5 { background-color: var(--tf-bg-ffcc99); }
 
 /* Row highlight animation */
 @keyframes highlight {
@@ -42,8 +283,8 @@
 /* Tweet skeleton placeholder shown while createTweet promise pending.
    Used directly on dashboard.html. */
 .tweet-skeleton {
-	background: #fff;
-	border: 1px solid #e1e8ed;
+	background: var(--tf-bg-fff);
+	border: 1px solid var(--tf-bd-e1e8ed);
 	border-radius: 12px;
 	padding: 14px 16px;
 	min-height: 220px;
@@ -54,19 +295,19 @@
 	content: "";
 	position: absolute;
 	top: 0; left: 0; right: 0; bottom: 0;
-	background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+	background: linear-gradient(90deg, transparent 0%, var(--tf-bg-shimmer) 50%, transparent 100%);
 	animation: tf-shimmer 1.4s infinite;
 }
 @keyframes tf-shimmer {
 	0%   { transform: translateX(-100%); }
 	100% { transform: translateX(100%); }
 }
-.tweet-skeleton .sk-row { background: #e6ecf0; border-radius: 6px; margin-bottom: 10px; }
+.tweet-skeleton .sk-row { background: var(--tf-bg-e6ecf0); border-radius: 6px; margin-bottom: 10px; }
 .tweet-skeleton .sk-head { display: flex; align-items: center; margin-bottom: 14px; }
 .tweet-skeleton .sk-avatar {
 	width: 44px; height: 44px;
 	border-radius: 50%;
-	background: #e6ecf0;
+	background: var(--tf-bg-e6ecf0);
 	margin-right: 10px;
 	flex: 0 0 44px;
 }
@@ -76,7 +317,7 @@
 .tweet-skeleton .sk-body .sk-row:nth-child(1) { width: 95%; height: 10px; }
 .tweet-skeleton .sk-body .sk-row:nth-child(2) { width: 88%; height: 10px; }
 .tweet-skeleton .sk-body .sk-row:nth-child(3) { width: 60%; height: 10px; margin-bottom: 14px; }
-.tweet-skeleton .sk-foot { width: 40%; height: 10px; background: #e6ecf0; border-radius: 6px; }
+.tweet-skeleton .sk-foot { width: 40%; height: 10px; background: var(--tf-bg-e6ecf0); border-radius: 6px; }
 
 /* graphs/index.html: the 20 chart-card titles were <h6> for their default
    1rem size, not for semantics - fixed to <h3> (C4, 2026-08-20) so the page
@@ -87,7 +328,7 @@
    the same one `a { color: #3a6f96 }` further down exists to fight. It was
    the only place on the site still painting it. The class now owns the
    colour so the utility is not needed and cannot out-!important it. */
-.tf-graph-card-title { font-size: 1rem; color: #1178b3; }
+.tf-graph-card-title { font-size: 1rem; color: var(--tf-fg-1178b3); }
 
 /* Unified controls toolbar: one rounded row holding autorefresh switch,
    progress bar, and action buttons. Replaces the legacy 3-card flex-row
@@ -99,8 +340,8 @@
 	align-items: center;
 	gap: 1rem;
 	padding: 0.75rem 1rem;
-	background: #f8f9fa;
-	border: 1px solid #e1e4e8;
+	background: var(--tf-bg-f8f9fa);
+	border: 1px solid var(--tf-bd-e1e4e8);
 	border-radius: 8px;
 	margin-bottom: 1rem;
 }
@@ -112,7 +353,7 @@
 #emptyState {
 	text-align: center;
 	padding: 3rem 1rem;
-	color: #6c757d;
+	color: var(--tf-fg-6c757d);
 }
 .empty-state .empty-icon,
 #emptyState .empty-icon { font-size: 48px; opacity: 0.4; margin-bottom: 1rem; }
@@ -126,7 +367,7 @@
 .tag-search-wrap .tag-search {
 	width: 100%;
 	padding: 0.4rem 0.6rem 0.4rem 2rem;
-	border: 1px solid #ced4da;
+	border: 1px solid var(--tf-bd-ced4da);
 	border-radius: 6px;
 	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
@@ -136,7 +377,7 @@
 	left: 0.6rem;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #6c757d;
+	color: var(--tf-fg-6c757d);
 	font-size: 13px;
 }
 
@@ -149,7 +390,7 @@
    Replacing the previously-inline borders with CSS rules keeps the
    markup clean while preserving the intended visual identity. */
 .card {
-	border: 1px solid black;
+	border: 1px solid var(--tf-bd-000);
 }
 /* Cards rendered with only a card-header (e.g. feeds.html download cards)
    need two adjustments to render cleanly:
@@ -169,11 +410,11 @@
 }
 hr.divider {
 	border: 0;
-	border-top: 1px solid black;
+	border-top: 1px solid var(--tf-bd-000);
 	margin: 1.25rem 0;
 }
 .dash-toolbar {
-	border: 1px solid black;
+	border: 1px solid var(--tf-bd-000);
 }
 /* Code/command block - heavy black border per
    feedback_tweetfeed_black_borders memory. Used on agents.html /
@@ -181,8 +422,8 @@ hr.divider {
    examples. Border is uniform on all four sides per user feedback
    2026-05-02. */
 .code-block {
-	background: #DEDEDE;
-	border: 1px solid black;
+	background: var(--tf-bg-dedede);
+	border: 1px solid var(--tf-bd-000);
 	padding: 0.75rem 1rem;
 	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 	font-size: 13px;
@@ -198,13 +439,13 @@ hr.divider {
 	right: 0.5rem;
 	padding: 3px 7px;
 	font-size: 13px;
-	color: #555;
-	background: rgba(255, 255, 255, 0.9);
-	border: 1px solid black;
+	color: var(--tf-fg-555);
+	background: var(--tf-bg-copy-btn);
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 3px;
 	line-height: 1;
 }
-.code-block .tf-copy.code-copy:hover { color: #000; background: #fff; }
+.code-block .tf-copy.code-copy:hover { color: var(--tf-fg-000); background: var(--tf-bg-fff); }
 
 /* highlight.js repaints its own box INSIDE ours. The default theme ships
    `.hljs{background:#f0f0f0;color:#444}` plus `pre code.hljs{display:block;
@@ -233,35 +474,35 @@ hr.divider {
    load-bearing - the blocklist recipe says which of its seven files is which
    entirely in trailing `#` comments. #5a5a5a is 4.9:1 on the same ground. */
 .code-block .hljs-comment,
-.code-block .hljs-quote { color: #5a5a5a; }
+.code-block .hljs-quote { color: var(--tf-fg-5a5a5a); }
 
 /* Changelog cards: one <article class="card cl-entry"> per entry, with a
    coloured type tag + ISO date in the meta row. Reuses .card black border
    and the IOC-type colour palette so type badges feel native. */
 .cl-entry { margin-bottom: 0.85rem; }
 .cl-meta { display: flex; align-items: center; gap: 0.6rem; font-size: 13px; margin-bottom: 0.55rem; }
-.cl-meta time { color: #555; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-weight: 500; }
-.cl-tag { padding: 1px 8px; border: 1px solid black; border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; background: #fff; color: #000; line-height: 1.5; }
-.cl-tag-launch  { background: #34e3a4; }
-.cl-tag-feature { background: #a0dde6; }
-.cl-tag-tags    { background: #ffc591; }
-.cl-tag-status  { background: #FFCC99; }
+.cl-meta time { color: var(--tf-fg-555); font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-weight: 500; }
+.cl-tag { padding: 1px 8px; border: 1px solid var(--tf-bd-000); border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; background: var(--tf-bg-fff); color: var(--tf-fg-000); line-height: 1.5; }
+.cl-tag-launch  { background: var(--tf-bg-34e3a4); }
+.cl-tag-feature { background: var(--tf-bg-a0dde6); }
+.cl-tag-tags    { background: var(--tf-bg-ffc591); }
+.cl-tag-status  { background: var(--tf-bg-ffcc99); }
 /* Freshness pill on /feeds/ (headline cell fourth slot, fed live from
    /v1/status). Same bordered-badge idiom as .cl-tag above - reused rather
    than duplicated - just with its own two-state palette: green means the
    top-level `stale` boolean from the API is false, amber means true. */
-.tf-fresh, .tf-stale { display: inline-block; padding: 1px 8px; border: 1px solid black; border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: #000; line-height: 1.5; vertical-align: middle; }
-.tf-fresh { background: #34e3a4; }
-.tf-stale { background: #ffb454; }
+.tf-fresh, .tf-stale { display: inline-block; padding: 1px 8px; border: 1px solid var(--tf-bd-000); border-radius: 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; color: var(--tf-fg-000); line-height: 1.5; vertical-align: middle; }
+.tf-fresh { background: var(--tf-bg-34e3a4); }
+.tf-stale { background: var(--tf-bg-ffb454); }
 .cl-title { font-size: 1.2rem; margin: 0 0 0.6rem 0; }
-.cl-body { color: #1c1c1c; font-size: 15px; line-height: 1.6; }
+.cl-body { color: var(--tf-fg-1c1c1c); font-size: 15px; line-height: 1.6; }
 .cl-body p { margin: 0 0 0.5rem 0; }
 .cl-body p:last-child { margin-bottom: 0; }
 .cl-list { padding-left: 1.2rem; margin: 0.4rem 0; line-height: 1.7; }
 .cl-list li + li { margin-top: 0.2rem; }
-.cl-foot { color: #737373; font-size: 13px; margin: 0.75rem 0 0 0; }
+.cl-foot { color: var(--tf-fg-737373); font-size: 13px; margin: 0.75rem 0 0 0; }
 .cl-tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 0.5rem 0 0.75rem 0; }
-.cl-subhead { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: #1c1c1c; }
+.cl-subhead { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--tf-fg-1c1c1c); }
 /* In-page section TOC chip row (hunt.html, feeds.html). Black border +
    steel-blue hover matches the heavy-box design language. */
 .page-toc { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 0 0 1.25rem 0; }
@@ -278,17 +519,17 @@ hr.divider {
 .hnt-chip {
 	display: inline-block;
 	padding: 4px 12px;
-	border: 1px solid black;
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 4px;
 	font-size: 13px;
 	font-family: 'Rubik', sans-serif;
-	color: #000;
-	background: #fff;
+	color: var(--tf-fg-000);
+	background: var(--tf-bg-fff);
 	text-decoration: none;
 	line-height: 1.5;
 }
 .page-toc-chip:hover,
-.hnt-chip:hover { background: #3a6f96; color: #fff; text-decoration: none; }
+.hnt-chip:hover { background: var(--tf-bg-3a6f96); color: var(--tf-fg-fff); text-decoration: none; }
 
 /* Uppercase eyebrow that groups the chips above into named runs. Promoted
    from /feeds/, which was the only page that had it. */
@@ -320,9 +561,9 @@ hr.divider {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 0;
-	border: 1px solid black;
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 3px;
-	background: #fff;
+	background: var(--tf-bg-fff);
 	margin: 0 0 1.25rem;
 }
 .tf-headline-cell {
@@ -330,12 +571,12 @@ hr.divider {
 	text-align: center;
 	font-family: 'Rubik', sans-serif;
 }
-.tf-headline-cell + .tf-headline-cell { border-left: 1px solid black; }
+.tf-headline-cell + .tf-headline-cell { border-left: 1px solid var(--tf-bd-000); }
 .tf-headline-value {
 	font-size: 30px;
 	font-weight: 600;
 	line-height: 1.1;
-	color: #1c1c1c;
+	color: var(--tf-fg-1c1c1c);
 	font-variant-numeric: tabular-nums;
 }
 /* Modifier for the /feeds/ freshness cell: applied by JS ONLY once the live
@@ -345,11 +586,11 @@ hr.divider {
    must keep the normal 30px/24px sizing untouched. */
 .tf-headline-value-sm { font-size: 15px; }
 .tf-headline-label { margin-top: 2px; }
-.tf-headline-sub { font-size: 12px; color: #737373; }
+.tf-headline-sub { font-size: 12px; color: var(--tf-fg-737373); }
 @media (max-width: 767.98px) {
 	.tf-headline { grid-template-columns: repeat(2, 1fr); }
 	.tf-headline-cell:nth-child(3) { border-left: 0; }
-	.tf-headline-cell:nth-child(n+3) { border-top: 1px solid black; }
+	.tf-headline-cell:nth-child(n+3) { border-top: 1px solid var(--tf-bd-000); }
 	.tf-headline-value { font-size: 24px; }
 	.tf-headline-value-sm { font-size: 13px; }
 }
@@ -382,7 +623,7 @@ hr.divider {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
-	color: #4b5563;
+	color: var(--tf-fg-4b5563);
 	text-align: center;
 	margin: 0 0 0.5rem;
 }
@@ -390,9 +631,9 @@ hr.divider {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 0;
-	border: 1px solid black;
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 3px;
-	background: #fff;
+	background: var(--tf-bg-fff);
 	margin: 0 0 1.25rem;
 }
 .tf-integration {
@@ -401,15 +642,15 @@ hr.divider {
 	justify-content: center;
 	min-height: 68px;
 	padding: 0.75rem 0.9rem;
-	background: #fff;
+	background: var(--tf-bg-fff);
 	transition: background-color 0.15s ease;
 }
-.tf-integration + .tf-integration { border-left: 1px solid black; }
+.tf-integration + .tf-integration { border-left: 1px solid var(--tf-bd-000); }
 /* Same #f8f9fa the FAQ uses for an opened <details>: the site's one active
    surface, not a second invented tone. */
 .tf-integration:hover,
-.tf-integration:focus-visible { background: #f8f9fa; }
-.tf-integration:focus-visible { outline: 2px solid #3a6f96; outline-offset: -2px; }
+.tf-integration:focus-visible { background: var(--tf-bg-f8f9fa); }
+.tf-integration:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: -2px; }
 .tf-integration img {
 	display: block;
 	width: auto;
@@ -439,15 +680,15 @@ hr.divider {
 	font-family: 'Rubik', sans-serif;
 	font-size: 13px;
 }
-.tf-integrations-more a { color: #3a6f96; }
+.tf-integrations-more a { color: var(--tf-fg-3a6f96); }
 /* 8px to the left of the dot; to its right 4px plus the ~3.6px of the collapsed
    newline, which comes to the same 8px the flex gap used to give both sides. */
-.tf-integrations-more .tf-int-sep { color: #9aa0a6; margin: 0 4px 0 8px; }
+.tf-integrations-more .tf-int-sep { color: var(--tf-fg-9aa0a6); margin: 0 4px 0 8px; }
 @media (max-width: 575.98px) {
 	.tf-integrations { grid-template-columns: repeat(2, 1fr); }
 	.tf-integration { min-height: 60px; }
 	.tf-integration:nth-child(odd) { border-left: 0; }
-	.tf-integration:nth-child(n+3) { border-top: 1px solid black; }
+	.tf-integration:nth-child(n+3) { border-top: 1px solid var(--tf-bd-000); }
 }
 
 /* Documentation tables (/agents/, /api/). Three problems, all measured.
@@ -472,27 +713,27 @@ hr.divider {
    table.css:5-31 would take over from the <colgroup>. */
 .table-responsive:has(> .tf-doc-table) {
 	max-width: 900px;
-	border: 1px solid #000;
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 3px;
-	background: #fff;
+	background: var(--tf-bg-fff);
 }
 .table.tf-doc-table { width: 100%; max-width: none; margin: 0; }
 .table.tf-doc-table thead th {
-	background: #f8f9fa;
+	background: var(--tf-bg-f8f9fa);
 	border: 0;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid var(--tf-bd-000);
 	padding: 9px 14px;
 	font-family: 'Rubik', sans-serif;
 	font-size: 11px;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: .06em;
-	color: #4b5563;
+	color: var(--tf-fg-4b5563);
 	text-align: left;
 }
 .table.tf-doc-table td {
 	border: 0;
-	border-top: 1px solid #e3e6f0;
+	border-top: 1px solid var(--tf-bd-e3e6f0);
 	padding: 12px 14px;
 	vertical-align: top;
 	text-align: left;
@@ -518,7 +759,7 @@ hr.divider {
 /* The identifier is not the same kind of thing as the tokens quoted inside
    the prose next to it. Both were pink, so the first column read as a wall
    of the same colour as the parameters it describes. */
-.table.tf-doc-table td:first-child code { color: #1c1c1c; font-weight: 600; }
+.table.tf-doc-table td:first-child code { color: var(--tf-fg-1c1c1c); font-weight: 600; }
 /* #e83e8c is Bootstrap's default --pink, which nobody picked: 3.82:1 on
    white and 3.41:1 on the striped rows, under the 4.5:1 AA floor, and it is
    the colour carrying the meaning here (tool names, parameters, enum
@@ -536,7 +777,7 @@ hr.divider {
    (#1178b3) and .faq-section details > p code (#3a6f96, measured 5.3:1 on
    its own tinted ground). .code-block code.hljs -> inherit also still wins,
    so the highlighted blocks of /hunt/ are untouched. */
-code { color: #c2185b; }
+code { color: var(--tf-fg-c2185b); }
 
 /* Tweet skeleton placeholder: keep the soft border (it lives inside a
    card already; nesting two black borders looks heavy). */
@@ -554,7 +795,7 @@ code { color: #c2185b; }
    navbar and the footer already ask for by name. Alegreya Sans SC stays the
    display face for .toph1 and .cardTitle only. Two fonts, no system fallback. */
 .section-heading {
-	color: #1178b3;
+	color: var(--tf-fg-1178b3);
 	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 }
@@ -616,7 +857,7 @@ code { color: #c2185b; }
 .tf-prose p,
 .tf-prose ul,
 .tf-prose ol {
-	color: #737373;
+	color: var(--tf-fg-737373);
 	font-size: 16px;
 	font-family: 'Rubik', sans-serif;
 }
@@ -639,7 +880,7 @@ p.fds-grid-label {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
-	color: #4b5563;
+	color: var(--tf-fg-4b5563);
 }
 p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
 /* A second eyebrow following a card row sat flush against the cards' bottom
@@ -664,7 +905,7 @@ p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
    grey this sheet already uses for .code-block .hljs-comment on the same
    ground: 5.13:1 on #DEDEDE, 7.0:1 on white. */
 .tf-ph {
-	color: #5a5a5a;
+	color: var(--tf-fg-5a5a5a);
 }
 /* JSON response samples run longer than the endpoint one-liners, so they are
    set a step down. Was `style="font-size: 12px"` on 6 .code-blocks. */
@@ -673,7 +914,7 @@ p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
 }
 /* Per-parameter note under a key in the Details table. */
 .tf-param-note {
-	color: #000;
+	color: var(--tf-fg-000);
 }
 /* /agents/ entry points. The three cards under the setup callout were styled
    inline three times over - the card box, its <h4>, its <code> and its <ul> -
@@ -685,7 +926,7 @@ p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
 	text-align: center;
 }
 .agent-setup-callout p {
-	color: #737373;
+	color: var(--tf-fg-737373);
 	font-size: 15px;
 	font-family: 'Rubik', sans-serif;
 	margin-bottom: 0.4rem;
@@ -704,24 +945,24 @@ p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
 .agent-option-card {
 	height: 100%;
 	padding: 1rem;
-	background: #fff;
+	background: var(--tf-bg-fff);
 	transition: background-color 0.15s ease;
 }
 /* Same #f8f9fa the FAQ uses for an opened <details>: one "active surface"
    tone across the site rather than a second invented one. */
 .agent-option-link:hover .agent-option-card,
 .agent-option-link:focus-visible .agent-option-card {
-	background: #f8f9fa;
+	background: var(--tf-bg-f8f9fa);
 }
 .agent-option-card .agent-option-title {
-	color: #1178b3;
+	color: var(--tf-fg-1178b3);
 	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	font-size: 18px;
 	margin-bottom: 0.4rem;
 }
 .agent-option-card code {
-	color: #1178b3;
+	color: var(--tf-fg-1178b3);
 	font-size: 13px;
 	background: transparent;
 	padding: 0;
@@ -730,7 +971,7 @@ p.fds-grid-label { margin: 0 0 0.6rem; font-family: 'Rubik', sans-serif; }
 	margin: 0.6rem 0 0;
 	padding-left: 1.2rem;
 	font-size: 14px;
-	color: #737373;
+	color: var(--tf-fg-737373);
 	font-family: 'Rubik', sans-serif;
 }
 /* Colour and family inherit from .tf-prose p; only the centred measure and
@@ -747,7 +988,7 @@ p.agent-option-note {
    4.5:1 AA floor - the rule set the ink but never the ground it lands on.
    #5a5a5a gives 5.59:1 there. */
 .tf-disclaimer {
-	color: #5a5a5a;
+	color: var(--tf-fg-5a5a5a);
 	font-size: 15px;
 	font-family: 'Rubik', sans-serif;
 }
@@ -765,14 +1006,14 @@ p.agent-option-note {
 	font-size: 14px;
 	line-height: 1.45;
 	font-family: 'Rubik', sans-serif;
-	color: #4b5563;
-	background: #f8f9fa;
-	border: 1px solid #000;
+	color: var(--tf-fg-4b5563);
+	background: var(--tf-bg-f8f9fa);
+	border: 1px solid var(--tf-bd-000);
 	border-bottom: 0;
 	padding: 0.45rem 1rem;
 	margin: 1.5rem 0 0 0;
 }
-.tf-code-label b { font-weight: 600; color: #1c1c1c; }
+.tf-code-label b { font-weight: 600; color: var(--tf-fg-1c1c1c); }
 .tf-code-label + .code-block { margin-top: 0; }
 /* The one label that heads a table instead of a .code-block (agents/, "Available
    tools"): .table-responsive:has(> .tf-doc-table) caps at 900px, so without this
@@ -796,21 +1037,21 @@ p.agent-option-note {
    Used on 11 pages; see /tmp/unify_faqs.py history. */
 .faq-section {
 	font-family: 'Rubik', sans-serif;
-	color: #444;
+	color: var(--tf-fg-444);
 	margin: 0;
 }
 .faq-section > .section-heading,
 .faq-section > h2,
 .faq-section > h3 {
 	font-size: 22px;
-	color: #1178b3;
+	color: var(--tf-fg-1178b3);
 	font-family: 'Rubik', sans-serif;
 	font-weight: 600;
 	margin: 0 0 1rem 0;
 }
 .faq-section details {
-	background: #fff;
-	border: 1px solid black;
+	background: var(--tf-bg-fff);
+	border: 1px solid var(--tf-bd-000);
 	margin: 0 0 0.5rem 0;
 	padding: 0.875rem 1.25rem;
 	transition: background-color 0.15s ease;
@@ -819,14 +1060,14 @@ p.agent-option-note {
 	margin-bottom: 0;
 }
 .faq-section details[open] {
-	background: #f8f9fa;
+	background: var(--tf-bg-f8f9fa);
 }
 .faq-section details > summary {
 	list-style: none;
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: 600;
-	color: #222;
+	color: var(--tf-fg-222);
 	padding-right: 2.25rem;
 	line-height: 1.4;
 	position: relative;
@@ -845,45 +1086,45 @@ p.agent-option-note {
 	text-align: center;
 	font-size: 18px;
 	font-weight: bold;
-	color: #3a6f96;
-	border: 1px solid #3a6f96;
+	color: var(--tf-fg-3a6f96);
+	border: 1px solid var(--tf-bd-3a6f96);
 	border-radius: 3px;
 	transition: background-color 0.15s ease, color 0.15s ease;
 }
 .faq-section details[open] > summary::after {
 	content: '\2212'; /* MINUS SIGN, distinct from hyphen */
-	background: #3a6f96;
-	color: #fff;
+	background: var(--tf-bg-3a6f96);
+	color: var(--tf-fg-fff);
 }
 .faq-section details > summary:hover {
-	color: #1DA1F2;
+	color: var(--tf-fg-1da1f2);
 }
 .faq-section details > summary:hover::after {
-	background: #3a6f96;
-	color: #fff;
+	background: var(--tf-bg-3a6f96);
+	color: var(--tf-fg-fff);
 }
 .faq-section details > p {
 	margin: 0.875rem 0 0 0;
 	font-size: 15px;
 	line-height: 1.6;
-	color: #444;
+	color: var(--tf-fg-444);
 }
 .faq-section details > p code {
-	background: rgba(70, 130, 180, 0.08);
-	border: 1px solid rgba(70, 130, 180, 0.25);
+	background: var(--tf-bg-code-inline);
+	border: 1px solid var(--tf-bd-code-inline);
 	border-radius: 3px;
 	padding: 1px 6px;
 	font-size: 13px;
 	font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-	color: #3a6f96;
+	color: var(--tf-fg-3a6f96);
 }
 .faq-section details > p a {
-	color: #3a6f96;
+	color: var(--tf-fg-3a6f96);
 	text-decoration: underline;
 	text-underline-offset: 2px;
 }
 .faq-section details > p a:hover {
-	color: #1DA1F2;
+	color: var(--tf-fg-1da1f2);
 }
 
 /* TweetFeed brand button - replaces inline
@@ -894,17 +1135,17 @@ p.agent-option-note {
 .btn.btn-tf,
 a.btn.btn-tf,
 button.btn.btn-tf {
-	background-color: #3a6f96;
-	border-color: #3a6f96;
-	color: #fff;
+	background-color: var(--tf-bg-3a6f96);
+	border-color: var(--tf-bd-3a6f96);
+	color: var(--tf-fg-fff);
 }
 .btn.btn-tf:hover,
 .btn.btn-tf:focus,
 .btn.btn-tf:active,
 .btn.btn-tf:not(:disabled):not(.disabled):active {
-	background-color: #325d81;
-	border-color: #325d81;
-	color: #fff;
+	background-color: var(--tf-bg-325d81);
+	border-color: var(--tf-bd-325d81);
+	color: var(--tf-fg-fff);
 }
 
 /* Nav Feedback CTA (.nav-cta) - desktop bar + mobile dropdown row.
@@ -926,10 +1167,10 @@ button.btn.btn-tf {
 	gap: 8px;
 	height: 40px;               /* == the 40px .nav-link box of Docs / About */
 	padding: 0 16px;
-	border: 1px solid #0f172a;
+	border: 1px solid var(--tf-nav-bd-0f172a);
 	border-radius: 999px;
-	background: #0f172a;
-	color: #f1f5f9 !important;
+	background: var(--tf-nav-bg-0f172a);
+	color: var(--tf-nav-fg-f1f5f9) !important;
 	font-family: 'Rubik', sans-serif;
 	font-size: 15px;
 	font-weight: 500;
@@ -946,20 +1187,20 @@ button.btn.btn-tf {
 }
 .navbar-nav li a.btn-tf.nav-cta:hover,
 .navbar-nav li a.btn-tf.nav-cta:focus-visible {
-	background: #1e293b;
+	background: var(--tf-nav-bg-1e293b);
 	background-image: none;     /* index.css `.btn:hover` layers a 15% black gradient */
-	border-color: #1e293b;
+	border-color: var(--tf-nav-bd-1e293b);
 	border-radius: 999px;       /* re-assert: index.css's nav hover wants 50px */
-	color: #fff !important;
+	color: var(--tf-nav-fg-fff) !important;
 	box-shadow: 0 4px 14px rgba(15, 23, 42, .24);
 }
 /* :focus-visible, not :focus - with target=_blank a :focus ring stays stuck on
    the button after the user comes back from the new tab. */
 .navbar-nav li a.btn-tf.nav-cta:focus-visible {
-	outline: 2px solid #fff;
+	outline: 2px solid var(--tf-nav-ol-fff);
 	outline-offset: 2px;
 }
-.navbar-nav li a.btn-tf.nav-cta .nav-cta-icon { color: #7dd3fc; flex-shrink: 0; }
+.navbar-nav li a.btn-tf.nav-cta .nav-cta-icon { color: var(--tf-nav-fg-7dd3fc); flex-shrink: 0; }
 .navbar-nav li a.btn-tf.nav-cta .nav-cta-ext  { font-size: .75em; opacity: .75; flex-shrink: 0; }
 
 /* Mobile dropdown row: the menu is 175px wide with `padding: 8px 0`, so a
@@ -988,7 +1229,7 @@ button.btn.btn-tf {
 	height: 30px;
 	border: 1px solid transparent;
 	border-radius: 4px;
-	color: #6c757d;
+	color: var(--tf-fg-6c757d);
 	text-decoration: none;
 	line-height: 1;
 	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
@@ -1001,17 +1242,17 @@ button.btn.btn-tf {
 	text-decoration: none;
 }
 .tf-action:focus-visible {
-	outline: 2px solid #3a6f96;
+	outline: 2px solid var(--tf-ol-3a6f96);
 	outline-offset: 2px;
 }
 .tf-action.tf-action-tweet:hover {
-	background: #000;
-	border-color: #000;
-	color: #fff;
+	background: var(--tf-bg-000);
+	border-color: var(--tf-bd-000);
+	color: var(--tf-fg-fff);
 }
 .tf-action.tf-action-vt:hover {
-	background: #394eff;
-	border-color: #394eff;
+	background: var(--tf-bg-394eff);
+	border-color: var(--tf-bd-394eff);
 }
 .tf-action img {
 	width: 18px;
@@ -1034,19 +1275,19 @@ button.btn.btn-tf {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	background: #fff;
-	border: 1px solid black;
+	background: var(--tf-bg-fff);
+	border: 1px solid var(--tf-bd-000);
 	padding: 6px 14px;
 	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
 	font-weight: 600;
-	color: #222;
+	color: var(--tf-fg-222);
 	cursor: pointer;
 	user-select: none;
 	transition: background-color .15s, color .15s;
 }
-.tf-live:hover { background: #f8f9fa; }
-.tf-live:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+.tf-live:hover { background: var(--tf-bg-f8f9fa); }
+.tf-live:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 .tf-live-dot {
 	width: 9px;
 	height: 9px;
@@ -1055,7 +1296,7 @@ button.btn.btn-tf {
 	box-shadow: 0 0 0 0 rgba(22,163,74,.6);
 	animation: tf-live-pulse 6s ease-out infinite;
 }
-.tf-live[aria-pressed="false"] { color: #6b7280; }
+.tf-live[aria-pressed="false"] { color: var(--tf-fg-6b7280); }
 .tf-live[aria-pressed="false"] .tf-live-dot {
 	background: #94a3b8;
 	animation: none;
@@ -1160,7 +1401,7 @@ button.btn.btn-tf {
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
-	color: #737373;
+	color: var(--tf-fg-737373);
 	padding: 18px 12px 6px;
 	cursor: default;
 }
@@ -1170,7 +1411,7 @@ button.btn.btn-tf {
 	padding: 5px 12px;
 	font-size: 14px;
 	font-weight: 500;
-	color: #444;
+	color: var(--tf-fg-444);
 	text-decoration: none;
 	border-left: 2px solid transparent;
 	transition: color 0.15s, background 0.15s, border-color 0.15s;
@@ -1183,15 +1424,15 @@ button.btn.btn-tf {
 	font-size: 13px;
 }
 .docs-sidebar a:hover {
-	color: #1c1c1c;
-	background: rgba(0,0,0,0.03);
+	color: var(--tf-fg-1c1c1c);
+	background: var(--tf-bg-docs-hover);
 	text-decoration: none;
 }
 .docs-sidebar a.active {
-	color: #1DA1F2;
-	border-left-color: #1DA1F2;
+	color: var(--tf-fg-1da1f2);
+	border-left-color: var(--tf-bd-1da1f2);
 	font-weight: 600;
-	background: rgba(29,161,242,0.05);
+	background: var(--tf-bg-docs-active);
 }
 .docs-content {
 	flex: 1;
@@ -1227,7 +1468,7 @@ button.btn.btn-tf {
 		max-height: none;
 		overflow: visible;
 		padding: 0;
-		border-bottom: 1px solid #e0e0e0;
+		border-bottom: 1px solid var(--tf-bd-e0e0e0);
 	}
 	.docs-nav-summary {
 		display: flex;
@@ -1238,7 +1479,7 @@ button.btn.btn-tf {
 		font-family: 'Rubik', sans-serif;
 		font-size: 14px;
 		font-weight: 600;
-		color: #1c1c1c;
+		color: var(--tf-fg-1c1c1c);
 		cursor: pointer;
 		list-style: none;
 	}
@@ -1262,14 +1503,14 @@ button.btn.btn-tf {
 	}
 	.docs-sidebar a,
 	.docs-sidebar a.docs-nav-child {
-		border: 1px solid #c0c0c0;
+		border: 1px solid var(--tf-bd-c0c0c0);
 		border-radius: 4px;
 		padding: 4px 10px;
 		font-size: 13px;
 		border-left-width: 1px;
 	}
 	.docs-sidebar a.active {
-		border-color: #1DA1F2;
+		border-color: var(--tf-bd-1da1f2);
 		border-left-width: 1px;
 	}
 	.docs-content { max-width: 100%; }
@@ -1283,7 +1524,7 @@ button.btn.btn-tf {
 /* sb-admin-2 ships body{color:#858796}, only 3.4:1 on the #f8f9fc content
    background (fails AA). Darken the default body text to a still-muted grey
    that clears 4.5:1 and reads cleaner on the coloured IOC-type rows too. */
-body { color: #6b6d7c; }
+body { color: var(--tf-fg-6b6d7c); }
 
 /* sb-admin-2 also ships body{font-family:Nunito,...}, and Nunito is never
    loaded, so every element that does not name a font itself fell through to
@@ -1297,8 +1538,8 @@ body { font-family: 'Rubik', sans-serif; }
    #1178b3 that nobody chose. A bare `a` is (0,0,1), so every component that
    sets its own link colour still wins on specificity; this only catches the
    links that were falling through to Bootstrap. */
-a { color: #3a6f96; }
-a:hover { color: #325d81; }
+a { color: var(--tf-fg-3a6f96); }
+a:hover { color: var(--tf-fg-325d81); }
 
 /* Inline content links must not rely on colour alone (WCAG 1.4.1). Underline
    links inside body copy + the footer reference row; nav, buttons, TOC chips
@@ -1357,7 +1598,7 @@ a:hover { color: #325d81; }
 	font-weight: 600;
 	line-height: 1.2;
 	letter-spacing: -.01em;
-	color: #0f172a !important;
+	color: var(--tf-nav-fg-0f172a) !important;
 	text-decoration: none;
 	white-space: nowrap;
 }
@@ -1371,12 +1612,12 @@ a:hover { color: #325d81; }
 	background: none;
 	background-image: none;
 	border-radius: 0;
-	color: #0f172a !important;
+	color: var(--tf-nav-fg-0f172a) !important;
 	font-size: 20px;
 	font-weight: 600;
 	font-family: 'Rubik', sans-serif;
 }
-.navbar-nav li a.tf-wordmark:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.navbar-nav li a.tf-wordmark:focus-visible { outline: 2px solid var(--tf-nav-ol-fff); outline-offset: 2px; }
 /* No underline on the wordmark, in either state (operator's call,
    2026-08-18). The home page carries `aria-current="page"` on the brand for
    screen readers but paints nothing: the 60px hero wordmark directly below
@@ -1394,7 +1635,7 @@ a:hover { color: #325d81; }
 	flex: 0 0 1px;
 	margin: 0 14px;
 	padding: 0;
-	background: #0f172a;
+	background: var(--tf-nav-divider);
 }
 
 /* --- primary items ------------------------------------------------------- */
@@ -1410,36 +1651,36 @@ a:hover { color: #325d81; }
 	font-size: 16px;
 	font-weight: 500;
 	line-height: 1.5;
-	color: #000 !important;
+	color: var(--tf-nav-fg-000) !important;
 	white-space: nowrap;
 }
 .navbar-nav li a.tf-navlink:hover:not(.tf-nav-active),
 .navbar-nav li a.tf-navlink:focus-visible:not(.tf-nav-active) {
-	background: rgba(255, 255, 255, .28);   /* keeps black ink well above 4.5:1 */
+	background: var(--tf-nav-bg-hover);   /* keeps black ink well above 4.5:1 */
 	background-image: none;
 	border-radius: 999px;
-	color: #000 !important;
+	color: var(--tf-nav-fg-000) !important;
 	font-size: 16px;
 	font-weight: 500;
 }
-.navbar-nav li a.tf-navlink:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.navbar-nav li a.tf-navlink:focus-visible { outline: 2px solid var(--tf-nav-ol-fff); outline-offset: 2px; }
 
 /* Active pill. The black border is load-bearing for WCAG 1.4.11, and free
    on height because of border-box. */
 .navbar-nav li a.tf-navlink.tf-nav-active {
-	background: #fff;
+	background: var(--tf-nav-bg-fff);
 	background-image: none;
-	border: 1px solid #000;
+	border: 1px solid var(--tf-nav-bd-000);
 	border-radius: 999px;
 	padding: 0 11px;
-	color: #000 !important;
+	color: var(--tf-nav-fg-000) !important;
 	font-weight: 600;
 }
 .navbar-nav li a.tf-navlink.tf-nav-active:hover {
-	background: #fff;
+	background: var(--tf-nav-bg-fff);
 	background-image: none;
 	border-radius: 999px;
-	color: #000 !important;
+	color: var(--tf-nav-fg-000) !important;
 }
 .navbar-nav li a.tf-navlink .tf-nav-icon { font-size: .95em; }
 .navbar-nav li a.tf-nav-more.dropdown-toggle::after { margin-left: 2px; vertical-align: .15em; }
@@ -1457,25 +1698,25 @@ a:hover { color: #325d81; }
 	padding: 0;
 	border: 1px solid transparent;
 	border-radius: 999px;
-	color: #000 !important;
+	color: var(--tf-nav-fg-000) !important;
 	font-size: 17px;
 	line-height: 1;
 }
 .navbar-nav li a.tf-nav-search:hover,
 .navbar-nav li a.tf-nav-search:focus-visible {
-	background: #0f172a;
+	background: var(--tf-nav-hover-bg);
 	background-image: none;
-	border-color: #0f172a;
+	border-color: var(--tf-nav-hover-bg);
 	border-radius: 999px;
-	color: #fff !important;
+	color: var(--tf-nav-fg-fff) !important;
 	font-size: 17px;
 }
 .navbar-nav li a.tf-nav-search.tf-nav-active {
-	background: #fff;
-	border: 1px solid #000;
-	color: #000 !important;
+	background: var(--tf-nav-bg-fff);
+	border: 1px solid var(--tf-nav-bd-000);
+	color: var(--tf-nav-fg-000) !important;
 }
-.navbar-nav li a.tf-nav-search:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.navbar-nav li a.tf-nav-search:focus-visible { outline: 2px solid var(--tf-nav-ol-fff); outline-offset: 2px; }
 
 /* --- dropdown menu (desktop More + mobile hamburger) --------------------- */
 /* White card with a 1px black border, not the old flat-blue panel: a blue
@@ -1485,8 +1726,8 @@ a:hover { color: #325d81; }
 	min-width: 232px;
 	margin-top: 8px;
 	padding: 6px 0;
-	background: #fff;
-	border: 1px solid #000;
+	background: var(--tf-bg-fff);
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 4px;
 	box-shadow: none;
 	font-family: 'Rubik', sans-serif;
@@ -1501,24 +1742,24 @@ a:hover { color: #325d81; }
 	border-left: 3px solid transparent;   /* reserved: hover must not shift text */
 	font-size: 15px;
 	font-weight: 500;
-	color: #1c1c1c !important;
+	color: var(--tf-fg-1c1c1c) !important;
 	white-space: nowrap;
 }
 .navbar-nav li a.dropdown-item.tf-menu-item:hover,
 .navbar-nav li a.dropdown-item.tf-menu-item:focus-visible {
-	background: #f2f2f2;
+	background: var(--tf-bg-f2f2f2);
 	background-image: none;
 	border-radius: 0;
-	border-left-color: #3a6f96;
-	color: #000 !important;
+	border-left-color: var(--tf-bd-3a6f96);
+	color: var(--tf-fg-000) !important;
 }
-.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible { outline: 2px solid #3a6f96; outline-offset: -2px; }
+.navbar-nav li a.dropdown-item.tf-menu-item:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: -2px; }
 /* Current page reached through the menu. Reuses the .docs-sidebar a.active
    left-accent idiom so the site has one "current item in a list" language. */
 .navbar-nav li a.dropdown-item.tf-menu-item[aria-current="page"] {
-	background: #f2f2f2;
-	border-left-color: #1178b3;
-	color: #000 !important;
+	background: var(--tf-bg-f2f2f2);
+	border-left-color: var(--tf-bd-1178b3);
+	color: var(--tf-fg-000) !important;
 	font-weight: 600;
 }
 .navbar-nav li a.dropdown-item.tf-menu-item .tf-menu-icon { width: 1em; text-align: center; opacity: .75; }
@@ -1530,7 +1771,7 @@ a:hover { color: #325d81; }
 	height: 0;
 	margin: 6px 0;
 	border: 0;
-	border-top: 1px solid #000;
+	border-top: 1px solid var(--tf-bd-000);
 	opacity: 1;
 }
 
@@ -1578,11 +1819,11 @@ a:hover { color: #325d81; }
 		height: 44px;
 		padding: 0;
 		border-radius: 999px;
-		color: #000;
+		color: var(--tf-nav-fg-000);
 		font-size: 18px;
 	}
-	.navbar-nav li a.tf-nav-burger[aria-expanded="true"] { background: rgba(255, 255, 255, .28); }
-	.navbar-nav li a.tf-nav-burger:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+	.navbar-nav li a.tf-nav-burger[aria-expanded="true"] { background: var(--tf-nav-bg-hover); }
+	.navbar-nav li a.tf-nav-burger:focus-visible { outline: 2px solid var(--tf-nav-ol-fff); outline-offset: -2px; }
 	.navbar-nav .dropdown-menu.tf-menu {
 		min-width: 264px;
 		max-width: calc(100vw - 24px);
@@ -1605,10 +1846,10 @@ a:hover { color: #325d81; }
 .tf-footer {
 	position: relative;
 	width: 100%;
-	border-top: 1px solid #000;
-	background: #fff;
+	border-top: 1px solid var(--tf-bd-000);
+	background: var(--tf-bg-fff);
 	font-family: 'Rubik', sans-serif;
-	color: #555;
+	color: var(--tf-fg-555);
 }
 /* Align the footer grid with #content (width:80%, centred) so the columns sit
    on the same optical margins as the page above instead of running edge to
@@ -1623,7 +1864,7 @@ a:hover { color: #325d81; }
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: .08em;
-	color: #4b5563;
+	color: var(--tf-fg-4b5563);
 }
 .tf-footer .tf-foot-head + .tf-foot-link { margin-top: 0; }
 .tf-footer .tf-foot-col .tf-foot-head:not(:first-child) { margin-top: 24px; }
@@ -1632,17 +1873,17 @@ a:hover { color: #325d81; }
 	padding: 5px 0;
 	font-size: 14px;
 	line-height: 1.5;
-	color: #555;
+	color: var(--tf-fg-555);
 	text-decoration: none;
 }
 .tf-footer a.tf-foot-link:hover,
 .tf-footer a.tf-foot-link:focus-visible {
-	color: #1178b3;
+	color: var(--tf-fg-1178b3);
 	text-decoration: underline;
 	text-underline-offset: 2px;
 }
 .tf-footer a.tf-foot-link:focus-visible,
-.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 .tf-foot-ext { font-size: .75em; opacity: .6; }
 .tf-footer a.tf-foot-wordmark,
 .tf-mfooter a.tf-foot-wordmark {
@@ -1650,10 +1891,10 @@ a:hover { color: #325d81; }
 	font-size: 20px;
 	font-weight: 600;
 	letter-spacing: -.01em;
-	color: #0f172a;
+	color: var(--tf-fg-0f172a);
 	text-decoration: none;
 }
-.tf-foot-tagline { margin: 8px 0 14px; font-size: 13px; line-height: 1.5; color: #6b6d7c; max-width: 30ch; }
+.tf-foot-tagline { margin: 8px 0 14px; font-size: 13px; line-height: 1.5; color: var(--tf-fg-6b6d7c); max-width: 30ch; }
 .tf-foot-social { display: flex; gap: 10px; }
 a.tf-social {
 	display: inline-flex;
@@ -1661,21 +1902,21 @@ a.tf-social {
 	justify-content: center;
 	width: 44px;
 	height: 44px;
-	border: 1px solid #000;
+	border: 1px solid var(--tf-bd-000);
 	border-radius: 4px;
-	background: #fff;
-	color: #0f172a;
+	background: var(--tf-bg-fff);
+	color: var(--tf-fg-0f172a);
 	font-size: 17px;
 	text-decoration: none;
 }
-a.tf-social:hover, a.tf-social:focus-visible { background: #f2f2f2; color: #0f172a; }
-a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+a.tf-social:hover, a.tf-social:focus-visible { background: var(--tf-bg-f2f2f2); color: var(--tf-fg-0f172a); }
+a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 .tf-footer .tf-foot-bar {
-	border-top: 1px solid #000;
-	background: #f8f9fa;
+	border-top: 1px solid var(--tf-bd-000);
+	background: var(--tf-bg-f8f9fa);
 	padding: 12px 0;
 	font-size: 13px;
-	color: #555;
+	color: var(--tf-fg-555);
 }
 /* Four 25% columns are ~230px at 992px and go ragged as the longer labels
    wrap. Fall back to a 2x2 grid until 1200px. */
@@ -1691,10 +1932,10 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
    redundancy, not out of shrinking the targets. */
 .tf-mfooter.sticky-footer {
 	padding: 0;
-	border-top: 1px solid #000;
+	border-top: 1px solid var(--tf-bd-000);
 	font-family: 'Rubik', sans-serif;
 	font-size: 14px;
-	color: #555;
+	color: var(--tf-fg-555);
 }
 .tf-mfooter .tf-mfoot-top {
 	display: flex;
@@ -1703,7 +1944,7 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	gap: 12px;
 	padding: 14px 0;
 }
-.tf-mfooter .tf-mfoot-rule { border: 0; border-top: 1px solid #000; margin: 0; }
+.tf-mfooter .tf-mfoot-rule { border: 0; border-top: 1px solid var(--tf-bd-000); margin: 0; }
 .tf-mfooter .tf-mfoot-head { margin: 14px 0 2px; }
 .tf-mfooter .tf-mfoot-grid {
 	display: grid;
@@ -1718,15 +1959,15 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	padding: 2px 0;
 	font-size: 14px;
 	line-height: 1.4;
-	color: #555;
+	color: var(--tf-fg-555);
 	text-decoration: none;
 }
-.tf-mfooter a.tf-mfoot-link:active { color: #1178b3; }
-.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+.tf-mfooter a.tf-mfoot-link:active { color: var(--tf-fg-1178b3); }
+.tf-mfooter a.tf-mfoot-link:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 .tf-mfooter .tf-mfoot-legal { padding: 6px 0 16px; font-size: 13px; line-height: 1.6; }
 .tf-mfooter .tf-mfoot-legal-links { display: flex; gap: 20px; }
 .tf-mfooter a.tf-mfoot-link-inline { min-height: 40px; font-size: 13px; }
-.tf-mfooter .tf-mfoot-copy { display: block; color: #6b6d7c; }
+.tf-mfooter .tf-mfoot-copy { display: block; color: var(--tf-fg-6b6d7c); }
 
 @media (prefers-reduced-motion: reduce) {
 	.navbar-nav li a.tf-navlink,
@@ -1744,7 +1985,7 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
    copy target; utils.js swaps the label in place to confirm. */
 .tf-agent-setup { text-align: center; margin: 0.6rem auto 1.1rem; }
 .tf-agent-pill { display: inline-flex; align-items: center; gap: 9px; height: 40px; padding: 0 17px; max-width: 100%;
-	border: 1px solid #0f172a; border-radius: 999px; background: #0f172a; color: #f1f5f9;
+	border: 1px solid var(--tf-pill-bd-0f172a); border-radius: 999px; background: var(--tf-pill-bg-0f172a); color: var(--tf-pill-fg-f1f5f9);
 	font-family: 'Rubik', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -.01em;
 	/* NOT line-height:1. At 14px the line box would be exactly 14px while the text
 	   needs 15, and the label's overflow:hidden then clips the 1px holding the
@@ -1752,12 +1993,12 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	line-height: 1.5;
 	white-space: nowrap; cursor: pointer; box-shadow: 0 2px 8px rgba(15,23,42,.18);
 	transition: background .15s, border-color .15s, box-shadow .15s; }
-.tf-agent-pill:hover { background: #1e293b; border-color: #1e293b; box-shadow: 0 4px 14px rgba(15,23,42,.24); }
-.tf-agent-pill .tf-agent-pill-spark { color: #7dd3fc; flex-shrink: 0; transition: color .15s; }
+.tf-agent-pill:hover { background: var(--tf-pill-bg-1e293b); border-color: var(--tf-pill-bd-1e293b); box-shadow: 0 4px 14px rgba(15,23,42,.24); }
+.tf-agent-pill .tf-agent-pill-spark { color: var(--tf-pill-fg-7dd3fc); flex-shrink: 0; transition: color .15s; }
 .tf-agent-pill .tf-agent-pill-label { overflow: hidden; text-overflow: ellipsis; }
-.tf-agent-pill.is-copied { background: #166534; border-color: #166534; color: #ecfdf5; }
-.tf-agent-pill.is-copied .tf-agent-pill-spark { color: #86efac; }
-.tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: #0000EE; }
+.tf-agent-pill.is-copied { background: var(--tf-pill-bg-166534); border-color: var(--tf-pill-bd-166534); color: var(--tf-pill-fg-ecfdf5); }
+.tf-agent-pill.is-copied .tf-agent-pill-spark { color: var(--tf-pill-fg-86efac); }
+.tf-agent-setup-more { display: block; margin-top: 0.65rem; font-size: 13px; font-family: 'Rubik', sans-serif; color: var(--tf-fg-0000ee); }
 @media (max-width: 480px) { .tf-agent-pill { height: 38px; padding: 0 14px; gap: 7px; font-size: 13px; } }
 
 /* Skip link. Lived inline in a <style> of its own in all 60 pages until
@@ -1769,8 +2010,8 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	position: absolute;
 	top: -40px;
 	left: 0;
-	background: #000;
-	color: #fff;
+	background: var(--tf-bg-000);
+	color: var(--tf-fg-fff);
 	padding: 8px 16px;
 	z-index: 10000;
 	text-decoration: none;
@@ -1780,7 +2021,7 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 }
 .skip-link:focus {
 	top: 0;
-	outline: 2px solid #3a6f96;
+	outline: 2px solid var(--tf-ol-3a6f96);
 	outline-offset: -2px;
 }
 
@@ -1794,3 +2035,430 @@ a.tf-social:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
 	text-align: left;
 	line-height: 1.45;
 }
+
+
+/* ═════════════════════════════════════════════════════════════════════════
+   DARK THEME  (:root[data-site-theme="dark"]).  Palette "Dim", coherent with
+   X/Twitter dark. Light never reads anything below this line.
+   Layers: (1) token values, (2) page/body, (3) SB Admin 2 + Bootstrap 4
+   components, (4) DataTables bootstrap4 skin, (5) site components whose
+   colours are not tokens (images, SVG, controls), (6) the toggle button.
+   Contrast notes (measured with tools/dmscan.mjs, WCAG AA 4.5:1 text):
+   --tf-text on --tf-bg 14:1, --tf-text-2 on --tf-surface 6.6:1, link on
+   --tf-surface-2 > 5:1.
+   ═════════════════════════════════════════════════════════════════════════ */
+:root[data-site-theme="dark"] {
+	color-scheme: dark;
+	--tf-bg: #15202b;
+	--tf-surface: #192734;
+	--tf-surface-2: #1e2c3a;
+	--tf-surface-3: #253544;
+	--tf-border: #38444d;
+	--tf-input-border: #4a5a68;
+	/* The boxed border stays crisp and clearly visible (>= 3:1 on the surface), never the soft #38444d. */
+	--tf-box-border: #6b7c8c;
+	--tf-text: #f7f9f9;
+	--tf-text-body: #d0d8de;
+	--tf-text-2: #aab6c0;
+	--tf-text-3: #8b98a5;
+	--tf-accent: #5fb8f5;
+	--tf-accent-h: #8fd0fa;
+	--tf-heading: #4db0f4;
+	--tf-brand: #4ab3f4;
+
+	/* Navbar: #192734 with the brand kept as an inset line (no border: 56 px invariant). */
+	--tf-nav-bg: #192734;
+	--tf-nav-shadow: inset 0 -2px 0 #1DA1F2;
+	--tf-nav-divider: #38444d;
+	--tf-nav-hover-bg: rgba(255, 255, 255, .14);
+	--tf-nav-fg-000: #f7f9f9;
+	--tf-nav-fg-0f172a: #f7f9f9;
+	--tf-nav-bg-hover: rgba(255, 255, 255, .12);
+	--tf-nav-bg-fff: rgba(29, 155, 240, .22);
+	--tf-nav-bd-000: #1d9bf0;
+	--tf-nav-bg-0f172a: #0b1118;
+	--tf-nav-bd-0f172a: #4a5a68;
+	--tf-nav-bg-1e293b: #1c2733;
+	--tf-nav-bd-1e293b: #6b7c8c;
+	/* Agent pill sits on the page, not on the bar: raised dark chip with a visible rim. */
+	--tf-pill-bg-0f172a: #0b1118;
+	--tf-pill-bd-0f172a: #4a5a68;
+	--tf-pill-bg-1e293b: #1c2733;
+	--tf-pill-bd-1e293b: #6b7c8c;
+
+	/* Surfaces */
+	--tf-ioc-url: #7b93ff;
+	--tf-bg-fff: var(--tf-surface);
+	--tf-bg-f8f9fa: var(--tf-surface-2);
+	--tf-bg-f2f2f2: var(--tf-surface-3);
+	--tf-bg-dedede: #0f1923;
+	--tf-bg-e6ecf0: #2b3a48;
+	--tf-bg-shimmer: rgba(255, 255, 255, .07);
+	--tf-bg-copy-btn: rgba(25, 39, 52, .92);
+	--tf-bg-docs-hover: rgba(255, 255, 255, .05);
+	--tf-bg-docs-active: rgba(29, 155, 240, .14);
+	--tf-bg-code-inline: rgba(95, 184, 245, .12);
+	--tf-bd-code-inline: rgba(95, 184, 245, .3);
+	--tf-bg-cad2e8: #2b3b4d;
+	--tf-bg-e1e6f2: #36495e;
+	--tf-bg-15202b: #1e2c3a;
+	--tf-bg-1a394b: #254056;
+	--tf-bg-1da1f2: #1578b8;
+	--tf-bg-0d8ecf: #0e5f94;
+	--tf-bd-0d8ecf: #0e5f94;
+	/* IOC type colours (rows + badges): same hues, dark tints, light text. */
+	--tf-bg-c8f6fd: #123f4f;
+	--tf-bg-a0dde6: #1a5a68;
+	--tf-bg-34e3a4: #145c47;
+	--tf-bg-ffc591: #6a4224;
+	--tf-bg-ffcc99: #5c4a22;
+	--tf-bg-ffb454: #7a5214;
+	/* Added with the page inline-style conversion */
+	--tf-bd-9a9a9a: var(--tf-input-border);
+	--tf-bd-1c1c1c: var(--tf-box-border);
+	--tf-bg-3399ff: #2272c3;
+	--tf-bg-02bf0f: #0f7a1f;
+	--tf-bg-ffc34d: #8a6414;
+	--tf-bg-e2e3e5: var(--tf-surface-3);
+	--tf-fg-41464b: var(--tf-text-body);
+	--tf-fg-5c3d12: #fcd34d;
+	--tf-bg-f5f5f5: var(--tf-surface-2);
+	--tf-bd-b3b3b3: var(--tf-input-border);
+	--tf-fg-595959: var(--tf-text-2);
+	--tf-fg-8a8a8a: var(--tf-text-3);
+	--tf-fg-333: var(--tf-text);
+	--tf-bd-595959: var(--tf-input-border);
+	--tf-fg-0026e6: #7b93ff;
+	--tf-bd-f0f0f0: var(--tf-border);
+	--tf-fg-777: var(--tf-text-2);
+	/* Borders */
+	--tf-bd-000: var(--tf-box-border);
+	--tf-bd-e1e8ed: var(--tf-border);
+	--tf-bd-e1e4e8: var(--tf-border);
+	--tf-bd-e3e6f0: var(--tf-border);
+	--tf-bd-e0e0e0: var(--tf-border);
+	--tf-bd-ced4da: var(--tf-input-border);
+	--tf-bd-c0c0c0: var(--tf-input-border);
+	--tf-bd-1178b3: var(--tf-heading);
+	--tf-bd-1da1f2: var(--tf-brand);
+	--tf-ol-3a6f96: #5fb8f5;
+	/* Text */
+	--tf-fg-000: var(--tf-text);
+	--tf-fg-1c1c1c: var(--tf-text);
+	--tf-fg-222: var(--tf-text);
+	--tf-fg-0f172a: var(--tf-text);
+	--tf-fg-444: var(--tf-text-body);
+	--tf-fg-474747: var(--tf-text-body);
+	--tf-fg-555: var(--tf-text-body);
+	--tf-fg-4b5563: var(--tf-text-2);
+	--tf-fg-5a5a5a: var(--tf-text-2);
+	--tf-fg-6b6d7c: var(--tf-text-2);
+	--tf-fg-6b7280: var(--tf-text-2);
+	--tf-fg-6c757d: var(--tf-text-2);
+	--tf-fg-737373: var(--tf-text-2);
+	--tf-fg-3c4043: var(--tf-text-body);
+	--tf-fg-9aa0a6: var(--tf-text-3);
+	--tf-fg-1178b3: var(--tf-heading);
+	--tf-fg-3a6f96: var(--tf-accent);
+	--tf-fg-325d81: var(--tf-accent-h);
+	--tf-fg-1da1f2: var(--tf-brand);
+	--tf-fg-c2185b: #f472b6;
+	--tf-fg-0000ee: #7cc8f8;
+	/* Campaigns page */
+	--tf-bg-fff3cd: #3b3320;
+	--tf-bd-f0ad4e: #b8862b;
+	--tf-fg-7a5b12: #fcd34d;
+	--tf-fg-9a9a9a: #b8c3cc;
+	--tf-fg-0b3d2e: #d6f7ea;
+	--tf-bd-9aa0a6: #8b98a5;
+	--tf-bg-1c1c1c: #e7edf1;
+	--tf-fg-on-ink: #15202b;
+	--tf-bg-eef0f3: #263646;
+	--tf-bd-c9c9c9: #4a5a68;
+	--tf-fg-0d5c8a: #8fd0fa;
+	--tf-fg-6b6b6b: #aab6c0;
+	--tf-bg-737373: #8b98a5;
+	--tf-bg-0026e6: #3b55e6;
+	/* T2: hunt / trends / graphs / dashboard / researchers */
+	--tf-bg-f8f9fc: var(--tf-bg);
+	--tf-bg-1178b3: #125f94;
+	--tf-fg-808080: var(--tf-text-3);
+	--tf-bg-ffc94d: #8a6414;
+	--tf-fg-4a3300: #fff3d1;
+	--tf-chart-text: #aab6c0;
+	--tf-chart-title: #d0d8de;
+	--tf-chart-grid: #2f3d4a;
+	--tf-chart-tip-bg: #253544;
+	--tf-chart-tip-border: #4a5a68;
+	--tf-chart-hover-border: #192734;
+	--tf-chart-arc-border: #192734;
+	/* neutral light grey: the trends 'Total' aggregate must not collide with --tf-ioc-url (#7b93ff) or --tf-ioc-domain (#3399FF) */
+	--tf-chart-line-rgb: 200, 209, 217;
+	--tf-bg-d9d9d9: #3d4a56;
+	--tf-bg-7bc5f9: #1d5280;
+	--tf-bg-cdd8fa: #2c3b73;
+	--tf-bg-e6d3f7: #46326e;
+	--tf-bg-f7c7d9: #6e2d49;
+	--tf-bg-c9e4c5: #2e5c2c;
+	--tf-bg-f5e6a3: #5e5424;
+	--tf-fg-1a7a3d: #4ade80;
+	--tf-fg-b3261e: #f87171;
+	--tf-bg-9aa0a6: #5b6b78;
+	--tf-bd-fff: var(--tf-surface);
+	--tf-bd-0026e6: #7b93ff;
+	--tf-bd-4b5563: var(--tf-text-2);
+	--tf-bd-d6d6d6: var(--tf-border);
+	--tf-bd-e6e6e6: var(--tf-border);
+}
+
+/* (2) Page */
+:root[data-site-theme="dark"] html,
+:root[data-site-theme="dark"] body { background-color: var(--tf-bg); }
+:root[data-site-theme="dark"] #wrapper #content-wrapper { background-color: var(--tf-bg); }
+:root[data-site-theme="dark"] ::selection { background: rgba(29, 155, 240, .45); color: #fff; }
+:root[data-site-theme="dark"] hr { border-top-color: var(--tf-border); }
+:root[data-site-theme="dark"] hr.divider { border-top-color: var(--tf-box-border); }
+:root[data-site-theme="dark"] .navbar .container-fluid { background: transparent; }
+
+/* (3) SB Admin 2 / Bootstrap 4 components (the vendor skin carries no variables) */
+:root[data-site-theme="dark"] .card { background-color: var(--tf-surface); color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .card-header { background-color: var(--tf-surface-2); border-bottom-color: var(--tf-border); color: var(--tf-text); }
+:root[data-site-theme="dark"] .card-footer { background-color: var(--tf-surface-2); border-top-color: var(--tf-border); }
+:root[data-site-theme="dark"] .card-body { color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .bg-white { background-color: var(--tf-surface) !important; }
+:root[data-site-theme="dark"] .bg-light { background-color: var(--tf-surface-2) !important; }
+:root[data-site-theme="dark"] .text-dark,
+:root[data-site-theme="dark"] .text-body,
+:root[data-site-theme="dark"] .text-black-50 { color: var(--tf-text) !important; }
+:root[data-site-theme="dark"] .text-muted { color: var(--tf-text-2) !important; }
+:root[data-site-theme="dark"] .text-primary { color: var(--tf-heading) !important; }
+:root[data-site-theme="dark"] .text-danger { color: #f87171 !important; }
+:root[data-site-theme="dark"] .text-success { color: #4ade80 !important; }
+:root[data-site-theme="dark"] .text-warning { color: #fcd34d !important; }
+:root[data-site-theme="dark"] .text-gray-100, :root[data-site-theme="dark"] .text-gray-200,
+:root[data-site-theme="dark"] .text-gray-300, :root[data-site-theme="dark"] .text-gray-400,
+:root[data-site-theme="dark"] .text-gray-500, :root[data-site-theme="dark"] .text-gray-600 { color: var(--tf-text-2) !important; }
+:root[data-site-theme="dark"] .text-gray-700, :root[data-site-theme="dark"] .text-gray-800,
+:root[data-site-theme="dark"] .text-gray-900 { color: var(--tf-text) !important; }
+:root[data-site-theme="dark"] .border,
+:root[data-site-theme="dark"] .border-top,
+:root[data-site-theme="dark"] .border-bottom,
+:root[data-site-theme="dark"] .border-left,
+:root[data-site-theme="dark"] .border-right { border-color: var(--tf-border) !important; }
+:root[data-site-theme="dark"] .shadow { box-shadow: 0 .15rem 1.75rem 0 rgba(0, 0, 0, .45) !important; }
+:root[data-site-theme="dark"] .shadow-sm { box-shadow: 0 .125rem .25rem 0 rgba(0, 0, 0, .4) !important; }
+:root[data-site-theme="dark"] pre { color: var(--tf-text-body); border-color: var(--tf-border); }
+/* .code-block panels keep the crisp box border (SPEC: never the soft #38444d); the generic pre rule above (0,2,1) would otherwise beat .code-block (0,1,0). */
+:root[data-site-theme="dark"] pre.code-block { border-color: var(--tf-box-border); }
+:root[data-site-theme="dark"] kbd { background: var(--tf-surface-3); color: var(--tf-text); }
+:root[data-site-theme="dark"] .section-heading,
+:root[data-site-theme="dark"] .faq-section > h2,
+:root[data-site-theme="dark"] .faq-section > h3 { color: var(--tf-heading); }
+
+/* Tables (Bootstrap + SB Admin) */
+:root[data-site-theme="dark"] .table { color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .table td,
+:root[data-site-theme="dark"] .table th,
+:root[data-site-theme="dark"] .table thead th,
+:root[data-site-theme="dark"] .table tbody + tbody,
+:root[data-site-theme="dark"] .table-bordered,
+:root[data-site-theme="dark"] .table-bordered td,
+:root[data-site-theme="dark"] .table-bordered th { border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .table-striped tbody tr:nth-of-type(odd) { background-color: rgba(255, 255, 255, .04); }
+:root[data-site-theme="dark"] .table-hover tbody tr:hover { color: var(--tf-text); background-color: rgba(255, 255, 255, .07); }
+:root[data-site-theme="dark"] .table thead th { color: var(--tf-text); }
+:root[data-site-theme="dark"] .thead-light th { background-color: var(--tf-surface-2); border-color: var(--tf-border); color: var(--tf-text); }
+:root[data-site-theme="dark"] .table-light, :root[data-site-theme="dark"] .table-light > td, :root[data-site-theme="dark"] .table-light > th { background-color: var(--tf-surface-2); }
+
+/* Buttons */
+:root[data-site-theme="dark"] .btn-light { color: var(--tf-text); background-color: var(--tf-surface-3); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .btn-light:hover { color: var(--tf-text); background-color: #2e4052; border-color: var(--tf-input-border); }
+:root[data-site-theme="dark"] .btn-secondary { background-color: #4a5a68; border-color: #4a5a68; }
+:root[data-site-theme="dark"] .btn-secondary:hover { background-color: #5a6b78; border-color: #5a6b78; }
+:root[data-site-theme="dark"] .btn-outline-secondary { color: var(--tf-text-2); border-color: var(--tf-input-border); }
+:root[data-site-theme="dark"] .btn-outline-secondary:hover { color: var(--tf-text); background-color: var(--tf-surface-3); }
+:root[data-site-theme="dark"] .btn-outline-primary { color: var(--tf-accent); border-color: var(--tf-accent); }
+:root[data-site-theme="dark"] .btn-outline-primary:hover { color: #fff; background-color: #1578b8; border-color: #1578b8; }
+:root[data-site-theme="dark"] .btn-link { color: var(--tf-accent); }
+:root[data-site-theme="dark"] .btn-primary { background-color: #1578b8; border-color: #1578b8; }
+:root[data-site-theme="dark"] .btn-primary:hover,
+:root[data-site-theme="dark"] .btn-primary:focus { background-color: #0e5f94; border-color: #0e5f94; }
+:root[data-site-theme="dark"] .btn-info { background-color: #0e7490; border-color: #0e7490; }
+
+/* Forms */
+:root[data-site-theme="dark"] .form-control,
+:root[data-site-theme="dark"] .custom-select,
+:root[data-site-theme="dark"] .input-group-text {
+	background-color: var(--tf-surface-2); border-color: var(--tf-input-border); color: var(--tf-text);
+}
+:root[data-site-theme="dark"] .form-control:focus,
+:root[data-site-theme="dark"] .custom-select:focus { background-color: var(--tf-surface-2); border-color: var(--tf-accent); color: var(--tf-text); box-shadow: 0 0 0 .2rem rgba(95, 184, 245, .25); }
+:root[data-site-theme="dark"] .form-control::placeholder { color: var(--tf-text-3); }
+:root[data-site-theme="dark"] .form-control:disabled,
+:root[data-site-theme="dark"] .form-control[readonly],
+:root[data-site-theme="dark"] .custom-select:disabled { background-color: var(--tf-surface); color: var(--tf-text-3); }
+:root[data-site-theme="dark"] .custom-select {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23aab6c0' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+}
+:root[data-site-theme="dark"] .form-text { color: var(--tf-text-2); }
+:root[data-site-theme="dark"] select option { background-color: var(--tf-surface-2); color: var(--tf-text); }
+:root[data-site-theme="dark"] .tag-search-wrap .tag-search { background: var(--tf-surface-2); color: var(--tf-text); }
+
+/* Dropdowns (More menu + pagination "show N" etc.) */
+:root[data-site-theme="dark"] .dropdown-menu { background-color: var(--tf-surface); border-color: var(--tf-border); color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .dropdown-item { color: var(--tf-text); }
+:root[data-site-theme="dark"] .dropdown-item:hover,
+:root[data-site-theme="dark"] .dropdown-item:focus { color: var(--tf-text); background-color: var(--tf-surface-3); }
+:root[data-site-theme="dark"] .dropdown-divider { border-top-color: var(--tf-border); }
+
+/* Pagination */
+:root[data-site-theme="dark"] .page-link { color: var(--tf-accent); background-color: var(--tf-surface); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .page-link:hover { color: var(--tf-accent-h); background-color: var(--tf-surface-3); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .page-item.active .page-link { color: #fff; background-color: #1578b8; border-color: #1578b8; }
+:root[data-site-theme="dark"] .page-item.disabled .page-link { color: var(--tf-text-3); background-color: var(--tf-surface); border-color: var(--tf-border); }
+
+/* Alerts, badges, progress, modals, tooltips */
+:root[data-site-theme="dark"] .alert-secondary { color: var(--tf-text-body); background-color: var(--tf-surface-2); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .alert-warning { color: #fcd34d; background-color: rgba(251, 191, 36, .12); border-color: rgba(251, 191, 36, .35); }
+:root[data-site-theme="dark"] .alert-danger { color: #fca5a5; background-color: rgba(248, 113, 113, .12); border-color: rgba(248, 113, 113, .35); }
+:root[data-site-theme="dark"] .alert-success { color: #86efac; background-color: rgba(34, 197, 94, .14); border-color: rgba(34, 197, 94, .35); }
+:root[data-site-theme="dark"] .alert-info { color: #7dd3fc; background-color: rgba(14, 165, 233, .12); border-color: rgba(14, 165, 233, .35); }
+:root[data-site-theme="dark"] .alert-light { color: var(--tf-text-body); background-color: var(--tf-surface-2); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .alert .close, :root[data-site-theme="dark"] .close { color: var(--tf-text); text-shadow: none; }
+:root[data-site-theme="dark"] .badge-light, :root[data-site-theme="dark"] .badge-secondary { background-color: var(--tf-surface-3); color: var(--tf-text); }
+:root[data-site-theme="dark"] .progress { background-color: var(--tf-surface-3); }
+:root[data-site-theme="dark"] .modal-content { background-color: var(--tf-surface); border-color: var(--tf-border); color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .modal-header, :root[data-site-theme="dark"] .modal-footer { border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .list-group-item { background-color: var(--tf-surface); border-color: var(--tf-border); color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .nav-tabs { border-bottom-color: var(--tf-border); }
+:root[data-site-theme="dark"] .popover { background-color: var(--tf-surface); border-color: var(--tf-border); }
+:root[data-site-theme="dark"] .tooltip-inner { background-color: #0b1118; color: var(--tf-text); border: 1px solid var(--tf-border); }
+:root[data-site-theme="dark"] .tooltip.bs-tooltip-top .arrow::before { border-top-color: #0b1118; }
+:root[data-site-theme="dark"] .tooltip.bs-tooltip-bottom .arrow::before { border-bottom-color: #0b1118; }
+:root[data-site-theme="dark"] .breadcrumb { background-color: var(--tf-surface-2); }
+
+/* Mobile footer: SB Admin's .sticky-footer paints its own white */
+:root[data-site-theme="dark"] footer.sticky-footer,
+:root[data-site-theme="dark"] .sticky-footer { background-color: var(--tf-surface); }
+
+/* (4) DataTables bootstrap4 skin */
+:root[data-site-theme="dark"] table.dataTable { color: var(--tf-text-body); }
+:root[data-site-theme="dark"] table.dataTable thead th,
+:root[data-site-theme="dark"] table.dataTable thead td,
+:root[data-site-theme="dark"] table.dataTable tfoot th,
+:root[data-site-theme="dark"] table.dataTable tfoot td { border-color: var(--tf-border); color: var(--tf-text); }
+:root[data-site-theme="dark"] table.dataTable.no-footer { border-bottom-color: var(--tf-border); }
+:root[data-site-theme="dark"] table.dataTable tbody tr { background-color: transparent; }
+:root[data-site-theme="dark"] table.dataTable.table-striped tbody tr.odd { background-color: rgba(255, 255, 255, .04); }
+:root[data-site-theme="dark"] table.dataTable.table-hover tbody tr:hover { background-color: rgba(255, 255, 255, .07); }
+:root[data-site-theme="dark"] table.dataTable thead .sorting:before,
+:root[data-site-theme="dark"] table.dataTable thead .sorting:after,
+:root[data-site-theme="dark"] table.dataTable thead .sorting_asc:before,
+:root[data-site-theme="dark"] table.dataTable thead .sorting_asc:after,
+:root[data-site-theme="dark"] table.dataTable thead .sorting_desc:before,
+:root[data-site-theme="dark"] table.dataTable thead .sorting_desc:after { color: var(--tf-text); }
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_length,
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_filter,
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_info,
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_processing { color: var(--tf-text-2); }
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_processing { background: var(--tf-surface-3); border: 1px solid var(--tf-border); }
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_filter input,
+:root[data-site-theme="dark"] div.dataTables_wrapper div.dataTables_length select { background-color: var(--tf-surface-2); border-color: var(--tf-input-border); color: var(--tf-text); }
+:root[data-site-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button { color: var(--tf-accent) !important; }
+:root[data-site-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button.current { color: #fff !important; }
+
+/* (5) Site components whose colours are not tokens */
+/* Dark logos / favicons on dark: a light plate, dark mode only. */
+:root[data-site-theme="dark"] .tf-integration img { background: #f8fafc; border-radius: 4px; padding: 3px 6px; }
+:root[data-site-theme="dark"] .tf-foot-brand img,
+:root[data-site-theme="dark"] .navbar-brand img { background: transparent; }
+:root[data-site-theme="dark"] .code-block .tf-copy.code-copy { color: var(--tf-text-body); }
+:root[data-site-theme="dark"] .tweet-skeleton { background: var(--tf-surface); }
+:root[data-site-theme="dark"] .tf-action:hover { background: var(--tf-surface-3); }
+/* Embedded tweets (widgets.js iframes) render their own dark card on a transparent page. An iframe whose
+   color-scheme differs from the embedding page gets an opaque light backdrop, which shows as white
+   corners around the rounded card: pin the iframe to the scheme of the embedded document. */
+:root[data-site-theme="dark"] .tfd-cell iframe,
+:root[data-site-theme="dark"] .twitter-tweet iframe,
+:root[data-site-theme="dark"] iframe.twitter-tweet { color-scheme: normal; }
+/* highlight.js 11.2.0 ships only the light "default" theme from cdnjs (SRI-pinned, so it cannot be
+   swapped): in dark, repaint its token colours with a github-dark palette. The box itself is the
+   .code-block (token --tf-bg-dedede -> #0f1923), so every ink below is >= 4.5:1 on it. */
+:root[data-site-theme="dark"] .code-block code.hljs { color: #d0d8de; }
+:root[data-site-theme="dark"] .code-block .hljs-comment,
+:root[data-site-theme="dark"] .code-block .hljs-quote { color: #8b98a5; }
+:root[data-site-theme="dark"] .code-block .hljs-keyword,
+:root[data-site-theme="dark"] .code-block .hljs-selector-tag,
+:root[data-site-theme="dark"] .code-block .hljs-doctag,
+:root[data-site-theme="dark"] .code-block .hljs-deletion { color: #ff7b72; }
+:root[data-site-theme="dark"] .code-block .hljs-title,
+:root[data-site-theme="dark"] .code-block .hljs-section,
+:root[data-site-theme="dark"] .code-block .hljs-selector-id { color: #d2a8ff; }
+:root[data-site-theme="dark"] .code-block .hljs-attr,
+:root[data-site-theme="dark"] .code-block .hljs-attribute,
+:root[data-site-theme="dark"] .code-block .hljs-literal,
+:root[data-site-theme="dark"] .code-block .hljs-number,
+:root[data-site-theme="dark"] .code-block .hljs-operator,
+:root[data-site-theme="dark"] .code-block .hljs-variable,
+:root[data-site-theme="dark"] .code-block .hljs-meta,
+:root[data-site-theme="dark"] .code-block .hljs-selector-attr,
+:root[data-site-theme="dark"] .code-block .hljs-selector-class,
+:root[data-site-theme="dark"] .code-block .hljs-selector-pseudo { color: #79c0ff; }
+:root[data-site-theme="dark"] .code-block .hljs-string,
+:root[data-site-theme="dark"] .code-block .hljs-regexp,
+:root[data-site-theme="dark"] .code-block .hljs-meta .hljs-string { color: #a5d6ff; }
+:root[data-site-theme="dark"] .code-block .hljs-built_in,
+:root[data-site-theme="dark"] .code-block .hljs-symbol,
+:root[data-site-theme="dark"] .code-block .hljs-template-variable,
+:root[data-site-theme="dark"] .code-block .hljs-type,
+:root[data-site-theme="dark"] .code-block .hljs-link { color: #ffa657; }
+:root[data-site-theme="dark"] .code-block .hljs-name,
+:root[data-site-theme="dark"] .code-block .hljs-tag,
+:root[data-site-theme="dark"] .code-block .hljs-addition { color: #7ee787; }
+:root[data-site-theme="dark"] .code-block .hljs-bullet { color: #f2cc60; }
+:root[data-site-theme="dark"] .code-block .hljs-punctuation,
+:root[data-site-theme="dark"] .code-block .hljs-params,
+:root[data-site-theme="dark"] .code-block .hljs-subst { color: #d0d8de; }
+
+/* (6) Theme toggle button. Colours match the other nav links (the nav is dark
+   navy-ish in dark and brand blue + black ink in light: --tf-nav-fg-000). */
+.site-theme-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	margin: 0 0 0 6px;
+	padding: 0;
+	border: 1px solid transparent;
+	border-radius: 999px;
+	background: transparent;
+	color: var(--tf-nav-fg-000);
+	font-size: 17px;
+	line-height: 1;
+	cursor: pointer;
+}
+.site-theme-toggle:hover { background: var(--tf-nav-bg-hover); }
+.site-theme-toggle:focus-visible { outline: 2px solid var(--tf-nav-ol-fff); outline-offset: 2px; }
+.site-theme-toggle .fa-sun { display: none; }
+:root[data-site-theme="dark"] .site-theme-toggle .fa-moon { display: none; }
+:root[data-site-theme="dark"] .site-theme-toggle .fa-sun { display: inline-block; }
+@media (max-width: 991.98px) {
+	.site-theme-toggle { width: 44px; height: 44px; margin: 0; }
+	/* Same ink as the hamburger next to it: its computed colour is Bootstrap's
+	   .navbar-dark .nav-link rgba(255,255,255,.5) in both themes (that rule outranks the
+	   burger's own colour), so the toggle follows the same value instead of black. */
+	.tf-navbar-mobile .site-theme-toggle { color: rgba(255, 255, 255, .5); }
+	.tf-navbar-mobile .site-theme-toggle:hover { color: rgba(255, 255, 255, .75); }
+}
+
+/* Bare inputs (DataTables column filters, ad-hoc <input> in page scripts) */
+:root[data-site-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]),
+:root[data-site-theme="dark"] textarea {
+	background-color: var(--tf-surface-2); color: var(--tf-text); border: 1px solid var(--tf-input-border);
+}
+:root[data-site-theme="dark"] input::placeholder,
+:root[data-site-theme="dark"] textarea::placeholder { color: var(--tf-text-3); opacity: 1; }
+/* The VirusTotal glyph is a dark-blue PNG: lift it on dark (hover keeps its own white-out filter). */
+:root[data-site-theme="dark"] .tf-action.tf-action-vt:not(:hover) img,
+:root[data-site-theme="dark"] img.virustotal { filter: brightness(2.1) saturate(.8); }

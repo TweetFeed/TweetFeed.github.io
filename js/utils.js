@@ -402,6 +402,149 @@
     } catch (e) { /* analytics must never break a click handler */ }
   }
 
+  // ─── Site theme (light/dark) ───────────────────────────────────────────────
+  // Contract shared with the inline init snippet (scripts/templates/_theme_init.html.j2):
+  // <html data-site-theme="light|dark"> is the RESOLVED theme, localStorage
+  // 'site-theme' = 'light'|'dark' is the explicit choice (absent = follow the
+  // system). The init snippet sets the attribute before first paint; this
+  // handler owns the toggle button, the live system-follow, cross-tab sync and
+  // the `site-themechange` event (charts listen to it). Embedded tweets
+  // (widgets.js) read the twitter:widgets:theme meta only when they render, so
+  // a toggle does not repaint tweets already on the page: they follow on the
+  // next load (re-rendering them is neither cheap nor safe).
+  (function initSiteTheme() {
+    var doc, root, mq;
+    try { doc = document; root = doc.documentElement; mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)'); } catch (e) { return; }
+    if (!root || !root.setAttribute || !doc.querySelectorAll) return;
+
+    function stored() {
+      try {
+        var v = window.localStorage.getItem('site-theme');
+        return (v === 'light' || v === 'dark') ? v : null;
+      } catch (e) { return null; }
+    }
+    function systemTheme() { return mq && mq.matches ? 'dark' : 'light'; }
+    function resolved() { return stored() || systemTheme(); }
+
+    function paint(theme) {
+      var changed = root.getAttribute('data-site-theme') !== theme;
+      root.setAttribute('data-site-theme', theme);
+      root.style.colorScheme = theme;
+      // Tweet embeds: keep the widgets meta in step for tweets rendered later.
+      var meta = doc.querySelector('meta[name="twitter:widgets:theme"]');
+      if (theme === 'dark' && !meta && doc.head) {
+        meta = doc.createElement('meta');
+        meta.name = 'twitter:widgets:theme';
+        meta.content = 'dark';
+        doc.head.appendChild(meta);
+      } else if (theme === 'light' && meta && meta.parentNode) {
+        meta.parentNode.removeChild(meta);
+      }
+      var tc = doc.querySelector('meta[name="theme-color"]');
+      if (tc) {
+        if (!tc.hasAttribute('data-light')) tc.setAttribute('data-light', tc.getAttribute('content') || '');
+        tc.setAttribute('content', theme === 'dark' ? '#192734' : tc.getAttribute('data-light'));
+      }
+      var btns = doc.querySelectorAll('[data-theme-toggle]');
+      for (var i = 0; i < btns.length; i++) {
+        var b = btns[i];
+        var label = theme === 'dark'
+          ? (b.getAttribute('data-label-to-light') || 'Switch to light theme')
+          : (b.getAttribute('data-label-to-dark') || 'Switch to dark theme');
+        b.setAttribute('aria-label', label);
+        b.setAttribute('title', label);
+      }
+      return changed;
+    }
+    function announce(theme) {
+      try { doc.dispatchEvent(new CustomEvent('site-themechange', { detail: { theme: theme } })); } catch (e) {}
+    }
+    function apply(theme) { if (paint(theme)) announce(theme); }
+
+    // Labels must reflect the theme the init snippet already set.
+    function syncLabels() { paint(root.getAttribute('data-site-theme') === 'dark' ? 'dark' : (root.getAttribute('data-site-theme') === 'light' ? 'light' : resolved())); }
+    if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', syncLabels); else syncLabels();
+
+    doc.addEventListener('click', function (ev) {
+      var t = ev.target;
+      var btn = t && t.closest ? t.closest('[data-theme-toggle]') : null;
+      if (!btn) return;
+      ev.preventDefault();
+      var next = root.getAttribute('data-site-theme') === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem('site-theme', next); } catch (e) { /* blocked storage: works for this page view only */ }
+      apply(next);
+    });
+
+    // Follow the system live, but only while the visitor has made no choice.
+    if (mq) {
+      var onSys = function () { if (!stored()) apply(systemTheme()); };
+      if (mq.addEventListener) mq.addEventListener('change', onSys);
+      else if (mq.addListener) mq.addListener(onSys);
+    }
+    // Another tab changed the choice (or cleared it).
+    window.addEventListener('storage', function (ev) {
+      if (ev.key === 'site-theme' || ev.key === null) apply(resolved());
+    });
+  })();
+
+
+
+  // ─── Chart theme helpers (Chart.js pages: trends, graphs) ──────────────────
+  // Colours come from the --tf-chart-* / --tf-ioc-* tokens of css/tweetfeed.css:
+  // the light value of each token is the literal the pages used to hard-code, so
+  // light charts are unchanged. Charts read them when they are CREATED and again
+  // on `site-themechange` (mutate options + chart.update(), never a reload).
+  var CHART_TOKENS = {
+    text:        ['--tf-chart-text', '#858796'],
+    title:       ['--tf-chart-title', '#6e707e'],
+    grid:        ['--tf-chart-grid', 'rgb(234, 236, 244)'],
+    tipBg:       ['--tf-chart-tip-bg', 'rgb(255,255,255)'],
+    tipBorder:   ['--tf-chart-tip-border', '#dddfeb'],
+    hoverBorder: ['--tf-chart-hover-border', 'rgba(234, 236, 244, 1)'],
+    arcBorder:   ['--tf-chart-arc-border', '#fff'],
+    lineRgb:     ['--tf-chart-line-rgb', '78, 115, 223'],
+    url:         ['--tf-ioc-url', '#0026E6'],
+    domain:      ['--tf-ioc-domain', '#3399FF'],
+    ip:          ['--tf-ioc-ip', '#02bf0f'],
+    sha256:      ['--tf-ioc-sha256', '#FFC34D'],
+    md5:         ['--tf-ioc-md5', '#ffc591']
+  };
+  function isDark() {
+    try { return document.documentElement.getAttribute('data-site-theme') === 'dark'; } catch (e) { return false; }
+  }
+  function chartTheme() {
+    var out = { dark: isDark() }, cs = null;
+    try { cs = window.getComputedStyle(document.documentElement); } catch (e) {}
+    Object.keys(CHART_TOKENS).forEach(function (k) {
+      var v = cs ? String(cs.getPropertyValue(CHART_TOKENS[k][0]) || '').trim() : '';
+      out[k] = v || CHART_TOKENS[k][1];
+    });
+    out.line = 'rgba(' + out.lineRgb + ', 1)';
+    out.lineFill = function (a) { return 'rgba(' + out.lineRgb + ', ' + a + ')'; };
+    return out;
+  }
+  // Data colours that are too dark to read on the dark card (#7315BF, #082A33 ...)
+  // are lifted toward white until they reach a relative luminance of ~0.2; light
+  // theme returns the colour untouched. Accepts #rgb / #rrggbb, anything else passes through.
+  function chartInk(color) {
+    if (!isDark() || typeof color !== 'string') return color;
+    var m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(color.trim());
+    if (!m) return color;
+    var h = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+    var c = [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16); });
+    function lin(x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }
+    function lum(v) { return 0.2126 * lin(v[0]) + 0.7152 * lin(v[1]) + 0.0722 * lin(v[2]); }
+    var t = 0, v = c;
+    while (lum(v) < 0.2 && t < 1) {
+      t += 0.05;
+      v = c.map(function (x) { return Math.round(x + (255 - x) * t); });
+    }
+    return '#' + v.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+  }
+  function onThemeChange(fn) {
+    try { document.addEventListener('site-themechange', function () { try { fn(chartTheme()); } catch (e) {} }); } catch (e) {}
+  }
+
   // ─── Expose public API ─────────────────────────────────────────────────────
   var api = {
     escapeHtml: escapeHtml,
@@ -420,6 +563,9 @@
     clearTrackedIntervals: clearTrackedIntervals,
     lazyInViewport: lazyInViewport,
     track: track,
+    chartTheme: chartTheme,
+    chartInk: chartInk,
+    onThemeChange: onThemeChange,
   };
 
   window.TweetFeed = window.TweetFeed || {};

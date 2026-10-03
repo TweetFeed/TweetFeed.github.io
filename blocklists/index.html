@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="Free plain-text blocklists for Pi-hole, AdGuard, dnsmasq and RPZ resolvers, firewalls and SIEMs. Rolling 30-day window, rebuilt every 15 minutes.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="blocklists,pi-hole,adguard,dnsmasq,rpz,firewall blocklist,dns blocklist,ioc feed,osint,Threat Intelligence">
@@ -44,9 +63,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/table.css?v=6" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -111,7 +130,7 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"dateModified": "2026-09-06T21:00:19Z",
+		"dateModified": "2026-10-03T20:15:15Z",
 		"@type": "Dataset",
 		"@id": "https://tweetfeed.live/blocklists/#dataset",
 		"name": "TweetFeed IOC Blocklists",
@@ -232,7 +251,7 @@
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -289,10 +308,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -300,6 +322,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -357,10 +382,10 @@
 						</ul>
 					</details>
 					<script>
-						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=6
-						   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-						   56th) does not load it at all, so anything added there would never reach
-						   that page. Inline also means no FOUC.
+						/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+						   (it runs before first paint, js/utils.js loads at the end of <body>).
+						   js/utils.js now loads on every page, threat-intelligence-guide included
+						   (the dark-mode toggle handler lives there).
 						   The markup ships `open`, so desktop and any JS-disabled browser get the
 						   full list with no CSS trickery. CSS cannot close it: a closed <details>
 						   is hidden by the UA through its slot, and an author-level display:block
@@ -391,19 +416,19 @@
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 
-				<p class="text-center" style="font-size:13px;color:#737373;margin:0 0 1.25rem;"><strong>Related Threat Intelligence feeds:</strong> <a href="../malicious-domains/">malicious domains</a> &middot; <a href="../malicious-urls/">URLs</a> &middot; <a href="../malicious-ips/">malicious IP list</a> &middot; <a href="../feeds/">CSV/JSON feeds</a> &middot; <a href="../ioc-types/">All IOC types</a></p>
+				<p class="text-center" style="font-size:13px;color:var(--tf-fg-737373);margin:0 0 1.25rem;"><strong>Related Threat Intelligence feeds:</strong> <a href="../malicious-domains/">malicious domains</a> &middot; <a href="../malicious-urls/">URLs</a> &middot; <a href="../malicious-ips/">malicious IP list</a> &middot; <a href="../feeds/">CSV/JSON feeds</a> &middot; <a href="../ioc-types/">All IOC types</a></p>
 
 				<!-- ============================================================ -->
 				<!-- THE BLOCKLIST FORMATS                                         -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">The blocklist formats</h3>
-				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Every file is CC0 with no API key or sign-up - these are the same community-reported IOCs as the rest of TweetFeed, with no additional quality gate.</p>
+				<p style="margin-bottom:1rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Every file is CC0 with no API key or sign-up - these are the same community-reported IOCs as the rest of TweetFeed, with no additional quality gate.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="domains">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Pi-hole</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Pi-hole, and anything that takes one bare domain per line.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Pi-hole</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Pi-hole, and anything that takes one bare domain per line.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/domains.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/domains.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -412,8 +437,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="hosts">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">hosts file <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">any /etc/hosts reader</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">/etc/hosts, Windows hosts file, some routers.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">hosts file <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">any /etc/hosts reader</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">/etc/hosts, Windows hosts file, some routers.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/hosts.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/hosts.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/hosts.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/hosts.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -422,8 +447,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="adguard">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">AdGuard rules <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">AdGuard</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">AdGuard Home and uBlock-style filter lists. Valid AdGuard/uBlock filter list with a <code>!</code> metadata header (Title/Homepage/License/Expires), not the generic <code>#</code> header the other files use.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">AdGuard rules <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">AdGuard</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">AdGuard Home and uBlock-style filter lists. Valid AdGuard/uBlock filter list with a <code>!</code> metadata header (Title/Homepage/License/Expires), not the generic <code>#</code> header the other files use.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/adguard.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/adguard.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/adguard.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/adguard.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -432,8 +457,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="ips">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">firewall</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Firewalls and edge ACLs.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">firewall</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Firewalls and edge ACLs.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -442,8 +467,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="rpz">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">DNS RPZ zone <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">RPZ resolver</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">BIND, Unbound, PowerDNS Recursor.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">DNS RPZ zone <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">RPZ resolver</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">BIND, Unbound, PowerDNS Recursor.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/rpz.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/rpz.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -452,8 +477,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="dnsmasq">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">dnsmasq config <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">dnsmasq</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">dnsmasq, including OpenWrt and pfSense.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">dnsmasq config <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">dnsmasq</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">dnsmasq, including OpenWrt and pfSense.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/dnsmasq.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -462,27 +487,27 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="urls">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">SIEM</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Proxies, IDS, SIEM/SOAR enrichment - matches on path, not just host.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">SIEM</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Proxies, IDS, SIEM/SOAR enrichment - matches on path, not just host.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/urls.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</p>
+				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</p>
 
 				<!-- ============================================================ -->
 				<!-- IDS AND SIEM                                                  -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">IDS and SIEM</h3>
-				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a tab-separated Zeek Intelligence Framework file (<code>meta.source</code> always <code>tweetfeed.live</code>) and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
+				<p style="margin-bottom:1rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Formats for intrusion detection and log correlation tooling: a tab-separated Zeek Intelligence Framework file (<code>meta.source</code> always <code>tweetfeed.live</code>) and two Wazuh CDB lists. Same rolling 30-day window, same CC0 license. None of the three carries a header comment - Zeek parses every non-<code>#fields</code> line as data, and a Wazuh CDB would compile a <code>#</code> as a literal key - so check freshness with <a href="../api/#manifest"><code>/v1/manifest</code></a> or the response's <code>Last-Modified</code> header instead.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="zeek-intel">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Zeek intel file <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Zeek</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Zeek's Intelligence Framework, loaded with <code>redef Intel::read_files</code>.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Zeek intel file <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Zeek</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Zeek's Intelligence Framework, loaded with <code>redef Intel::read_files</code>.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/zeek-intel.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/zeek-intel.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -491,8 +516,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="wazuh-domains">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh domains CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="match_key"</code> on a domain field.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh domains CDB <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="match_key"</code> on a domain field.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/wazuh-domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-domains.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -501,8 +526,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="wazuh-ips">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh IPs CDB <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="address_match_key"</code> on <code>srcip</code>/<code>dstip</code>.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Wazuh IPs CDB <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Wazuh</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">Wazuh CDB list for a rule with <code>lookup="address_match_key"</code> on <code>srcip</code>/<code>dstip</code>.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/wazuh-ips.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/wazuh-ips.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -510,13 +535,13 @@
 					</div>
 				</div>
 				<h3 class="section-heading tf-block-head">Corroborated subsets</h3>
-				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Subset of domains.txt / ips.txt / urls.txt: entries also listed by at least one of URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last 6-hourly cross-check. If your change control won't deploy a single-reporter community list, start here - the base lists above remain the full feed. Set membership only, not a quality score and not a verdict.</p>
+				<p style="margin-bottom:1rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Subset of domains.txt / ips.txt / urls.txt: entries also listed by at least one of URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of the last 6-hourly cross-check. If your change control won't deploy a single-reporter community list, start here - the base lists above remain the full feed. Set membership only, not a quality score and not a verdict.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="domains-corroborated">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Domain list (corroborated) <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/domains-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/domains-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -525,8 +550,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="ips-corroborated">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">ips.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">IP list (corroborated) <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">ips.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/ips-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/ips-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -535,24 +560,24 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="urls-corroborated">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs (corroborated) <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">urls.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Full URLs (corroborated) <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">Corroborated</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">urls.txt entries also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/urls-corroborated.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/urls-corroborated.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval; the file changes at most every 15 minutes, so polling faster buys little. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
+				<p style="margin-top:-0.5rem; margin-bottom:1.5rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Palo Alto Networks (PAN-OS EDL): point a Domain EDL at <code>domains.txt</code> with <strong>Automatically expand to include subdomains</strong> ticked and an Hourly refresh interval; the file changes at most every 15 minutes, so polling faster buys little. Point an IP EDL at <code>ips.txt</code>; comment lines are documented for IP EDLs and are skipped as non-matching entries. Do not use <code>urls.txt</code> as a URL EDL: PAN-OS reads <code>? & = ; +</code> as wildcard/token separators, which breaks full-path indicators.</p>
 
 				<h3 class="section-heading tf-block-head">Hashes and newly registered</h3>
-				<p style="margin-bottom:1rem; color:#1c1c1c; font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Two more angles on the same 30-day feed: file hashes for EDR/AV bulk import, and a newly-registered-plus-reported subset for DNS filters.</p>
+				<p style="margin-bottom:1rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Two more angles on the same 30-day feed: file hashes for EDR/AV bulk import, and a newly-registered-plus-reported subset for DNS filters.</p>
 				<div class="row">
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="sha256">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">SHA-256 hashes <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex SHA-256 per line. For Microsoft Defender for Endpoint's Indicators CSV import, CrowdStrike IOC management or any EDR/AV custom-indicator bulk import. About 300 hashes today - smaller than the domain/URL lists, since researchers tweet fewer hashes.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">SHA-256 hashes <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex SHA-256 per line. For Microsoft Defender for Endpoint's Indicators CSV import, CrowdStrike IOC management or any EDR/AV custom-indicator bulk import. About 300 hashes today - smaller than the domain/URL lists, since researchers tweet fewer hashes.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/sha256.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/sha256.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/sha256.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/sha256.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -561,8 +586,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="md5">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">MD5 hashes <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex MD5 per line, same use case as sha256.txt for tools that still key on MD5. About 130 hashes today.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">MD5 hashes <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">EDR/AV</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">One lowercase hex MD5 per line, same use case as sha256.txt for tools that still key on MD5. About 130 hashes today.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/md5.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/md5.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/md5.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/md5.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -571,8 +596,8 @@
 					<div class="col-lg-6 col-12">
 						<div class="card mb-4 h-100" id="nrd-domains">
 							<div class="card-body">
-								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Newly registered domains <span style="font-size:11px; padding:2px 7px; background:#000; color:#fff; border-radius:3px; vertical-align:middle;">NRD</span></h4>
-								<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries whose registrable apex was created 30 days or less before TweetFeed's first report (RDAP creation date). Only apexes with a known RDAP creation date are considered (about 6 in 10 reported domains), and a domain reported this tick can appear one tick later since the registration check runs after publish - a supplement to domains.txt, not a complete NRD feed.</p>
+								<h4 style="font-family:'Rubik',sans-serif; font-size:17px; margin-bottom:0.35rem;">Newly registered domains <span style="font-size:11px; padding:2px 7px; background:var(--tf-bg-000); color:var(--tf-fg-fff); border-radius:3px; vertical-align:middle;">NRD</span></h4>
+								<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.6rem;">domains.txt entries whose registrable apex was created 30 days or less before TweetFeed's first report (RDAP creation date). Only apexes with a known RDAP creation date are considered (about 6 in 10 reported domains), and a domain reported this tick can appear one tick later since the registration check runs after publish - a supplement to domains.txt, not a complete NRD feed.</p>
 								<p style="margin-bottom:0.5rem; font-size:13px;"><code>/v1/blocklist/nrd-domains.txt</code> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt" role="button" tabindex="0" aria-label="Copy URL to clipboard" title="Copy URL"></i></p>
 								<pre class="code-block code-block-sm" style="margin-bottom:0; white-space:pre;">curl -sfL https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt <i class="tf-copy far fa-copy" data-copy="curl -sfL https://api.tweetfeed.live/v1/blocklist/nrd-domains.txt" role="button" tabindex="0" aria-label="Copy curl command to clipboard" title="Copy"></i></pre>
 							</div>
@@ -586,7 +611,7 @@
 				<h3 class="section-heading tf-block-head">What a response looks like</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Most files open with a header comment giving their own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here. <code>rpz.txt</code> is a BIND zone file instead of a flat list; <code>zeek-intel.txt</code> opens with a single tab-separated <code>#fields</code> line instead; the <code>wazuh-*.txt</code> files carry no header at all, since a <code>#</code> would compile as a literal CDB key. <code>adguard.txt</code> carries AdGuard/uBlock filter-list metadata (<code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.) instead of the generic <code>#</code> header; <code>nrd-domains.txt</code> adds extra header lines naming its base list and cross-check refresh time.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Most files open with a header comment giving their own generation timestamp and live entry count, then one indicator per line. <code>domains.txt</code> shown here. <code>rpz.txt</code> is a BIND zone file instead of a flat list; <code>zeek-intel.txt</code> opens with a single tab-separated <code>#fields</code> line instead; the <code>wazuh-*.txt</code> files carry no header at all, since a <code>#</code> would compile as a literal CDB key. <code>adguard.txt</code> carries AdGuard/uBlock filter-list metadata (<code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.) instead of the generic <code>#</code> header; <code>nrd-domains.txt</code> adds extra header lines naming its base list and cross-check refresh time.</p>
 						<pre class="code-block code-block-sm"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days
 # Entries: 4877
@@ -609,7 +634,7 @@
 				<h3 class="section-heading tf-block-head">Window and refresh</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li>Rolling 30-day window: an entry drops off 30 days after it was last reported, not 30 days after you last downloaded the file.</li>
 							<li>Rebuilt every 15 minutes, in step with the rest of the TweetFeed pipeline; a file only changes on disk when its entries change.</li>
 							<li>Every file supports conditional requests (<code>curl -z &lt;local-file&gt;</code> / <code>wget --timestamping</code>): a <code>304</code> with no body comes back when nothing changed since your last pull.</li>
@@ -654,7 +679,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">License</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -764,7 +789,7 @@
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities (delegated tf-copy click handler) -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=6"></script>
+	<script src="../js/utils.js?v=8"></script>
 </body>
 
 </html>

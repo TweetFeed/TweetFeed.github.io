@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="Live IOC dashboard with embedded tweets. Filter by URL, IP, hash, domain and malware family. Updated every 15 min from ~95 infosec researchers.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious">
@@ -46,9 +65,9 @@
 	<!-- Custom styles for this page -->
 	<!-- vendor/datatables/dataTables.bootstrap4.min.css removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- Custom CSS 0xDanielLopez -->
-	<!-- <link href="../css/table.css?v=5" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<!-- <link href="../css/table.css?v=6" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -173,38 +192,38 @@
 		/* Type strip. Pattern copied from .tfc-headline (campaigns/index.html:161-190):
 		   grid with a black border and 1px dividers, tabular-nums figures. */
 		.tfd-types { display:grid; grid-template-columns:repeat(5,1fr); gap:0;
-			border:1px solid black; border-radius:3px; background:#fff; margin:0 0 .75rem 0; }
-		.tfd-type { appearance:none; border:0; background:#fff; padding:.7rem .4rem;
+			border:1px solid var(--tf-bd-000); border-radius:3px; background:var(--tf-bg-fff); margin:0 0 .75rem 0; }
+		.tfd-type { appearance:none; border:0; background:var(--tf-bg-fff); padding:.7rem .4rem;
 			font-family:'Rubik',sans-serif; text-align:center; cursor:pointer;
 			border-bottom:3px solid transparent; transition:background-color .15s ease; }
-		.tfd-type + .tfd-type { border-left:1px solid black; }
-		.tfd-type:hover { background:#f8f9fa; background-image:none; }
-		.tfd-type-num { display:block; font-size:26px; font-weight:700; color:#1c1c1c;
+		.tfd-type + .tfd-type { border-left:1px solid var(--tf-bd-000); }
+		.tfd-type:hover { background:var(--tf-bg-f8f9fa); background-image:none; }
+		.tfd-type-num { display:block; font-size:26px; font-weight:700; color:var(--tf-fg-1c1c1c);
 			font-variant-numeric:tabular-nums; line-height:1.1; }
 		.tfd-type-label { display:block; font-size:11px; font-weight:700; text-transform:uppercase;
-			letter-spacing:.06em; color:#4b5563; margin-top:2px; }
+			letter-spacing:.06em; color:var(--tf-fg-4b5563); margin-top:2px; }
 		/* Per-type accent: same palette as .tfl-type-* in search/index.html:278-283 */
-		.tfd-type-url    { border-bottom-color:#0026E6; }
-		.tfd-type-domain { border-bottom-color:#3399FF; }
-		.tfd-type-ip     { border-bottom-color:#02bf0f; }
-		.tfd-type-sha256, .tfd-type-md5 { border-bottom-color:#FFC34D; }
+		.tfd-type-url    { border-bottom-color:var(--tf-bd-0026e6); }
+		.tfd-type-domain { border-bottom-color:var(--tf-bd-3399ff); }
+		.tfd-type-ip     { border-bottom-color:var(--tf-bd-02bf0f); }
+		.tfd-type-sha256, .tfd-type-md5 { border-bottom-color:var(--tf-bd-ffc34d); }
 		/* Selected: filled with the type's color, same idiom as .tfc-filter-chip.active */
-		.tfd-type[aria-pressed="true"].tfd-type-url    { background:#0026E6; }
-		.tfd-type[aria-pressed="true"].tfd-type-domain { background:#3399FF; }
-		.tfd-type[aria-pressed="true"].tfd-type-ip     { background:#02bf0f; }
+		.tfd-type[aria-pressed="true"].tfd-type-url    { background:var(--tf-bg-0026e6); }
+		.tfd-type[aria-pressed="true"].tfd-type-domain { background:var(--tf-bg-3399ff); }
+		.tfd-type[aria-pressed="true"].tfd-type-ip     { background:var(--tf-bg-02bf0f); }
 		.tfd-type[aria-pressed="true"].tfd-type-sha256,
-		.tfd-type[aria-pressed="true"].tfd-type-md5    { background:#FFC34D; }
+		.tfd-type[aria-pressed="true"].tfd-type-md5    { background:var(--tf-bg-ffc34d); }
 		.tfd-type[aria-pressed="true"].tfd-type-url .tfd-type-num,
 		.tfd-type[aria-pressed="true"].tfd-type-url .tfd-type-label,
 		.tfd-type[aria-pressed="true"].tfd-type-domain .tfd-type-num,
 		.tfd-type[aria-pressed="true"].tfd-type-domain .tfd-type-label,
 		.tfd-type[aria-pressed="true"].tfd-type-ip .tfd-type-num,
-		.tfd-type[aria-pressed="true"].tfd-type-ip .tfd-type-label { color:#fff; }
+		.tfd-type[aria-pressed="true"].tfd-type-ip .tfd-type-label { color:var(--tf-fg-fff); }
 		.tfd-type[aria-pressed="true"].tfd-type-sha256 .tfd-type-num,
 		.tfd-type[aria-pressed="true"].tfd-type-sha256 .tfd-type-label,
 		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-num,
-		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-label { color:#5c3d12; }
-		.tfd-type:focus-visible { outline:2px solid #3a6f96; outline-offset:-2px; }
+		.tfd-type[aria-pressed="true"].tfd-type-md5 .tfd-type-label { color:var(--tf-fg-5c3d12); }
+		.tfd-type:focus-visible { outline:2px solid var(--tf-ol-3a6f96); outline-offset:-2px; }
 
 		/* Tag chips. Copy of .tfc-filter-chip (campaigns/index.html:648-688). */
 		.tfd-chips { display:flex; flex-wrap:wrap; gap:6px; }
@@ -213,63 +232,63 @@
 		   chips ARE the tag filter, so they carry #4b5563 at full opacity: 11px
 		   uppercase at 2.4:1 was unreadable, and the site already carries an
 		   explicit AA fix for exactly this (body{color:#6b6d7c} in tweetfeed.css). */
-		.tfd-chip { appearance:none; padding:3px 12px; border:1px solid #9a9a9a; border-radius:3px;
+		.tfd-chip { appearance:none; padding:3px 12px; border:1px solid var(--tf-bd-9a9a9a); border-radius:3px;
 			font-size:11px; font-family:'Rubik',sans-serif; font-weight:600; text-transform:uppercase;
-			letter-spacing:.03em; line-height:1.6; background:#fff; color:#4b5563; cursor:pointer;
+			letter-spacing:.03em; line-height:1.6; background:var(--tf-bg-fff); color:var(--tf-fg-4b5563); cursor:pointer;
 			transition:background-color .15s ease, border-color .15s ease; }
-		.tfd-chip:hover { border-color:#4b5563; background:#f8f9fa; background-image:none; }
-		.tfd-chip[aria-pressed="true"] { border-color:black; background:#3a6f96; color:#fff; }
-		.tfd-chip[aria-pressed="true"]:hover { background:#325d81; }
-		.tfd-chip:focus-visible { outline:2px solid #3a6f96; outline-offset:1px; }
-		.tfd-chip-count { margin-left:4px; font-weight:400; color:#737373; }
-		.tfd-chip[aria-pressed="true"] .tfd-chip-count { color:#fff; opacity:.8; }
+		.tfd-chip:hover { border-color:var(--tf-bd-4b5563); background:var(--tf-bg-f8f9fa); background-image:none; }
+		.tfd-chip[aria-pressed="true"] { border-color:var(--tf-bd-000); background:var(--tf-bg-3a6f96); color:var(--tf-fg-fff); }
+		.tfd-chip[aria-pressed="true"]:hover { background:var(--tf-bg-325d81); }
+		.tfd-chip:focus-visible { outline:2px solid var(--tf-ol-3a6f96); outline-offset:1px; }
+		.tfd-chip-count { margin-left:4px; font-weight:400; color:var(--tf-fg-737373); }
+		.tfd-chip[aria-pressed="true"] .tfd-chip-count { color:var(--tf-fg-fff); opacity:.8; }
 		/* Zero-hit tags stay legible, just clearly recessive: a lighter border and
 		   a muted label, not a global opacity that would drag the text under AA. */
-		.tfd-chip-zero { border-color:#d6d6d6; color:#737373; }
+		.tfd-chip-zero { border-color:var(--tf-bd-d6d6d6); color:var(--tf-fg-737373); }
 		/* X marker on the removable filter chips inside the summary bar (not part
 		   of the spec's chip spec verbatim; minimal addition, namespaced .tfd-). */
 		.tfd-chip-x { margin-left:4px; opacity:.7; }
 
 		/* Filter panel */
-		.tfd-panel { border:1px solid black; border-radius:3px; background:#fff;
+		.tfd-panel { border:1px solid var(--tf-bd-000); border-radius:3px; background:var(--tf-bg-fff);
 			padding:.9rem 1rem; margin-bottom:.75rem; }
 		.tfd-panel-label { font-family:'Rubik',sans-serif; font-size:11px; font-weight:700;
-			text-transform:uppercase; letter-spacing:.06em; color:#4b5563; margin:0 0 .5rem 0; }
+			text-transform:uppercase; letter-spacing:.06em; color:var(--tf-fg-4b5563); margin:0 0 .5rem 0; }
 		/* No-tags-in-window notice. Not in the spec's CSS listing verbatim; reuses
 		   the same microcopy typography as .tfd-summary. */
-		.tfd-no-live { font-family:'Rubik',sans-serif; font-size:12.5px; color:#737373; margin:0; }
+		.tfd-no-live { font-family:'Rubik',sans-serif; font-size:12.5px; color:var(--tf-fg-737373); margin:0; }
 		/* details: same +/- marker as .faq-section (tweetfeed.css:437-527) */
-		.tfd-all { margin-top:.9rem; border-top:1px solid #e6e6e6; padding-top:.75rem; }
+		.tfd-all { margin-top:.9rem; border-top:1px solid var(--tf-bd-e6e6e6); padding-top:.75rem; }
 		/* .faq-section pushes this marker to the far right with margin-left:auto,
 		   which works there because the question fills the line. Here the label is
 		   four words wide, so the marker has to sit next to it or it floats a full
 		   content width away from the thing it opens. */
 		.tfd-all > summary { list-style:none; cursor:pointer; display:inline-flex; align-items:center;
-			gap:.5rem; font-family:'Rubik',sans-serif; font-size:13px; color:#1c1c1c; }
+			gap:.5rem; font-family:'Rubik',sans-serif; font-size:13px; color:var(--tf-fg-1c1c1c); }
 		.tfd-all > summary::-webkit-details-marker { display:none; }
 		.tfd-all > summary::after { content:'+'; width:20px; height:20px;
-			display:inline-flex; align-items:center; justify-content:center; color:#3a6f96;
-			border:1px solid #3a6f96; border-radius:3px; font-size:14px; line-height:1; }
+			display:inline-flex; align-items:center; justify-content:center; color:var(--tf-fg-3a6f96);
+			border:1px solid var(--tf-bd-3a6f96); border-radius:3px; font-size:14px; line-height:1; }
 		.tfd-all[open] > summary::after { content:'\2212'; }
 		.tfd-all .tag-search-wrap { margin:.6rem 0; }
 		.tag-hidden { display:none !important; }
 
 		/* Summary bar */
 		.tfd-summary { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem;
-			font-family:'Rubik',sans-serif; font-size:12.5px; color:#737373; margin-bottom:.75rem; }
+			font-family:'Rubik',sans-serif; font-size:12.5px; color:var(--tf-fg-737373); margin-bottom:.75rem; }
 		.tfd-summary-text { font-variant-numeric:tabular-nums; }
-		.tfd-linkbtn { appearance:none; border:0; background:none; padding:0; color:#3a6f96;
+		.tfd-linkbtn { appearance:none; border:0; background:none; padding:0; color:var(--tf-fg-3a6f96);
 			font-family:'Rubik',sans-serif; font-size:12.5px; cursor:pointer; text-decoration:underline; }
-		.tfd-linkbtn:hover { color:#325d81; background-image:none; }
+		.tfd-linkbtn:hover { color:var(--tf-fg-325d81); background-image:none; }
 
 		/* Row-count segmented control */
-		.tfd-seg { display:inline-flex; border:1px solid black; border-radius:3px; overflow:hidden; }
-		.tfd-seg button { appearance:none; border:0; background:#fff; padding:2px 10px;
-			font-family:'Rubik',sans-serif; font-size:12px; font-weight:600; color:#4b5563; cursor:pointer; }
-		.tfd-seg button + button { border-left:1px solid black; }
-		.tfd-seg button:hover { background:#f8f9fa; background-image:none; }
-		.tfd-seg button[aria-pressed="true"] { background:#3a6f96; color:#fff; }
-		.tfd-seg button:focus-visible { outline:2px solid #3a6f96; outline-offset:-2px; }
+		.tfd-seg { display:inline-flex; border:1px solid var(--tf-bd-000); border-radius:3px; overflow:hidden; }
+		.tfd-seg button { appearance:none; border:0; background:var(--tf-bg-fff); padding:2px 10px;
+			font-family:'Rubik',sans-serif; font-size:12px; font-weight:600; color:var(--tf-fg-4b5563); cursor:pointer; }
+		.tfd-seg button + button { border-left:1px solid var(--tf-bd-000); }
+		.tfd-seg button:hover { background:var(--tf-bg-f8f9fa); background-image:none; }
+		.tfd-seg button[aria-pressed="true"] { background:var(--tf-bg-3a6f96); color:var(--tf-fg-fff); }
+		.tfd-seg button:focus-visible { outline:2px solid var(--tf-ol-3a6f96); outline-offset:-2px; }
 
 		/* Tweet grid: N flex columns with round-robin distribution. Do NOT use
 		   column-count: X's iframes resize on load and column-count reflows the
@@ -280,8 +299,8 @@
 		.tfd-cell > .twitter-tweet-rendered, .tfd-cell > iframe { width:100% !important; }
 
 		@media (max-width:575.98px) { .tfd-types { grid-template-columns:repeat(2,1fr); }
-			.tfd-type:nth-child(2n) { border-left:1px solid black; }
-			.tfd-type:nth-child(n+3) { border-top:1px solid black; }
+			.tfd-type:nth-child(2n) { border-left:1px solid var(--tf-bd-000); }
+			.tfd-type:nth-child(n+3) { border-top:1px solid var(--tf-bd-000); }
 			.tfd-type:nth-child(2n+1) { border-left:0; }
 			/* Five tiles in two columns leaves MD5 alone on the last row with an
 			   empty half inside the border. Let it span instead. */
@@ -298,7 +317,7 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -355,10 +374,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -366,6 +388,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -422,7 +447,7 @@
 								<button type="button" class="tfd-n" data-n="100" aria-pressed="false">100</button>
 							</div>
 							<button type="button" id="filtersToggle" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters"><i class="fas fa-sliders-h" aria-hidden="true"></i> Filters</button>
-							<button data-export="values" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:#3a6f96"><i class="fas fa-download"></i> Export CSV</button>
+							<button data-export="values" type="button" class="btn btn-primary btn-sm btn-tf" style="border-color:var(--tf-bd-3a6f96)"><i class="fas fa-download"></i> Export CSV</button>
 							<i class="far fa-question-circle fa-sm text-muted" data-toggle="tooltip" data-placement="top" title="File format: [Date]_[Hour]_TweetFeed.csv"></i>
 						</div>
 					</div>
@@ -566,7 +591,7 @@
 	<!-- vendor/datatables/*.js + js/demo/datatables-demo.js removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=6"></script>
+	<script defer src="../js/utils.js?v=8"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// Tweet rendering queue: loadData() may run before platform widgets.js
@@ -621,7 +646,7 @@
 	function __tfRenderInto(statusId, targetEl) {
 		__tfClear(targetEl);
 		targetEl.appendChild(__tfBuildSkeleton());
-		twttr.widgets.createTweet(statusId, targetEl, { conversation: 'none' })
+		twttr.widgets.createTweet(statusId, targetEl, { conversation: 'none', theme: document.documentElement.getAttribute('data-site-theme') === 'dark' ? 'dark' : 'light' })
 			.then(function(el) {
 				var sk = targetEl.querySelector('.tweet-skeleton');
 				if (sk) sk.remove();
@@ -996,6 +1021,12 @@
 					tfdBuildGrid(tfdLastLines);
 				}
 			}, 200));
+
+			// Embedded tweets are iframes themed when they render: on a theme switch rebuild the grid, which
+			// re-embeds only the cells near the viewport (same lazy path as the resize rebuild above).
+			document.addEventListener('site-themechange', function() {
+				if (tfdLastLines && tfdLastLines.length) tfdBuildGrid(tfdLastLines);
+			});
 
 			function animation() {
 				$('#tfdGrid').hide();

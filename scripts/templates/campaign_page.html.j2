@@ -11,6 +11,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{{ shell_theme_init }}
 	{%- if noindex %}
 	<meta name="robots" content="noindex, nofollow">
 	{%- endif %}
@@ -44,9 +45,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../../css/table.css?v=5" rel="stylesheet">
-	<link href="../../css/index.css?v=64" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../../css/table.css?v=6" rel="stylesheet">
+	<link href="../../css/index.css?v=73" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -127,12 +128,12 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-layer-group" style="font-size: 36px;"></i> {{ c.title }}</h1>
-					<p style="font-size:14px;color:#737373;margin-top:0.5rem;">Snapshot generated {{ c.generated_at_str }}. AI-clustered from public Twitter/X threat-intel reports.</p>
+					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;">Snapshot generated {{ c.generated_at_str }}. AI-clustered from public Twitter/X threat-intel reports.</p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-layer-group" style="font-size: 36px;"></i> {{ c.title }}</p>
-					<p style="font-size:13px;color:#737373;margin-top:0.25rem;">Snapshot generated {{ c.generated_at_str }}.</p>
+					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;">Snapshot generated {{ c.generated_at_str }}.</p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 
@@ -146,8 +147,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">IOCs</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ c.ioc_count }}</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">tracked in this campaign</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ c.ioc_count }}</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">tracked in this campaign</p>
 							</div>
 						</div>
 					</div>
@@ -156,8 +157,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Confidence</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif; text-transform:capitalize;">{{ c.confidence }}</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">clustering confidence</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif; text-transform:capitalize;">{{ c.confidence }}</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">clustering confidence</p>
 							</div>
 						</div>
 					</div>
@@ -166,13 +167,13 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">First seen</span>
 								<hr>
-								<p style="font-size: 28px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ c.first_seen }}</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">earliest IOC in this cluster</p>
+								<p style="font-size: 28px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ c.first_seen }}</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">earliest IOC in this cluster</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Snapshot as of {{ c.generated_at_str }}. This is a manually-generated prototype page, not yet on the daily regeneration cycle.</p>
+				<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Snapshot as of {{ c.generated_at_str }}. This is a manually-generated prototype page, not yet on the daily regeneration cycle.</p>
 
 				<!-- ============================================================ -->
 				<!-- ABOUT THIS TAG                                                -->
@@ -180,7 +181,7 @@
 				<h2 class="section-heading tf-block-head">About this campaign</h2>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">{{ c.context_html }}</p>
+						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">{{ c.context_html }}</p>
 					</div>
 				</div>
 
@@ -203,7 +204,7 @@
 							</table>
 						</div>
 						{% else %}
-						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">No registered-domain anchors for this campaign (clustered on tags or URL path patterns instead).</p>
+						<p style="margin-bottom:0; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">No registered-domain anchors for this campaign (clustered on tags or URL path patterns instead).</p>
 						{% endif %}
 					</div>
 				</div>
@@ -217,7 +218,7 @@
 				<h2 class="section-heading tf-block-head">Infrastructure footprint</h2>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">{{ c.infra_ip_count }} IP{{ 's' if c.infra_ip_count != 1 }} across {{ c.infra_org_count }} network{{ 's' if c.infra_org_count != 1 }} in this campaign:</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">{{ c.infra_ip_count }} IP{{ 's' if c.infra_ip_count != 1 }} across {{ c.infra_org_count }} network{{ 's' if c.infra_org_count != 1 }} in this campaign:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:420px; margin-bottom:0;">
 								<colgroup>
@@ -252,8 +253,8 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						{% if iocs %}
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Showing up to 25 IOCs (the campaigns API caps each campaign's published list at 25). Live JSON: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/campaigns</code></a>.</p>
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Download this campaign: <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}" target="_blank" rel="noopener noreferrer">JSON</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.csv" target="_blank" rel="noopener noreferrer">CSV</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.stix.json" target="_blank" rel="noopener noreferrer">STIX 2.1</a>.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Showing up to 25 IOCs (the campaigns API caps each campaign's published list at 25). Live JSON: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/campaigns</code></a>.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Download this campaign: <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}" target="_blank" rel="noopener noreferrer">JSON</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.csv" target="_blank" rel="noopener noreferrer">CSV</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.stix.json" target="_blank" rel="noopener noreferrer">STIX 2.1</a>.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:720px; margin-bottom:0;">
 								<colgroup>
@@ -272,7 +273,7 @@
 								</thead>
 								<tbody>
 									{% for s in iocs %}<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ s.date_short }}</td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ s.date_short }}</td>
 										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:{{ s.type_color }}; color:{{ s.type_text_color }}; border-radius:3px;">{{ s.type }}</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ s.value_full }}"><i class="tf-copy far fa-copy" data-copy="{{ s.value_full }}" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>{{ s.value_display }}</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/{{ s.user }}" target="_blank" rel="noopener noreferrer">@{{ s.user }}</a></td>
@@ -281,7 +282,7 @@
 							</table>
 						</div>
 						{% else %}
-						<p style="margin-bottom:0; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">No IOC rows available for this campaign.</p>
+						<p style="margin-bottom:0; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">No IOC rows available for this campaign.</p>
 						{% endif %}
 					</div>
 				</div>
@@ -292,7 +293,7 @@
 				<h2 class="section-heading tf-block-head">Explore more</h2>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0;">See all active campaigns on the <a href="../../campaigns/" class="text-decoration-none">Campaigns</a> page, or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0;">See all active campaigns on the <a href="../../campaigns/" class="text-decoration-none">Campaigns</a> page, or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
 					</div>
 				</div>
 
@@ -300,7 +301,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h2 class="section-heading tf-block-head">License</h2>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					This campaign's IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Campaign descriptions are AI-generated from the underlying IOC data and may contain errors - verify before acting on them. Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -320,7 +321,7 @@
 	<script src="../../vendor/jquery/jquery.min.js"></script>
 	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities (delegated tf-copy click handler) -->
-	<script src="../../js/utils.js?v=6"></script>
+	<script src="../../js/utils.js?v=8"></script>
 	<script>
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
 	</script>

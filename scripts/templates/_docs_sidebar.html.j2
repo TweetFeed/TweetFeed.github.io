@@ -25,10 +25,10 @@
 		</ul>
 	</details>
 	<script>
-		/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=6
-		   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-		   56th) does not load it at all, so anything added there would never reach
-		   that page. Inline also means no FOUC.
+		/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+		   (it runs before first paint, js/utils.js loads at the end of <body>).
+		   js/utils.js now loads on every page, threat-intelligence-guide included
+		   (the dark-mode toggle handler lives there).
 		   The markup ships `open`, so desktop and any JS-disabled browser get the
 		   full list with no CSS trickery. CSS cannot close it: a closed <details>
 		   is hidden by the UA through its slot, and an author-level display:block

@@ -1660,6 +1660,51 @@ def check_status_top_level_documented() -> list[str]:
     return failures
 
 
+FIRST_STYLE_RE = re.compile(
+    r'<link\b[^>]*\brel="stylesheet"|<link\b[^>]*\bas="style"|<style\b', re.I
+)
+THEME_INIT_REGION_RE = re.compile(r"<!-- site-theme-init -->.*?<!-- /site-theme-init -->", re.S)
+
+
+def _squash(text: str) -> str:
+    """Compare the init region regardless of indentation (tabs in most pages,
+    4 spaces in 404.html)."""
+    return "\n".join(line.strip() for line in text.strip().splitlines() if line.strip())
+
+
+def check_theme_init(pages: list[str]) -> list[str]:
+    """Every page carries exactly ONE site-theme-init region, identical to
+    scripts/templates/_theme_init.html.j2, BEFORE the first stylesheet/<style>
+    (otherwise the first paint can flash the wrong theme). The Jinja generator
+    templates must carry `{{ shell_theme_init }}` once, in the same place, so
+    the 06:00 regen keeps the region on the tag/campaign/tags pages."""
+    from render_shell import theme_init_block
+
+    expected = _squash(theme_init_block(""))
+    failures: list[str] = []
+    for p in pages:
+        text = read(p)
+        first_style = FIRST_STYLE_RE.search(text)
+        limit = first_style.start() if first_style else len(text)
+        if p.endswith(".j2"):
+            n = text.count("{{ shell_theme_init }}")
+            if n != 1:
+                failures.append(f"{p}: expected exactly one {{{{ shell_theme_init }}}}, found {n}")
+            elif text.index("{{ shell_theme_init }}") > limit:
+                failures.append(f"{p}: {{{{ shell_theme_init }}}} comes after the first stylesheet")
+            continue
+        regions = list(THEME_INIT_REGION_RE.finditer(text))
+        if len(regions) != 1 or text.count("<!-- site-theme-init -->") != 1:
+            failures.append(f"{p}: expected exactly one site-theme-init region, found {len(regions)}")
+            continue
+        m = regions[0]
+        if _squash(m.group(0)) != expected:
+            failures.append(f"{p}: site-theme-init region differs from _theme_init.html.j2")
+        if m.start() > limit:
+            failures.append(f"{p}: site-theme-init region comes after the first stylesheet")
+    return failures
+
+
 CHECKS = [
     ("Canonical URLs", check_canonicals),
     ("Analytics scripts (anchor + Umami + Ahrefs)", check_analytics),
@@ -1695,6 +1740,7 @@ SHELL_CHECKS = [
     ("Footer column headings present", check_footer_headings),
     ("Nav/footer links resolve", check_links_resolve),
     ("Docs sidebar matches site_ia", check_docs_sidebar),
+    ("Theme init region (one, identical, before first stylesheet)", check_theme_init),
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
     ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
     ("Duplicate HTML ids", check_duplicate_ids),
@@ -1878,7 +1924,18 @@ def check_hunt_recipe_counts() -> list[str]:
     return failures
 
 
+def check_theme_init_templates() -> list[str]:
+    """Same invariant for the generator templates (see check_theme_init)."""
+    tpls = sorted(
+        f"scripts/templates/{p.name}"
+        for p in (REPO_ROOT / "scripts" / "templates").glob("*.j2")
+        if not p.name.startswith("_")
+    )
+    return check_theme_init(tpls)
+
+
 GLOBAL_CHECKS = [
+    ("Theme init in the generator templates (one {{ shell_theme_init }}, before the first stylesheet)", check_theme_init_templates),
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
     ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),

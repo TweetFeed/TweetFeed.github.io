@@ -18,7 +18,7 @@ table {
   vertical-align: middle;
   font-size: clamp(0.75rem, 0.8vw, 1rem);
   font-family: 'Rubik', sans-serif;
-  color: #474747;
+  color: var(--tf-fg-474747);
 }
 
 .twitterUser {
@@ -28,11 +28,11 @@ table {
   font-family: 'Rubik', sans-serif;
   font-size: clamp(0.625rem, 0.65vw, 0.875rem);
   font-weight: 600;
-  color: #fff;
+  color: var(--tf-fg-fff);
   text-decoration: none;
   white-space: nowrap;
-  background-color: #1DA1F2;
-  border: 2px solid black;
+  background-color: var(--tf-bg-1da1f2);
+  border: 2px solid var(--tf-bd-000);
   border-radius: 2px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
@@ -41,8 +41,8 @@ table {
 }
 
 .twitterUser:hover {
-  background-color: #0d8ecf;
-  border-color: #0d8ecf;
+  background-color: var(--tf-bg-0d8ecf);
+  border-color: var(--tf-bd-0d8ecf);
 }
 
 .twitterUser img {
@@ -90,7 +90,7 @@ table {
     vertical-align: middle;
     font-size: clamp(0.8125rem, 3vw, 1.125rem);
     font-family: 'Rubik', sans-serif;
-    color: #474747;
+    color: var(--tf-fg-474747);
   }
 
   .twitterUser {

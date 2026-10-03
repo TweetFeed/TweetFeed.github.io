@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="30 copy-paste IOC recipes: terminal, Splunk, Sentinel, Defender, Elastic, QRadar, MISP, TAXII, OpenCTI, IntelOwl, Sigma, MCP. Free, CC0, refreshed every 15 min.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="hunt,feed,phishing,scam,malware,twitter,osint,socmint,ioc,threat,malicious,splunk,kql,sentinel,defender,elastic,elasticsearch,logstash,esql,kibana,misp,sigma,qradar,opencti,intelowl">
@@ -44,8 +63,8 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -248,7 +267,7 @@
 			font-family: 'Rubik', sans-serif;
 			font-size: 15px;
 			line-height: 1.6;
-			color: #444;
+			color: var(--tf-fg-444);
 			margin: 0.35rem 0 0;
 			max-width: 68ch;
 		}
@@ -280,8 +299,8 @@
 			gap: 6px 8px;
 			padding: 10px 0;
 			margin: 0;
-			background: #f8f9fc;
-			border-bottom: 1px solid black;
+			background: var(--tf-bg-f8f9fc);
+			border-bottom: 1px solid var(--tf-bd-000);
 		}
 		/* The desktop bar is fixed-top and exactly 56px (see the note in
 		   tweetfeed.css); below 992px the bar scrolls away with the page. */
@@ -294,14 +313,14 @@
 		   this used to duplicate declaration for declaration. What stays is what
 		   a toggle <button> needs and a nav <a> does not. */
 		.hnt-chip { cursor: pointer; }
-		.hnt-chip:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
-		.hnt-chip[aria-pressed="true"] { background: #1178b3; color: #fff; font-weight: 600; }
+		.hnt-chip:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
+		.hnt-chip[aria-pressed="true"] { background: var(--tf-bg-1178b3); color: var(--tf-fg-fff); font-weight: 600; }
 		.hnt-chip-n { opacity: 0.7; margin-left: 4px; font-variant-numeric: tabular-nums; }
 		.hnt-chip[aria-pressed="true"] .hnt-chip-n { opacity: 0.85; }
 		.hnt-status {
 			font-family: 'Rubik', sans-serif;
 			font-size: 13px;
-			color: #737373;
+			color: var(--tf-fg-737373);
 			margin: 0.6rem 0 0;
 		}
 		.hnt-status button {
@@ -309,12 +328,12 @@
 			border: 0;
 			padding: 0;
 			font: inherit;
-			color: #3a6f96;
+			color: var(--tf-fg-3a6f96);
 			text-decoration: underline;
 			text-underline-offset: 2px;
 			cursor: pointer;
 		}
-		.hnt-status button:hover { color: #1178b3; }
+		.hnt-status button:hover { color: var(--tf-fg-1178b3); }
 
 		/* Groups and cards. Each recipe is its own <article> with an id, so
 		   every one of them is linkable (/hunt/#sentinel-dns-hits) - the old
@@ -325,13 +344,13 @@
 			font-family: 'Rubik', sans-serif;
 			font-size: 15px;
 			line-height: 1.6;
-			color: #444;
+			color: var(--tf-fg-444);
 			margin: 0 0 0.9rem;
 			max-width: 72ch;
 		}
 		.hnt-card {
-			border: 1px solid black;
-			background: #fff;
+			border: 1px solid var(--tf-bd-000);
+			background: var(--tf-bg-fff);
 			padding: 1rem 1.15rem 1.15rem;
 			margin: 0 0 0.85rem;
 		}
@@ -344,7 +363,7 @@
 		}
 		.hnt-badge {
 			padding: 1px 8px;
-			border: 1px solid black;
+			border: 1px solid var(--tf-bd-000);
 			border-radius: 3px;
 			font-family: 'Rubik', sans-serif;
 			font-size: 10.5px;
@@ -352,21 +371,21 @@
 			text-transform: uppercase;
 			letter-spacing: 0.04em;
 			line-height: 1.5;
-			color: #000;
+			color: var(--tf-fg-000);
 			white-space: nowrap;
 		}
 		.hnt-title {
 			font-family: 'Rubik', sans-serif;
 			font-size: 1.05rem;
 			font-weight: 600;
-			color: #1c1c1c;
+			color: var(--tf-fg-1c1c1c);
 			margin: 0;
 		}
 		.hnt-anchor {
 			margin-left: auto;
 			font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 			font-size: 15px;
-			color: #9aa0a6;
+			color: var(--tf-fg-9aa0a6);
 			text-decoration: none;
 			opacity: 0;
 			transition: opacity 0.15s ease;
@@ -374,7 +393,7 @@
 		.hnt-card:hover .hnt-anchor,
 		.hnt-card:focus-within .hnt-anchor { opacity: 1; }
 		.hnt-anchor:hover,
-		.hnt-anchor:focus-visible { color: #1178b3; text-decoration: none; opacity: 1; }
+		.hnt-anchor:focus-visible { color: var(--tf-fg-1178b3); text-decoration: none; opacity: 1; }
 		.hnt-desc,
 		.hnt-note {
 			font-family: 'Rubik', sans-serif;
@@ -384,16 +403,16 @@
 		/* 15px, matching .cl-body and .faq-section p. The old page set
 		   style="font-size:14px" inline on ~30 paragraphs, one notch under
 		   every other page's prose. */
-		.hnt-desc { font-size: 15px; color: #444; margin: 0 0 0.6rem; }
-		.hnt-note { font-size: 14px; color: #555; margin: 0.75rem 0 0.35rem; }
+		.hnt-desc { font-size: 15px; color: var(--tf-fg-444); margin: 0 0 0.6rem; }
+		.hnt-note { font-size: 14px; color: var(--tf-fg-555); margin: 0.75rem 0 0.35rem; }
 		.hnt-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 0.5rem; margin: 0 0 0.75rem; }
 		.hnt-meta span {
 			font-family: 'Rubik', sans-serif;
 			font-size: 11.5px;
 			line-height: 1.6;
-			color: #4b5563;
-			background: #f2f2f2;
-			border: 1px solid #c9c9c9;
+			color: var(--tf-fg-4b5563);
+			background: var(--tf-bg-f2f2f2);
+			border: 1px solid var(--tf-bd-c9c9c9);
 			border-radius: 3px;
 			padding: 1px 7px;
 		}
@@ -406,8 +425,8 @@
 			font-family: 'Rubik', sans-serif;
 			font-size: 13.5px;
 		}
-		.hnt-links a { color: #3a6f96; text-decoration: underline; text-underline-offset: 2px; }
-		.hnt-links a:hover { color: #1178b3; }
+		.hnt-links a { color: var(--tf-fg-3a6f96); text-decoration: underline; text-underline-offset: 2px; }
+		.hnt-links a:hover { color: var(--tf-fg-1178b3); }
 		.hnt-card[hidden], .hnt-group[hidden] { display: none; }
 
 		/* A deep link must clear BOTH the sticky filter row (51px) and, on
@@ -425,18 +444,18 @@
 
 		/* One pastel per stack, all from the existing palette. Black text on
 		   every one of them clears AA by a wide margin. */
-		.hnt-badge-api      { background: #c8f6fd; }
-		.hnt-badge-terminal { background: #d9d9d9; }
-		.hnt-badge-splunk   { background: #34e3a4; }
-		.hnt-badge-sentinel { background: #7BC5F9; }
-		.hnt-badge-defender { background: #cdd8fa; }
-		.hnt-badge-elastic  { background: #ffc591; }
-		.hnt-badge-misp     { background: #a0dde6; }
-		.hnt-badge-sigma    { background: #FFCC99; }
-		.hnt-badge-agents   { background: #e6d3f7; }
-		.hnt-badge-qradar   { background: #f7c7d9; }
-		.hnt-badge-opencti  { background: #c9e4c5; }
-		.hnt-badge-intelowl { background: #f5e6a3; }
+		.hnt-badge-api      { background: var(--tf-bg-c8f6fd); }
+		.hnt-badge-terminal { background: var(--tf-bg-d9d9d9); }
+		.hnt-badge-splunk   { background: var(--tf-bg-34e3a4); }
+		.hnt-badge-sentinel { background: var(--tf-bg-7bc5f9); }
+		.hnt-badge-defender { background: var(--tf-bg-cdd8fa); }
+		.hnt-badge-elastic  { background: var(--tf-bg-ffc591); }
+		.hnt-badge-misp     { background: var(--tf-bg-a0dde6); }
+		.hnt-badge-sigma    { background: var(--tf-bg-ffcc99); }
+		.hnt-badge-agents   { background: var(--tf-bg-e6d3f7); }
+		.hnt-badge-qradar   { background: var(--tf-bg-f7c7d9); }
+		.hnt-badge-opencti  { background: var(--tf-bg-c9e4c5); }
+		.hnt-badge-intelowl { background: var(--tf-bg-f5e6a3); }
 	</style>
 </head>
 
@@ -450,7 +469,7 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -507,10 +526,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -518,6 +540,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -1405,7 +1430,7 @@ tags:
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../js/config.js"></script>
-  <script src="../js/utils.js?v=6"></script>
+  <script src="../js/utils.js?v=8"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Recipe filter. Progressive enhancement on purpose: the markup ships
 	     with every card visible, so with JS off (or before this runs) the page

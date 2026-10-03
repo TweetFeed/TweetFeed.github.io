@@ -1,0 +1,27 @@
+{#- Site theme init. Inline in <head> (CSP allows inline scripts here), placed
+    BEFORE the first stylesheet so the first paint already has the right
+    data-site-theme: no flash. Stamped by scripts/render_shell.py between the
+    <!-- site-theme-init --> markers, and into the Jinja generators through
+    shell_context()["shell_theme_init"]. Do NOT hand-edit the copies in pages.
+    Contract: SPEC.md of the dark-mode work (storage key `site-theme`, attribute
+    `data-site-theme`, follows prefers-color-scheme while nothing is stored).
+    js/utils.js owns the click handler and the live system-follow. -#}
+<!-- site-theme-init -->
+<script>
+(function () {
+	var d = document.documentElement, t = null;
+	try { t = localStorage.getItem('site-theme'); } catch (e) {}
+	if (t !== 'light' && t !== 'dark') {
+		t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+	}
+	d.setAttribute('data-site-theme', t);
+	d.style.colorScheme = t;
+	if (t === 'dark') {
+		var m = document.createElement('meta');
+		m.name = 'twitter:widgets:theme';
+		m.content = 'dark';
+		document.head.appendChild(m);
+	}
+})();
+</script>
+<!-- /site-theme-init -->

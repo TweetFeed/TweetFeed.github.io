@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="IOCs attributed to Kimsuky (DPRK APT, also Velvet Chollima/TA427/Black Banshee). 13,299 hits last year. Updated every 15 min.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="kimsuky,velvet chollima,ta427,black banshee,dprk apt,north korea apt,ioc feed,osint,Threat Intelligence">
@@ -43,9 +62,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../../css/table.css?v=5" rel="stylesheet">
-	<link href="../../css/index.css?v=64" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../../css/table.css?v=6" rel="stylesheet">
+	<link href="../../css/index.css?v=73" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -173,7 +192,7 @@
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -230,10 +249,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -241,6 +263,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -298,10 +323,10 @@
 					</ul>
 				</details>
 				<script>
-					/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=6
-					   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-					   56th) does not load it at all, so anything added there would never reach
-					   that page. Inline also means no FOUC.
+					/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+					   (it runs before first paint, js/utils.js loads at the end of <body>).
+					   js/utils.js now loads on every page, threat-intelligence-guide included
+					   (the dark-mode toggle handler lives there).
 					   The markup ships `open`, so desktop and any JS-disabled browser get the
 					   full list with no CSS trickery. CSS cannot close it: a closed <details>
 					   is hidden by the UA through its slot, and an author-level display:block
@@ -325,13 +350,13 @@
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #Kimsuky</h1>
 					<h2><em>DPRK-aligned APT (also tracked as Velvet Chollima, TA427, Black Banshee)</em></h2>
-					<p style="font-size:14px;color:#737373;margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/kimsuky.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
+					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/kimsuky.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #Kimsuky</p>
 					<p style="font-size: 14px;"><em>DPRK-aligned APT (Velvet Chollima, TA427, Black Banshee)</em></p>
-					<p style="font-size:13px;color:#737373;margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/kimsuky.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
+					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/kimsuky.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
 
@@ -345,8 +370,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #Kimsuky</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #Kimsuky</p>
 							</div>
 						</div>
 					</div>
@@ -355,8 +380,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">12</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #Kimsuky</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">12</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #Kimsuky</p>
 							</div>
 						</div>
 					</div>
@@ -365,8 +390,8 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">90</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #Kimsuky</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">90</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #Kimsuky</p>
 							</div>
 						</div>
 					</div>
@@ -375,13 +400,13 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: #0026E6; margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">13,299</p>
-								<p style="font-size: 13px; color: #737373; margin-bottom: 0;">IOCs tagged #Kimsuky</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">13,299</p>
+								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #Kimsuky</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Counts as of 2026-10-03. Regenerated daily.</p>
+				<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:-0.5rem; margin-bottom:1.5rem;">Counts as of 2026-10-03. Regenerated daily.</p>
 
 				<!-- ============================================================ -->
 				<!-- ABOUT THIS TAG                                                -->
@@ -389,7 +414,7 @@
 				<h3 class="section-heading tf-block-head">About #Kimsuky</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Threat actor:</b> DPRK-aligned APT active since at least 2012, also tracked as <em>Velvet Chollima</em> (CrowdStrike), <em>TA427</em> (Proofpoint) and <em>Black Banshee</em> (Mandiant).</li>
 							<li><b>Targets:</b> South Korean government, defense and academic organisations; expanded to think tanks and research institutions in the US, Japan and Europe.</li>
 							<li><b>Tactics:</b> spear-phishing with weaponised HWP and PDF, custom backdoors (BabyShark, AppleSeed, GoldDragon), credential harvesting on legacy email portals, fake login pages.</li>
@@ -406,7 +431,7 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						
-						<p style="margin-bottom:0.75rem; color:#737373; font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 IOCs from the past 30 days. Live JSON: <a href="https://api.tweetfeed.live/v1/month/kimsuky" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/month/kimsuky</code></a>.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Latest 10 IOCs from the past 30 days. Live JSON: <a href="https://api.tweetfeed.live/v1/month/kimsuky" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/month/kimsuky</code></a>.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:720px; margin-bottom:0;">
 								<colgroup>
@@ -425,62 +450,62 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="requires5.dynu.org"><i class="tf-copy far fa-copy" data-copy="requires5.dynu.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>requires5.dynu.org</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/phatomcandle" target="_blank" rel="noopener noreferrer">@phatomcandle</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://requires5.dynu.org"><i class="tf-copy far fa-copy" data-copy="http://requires5.dynu.org" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://requires5.dynu.org</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/phatomcandle" target="_blank" rel="noopener noreferrer">@phatomcandle</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://152.32.243.238"><i class="tf-copy far fa-copy" data-copy="http://152.32.243.238" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://152.32.243.238</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/phatomcandle" target="_blank" rel="noopener noreferrer">@phatomcandle</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#02bf0f; color:white; border-radius:3px;">ip</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 01, 15:00</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-02bf0f); color:var(--tf-fg-fff); border-radius:3px;">ip</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="152.32.243.238"><i class="tf-copy far fa-copy" data-copy="152.32.243.238" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>152.32.243.238</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/phatomcandle" target="_blank" rel="noopener noreferrer">@phatomcandle</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 29, 00:07</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 29, 00:07</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="oppsite.dothome.co.kr"><i class="tf-copy far fa-copy" data-copy="oppsite.dothome.co.kr" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>oppsite.dothome.co.kr</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/cyberwar_15" target="_blank" rel="noopener noreferrer">@cyberwar_15</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 29, 00:07</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 29, 00:07</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="https://oppsite.dothome.co.kr"><i class="tf-copy far fa-copy" data-copy="https://oppsite.dothome.co.kr" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>https://oppsite.dothome.co.kr</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/cyberwar_15" target="_blank" rel="noopener noreferrer">@cyberwar_15</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="gtib96.onlinewebshop.net"><i class="tf-copy far fa-copy" data-copy="gtib96.onlinewebshop.net" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>gtib96.onlinewebshop.net</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/copy_and_paster" target="_blank" rel="noopener noreferrer">@copy_and_paster</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://gtib96.onlinewebshop.net"><i class="tf-copy far fa-copy" data-copy="http://gtib96.onlinewebshop.net" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://gtib96.onlinewebshop.net</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/copy_and_paster" target="_blank" rel="noopener noreferrer">@copy_and_paster</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#3399FF; color:white; border-radius:3px;">domain</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="nyqxa4.scienceontheweb.net"><i class="tf-copy far fa-copy" data-copy="nyqxa4.scienceontheweb.net" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>nyqxa4.scienceontheweb.net</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/copy_and_paster" target="_blank" rel="noopener noreferrer">@copy_and_paster</a></td>
 									</tr>
 									<tr>
-										<td style="font-size:12px; color:#737373; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
-										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:#0026E6; color:white; border-radius:3px;">url</span></td>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Sep 28, 00:30</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
 										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://nyqxa4.scienceontheweb.net"><i class="tf-copy far fa-copy" data-copy="http://nyqxa4.scienceontheweb.net" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://nyqxa4.scienceontheweb.net</td>
 										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/copy_and_paster" target="_blank" rel="noopener noreferrer">@copy_and_paster</a></td>
 									</tr>
@@ -498,7 +523,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:#737373; font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #Kimsuky.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #Kimsuky.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../dprk/">#DPRK</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../apt/">#APT</a></li>
@@ -506,7 +531,7 @@
 							<li><a class="btn btn-tf btn-sm" href="../malware/">#malware</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../lazarus/">#Lazarus</a></li>
 							</ul>
-						<p style="color:#737373; font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
+						<p style="color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-top:1rem; margin-bottom:0;">See all tags on the <a href="../../dashboard/" class="text-decoration-none">Dashboard</a> or browse the full <a href="../../feeds/" class="text-decoration-none">IOC feed</a>.</p>
 					</div>
 				</div>
 
@@ -537,7 +562,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">License</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Kimsuky IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty. Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -646,7 +671,7 @@
 	<script src="../../vendor/jquery/jquery.min.js"></script>
 	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities (delegated tf-copy click handler) -->
-	<script src="../../js/utils.js?v=6"></script>
+	<script src="../../js/utils.js?v=8"></script>
 	<script>
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
 	</script>

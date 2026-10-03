@@ -52,7 +52,7 @@ body {
     font-family: 'Alegreya Sans SC', sans-serif;
     /*font-weight: bold;*/
     font-weight: 800;
-    color: #1178b3;
+    color: var(--tf-fg-1178b3);
 }
 
 #presentation h2,
@@ -68,7 +68,7 @@ body {
     font-size: 42px;
     font-family: 'Alegreya Sans SC', sans-serif;
     font-weight: 800;
-    color: #1178b3;
+    color: var(--tf-fg-1178b3);
 }
 
 #presentationSecondary h2 {
@@ -85,7 +85,7 @@ body {
        request, so a 600 here could only ever be synthesised. Available:
        100/300/400/500/700/800/900. */
     font-weight: 700;
-    color: #1178b3;
+    color: var(--tf-fg-1178b3);
 }
 
 /* Legacy navbar base. RETIRED 2026-08-18: the shell is generated from
@@ -96,11 +96,11 @@ body {
    of the cascade is legible. */
 
 .active:not([role=tab]) {
-    color: black !important;
+    color: var(--tf-fg-000) !important;
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
-    background: white;
+    background: var(--tf-bg-fff);
 }
 
 /* Legacy navbar hover. RETIRED 2026-08-18 because it CHANGED THE BAR'S
@@ -113,21 +113,21 @@ body {
 
 /* Todos */
 .nav-pills li a {
-    color: black;
+    color: var(--tf-fg-000);
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
     font-weight: 500;
-    background: #cad2e8;
+    background: var(--tf-bg-cad2e8);
 }
 
 /* Hover */
 .nav-pills li a:hover:not(.active) {
-    color: black;
+    color: var(--tf-fg-000);
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
-    background: #e1e6f2;
+    background: var(--tf-bg-e1e6f2);
 }
 
 /* El activo. DEAD RULE, kept only so the cascade stays as documented: every
@@ -135,11 +135,11 @@ body {
    navbar. Do NOT "fix" it, the declared white-on-#1DA1F2 is 2.83:1 and fails
    AA. The real active state is .tf-nav-active in tweetfeed.css. */
 .nav-link.active:not([href$="html"]):not([href$="/"]):not(.border-bottom-0) {
-    color: white !important;
+    color: var(--tf-fg-fff) !important;
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
     border-radius: 50px;
-    background: #1DA1F2;
+    background: var(--tf-bg-1da1f2);
 }
 
 /* #004080 */
@@ -150,7 +150,7 @@ body {
    element on the site, so the !important overrode nothing. */
 
 .fa-copy:hover {
-    color: #325d81 !important;
+    color: var(--tf-fg-325d81) !important;
 }
 
 .btn:hover {
@@ -174,16 +174,16 @@ body {
 .tweet-container {
     border-radius: 10px;
     padding: 10px;
-    background-color: #15202B;
-    color: #fff;
+    background-color: var(--tf-bg-15202b);
+    color: var(--tf-fg-fff);
     display: block;
     height: 220px; /* Fixed height */
     overflow: auto; /* Handle overflow */
 }
 
 .tweet-container:hover {
-    background-color: #1A394B;
-    color: #fff;
+    background-color: var(--tf-bg-1a394b);
+    color: var(--tf-fg-fff);
 }
 
 .tweet-avatar img {
@@ -209,7 +209,7 @@ body {
 }
 
 .tweet-divider {
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-top: 1px solid var(--tf-bd-tweet-divider);
     margin: 10px 0;
 }
 /* =========== END Tweets ======== */
@@ -256,7 +256,7 @@ body {
    comment above says the intent was the click flash, which is :active. Same
    specificity as the rule above, declared later, so it wins for keyboard focus
    only. Ring token reused from .tf-live / .hnt-chip / .fds-typetile. */
-.tf-copy:focus-visible { outline: 2px solid #3a6f96; outline-offset: 2px; }
+.tf-copy:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 
 /* Footer link colors: RETIRED 2026-08-18. The regenerated footers use
    .tf-foot-link / .tf-mfoot-link (see tweetfeed.css) and no longer carry

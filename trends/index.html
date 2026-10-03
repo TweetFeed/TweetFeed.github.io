@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="Daily IOC volume over 30 days, top trending tags, malicious-domain TLDs, new vs recurring IOC rates, and feed health with producer concentration on TweetFeed.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="ioc trends,threat statistics,top movers,malicious tld,phishing trends,malware trends,ioc volume,new vs recurring iocs">
@@ -44,9 +63,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/table.css?v=6" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -150,7 +169,7 @@
 		"name": "IOC Trends",
 		"url": "https://tweetfeed.live/trends/",
 		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
-		"dateModified": "2026-10-03T11:15:17Z",
+		"dateModified": "2026-10-03T20:15:15Z",
 		"inLanguage": "en"
 	}
 	</script>
@@ -177,21 +196,21 @@
 		   and 1px solid #1c1c1c borders on stat cards / table cells / the new
 		   badge to match the site's heavy-box aesthetic. */
 		.trd-generated-line {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 13px;
 			font-family: 'Rubik', sans-serif;
 			margin: 0 0 0.5rem 0;
 		}
 		.trd-fail-notice {
 			display: none;
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 13px;
 			font-family: 'Rubik', sans-serif;
 			padding: 0.6rem 0;
 			text-align: center;
 		}
 		.trd-subtitle {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 13px;
 			font-family: 'Rubik', sans-serif;
 			margin: 0 0 0.8rem 0;
@@ -204,41 +223,41 @@
 		}
 		.trd-movers-table th,
 		.trd-movers-table td {
-			border: 1px solid #1c1c1c;
+			border: 1px solid var(--tf-bd-1c1c1c);
 			padding: 6px 10px;
 			text-align: left;
 		}
 		.trd-movers-table th {
-			background: #f2f2f2;
+			background: var(--tf-bg-f2f2f2);
 		}
 		.trd-movers-table td.trd-num,
 		.trd-movers-table th.trd-num {
 			text-align: right;
 			font-variant-numeric: tabular-nums;
 		}
-		.trd-arrow-up { color: #1a7a3d; font-weight: 600; }
-		.trd-arrow-down { color: #b3261e; font-weight: 600; }
-		.trd-arrow-flat { color: #737373; font-weight: 600; }
+		.trd-arrow-up { color: var(--tf-fg-1a7a3d); font-weight: 600; }
+		.trd-arrow-down { color: var(--tf-fg-b3261e); font-weight: 600; }
+		.trd-arrow-flat { color: var(--tf-fg-737373); font-weight: 600; }
 		.trd-pct {
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 12px;
 			margin-left: 3px;
 		}
 		.trd-badge-new {
 			display: inline-block;
 			padding: 1px 8px;
-			border: 1px solid #1c1c1c;
+			border: 1px solid var(--tf-bd-1c1c1c);
 			border-radius: 3px;
 			font-size: 10px;
 			font-weight: 700;
 			text-transform: uppercase;
 			letter-spacing: 0.03em;
-			background: #34e3a4;
-			color: #0b3d2e;
+			background: var(--tf-bg-34e3a4);
+			color: var(--tf-fg-0b3d2e);
 			margin-right: 4px;
 		}
 		.trd-stat-card {
-			border: 1px solid #1c1c1c;
+			border: 1px solid var(--tf-bd-1c1c1c);
 			border-radius: 4px;
 			padding: 1rem;
 			text-align: center;
@@ -271,8 +290,8 @@
 		.trd-mover-track {
 			position: relative;
 			height: 18px;
-			background: #f2f2f2;
-			border: 1px solid black;
+			background: var(--tf-bg-f2f2f2);
+			border: 1px solid var(--tf-bd-000);
 			border-radius: 2px;
 			overflow: hidden;
 		}
@@ -284,17 +303,17 @@
 			top: 0;
 			bottom: 0;
 			width: 1px;
-			background: #9aa0a6;
+			background: var(--tf-bg-9aa0a6);
 		}
 		.trd-mover-bar { position: absolute; top: 0; bottom: 0; }
-		.trd-mover-bar-down { right: 50%; background: #e2574c; }
+		.trd-mover-bar-down { right: 50%; background: var(--tf-bg-e2574c); }
 		.trd-mover-bar-up { left: 50%; background: #16a34a; }
 		.trd-mover-fig {
 			font-size: 13px;
 			font-variant-numeric: tabular-nums;
 			white-space: nowrap;
 		}
-		.trd-mover-fig .trd-pct { color: #737373; margin-left: 4px; }
+		.trd-mover-fig .trd-pct { color: var(--tf-fg-737373); margin-left: 4px; }
 		@media (max-width: 575.98px) {
 			.trd-mover { grid-template-columns: minmax(70px, 100px) 1fr; row-gap: 2px; }
 			.trd-mover-fig { grid-column: 2; text-align: right; }
@@ -303,19 +322,19 @@
 		.trd-stat-value {
 			font-size: 34px;
 			font-weight: 700;
-			color: #1c1c1c;
+			color: var(--tf-fg-1c1c1c);
 			line-height: 1.2;
 		}
 		.trd-stat-label {
 			font-size: 13px;
-			color: #555;
+			color: var(--tf-fg-555);
 			text-transform: uppercase;
 			letter-spacing: 0.03em;
 			margin-top: 0.25rem;
 		}
 		.trd-stat-sub {
 			font-size: 12.5px;
-			color: #737373;
+			color: var(--tf-fg-737373);
 			margin-top: 0.4rem;
 		}
 		.trd-legend-item {
@@ -326,7 +345,7 @@
 		.trd-health-badge {
 			display: inline-block;
 			padding: 4px 14px;
-			border: 1px solid #1c1c1c;
+			border: 1px solid var(--tf-bd-1c1c1c);
 			border-radius: 3px;
 			font-size: 13px;
 			font-weight: 700;
@@ -336,13 +355,13 @@
 		}
 		/* Contrast-checked (WCAG AA, >= 4.5:1) against their text colour:
 		   low 7.36:1, moderate 7.77:1, high 5.62:1. */
-		.trd-health-low { background: #34e3a4; color: #0b3d2e; }
-		.trd-health-mod { background: #ffc94d; color: #4a3300; }
-		.trd-health-high { background: #c62828; color: #ffffff; }
+		.trd-health-low { background: var(--tf-bg-34e3a4); color: var(--tf-fg-0b3d2e); }
+		.trd-health-mod { background: var(--tf-bg-ffc94d); color: var(--tf-fg-4a3300); }
+		.trd-health-high { background: var(--tf-bg-c62828); color: var(--tf-fg-ffffff); }
 		.trd-health-badge-note {
 			display: inline-block;
 			margin-left: 8px;
-			color: #737373;
+			color: var(--tf-fg-737373);
 			font-size: 12.5px;
 			font-family: 'Rubik', sans-serif;
 		}
@@ -355,7 +374,7 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Main Content -->
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -412,10 +431,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -423,6 +445,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -467,7 +492,7 @@
 					<p style="font-size: 14px;"><em>30-day volume, movers and TLD breakdown</em></p>
 				</div>
 				<!-- freshness:trendsstats:start -->
-				<p class="trd-generated-line">Last 30 days: 1,682 URLs, 1,504 domains, 374 IPs, 172 SHA-256 and 69 MD5 hashes reported.</p>
+				<p class="trd-generated-line">Last 30 days: 1,700 URLs, 1,509 domains, 386 IPs, 173 SHA-256 and 69 MD5 hashes reported.</p>
 				<!-- freshness:trendsstats:end -->
 				<hr class="divider"> <!-- DIVIDER -->
 
@@ -514,13 +539,13 @@
 							<div class="card shadow mb-4">
 								<div class="card-body">
 									<!-- freshness:count:start -->
-									<p class="trd-generated-line" id="trendsGeneratedLine">Last updated: October 3rd, 2026 11:15:17 UTC</p>
+									<p class="trd-generated-line" id="trendsGeneratedLine">Last updated: October 3rd, 2026 20:15:15 UTC</p>
 									<!-- freshness:count:end -->
 									<div class="chart-area">
 										<canvas id="trendsVolumeChart" role="img" aria-label="Daily IOC volume for the last 30 days, by type"></canvas>
 									</div>
 									<hr>
-									<em style="font-size: 13px;color: grey;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Click a legend item to show or hide that IOC type. Times in UTC.</em>
+									<em style="font-size: 13px;color: var(--tf-fg-808080);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Click a legend item to show or hide that IOC type. Times in UTC.</em>
 								</div>
 							</div>
 						</div>
@@ -778,7 +803,7 @@
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=6"></script>
+	<script src="../js/utils.js?v=8"></script>
 	<!-- Page level custom scripts -->
 	<script src="../vendor/chart.js/Chart.min.js"></script>
 	<!-- Page level custom script: single fetch of trends.json (TweetFeed.dataUrl,
@@ -788,17 +813,47 @@
 		'use strict';
 
 		Chart.defaults.global.defaultFontFamily = "'Rubik', sans-serif";
-		Chart.defaults.global.defaultFontColor = '#858796';
+		// Colours come from the --tf-chart-* / --tf-ioc-* tokens (TweetFeed.chartTheme in js/utils.js): the
+		// light values are the literals this page used before, dark values live in css/tweetfeed.css.
+		// Charts are themed when created (lazyChart) and re-themed in place on `site-themechange`.
+		Chart.defaults.global.defaultFontColor = TweetFeed.chartTheme().text;
 
-		var TYPE_COLORS = { URL: '#0026E6', Domain: '#3399FF', IP: '#02bf0f', SHA256: '#FFC34D', MD5: '#ffc591' };
+		function typeColors(T) { return { URL: T.url, Domain: T.domain, IP: T.ip, SHA256: T.sha256, MD5: T.md5 }; }
+		var TYPE_COLORS = typeColors(TweetFeed.chartTheme());
 		var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 		// Lazy-render a Chart.js instance once its target canvas enters the
 		// viewport (with a 200px preload margin). Copied verbatim from
 		// graphs/index.html - keeps expensive chart paint out of LCP/TBT.
-		function lazyChart(canvas, config) {
+		var liveCharts = [];
+		function eachAxis(opts, fn) {
+			var sc = (opts && opts.scales) || {};
+			(sc.xAxes || []).concat(sc.yAxes || []).forEach(fn);
+		}
+		// Paint ticks, grid, legend and tooltip from the tokens. Works on a config (before creation)
+		// and on a live chart (its resolved options have the same shape).
+		function paintChrome(holder, T) {
+			var o = holder.options = holder.options || {};
+			eachAxis(o, function(ax) {
+				ax.ticks = ax.ticks || {};
+				ax.ticks.fontColor = T.text;
+				if (ax.gridLines && ax.gridLines.display !== false) {
+					ax.gridLines.color = T.grid;
+					if ('zeroLineColor' in ax.gridLines) ax.gridLines.zeroLineColor = T.grid;
+				}
+			});
+			if (o.legend && o.legend.display) { o.legend.labels = o.legend.labels || {}; o.legend.labels.fontColor = T.text; }
+			var tt = o.tooltips = o.tooltips || {};
+			tt.backgroundColor = T.tipBg; tt.bodyFontColor = T.text; tt.titleFontColor = T.title; tt.borderColor = T.tipBorder;
+		}
+		function lazyChart(canvas, config, recolor) {
 			if (!canvas) return;
-			var render = function() { new Chart(canvas, config); };
+			var render = function() {
+				var T = TweetFeed.chartTheme();
+				paintChrome(config, T);
+				if (recolor) recolor(config, T);
+				liveCharts.push({ chart: new Chart(canvas, config), recolor: recolor });
+			};
 			if (!('IntersectionObserver' in window)) { render(); return; }
 			var obs = new IntersectionObserver(function(entries) {
 				for (var i = 0; i < entries.length; i++) {
@@ -807,6 +862,20 @@
 			}, { rootMargin: '200px' });
 			obs.observe(canvas);
 		}
+
+		function paintTypesLegend() {
+			$('#trendsTypesLegend i[data-ioc]').each(function() { this.style.color = TYPE_COLORS[this.getAttribute('data-ioc')]; });
+		}
+		TweetFeed.onThemeChange(function(T) {
+			Chart.defaults.global.defaultFontColor = T.text;
+			TYPE_COLORS = typeColors(T);
+			paintTypesLegend();
+			liveCharts.forEach(function(e) {
+				paintChrome(e.chart, T);
+				if (e.recolor) e.recolor(e.chart, T);
+				e.chart.update();
+			});
+		});
 
 		function fmtShortDate(s) {
 			var d = new Date(s + 'T00:00:00Z');
@@ -819,7 +888,7 @@
 			if (!ctx) return;
 			var types = daily.types || {};
 			var datasets = [
-				{ label: 'Total', data: daily.total || [], borderColor: '#4e73df', backgroundColor: 'rgba(78, 115, 223, 0.08)', pointRadius: 2, pointHoverRadius: 3, lineTension: 0.3, borderWidth: 2, hidden: false },
+				{ label: 'Total', data: daily.total || [], borderColor: TweetFeed.chartTheme().line, backgroundColor: TweetFeed.chartTheme().lineFill(0.08), pointRadius: 2, pointHoverRadius: 3, lineTension: 0.3, borderWidth: 2, hidden: false },
 				{ label: 'URL', data: types.url || [], borderColor: TYPE_COLORS.URL, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
 				{ label: 'Domain', data: types.domain || [], borderColor: TYPE_COLORS.Domain, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
 				{ label: 'IP', data: types.ip || [], borderColor: TYPE_COLORS.IP, backgroundColor: 'transparent', pointRadius: 0, lineTension: 0.3, borderWidth: 1.5, hidden: false },
@@ -834,16 +903,12 @@
 					layout: { padding: { left: 10, right: 25, top: 10, bottom: 0 } },
 					scales: {
 						xAxes: [{ ticks: { autoSkip: true, maxTicksLimit: 8, maxRotation: 0, padding: 5 }, gridLines: { display: false, drawBorder: false } }],
-						yAxes: [{ ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true }, gridLines: { color: 'rgb(234, 236, 244)', zeroLineColor: 'rgb(234, 236, 244)', drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } }]
+						yAxes: [{ ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true }, gridLines: { color: TweetFeed.chartTheme().grid, zeroLineColor: TweetFeed.chartTheme().grid, drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } }]
 					},
 					legend: { display: true, position: 'bottom', labels: { boxWidth: 12, padding: 12 } },
 					tooltips: {
 						mode: 'index',
 						intersect: false,
-						backgroundColor: 'rgb(255,255,255)',
-						bodyFontColor: '#858796',
-						titleFontColor: '#6e707e',
-						borderColor: '#dddfeb',
 						borderWidth: 1,
 						xPadding: 15,
 						yPadding: 15,
@@ -851,6 +916,11 @@
 						caretPadding: 10
 					}
 				}
+			}, function(chart, T) {
+				var ds = chart.data.datasets, tc = typeColors(T);
+				ds[0].borderColor = T.line; ds[0].backgroundColor = T.lineFill(0.08);
+				ds[1].borderColor = tc.URL; ds[2].borderColor = tc.Domain; ds[3].borderColor = tc.IP;
+				ds[4].borderColor = tc.SHA256; ds[5].borderColor = tc.MD5;
 			});
 		}
 
@@ -870,7 +940,7 @@
 			});
 
 			var legendHtml = labels.map(function(l, i) {
-				return '<span class="trd-legend-item"><i class="fas fa-circle" style="color:' + colors[i] + ';"></i> ' +
+				return '<span class="trd-legend-item"><i class="fas fa-circle" data-ioc="' + TweetFeed.escapeHtml(l) + '" style="color:' + colors[i] + ';"></i> ' +
 					TweetFeed.escapeHtml(l) + ': ' + TweetFeed.escapeHtml(TweetFeed.numberFormat(data[i])) + '</span>';
 			}).join('');
 			$('#trendsTypesLegend').html(legendHtml);
@@ -879,13 +949,18 @@
 			if (!ctx) return;
 			lazyChart(ctx, {
 				type: 'doughnut',
-				data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, hoverBorderColor: 'rgba(234, 236, 244, 1)' }] },
+				data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, hoverBorderColor: TweetFeed.chartTheme().hoverBorder }] },
 				options: {
 					maintainAspectRatio: false,
 					legend: { display: false },
 					cutoutPercentage: 75,
-					tooltips: { backgroundColor: 'rgb(255,255,255)', bodyFontColor: '#858796', borderColor: '#dddfeb', borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
+					tooltips: { borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
 				}
+			}, function(chart, T) {
+				var tc = typeColors(T), ds = chart.data.datasets[0];
+				ds.backgroundColor = chart.data.labels.map(function(l) { return tc[l]; });
+				ds.hoverBorderColor = T.hoverBorder;
+				ds.borderColor = T.arcBorder;
 			});
 		}
 
@@ -897,8 +972,12 @@
 				labels.push('other');
 				data.push(tlds.other);
 			}
-			var palette = ['#0026E6', '#3399FF', '#02bf0f', '#FFC34D', '#ffc591', '#7315BF', '#FF9933', '#008040', '#B02699', '#2F60F1'];
-			var colors = labels.map(function(l, i) { return l === 'other' ? '#9a9a9a' : palette[i % palette.length]; });
+			// Palette slots 0-4 are the IOC type colours (tokens), 5-9 are fixed hexes lifted for dark by chartInk.
+			function tldColors(T) {
+				var palette = [T.url, T.domain, T.ip, T.sha256, T.md5, '#7315BF', '#FF9933', '#008040', '#B02699', '#2F60F1'];
+				return labels.map(function(l, i) { return l === 'other' ? '#9a9a9a' : TweetFeed.chartInk(palette[i % palette.length]); });
+			}
+			var colors = tldColors(TweetFeed.chartTheme());
 
 			$('#trendsTldsSubtitle').text(TweetFeed.numberFormat(tlds.domains_total || 0) + ' malicious domains in the last 30 days');
 
@@ -911,12 +990,12 @@
 					maintainAspectRatio: false,
 					legend: { display: false },
 					scales: {
-						xAxes: [{ ticks: { beginAtZero: true, maxTicksLimit: 6 }, gridLines: { color: 'rgb(234, 236, 244)', drawBorder: false } }],
+						xAxes: [{ ticks: { beginAtZero: true, maxTicksLimit: 6 }, gridLines: { color: TweetFeed.chartTheme().grid, drawBorder: false } }],
 						yAxes: [{ gridLines: { display: false, drawBorder: false } }]
 					},
-					tooltips: { backgroundColor: 'rgb(255,255,255)', bodyFontColor: '#858796', borderColor: '#dddfeb', borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
+					tooltips: { borderWidth: 1, xPadding: 15, yPadding: 15, displayColors: false, caretPadding: 10 }
 				}
-			});
+			}, function(chart, T) { chart.data.datasets[0].backgroundColor = tldColors(T); });
 		}
 
 		function renderMovers(movers) {

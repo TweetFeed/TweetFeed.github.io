@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;" width="98px" height="98px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: transparent; display: block; shape-rendering: auto;" width="98px" height="98px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 <g transform="rotate(0 50 50)">
   <rect x="47.5" y="23.5" rx="2.5" ry="5.2" width="5" height="13" fill="#1da1f2">
     <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.3513513513513513s" begin="-1.2162162162162162s" repeatCount="indefinite"></animate>

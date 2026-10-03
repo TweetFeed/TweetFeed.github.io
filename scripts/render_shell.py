@@ -175,6 +175,12 @@ def shell_context(depth=0, active_key=None, link_base=None, indent=None, docs_ac
         "FOOTER_MADE_IN": ia.FOOTER_MADE_IN,
         "FOOTER_COPYRIGHT": ia.FOOTER_COPYRIGHT,
     }
+    # The <head> theme init is indented for <head> (one tab), whatever `indent`
+    # the body regions use, and is always provided: the generators need it
+    # even when they only pass `indent`.
+    ctx["shell_theme_init"] = Markup(
+        reindent(render_partial("_theme_init.html.j2", ctx), "\t")
+    )
     if indent is not None:
         ctx["shell_nav"] = Markup(reindent(render_partial("_nav.html.j2", ctx), indent))
         ctx["shell_footer"] = Markup(reindent(render_partial("_footer.html.j2", ctx), indent))
@@ -324,6 +330,40 @@ def page_params(page):
     return depth, link_base, ia.active_key_for(page)
 
 
+# --------------------------------------------------------------------------
+# The <head> theme-init region (managed between markers)
+# --------------------------------------------------------------------------
+# Unlike nav/footer it is anchored on its own markers, and, the first time,
+# inserted right after the viewport <meta>: that is before the first
+# stylesheet/preload on every page, template and 404.html, and after the
+# charset meta that must stay within the first 1024 bytes.
+THEME_INIT_RE = re.compile(
+    r"^[ \t]*<!-- site-theme-init -->.*?<!-- /site-theme-init -->[ \t]*(?:\r?\n|$)",
+    re.S | re.M,
+)
+VIEWPORT_RE = re.compile(r'^[ \t]*<meta\b[^>]*\bname="viewport"[^>]*>[ \t]*(?:\r?\n|$)', re.M)
+
+
+def theme_init_block(prefix):
+    """The region, indented for a <head> whose lines start with `prefix`."""
+    return reindent(render_partial("_theme_init.html.j2", {}), prefix)
+
+
+def apply_theme_init(html, block_fn):
+    """Replace the managed region, or insert it after the viewport meta.
+    `block_fn(prefix)` returns the region text (no trailing newline) for the
+    indent prefix of the line it lands on."""
+    m = THEME_INIT_RE.search(html)
+    if m:
+        prefix = indent_of(html, m.start())
+        return html[: m.start()] + block_fn(prefix) + "\n" + html[m.end():]
+    v = VIEWPORT_RE.search(html)
+    if not v:
+        raise ValueError("no viewport <meta> to anchor the site-theme-init region")
+    prefix = indent_of(html, v.start())
+    return html[: v.end()] + block_fn(prefix) + "\n" + html[v.end():]
+
+
 def render_for(page):
     depth, link_base, active = page_params(page)
     docs_active = ia.docs_sidebar_active_for(page)
@@ -344,6 +384,7 @@ def render_for(page):
 def rewrite(html, page):
     nav, foot, sidebar, integrations = render_for(page)
     html = MARKER_LINE_RE.sub("", html)
+    html = apply_theme_init(html, theme_init_block)
     if sidebar is not None and REGION_ANCHORS["sidebar_start"].search(html):
         start, end = find_region(html, "sidebar")
         # The region ends exactly at </aside> with no trailing newline, so the
@@ -377,10 +418,15 @@ def rewrite(html, page):
 INCLUDE_NAV = "{{ shell_nav }}"
 INCLUDE_FOOT = "{{ shell_footer }}"
 INCLUDE_SIDEBAR = "{{ shell_docs_sidebar }}"
+INCLUDE_THEME_INIT = "{{ shell_theme_init }}"
 
 
 def rewrite_template(text):
     text = MARKER_LINE_RE.sub("", text)
+    # The generators get the region from shell_context()["shell_theme_init"]
+    # (already indented for <head>), emitted at column 0 like the other includes.
+    if INCLUDE_THEME_INIT not in text:
+        text = apply_theme_init(text, lambda prefix: INCLUDE_THEME_INIT)
     for kind, inc in (("sidebar", INCLUDE_SIDEBAR), ("nav", INCLUDE_NAV), ("foot", INCLUDE_FOOT)):
         try:
             start, end = find_region(text, kind)

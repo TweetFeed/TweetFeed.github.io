@@ -11,6 +11,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
 	<meta name="description" content="Practical Threat Intelligence guide for security teams. IOC lifecycle, MITRE ATT&CK basics, common pitfalls, glossary. Vendor-neutral and free.">
 	<meta name="author" content="tweetfeed.live">
 	<meta name="keywords" content="Threat Intelligence,ioc,osint,mitre attack,apt,c2,Threat Intelligence guide,siem,soc,blue team">
@@ -43,9 +62,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=5" rel="stylesheet">
-	<link href="../css/index.css?v=64" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=64" rel="stylesheet">
+	<link href="../css/table.css?v=6" rel="stylesheet">
+	<link href="../css/index.css?v=73" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -143,7 +162,7 @@
 
 <body id="page-top">
 	<a class="skip-link" href="#content">Skip to content</a>
-		<style>
+	<style>
 		/* The desktop navbar is fixed-top at 56px and nothing compensates for
 		   it, so every anchor on this page used to land underneath it. Same
 		   fix as feeds/index.html. */
@@ -155,12 +174,12 @@
 		   hard-coding a Segoe UI stack the site never loads (fixed 2026-08-22). */
 		h4.section-heading { font-size: 17px; }
 	</style>
-<!-- Page Wrapper -->
+	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- Top bar -->
-			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top" style="background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
 				<div class="container-fluid">
 					<ul class="nav navbar-nav navbar-left">
 						<li class="nav-item">
@@ -217,10 +236,13 @@
 						<li class="nav-item">
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 					</ul>
 				</div>
 			</nav>
-			<nav class="navbar navbar-expand navbar-dark d-lg-none" style="margin: 0;padding: 0;background: linear-gradient(#1DA1F2 0%, #1DA1F2 100%);">
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
 				<div class="container-fluid">
 					<ul class="navbar-nav">
 						<li class="nav-item">
@@ -228,6 +250,9 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
 							<div class="dropdown-menu dropdown-menu-right tf-menu">
@@ -285,10 +310,10 @@
 						</ul>
 					</details>
 					<script>
-						/* Collapse the docs nav on small screens. Inline on purpose: js/utils.js?v=6
-						   loads on 55 of 56 pages, but threat-intelligence-guide/index.html (the
-						   56th) does not load it at all, so anything added there would never reach
-						   that page. Inline also means no FOUC.
+						/* Collapse the docs nav on small screens. Inline on purpose: no FOUC
+						   (it runs before first paint, js/utils.js loads at the end of <body>).
+						   js/utils.js now loads on every page, threat-intelligence-guide included
+						   (the dark-mode toggle handler lives there).
 						   The markup ships `open`, so desktop and any JS-disabled browser get the
 						   full list with no CSS trickery. CSS cannot close it: a closed <details>
 						   is hidden by the UA through its slot, and an author-level display:block
@@ -324,14 +349,14 @@
 				<!-- ============================================================ -->
 				<h3 class="section-heading">In this guide</h3>
 				<div class="row">
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#what-is-ti" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 1</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">What is Threat Intelligence?</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#ioc-lifecycle" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 2</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">IOC types and lifecycle</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#osint-vs-commercial" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 3</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">OSINT vs commercial feeds</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#mitre-attack" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 4</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">MITRE ATT&amp;CK basics</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#tweetfeed-fits" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 5</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">How TweetFeed fits</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#pitfalls" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 6</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Common pitfalls</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#glossary" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 7</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Glossary</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#faq" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:#fff;"><span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif;">Section 8</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">FAQ</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#what-is-ti" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 1</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">What is Threat Intelligence?</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#ioc-lifecycle" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 2</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">IOC types and lifecycle</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#osint-vs-commercial" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 3</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">OSINT vs commercial feeds</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#mitre-attack" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 4</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">MITRE ATT&amp;CK basics</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#tweetfeed-fits" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 5</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">How TweetFeed fits</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#pitfalls" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 6</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Common pitfalls</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#glossary" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 7</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Glossary</h4></div></a></div>
+					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#faq" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 8</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">FAQ</h4></div></a></div>
 				</div>
 
 				<!-- ============================================================ -->
@@ -340,13 +365,13 @@
 				<h3 id="what-is-ti" class="section-heading">1. What is Threat Intelligence?</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><b>Threat Intelligence</b> is processed information about adversaries and their tactics, techniques and procedures (TTPs), used by security teams to make better defense decisions. It is consumed at three levels:</p>
-						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><b>Threat Intelligence</b> is processed information about adversaries and their tactics, techniques and procedures (TTPs), used by security teams to make better defense decisions. It is consumed at three levels:</p>
+						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Strategic:</b> board-level briefings about threat actor motives, geopolitical context and long-term trends. Output: written reports.</li>
 							<li><b>Operational:</b> campaign reports tied to specific threat groups (e.g. "Kimsuky targeting US think tanks Q2 2026"). Output: TTP narratives, victimology, infrastructure clusters.</li>
 							<li><b>Tactical:</b> concrete indicators (URLs, IPs, hashes) that can be ingested into a SIEM, firewall or EDR. Output: machine-readable feeds.</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0;">Threat Intelligence is more than IOC blocklists. It includes context (who, why, when), attribution (which group), motive (financial, espionage, hacktivism) and the relationship between an indicator and the broader campaign. The list of URLs is the easiest layer to produce and the easiest for adversaries to rotate, which is why mature programs invest beyond IOCs into TTP-level detection.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0;">Threat Intelligence is more than IOC blocklists. It includes context (who, why, when), attribution (which group), motive (financial, espionage, hacktivism) and the relationship between an indicator and the broader campaign. The list of URLs is the easiest layer to produce and the easiest for adversaries to rotate, which is why mature programs invest beyond IOCs into TTP-level detection.</p>
 					</div>
 				</div>
 
@@ -356,7 +381,7 @@
 				<h3 id="ioc-lifecycle" class="section-heading">2. IOC types and lifecycle</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;">An <b>indicator of compromise</b> is an artefact observed during or after an intrusion that suggests malicious activity. The four types you will meet most often:</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">An <b>indicator of compromise</b> is an artefact observed during or after an intrusion that suggests malicious activity. The four types you will meet most often:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
 								<colgroup>
@@ -381,14 +406,14 @@
 								</tbody>
 							</table>
 						</div>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;">Every IOC moves through four stages from collection to retirement:</p>
-						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">Every IOC moves through four stages from collection to retirement:</p>
+						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Collection:</b> sourced from sandboxes, honeypots, partner feeds, OSINT or analyst observation.</li>
 							<li><b>Enrichment:</b> WHOIS, passive DNS, reputation scores, sandbox detonations, MITRE ATT&amp;CK technique tagging.</li>
 							<li><b>Action:</b> blocking, alerting or monitoring; routed to SIEM, firewall, EDR, MISP or SOAR.</li>
 							<li><b>Expiration:</b> aged out by per-type TTL. URLs after a few days, IPs after weeks, hashes effectively never.</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:14px; line-height:1.6; color:#737373; margin-bottom:0.85rem;">Without per-type TTL, a SIEM rule built on a 6-month-old URL list will alert on legitimate traffic to a domain that the original adversary lost months ago.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.6; color:var(--tf-fg-737373); margin-bottom:0.85rem;">Without per-type TTL, a SIEM rule built on a 6-month-old URL list will alert on legitimate traffic to a domain that the original adversary lost months ago.</p>
 						<p style="font-family:'Rubik',sans-serif; font-size:14px; line-height:1.6; margin-bottom:0;">For per-type detail, see the <a href="../ioc-types/" class="text-decoration-none"><b>5 IOC type hubs</b></a> covering format, prevalence and best use of URLs, domains, IPs, MD5 and SHA-256.</p>
 					</div>
 				</div>
@@ -399,7 +424,7 @@
 				<h3 id="osint-vs-commercial" class="section-heading">3. OSINT vs commercial feeds</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;">There is no single best feed. Most mature SOCs ingest both OSINT and commercial intelligence; the trick is matching feed properties to the use case.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">There is no single best feed. Most mature SOCs ingest both OSINT and commercial intelligence; the trick is matching feed properties to the use case.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
 								<colgroup>
@@ -425,7 +450,7 @@
 								</tbody>
 							</table>
 						</div>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0;">A common pattern: OSINT feeds drive automated proxy and DNS blocks at scale; commercial intelligence drives incident response, attribution and executive briefings. The two are complementary, not substitutes.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0;">A common pattern: OSINT feeds drive automated proxy and DNS blocks at scale; commercial intelligence drives incident response, attribution and executive briefings. The two are complementary, not substitutes.</p>
 					</div>
 				</div>
 
@@ -435,9 +460,9 @@
 				<h3 id="mitre-attack" class="section-heading">4. MITRE ATT&amp;CK basics</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a> is a knowledge base of adversary tactics, techniques and procedures maintained by the MITRE Corporation. It organises observed adversary behaviour into <b>14 tactics</b> (the "why" of an action) and over <b>200 techniques</b> (the "how"). Most Threat Intelligence reports and detection rules cite ATT&amp;CK technique IDs (e.g. <code>T1059</code> for Command and Scripting Interpreter, <code>T1071</code> for Application Layer Protocol) so analysts can normalise across vendors.</p>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7; margin-bottom:0.5rem;">The 14 ATT&amp;CK Enterprise tactics, in execution order:</p>
-						<ul style="columns:2; -webkit-columns:2; -moz-columns:2; margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:14px; line-height:1.7;">
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a> is a knowledge base of adversary tactics, techniques and procedures maintained by the MITRE Corporation. It organises observed adversary behaviour into <b>14 tactics</b> (the "why" of an action) and over <b>200 techniques</b> (the "how"). Most Threat Intelligence reports and detection rules cite ATT&amp;CK technique IDs (e.g. <code>T1059</code> for Command and Scripting Interpreter, <code>T1071</code> for Application Layer Protocol) so analysts can normalise across vendors.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.5rem;">The 14 ATT&amp;CK Enterprise tactics, in execution order:</p>
+						<ul style="columns:2; -webkit-columns:2; -moz-columns:2; margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.7;">
 							<li>Reconnaissance</li>
 							<li>Resource Development</li>
 							<li>Initial Access</li>
@@ -453,7 +478,7 @@
 							<li>Exfiltration</li>
 							<li>Impact</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:14px; line-height:1.6; color:#737373; margin-bottom:0;">Reference: <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">attack.mitre.org</a> &middot; <a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">Threat group catalogue</a> &middot; <a href="https://attack.mitre.org/techniques/enterprise/" target="_blank" rel="noopener noreferrer">Enterprise technique matrix</a>.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.6; color:var(--tf-fg-737373); margin-bottom:0;">Reference: <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">attack.mitre.org</a> &middot; <a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">Threat group catalogue</a> &middot; <a href="https://attack.mitre.org/techniques/enterprise/" target="_blank" rel="noopener noreferrer">Enterprise technique matrix</a>.</p>
 					</div>
 				</div>
 
@@ -463,7 +488,7 @@
 				<h3 id="tweetfeed-fits" class="section-heading">5. How TweetFeed fits</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Source:</b> ~95 Twitter/X security researchers, scraped via RSS every 15 minutes.</li>
 							<li><b>Output:</b> CSV, JSON, RSS, MISP events and an MCP server, in windows of today / week / month / year. See <a href="../feeds/" class="text-decoration-none">/feeds</a>.</li>
 							<li><b>Access:</b> No authentication, no rate limit for normal use.</li>
@@ -474,24 +499,24 @@
 						<div class="row mt-3">
 							<div class="col-md-6 mb-3">
 								<a href="../tags/" class="text-decoration-none" style="color:inherit;">
-									<div class="card h-100 p-3" style="background:#f2f2f2; border:1px solid #1c1c1c;">
-										<span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by tag</span>
+									<div class="card h-100 p-3" style="background:var(--tf-bg-f2f2f2); border:1px solid var(--tf-bd-1c1c1c);">
+										<span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by tag</span>
 										<h4 class="section-heading" style="margin:0.3rem 0 0.4rem 0;">25 curated threat tags</h4>
-										<p style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">APT groups, malware families and TTPs. Each tag has a dedicated landing page with the live IOC stream and reference content.</p>
+										<p style="font-size:13px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">APT groups, malware families and TTPs. Each tag has a dedicated landing page with the live IOC stream and reference content.</p>
 									</div>
 								</a>
 							</div>
 							<div class="col-md-6 mb-3">
 								<a href="../ioc-types/" class="text-decoration-none" style="color:inherit;">
-									<div class="card h-100 p-3" style="background:#f2f2f2; border:1px solid #1c1c1c;">
-										<span style="color:#737373; font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by IOC type</span>
+									<div class="card h-100 p-3" style="background:var(--tf-bg-f2f2f2); border:1px solid var(--tf-bd-1c1c1c);">
+										<span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by IOC type</span>
 										<h4 class="section-heading" style="margin:0.3rem 0 0.4rem 0;">5 IOC types</h4>
-										<p style="font-size:13px; color:#737373; font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">URLs, domains, IPs, MD5 and SHA-256. Per-type hubs covering format, half-life and best blocking use cases.</p>
+										<p style="font-size:13px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">URLs, domains, IPs, MD5 and SHA-256. Per-type hubs covering format, half-life and best blocking use cases.</p>
 									</div>
 								</a>
 							</div>
 						</div>
-						<p style="font-family:'Rubik',sans-serif; color:#737373; font-size:14px; line-height:1.6; margin: 0.5rem 0 0 0;">Integration recipes for MISP, OpenCTI, Splunk, KQL and IntelOwl on the <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a>.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-737373); font-size:14px; line-height:1.6; margin: 0.5rem 0 0 0;">Integration recipes for MISP, OpenCTI, Splunk, KQL and IntelOwl on the <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a>.</p>
 					</div>
 				</div>
 
@@ -501,7 +526,7 @@
 				<h3 id="pitfalls" class="section-heading">6. Common pitfalls</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.8;">
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Blocking on IPs alone.</b> Shared hosting and CDNs reuse IPs across legitimate and malicious tenants. An IP is enrichment, not a verdict. Block only with corroborating signals (active sample, beacon traffic).</li>
 							<li><b>Ignoring TTL.</b> A six-month-old URL feed is mostly noise. Configure per-type TTL: hours for URLs, days for IPs, weeks for domains, never for hashes.</li>
 							<li><b>Treating IOC = verdict.</b> An IOC is a lead. Cross-reference VirusTotal, urlscan.io, your sandbox, or pivot through passive DNS before automating action.</li>
@@ -516,7 +541,7 @@
 				<h3 id="glossary" class="section-heading">7. Glossary</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<dl style="margin-bottom:0; font-family:'Rubik',sans-serif; color:#1c1c1c; font-size:15px; line-height:1.7;">
+						<dl style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7;">
 							<dt style="font-weight:600;">APT (Advanced Persistent Threat)</dt>
 							<dd style="margin-bottom:0.6rem;">A well-resourced adversary that maintains long-term access to a target environment. Often nation-state aligned. Tracked by aliases that vary by vendor.</dd>
 							<dt style="font-weight:600;">IOC (Indicator of Compromise)</dt>
@@ -556,7 +581,7 @@
 				<!-- LICENSE                                                       -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading">License</h3>
-				<p style="color: #737373;font-size: 16px;font-family: 'Rubik', sans-serif;">
+				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
 					Source code for the pipeline:
 					<a target="_blank" rel="noopener noreferrer" href="https://github.com/0xDanielLopez/TweetFeed">github.com/0xDanielLopez/TweetFeed</a> (MIT).
 				</p>
@@ -664,6 +689,7 @@
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../js/utils.js?v=8"></script>
 	<script>
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
 	</script>
