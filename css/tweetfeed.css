@@ -754,6 +754,52 @@ hr.divider {
 @media (max-width: 991.98px) {
 	.tf-doc-table td, .tf-doc-table th { word-break: break-word; overflow-wrap: anywhere; }
 }
+/* Identifier columns (/agents/ tools, skills, feed paths; marked
+   .tf-doc-ids). The `anywhere` rule above split MCP tool names mid-word
+   (query_ioc/s, check_has/h) because .table is table-layout:fixed, so the
+   inline 30% <colgroup> pins column 1 at ~100px whatever the content. Pure
+   CSS, no markup inside the identifiers: on phones the id <code> stays on
+   one line (nowrap), the table goes back to automatic layout so column 1
+   grows to the longest name, and a smaller mono size + 8px side padding give
+   the prose column back some of the width (page height +4..8%, not +14..23%
+   as with nowrap at the default size). Opt-in per table: the /.well-known
+   path table has no <code>, still needs `anywhere`, and is left alone. */
+@media (max-width: 575.98px) {
+	.table.tf-doc-table.tf-doc-ids { table-layout: auto; }
+	.table.tf-doc-table.tf-doc-ids td,
+	.table.tf-doc-table.tf-doc-ids thead th { padding-left: 8px; padding-right: 8px; }
+	.table.tf-doc-table.tf-doc-ids td:first-child code {
+		white-space: nowrap;
+		word-break: normal;
+		overflow-wrap: normal;
+		font-size: 12px;
+	}
+}
+/* /docs/ "At a glance" (.tf-glance): 4 columns, the URL one holds
+   api.tweetfeed.live (~120px of mono). At 320 the table was 294px inside a
+   240px card-body content box (License clipped past the card border); at 360
+   it spilled 15px into the card padding. Pure CSS, no markup inside the
+   hostnames: tighter cell padding and type, a wider URL column (the inline
+   <col> widths need !important) and a 10px/11px mono size so the hostname
+   stays on one line. `overflow-wrap:anywhere` is only the safety net. */
+@media (max-width: 374.98px) {
+	.table.tf-glance td, .table.tf-glance th { padding-left: .15rem; padding-right: .15rem; font-size: 13px; }
+	.table.tf-glance th { font-size: 10px; letter-spacing: .03em; }
+	.table.tf-glance code { font-size: 11px !important; overflow-wrap: anywhere; }
+	.table.tf-glance col:nth-child(1) { width: 20% !important; }
+	.table.tf-glance col:nth-child(2) { width: 54% !important; }
+}
+@media (max-width: 339.98px) {
+	.table.tf-glance code { font-size: 10px !important; }
+}
+/* Phone gutter for pages with no .docs-wrap (/about/, /tos/). index.css gives
+   #content width:98% / margin:1% below 992, i.e. ~3px at 320, so the body
+   text sat against the screen edge while the docs pages (16px docs-wrap
+   padding) have ~19px. Opt-in via class: the other non-docs pages are not
+   covered by this change. */
+@media (max-width: 575.98px) {
+	#content.tf-gutter { padding-left: 1rem; padding-right: 1rem; }
+}
 .table.tf-doc-table tbody tr:nth-of-type(odd),
 .table.tf-doc-table tbody tr:nth-of-type(even) { background-color: transparent; }
 /* The identifier is not the same kind of thing as the tokens quoted inside
@@ -1514,6 +1560,16 @@ button.btn.btn-tf {
 		border-left-width: 1px;
 	}
 	.docs-content { max-width: 100%; }
+}
+
+/* T03 C10: sb-admin-2's .container (1.5rem side padding) sitting directly in
+   main.docs-content stacked a second gutter on the .docs-wrap one: 44px each
+   side on a 360 phone, cards 273px wide. Only /changelog/ does this today. */
+@media (max-width: 767.98px) {
+	.docs-content > .container {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 /* ── Accessibility (WCAG AA) hardening, 2026-06-30 ──────────────────────

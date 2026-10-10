@@ -55,6 +55,23 @@ body {
     color: var(--tf-fg-1178b3);
 }
 
+/* Phone title (T03 C1). The mobile title is a p.toph1 inside #presentationMobile
+   (the real h1 is hidden below lg). A fixed 60px clipped long one-word tag
+   names (#NetSupportRAT needs ~40px icon + 7.03em of text, so it overflowed
+   every phone up to ~460px) and wrapped ToS/About to two 90px lines.
+   Fluid size: (viewport - 84px) / 7.1 keeps the longest current tag on one
+   line, floor 34px (same as /hunt/'s own override), and reaches the old 60px
+   at ~510px, so tablets and up are unchanged. overflow-wrap is the safety net
+   for a future longer tag. Only the mobile p.toph1 is matched: the desktop
+   h1.toph1 lives in #presentationSecondary / #presentation. */
+@media (max-width: 575.98px) {
+    #presentationMobile .toph1 {
+        font-size: clamp(34px, calc((100vw - 84px) / 7.1), 60px);
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+}
+
 #presentation h2,
 #presentationMobile h2 {
     font-size: 18px;
@@ -86,6 +103,27 @@ body {
        100/300/400/500/700/800/900. */
     font-weight: 700;
     color: var(--tf-fg-1178b3);
+}
+
+/* T03 C3: below ~375px the col-6 window cards (146px inner at 360, 127 at 320)
+   cannot hold 36px 'Month'/'Today' plus the ? icon, so the word broke
+   mid-letter ('MONT / H'). 28px keeps the titles on one line. */
+@media (max-width: 374.98px) {
+    .cardTitle {
+        font-size: 28px;
+    }
+}
+/* Same grids, icon side: 'Month' + ? icon needs ~129px at 36px (101px at 28px)
+   but a col-6 header only has 87px (320) to ~122px (404) after its 20px side
+   padding, so the icon dropped under the word and that header ended up 24px
+   taller than its row mates. 12px side padding (103px at 320) lets title + icon
+   share a line up to 419px, headers equal. Scoped to col-6 cards: tag and
+   campaign pages stack cards full width and keep their padding. */
+@media (max-width: 419.98px) {
+    .col-6 > .card > .card-header:has(> .cardTitle) {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
 }
 
 /* Legacy navbar base. RETIRED 2026-08-18: the shell is generated from

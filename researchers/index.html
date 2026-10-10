@@ -65,9 +65,9 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=6" rel="stylesheet">
-	<link href="../css/index.css?v=73" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
+	<link href="../css/table.css?v=7" rel="stylesheet">
+	<link href="../css/index.css?v=74" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -171,6 +171,11 @@
 		]
 	}
 	</script>
+	<style>
+		/* "Search" link under each researcher button: keep icon + text together and
+		   give it a 24px+ tap target clear of the user button (WCAG 2.5.8) */
+		.tableResearchers .tf-res-search { display:inline-block; padding:5px 8px; margin-top:4px; }
+	</style>
 </head>
 
 <body id="page-top">
@@ -613,7 +618,7 @@
 			var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
 			var picSrc = '../pics/' + safeUser + '.png';
 
-			$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>' + ' <a href="../search/?user=' + encodeURIComponent(user) + '" style="color:var(--tf-fg-555);font-size:12px;" title="Search this researcher\'s IOCs on TweetFeed" aria-label="Search this researcher\'s IOCs on TweetFeed"><i class="fas fa-search"></i> Search</a>');
+			$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>' + ' <a class="tf-res-search" href="../search/?user=' + encodeURIComponent(user) + '" style="color:var(--tf-fg-555);font-size:12px;" title="Search this researcher\'s IOCs on TweetFeed" aria-label="Search this researcher\'s IOCs on TweetFeed"><i class="fas fa-search"></i> Search</a>');
 
 			// For Mobile
 			$(this.node()).find('td').eq(0).addClass('text-center');

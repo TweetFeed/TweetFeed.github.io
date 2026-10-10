@@ -65,9 +65,9 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=6" rel="stylesheet">
-	<link href="../css/index.css?v=73" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
+	<link href="../css/table.css?v=7" rel="stylesheet">
+	<link href="../css/index.css?v=74" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -560,6 +560,12 @@
 			gap: 0.9rem;
 			margin-top: 0.25rem;
 		}
+		/* Feed explorer filters: 3x2 grid from md (768) to xl-1 (1199) so the date/tag
+		   fields stay readable, 6-up from 1200. The trimmed sb-admin-2 build has no
+		   .col-xl-2, so the xl step is defined here, scoped to the form. */
+		@media (min-width: 1200px) {
+			#feedExplorerForm .form-group.col-md-4 { flex: 0 0 16.66667%; max-width: 16.66667%; }
+		}
 		.tfe-status-loading {
 			display: flex;
 			align-items: center;
@@ -802,7 +808,7 @@
 							<h3 class="section-heading tf-block-head">Feed explorer</h3>
 							<form id="feedExplorerForm" role="search" aria-label="Feed explorer filters">
 								<div class="form-row">
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feWindow">Window</label>
 										<select class="form-control" id="feWindow">
 											<option value="today">Today</option>
@@ -810,7 +816,7 @@
 											<option value="month">Last 30 days</option>
 										</select>
 									</div>
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feType">Type</label>
 										<select class="form-control" id="feType">
 											<option value="">Any</option>
@@ -821,22 +827,22 @@
 											<option value="md5">MD5</option>
 										</select>
 									</div>
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feTag">Tag</label>
 										<input type="text" class="form-control" id="feTag" list="feTagOptions" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. cobaltstrike">
 										<datalist id="feTagOptions"></datalist>
 										<small class="form-text text-danger" id="feTagError" aria-live="polite"></small>
 									</div>
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feUser">User</label>
 										<input type="text" class="form-control" id="feUser" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="@handle">
 										<small class="form-text text-danger" id="feUserError" aria-live="polite"></small>
 									</div>
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feFrom">From</label>
 										<input type="date" class="form-control" id="feFrom">
 									</div>
-									<div class="form-group col-6 col-md-2">
+									<div class="form-group col-6 col-md-4">
 										<label for="feTo">To</label>
 										<input type="date" class="form-control" id="feTo">
 									</div>

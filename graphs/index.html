@@ -65,9 +65,9 @@
 	<!-- Custom styles for this page -->
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=6" rel="stylesheet">
-	<link href="../css/index.css?v=73" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
+	<link href="../css/table.css?v=7" rel="stylesheet">
+	<link href="../css/index.css?v=74" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -165,6 +165,26 @@
 		]
 	}
 	</script>
+	<style>
+		/* Responsive fix B2 (2026-10-10).
+		   C13: each card sits in .col-12.col-md-6.d-flex > .col-xl-12.col-lg-12; the inner
+		   col added a second 12px side gutter (cards inset 12px per side from the
+		   full-width cards above, gaps of 48px) so zero it. The outer col is a fixed
+		   50% half from md up (a flex-basis:0 .col let the DataTables min-content make
+		   the pair unequal).
+		   C5: DataTables' length + Search controls (col-md-6 halves, ~485px of content)
+		   do not fit a 2-up card narrower than that and the Search input was clipped by
+		   .table-responsive. The stacking is tied to the card width itself (container
+		   query), not to a viewport cap: it applies only while the card is too narrow,
+		   and wide screens keep the side-by-side controls. */
+		#pills-tabContent .d-flex > .col-xl-12.col-lg-12 { padding-left: 0; padding-right: 0; }
+		@media (min-width: 768px) {
+			#pills-tabContent .table-responsive { container-type: inline-size; }
+			@container (max-width: 500px) {
+				#pills-tabContent .dataTables_wrapper > .row > .col-md-6 { flex: 0 0 100%; max-width: 100%; text-align: left; }
+			}
+		}
+	</style>
 </head>
 
 <body id="page-top">
@@ -380,7 +400,7 @@
 							</div> <!-- class="col-sm-6" -->
 						</div> <!-- row -->
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -408,7 +428,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -429,7 +449,7 @@
 						</div> <!-- row -->
 						<br>
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -456,7 +476,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -550,7 +570,7 @@
 							</div> <!-- class="col-sm-6" -->
 						</div> <!-- row -->
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -578,7 +598,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -599,7 +619,7 @@
 						</div> <!-- row -->
 						<br>
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -626,7 +646,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -720,7 +740,7 @@
 							</div> <!-- class="col-sm-6" -->
 						</div> <!-- row -->
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -748,7 +768,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -769,7 +789,7 @@
 						</div> <!-- row -->
 						<br>
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -796,7 +816,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -890,7 +910,7 @@
 							</div> <!-- class="col-sm-6" -->
 						</div> <!-- row -->
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -918,7 +938,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<!-- Donut Chart -->
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
@@ -939,7 +959,7 @@
 						</div> <!-- row -->
 						<br>
 						<div class="row">
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->
@@ -966,7 +986,7 @@
 									</div> <!-- card -->
 								</div>
 							</div>
-							<div class="col d-flex align-items-stretch">
+							<div class="col-12 col-md-6 d-flex align-items-stretch">
 								<div class="col-xl-12 col-lg-12">
 									<div class="card shadow mb-4 h-100">
 										<!-- Card Header - Dropdown -->

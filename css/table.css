@@ -118,6 +118,96 @@ table {
     overflow: visible !important;
   }
 
+  /* Hidden columns must not keep their <col>. Below lg the cells are hidden with
+     d-none d-lg-table-cell (markup / DataTables columnDefs), but a display:none cell
+     leaves the table grid, so the visible cells slide into column slots 1..n and
+     inherit the widths of the HIDDEN columns' <col> (User got Date's 14%, Value got
+     User's 13%) while the last slots stayed empty and still reserved 42/10/6/7%:
+     the visible cells filled only ~53% of the table at 576-991 (Value 80-108px).
+     Drop the <col>s of the hidden columns and give the visible ones the whole width.
+     The <col> widths are inline style, hence !important. Measured 2026-10-10 at 768:
+       home #dataTable            User/Value/X       145/108/80  -> 233/336/80
+       /search/ #dataTableFull    User/Value         145/108     -> 221/429
+       /search/ #feedExplorerTable User/Value         91/84      -> 221/429
+       /researchers/ x4           Number/User/IOCs   110/147/106 -> 172/302/223
+     Visible columns per table (1-based): home 2,4,6 (hidden 1,3,5,7); search tables
+     2,4 only (X/Tweet is hidden there too: td:eq(5) gets d-none in search/index.html);
+     researchers 1-3 (hidden 4,5). */
+  #dataTable col:nth-child(odd) { display: none; }
+  #dataTable col:nth-child(2) { width: 36% !important; }
+  #dataTable col:nth-child(4) { width: 52% !important; }
+  #dataTable col:nth-child(6) { width: 12% !important; }
+
+  #dataTableFull col:nth-child(odd),
+  #dataTableFull col:nth-child(n+6),
+  #feedExplorerTable col:nth-child(odd),
+  #feedExplorerTable col:nth-child(n+6) { display: none; }
+  #dataTableFull col:nth-child(2),
+  #feedExplorerTable col:nth-child(2) { width: 34% !important; }
+  #dataTableFull col:nth-child(4),
+  #feedExplorerTable col:nth-child(4) { width: 66% !important; }
+
+  .tableResearchers colgroup col:nth-child(n+4) { display: none; }
+}
+
+/* Recent-IOC / sample tables (tag pages, campaign pages: .tf-ioc-table = Date | Type |
+   Value | Source; malicious-* pages: .tf-samples-table = Date | Value | Tags | Source,
+   rows filled by JS). They used to carry an inline min-width (720px / 560px) with
+   table-layout:fixed and nowrap cells, so on a phone the wrapper showed 279px of
+   720px: Date and Type, with the Value and Source columns off-screen and no scroll
+   hint. Below 576px each row is stacked as a small grid instead: Date, Type and
+   Source on the first line, the Value on its own full-width line (wrapping), Tags
+   (malicious-*) on a third line when present. No horizontal scroll, copy icon and
+   title tooltip untouched. The thead stays in the DOM, visually hidden, for screen
+   readers. From 576px up the table is a normal fixed-layout table that just fills
+   the wrapper (Value ellipsises, the full text is in the title and the copy icon).
+   Row separators use --tf-border so the dark theme keeps working. The cell rules
+   need !important only to beat the inline nowrap/overflow on the cells. */
+@media (max-width: 575.98px) {
+  .table.tf-ioc-table,
+  .table.tf-samples-table,
+  .tf-ioc-table tbody,
+  .tf-samples-table tbody { display: block; width: 100%; }
+  .tf-ioc-table colgroup,
+  .tf-samples-table colgroup { display: none; }
+  .tf-ioc-table thead,
+  .tf-samples-table thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .table.tf-ioc-table tr,
+  .table.tf-samples-table tr {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    column-gap: .5rem;
+    row-gap: .25rem;
+    align-items: center;
+    width: auto;
+    padding: .5rem 0;
+    border-top: 1px solid var(--tf-border);
+  }
+  .table.tf-ioc-table tr:first-child,
+  .table.tf-samples-table tr:first-child { border-top: 0; padding-top: 0; }
+  .table.tf-ioc-table td,
+  .table.tf-samples-table td {
+    display: block; width: auto; min-width: 0; padding: 0; border: 0; text-align: left;
+  }
+  .tf-ioc-table td:nth-child(1),
+  .tf-samples-table td:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .tf-ioc-table td:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .tf-ioc-table td:nth-child(4),
+  .tf-samples-table td:nth-child(4) { grid-column: 3; grid-row: 1; text-align: right; }
+  .tf-ioc-table td:nth-child(3),
+  .tf-samples-table td:nth-child(2) {
+    grid-column: 1 / -1; grid-row: 2;
+    overflow: visible !important; white-space: normal !important; text-overflow: clip !important;
+    overflow-wrap: anywhere; word-break: break-all;
+  }
+  .tf-samples-table td:nth-child(3) {
+    grid-column: 1 / -1; grid-row: 3;
+    overflow: visible !important; white-space: normal !important;
+  }
+  .tf-samples-table td:nth-child(3):empty { display: none; }
 }
 
 /* CLS fix: reserve height for the .card-body that wraps each DataTable so
@@ -211,4 +301,47 @@ input {
 #abuse_ch {
   width: 16px;
   height: auto;
+}
+
+/* iOS Safari zooms the page when a form control under 16px gets focus, and it stays
+   zoomed. Bootstrap's form-control-sm / custom-select-sm (the DataTables "Show N
+   entries" select and "Search" box) are 14px and the per-column filter inputs in the
+   thead inherit the browser default (13.33px). 16px on phones only (the campaigns
+   toolbar has its own rule in campaigns/index.html); desktop is unchanged. */
+@media (max-width: 575.98px) {
+  .dataTables_wrapper .dataTables_length select,
+  .dataTables_wrapper .dataTables_filter input,
+  .dataTable thead th input { font-size: 16px; }
+  /* At 16px the "Search:" box (size=20, ~191px) no longer fits next to its label in a
+     ~250px card and was clipped on the right (measured 360px: right edge 316 vs card
+     311). Let the label lay out as a flex row so the input shrinks to the room left. */
+  .dataTables_wrapper .dataTables_filter label {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dataTables_wrapper .dataTables_filter input { min-width: 0; }
+  /* Pagination: Previous + 5 page buttons + Next is ~300px of nowrap flex in a ~250px
+     card (/search/ at 360px), so the wrapper scrolled sideways and clipped "Previous".
+     Wrap onto a second line instead of clipping. */
+  .dataTables_wrapper .dataTables_paginate .pagination { flex-wrap: wrap; justify-content: center; }
+  /* Home #dataTable at 360px was 276px wide in a 263px card (13px of sideways scroll that
+     cut the X column's sort arrows; 320px: 52px). Its min-content is driven by cell padding:
+     th 12+30 (sort arrows) and td 12+12 around nowrap badges/headers. Trim the left padding
+     on all cells and the right padding on td; th keeps its 30px for the sort arrows.
+     Measured 360px: 276 -> 258 (fits). 320px: 276 -> 252 (still 28px over, the User badge
+     alone is 93px). */
+  #dataTable th, #dataTable td { padding-left: .375rem; }
+  #dataTable td { padding-right: .375rem; }
+  /* Campaign pages, Domains (1 column) and Infrastructure (Network | IPs | Country) tables
+     (scripts/templates/campaign_page.html.j2). They carried an inline min-width (320px /
+     420px) inside a ~263px card at 360px, so .table-responsive scrolled sideways. The
+     min-width is gone from the template; here the fixed IPs/Country columns shrink to
+     their header text and Network wraps (the cell has inline nowrap + ellipsis, hence
+     !important, as with .tf-ioc-table). Domains values have no break opportunity. */
+  .tf-domains-table td { overflow-wrap: anywhere; word-break: break-all; }
+  .tf-infra-table col:nth-child(2) { width: 3.5rem !important; }
+  .tf-infra-table col:nth-child(3) { width: 5.5rem !important; }
+  .tf-infra-table td:first-child {
+    white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+    overflow-wrap: anywhere; word-break: break-all;
+  }
 }

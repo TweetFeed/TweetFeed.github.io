@@ -64,8 +64,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=73" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=73" rel="stylesheet">
+	<link href="../css/index.css?v=74" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -311,7 +311,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<style>
 				.about-section { color: var(--tf-fg-555); font-size: 15px; font-family: 'Rubik', sans-serif; }
 				/* Icon layout only. The font-size/weight/colour this rule used to carry
@@ -338,6 +338,24 @@
 				.about-cta .cta-btn.primary:hover { background: var(--tf-bg-0d8bd9); transform: translateY(-2px); color: var(--tf-fg-fff); text-decoration: none; }
 				.about-cta .cta-btn.ghost { background: var(--tf-bg-255-255-255-08); color: var(--tf-fg-fff); border: 1px solid var(--tf-bd-255-255-255-15); }
 				.about-cta .cta-btn.ghost:hover { background: var(--tf-bg-255-255-255-15); transform: translateY(-2px); color: var(--tf-fg-fff); text-decoration: none; }
+				/* Testimonials. .tweet-container is fixed at 220px in index.css, built for
+				   the 4-column desktop grid. Below 769px the grid is 1 column wide
+				   (285px at 360, 652px at 768), so short quotes left 60-90px holes and the
+				   longest one (253px of content at 320) scrolled inside its card. Height
+				   follows the content here, and 576-768 gets 2 columns instead of a single
+				   652px-wide card. Scoped to this page: nothing else uses these classes. */
+				@media (max-width: 768px) {
+					.about-testimonials .grid-container > a { display: flex; }
+					.about-testimonials .tweet-container { flex: 1 1 auto; min-width: 0; height: auto; }
+				}
+				@media (min-width: 576px) and (max-width: 768px) {
+					.about-testimonials .grid-container { grid-template-columns: repeat(2, 1fr); }
+				}
+				/* The .container gutter stacked on the grid's own 10px padding; #content
+				   already supplies the page gutter on phones (.tf-gutter). */
+				@media (max-width: 575.98px) {
+					.about-testimonials { padding-left: 0; padding-right: 0; }
+				}
 				</style>
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
@@ -371,7 +389,7 @@
 				</section>
 				<!-- Testimonials -->
 				<h2 class="section-heading tf-block-head"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> What people say</h2>
-				<div class="container">
+				<div class="container about-testimonials">
 					<div class="grid-container">
 						<a href="https://x.com/fr0gger_/status/1747771695803621852" target="_blank" style="text-decoration: none; color: inherit;" rel="noopener noreferrer">
 							<div class="tweet-container text-center">

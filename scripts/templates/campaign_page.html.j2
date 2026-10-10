@@ -45,9 +45,9 @@
 	<!-- Custom styles for this template -->
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../../css/table.css?v=6" rel="stylesheet">
-	<link href="../../css/index.css?v=73" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=73" rel="stylesheet">
+	<link href="../../css/table.css?v=7" rel="stylesheet">
+	<link href="../../css/index.css?v=74" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -193,7 +193,7 @@
 					<div class="card-body">
 						{% if c.domains %}
 						<div class="table-responsive">
-							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:320px; margin-bottom:0;">
+							<table class="table table-sm tf-domains-table" style="table-layout:fixed; width:100%; margin-bottom:0;">
 								<colgroup><col style="width:100%;"></colgroup>
 								<thead><tr><th scope="col">Domain</th></tr></thead>
 								<tbody>
@@ -220,7 +220,7 @@
 					<div class="card-body">
 						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">{{ c.infra_ip_count }} IP{{ 's' if c.infra_ip_count != 1 }} across {{ c.infra_org_count }} network{{ 's' if c.infra_org_count != 1 }} in this campaign:</p>
 						<div class="table-responsive">
-							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:420px; margin-bottom:0;">
+							<table class="table table-sm tf-infra-table" style="table-layout:fixed; width:100%; margin-bottom:0;">
 								<colgroup>
 									<col style="width:100%;">
 									<col style="width:70px;">
@@ -256,7 +256,7 @@
 						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Showing up to 25 IOCs (the campaigns API caps each campaign's published list at 25). Live JSON: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/campaigns</code></a>.</p>
 						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Download this campaign: <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}" target="_blank" rel="noopener noreferrer">JSON</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.csv" target="_blank" rel="noopener noreferrer">CSV</a> &middot; <a href="https://api.tweetfeed.live/v1/campaigns/{{ c.id }}.stix.json" target="_blank" rel="noopener noreferrer">STIX 2.1</a>.</p>
 						<div class="table-responsive">
-							<table class="table table-sm" style="table-layout:fixed; width:100%; min-width:720px; margin-bottom:0;">
+							<table class="table table-sm tf-ioc-table" style="table-layout:fixed; width:100%; margin-bottom:0;">
 								<colgroup>
 									<col style="width:90px;">
 									<col style="width:60px;">
