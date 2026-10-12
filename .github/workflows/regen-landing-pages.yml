@@ -80,8 +80,12 @@ jobs:
           # tags/index.html on every run but it was never staged, so the hub
           # silently stayed stale in git while CI reported success. malicious-*/
           # and trends/ were added 2026-08-22 alongside bake_freshness.py.
+          # The 3 pages of DATASET_DATEMODIFIED_PAGES were missing the same way
+          # (found 2026-10-12): prod served a 9-day-old Dataset "dateModified"
+          # while bump_sitemap_lastmod.py dated them "today" every run.
           git add tag/ tags/ malicious-domains/ malicious-ips/ malicious-urls/ \
-                  malicious-hashes-md5/ malicious-hashes-sha256/ trends/ sitemap.xml
+                  malicious-hashes-md5/ malicious-hashes-sha256/ trends/ sitemap.xml \
+                  index.html feeds/index.html blocklists/index.html
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
