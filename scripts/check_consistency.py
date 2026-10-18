@@ -40,7 +40,7 @@ MAIN_PAGES = [
     "about/index.html", "agents/index.html", "api/index.html", "campaigns/index.html",
     "changelog/index.html", "dashboard/index.html", "docs/index.html", "feeds/index.html",
     "graphs/index.html", "hunt/index.html", "index.html", "researchers/index.html",
-    "search/index.html", "trends/index.html", "tos/index.html",
+    "search/index.html", "trends/index.html", "tos/index.html", "privacy/index.html",
     "threat-intelligence-guide/index.html", "malicious-urls/index.html",
     "malicious-domains/index.html", "malicious-ips/index.html",
     "malicious-hashes-md5/index.html", "malicious-hashes-sha256/index.html",

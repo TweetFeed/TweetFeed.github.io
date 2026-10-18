@@ -146,6 +146,7 @@ FOOTER_COLUMNS = [
         Link("About", "about/"),
         Link("Guide", "threat-intelligence-guide/"),
         Link("Terms of Service", "tos/"),
+        Link("Privacy", "privacy/"),
         Link("Feedback", FEEDBACK_URL, external=True),
     ]),
 ]
@@ -178,6 +179,7 @@ FOOTER_MOBILE_COLUMNS = [
 
 FOOTER_MOBILE_LEGAL = [
     Link("Terms of Service", "tos/"),
+    Link("Privacy", "privacy/"),
     Link("Feedback", FEEDBACK_URL, external=True),
 ]
 
@@ -353,6 +355,7 @@ NO_ACTIVE = {
     "malicious-hashes-md5/index.html",
     "malicious-hashes-sha256/index.html",
     "tos/index.html",
+    "privacy/index.html",
     "404.html",
 }
 

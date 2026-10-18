@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- 100% privacy-first analytics -->
+	<!-- Umami, self-hosted on our own infrastructure. Cookieless, no localStorage, no personal data stored. -->
+	<script defer src="https://s.tweetfeed.live/script.js" data-website-id="d81a4278-e114-4627-a06d-d3c5178f4950" data-domains="tweetfeed.live"></script>
+	<!-- Ahrefs Web Analytics (cookieless) -->
+	<script src="https://analytics.ahrefs.com/analytics.js" data-key="J59c6Ehci39jQWCQRIWuRw" async></script>
+<link rel="icon" href="../favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- site-theme-init -->
+	<script>
+	(function () {
+		var d = document.documentElement, t = null;
+		try { t = localStorage.getItem('site-theme'); } catch (e) {}
+		if (t !== 'light' && t !== 'dark') {
+			t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+		}
+		d.setAttribute('data-site-theme', t);
+		d.style.colorScheme = t;
+		if (t === 'dark') {
+			var m = document.createElement('meta');
+			m.name = 'twitter:widgets:theme';
+			m.content = 'dark';
+			document.head.appendChild(m);
+		}
+	})();
+	</script>
+	<!-- /site-theme-init -->
+	<meta name="description" content="Privacy policy for tweetfeed.live, the TweetFeed API, and the MCP server: no accounts, no cookies, rate-limit logs, and how to contact me.">
+	<meta name="author" content="tweetfeed.live">
+	<meta name="keywords" content="privacy,policy,gdpr,tweetfeed,mcp">
+	<link rel="canonical" href="https://tweetfeed.live/privacy/">
+	<link rel="alternate" type="application/rss+xml" title="TweetFeed - all IOCs" href="https://tweetfeed.live/rss.xml">
+	<title>Privacy Policy - TweetFeed</title>
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Privacy Policy - TweetFeed">
+	<meta name="twitter:description" content="Privacy policy for tweetfeed.live, the TweetFeed API, and the MCP server: no accounts, no cookies, rate-limit logs, and how to contact me.">
+	<meta name="twitter:url" content="https://tweetfeed.live/privacy/">
+	<meta name="twitter:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta name="twitter:creator" content="@0xDanielLopez">
+	<!-- Facebook -->
+	<meta property="og:url" content="https://tweetfeed.live/privacy/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Privacy Policy - TweetFeed">
+	<meta property="og:description" content="Privacy policy for tweetfeed.live, the TweetFeed API, and the MCP server: no accounts, no cookies, rate-limit logs, and how to contact me.">
+	<meta property="og:site_name" content="tweetfeed.live">
+	<meta property="og:image" content="https://tweetfeed.live/img/TweetFeed_card_og.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="627">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
+	<!-- Preconnect -->
+	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+	<!-- Custom fonts for this template -->
+	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
+	<!-- Custom styles for this template -->
+	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
+	<!-- Custom CSS 0xDanielLopez -->
+	<link href="../css/index.css?v=74" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"></noscript>
+	<!-- Structured data -->
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"logo": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"@id": "https://tweetfeed.live/#organization",
+		"founder": {"@id": "https://tweetfeed.live/#founder"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez/TweetFeed",
+			"https://phishunt.io/",
+			"https://daniel.tools/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"@id": "https://tweetfeed.live/#founder",
+		"name": "Daniel López",
+		"url": "https://tweetfeed.live/about/",
+		"image": "https://tweetfeed.live/img/TweetFeed_card_og.png",
+		"jobTitle": "Cyber Threat Researcher",
+		"description": "Cyber threat researcher working in cybersecurity since 2017. Founder of TweetFeed and phishunt.io; maintainer of public Threat Intelligence feeds and MCP servers for AI agents.",
+				"knowsAbout": [
+			"Threat Intelligence",
+			"Indicators of compromise",
+			"OSINT",
+			"Malware analysis",
+			"Phishing detection",
+			"Cybersecurity"
+		],
+		"founderOf": {"@id": "https://tweetfeed.live/#organization"},
+		"sameAs": [
+			"https://github.com/0xDanielLopez",
+			"https://x.com/0xDanielLopez",
+			"https://daniel.tools/",
+			"https://phishunt.io/",
+			"https://0xdaniellopez.github.io/CV/"
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "TweetFeed",
+		"url": "https://tweetfeed.live/",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "https://tweetfeed.live/search/?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Home",
+				"item": "https://tweetfeed.live/"
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Privacy Policy",
+				"item": "https://tweetfeed.live/privacy/"
+			}
+		]
+	}
+	</script>
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		"name": "Privacy Policy",
+		"url": "https://tweetfeed.live/privacy/",
+		"description": "Privacy policy for tweetfeed.live, the TweetFeed API, and the MCP server.",
+		"isPartOf": {"@id": "https://tweetfeed.live/#organization"},
+		"inLanguage": "en"
+	}
+	</script>
+</head>
+
+<body id="page-top">
+	<a class="skip-link" href="#content">Skip to content</a>
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+		<!-- Sidebar -->
+		<!-- End of Sidebar -->
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<!-- Main Content -->
+			<!-- Top bar -->
+			<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block fixed-top tf-navbar">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-left">
+						<li class="nav-item">
+							<a class="nav-link tf-wordmark" href="../"><span class="tf-wordmark-text">TweetFeed</span></a>
+						</li>
+						<li class="tf-nav-divider" aria-hidden="true"></li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../agents/"><svg class="tf-nav-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../campaigns/"><i class="fas fa-project-diagram tf-nav-icon" aria-hidden="true"></i> Campaigns</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../dashboard/"><i class="fas fa-th tf-nav-icon" aria-hidden="true"></i> Dashboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../hunt/"><i class="fas fa-bullseye tf-nav-icon" aria-hidden="true"></i> Hunt</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../feeds/"><i class="fas fa-rss tf-nav-icon" aria-hidden="true"></i> Feeds</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../api/"><i class="fas fa-code tf-nav-icon" aria-hidden="true"></i> API</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link tf-navlink tf-nav-more dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+							<div class="dropdown-menu tf-menu">
+								<a class="dropdown-item tf-menu-item" href="../graphs/"><i class="fas fa-chart-pie tf-menu-icon" aria-hidden="true"></i> Graphs</a>
+								<a class="dropdown-item tf-menu-item" href="../trends/"><i class="fas fa-chart-line tf-menu-icon" aria-hidden="true"></i> Trends</a>
+								<a class="dropdown-item tf-menu-item" href="../researchers/"><i class="fas fa-users tf-menu-icon" aria-hidden="true"></i> Researchers</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="../tags/"><i class="fas fa-hashtag tf-menu-icon" aria-hidden="true"></i> Tags</a>
+								<a class="dropdown-item tf-menu-item" href="../ioc-types/"><i class="fas fa-list tf-menu-icon" aria-hidden="true"></i> IOC types</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="../malicious-domains/"><i class="fas fa-globe tf-menu-icon" aria-hidden="true"></i> Bad domains list</a>
+								<a class="dropdown-item tf-menu-item" href="../malicious-ips/"><i class="fas fa-map-marker-alt tf-menu-icon" aria-hidden="true"></i> Bad IPs list</a>
+								<a class="dropdown-item tf-menu-item" href="../blocklists/"><i class="fas fa-ban tf-menu-icon" aria-hidden="true"></i> Blocklists</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="../about/"><i class="fas fa-question-circle tf-menu-icon" aria-hidden="true"></i> About</a>
+								<a class="dropdown-item tf-menu-item" href="../changelog/"><i class="fas fa-history tf-menu-icon" aria-hidden="true"></i> Changelog</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg class="tf-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> X List <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i></a>
+								<a class="dropdown-item tf-menu-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish tf-menu-icon" aria-hidden="true"></i> phishunt.io <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i></a>
+							</div>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="nav-item">
+							<a class="nav-link tf-nav-search" href="../search/"><i class="fas fa-search" aria-hidden="true"></i><span class="sr-only">Search IOCs</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link tf-navlink" href="../docs/"><i class="fas fa-book tf-nav-icon" aria-hidden="true"></i> Docs</a>
+						</li>
+						<li class="nav-item">
+							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
+						</li>
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-expand navbar-dark d-lg-none tf-navbar tf-navbar-mobile">
+				<div class="container-fluid">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link tf-wordmark" href="../"><span class="tf-wordmark-text">TweetFeed</span></a>
+						</li>
+					</ul>
+					<ul class="navbar-nav navbar-right">
+						<li class="nav-item">
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
+							<div class="dropdown-menu dropdown-menu-right tf-menu">
+								<a class="dropdown-item tf-menu-item" href="../agents/"><svg class="tf-menu-icon" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> Agents</a>
+								<a class="dropdown-item tf-menu-item" href="../campaigns/"><i class="fas fa-project-diagram tf-menu-icon" aria-hidden="true"></i> Campaigns</a>
+								<a class="dropdown-item tf-menu-item" href="../dashboard/"><i class="fas fa-th tf-menu-icon" aria-hidden="true"></i> Dashboard</a>
+								<a class="dropdown-item tf-menu-item" href="../hunt/"><i class="fas fa-bullseye tf-menu-icon" aria-hidden="true"></i> Hunt</a>
+								<a class="dropdown-item tf-menu-item" href="../feeds/"><i class="fas fa-rss tf-menu-icon" aria-hidden="true"></i> Feeds</a>
+								<a class="dropdown-item tf-menu-item" href="../api/"><i class="fas fa-code tf-menu-icon" aria-hidden="true"></i> API</a>
+								<a class="dropdown-item tf-menu-item" href="../search/"><i class="fas fa-search tf-menu-icon" aria-hidden="true"></i> Search</a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="../graphs/"><i class="fas fa-chart-pie tf-menu-icon" aria-hidden="true"></i> Graphs</a>
+								<a class="dropdown-item tf-menu-item" href="../trends/"><i class="fas fa-chart-line tf-menu-icon" aria-hidden="true"></i> Trends</a>
+								<a class="dropdown-item tf-menu-item" href="../researchers/"><i class="fas fa-users tf-menu-icon" aria-hidden="true"></i> Researchers</a>
+								<a class="dropdown-item tf-menu-item" href="../tags/"><i class="fas fa-hashtag tf-menu-icon" aria-hidden="true"></i> Tags</a>
+								<a class="dropdown-item tf-menu-item" href="../ioc-types/"><i class="fas fa-list tf-menu-icon" aria-hidden="true"></i> IOC types</a>
+								<a class="dropdown-item tf-menu-item" href="../malicious-domains/"><i class="fas fa-globe tf-menu-icon" aria-hidden="true"></i> Bad domains list</a>
+								<a class="dropdown-item tf-menu-item" href="../malicious-ips/"><i class="fas fa-map-marker-alt tf-menu-icon" aria-hidden="true"></i> Bad IPs list</a>
+								<a class="dropdown-item tf-menu-item" href="../blocklists/"><i class="fas fa-ban tf-menu-icon" aria-hidden="true"></i> Blocklists</a>
+								<a class="dropdown-item tf-menu-item" href="../about/"><i class="fas fa-question-circle tf-menu-icon" aria-hidden="true"></i> About</a>
+								<a class="dropdown-item tf-menu-item" href="../changelog/"><i class="fas fa-history tf-menu-icon" aria-hidden="true"></i> Changelog</a>
+								<a class="dropdown-item tf-menu-item" href="https://x.com/i/lists/1423693426437001224" target="_blank" rel="noopener noreferrer"><svg class="tf-menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg> X List <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i></a>
+								<a class="dropdown-item tf-menu-item" href="https://phishunt.io/" target="_blank" rel="noopener noreferrer"><i class="fas fa-fish tf-menu-icon" aria-hidden="true"></i> phishunt.io <i class="fas fa-external-link-alt tf-menu-ext" aria-hidden="true"></i></a>
+								<hr class="dropdown-divider">
+								<a class="dropdown-item tf-menu-item" href="../docs/"><i class="fas fa-book tf-menu-icon" aria-hidden="true"></i> Docs</a>
+								<a class="dropdown-item btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top bar end -->
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
+				<div id="presentationSecondary" class="d-none d-md-block">
+					<br><br><br>
+					<h1 class="toph1"><i class="fas fa-user-shield" style="font-size: 36px;"></i> Privacy Policy</h1>
+					<h2><em>What I collect, and what I do not</em></h2>
+				</div>
+				<div id="presentationMobile" class="d-block d-md-none">
+					<br>
+					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-user-shield" style="font-size: 36px;"></i> Privacy Policy</p>
+					<p style="font-size: 14px;"><em>TweetFeed</em></p>
+				</div>
+				<hr class="divider"> <!-- DIVIDER -->
+
+				<div style="font-size:15px;color:var(--tf-fg-3c4043);line-height:1.7;max-width:800px;font-family: 'Rubik', sans-serif;padding: 0 15px 40px 0;">
+
+				<b>Who I am</b><br>
+				I am Daniel López. I run TweetFeed alone, from Spain. I am the data controller for tweetfeed.live, api.tweetfeed.live, and mcp.tweetfeed.live.
+
+				<br><br>
+
+				<b>No accounts</b><br>
+				TweetFeed has no accounts and no login. The website, the API, and the MCP server do not ask for your name, your email address, or a key. I set no cookies.
+
+				<br><br>
+
+				<b>Your browser</b><br>
+				The website saves your light or dark theme choice in your browser. It saves nothing else. My servers never read it.
+
+				<br><br>
+
+				<b>Analytics</b><br>
+				The website uses Umami, which I host myself at s.tweetfeed.live, and Ahrefs Web Analytics. Both work without cookies. They count page views, referrers, and coarse device and country data. Umami does not store your IP address. The API and the MCP server have no browser analytics. When a known AI agent calls the API, the API sends one event to my Umami. The event holds the path and a shortened User-Agent. It holds no IP address.
+
+				<br><br>
+
+				<b>Logs and rate limits</b><br>
+				Cloudflare serves all requests. It sees your IP address and User-Agent, and it applies a rate limit of 50 requests in 10 seconds for each IP. The API also counts single-IOC lookups (<code>/v1/ioc</code>) for each IP. It does not block them today. When one IP sends more than 20 in a minute, the API writes one log line with that IP address, User-Agent, and request path. Cloudflare Workers Logs is on for the API and the MCP server. It can record the request URL and status for a short time (days). For a lookup, the URL can contain the value you look up. The MCP server writes no log lines of its own and does not read your IP address.
+
+				<br><br>
+
+				<b>The data</b><br>
+				The IOCs come from public posts on X. For each IOC, I keep the post link and the handle of its author as source data. I do not read private accounts or private messages. The data is public domain (CC0 1.0).
+
+				<br><br>
+
+				<b>Sharing</b><br>
+				I do not sell your data. Cloudflare processes requests for me. GitHub hosts the website and the public data. The website also loads fonts from Google Fonts and code libraries from public CDNs. Each of these services has its own privacy policy. The <a href="../tos/">Terms of Service</a> list them in section 13.
+
+				<br><br>
+
+				<b>Your rights and contact</b><br>
+				You can ask me to give you, correct, or delete your data, or to stop using it. You can also complain to the Spanish data protection authority (AEPD). To contact me, open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues" target="_blank" rel="noopener noreferrer">GitHub issue</a>. Do not post private data in it. TweetFeed has no email address.
+
+				<br><br>
+
+				<small>Last updated: 18 October 2026</small>
+				</div>
+			</div>
+			<!-- End of Main Content -->
+			<!-- Footer -->
+			<footer class="tf-footer d-none d-lg-block">
+				<div class="tf-foot-cols">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-6 col-xl-3 tf-foot-col">
+								<div class="tf-foot-brand">
+									<a class="tf-foot-wordmark" href="../">TweetFeed</a>
+									<p class="tf-foot-tagline">IOCs shared by the infosec community on Twitter/X.</p>
+									<div class="tf-foot-social">
+										<a class="tf-social" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer" aria-label="X @0xDanielLopez"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>
+										<a class="tf-social" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-xl-3 tf-foot-col">
+								<p class="tf-foot-head">DATA</p>
+								<a class="tf-foot-link" href="../feeds/">IOC feeds</a>
+								<a class="tf-foot-link" href="../malicious-domains/">Bad domains list</a>
+								<a class="tf-foot-link" href="../malicious-ips/">Bad IPs list</a>
+								<a class="tf-foot-link" href="../blocklists/">Blocklists</a>
+								<a class="tf-foot-link" href="../malicious-urls/">Malicious URLs</a>
+								<a class="tf-foot-link" href="../malicious-hashes-md5/">MD5 hashes</a>
+								<a class="tf-foot-link" href="../malicious-hashes-sha256/">SHA-256 hashes</a>
+								<a class="tf-foot-link" href="../tags/">Tags</a>
+								<a class="tf-foot-link" href="../ioc-types/">IOC types</a>
+							</div>
+							<div class="col-6 col-xl-3 tf-foot-col">
+								<p class="tf-foot-head">EXPLORE</p>
+								<a class="tf-foot-link" href="../dashboard/">Dashboard</a>
+								<a class="tf-foot-link" href="../hunt/">Hunt</a>
+								<a class="tf-foot-link" href="../search/">Search</a>
+								<a class="tf-foot-link" href="../campaigns/">Campaigns</a>
+								<a class="tf-foot-link" href="../trends/">Trends</a>
+								<a class="tf-foot-link" href="../graphs/">Graphs</a>
+								<a class="tf-foot-link" href="../researchers/">Researchers</a>
+							</div>
+							<div class="col-6 col-xl-3 tf-foot-col">
+								<p class="tf-foot-head">DEVELOPERS</p>
+								<a class="tf-foot-link" href="../api/">API</a>
+								<a class="tf-foot-link" href="../agents/">Agents (MCP)</a>
+								<a class="tf-foot-link" href="../docs/">Docs</a>
+								<a class="tf-foot-link" href="../changelog/">Changelog</a>
+								<p class="tf-foot-head">PROJECT</p>
+								<a class="tf-foot-link" href="../about/">About</a>
+								<a class="tf-foot-link" href="../threat-intelligence-guide/">Guide</a>
+								<a class="tf-foot-link" href="../tos/">Terms of Service</a>
+								<a class="tf-foot-link" href="../privacy/">Privacy</a>
+								<a class="tf-foot-link" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">Feedback <i class="fas fa-external-link-alt tf-foot-ext" aria-hidden="true"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tf-foot-bar">
+					<div class="container-fluid">
+						<div class="row align-items-center">
+							<div class="col-6 text-left">By Daniel López &nbsp;·&nbsp; Made with ❤ in Andalucía, Spain</div>
+							<div class="col-6 text-right">© 2026 TweetFeed.live</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- MOBILE -->
+			<footer class="sticky-footer tf-mfooter bg-white d-lg-none">
+				<div class="container-fluid">
+					<div class="tf-mfoot-top">
+						<a class="tf-foot-wordmark" href="../">TweetFeed</a>
+						<div class="tf-foot-social">
+							<a class="tf-social" href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer" aria-label="X @0xDanielLopez"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>
+							<a class="tf-social" href="https://github.com/0xDanielLopez/TweetFeed" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+						</div>
+					</div>
+					<hr class="tf-mfoot-rule">
+					<p class="tf-mfoot-head">REFERENCE</p>
+					<div class="tf-mfoot-grid">
+						<a class="tf-mfoot-link" href="../malicious-urls/">Malicious URLs</a>
+						<a class="tf-mfoot-link" href="../malicious-hashes-md5/">MD5 hashes</a>
+						<a class="tf-mfoot-link" href="../malicious-hashes-sha256/">SHA-256 hashes</a>
+						<a class="tf-mfoot-link" href="../threat-intelligence-guide/">Guide</a>
+					</div>
+					<hr class="tf-mfoot-rule">
+					<div class="tf-mfoot-legal">
+						<span class="tf-mfoot-legal-links">
+							<a class="tf-mfoot-link tf-mfoot-link-inline" href="../tos/">Terms of Service</a>
+							<a class="tf-mfoot-link tf-mfoot-link-inline" href="../privacy/">Privacy</a>
+							<a class="tf-mfoot-link tf-mfoot-link-inline" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">Feedback <i class="fas fa-external-link-alt tf-foot-ext" aria-hidden="true"></i></a>
+						</span>
+						<span class="tf-mfoot-copy">By Daniel López &nbsp;·&nbsp; © 2026 TweetFeed.live</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+		</div>
+	</div>
+	<!-- End of Content Wrapper -->
+	<!-- End of Page Wrapper -->
+	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../js/utils.js?v=8"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
