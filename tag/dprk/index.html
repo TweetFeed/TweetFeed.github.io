@@ -152,7 +152,7 @@
 				"name": "What does the #DPRK tag cover?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "The #DPRK tag is an umbrella for any IOC researchers attribute to North Korean state-aligned activity, regardless of specific cluster. Sub-tags exist for the most active clusters - #Kimsuky and #Lazarus - so a researcher can either filter broadly with #DPRK or narrow to one cluster. An IOC frequently carries both #DPRK and a cluster-specific tag."
+					"text": "Any IOC that researchers attribute to North Korean state-aligned activity, for any cluster. Sub-tags #Kimsuky and #Lazarus narrow it, and an IOC often has #DPRK plus one of them."
 				}
 			},
 			{
@@ -160,7 +160,7 @@
 				"name": "Which DPRK clusters are most active in this feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Kimsuky dominates volume (intelligence-collection campaigns generate large numbers of phishing domains and credential-harvesting URLs). Lazarus contributes fewer IOCs but with higher per-IOC operational impact (cryptocurrency theft infrastructure, custom backdoors). BlueNoroff and Andariel appear more sporadically, often piggybacking on Lazarus operations."
+					"text": "Kimsuky gives the most IOCs, many of them phishing domains and credential-harvesting URLs. Lazarus gives fewer but higher-impact IOCs, and BlueNoroff and Andariel appear less often."
 				}
 			},
 			{
@@ -168,7 +168,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. DPRK-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
+					"text": "The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day."
 				}
 			},
 			{
@@ -176,7 +176,7 @@
 				"name": "What is the license? Can I use this commercially?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "All TweetFeed IOC data, including this DPRK subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."
+					"text": "Yes. All IOC data, including this DPRK subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0."
 				}
 			}
 		]
@@ -348,13 +348,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #DPRK</h1>
-					<h2><em>DPRK-aligned threat activity (Lazarus, Kimsuky and adjacent clusters) attributed to North Korean state operations</em></h2>
+					<h2><em>DPRK-aligned threat activity: Lazarus, Kimsuky and related clusters</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/dprk.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #DPRK</p>
-					<p style="font-size: 14px;"><em>DPRK-aligned threat activity (Lazarus, Kimsuky, adjacent)</em></p>
+					<p style="font-size: 14px;"><em>DPRK-aligned activity: Lazarus, Kimsuky and more</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/dprk.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -414,9 +414,11 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Scope:</b> umbrella tag for DPRK-aligned threat clusters: <em>Lazarus</em> (financial), <em>Kimsuky</em> (intelligence), <em>Andariel</em> (financial + cyber espionage), <em>BlueNoroff</em> (Lazarus subcluster, crypto-focused), and emerging operators (Konni, ScarCruft / APT37 in some attribution schemes).</li>
-							<li><b>Common objectives:</b> cryptocurrency theft for sanctions evasion, intelligence collection on South Korea + adjacent geopolitical adversaries, supply-chain compromise of npm / PyPI / browser-extension ecosystems, defence-contractor reconnaissance.</li>
-							<li><b>Tactics:</b> spearphishing with LinkedIn / Instagram lures, weaponised HWP / PDF documents, custom backdoors, DPRK-specific implants like AppleJeus (macOS), LightlessCan, Manuscrypt, BabyShark, GoldDragon.</li>
+							<li><b>Scope:</b> Umbrella tag for DPRK-aligned clusters.</li>
+							<li><b>Clusters:</b> <em>Lazarus</em>, <em>Kimsuky</em>, <em>Andariel</em>, <em>BlueNoroff</em>, plus Konni and ScarCruft / APT37 in some schemes.</li>
+							<li><b>Goals:</b> Crypto theft, South Korea intel, supply-chain attacks, defence-contractor recon.</li>
+							<li><b>Lures:</b> Spearphishing with LinkedIn / Instagram lures. Weaponised HWP / PDF files.</li>
+							<li><b>Malware:</b> Implants like AppleJeus, LightlessCan, Manuscrypt, BabyShark, GoldDragon.</li>
 							<li><b>References:</b> <a href="https://attack.mitre.org/groups/G0032/" target="_blank" rel="noopener noreferrer">G0032 Lazarus</a> &middot; <a href="https://attack.mitre.org/groups/G0094/" target="_blank" rel="noopener noreferrer">G0094 Kimsuky</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors" target="_blank" rel="noopener noreferrer">CISA North Korea</a>.</li>
 							
 						</ul>
@@ -482,7 +484,7 @@
 							</table>
 						</div>
 						
-						<p style="margin-top:0.75rem; color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-bottom:0;"><em>Past-month volume is low; the year aggregate (11,669) reflects historical activity. For a longer window, download the full annual feed <a href="https://api.tweetfeed.live/v1/year" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/year</code></a> (all tags) and filter for #DPRK client-side.</em></p>
+						<p style="margin-top:0.75rem; color:var(--tf-fg-737373); font-size:13px; font-family:'Rubik',sans-serif; margin-bottom:0;"><em>Low volume this month. Year total: 11,669. Older data: <a href="https://api.tweetfeed.live/v1/year" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/year</code></a> (all tags, filter for #DPRK).</em></p>
 						
 						
 					</div>
@@ -494,7 +496,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #DPRK.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Often seen with #DPRK.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../kimsuky/">#Kimsuky</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../lazarus/">#Lazarus</a></li>
@@ -513,19 +515,19 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What does the #DPRK tag cover?</summary>
-						<p>The #DPRK tag is an umbrella for any IOC researchers attribute to North Korean state-aligned activity, regardless of specific cluster. Sub-tags exist for the most active clusters - #Kimsuky and #Lazarus - so a researcher can either filter broadly with #DPRK or narrow to one cluster. An IOC frequently carries both #DPRK and a cluster-specific tag.</p>
+						<p>Any IOC that researchers attribute to North Korean state-aligned activity, for any cluster. Sub-tags #Kimsuky and #Lazarus narrow it, and an IOC often has #DPRK plus one of them.</p>
 					</details>
 					<details>
 						<summary>Which DPRK clusters are most active in this feed?</summary>
-						<p>Kimsuky dominates volume (intelligence-collection campaigns generate large numbers of phishing domains and credential-harvesting URLs). Lazarus contributes fewer IOCs but with higher per-IOC operational impact (cryptocurrency theft infrastructure, custom backdoors). BlueNoroff and Andariel appear more sporadically, often piggybacking on Lazarus operations.</p>
+						<p>Kimsuky gives the most IOCs, many of them phishing domains and credential-harvesting URLs. Lazarus gives fewer but higher-impact IOCs, and BlueNoroff and Andariel appear less often.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
-						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. DPRK-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+						<p>The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day.</p>
 					</details>
 					<details>
 						<summary>What is the license? Can I use this commercially?</summary>
-						<p>All TweetFeed IOC data, including this DPRK subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						<p>Yes. All IOC data, including this DPRK subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0.</p>
 					</details>
 				</section>
 

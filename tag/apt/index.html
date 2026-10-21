@@ -152,7 +152,7 @@
 				"name": "What is APT (Advanced Persistent Threat)?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "An Advanced Persistent Threat is a sophisticated, long-running adversary - typically nation-state-aligned or a top-tier criminal organisation - that targets specific verticals or organisations with mission-focused tradecraft. The label originally distinguished targeted, persistent operations from opportunistic commodity malware. MITRE ATT&CK Groups page lists the most-tracked clusters."
+					"text": "Typically a long-running, well-resourced adversary, nation-state-aligned or organised criminal. It runs targeted, mission-focused operations."
 				}
 			},
 			{
@@ -160,7 +160,7 @@
 				"name": "Which APT groups produce the most IOCs in this feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "DPRK-aligned activity (Kimsuky, Lazarus, plus generic DPRK-tagged operations) dominates volume due to active researcher coverage on Twitter/X. Russian-, Iranian- and Chinese-attributed activity also appears regularly. For per-group filtering see the dedicated pages: #Kimsuky, #Lazarus, #DPRK."
+					"text": "DPRK-aligned activity (Kimsuky, Lazarus) is the largest part, because researchers cover it often on Twitter/X. Russian-, Iranian- and Chinese-attributed activity also appears."
 				}
 			},
 			{
@@ -168,7 +168,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. APT-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
+					"text": "The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day."
 				}
 			},
 			{
@@ -176,7 +176,7 @@
 				"name": "What is the license? Can I use this commercially?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "All TweetFeed IOC data, including this APT subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."
+					"text": "Yes. All IOC data, including this APT subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0."
 				}
 			}
 		]
@@ -348,13 +348,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #APT</h1>
-					<h2><em>Advanced Persistent Threat infrastructure (URLs, domains, IPs, hashes) attributed to nation-state and criminal threat actors</em></h2>
+					<h2><em>Infrastructure that researchers tie to nation-state and criminal threat actors</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/apt.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #APT</p>
-					<p style="font-size: 14px;"><em>APT infrastructure (URLs, domains, IPs, hashes)</em></p>
+					<p style="font-size: 14px;"><em>APT infrastructure: URLs, domains, IPs, hashes</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/apt.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -414,9 +414,10 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Definition:</b> umbrella tag for IOCs that researchers attribute to an Advanced Persistent Threat - typically a well-resourced, long-running adversary (nation-state-aligned or organised criminal) with mission-focused targeting and tradecraft.</li>
-							<li><b>Common attributed groups in corpus:</b> Kimsuky, Lazarus, APT29, APT41, FIN7, MuddyWater, Konni, OilRig and similar. Each has its own per-tag page when volume justifies it; see #Kimsuky and #Lazarus.</li>
-							<li><b>Detection:</b> behaviour-based detection (atypical lateral movement, persistence in unusual registry locations, custom protocols), Threat Intelligence-fed blocklists, and YARA on signature-light variants. Entry-point indicators are usually phishing or supply-chain compromise.</li>
+							<li><b>Meaning:</b> IOCs that researchers attribute to an Advanced Persistent Threat.</li>
+							<li><b>Actors:</b> Typically long-running and well-resourced, nation-state-aligned or organised criminal.</li>
+							<li><b>Common in corpus:</b> Kimsuky, Lazarus, APT29, APT41, FIN7, MuddyWater, Konni, OilRig and similar.</li>
+							<li><b>Detection:</b> Behaviour-based detection, blocklists, YARA. Entry: usually phishing or supply chain.</li>
 							<li><b>References:</b> <a href="https://attack.mitre.org/groups/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK Groups</a> &middot; <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors" target="_blank" rel="noopener noreferrer">CISA APT advisories</a>.</li>
 							
 						</ul>
@@ -522,7 +523,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #APT.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Often seen with #APT.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../kimsuky/">#Kimsuky</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../lazarus/">#Lazarus</a></li>
@@ -541,19 +542,19 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is APT (Advanced Persistent Threat)?</summary>
-						<p>An Advanced Persistent Threat is a sophisticated, long-running adversary - typically nation-state-aligned or a top-tier criminal organisation - that targets specific verticals or organisations with mission-focused tradecraft. The label originally distinguished targeted, persistent operations from opportunistic commodity malware. MITRE ATT&CK Groups page lists the most-tracked clusters.</p>
+						<p>Typically a long-running, well-resourced adversary, nation-state-aligned or organised criminal. It runs targeted, mission-focused operations.</p>
 					</details>
 					<details>
 						<summary>Which APT groups produce the most IOCs in this feed?</summary>
-						<p>DPRK-aligned activity (Kimsuky, Lazarus, plus generic DPRK-tagged operations) dominates volume due to active researcher coverage on Twitter/X. Russian-, Iranian- and Chinese-attributed activity also appears regularly. For per-group filtering see the dedicated pages: #Kimsuky, #Lazarus, #DPRK.</p>
+						<p>DPRK-aligned activity (Kimsuky, Lazarus) is the largest part, because researchers cover it often on Twitter/X. Russian-, Iranian- and Chinese-attributed activity also appears.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
-						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. APT-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+						<p>The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day.</p>
 					</details>
 					<details>
 						<summary>What is the license? Can I use this commercially?</summary>
-						<p>All TweetFeed IOC data, including this APT subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						<p>Yes. All IOC data, including this APT subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0.</p>
 					</details>
 				</section>
 

@@ -104,11 +104,11 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the cohesion rating and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed."}},
-			{"@type": "Question", "name": "How is campaign cohesion calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Cohesion (high, medium, low) is the AI's assessment of how tightly the cluster holds together - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low cohesion as a lead to verify, not a verdict. The API field is still named confidence."}},
-			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows every campaign in the 30-day window by default - use the More control to narrow to campaigns still active this week. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot."}},
-			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed."}},
-			{"@type": "Question", "name": "Why does a campaign show only 25 of 412 IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Each campaign publishes a sample of up to 25 IOCs to keep the response small; ioc_count is the real total. When a campaign has more IOCs than the sample, the Indicators panel says so honestly, offers a 'Load all' button where available, and the Reach the rest panel links out to the campaign's own domains and tags via Search so you can find the remaining IOCs today."}}
+			{"@type": "Question", "name": "What is an AI campaign on TweetFeed?", "acceptedAnswer": {"@type": "Answer", "text": "IOCs from the last 30 days that AI links to one operation. AI picks the grouping, name, context, cohesion and target. Counts, dates and IOCs come straight from the feed."}},
+			{"@type": "Question", "name": "How is campaign cohesion calculated?", "acceptedAnswer": {"@type": "Answer", "text": "It is how sure the AI is that the IOCs are one campaign, not a maliciousness score. Shared domains, tags and reporters raise it. Treat low cohesion as a lead to verify. API field: confidence."}},
+			{"@type": "Question", "name": "How often is the campaign data refreshed?", "acceptedAnswer": {"@type": "Answer", "text": "Daily, from a rolling 30-day window. Use More to show only campaigns active this week. If a run fails, the page shows a warning and the last good snapshot."}},
+			{"@type": "Question", "name": "Where does the underlying IOC data come from?", "acceptedAnswer": {"@type": "Answer", "text": "The same TweetFeed feed: IOCs that researchers post on X, deduplicated every 15 minutes. Clustering is an AI layer on top."}},
+			{"@type": "Question", "name": "Why does a campaign show only 25 of 412 IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Each campaign carries a sample of up to 25 IOCs. ioc_count is the real total. Use Load all where you see it, or Search for the campaign domains and tags."}}
 		]
 	}
 	</script>
@@ -1495,23 +1495,23 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an AI campaign on TweetFeed?</summary>
-						<p>A campaign groups multiple IOCs reported by the community that AI detects as belonging to the same underlying operation - shared infrastructure, malware family, or targeted brand - seen over the last 30 days. The grouping itself, the name, the context narrative, the cohesion rating and the apparent target are AI-inferred; the counts, dates, IOC types, anchors and the raw IOCs underneath are derived deterministically from the feed.</p>
+						<p>IOCs from the last 30 days that AI links to one operation. AI picks the grouping, name, context, cohesion and target. Counts, dates and IOCs come straight from the feed.</p>
 					</details>
 					<details>
 						<summary>How is campaign cohesion calculated?</summary>
-						<p>Cohesion (high, medium, low) is the AI's assessment of how tightly the cluster holds together - how strongly the underlying IOCs appear related, not a maliciousness score or a verdict on any single indicator. Shared registrable domains, matching tags and overlapping reporters raise it; loosely related indicators lower it. Treat low cohesion as a lead to verify, not a verdict. The API field is still named confidence.</p>
+						<p>It is how sure the AI is that the IOCs are one campaign, not a maliciousness score. Shared domains, tags and reporters raise it. Treat low cohesion as a lead to verify. API field: confidence.</p>
 					</details>
 					<details>
 						<summary>How often is the campaign data refreshed?</summary>
-						<p>Campaigns are recomputed daily from a rolling 30-day window of TweetFeed IOCs. This page shows every campaign in the 30-day window by default - use the More control to narrow to campaigns still active this week. If a generation run fails, this page shows a stale-data warning and falls back to the last successful snapshot.</p>
+						<p>Daily, from a rolling 30-day window. Use More to show only campaigns active this week. If a run fails, the page shows a warning and the last good snapshot.</p>
 					</details>
 					<details>
 						<summary>Where does the underlying IOC data come from?</summary>
-						<p>The same source as the rest of TweetFeed: indicators of compromise shared publicly by infosec researchers on Twitter/X, deduplicated and published every 15 minutes. Campaign clustering is an AI layer on top of that same feed.</p>
+						<p>The same TweetFeed feed: IOCs that researchers post on X, deduplicated every 15 minutes. Clustering is an AI layer on top.</p>
 					</details>
 					<details>
 						<summary>Why does a campaign show only 25 of 412 IOCs?</summary>
-						<p>Each campaign publishes a sample of up to 25 IOCs to keep the response small; ioc_count is the real total. When a campaign has more IOCs than the sample, the Indicators panel says so honestly, offers a 'Load all' button where available, and the Reach the rest panel links out to the campaign's own domains and tags via Search so you can find the remaining IOCs today.</p>
+						<p>Each campaign carries a sample of up to 25 IOCs. ioc_count is the real total. Use Load all where you see it, or Search for the campaign domains and tags.</p>
 					</details>
 				</section>
 

@@ -152,7 +152,7 @@
 				"name": "What is ransomware?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Ransomware is malware that encrypts a victim's data and demands payment - usually in cryptocurrency - for the decryption key. Modern operators add data-theft and public leaks (\"double extortion\") even if the victim restores from backups. Initial access is typically via phishing, exposed RDP, vulnerable VPN appliances or compromised credentials."
+					"text": "Malware that encrypts a victim's data and demands payment for the key. Modern operators also steal data and threaten to leak it."
 				}
 			},
 			{
@@ -160,7 +160,7 @@
 				"name": "Which ransomware operators produce the most IOCs in this feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Volume tracks active researcher coverage rather than pure operator output, so high-profile crews (LockBit while active, BlackCat/ALPHV, Akira, Play) tend to dominate. Affiliate-driven RaaS programmes generate more diverse infrastructure than single-team operations, which produces more URLs/IPs to tag."
+					"text": "Volume follows researcher coverage, so high-profile crews (LockBit while active, BlackCat/ALPHV, Akira, Play) tend to lead. Affiliate-driven RaaS produces more varied infrastructure."
 				}
 			},
 			{
@@ -168,7 +168,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Ransomware-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
+					"text": "The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day."
 				}
 			},
 			{
@@ -176,7 +176,7 @@
 				"name": "What is the license? Can I use this commercially?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "All TweetFeed IOC data, including this Ransomware subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."
+					"text": "Yes. All IOC data, including this Ransomware subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0."
 				}
 			}
 		]
@@ -348,13 +348,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #ransomware</h1>
-					<h2><em>Ransomware infrastructure (URLs, domains, IPs, hashes) extracted from public security researchers</em></h2>
+					<h2><em>Ransomware infrastructure: URLs, domains, IPs, hashes.</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #ransomware</p>
-					<p style="font-size: 14px;"><em>Ransomware infrastructure (URLs, domains, IPs, hashes)</em></p>
+					<p style="font-size: 14px;"><em>Ransomware URLs, domains, IPs, hashes</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/ransomware.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -414,9 +414,12 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Definition:</b> malware that encrypts victim data and demands payment for decryption, typically combined with data-theft extortion ("double extortion"). Encryption itself maps to MITRE ATT&amp;CK T1486 (Data Encrypted for Impact).</li>
-							<li><b>Common operators / families:</b> LockBit, BlackCat (ALPHV), Akira, Play, Royal, Hive, Conti (legacy), Clop, BianLian. The #ransomware tag covers infrastructure linked to any of these (intrusion C2, data-leak sites, ESXi-targeting components).</li>
-							<li><b>Detection:</b> EDR rules on file-encryption velocity, OS-vendor anti-tamper protections, immutable backups + air-gapped restore, and infrastructure blocklists for the C2/staging URLs and IPs that precede the encryption phase.</li>
+							<li><b>Definition:</b> Malware that encrypts data and demands payment for decryption.</li>
+							<li><b>Double extortion:</b> Often adds data theft and leak threats.</li>
+							<li><b>Families:</b> LockBit, BlackCat (ALPHV), Akira, Play, Royal, Hive, Conti (legacy), Clop, BianLian.</li>
+							<li><b>Covers:</b> Intrusion C2, data-leak sites, ESXi-targeting components.</li>
+							<li><b>Detection:</b> EDR rules, immutable backups, blocklists for C2 and staging URLs and IPs.</li>
+							<li><b>ATT&amp;CK:</b> T1486, Data Encrypted for Impact.</li>
 							<li><b>References:</b> <a href="https://attack.mitre.org/techniques/T1486/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1486</a> &middot; <a href="https://www.cisa.gov/stopransomware" target="_blank" rel="noopener noreferrer">CISA #StopRansomware</a> &middot; <a href="https://www.nomoreransom.org/" target="_blank" rel="noopener noreferrer">No More Ransom (decryptors)</a>.</li>
 							
 						</ul>
@@ -522,7 +525,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #ransomware.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Often seen with #ransomware.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../cobaltstrike/">#CobaltStrike</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../c2/">#C2</a></li>
@@ -540,19 +543,19 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is ransomware?</summary>
-						<p>Ransomware is malware that encrypts a victim's data and demands payment - usually in cryptocurrency - for the decryption key. Modern operators add data-theft and public leaks ("double extortion") even if the victim restores from backups. Initial access is typically via phishing, exposed RDP, vulnerable VPN appliances or compromised credentials.</p>
+						<p>Malware that encrypts a victim's data and demands payment for the key. Modern operators also steal data and threaten to leak it.</p>
 					</details>
 					<details>
 						<summary>Which ransomware operators produce the most IOCs in this feed?</summary>
-						<p>Volume tracks active researcher coverage rather than pure operator output, so high-profile crews (LockBit while active, BlackCat/ALPHV, Akira, Play) tend to dominate. Affiliate-driven RaaS programmes generate more diverse infrastructure than single-team operations, which produces more URLs/IPs to tag.</p>
+						<p>Volume follows researcher coverage, so high-profile crews (LockBit while active, BlackCat/ALPHV, Akira, Play) tend to lead. Affiliate-driven RaaS produces more varied infrastructure.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
-						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Ransomware-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+						<p>The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day.</p>
 					</details>
 					<details>
 						<summary>What is the license? Can I use this commercially?</summary>
-						<p>All TweetFeed IOC data, including this Ransomware subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						<p>Yes. All IOC data, including this Ransomware subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0.</p>
 					</details>
 				</section>
 

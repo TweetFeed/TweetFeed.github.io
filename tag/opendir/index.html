@@ -151,7 +151,7 @@
 				"name": "What is an opendir?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "An opendir (open directory) is a web folder where directory autoindexing is enabled, exposing all files inside as a clickable listing. When attackers misconfigure their staging servers this way - which happens often - researchers can browse the listing, download every artefact and reverse-engineer the kit or payload set."
+					"text": "A web folder with directory autoindex on, so its files show as a list. Researchers can browse it and download every artefact."
 				}
 			},
 			{
@@ -159,7 +159,7 @@
 				"name": "How do opendirs end up in this feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Public researchers post URLs to attacker opendirs they discover, tagged #opendir. The TweetFeed pipeline picks up these URLs (and the IPs/domains hosting them) and republishes them in CSV, JSON and RSS within 15 minutes. Many opendirs are short-lived: the operator notices the leak and locks down the directory or rotates infrastructure."
+					"text": "Researchers post attacker opendir URLs tagged #opendir, and TweetFeed republishes them in CSV, JSON and RSS within 15 minutes. Many are short-lived."
 				}
 			},
 			{
@@ -167,7 +167,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Opendir-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
+					"text": "The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day."
 				}
 			},
 			{
@@ -175,7 +175,7 @@
 				"name": "What is the license? Can I use this commercially?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "All TweetFeed IOC data, including this Opendir subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."
+					"text": "Yes. All IOC data, including this Opendir subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0."
 				}
 			}
 		]
@@ -347,13 +347,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #opendir</h1>
-					<h2><em>Open directories - publicly listable web roots hosting attacker payloads, kits and tools</em></h2>
+					<h2><em>Public web folders with attacker payloads, kits and tools</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/opendir.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #opendir</p>
-					<p style="font-size: 14px;"><em>Open directories hosting attacker payloads</em></p>
+					<p style="font-size: 14px;"><em>Open directories with attacker payloads</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/opendir.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -413,9 +413,11 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Definition:</b> an HTTP server (often nginx / Apache / IIS) configured with directory autoindex enabled, exposing the contents of a folder. When the folder belongs to an attacker (staging server, kit drop, panel root) the listing reveals payloads, scripts and operator artefacts.</li>
-							<li><b>Why researchers track them:</b> open directories are a high-yield source of fresh IOCs. A single opendir often hosts multiple loaders, second-stage payloads, exfiltrated-data archives and YARA-friendly scripts; researchers download, hash and tag each artefact in bulk.</li>
-							<li><b>Detection:</b> for defenders, periodic scans of organisation egress for `Index of /` patterns; for hunters, services like ODIN by The DFIR Report, URLscan tag filters, and certificate-transparency-driven sweeps.</li>
+							<li><b>Definition:</b> Web folder with directory autoindex on. Anyone can list its files.</li>
+							<li><b>Attacker use:</b> Staging servers, kit drops and panel roots can show payloads and scripts.</li>
+							<li><b>Why track:</b> High-yield IOC source. One opendir often holds multiple loaders and payloads.</li>
+							<li><b>Defenders:</b> Scan egress for Index of / patterns.</li>
+							<li><b>Hunters:</b> ODIN by The DFIR Report, URLscan tag filters, certificate-transparency sweeps.</li>
 							<li><b>References:</b> <a href="https://attack.mitre.org/techniques/T1190/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK T1190</a> &middot; <a href="https://thedfirreport.com/" target="_blank" rel="noopener noreferrer">The DFIR Report</a>.</li>
 							
 						</ul>
@@ -521,7 +523,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #opendir.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Often seen with #opendir.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../phishing/">#phishing</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../malware/">#malware</a></li>
@@ -539,19 +541,19 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is an opendir?</summary>
-						<p>An opendir (open directory) is a web folder where directory autoindexing is enabled, exposing all files inside as a clickable listing. When attackers misconfigure their staging servers this way - which happens often - researchers can browse the listing, download every artefact and reverse-engineer the kit or payload set.</p>
+						<p>A web folder with directory autoindex on, so its files show as a list. Researchers can browse it and download every artefact.</p>
 					</details>
 					<details>
 						<summary>How do opendirs end up in this feed?</summary>
-						<p>Public researchers post URLs to attacker opendirs they discover, tagged #opendir. The TweetFeed pipeline picks up these URLs (and the IPs/domains hosting them) and republishes them in CSV, JSON and RSS within 15 minutes. Many opendirs are short-lived: the operator notices the leak and locks down the directory or rotates infrastructure.</p>
+						<p>Researchers post attacker opendir URLs tagged #opendir, and TweetFeed republishes them in CSV, JSON and RSS within 15 minutes. Many are short-lived.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
-						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Opendir-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+						<p>The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day.</p>
 					</details>
 					<details>
 						<summary>What is the license? Can I use this commercially?</summary>
-						<p>All TweetFeed IOC data, including this Opendir subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						<p>Yes. All IOC data, including this Opendir subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0.</p>
 					</details>
 				</section>
 

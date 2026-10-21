@@ -151,7 +151,7 @@
 				"name": "What is Mythic?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Mythic is an open-source modular C2 framework maintained by SpecterOps. Unlike monolithic frameworks, Mythic is built around pluggable agents - Apollo (.NET, Windows), Athena (.NET, multi-platform), Poseidon (Go, multi-platform), Apfell (macOS), Medusa (Python) - and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS). Operators mix and match for each engagement."
+					"text": "An open-source modular C2 framework maintained by SpecterOps. It uses pluggable agents (Apollo, Athena, Poseidon) and C2 profiles."
 				}
 			},
 			{
@@ -159,7 +159,7 @@
 				"name": "Is Mythic primarily used legitimately or maliciously?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Primarily a red-team and authorised-engagement tool. The open-source nature means real-world intrusions occasionally surface - most often using the Apollo or Athena agents - but mass-volume in commodity malware is low. The IOCs on this page reflect Mythic infrastructure researchers have observed in real intrusions, not the upstream tool itself."
+					"text": "Mainly a red-team and authorised-engagement tool. Some real intrusions use it, but volume in commodity malware is low."
 				}
 			},
 			{
@@ -167,7 +167,7 @@
 				"name": "How is this list updated?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action."
+					"text": "The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day."
 				}
 			},
 			{
@@ -175,7 +175,7 @@
 				"name": "What is the license? Can I use this commercially?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "All TweetFeed IOC data, including this Mythic subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."
+					"text": "Yes. All IOC data, including this Mythic subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0."
 				}
 			}
 		]
@@ -347,13 +347,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #Mythic</h1>
-					<h2><em>Open-source modular C2 framework by SpecterOps - pluggable agents and C2 profiles</em></h2>
+					<h2><em>Open-source modular C2 framework by SpecterOps</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/mythic.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #Mythic</p>
-					<p style="font-size: 14px;"><em>Open-source modular C2 by SpecterOps</em></p>
+					<p style="font-size: 14px;"><em>Open-source modular C2</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/mythic.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -413,9 +413,11 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Type:</b> open-source modular C2 framework maintained by SpecterOps. Designed around pluggable agents (<em>Apollo</em>, <em>Athena</em>, <em>Poseidon</em>, <em>Apfell</em>, <em>Medusa</em>) and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS) so operators can mix and match for the engagement.</li>
-							<li><b>Abuse pattern:</b> primarily a red-team / authorised-engagement tool, but the open-source nature means real-world intrusions occasionally surface (especially Apollo and Athena agents). Lower mass-volume than Sliver or Cobalt Strike but appears in higher-effort intrusions.</li>
-							<li><b>Detection signals:</b> agent-specific YARA (Apollo .NET, Athena .NET, Poseidon Go, Apfell macOS), default mTLS certificates, distinctive web-UI ports on listeners. JA3 / JA4 fingerprints depend on the chosen C2 profile.</li>
+							<li><b>Type:</b> Open-source modular C2 framework, maintained by SpecterOps.</li>
+							<li><b>Agents:</b> <em>Apollo</em>, <em>Athena</em>, <em>Poseidon</em>, <em>Apfell</em>, <em>Medusa</em>.</li>
+							<li><b>C2 profiles:</b> HTTP, websocket, SMB, dynamic DNS.</li>
+							<li><b>Abuse:</b> Mainly a red-team tool. Some real intrusions, mostly Apollo and Athena.</li>
+							<li><b>Detection:</b> Agent-specific YARA, default mTLS certificates, web-UI ports on listeners.</li>
 							<li><b>References:</b> <a href="https://github.com/its-a-feature/Mythic" target="_blank" rel="noopener noreferrer">Mythic on GitHub</a>.</li>
 							
 						</ul>
@@ -497,7 +499,7 @@
 				<h3 class="section-heading tf-block-head">Related tags</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Tags that frequently co-occur with #Mythic.</p>
+						<p style="color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; margin-bottom:0.75rem;">Often seen with #Mythic.</p>
 						<ul style="list-style:none; padding-left:0; margin-bottom:0; display:flex; flex-wrap:wrap; gap:0.5rem;">
 							<li><a class="btn btn-tf btn-sm" href="../c2/">#C2</a></li>
 							<li><a class="btn btn-tf btn-sm" href="../malware/">#malware</a></li>
@@ -515,19 +517,19 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is Mythic?</summary>
-						<p>Mythic is an open-source modular C2 framework maintained by SpecterOps. Unlike monolithic frameworks, Mythic is built around pluggable agents - Apollo (.NET, Windows), Athena (.NET, multi-platform), Poseidon (Go, multi-platform), Apfell (macOS), Medusa (Python) - and pluggable C2 profiles (HTTP, websocket, SMB, dynamic DNS). Operators mix and match for each engagement.</p>
+						<p>An open-source modular C2 framework maintained by SpecterOps. It uses pluggable agents (Apollo, Athena, Poseidon) and C2 profiles.</p>
 					</details>
 					<details>
 						<summary>Is Mythic primarily used legitimately or maliciously?</summary>
-						<p>Primarily a red-team and authorised-engagement tool. The open-source nature means real-world intrusions occasionally surface - most often using the Apollo or Athena agents - but mass-volume in commodity malware is low. The IOCs on this page reflect Mythic infrastructure researchers have observed in real intrusions, not the upstream tool itself.</p>
+						<p>Mainly a red-team and authorised-engagement tool. Some real intrusions use it, but volume in commodity malware is low.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
-						<p>Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public Twitter/X security researcher accounts and lists, extracts IOCs, tags them with the relevant malware family or threat actor, and republishes the result in CSV, JSON and RSS. Mythic-tagged IOCs are surfaced on this page within the next 15-minute tick. The page itself is regenerated daily by a GitHub Action.</p>
+						<p>The feed and the API update every 15 minutes from researcher posts on X. This page refreshes once a day.</p>
 					</details>
 					<details>
 						<summary>What is the license? Can I use this commercially?</summary>
-						<p>All TweetFeed IOC data, including this Mythic subset, is released under <b>CC0 1.0 Universal</b> (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0.</p>
+						<p>Yes. All IOC data, including this Mythic subset, is CC0 1.0 Universal. No attribution needed. No warranty. The website code and branding are not CC0.</p>
 					</details>
 				</section>
 

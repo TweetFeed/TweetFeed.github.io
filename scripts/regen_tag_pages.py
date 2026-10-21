@@ -164,12 +164,17 @@ def faq_update_answer(m):
     rendered <p> in tag_page.html.j2, so the two can never drift again.
     """
     return (
-        "Every 15 minutes. The TweetFeed pipeline scrapes RSS feeds from public "
-        "Twitter/X security researcher accounts and lists, extracts IOCs, tags "
-        "them with the relevant malware family or threat actor, and republishes "
-        f"the result in CSV, JSON and RSS. {m['license_subject']}-tagged IOCs are "
-        "surfaced on this page within the next 15-minute tick. The page itself "
-        "is regenerated daily by a GitHub Action."
+        "The feed and the API update every 15 minutes from researcher posts on X. "
+        "This page refreshes once a day."
+    )
+
+
+def faq_license_answer(m):
+    """Canonical wording for the license FAQ answer, shared by the JSON-LD
+    acceptedAnswer.text and the rendered <p> like faq_update_answer."""
+    return (
+        f"Yes. All IOC data, including this {m['license_subject']} subset, is CC0 1.0 Universal. "
+        "No attribution needed. No warranty. The website code and branding are not CC0."
     )
 
 
@@ -183,7 +188,7 @@ def build_faq_jsonld(m):
             {"@type": "Question", "name": "How is this list updated?", "acceptedAnswer": {"@type": "Answer",
                 "text": faq_update_answer(m)}},
             {"@type": "Question", "name": "What is the license? Can I use this commercially?", "acceptedAnswer": {"@type": "Answer",
-                "text": f"All TweetFeed IOC data, including this {m['license_subject']} subset, is released under CC0 1.0 Universal (Public Domain Dedication). No attribution required, no warranty. Commercial use is allowed. The TweetFeed website code and branding are not covered by CC0."}},
+                "text": faq_license_answer(m)}},
         ],
     }
     return _dumps_tab_indented(payload)
@@ -214,6 +219,7 @@ def render_tag(m, env, counts, today_str):
         webpage_jsonld=build_webpage_jsonld(m, today_str),
         faq_jsonld=build_faq_jsonld(m),
         faq_update_a=faq_update_answer(m),
+        faq_license_a=faq_license_answer(m),
         noindex=IS_STAGE,
         # The nav/footer come from scripts/templates/_nav.html.j2 and
         # _footer.html.j2 via {% include %}. Passing the shell context here is
