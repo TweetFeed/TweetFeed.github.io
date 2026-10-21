@@ -597,8 +597,6 @@
 	<!-- Page level plugins -->
 	<script defer src="vendor/datatables/jquery.dataTables.min.js"></script>
 	<script defer src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- Export -->
-	<script defer src="js/demo/datatables-demo.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script defer src="js/config.js"></script>
 	<script defer src="js/utils.js?v=8"></script>
@@ -627,14 +625,43 @@
 					$(this.node()).addClass('newRow');
 				});
 				animationNew();
-				timerAux = setInterval(timerCycle, 6000);
+				timerAux = setInterval(timerCycle, 60000);
 				TweetFeed.trackInterval(timerAux);
 			}
 		})
 
-		let table = $('#dataTable').DataTable();
+		// Own init instead of js/demo/datatables-demo.js (same options plus
+		// deferRender): only the rows of the visible page get a <tr>. today.csv
+		// has ~2,300 rows and building every row up front blocked the main
+		// thread ~5 s on mobile (PSI 2026-10-21: TBT 4,930 ms, perf 38).
+		$('#dataTable thead tr').clone(true).appendTo('#dataTable thead');
+		$('#dataTable thead tr:eq(1) th').each(function(i) {
+			var title = $(this).text();
+			$(this).html('<input type="text" placeholder="' + title + '" />');
+			$('input', this).on('keyup change', function() {
+				if (table.column(i).search() !== this.value) {
+					table.column(i).search(this.value).draw();
+				}
+			});
+		});
+		let table = $('#dataTable').DataTable({
+			"pageLength": 10,
+			orderCellsTop: true,
+			fixedHeader: true,
+			deferRender: true,
+			// For Mobile: only show User (1), Value (3) and Twitter (5)
+			columnDefs: [
+				{ targets: [0, 2, 6], className: 'd-none d-lg-table-cell' },
+				{ targets: 4, className: 'd-none d-lg-table-cell tableTags' }
+			],
+			createdRow: function(row, rowData) {
+				$(row).addClass(rowData[2]);
+			}
+		});
 		loadData();
-		var timerAux = setInterval(timerCycle, 6000);
+		// The feed changes every 15 minutes; a 6 s poll re-downloaded and
+		// re-parsed today.csv ten times a minute for nothing.
+		var timerAux = setInterval(timerCycle, 60000);
 		TweetFeed.trackInterval(timerAux);
 
 		function timerCycle() {
@@ -689,43 +716,13 @@
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
 
-								var user = data[i][1];
 								var type = data[i][2];
-								var value = data[i][3];
-								var tweet_url = data[i][5];
-
-								// Handles are [A-Za-z0-9_]{1,15}. Anything else is never used to build a URL
-								// or an attribute; only the escaped text below renders it. Mirrors userCell()
-								// in search/index.html, which already did this.
-								var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
-								var picSrc = 'pics/' + safeUser + '.png';
-
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
-
-								// Add external link in URLs (v3: no direct access)
-								// XSS-safe: escape value in both attribute (data-copy) and text (HTML)
-								data[i][3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
-
-								data[i][5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
-
-								if (type == "url") {
-									value = encodeURIComponent(value);
-								}
-
-								data[i].push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+								decorateRow(data[i]);
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
 								$(node).addClass('newRow');
 								$(node).addClass(type);
-
-								// For Mobile
-								// Only show: User (1), Value (3) and Twitter (5)
-								// Hide: Date (0), Type (2), Tags (4) and VT (6)
-								$(node).find('td:eq(0)').addClass('d-none d-lg-table-cell');
-								$(node).find('td:eq(2)').addClass('d-none d-lg-table-cell');
-								$(node).find('td:eq(4)').addClass('d-none d-lg-table-cell tableTags');
-								$(node).find('td:eq(6)').addClass('d-none d-lg-table-cell');
 
 								flag_new = 1;
 							}
@@ -746,61 +743,11 @@
 					} else {
 
 						for (var i = 0; i < data.length; i++) {
-
-							var type = data[i][2];
-							var value = data[i][3];
-							var tweet_url = data[i][5];
-
-							if (type == "url") {
-								value = encodeURIComponent(value);
-							}
-
-							data[i].push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+							decorateRow(data[i]);
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
-						table.rows().every(function() {
-
-							// 0 - Date
-							// 1 - User
-							// 2 - Type
-							// 3 - Value
-							// 4 - Tags
-							// 5 - Twitter
-							// 6 - VT
-
-							$(this.node()).addClass('newRow');
-
-							var user = $(this.node()).find('td').eq(1).text().trim();
-							var type = $(this.node()).find('td').eq(2).text().trim();
-							$(this.node()).toggleClass(type);
-
-							// Handles are [A-Za-z0-9_]{1,15}. Anything else is never used to build a URL
-							// or an attribute; only the escaped text below renders it. Mirrors userCell()
-							// in search/index.html, which already did this.
-							var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
-							var picSrc = 'pics/' + safeUser + '.png';
-
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
-
-							var type = $(this.node()).find('td').eq(2).text().trim();
-							var value = $(this.node()).find('td').eq(3).text().trim();
-							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-
-							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>');
-
-							$(this.node()).find('td').eq(5).html('<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>');
-
-							// For Mobile
-							// Only show: User (1), Value (3) and Twitter (5)
-							// Hide: Date (0), Type (2), Tags (4) and VT (6)
-							$(this.node()).find('td').eq(0).addClass('d-none d-lg-table-cell');
-							$(this.node()).find('td').eq(2).addClass('d-none d-lg-table-cell');
-							$(this.node()).find('td').eq(4).addClass('d-none d-lg-table-cell tableTags');
-							$(this.node()).find('td').eq(6).addClass('d-none d-lg-table-cell');
-
-						})
+						$(table.rows({ page: 'current' }).nodes()).addClass('newRow');
 						animationNew();
 					}
 
@@ -815,6 +762,34 @@
 				cache: false
 			});
 			init = 0;
+		}
+
+		// Turns one today.csv row [date, user, type, value, tags, tweet_url] into
+		// table cells. XSS-safe: every value is escaped in attributes and text.
+		function decorateRow(r) {
+			var user = r[1];
+			var type = r[2];
+			var value = r[3];
+			var tweet_url = r[5];
+
+			// Handles are [A-Za-z0-9_]{1,15}. Anything else is never used to build a URL
+			// or an attribute; only the escaped text below renders it. Mirrors userCell()
+			// in search/index.html, which already did this.
+			var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
+			var picSrc = 'pics/' + safeUser + '.png';
+
+			r[1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="Profile pic of ' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
+
+			r[3] = '<span style="display: block; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
+
+			r[5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
+
+			if (type == "url") {
+				value = encodeURIComponent(value);
+			}
+
+			r.push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+			return r;
 		}
 
 		function countTypes(className, jsonArr) {
