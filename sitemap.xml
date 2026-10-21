@@ -8,7 +8,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/dashboard/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -106,7 +106,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/threat-intelligence-guide/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -119,7 +119,7 @@
   </url>
   <url>
     <loc>https://tweetfeed.live/ioc-types/</loc>
-    <lastmod>2026-10-18</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
