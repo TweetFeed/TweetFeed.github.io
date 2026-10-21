@@ -8,6 +8,10 @@
 #   apt-group       -- threat actor cluster
 #   malware-family  -- offensive tooling / RAT / loader / stealer / C2 framework
 #   ttp             -- generic technique / category / infra label
+#   vulnerability   -- named CVE / exploited vulnerability
+#
+# Optional per entry: status_html (one raw-HTML line shown above "About"),
+# recommendations (list of {label, html}, shown as a numbered list after "About").
 #
 # faq_q1, faq_q2: tag-specific. faq_q3 (updates) and faq_q4 (license) are
 # templated by regen_tag_pages.py from license_subject.
@@ -1087,3 +1091,71 @@ tags:
       - {display: "malware", slug: "malware"}
       - {display: "malvertising", slug: "malvertising"}
       - {display: "scam", slug: "scam"}
+
+  # ============================================================
+  # VULNERABILITIES
+  # ============================================================
+
+  - slug: php2shell
+    display_tag: PHP2Shell
+    license_subject: "PHP2Shell"
+    category: vulnerability
+    short_subtitle: "Two critical PHP runtime flaws (CVE-2026-109618, CVE-2026-109619), fix due 2026-10-21 14:00 UTC"
+    short_subtitle_mobile: "Critical PHP flaws CVE-2026-109618 and CVE-2026-109619"
+    seo_title: "PHP2Shell PHP Vulnerability IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed"
+    twitter_title: "PHP2Shell (CVE-2026-109618, CVE-2026-109619) IOC feed - TweetFeed"
+    twitter_description: "Real-time IOCs that researchers link to PHP2Shell, two critical PHP flaws (CVE-2026-109618, CVE-2026-109619). CC0, no auth."
+    og_image_alt: "TweetFeed - PHP2Shell PHP vulnerability IOC feed"
+    webpage_name: "PHP2Shell (PHP vulnerability) IOC feed"
+    webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) that researchers link to PHP2Shell, the name for two critical PHP runtime flaws, CVE-2026-109618 and CVE-2026-109619."
+    meta_description: "IOCs linked to PHP2Shell (CVE-2026-109618/CVE-2026-109619, critical PHP flaws). {year} hits last year. Updated every 15 min."
+    meta_keywords: "php2shell,cve-2026-109618,cve-2026-109619,php vulnerability,php security release,php-fpm,session upload progress,ioc feed,osint,Threat Intelligence"
+    status_html: '<b>Status, last checked 2026-10-21 10:30 UTC:</b> PHP has not published the advisory or the fixed versions yet. PHP schedules them for <a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">2026-10-21 14:00 UTC</a>. I update this page when they are out.'
+    schema_about:
+      type: Thing
+      name: "PHP2Shell"
+      alternate_names: ["CVE-2026-109618", "CVE-2026-109619"]
+      same_as:
+        - "https://www.php.net/index.php#2026-10-20-1"
+        - "https://www.tenable.com/cve/CVE-2026-109619"
+    bullets:
+      - label: "Vulnerability"
+        html: 'Two critical flaws in the PHP runtime, both rated CVSS v4.0 9.2 in the <a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net notice</a>. The PHP2Shell name and the link to CVE-2026-109618 and CVE-2026-109619 come from researchers, not from PHP.'
+      - label: "Status"
+        html: 'Details leaked online before the official release, as <a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a> reports. PHP has not published the affected versions or the fixed versions yet.'
+      - label: "Suspected path"
+        html: 'Researchers suspect a memory-safety bug in session upload-progress handling during multipart/form-data parsing (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). PHP has not confirmed the root cause.'
+      - label: "Exploitation"
+        html: 'watchTowr says it reproduced CVE-2026-109618 (<a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a>), and on 21 October its <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">FAQ</a> reported no exploitation in the wild. Other reports of active exploitation are not confirmed yet.'
+      - label: "What I track"
+        html: "I collect the IOCs that researchers post on X with the #PHP2Shell hashtag. New posts reach the feed within 15 minutes."
+      - label: "References"
+        html: '<a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net notice</a> &middot; <a href="https://www.tenable.com/cve/CVE-2026-109619" target="_blank" rel="noopener noreferrer">Tenable CVE-2026-109619</a> &middot; <a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a> &middot; <a href="https://github.com/syhunt/php2shell-protection" target="_blank" rel="noopener noreferrer">Syhunt mitigation kit</a>.'
+    recommendations:
+      - label: "Inventory"
+        html: 'List every PHP runtime: web SAPI, FPM pools, CLI, containers and panel-managed PHP (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). The output of php -v shows only the CLI binary, and an inventory does not show if a host is vulnerable.'
+      - label: "Prepare your package source"
+        html: 'If you use the Remi repository, move to distro packages or a source build now. The <a href="https://x.com/ThePHPF/status/2112828424486056183" target="_blank" rel="noopener noreferrer">PHP Foundation</a> says Remi will not have updates on 21 October.'
+      - label: "Patch"
+        html: 'Install the fixed PHP release or your distro backport in every runtime when PHP publishes it at 2026-10-21 14:00 UTC (<a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net</a>). Confirm the CVE ID in the official advisory or the package changelog, not a version number from a blog.'
+      - label: "Rebuild containers"
+        html: 'After the fix ships, pull a fresh base image, rebuild, and replace the running containers, because a restart keeps the old PHP (<a href="https://teramont.net/blog/php2shell-cve-2026-109618-109619-php-update" target="_blank" rel="noopener noreferrer">Teramont</a>). On Plesk and cPanel, update the panel-managed PHP runtimes too.'
+      - label: "Mitigate until you patch"
+        html: 'If you do not need upload progress, set session.upload_progress.enabled to Off in php.ini or the FPM pool, and check the value from the web SAPI (<a href="https://teramont.net/blog/php2shell-cve-2026-109618-109619-php-update" target="_blank" rel="noopener noreferrer">Teramont</a>). This is not a fix, and one researcher says it stops at most one of the two bugs.'
+      - label: "Block multipart at the edge"
+        html: 'If a site does not need multipart forms, reject multipart/form-data POST requests before they reach PHP (<a href="https://github.com/syhunt/php2shell-protection" target="_blank" rel="noopener noreferrer">Syhunt</a>). This breaks file uploads and multipart APIs, and the Syhunt example covers only Apache and POST.'
+      - label: "Hunt"
+        html: 'Look for unusual multipart requests on JSON-only endpoints, PHP worker crashes and processes that PHP service accounts start (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). These are leads, not PHP2Shell signatures, and a quiet log does not prove that you are safe.'
+      - label: "Treat PoCs as malware"
+        html: 'No public PHP2Shell exploit is independently verified, and abgeo.dev warns that fake exploits target security staff (<a href="https://www.abgeo.dev/blog/php2shell-critical-php-rce/" target="_blank" rel="noopener noreferrer">abgeo.dev</a>). Review any PoC code first, and run it only in an isolated lab.'
+      - label: "Share IOCs"
+        html: "If you see PHP2Shell exploitation, post the IOCs (IPs, URLs, domains, hashes) on X with the #PHP2Shell hashtag. I add them to this page and to the free CC0 feed for all defenders."
+    faq_q1:
+      q: "What is PHP2Shell?"
+      a: "PHP2Shell is the name that researchers use for two critical flaws in the PHP runtime, CVE-2026-109618 and CVE-2026-109619. PHP rates both flaws CVSS v4.0 9.2. PHP schedules the fixed releases for 21 October 2026 at 14:00 UTC. The name does not come from PHP. As of 2026-10-21 10:30 UTC, PHP has not published the root cause, the affected versions or the fixed versions. Researchers suspect a memory-safety bug in session upload-progress handling, but this is not confirmed."
+    faq_q2:
+      q: "How do I protect my PHP servers from PHP2Shell?"
+      a: "Install the fixed PHP release in every PHP runtime when PHP publishes it, including CLI, workers and container images. Until then, you can set session.upload_progress.enabled to Off. If a site does not need multipart forms, you can also reject multipart/form-data POST requests at the web server or the WAF. These steps are interim and they are not a fix. The multipart block also breaks file uploads. After the fix ships, rebuild your container images, because a restart keeps the old PHP."
+    related_tags:
+      - {display: "malware", slug: "malware"}
+      - {display: "C2", slug: "c2"}

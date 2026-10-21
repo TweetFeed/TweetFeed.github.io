@@ -276,6 +276,7 @@ CATEGORY_HEADINGS = {
     "apt-group": ("APT groups", "Threat-actor clusters tracked by attribution analysts. Each page collates the IOCs the public infosec community on Twitter/X has linked to that cluster."),
     "malware-family": ("Malware families &middot; C2 frameworks &middot; tools", "Specific malware identities (Cobalt Strike, AsyncRAT, NetSupportRAT, …) plus dual-use offensive tooling that surfaces in real-world intrusions."),
     "ttp": ("Tactics, techniques and infra labels", "Broader categories: phishing, C2 infrastructure, ransomware, infostealer, scam, opendir and the umbrella malware / APT labels."),
+    "vulnerability": ("Vulnerabilities", "Named CVEs and exploited vulnerabilities. Each page collates the IOCs the public infosec community on Twitter/X has linked to exploitation of that flaw."),
 }
 
 
@@ -295,8 +296,8 @@ def render_tags_index(tags, env, counts, today_str):
             "month_count": f"{month_count:,}",
         })
 
-    # Order: apt-group, malware-family, ttp. Within each, order by year volume desc.
-    cat_order = ["apt-group", "malware-family", "ttp"]
+    # Order: apt-group, malware-family, ttp, vulnerability. Within each, order by year volume desc.
+    cat_order = ["apt-group", "malware-family", "ttp", "vulnerability"]
     categories = []
     for cat_key in cat_order:
         if cat_key not in by_cat:

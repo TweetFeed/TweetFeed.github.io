@@ -185,6 +185,13 @@
 				<!-- ============================================================ -->
 				<!-- ABOUT THIS TAG                                                -->
 				<!-- ============================================================ -->
+{%- if m.status_html %}
+				<div class="card mb-4" style="border-left:4px solid var(--tf-bd-0026e6);">
+					<div class="card-body py-2">
+						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.6;">{{ m.status_html | safe }}</p>
+					</div>
+				</div>
+{%- endif %}
 				<h3 class="section-heading tf-block-head">About #{{ m.display_tag }}</h3>
 				<div class="card mb-4">
 					<div class="card-body">
@@ -194,6 +201,22 @@
 						</ul>
 					</div>
 				</div>
+{%- if m.recommendations %}
+
+				<!-- ============================================================ -->
+				<!-- RECOMMENDATIONS (OPTIONAL, PER TAG)                           -->
+				<!-- ============================================================ -->
+				<h3 class="section-heading tf-block-head">Recommendations</h3>
+				<div class="card mb-4">
+					<div class="card-body">
+						<ol style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
+							{% for r in m.recommendations %}<li><b>{{ r.label }}:</b> {{ r.html | safe }}</li>
+							{% endfor %}
+						</ol>
+						<p style="margin:0.75rem 0 0 0; font-family:'Rubik',sans-serif; color:var(--tf-fg-737373); font-size:13px;">Advice changes as vendors publish. Check the linked sources before you act.</p>
+					</div>
+				</div>
+{%- endif %}
 
 				<!-- ============================================================ -->
 				<!-- RECENT IOCS (BAKED FROM API AT BUILD TIME)                    -->
