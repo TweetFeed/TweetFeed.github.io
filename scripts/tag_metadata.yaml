@@ -1133,7 +1133,7 @@ tags:
       - label: "Who is at risk"
         html: 'PHP says that all PHP installations that serve web requests are at risk, including PHP-FPM, Apache mod_php, php-cgi, FrankenPHP and LiteSpeed. The risk is highest for mod_php, where one unauthenticated request can start the attack before any application code runs.'
       - label: "Exploitation"
-        html: 'watchTowr reports exploitation in the wild on 21 October from its honeypot network (<a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr FAQ</a>), and I have no second source yet. CISA KEV does not list the two CVEs as of 2026-10-21 16:50 UTC.'
+        html: 'watchTowr reports exploitation in the wild on 21 October from its honeypot network (<a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr FAQ</a>), and <a href="https://x.com/Vega_Threat/status/2112922163967840256" target="_blank" rel="noopener noreferrer">Vega</a> reports exploit attempts with a public PoC on the same day. CISA KEV does not list the two CVEs as of 2026-10-21 16:50 UTC.'
       - label: "What I track"
         html: "I collect the IOCs that researchers post on X with the #PHP2Shell hashtag. New posts reach the feed within 15 minutes."
       - label: "References"
