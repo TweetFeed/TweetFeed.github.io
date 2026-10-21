@@ -59,7 +59,7 @@
 ## Coverage
 
 - IOC types: URL, domain, IPv4/IPv6, SHA-256, MD5 - malicious infrastructure reported by the community.
-- Tag taxonomy: 94 tags across malware families and tactics; full list in the `/dashboard/` filter.
+- Tag taxonomy: 95 tags across malware families and tactics; full list in the `/dashboard/` filter.
 - [Researchers](https://tweetfeed.live/researchers/): ~95 vetted infosec accounts on Twitter/X feed the aggregator.
 
 ## Use policy
