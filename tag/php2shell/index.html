@@ -30,9 +30,9 @@
 	})();
 	</script>
 	<!-- /site-theme-init -->
-	<meta name="description" content="IOCs linked to PHP2Shell (CVE-2026-109618/CVE-2026-109619, critical PHP flaws). 0 hits last year. Updated every 15 min.">
+	<meta name="description" content="IOCs linked to PHP2Shell (CVE-2026-109618/CVE-2026-109619, critical PHP RCE flaws). 2 hits last year. Updated every 15 min.">
 	<meta name="author" content="tweetfeed.live">
-	<meta name="keywords" content="php2shell,cve-2026-109618,cve-2026-109619,php vulnerability,php security release,php-fpm,session upload progress,ioc feed,osint,Threat Intelligence">
+	<meta name="keywords" content="php2shell,cve-2026-109618,cve-2026-109619,php vulnerability,php 8.5.12,php security advisory,php-fpm,mod_php,ioc feed,osint,Threat Intelligence">
 	<link rel="canonical" href="https://tweetfeed.live/tag/php2shell/">
 	<link rel="alternate" type="application/rss+xml" title="TweetFeed - #php2shell IOC feed" href="https://tweetfeed.live/rss/tag/php2shell.xml">
 	<title>PHP2Shell PHP Vulnerability IOC Feed - URLs, Domains, IPs, Hashes - TweetFeed</title>
@@ -62,6 +62,7 @@
 	<!-- Custom styles for this template -->
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
+	<link href="../../css/table.css?v=7" rel="stylesheet">
 	<link href="../../css/index.css?v=74" rel="stylesheet">
 	<link href="../../css/tweetfeed.css?v=74" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -124,8 +125,13 @@
 				"CVE-2026-109619"
 			],
 			"sameAs": [
-				"https://www.php.net/index.php#2026-10-20-1",
-				"https://www.tenable.com/cve/CVE-2026-109619"
+				"https://www.php.net/archive/2026.php#2026-10-21-5",
+				"https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w",
+				"https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp",
+				"https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
+				"https://nvd.nist.gov/vuln/detail/CVE-2026-109619",
+				"https://www.cve.org/CVERecord?id=CVE-2026-109618",
+				"https://www.cve.org/CVERecord?id=CVE-2026-109619"
 			]
 		},
 		"inLanguage": "en"
@@ -151,7 +157,7 @@
 				"name": "What is PHP2Shell?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "PHP2Shell is the name that researchers use for two critical flaws in the PHP runtime, CVE-2026-109618 and CVE-2026-109619. PHP rates both flaws CVSS v4.0 9.2. PHP schedules the fixed releases for 21 October 2026 at 14:00 UTC. The name does not come from PHP. As of 2026-10-21 10:30 UTC, PHP has not published the root cause, the affected versions or the fixed versions. Researchers suspect a memory-safety bug in session upload-progress handling, but this is not confirmed."
+					"text": "PHP2Shell is the name that researchers use for two critical flaws in the PHP runtime, CVE-2026-109618 and CVE-2026-109619. PHP rates both flaws CVSS v4.0 9.2 and says that they can allow unauthenticated remote code execution. In CVE-2026-109618, an out-of-memory error during request handling leaves request memory in an invalid state. In CVE-2026-109619, request state survives into the next request on the same worker. PHP fixed both flaws in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October 2026. The name does not come from PHP."
 				}
 			},
 			{
@@ -159,7 +165,7 @@
 				"name": "How do I protect my PHP servers from PHP2Shell?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Install the fixed PHP release in every PHP runtime when PHP publishes it, including CLI, workers and container images. Until then, you can set session.upload_progress.enabled to Off. If a site does not need multipart forms, you can also reject multipart/form-data POST requests at the web server or the WAF. These steps are interim and they are not a fix. The multipart block also breaks file uploads. After the fix ships, rebuild your container images, because a restart keeps the old PHP."
+					"text": "Update every PHP runtime to PHP 8.5.12, 8.4.27, 8.3.36 or 8.2.35, or install the fixed package from your distro or LTS vendor, including CLI, workers and container images. PHP says that only an update is a complete fix. If you cannot update now, PHP advises memory_limit=-1, a low post_max_size, session.upload_progress.enabled=0 and, on PHP 8.5, fatal_error_backtraces=0, set in php.ini or the server configuration, and a restart of every worker. These steps block only some attack paths. After you update, rebuild your container images, because a restart keeps the old PHP."
 				}
 			},
 			{
@@ -347,7 +353,7 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #PHP2Shell</h1>
-					<h2><em>Two critical PHP runtime flaws (CVE-2026-109618, CVE-2026-109619), fix due 2026-10-21 14:00 UTC</em></h2>
+					<h2><em>Two critical PHP RCE flaws (CVE-2026-109618, CVE-2026-109619), fixed in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/php2shell.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
@@ -368,7 +374,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">2</p>
 								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #PHP2Shell</p>
 							</div>
 						</div>
@@ -378,7 +384,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">2</p>
 								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #PHP2Shell</p>
 							</div>
 						</div>
@@ -388,7 +394,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">2</p>
 								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #PHP2Shell</p>
 							</div>
 						</div>
@@ -398,7 +404,7 @@
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">0</p>
+								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">2</p>
 								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #PHP2Shell</p>
 							</div>
 						</div>
@@ -411,19 +417,20 @@
 				<!-- ============================================================ -->
 				<div class="card mb-4" style="border-left:4px solid var(--tf-bd-0026e6);">
 					<div class="card-body py-2">
-						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.6;"><b>Status, last checked 2026-10-21 10:30 UTC:</b> PHP has not published the advisory or the fixed versions yet. PHP schedules them for <a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">2026-10-21 14:00 UTC</a>. I update this page when they are out.</p>
+						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.6;"><b>Status, last checked 2026-10-21 16:50 UTC:</b> PHP published the <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">security advisory</a> and the fixed versions 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October. PHP says that only an update is a complete fix.</p>
 					</div>
 				</div>
 				<h3 class="section-heading tf-block-head">About #PHP2Shell</h3>
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Vulnerability:</b> Two critical flaws in the PHP runtime, both rated CVSS v4.0 9.2 in the <a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net notice</a>. The PHP2Shell name and the link to CVE-2026-109618 and CVE-2026-109619 come from researchers, not from PHP.</li>
-							<li><b>Status:</b> Details leaked online before the official release, as <a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a> reports. PHP has not published the affected versions or the fixed versions yet.</li>
-							<li><b>Suspected path:</b> Researchers suspect a memory-safety bug in session upload-progress handling during multipart/form-data parsing (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). PHP has not confirmed the root cause.</li>
-							<li><b>Exploitation:</b> watchTowr says it reproduced CVE-2026-109618 (<a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a>), and on 21 October its <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">FAQ</a> reported no exploitation in the wild. Other reports of active exploitation are not confirmed yet.</li>
+							<li><b>Vulnerability:</b> Two critical flaws in the PHP runtime that can allow unauthenticated remote code execution, both rated CVSS v4.0 9.2 in the <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">PHP advisory</a>: CVE-2026-109618 (RCE via OOM corruption) and CVE-2026-109619 (RCE via stale global state). The PHP2Shell name comes from researchers, not from PHP.</li>
+							<li><b>Status:</b> PHP fixed both flaws in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October 2026, and gave minimal source backports for PHP 7.4, 8.0 and 8.1. Details leaked online before the release, as <a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a> reports.</li>
+							<li><b>Root cause:</b> In CVE-2026-109618, an out-of-memory error during request startup, for example in multipart body parsing, leaves request memory in an invalid state that request shutdown then uses (<a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">GHSA-w8hw-w9fx-j79w</a>). In CVE-2026-109619, request state survives into the next request on the same worker, and INI diagnostics, session upload progress and, on PHP 8.5, fatal error backtraces are the confirmed paths (<a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA-6wmf-4rv5-p3rp</a>).</li>
+							<li><b>Who is at risk:</b> PHP says that all PHP installations that serve web requests are at risk, including PHP-FPM, Apache mod_php, php-cgi, FrankenPHP and LiteSpeed. The risk is highest for mod_php, where one unauthenticated request can start the attack before any application code runs.</li>
+							<li><b>Exploitation:</b> watchTowr reports exploitation in the wild on 21 October from its honeypot network (<a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr FAQ</a>), and I have no second source yet. CISA KEV does not list the two CVEs as of 2026-10-21 16:50 UTC.</li>
 							<li><b>What I track:</b> I collect the IOCs that researchers post on X with the #PHP2Shell hashtag. New posts reach the feed within 15 minutes.</li>
-							<li><b>References:</b> <a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net notice</a> &middot; <a href="https://www.tenable.com/cve/CVE-2026-109619" target="_blank" rel="noopener noreferrer">Tenable CVE-2026-109619</a> &middot; <a href="https://www.securityweek.com/php2shell-mass-exploitation-looms-for-leaked-critical-php-flaws/" target="_blank" rel="noopener noreferrer">SecurityWeek</a> &middot; <a href="https://github.com/syhunt/php2shell-protection" target="_blank" rel="noopener noreferrer">Syhunt mitigation kit</a>.</li>
+							<li><b>References:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">PHP advisory</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">GHSA-w8hw-w9fx-j79w</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA-6wmf-4rv5-p3rp</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109618" target="_blank" rel="noopener noreferrer">NVD CVE-2026-109618</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109619" target="_blank" rel="noopener noreferrer">NVD CVE-2026-109619</a> &middot; <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr FAQ</a>.</li>
 							
 						</ul>
 					</div>
@@ -436,15 +443,16 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ol style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Inventory:</b> List every PHP runtime: web SAPI, FPM pools, CLI, containers and panel-managed PHP (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). The output of php -v shows only the CLI binary, and an inventory does not show if a host is vulnerable.</li>
-							<li><b>Prepare your package source:</b> If you use the Remi repository, move to distro packages or a source build now. The <a href="https://x.com/ThePHPF/status/2112828424486056183" target="_blank" rel="noopener noreferrer">PHP Foundation</a> says Remi will not have updates on 21 October.</li>
-							<li><b>Patch:</b> Install the fixed PHP release or your distro backport in every runtime when PHP publishes it at 2026-10-21 14:00 UTC (<a href="https://www.php.net/index.php#2026-10-20-1" target="_blank" rel="noopener noreferrer">php.net</a>). Confirm the CVE ID in the official advisory or the package changelog, not a version number from a blog.</li>
-							<li><b>Rebuild containers:</b> After the fix ships, pull a fresh base image, rebuild, and replace the running containers, because a restart keeps the old PHP (<a href="https://teramont.net/blog/php2shell-cve-2026-109618-109619-php-update" target="_blank" rel="noopener noreferrer">Teramont</a>). On Plesk and cPanel, update the panel-managed PHP runtimes too.</li>
-							<li><b>Mitigate until you patch:</b> If you do not need upload progress, set session.upload_progress.enabled to Off in php.ini or the FPM pool, and check the value from the web SAPI (<a href="https://teramont.net/blog/php2shell-cve-2026-109618-109619-php-update" target="_blank" rel="noopener noreferrer">Teramont</a>). This is not a fix, and one researcher says it stops at most one of the two bugs.</li>
-							<li><b>Block multipart at the edge:</b> If a site does not need multipart forms, reject multipart/form-data POST requests before they reach PHP (<a href="https://github.com/syhunt/php2shell-protection" target="_blank" rel="noopener noreferrer">Syhunt</a>). This breaks file uploads and multipart APIs, and the Syhunt example covers only Apache and POST.</li>
-							<li><b>Hunt:</b> Look for unusual multipart requests on JSON-only endpoints, PHP worker crashes and processes that PHP service accounts start (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). These are leads, not PHP2Shell signatures, and a quiet log does not prove that you are safe.</li>
-							<li><b>Treat PoCs as malware:</b> No public PHP2Shell exploit is independently verified, and abgeo.dev warns that fake exploits target security staff (<a href="https://www.abgeo.dev/blog/php2shell-critical-php-rce/" target="_blank" rel="noopener noreferrer">abgeo.dev</a>). Review any PoC code first, and run it only in an isolated lab.</li>
-							<li><b>Share IOCs:</b> If you see PHP2Shell exploitation, post the IOCs (IPs, URLs, domains, hashes) on X with the #PHP2Shell hashtag. I add them to this page and to the free CC0 feed for all defenders.</li>
+							<li><b>Patch:</b> Update every PHP runtime to PHP 8.5.12, 8.4.27, 8.3.36 or 8.2.35, or install the fixed package from your distro or LTS vendor, which got the patches in advance (<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">PHP advisory</a>). PHP 8.1 and older get no official releases, so use a vendor backport or the PHP source backports, or upgrade.</li>
+							<li><b>Inventory:</b> List every PHP runtime: web SAPI, FPM pools, CLI, containers and panel-managed PHP (<a href="https://www.dexpose.io/php2shell-php-rce-exposure-response/" target="_blank" rel="noopener noreferrer">DeXpose</a>). The output of php -v shows only the CLI binary, so check the version that each web SAPI reports.</li>
+							<li><b>Rebuild containers:</b> Pull a fresh base image with the fixed PHP, rebuild, and replace the running containers, because a restart keeps the old PHP (<a href="https://teramont.net/blog/php2shell-cve-2026-109618-109619-php-update" target="_blank" rel="noopener noreferrer">Teramont</a>). On Plesk and cPanel, update the panel-managed PHP runtimes too.</li>
+							<li><b>Remi users:</b> At 2026-10-21 16:50 UTC, the <a href="https://blog.remirepo.net/" target="_blank" rel="noopener noreferrer">Remi blog</a> shows only 8.5.12RC1 and 8.4.27RC1 builds, not the fixed releases. The <a href="https://x.com/ThePHPF/status/2112828424486056183" target="_blank" rel="noopener noreferrer">PHP Foundation</a> tells Remi users to move to distro packages or a source build now.</li>
+							<li><b>Mitigate CVE-2026-109618 until you patch:</b> PHP advises memory_limit=-1, set so that no application, pool or directory can put a finite limit back, and a low post_max_size (8M without uploads, 32M with uploads) (<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">PHP advisory</a>). This is not a complete fix, and you must not use RLIMIT_AS or RLIMIT_DATA, because they can cause the vulnerable allocation failure.</li>
+							<li><b>Mitigate CVE-2026-109619 until you patch:</b> Set session.upload_progress.enabled=0 and, on PHP 8.5, fatal_error_backtraces=0 in php.ini, the FPM pool or the server configuration, not with ini_set() or .user.ini, then restart every worker (<a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">PHP advisory</a>). This blocks only the confirmed paths, so also remove invalid or deprecated per-request INI settings and fix fatal errors that an attacker can reach.</li>
+							<li><b>Limit requests at the edge:</b> If the application does not use multipart forms, block multipart requests at the web server or proxy before they reach PHP (<a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">GHSA-w8hw-w9fx-j79w</a>). Also limit the decoded request size, field count, part count, header count and nesting depth, also for requests without a usable Content-Length.</li>
+							<li><b>Hunt:</b> Look for PHP worker crashes, fatal errors, Maximum execution time exceeded, warnings before scripts run and unusual multipart requests on JSON-only endpoints (<a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA-6wmf-4rv5-p3rp</a>). PHP says that a quiet log does not prove that you are safe.</li>
+							<li><b>Treat PoCs as malware:</b> I know of no public PHP2Shell exploit that a trusted party has verified, and abgeo.dev warns that fake exploits target security staff (<a href="https://www.abgeo.dev/blog/php2shell-critical-php-rce/" target="_blank" rel="noopener noreferrer">abgeo.dev</a>). Review any PoC code first, and run it only in an isolated lab.</li>
+							<li><b>Share IOCs:</b> If you see PHP2Shell exploitation, post the IOCs (IPs, URLs, domains, hashes) on X with the #PHP2Shell hashtag. I add them to the free CC0 feed and the API within 15 minutes, and this page refreshes daily.</li>
 							
 						</ol>
 						<p style="margin:0.75rem 0 0 0; font-family:'Rubik',sans-serif; color:var(--tf-fg-737373); font-size:13px;">Advice changes as vendors publish. Check the linked sources before you act.</p>
@@ -458,7 +466,40 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						
-						<p style="margin-bottom:0; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">No IOCs tagged #PHP2Shell in the past 30 days. Year aggregate: <b>0</b>. For longer-window data, download the full annual feed <a href="https://api.tweetfeed.live/v1/year" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/year</code></a> (all tags) and filter for #PHP2Shell client-side.</p>
+						<p style="margin-bottom:0.75rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Latest 2 IOCs from the past 30 days. Live JSON: <a href="https://api.tweetfeed.live/v1/month/php2shell" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/month/php2shell</code></a>.</p>
+						<div class="table-responsive">
+							<table class="table table-sm tf-ioc-table" style="table-layout:fixed; width:100%; margin-bottom:0;">
+								<colgroup>
+									<col style="width:90px;">
+									<col style="width:60px;">
+									<col style="width:100%;">
+									<col style="width:100px;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">Date</th>
+										<th scope="col">Type</th>
+										<th scope="col">Value</th>
+										<th scope="col">Source</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 21, 13:10</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px;">domain</span></td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="acme.com"><i class="tf-copy far fa-copy" data-copy="acme.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>acme.com</td>
+										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/mazen160" target="_blank" rel="noopener noreferrer">@mazen160</a></td>
+									</tr>
+									<tr>
+										<td style="font-size:12px; color:var(--tf-fg-737373); vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Oct 21, 13:10</td>
+										<td style="vertical-align:middle;"><span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px;">url</span></td>
+										<td style="font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size:13px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="http://acme.com"><i class="tf-copy far fa-copy" data-copy="http://acme.com" style="margin-right:0.4rem;" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i>http://acme.com</td>
+										<td style="font-size:12px; vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><a href="https://x.com/mazen160" target="_blank" rel="noopener noreferrer">@mazen160</a></td>
+									</tr>
+									</tbody>
+							</table>
+						</div>
+						
 						
 					</div>
 				</div>
@@ -485,11 +526,11 @@
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
 						<summary>What is PHP2Shell?</summary>
-						<p>PHP2Shell is the name that researchers use for two critical flaws in the PHP runtime, CVE-2026-109618 and CVE-2026-109619. PHP rates both flaws CVSS v4.0 9.2. PHP schedules the fixed releases for 21 October 2026 at 14:00 UTC. The name does not come from PHP. As of 2026-10-21 10:30 UTC, PHP has not published the root cause, the affected versions or the fixed versions. Researchers suspect a memory-safety bug in session upload-progress handling, but this is not confirmed.</p>
+						<p>PHP2Shell is the name that researchers use for two critical flaws in the PHP runtime, CVE-2026-109618 and CVE-2026-109619. PHP rates both flaws CVSS v4.0 9.2 and says that they can allow unauthenticated remote code execution. In CVE-2026-109618, an out-of-memory error during request handling leaves request memory in an invalid state. In CVE-2026-109619, request state survives into the next request on the same worker. PHP fixed both flaws in PHP 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October 2026. The name does not come from PHP.</p>
 					</details>
 					<details>
 						<summary>How do I protect my PHP servers from PHP2Shell?</summary>
-						<p>Install the fixed PHP release in every PHP runtime when PHP publishes it, including CLI, workers and container images. Until then, you can set session.upload_progress.enabled to Off. If a site does not need multipart forms, you can also reject multipart/form-data POST requests at the web server or the WAF. These steps are interim and they are not a fix. The multipart block also breaks file uploads. After the fix ships, rebuild your container images, because a restart keeps the old PHP.</p>
+						<p>Update every PHP runtime to PHP 8.5.12, 8.4.27, 8.3.36 or 8.2.35, or install the fixed package from your distro or LTS vendor, including CLI, workers and container images. PHP says that only an update is a complete fix. If you cannot update now, PHP advises memory_limit=-1, a low post_max_size, session.upload_progress.enabled=0 and, on PHP 8.5, fatal_error_backtraces=0, set in php.ini or the server configuration, and a restart of every worker. These steps block only some attack paths. After you update, rebuild your container images, because a restart keeps the old PHP.</p>
 					</details>
 					<details>
 						<summary>How is this list updated?</summary>
