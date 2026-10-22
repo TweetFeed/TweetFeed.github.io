@@ -55,11 +55,13 @@
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:alt" content="TweetFeed - AI Campaigns">
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -192,10 +194,14 @@
 			color: var(--tf-fg-4b5563);
 		}
 		.tfc-headline-sub { margin-top: 2px; font-size: 12px; color: var(--tf-fg-737373); }
+		/* Phones: the three cells stay in ONE row (stacked they pushed the first
+		   campaign ~970px down). Labels wrap by word; subs are kept short in JS. */
 		@media (max-width: 575.98px) {
-			.tfc-headline { grid-template-columns: 1fr; }
-			.tfc-headline-cell + .tfc-headline-cell { border-left: 0; border-top: 1px solid var(--tf-bd-000); }
-			.tfc-headline-value { font-size: 24px; }
+			.tfc-headline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+			.tfc-headline-cell { padding: 8px 4px; }
+			.tfc-headline-value { font-size: 22px; }
+			.tfc-headline-label { font-size: 10px; letter-spacing: 0.03em; }
+			.tfc-headline-sub { font-size: 11px; }
 		}
 
 		/* ── Toolbar (one row) ────────────────────────────────────────────
@@ -276,6 +282,17 @@
 			font-size: 11.5px;
 			color: var(--tf-fg-9aa0a6);
 			margin: -0.15rem 0 0.75rem;
+		}
+		/* Label + select wrap together, never "Sort:" at the end of one row and its select on the next. */
+		.tfc-field {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			white-space: nowrap;
+		}
+		/* !important: jQuery .show() writes an inline display:block that would otherwise win. */
+		@media (max-width: 575.98px) {
+			.tfc-toolbar-note { display: none !important; }
 		}
 		.tfc-hint-tok {
 			background: none;
@@ -1277,7 +1294,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -1291,7 +1308,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -1402,8 +1419,8 @@
 						<div class="tfc-headline-sub" id="tfcHlHeadSub"></div>
 					</div>
 				</div>
-				<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs.</p>
-				<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/#campaign-export">per-campaign export (JSON/CSV/STIX)</a> &middot; <a href="../api/">API docs</a></p>
+				<p class="tfc-generated-line" id="generatedLine"><i class="fas fa-robot"></i> AI-generated daily</p>
+				<p class="tfc-generated-line" id="rawDataLine"><i class="fas fa-database"></i> Raw data: <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer">JSON API</a> &middot; <a href="../api/#campaign-export">per-campaign export<span class="d-none d-sm-inline"> (JSON/CSV/STIX)</span></a> &middot; <a href="../api/">API docs</a></p>
 
 				<div class="tfc-stale-banner" id="staleBanner" style="display:none;" role="alert"></div>
 
@@ -1441,15 +1458,19 @@
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-high active" data-confidence="high" aria-pressed="true">High <span class="tfc-chip-count"></span></button>
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-medium active" data-confidence="medium" aria-pressed="true">Medium <span class="tfc-chip-count"></span></button>
 					<button type="button" class="tfc-filter-chip tfc-filter-chip-low active" data-confidence="low" aria-pressed="true">Low <span class="tfc-chip-count"></span></button>
-					<label class="tfc-filter-label" for="campaignsType">Type:</label>
-					<select id="campaignsType" class="tfc-sort-select" aria-label="Filter by IOC type"><option value="any">Any type</option></select>
-					<label class="tfc-filter-label" for="campaignsSort">Sort:</label>
-					<select id="campaignsSort" class="tfc-sort-select" aria-label="Sort campaigns by">
-						<option value="total">Total IOCs</option>
-						<option value="recent">Recent activity</option>
-						<option value="lastseen">Last seen</option>
-						<option value="confidence">Cohesion</option>
-					</select>
+					<span class="tfc-field">
+						<label class="tfc-filter-label" for="campaignsType">Type:</label>
+						<select id="campaignsType" class="tfc-sort-select" aria-label="Filter by IOC type"><option value="any">Any type</option></select>
+					</span>
+					<span class="tfc-field">
+						<label class="tfc-filter-label" for="campaignsSort">Sort:</label>
+						<select id="campaignsSort" class="tfc-sort-select" aria-label="Sort campaigns by">
+							<option value="total">Total IOCs</option>
+							<option value="recent">Recent activity</option>
+							<option value="lastseen">Last seen</option>
+							<option value="confidence">Cohesion</option>
+						</select>
+					</span>
 					<button type="button" class="tfc-filter-chip tfc-more-btn" id="campaignsMore" aria-expanded="false" aria-controls="campaignsMorePanel">More <span class="tfc-chip-count" id="campaignsMoreCount"></span></button>
 					<button type="button" class="tfc-expand-all" id="campaignsExpandAll" aria-pressed="false">Expand all</button>
 					<span class="tfc-filter-count" id="campaignsFilterCount"></span>
@@ -1614,13 +1635,13 @@
 			<!-- End of Footer -->
 		</div>
 	</div>
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom script: fetches the live production campaigns API
 	     directly (NOT TweetFeed.dataUrl(), which resolves to this repo's own data
 	     repo CSVs - this endpoint is a separate, already-live prod service). -->
-	<script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	(function() {
 	'use strict';
 
@@ -1782,7 +1803,7 @@
 	function dateRangeText(c) {
 		if (!c.first_seen || !c.last_seen) return '';
 		if (c.first_seen === c.last_seen) return shortDate(c.first_seen) + ' (one day)';
-		return shortDate(c.first_seen) + ' – ' + shortDate(c.last_seen);
+		return shortDate(c.first_seen) + ' - ' + shortDate(c.last_seen);
 	}
 
 	// B1: apparent target. targeted_sector arrives as a STIX vocabulary slug
@@ -2342,9 +2363,9 @@
 			'<div class="tf-headline">' +
 				'<div class="tf-headline-cell"><div class="tf-headline-value">' + esc(nf(total)) + '</div><div class="tf-headline-label">IOCs</div>' +
 					'<div class="tf-headline-sub tfc-vitals-published">' + esc(nf(sampleLen)) + ' published below</div></div>' +
-				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (daysSince === null ? '–' : esc(String(daysSince))) + '</div><div class="tf-headline-label">Days since last IOC</div>' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (daysSince === null ? '-' : esc(String(daysSince))) + '</div><div class="tf-headline-label">Days since last IOC</div>' +
 					'<div class="tf-headline-sub">' + sinceSub + '</div></div>' +
-				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (span === null ? '–' : esc(String(span))) + '</div><div class="tf-headline-label">Day span</div>' +
+				'<div class="tf-headline-cell"><div class="tf-headline-value">' + (span === null ? '-' : esc(String(span))) + '</div><div class="tf-headline-label">Day span</div>' +
 					'<div class="tf-headline-sub">' + esc(dateRangeText(c)) + '</div>' +
 					(historySub ? '<div class="tf-headline-sub">' + esc(historySub) + '</div>' : '') + '</div>' +
 				'<div class="tf-headline-cell"><div class="tf-headline-value" style="font-size:15px;font-weight:600;">' + esc(targetVal) + '</div><div class="tf-headline-label">Apparent target</div>' +
@@ -3491,11 +3512,11 @@
 
 		$('#tfcHlShown').text(nf(shown));
 		$('#tfcHlIocs').text(nf(visibleIocSum));
-		$('#tfcHlIocsSub').text('across ' + nf(shown) + ' campaign' + (shown === 1 ? '' : 's'));
+		$('#tfcHlIocsSub').text('in ' + nf(shown) + ' campaign' + (shown === 1 ? '' : 's'));
 		visibleSizesDesc.sort(function(x, y) { return y - x; });
 		var topPct = (visibleSizesDesc.length && visibleIocSum > 0) ? Math.round((visibleSizesDesc[0] / visibleIocSum) * 100) : null;
 		$('#tfcHlHead').text(nf(visibleWeeks.filter(function(n) { return n > 0; }).length));
-		$('#tfcHlHeadSub').text(topPct === null ? '' : ('top campaign = ' + topPct + '% of IOCs'));
+		$('#tfcHlHeadSub').text(topPct === null ? '' : ('top = ' + topPct + '% of IOCs'));
 	}
 
 	function sortTieBreak(a, b) {
@@ -3664,8 +3685,12 @@
 		allCampaigns = campaigns;
 		docGeneratedAt = (data && data.generated_at) || null;
 
-		var genLine = '<i class="fas fa-robot"></i> Generated daily by AI from the last 30 days of community IOCs';
-		if (docGeneratedAt) genLine += ' · last run: ' + TweetFeed.escapeHtml(TweetFeed.formatDateLong(docGeneratedAt));
+		var genLine = '<i class="fas fa-robot"></i> AI-generated daily';
+		if (docGeneratedAt) {
+			// "October 22nd, 2026 06:27:00 UTC" -> "Oct 22, 06:27 UTC" so the note stays on one line.
+			var genShort = TweetFeed.formatDateLong(docGeneratedAt).replace(/^(\w{3})\w*\s+(\d+)\w{2},\s+\d{4}\s+(\d{2}:\d{2}):\d{2} UTC$/, '$1 $2, $3 UTC');
+			genLine = '<i class="fas fa-robot"></i> AI run: ' + TweetFeed.escapeHtml(genShort);
+		}
 		$('#generatedLine').html(genLine);
 
 		if (data && data.stale) {
@@ -4036,7 +4061,7 @@
 		window.addEventListener('beforeprint', buildAllBodies);
 	});
 })();
-	</script>
+	});</script>
 </body>
 
 </html>

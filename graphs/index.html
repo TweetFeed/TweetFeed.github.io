@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -68,8 +70,8 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -186,6 +188,15 @@
 				#pills-tabContent .dataTables_wrapper > .row > .col-md-6 { flex: 0 0 100%; max-width: 100%; text-align: left; }
 			}
 		}
+		/* Counts row (#11): labels on every width. Phones: tighter column gutters and the icon above the label
+		   so five labels (URLs, Domains, IPs, SHA256, MD5) fit in ~290px. */
+		@media (max-width: 575.98px) {
+			#pills-tabContent .card-body > .container { padding-left: 0; padding-right: 0; }
+			#pills-tabContent .card-body > .container > .row.align-items-center { margin-left: 0; margin-right: 0; }
+			#pills-tabContent .card-body > .container > .row.align-items-center > .col { padding-left: 2px; padding-right: 2px; }
+			.tf-cnt-lbl { font-size: 12px; }
+			.tf-cnt-lbl i { display: block; margin-bottom: 2px; }
+		}
 	</style>
 </head>
 
@@ -257,7 +268,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -271,7 +282,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -305,7 +316,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-chart-pie" style="font-size: 36px;"></i> IOC Statistics</h1>
@@ -355,28 +366,23 @@
 											<div class="container">
 												<div class="row h-100 align-items-center">
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
-														<span class="d-block d-md-none"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
 														<span class="today-url"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
-														<span class="d-block d-md-none"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
 														<span class="today-domain"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
-														<span class="d-block d-md-none"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
 														<span class="today-ip"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
 														<span class="today-sha256"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
 														<span class="today-md5"></span>
 													</div>
 												</div> <!-- row -->
@@ -526,28 +532,23 @@
 											<div class="container">
 												<div class="row h-100 align-items-center">
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
-														<span class="d-block d-md-none"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
 														<span class="week-url"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
-														<span class="d-block d-md-none"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
 														<span class="week-domain"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
-														<span class="d-block d-md-none"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
 														<span class="week-ip"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
 														<span class="week-sha256"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
 														<span class="week-md5"></span>
 													</div>
 												</div> <!-- row -->
@@ -696,28 +697,23 @@
 											<div class="container">
 												<div class="row h-100 align-items-center">
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
-														<span class="d-block d-md-none"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
 														<span class="month-url"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
-														<span class="d-block d-md-none"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
 														<span class="month-domain"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
-														<span class="d-block d-md-none"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
 														<span class="month-ip"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
 														<span class="month-sha256"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
 														<span class="month-md5"></span>
 													</div>
 												</div> <!-- row -->
@@ -866,28 +862,23 @@
 											<div class="container">
 												<div class="row h-100 align-items-center">
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
-														<span class="d-block d-md-none"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-link" style="color: var(--tf-fg-0026e6);"></i> URLs</span>
 														<span class="year-url"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
-														<span class="d-block d-md-none"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-globe" style="color: var(--tf-fg-3399ff)"></i> Domains</span>
 														<span class="year-domain"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
-														<span class="d-block d-md-none"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-map-marker-alt" style="color: var(--tf-fg-02bf0f)"></i> IPs</span>
 														<span class="year-ip"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc34d);"></i> SHA256</span>
 														<span class="year-sha256"></span>
 													</div>
 													<div class="col h-100 d-flex flex-column" style="font-size: 16px;">
-														<span class="d-none d-md-block"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
-														<span class="d-block d-md-none"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i></span>
+														<span class="d-block tf-cnt-lbl"><i class="fas fa-file-alt" style="color: var(--tf-fg-ffc591);"></i> MD5</span>
 														<span class="year-md5"></span>
 													</div>
 												</div> <!-- row -->
@@ -1124,19 +1115,19 @@
 	<!-- js/demo/datatables-demo.js removed: targets #dataTable, which does not exist on this page (graphs uses #dataTableType*/#dataTableTag* tables, initialized in its own inline script below); confirmed no-op here -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=8"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script defer src="../vendor/chart.js/Chart.min.js"></script>
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
-	let tableTypesToday = $('#dataTableTypesToday').DataTable();
-	let tableTagsToday = $('#dataTableTagsToday').DataTable();
-	let tableTypesWeek = $('#dataTableTypesWeek').DataTable();
-	let tableTagsWeek = $('#dataTableTagsWeek').DataTable();
-	let tableTypesMonth = $('#dataTableTypesMonth').DataTable();
-	let tableTagsMonth = $('#dataTableTagsMonth').DataTable();
-	let tableTypesYear = $('#dataTableTypesYear').DataTable();
-	let tableTagsYear = $('#dataTableTagsYear').DataTable();
+	let tableTypesToday = $('#dataTableTypesToday').DataTable({ paging: false, searching: false, info: false });
+	let tableTagsToday = $('#dataTableTagsToday').DataTable({ lengthChange: false, searching: false });
+	let tableTypesWeek = $('#dataTableTypesWeek').DataTable({ paging: false, searching: false, info: false });
+	let tableTagsWeek = $('#dataTableTagsWeek').DataTable({ lengthChange: false, searching: false });
+	let tableTypesMonth = $('#dataTableTypesMonth').DataTable({ paging: false, searching: false, info: false });
+	let tableTagsMonth = $('#dataTableTagsMonth').DataTable({ lengthChange: false, searching: false });
+	let tableTypesYear = $('#dataTableTypesYear').DataTable({ paging: false, searching: false, info: false });
+	let tableTagsYear = $('#dataTableTagsYear').DataTable({ lengthChange: false, searching: false });
 
 	Chart.defaults.global.defaultFontFamily = "'Rubik', sans-serif";
 	// Colours come from the --tf-chart-* / --tf-ioc-* tokens (TweetFeed.chartTheme in js/utils.js): light values

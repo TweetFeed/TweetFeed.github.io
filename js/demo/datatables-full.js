@@ -3,6 +3,8 @@ $(document).ready(function() {
     $('#dataTableFull thead tr').clone(true).appendTo( '#dataTableFull thead' );
     $('#dataTableFull thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
+        // Icon-only columns (X, VirusTotal) have no text: a filter box there filters nothing.
+        if ( !title.trim() ) { $(this).empty(); return; }
         $(this).html( '<input type="text" placeholder="'+title+'" />' );
  
         $( 'input', this ).on( 'keyup change', function () {
@@ -19,6 +21,19 @@ $(document).ready(function() {
         "pageLength": 10,
         orderCellsTop: true,
         fixedHeader: true,
+        // deferRender: week.csv has ~4,900 rows; only the rows of the visible page
+        // get a <tr>. Mobile column classes come from columnDefs and the type tint
+        // (url/domain/ip/sha256/md5 -> the row colour) from createdRow, so nothing
+        // has to touch every node after the data is added.
+        deferRender: true,
+        // For Mobile: only show User (1), Value (3). Hide Date (0), Type (2), Tags (4), X (5), VT (6)
+        columnDefs: [
+            { targets: [0, 2, 5, 6], className: 'd-none d-lg-table-cell' },
+            { targets: 4, className: 'd-none d-lg-table-cell tableTags' }
+        ],
+        createdRow: function ( row, rowData ) {
+            $(row).addClass( rowData[2] );
+        },
         language: {
             // Custom empty-state messaging matching the design-system .empty-state
             // component (icon + headline + hint). Mirrors dashboard.html's

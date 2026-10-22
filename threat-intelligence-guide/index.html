@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - Threat Intelligence guide">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
@@ -65,8 +67,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -147,16 +149,46 @@
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
 		"mainEntity": [
-			{"@type": "Question", "name": "What is Threat Intelligence?",                                           "acceptedAnswer": {"@type": "Answer", "text": "Threat Intelligence is processed information about adversaries and their tactics, techniques and procedures (TTPs), used by security teams to make better defense decisions. It spans three levels: strategic (board-level briefings on threat actor motives), operational (campaign reports tied to specific threat groups) and tactical (concrete indicators such as URLs, IPs and file hashes that can be ingested into a SIEM or firewall)."}},
-			{"@type": "Question", "name": "What is an IOC?",                                                        "acceptedAnswer": {"@type": "Answer", "text": "An indicator of compromise (IOC) is an artefact observed during or after an intrusion that suggests malicious activity. Common IOC types are URLs, domains, IP addresses and file hashes (MD5, SHA-1, SHA-256). IOCs are the most volatile layer of the Pyramid of Pain: easy to collect, easy for adversaries to rotate, but immediately actionable."}},
-			{"@type": "Question", "name": "How quickly do IOCs become stale?",                                      "acceptedAnswer": {"@type": "Answer", "text": "It depends on the type. URLs and IPs often rotate within hours to days as adversaries take down infrastructure. Domains can persist for weeks. File hashes are essentially permanent (a hash uniquely identifies a binary). Configure your SIEM to honour different time-to-live values per IOC type, or you risk blocking legitimate traffic on stale entries."}},
-			{"@type": "Question", "name": "Should I block traffic based on IOCs alone?",                            "acceptedAnswer": {"@type": "Answer", "text": "Block on high-confidence IOCs (file hashes, exact malicious URLs) but treat IPs and domains as enrichment signals first. IPs in particular have high false-positive rates because shared hosting, CDNs and cloud providers will reuse them across legitimate and malicious tenants. Cross-reference VirusTotal, urlscan.io or your sandbox before automated blocking."}},
-			{"@type": "Question", "name": "What is MITRE ATT&CK?",                                                  "acceptedAnswer": {"@type": "Answer", "text": "MITRE ATT&CK is a knowledge base of adversary tactics, techniques and procedures maintained by the MITRE Corporation. It organises observed adversary behaviour into 14 tactics (initial access, persistence, lateral movement, exfiltration, etc.) and over 200 techniques. Most Threat Intelligence reports and detection rules cite ATT&CK technique IDs (T1059, T1071) so analysts can normalise across vendors."}},
-			{"@type": "Question", "name": "What is an APT?",                                                        "acceptedAnswer": {"@type": "Answer", "text": "Advanced persistent threat (APT) describes a well-resourced adversary, often nation-state aligned, that maintains long-term access to a target environment. APTs are tracked by aliases that vary by vendor (Kimsuky / Velvet Chollima / TA427, APT29 / Cozy Bear / Midnight Blizzard) because attribution analysts work from different telemetry. Same actor, different name."}},
-			{"@type": "Question", "name": "OSINT vs commercial Threat Intelligence: which should I use?",            "acceptedAnswer": {"@type": "Answer", "text": "OSINT feeds (TweetFeed, abuse.ch, AlienVault OTX) are free, broad and high-volume but noisier and less curated. Commercial feeds (Recorded Future, Mandiant Advantage, CrowdStrike Falcon Intelligence) are expensive but offer SLAs, analyst access and lower false-positive rates. Most mature SOCs blend both: OSINT for breadth and budget, commercial for depth and analyst-grade context."}},
-			{"@type": "Question", "name": "How fresh should my Threat Intelligence feed be?",                              "acceptedAnswer": {"@type": "Answer", "text": "Match feed cadence to IOC volatility. URL feeds should refresh in minutes (TweetFeed updates every 15 minutes; commercial feeds are real-time). Domain feeds in hours. File-hash feeds can refresh daily. Stale URL feeds are essentially useless: a phishing URL up an hour ago is often offline by the time a daily-refresh feed reaches you."}},
-			{"@type": "Question", "name": "Is TweetFeed enterprise-ready?",                                          "acceptedAnswer": {"@type": "Answer", "text": "TweetFeed is a free OSINT feed: high recall, lower precision, no SLA, no analyst support. It is suitable as a complement to commercial intelligence or as the primary feed for resource-constrained teams. Treat IOCs as leads to triage, not as verdicts. Always cross-reference before automated blocking."}},
-			{"@type": "Question", "name": "Where can I learn more about Threat Intelligence?",                       "acceptedAnswer": {"@type": "Answer", "text": "Start with the SANS Cyber Threat Intelligence resources, the MITRE ATT&CK framework documentation, NIST SP 800-150 (Guide to Cyber Threat Information Sharing) and the OWASP Top 10 for application-layer context. For practitioner blogs, follow Mandiant, Microsoft Threat Intelligence and Cisco Talos. Most ATT&CK technique pages link to the relevant primary sources."}}
+			{
+				"@type": "Question",
+				"name": "Should I block traffic based on IOCs alone?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Only for high-confidence IOCs like file hashes and exact malicious URLs. Treat IPs and domains as signals first and check VirusTotal before blocking."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "What is an APT?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "A well-resourced adversary, often nation-state aligned, with long-term access to a target. Vendors use different names for the same actor, like APT29 and Cozy Bear."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "OSINT vs commercial Threat Intelligence: which should I use?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "OSINT feeds are free, broad and noisy. Commercial feeds cost more but offer SLAs and analyst support, so most SOCs use both."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "How fresh should my Threat Intelligence feed be?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Refresh URLs in minutes, domains in hours and hashes daily. A phishing URL seen an hour ago is often offline by the time a daily feed arrives."
+				}
+			},
+			{
+				"@type": "Question",
+				"name": "Where can I learn more about Threat Intelligence?",
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": "Start with SANS CTI resources, MITRE ATT&CK, NIST SP 800-150 and the OWASP Top 10. For blogs, follow Mandiant, Microsoft Threat Intelligence and Cisco Talos."
+				}
+			}
 		]
 	}
 	</script>
@@ -239,7 +271,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -253,7 +285,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -351,14 +383,14 @@
 				<!-- ============================================================ -->
 				<h3 class="section-heading">In this guide</h3>
 				<div class="row">
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#what-is-ti" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 1</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">What is Threat Intelligence?</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#ioc-lifecycle" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 2</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">IOC types and lifecycle</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#osint-vs-commercial" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 3</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">OSINT vs commercial feeds</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#mitre-attack" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 4</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">MITRE ATT&amp;CK basics</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#tweetfeed-fits" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 5</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">How TweetFeed fits</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#pitfalls" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 6</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Common pitfalls</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#glossary" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 7</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Glossary</h4></div></a></div>
-					<div class="col-md-4 col-sm-6 col-12 mb-3"><a href="#faq" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-3" style="background:var(--tf-bg-fff);"><span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 8</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">FAQ</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#what-is-ti" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 1</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">What is Threat Intelligence?</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#ioc-lifecycle" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 2</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">IOC types and lifecycle</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#osint-vs-commercial" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 3</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">OSINT vs commercial feeds</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#mitre-attack" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 4</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">MITRE ATT&amp;CK basics</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#tweetfeed-fits" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 5</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">How TweetFeed fits</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#pitfalls" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 6</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Common pitfalls</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#glossary" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 7</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">Glossary</h4></div></a></div>
+					<div class="col-6 col-md-4 mb-2"><a href="#faq" class="text-decoration-none" style="color:inherit;"><div class="card h-100 p-2" style="background:var(--tf-bg-fff);"><span class="d-none d-md-block" style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif;">Section 8</span><h4 class="section-heading" style="margin:0.2rem 0 0 0;">FAQ</h4></div></a></div>
 				</div>
 
 				<!-- ============================================================ -->
@@ -367,13 +399,17 @@
 				<h3 id="what-is-ti" class="section-heading">1. What is Threat Intelligence?</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><b>Threat Intelligence</b> is processed information about adversaries and their tactics, techniques and procedures (TTPs), used by security teams to make better defense decisions. It is consumed at three levels:</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><b>Threat Intelligence</b> is processed information about adversaries and their TTPs, used to make better defense decisions. It works at three levels:</p>
 						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Strategic:</b> board-level briefings about threat actor motives, geopolitical context and long-term trends. Output: written reports.</li>
 							<li><b>Operational:</b> campaign reports tied to specific threat groups (e.g. "Kimsuky targeting US think tanks Q2 2026"). Output: TTP narratives, victimology, infrastructure clusters.</li>
 							<li><b>Tactical:</b> concrete indicators (URLs, IPs, hashes) that can be ingested into a SIEM, firewall or EDR. Output: machine-readable feeds.</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0;">Threat Intelligence is more than IOC blocklists. It includes context (who, why, when), attribution (which group), motive (financial, espionage, hacktivism) and the relationship between an indicator and the broader campaign. The list of URLs is the easiest layer to produce and the easiest for adversaries to rotate, which is why mature programs invest beyond IOCs into TTP-level detection.</p>
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
+							<li>More than blocklists: adds who, why and when.</li>
+							<li>Adds attribution (which group) and motive (money, spying, activism).</li>
+							<li>URLs rotate fastest, so mature teams also detect TTPs.</li>
+						</ul>
 					</div>
 				</div>
 
@@ -383,7 +419,7 @@
 				<h3 id="ioc-lifecycle" class="section-heading">2. IOC types and lifecycle</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">An <b>indicator of compromise</b> is an artefact observed during or after an intrusion that suggests malicious activity. The four types you will meet most often:</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">An <b>indicator of compromise</b> (IOC) is an artefact that suggests malicious activity. The four main types:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
 								<colgroup>
@@ -415,8 +451,8 @@
 							<li><b>Action:</b> blocking, alerting or monitoring; routed to SIEM, firewall, EDR, MISP or SOAR.</li>
 							<li><b>Expiration:</b> aged out by per-type TTL. URLs after a few days, IPs after weeks, hashes effectively never.</li>
 						</ul>
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.6; color:var(--tf-fg-737373); margin-bottom:0.85rem;">Without per-type TTL, a SIEM rule built on a 6-month-old URL list will alert on legitimate traffic to a domain that the original adversary lost months ago.</p>
-						<p style="font-family:'Rubik',sans-serif; font-size:14px; line-height:1.6; margin-bottom:0;">For per-type detail, see the <a href="../ioc-types/" class="text-decoration-none"><b>5 IOC type hubs</b></a> covering format, prevalence and best use of URLs, domains, IPs, MD5 and SHA-256.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.6; color:var(--tf-fg-737373); margin-bottom:0.85rem;">Without per-type TTL, a rule built on a 6-month-old URL list alerts on legitimate traffic.</p>
+						<p style="font-family:'Rubik',sans-serif; font-size:14px; line-height:1.6; margin-bottom:0;">Per-type detail: see the <a href="../ioc-types/" class="text-decoration-none"><b>5 IOC type hubs</b></a>.</p>
 					</div>
 				</div>
 
@@ -426,7 +462,7 @@
 				<h3 id="osint-vs-commercial" class="section-heading">3. OSINT vs commercial feeds</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">There is no single best feed. Most mature SOCs ingest both OSINT and commercial intelligence; the trick is matching feed properties to the use case.</p>
+						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;">No feed is best. Most mature SOCs use both OSINT and commercial intelligence.</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem;">
 								<colgroup>
@@ -452,7 +488,10 @@
 								</tbody>
 							</table>
 						</div>
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0;">A common pattern: OSINT feeds drive automated proxy and DNS blocks at scale; commercial intelligence drives incident response, attribution and executive briefings. The two are complementary, not substitutes.</p>
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
+							<li>OSINT drives automated blocks at scale.</li>
+							<li>Commercial intel drives incident response and attribution.</li>
+						</ul>
 					</div>
 				</div>
 
@@ -462,7 +501,11 @@
 				<h3 id="mitre-attack" class="section-heading">4. MITRE ATT&amp;CK basics</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.85rem;"><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a> is a knowledge base of adversary tactics, techniques and procedures maintained by the MITRE Corporation. It organises observed adversary behaviour into <b>14 tactics</b> (the "why" of an action) and over <b>200 techniques</b> (the "how"). Most Threat Intelligence reports and detection rules cite ATT&amp;CK technique IDs (e.g. <code>T1059</code> for Command and Scripting Interpreter, <code>T1071</code> for Application Layer Protocol) so analysts can normalise across vendors.</p>
+						<ul style="margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
+							<li><a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a> is MITRE's catalogue of attacker behaviour.</li>
+							<li><b>14 tactics</b> (the why) and <b>200+ techniques</b> (the how).</li>
+							<li>Reports and detections cite IDs like <code>T1059</code> and <code>T1071</code>.</li>
+						</ul>
 						<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.7; margin-bottom:0.5rem;">The 14 ATT&amp;CK Enterprise tactics, in execution order:</p>
 						<ul style="columns:2; -webkit-columns:2; -moz-columns:2; margin-bottom:0.85rem; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:14px; line-height:1.7;">
 							<li>Reconnaissance</li>
@@ -503,7 +546,7 @@
 								<a href="../tags/" class="text-decoration-none" style="color:inherit;">
 									<div class="card h-100 p-3" style="background:var(--tf-bg-f2f2f2); border:1px solid var(--tf-bd-1c1c1c);">
 										<span style="color:var(--tf-fg-737373); font-size:12px; font-family:'Rubik',sans-serif; text-transform:uppercase; letter-spacing:0.04em;">Browse by tag</span>
-										<h4 class="section-heading" style="margin:0.3rem 0 0.4rem 0;">25 curated threat tags</h4>
+										<h4 class="section-heading" style="margin:0.3rem 0 0.4rem 0;">26 curated threat tags</h4>
 										<p style="font-size:13px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.5; margin:0;">APT groups, malware families and TTPs. Each tag has a dedicated landing page with the live IOC stream and reference content.</p>
 									</div>
 								</a>
@@ -529,10 +572,10 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li><b>Blocking on IPs alone.</b> Shared hosting and CDNs reuse IPs across legitimate and malicious tenants. An IP is enrichment, not a verdict. Block only with corroborating signals (active sample, beacon traffic).</li>
-							<li><b>Ignoring TTL.</b> A six-month-old URL feed is mostly noise. Configure per-type TTL: hours for URLs, days for IPs, weeks for domains, never for hashes.</li>
-							<li><b>Treating IOC = verdict.</b> An IOC is a lead. Cross-reference VirusTotal, urlscan.io, your sandbox, or pivot through passive DNS before automating action.</li>
-							<li><b>Single-feed dependency.</b> Each feed has blind spots. Stack two or three feeds (one OSINT, one commercial, one peer-shared via ISAC/ISAO) and dedup on the way in.</li>
+							<li><b>Blocking on IPs alone.</b> Shared hosting reuses IPs. Add a second signal.</li>
+							<li><b>Ignoring TTL.</b> Expire URLs in hours, IPs in days, domains in weeks.</li>
+							<li><b>Treating an IOC as a verdict.</b> It is a lead. Check VirusTotal first.</li>
+							<li><b>One feed only.</b> Every feed has blind spots. Stack two or three.</li>
 						</ul>
 					</div>
 				</div>
@@ -567,16 +610,11 @@
 				<!-- ============================================================ -->
 				<section class="faq-section">
 					<h3 id="faq" class="section-heading">8. Frequently asked questions</h3>
-					<details><summary>What is Threat Intelligence?</summary><p>Threat Intelligence is processed information about adversaries and their tactics, techniques and procedures (TTPs), used by security teams to make better defense decisions. It spans three levels: strategic (board-level briefings on threat actor motives), operational (campaign reports tied to specific threat groups) and tactical (concrete indicators such as URLs, IPs and file hashes that can be ingested into a SIEM or firewall).</p></details>
-						<details><summary>What is an IOC?</summary><p>An indicator of compromise (IOC) is an artefact observed during or after an intrusion that suggests malicious activity. Common IOC types are URLs, domains, IP addresses and file hashes (MD5, SHA-1, SHA-256). IOCs are the most volatile layer of the Pyramid of Pain: easy to collect, easy for adversaries to rotate, but immediately actionable.</p></details>
-						<details><summary>How quickly do IOCs become stale?</summary><p>It depends on the type. URLs and IPs often rotate within hours to days as adversaries take down infrastructure. Domains can persist for weeks. File hashes are essentially permanent (a hash uniquely identifies a binary). Configure your SIEM to honour different time-to-live values per IOC type, or you risk blocking legitimate traffic on stale entries.</p></details>
-						<details><summary>Should I block traffic based on IOCs alone?</summary><p>Block on high-confidence IOCs (file hashes, exact malicious URLs) but treat IPs and domains as enrichment signals first. IPs in particular have high false-positive rates because shared hosting, CDNs and cloud providers will reuse them across legitimate and malicious tenants. Cross-reference VirusTotal, urlscan.io or your sandbox before automated blocking.</p></details>
-						<details><summary>What is MITRE ATT&amp;CK?</summary><p>MITRE ATT&amp;CK is a knowledge base of adversary tactics, techniques and procedures maintained by the MITRE Corporation. It organises observed adversary behaviour into 14 tactics (initial access, persistence, lateral movement, exfiltration, etc.) and over 200 techniques. Most Threat Intelligence reports and detection rules cite ATT&amp;CK technique IDs (T1059, T1071) so analysts can normalise across vendors.</p></details>
-						<details><summary>What is an APT?</summary><p>Advanced persistent threat (APT) describes a well-resourced adversary, often nation-state aligned, that maintains long-term access to a target environment. APTs are tracked by aliases that vary by vendor (Kimsuky / Velvet Chollima / TA427, APT29 / Cozy Bear / Midnight Blizzard) because attribution analysts work from different telemetry. Same actor, different name.</p></details>
-						<details><summary>OSINT vs commercial Threat Intelligence: which should I use?</summary><p>OSINT feeds (TweetFeed, abuse.ch, AlienVault OTX) are free, broad and high-volume but noisier and less curated. Commercial feeds (Recorded Future, Mandiant Advantage, CrowdStrike Falcon Intelligence) are expensive but offer SLAs, analyst access and lower false-positive rates. Most mature SOCs blend both: OSINT for breadth and budget, commercial for depth and analyst-grade context.</p></details>
-						<details><summary>How fresh should my Threat Intelligence feed be?</summary><p>Match feed cadence to IOC volatility. URL feeds should refresh in minutes (TweetFeed updates every 15 minutes; commercial feeds are real-time). Domain feeds in hours. File-hash feeds can refresh daily. Stale URL feeds are essentially useless: a phishing URL up an hour ago is often offline by the time a daily-refresh feed reaches you.</p></details>
-						<details><summary>Is TweetFeed enterprise-ready?</summary><p>TweetFeed is a free OSINT feed: high recall, lower precision, no SLA, no analyst support. It is suitable as a complement to commercial intelligence or as the primary feed for resource-constrained teams. Treat IOCs as leads to triage, not as verdicts. Always cross-reference before automated blocking.</p></details>
-						<details><summary>Where can I learn more about Threat Intelligence?</summary><p>Start with the SANS Cyber Threat Intelligence resources, the <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a> framework documentation, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf" target="_blank" rel="noopener noreferrer">NIST SP 800-150</a> (Guide to Cyber Threat Information Sharing) and the <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">OWASP Top 10</a> for application-layer context. For practitioner blogs, follow Mandiant, Microsoft Threat Intelligence and Cisco Talos. Most ATT&amp;CK technique pages link to the relevant primary sources.</p></details>
+					<details><summary>Should I block traffic based on IOCs alone?</summary><p>Only for high-confidence IOCs like file hashes and exact malicious URLs. Treat IPs and domains as signals first and check VirusTotal before blocking.</p></details>
+					<details><summary>What is an APT?</summary><p>A well-resourced adversary, often nation-state aligned, with long-term access to a target. Vendors use different names for the same actor, like APT29 and Cozy Bear.</p></details>
+					<details><summary>OSINT vs commercial Threat Intelligence: which should I use?</summary><p>OSINT feeds are free, broad and noisy. Commercial feeds cost more but offer SLAs and analyst support, so most SOCs use both.</p></details>
+					<details><summary>How fresh should my Threat Intelligence feed be?</summary><p>Refresh URLs in minutes, domains in hours and hashes daily. A phishing URL seen an hour ago is often offline by the time a daily feed arrives.</p></details>
+					<details><summary>Where can I learn more about Threat Intelligence?</summary><p>Start with SANS CTI resources, <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK</a>, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf" target="_blank" rel="noopener noreferrer">NIST SP 800-150</a> and the <a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">OWASP Top 10</a>. For blogs, follow Mandiant, Microsoft Threat Intelligence and Cisco Talos.</p></details>
 				</section>
 
 				<!-- ============================================================ -->
@@ -690,12 +728,12 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
-	<script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
-	</script>
+	});</script>
 </body>
 
 </html>

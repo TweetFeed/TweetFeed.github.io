@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -67,8 +69,8 @@
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -284,6 +286,8 @@
 		   that uses them. */
 		/* Colour, size and family come from .tf-prose ul; only rhythm here. */
 		ul.fds-facts { margin: 0 0 1rem; padding-left: 1.25rem; line-height: 1.6; }
+		/* Links inside the facts lists were told apart from the text only by colour. */
+		ul.fds-facts a { text-decoration: underline !important; }
 
 		/* ── Window card internals ────────────────────────────────────────
 		   The five per-type counts were five bare coloured icons in a nested
@@ -456,7 +460,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -470,7 +474,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -504,7 +508,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-rss" style="font-size: 36px;"></i> IOC Feeds</h1>
@@ -560,8 +564,8 @@
 				<h3 id="csv" class="section-heading tf-sect-head">CSV feeds</h3>
 				<p>One row per IOC: date, reporter, type, value, tags and the tweet it came from. Windows roll forward and are rebuilt every 15 minutes.</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Since 00:00 UTC today"></i>
 								<p class="fds-card-range"><em class="fds-range-today"></em></p>
@@ -578,8 +582,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 7 days"></i>
 								<p class="fds-card-range"><em class="fds-range-week"></em></p>
@@ -596,8 +600,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 30 days"></i>
 								<p class="fds-card-range"><em class="fds-range-month"></em></p>
@@ -614,8 +618,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Last 365 days"></i>
 								<p class="fds-card-range"><em class="fds-range-year"></em></p>
@@ -646,8 +650,8 @@
 				</ul>
 				<p class="fds-grid-label">DNS and host-level blocking</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One domain per line, Pi-hole/dnsmasq style"></i>
 								<hr>
@@ -655,8 +659,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Hosts</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="0.0.0.0 hosts-file format"></i>
 								<hr>
@@ -664,8 +668,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">AdGuard</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="AdGuard Home ||domain^ syntax"></i>
 								<hr>
@@ -673,8 +677,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">dnsmasq</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="dnsmasq address=/domain/0.0.0.0 format"></i>
 								<hr>
@@ -685,8 +689,8 @@
 				</div>
 				<p class="fds-grid-label">Resolver, firewall and proxy</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">RPZ</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="DNS Response Policy Zone for BIND, Unbound and PowerDNS Recursor"></i>
 								<hr>
@@ -694,8 +698,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One IP per line, for firewalls"></i>
 								<hr>
@@ -703,8 +707,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Full URL per line, for proxies, IDS and enrichment"></i>
 								<hr>
@@ -715,8 +719,8 @@
 				</div>
 				<p class="fds-grid-label">IDS and SIEM</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Zeek</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Zeek Intelligence Framework file, loaded via redef Intel::read_files"></i>
 								<hr>
@@ -724,8 +728,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Wazuh domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Wazuh CDB list, lookup=match_key on a domain field"></i>
 								<hr>
@@ -733,8 +737,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Wazuh IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Wazuh CDB list, lookup=address_match_key on srcip/dstip"></i>
 								<hr>
@@ -745,8 +749,8 @@
 				</div>
 				<p class="fds-grid-label">Corroborated subsets</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of domains.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
 								<hr>
@@ -754,8 +758,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">IPs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of ips.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
 								<hr>
@@ -763,8 +767,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">URLs</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of urls.txt also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum"></i>
 								<hr>
@@ -775,8 +779,8 @@
 				</div>
 				<p class="fds-grid-label">Hashes and newly-registered domains</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">SHA-256</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One lowercase hex SHA-256 per line, for EDR/AV bulk import"></i>
 								<hr>
@@ -784,8 +788,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">MD5</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="One lowercase hex MD5 per line, for EDR/AV bulk import"></i>
 								<hr>
@@ -793,8 +797,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">NRD domains</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Subset of domains.txt with RDAP apex creation date 30 days or less before first report"></i>
 								<hr>
@@ -809,8 +813,8 @@
 				<h3 id="rss" class="section-heading tf-sect-head">RSS firehose</h3>
 				<p>Every IOC as it lands, newest first, across all types, reporters and tags.</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">RSS feed</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Download the RSS feed of IOCs"></i>
 								<hr>
@@ -821,13 +825,13 @@
 				</div>
 				<h3 id="per-tag-rss" class="section-heading tf-sect-head">Per-tag RSS</h3>
 				<p>One feed per active tag, where active means at least one hit in the last 7 days. Browse them all from the <a class="text-decoration-none" href="../tags/">Tag index</a>; each tag landing page also exposes its feed through <code>&lt;link rel="alternate"&gt;</code>.</p>
-				<pre class="code-block">https://tweetfeed.live/rss/tag/<b class="tf-ph">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the phishing tag" title="Copy example (phishing)"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/rss/tag/<b class="tf-ph">&lt;slug&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/tag/phishing.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the phishing tag" data-tip="Copy example (phishing)"></i></pre>
 				<h3 id="per-type-rss" class="section-heading tf-sect-head">Per-type RSS</h3>
 				<p>One feed per IOC type. Always available, no activity threshold.</p>
-				<pre class="code-block">https://tweetfeed.live/rss/type/<b class="tf-ph">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the url type" title="Copy example (url)"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/rss/type/<b class="tf-ph">&lt;url|domain|ip|sha256|md5&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/type/url.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for the url type" data-tip="Copy example (url)"></i></pre>
 				<h3 id="per-user-rss" class="section-heading tf-sect-head">Per-user RSS</h3>
 				<p>One feed per reporter active in the last 7 days. Handles are lowercase. Quiet or unknown handles return an error.</p>
-				<pre class="code-block">https://tweetfeed.live/rss/user/<b class="tf-ph">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/phishunt_io.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for phishunt_io" title="Copy example (phishunt_io)"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/rss/user/<b class="tf-ph">&lt;handle&gt;</b>.xml <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/rss/user/phishunt_io.xml" role="button" tabindex="0" aria-label="Copy the example feed URL for phishunt_io" data-tip="Copy example (phishunt_io)"></i></pre>
 				<hr class="divider">
 				<h2 id="integrate" class="section-heading tf-block-head">Integrate</h2>
 				<p>Formats that plug straight into a Threat Intelligence platform.</p>
@@ -836,7 +840,7 @@
 				<p>Native MISP format: <b>one Event per day</b>, 365 days of history, rebuilt every 15 minutes.</p>
 				<p><b>MISP 2.5.47 or newer</b> ships TweetFeed in the default feed list: go to <em>Sync Actions, List Feeds</em>, click <em>Load default feed metadata</em> and enable <b>TweetFeed</b>. Older instances add the feed by hand:</p>
 				<p>Paste this into MISP under <em>Sync Actions, Feeds, Add</em>. It is a feed base URL, not a page: MISP appends <code>/manifest.json</code> itself, so opening it in a browser just brings you back here.</p>
-				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL" title="Copy"></i></pre>
+				<pre class="code-block">https://tweetfeed.live/misp <i class="tf-copy far fa-copy" data-copy="https://tweetfeed.live/misp" role="button" tabindex="0" aria-label="Copy the MISP feed base URL"></i></pre>
 				<ul class="fds-facts">
 					<li>Point MISP at the directory, not at <code>manifest.json</code>. Giving it the manifest file makes it fetch <code>/misp/manifest.json/manifest.json</code>, which does not exist.</li>
 					<li>Only the current day's Event changes between pulls, so after the first sync your instance re-fetches one file.</li>
@@ -844,8 +848,8 @@
 					<li>Enrichment: the <b>TweetFeed Lookup</b> module in <a href="https://github.com/MISP/misp-modules" target="_blank" rel="noopener noreferrer external">misp-modules</a> 3.0.10 or newer (expansion and hover, no API key) adds the reporter, source tweets, corroboration and campaign membership to IP, domain, hostname, URL, MD5 and SHA-256 attributes. Enable <code>Plugin.Enrichment_tweetfeed_enabled</code> under Administration, Server Settings, Plugin settings.</li>
 				</ul>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of every daily Event - the file MISP fetches first"></i>
 								<hr>
@@ -853,8 +857,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Feed cache</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="md5(value),event-uuid per attribute - what MISP's Cache feed correlates against (last 31 days)"></i>
 								<hr>
@@ -866,8 +870,8 @@
 				<h3 id="stix" class="section-heading tf-sect-head">STIX 2.1 bundles</h3>
 				<p>Indicator bundles for SIEM and Threat Intelligence platforms. TLP:CLEAR, with deterministic UUIDs so a re-pull dedupes cleanly. Need a live pull instead of static bundles? See <a class="text-decoration-none" href="../api/#taxii">TAXII 2.1</a> in the API docs.</p>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Manifest</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="Index of all bundles plus indicator counts"></i>
 								<hr>
@@ -875,8 +879,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 24h of IOCs"></i>
 								<hr>
@@ -884,8 +888,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 7 days of IOCs"></i>
 								<hr>
@@ -893,8 +897,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span> <i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="STIX bundle with the last 31 days of IOCs"></i>
 								<hr>
@@ -909,7 +913,7 @@
 				</ul>
 				<h3 id="diff" class="section-heading tf-sect-head">Diff endpoint (incremental sync)</h3>
 				<p>Fetch only the IOCs added after a given timestamp. Replace the placeholder with your last sync time, in the <code>Z</code> form for unambiguous UTC. Same <code>/&lt;filter1&gt;/&lt;filter2&gt;</code> syntax as the firehose API. Returns <code>410 Gone</code> if the timestamp is more than 365 days old.</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<b class="tf-ph">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy the example request with a 2026-05-01 timestamp" title="Copy example"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<b class="tf-ph">&lt;ISO8601&gt;</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy the example request with a 2026-05-01 timestamp" data-tip="Copy example"></i></pre>
 				<hr class="divider">
 				<h2 class="section-heading tf-block-head">Browse by IOC type</h2>
 				<p>Need only one indicator type? Each type has its own feed page with stats, recent samples, formats and a FAQ.</p>
@@ -1063,15 +1067,15 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- DataTables (js + css) and js/demo/datatables-demo.js all removed: this page has no <table>. Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
-	<script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	// One counts.json fetch feeds both the headline figures and the four
 	// window cards. Replaces the 4 CSV fetches (year.csv is ~4MB / 120k rows)
 	// that used to block the main thread during LCP; counts.json is ~500 bytes.
@@ -1203,12 +1207,12 @@
 			});
 		}});
 	});
-	</script>
-	<script>
+	});</script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
-	</script>
+	});</script>
 </body>
 
 </html>

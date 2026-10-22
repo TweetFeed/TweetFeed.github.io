@@ -55,12 +55,14 @@
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:alt" content="TweetFeed - docs">
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -115,6 +117,11 @@
 		]
 	}
 	</script>
+	<style>
+		.tf-bullets { padding-left: 1.2rem; }
+		.tf-bullets li { margin-bottom: 0.2rem; }
+		.tf-bullets .tf-bullets { margin: 0.15rem 0 0.3rem; }
+	</style>
 </head>
 
 <body id="page-top">
@@ -180,7 +187,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -194,7 +201,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -289,21 +296,47 @@
 
 				<p style="font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.75; margin:0 0 1rem;">Pick a section from the sidebar. Everything is free, open and CC0.</p>
 
-				<h3 class="section-heading tf-block-head">Where to start</h3>
+				<h2 class="section-heading tf-block-head">Where to start</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.85;">
-							<li><b>New to Threat Intelligence?</b> Read the <a href="../threat-intelligence-guide/" class="text-decoration-none">Threat Intelligence guide</a> - ~1,640 words on IOCs, OSINT vs commercial, MITRE ATT&amp;CK basics.</li>
-							<li><b>Looking for a specific actor or family?</b> Browse the <a href="../tags/" class="text-decoration-none">tag index</a> (25 tags: Kimsuky, Lazarus, Cobalt&nbsp;Strike, AsyncRAT, Lumma&hellip;).</li>
-							<li><b>Need only a particular IOC type?</b> Jump to the <a href="../ioc-types/" class="text-decoration-none">IOC type hubs</a> (URLs, domains, IPs, MD5, SHA-256).</li>
-							<li><b>Want the bigger picture?</b> Browse <a href="../campaigns/" class="text-decoration-none">AI Campaigns</a> - daily AI-clustered threat campaigns from the last 30 days of community IOCs.</li>
-							<li><b>Building an integration?</b> Start with the <a href="../api/" class="text-decoration-none">REST API</a> reference. For LLM/agent workflows see <a href="../agents/" class="text-decoration-none">MCP and Agents</a>.</li>
-							<li><b>Operating a SOC?</b> The <a href="../hunt/" class="text-decoration-none">Threat hunting</a> page has copy-paste recipes for MISP, OpenCTI, Splunk, KQL and IntelOwl.</li>
+							<li><b>New to Threat Intelligence?</b> Read the <a href="../threat-intelligence-guide/" class="text-decoration-none">Threat Intelligence guide</a>.
+								<ul class="tf-bullets">
+									<li>~1,640 words.</li>
+									<li>Covers IOCs, OSINT vs commercial, MITRE ATT&amp;CK basics.</li>
+								</ul>
+							</li>
+							<li><b>Looking for a specific actor or family?</b> Browse the <a href="../tags/" class="text-decoration-none">tag index</a>.
+								<ul class="tf-bullets">
+									<li>25 tags: Kimsuky, Lazarus, Cobalt&nbsp;Strike, AsyncRAT, Lumma&hellip;</li>
+								</ul>
+							</li>
+							<li><b>Need only a particular IOC type?</b> Jump to the <a href="../ioc-types/" class="text-decoration-none">IOC type hubs</a>.
+								<ul class="tf-bullets">
+									<li>URLs, domains, IPs, MD5, SHA-256.</li>
+								</ul>
+							</li>
+							<li><b>Want the bigger picture?</b> Browse <a href="../campaigns/" class="text-decoration-none">AI Campaigns</a>.
+								<ul class="tf-bullets">
+									<li>Daily AI-clustered threat campaigns.</li>
+									<li>From the last 30 days of community IOCs.</li>
+								</ul>
+							</li>
+							<li><b>Building an integration?</b> Start with the <a href="../api/" class="text-decoration-none">REST API</a> reference.
+								<ul class="tf-bullets">
+									<li>For LLM/agent workflows see <a href="../agents/" class="text-decoration-none">MCP and Agents</a>.</li>
+								</ul>
+							</li>
+							<li><b>Operating a SOC?</b> The <a href="../hunt/" class="text-decoration-none">Threat hunting</a> page has copy-paste recipes.
+								<ul class="tf-bullets">
+									<li>For MISP, OpenCTI, Splunk, KQL and IntelOwl.</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 				</div>
 
-				<h3 class="section-heading tf-block-head">At a glance</h3>
+				<h2 class="section-heading tf-block-head">At a glance</h2>
 				<div class="card mb-4">
 					<div class="card-body">
 						<table class="table table-sm tf-glance" style="margin-bottom:0; font-family:'Rubik',sans-serif; font-size:14px;">
@@ -428,9 +461,9 @@
 			<!-- End of Footer -->
 		</div>
 	</div>
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 </body>
 
 </html>

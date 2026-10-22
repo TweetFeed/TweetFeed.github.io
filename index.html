@@ -69,8 +69,8 @@
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="css/table.css?v=7" rel="stylesheet">
-	<link href="css/index.css?v=74" rel="stylesheet">
-	<link href="css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="css/index.css?v=75" rel="stylesheet">
+	<link href="css/tweetfeed.css?v=75" rel="stylesheet">
 	<style>
 		/* CLS fix: reserve the today-counts row height. countTypes() fills the
 		   empty .row.today with one line of bold counts after the today.csv
@@ -237,7 +237,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -251,7 +251,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -292,7 +292,6 @@
 					<hr>
 					<div class="alert tf-ink-2" role="alert" style="font-size: 16px;font-family: 'Rubik', sans-serif;">
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community on Twitter/X.
-						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
 					<div class="tf-agent-setup">
 						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
@@ -358,7 +357,6 @@
 					<h1 class="toph1">TweetFeed</h1>
 					<div class="alert tf-ink-2" role="alert" style="font-size: 16px;font-family: 'Rubik', sans-serif;">
 						TweetFeed collects Indicators of Compromise (IOCs) shared by the infosec community on Twitter/X.
-						<br>Here you will find malicious <b>URLs</b>, <b>domains</b>, <b>IPs</b>, and <b>SHA256</b>/<b>MD5</b> hashes.
 					</div>
 					<div class="tf-agent-setup">
 						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
@@ -377,7 +375,7 @@
 							<div class="container-fluid rounded">
 								<div class="row">
 									<div class="col align-self-center">
-										<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" title="Auto-refreshes every 6s. Click to pause.">
+										<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" data-original-title="Refreshes every 60 s. Click to pause.">
 											<span class="tf-live-dot" aria-hidden="true"></span>
 											<span class="tf-live-label">Live</span>
 										</button>
@@ -488,7 +486,9 @@
 						</p>
 					</section>
 					<div class="alert alert-secondary tf-ink-2" role="alert" style="font-size: 15px;font-family: 'Rubik', sans-serif;">
-						Please consider making your own analysis before taking any action related to the IOCs. The confidence of the shared IOCs is not always 100% so it is strongly recommended NOT adding them to a blocklist directly. These could potentially be used for <b>Threat Hunting</b> and could be added to a <b>Watchlist</b>.
+						IOC confidence is not always 100%.<br>
+						Do not add them to a blocklist directly.<br>
+						Use them for <b>Threat Hunting</b> or a <b>Watchlist</b>.
 					</div>
 				</div>
 				<!-- /.container-fluid -->
@@ -601,7 +601,7 @@
 	<script defer src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script defer src="js/config.js"></script>
-	<script defer src="js/utils.js?v=8"></script>
+	<script defer src="js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	document.addEventListener('DOMContentLoaded', function() {
@@ -639,6 +639,8 @@
 		$('#dataTable thead tr').clone(true).appendTo('#dataTable thead');
 		$('#dataTable thead tr:eq(1) th').each(function(i) {
 			var title = $(this).text();
+			// Icon-only columns (X, VirusTotal) have no text: a filter box there filters nothing.
+			if (!title.trim()) { $(this).empty(); return; }
 			$(this).html('<input type="text" placeholder="' + title + '" />');
 			$('input', this).on('keyup change', function() {
 				if (table.column(i).search() !== this.value) {

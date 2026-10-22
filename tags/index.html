@@ -55,11 +55,13 @@
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:alt" content="TweetFeed - tag index">
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -134,6 +136,11 @@
 		]
 	}
 	</script>
+	<style>
+		@media (max-width: 575.98px) {
+			.tf-tile-head { flex-direction: column; align-items: flex-start !important; }
+		}
+	</style>
 </head>
 
 <body id="page-top">
@@ -199,7 +206,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -213,7 +220,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -311,12 +318,12 @@
 				<h3 class="section-heading tf-block-head">APT groups <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 3</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Threat-actor clusters tracked by attribution analysts. Each page collates the IOCs the public infosec community on Twitter/X has linked to that cluster.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Threat actors and the IOCs linked to them.</p>
 						<div class="row">
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/kimsuky/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Kimsuky</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">13,325 hits last year &middot; 48 last month</span>
 									</div>
@@ -326,7 +333,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/dprk/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#DPRK</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">11,669 hits last year &middot; 5 last month</span>
 									</div>
@@ -336,7 +343,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/lazarus/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Lazarus</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">109 hits last year &middot; 0 last month</span>
 									</div>
@@ -348,15 +355,15 @@
 					</div>
 				</div>
 				
-				<h3 class="section-heading tf-block-head">Malware families &middot; C2 frameworks &middot; tools <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 12</span></h3>
+				<h3 class="section-heading tf-block-head">Malware and tools <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 12</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Specific malware identities (Cobalt Strike, AsyncRAT, NetSupportRAT, …) plus dual-use offensive tooling that surfaces in real-world intrusions.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Named malware, C2 frameworks, offensive tools.</p>
 						<div class="row">
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/asyncrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#AsyncRAT</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">614 hits last year &middot; 12 last month</span>
 									</div>
@@ -366,7 +373,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/xworm/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Xworm</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">495 hits last year &middot; 14 last month</span>
 									</div>
@@ -376,7 +383,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/lumma/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Lumma</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">292 hits last year &middot; 0 last month</span>
 									</div>
@@ -386,7 +393,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/remcos/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Remcos</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">291 hits last year &middot; 3 last month</span>
 									</div>
@@ -396,7 +403,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/njrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Njrat</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">196 hits last year &middot; 0 last month</span>
 									</div>
@@ -406,7 +413,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/cobaltstrike/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#CobaltStrike</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">126 hits last year &middot; 1 last month</span>
 									</div>
@@ -416,7 +423,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/netsupportrat/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#NetSupportRAT</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">47 hits last year &middot; 0 last month</span>
 									</div>
@@ -426,7 +433,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/sliver/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Sliver</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">43 hits last year &middot; 0 last month</span>
 									</div>
@@ -436,7 +443,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/interactsh/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Interactsh</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">17 hits last year &middot; 0 last month</span>
 									</div>
@@ -446,7 +453,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/havoc/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Havoc</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">16 hits last year &middot; 1 last month</span>
 									</div>
@@ -456,7 +463,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/mythic/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Mythic</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">14 hits last year &middot; 6 last month</span>
 									</div>
@@ -466,7 +473,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/deimos/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#Deimos</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">4 hits last year &middot; 0 last month</span>
 									</div>
@@ -478,17 +485,17 @@
 					</div>
 				</div>
 				
-				<h3 class="section-heading tf-block-head">Tactics, techniques and infra labels <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 10</span></h3>
+				<h3 class="section-heading tf-block-head">Techniques and labels <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 10</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Broader categories: phishing, C2 infrastructure, ransomware, infostealer, scam, opendir and the umbrella malware / APT labels.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Broad themes: phishing, C2, ransomware, scams.</p>
 						<div class="row">
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/phishing/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#phishing</span>
-										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">35,862 hits last year &middot; 3,494 last month</span>
+										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">35,870 hits last year &middot; 3,502 last month</span>
 									</div>
 									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Phishing IOCs from Twitter/X researchers</div>
 								</a>
@@ -496,7 +503,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/scam/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#scam</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">3,672 hits last year &middot; 57 last month</span>
 									</div>
@@ -506,9 +513,9 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/malware/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#malware</span>
-										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">3,534 hits last year &middot; 756 last month</span>
+										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">3,544 hits last year &middot; 766 last month</span>
 									</div>
 									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Malware-hosting URLs, domains, IPs</div>
 								</a>
@@ -516,7 +523,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/c2/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#C2</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">2,239 hits last year &middot; 115 last month</span>
 									</div>
@@ -526,7 +533,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/apt/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#APT</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">1,522 hits last year &middot; 36 last month</span>
 									</div>
@@ -536,9 +543,9 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/clickfix/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#ClickFix</span>
-										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">1,042 hits last year &middot; 437 last month</span>
+										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">1,044 hits last year &middot; 439 last month</span>
 									</div>
 									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Fake CAPTCHA that tricks you into pasting a command</div>
 								</a>
@@ -546,7 +553,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/opendir/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#opendir</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">715 hits last year &middot; 48 last month</span>
 									</div>
@@ -556,7 +563,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/ransomware/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#ransomware</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">677 hits last year &middot; 106 last month</span>
 									</div>
@@ -566,7 +573,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/stealer/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#stealer</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">673 hits last year &middot; 21 last month</span>
 									</div>
@@ -576,7 +583,7 @@
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/malvertising/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#malvertising</span>
 										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">81 hits last year &middot; 22 last month</span>
 									</div>
@@ -591,14 +598,14 @@
 				<h3 class="section-heading tf-block-head">Vulnerabilities <span style="font-size:14px; color:var(--tf-fg-737373); font-weight:400;">&middot; 1</span></h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Named CVEs and exploited vulnerabilities. Each page collates the IOCs the public infosec community on Twitter/X has linked to exploitation of that flaw.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Named CVEs seen exploited.</p>
 						<div class="row">
 							
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../tag/php2shell/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
-									<div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
+									<div class="tf-tile-head" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:0.6rem; row-gap:0;">
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">#PHP2Shell</span>
-										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">1 hits last year &middot; 1 last month</span>
+										<span style="font-size:11px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; white-space:nowrap;">5 hits last year &middot; 5 last month</span>
 									</div>
 									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.15rem;">Critical PHP RCE. Fixed in 8.5.12, 8.4.27, 8.3.36, 8.2.35.</div>
 								</a>
@@ -716,9 +723,9 @@
 			<!-- End of Footer -->
 		</div>
 	</div>
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 </body>
 
 </html>

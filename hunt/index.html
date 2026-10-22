@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -65,8 +67,8 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -307,9 +309,11 @@
 		/* The desktop bar is fixed-top and exactly 56px (see the note in
 		   tweetfeed.css); below 992px the bar scrolls away with the page. */
 		@media (min-width: 992px) { .hnt-filter { top: 56px; } }
+		/* Below 992px the 13 chips wrap onto 3 to 4 rows instead of scrolling
+		   sideways (9 of them sat off-screen with no cue). A bar that tall must
+		   not stay stuck to the top of a phone, so it scrolls with the page there. */
 		@media (max-width: 991.98px) {
-			.hnt-filter { flex-wrap: nowrap; overflow-x: auto; }
-			.hnt-chip { flex-shrink: 0; }
+			.hnt-filter { position: static; }
 		}
 		/* Resting appearance comes from .page-toc-chip in tweetfeed.css, which
 		   this used to duplicate declaration for declaration. What stays is what
@@ -317,7 +321,7 @@
 		.hnt-chip { cursor: pointer; }
 		.hnt-chip:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
 		.hnt-chip[aria-pressed="true"] { background: var(--tf-bg-1178b3); color: var(--tf-fg-fff); font-weight: 600; }
-		.hnt-chip-n { opacity: 0.7; margin-left: 4px; font-variant-numeric: tabular-nums; }
+		.hnt-chip-n { opacity: 0.85; margin-left: 4px; font-variant-numeric: tabular-nums; }
 		.hnt-chip[aria-pressed="true"] .hnt-chip-n { opacity: 0.85; }
 		.hnt-status {
 			font-family: 'Rubik', sans-serif;
@@ -458,6 +462,9 @@
 		.hnt-badge-qradar   { background: var(--tf-bg-f7c7d9); }
 		.hnt-badge-opencti  { background: var(--tf-bg-c9e4c5); }
 		.hnt-badge-intelowl { background: var(--tf-bg-f5e6a3); }
+			.hnt-list { padding-left: 1.2rem; }
+		.hnt-list li { margin-bottom: 0.2rem; }
+		.hnt-list .hnt-list { margin: 0.15rem 0 0.3rem; }
 	</style>
 </head>
 
@@ -529,7 +536,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -543,7 +550,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -577,7 +584,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-bullseye" style="font-size: 36px;"></i> Threat Hunting cookbook</h1>
@@ -589,7 +596,7 @@
 					<p class="hnt-lede">Copy-paste recipes for terminal, SIEM, TIP and detection content.</p>
 				</div>
 				<div class="tf-headline">
-					<div class="tf-headline-cell"><div class="tf-headline-value">25</div><div class="tf-headline-label">Recipes</div></div>
+					<div class="tf-headline-cell"><div class="tf-headline-value" id="hnt-headline-recipes">30</div><div class="tf-headline-label">Recipes</div></div>
 					<div class="tf-headline-cell"><div class="tf-headline-value">12</div><div class="tf-headline-label">Stacks covered</div></div>
 					<div class="tf-headline-cell"><div class="tf-headline-value">15 min</div><div class="tf-headline-label">Feed refresh</div></div>
 					<div class="tf-headline-cell"><div class="tf-headline-value">CC0</div><div class="tf-headline-label">Public domain, no auth</div></div>
@@ -623,11 +630,11 @@
 						<p class="hnt-desc">Every window and IOC type as JSON. No key, no signup, no per-caller throttling.</p>
 						<p class="hnt-meta"><span>Windows: today &middot; week &middot; month &middot; year</span><span>Refresh: 15 min</span></p>
 						<p class="hnt-note">All of today's IOCs as JSON:</p>
-						<pre id="qs-rest-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-1" title="Copy"></i></pre>
+						<pre id="qs-rest-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today | jq .</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-1"></i></pre>
 						<p class="hnt-note">Filter by IOC type (<code>url</code>, <code>domain</code>, <code>ip</code>, <code>sha256</code>, <code>md5</code>):</p>
-						<pre id="qs-rest-2" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-2" title="Copy"></i></pre>
+						<pre id="qs-rest-2" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/today/url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-2"></i></pre>
 						<p class="hnt-note">Combine type and tag - this week's Cobalt Strike IPs:</p>
-						<pre id="qs-rest-3" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-3" title="Copy"></i></pre>
+						<pre id="qs-rest-3" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/week/ip/CobaltStrike</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-3"></i></pre>
 						<p class="hnt-note">Response shape, one IOC per array element:</p>
 						<pre id="qs-rest-4" class="code-block"><code class="language-json">{
   "date": "2026-05-03 06:07:00",
@@ -636,7 +643,7 @@
   "value": "evil.example.shop",
   "tags": ["#phishing"],
   "tweet": "https://x.com/PhishStats/status/..."
-}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-4" title="Copy"></i></pre>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rest-4"></i></pre>
 						<p class="hnt-links"><a href="../api/">Full API reference</a><a href="../openapi.yaml">OpenAPI spec</a></p>
 					</article>
 					<article class="hnt-card" id="csv-download" data-stack="api">
@@ -649,7 +656,7 @@
 						<p class="hnt-meta"><span>Windows: today &middot; week &middot; month &middot; year</span></p>
 						<pre id="qs-csv-1" class="code-block"><code class="language-bash">wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/today.csv
 wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/week.csv
-wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-csv-1" title="Copy"></i></pre>
+wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-csv-1"></i></pre>
 					</article>
 					<article class="hnt-card" id="rss-feed" data-stack="api">
 						<header class="hnt-head">
@@ -659,7 +666,7 @@ wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv<
 						</header>
 						<p class="hnt-desc">The latest IOCs as an item stream, for feed readers and no-code automations.</p>
 						<p class="hnt-meta"><span>Refresh: 15 min</span></p>
-						<pre id="qs-rss-1" class="code-block"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rss-1" title="Copy"></i></pre>
+						<pre id="qs-rss-1" class="code-block"><code class="language-bash">curl -s https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/rss.xml</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-rss-1"></i></pre>
 					</article>
 					<article class="hnt-card" id="blocklists" data-stack="api">
 						<header class="hnt-head">
@@ -667,7 +674,12 @@ wget https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/month.csv<
 							<h3 class="hnt-title">Plain-text blocklists</h3>
 							<a class="hnt-anchor" href="#blocklists" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">Ready-to-consume exports of the last 30 days, one indicator per line, for Pi-hole, AdGuard Home, hosts files, dnsmasq, BIND RPZ, firewalls and IDS/SIEM tooling.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>Ready-to-consume exports of the last 30 days.</li>
+							<li>One indicator per line.</li>
+							<li>For Pi-hole, AdGuard Home, hosts files, dnsmasq and BIND RPZ.</li>
+							<li>For firewalls and IDS/SIEM tooling.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: 30 days</span><span>Refresh: 15 min</span></p>
 						<pre id="qs-blocklist-1" class="code-block"><code class="language-bash"># Plain-text exports, rolling 30-day window, one indicator per line
 curl -sfL https://api.tweetfeed.live/v1/blocklist/domains.txt   # bare domains (Pi-hole)
@@ -676,8 +688,22 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/adguard.txt   # AdGuard Home
 curl -sfL https://api.tweetfeed.live/v1/blocklist/dnsmasq.txt   # dnsmasq address= rules
 curl -sfL https://api.tweetfeed.live/v1/blocklist/rpz.txt       # BIND RPZ zone
 curl -sfL https://api.tweetfeed.live/v1/blocklist/ips.txt       # bare IPs
-curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not just hosts</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-blocklist-1" title="Copy"></i></pre>
-						<p class="hnt-note"><code>urls.txt</code> is the exception: it carries the full URL rather than the host, so it also covers IOCs sitting on shared infrastructure that host-level blocking cannot reach without collateral damage. These files are a 1:1 mirror of the feed with no extra quality gate - pair them with an allowlist. If your change control won't deploy a single-reporter list, start with the <code>-corroborated</code> variant (<code>domains-corroborated.txt</code>, <code>ips-corroborated.txt</code>, <code>urls-corroborated.txt</code>) - the subset also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum - or with <code>nrd-domains.txt</code>, the higher-signal subset of newly registered domains already reported malicious. <code>adguard.txt</code> now carries an AdGuard/uBlock filter-list metadata header (<code>!</code> comments) instead of the generic <code>#</code> one, so it drops straight into a custom filter list.</p>
+curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not just hosts</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-blocklist-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li><code>urls.txt</code> is the exception: it carries the full URL, not the host.</li>
+							<li>It also covers IOCs on shared infrastructure.</li>
+							<li>Host-level blocking cannot reach those without collateral damage.</li>
+							<li>These files are a 1:1 mirror of the feed, with no extra quality gate.</li>
+							<li>Pair them with an allowlist.</li>
+							<li>If change control won't deploy a single-reporter list, start with a subset.</li>
+							<li><code>domains-corroborated.txt</code>, <code>ips-corroborated.txt</code>, <code>urls-corroborated.txt</code></li>
+							<li>That subset is also listed by URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum.</li>
+							<li>Or start with <code>nrd-domains.txt</code>, a higher-signal subset.</li>
+							<li>It holds newly registered domains already reported malicious.</li>
+							<li><code>adguard.txt</code> now has an AdGuard/uBlock metadata header (<code>!</code> comments).</li>
+							<li>It replaces the generic <code>#</code> header.</li>
+							<li>So it drops straight into a custom filter list.</li>
+						</ul>
 						<p class="hnt-links"><a href="../malicious-domains/">Bad domains list</a><a href="../malicious-ips/">Bad IPs list</a></p>
 					</article>
 				</section>
@@ -694,7 +720,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 						<p class="hnt-desc">Rewrites a flat file every 15 minutes, ready for a firewall or proxy to reload.</p>
 						<p class="hnt-meta"><span>Window: today</span><span>Refresh: 15 min</span></p>
 						<pre id="term-1" class="code-block"><code class="language-bash">*/15 * * * * curl -sfL https://api.tweetfeed.live/v1/today/url \
-  | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-1" title="Copy"></i></pre>
+  | jq -r '.[].value' | sort -u &gt; /etc/blocklists/tweetfeed-urls.txt</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-1"></i></pre>
 					</article>
 					<article class="hnt-card" id="tag-slice" data-stack="terminal">
 						<header class="hnt-head">
@@ -704,7 +730,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 						</header>
 						<p class="hnt-desc">Only the IPs tagged Cobalt Strike this week. Swap the tag for any of the tracked hashtags.</p>
 						<p class="hnt-meta"><span>Window: week</span></p>
-						<pre id="term-2" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-2" title="Copy"></i></pre>
+						<pre id="term-2" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/week/ip/CobaltStrike | jq -r '.[].value'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-2"></i></pre>
 						<p class="hnt-links"><a href="../tags/">Tag index</a></p>
 					</article>
 					<article class="hnt-card" id="researcher-pivot" data-stack="terminal">
@@ -713,10 +739,13 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 							<h3 class="hnt-title">Pivot from a researcher</h3>
 							<a class="hnt-anchor" href="#researcher-pivot" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">Every IOC published in the last 30 days by one handle, filtered server-side: a researcher handle is a valid path filter as long as you keep the leading <code>@</code>.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>Every IOC published in the last 30 days by one handle, filtered server-side.</li>
+							<li>A researcher handle is a valid path filter if you keep the leading <code>@</code>.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: month</span></p>
 						<pre id="term-3" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/month/@malwrhunterteam \
-  | jq -r '.[] | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3" title="Copy"></i></pre>
+  | jq -r '.[] | "\(.type)\t\(.value)\t\(.tags|join(","))"'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-3"></i></pre>
 						<p class="hnt-links"><a href="../researchers/">Researchers</a></p>
 					</article>
 					<article class="hnt-card" id="ioc-provenance" data-stack="terminal">
@@ -728,7 +757,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 						<p class="hnt-desc">Every IOC carries provenance. Resolve one back to the post it came from before you alert on it.</p>
 						<p class="hnt-meta"><span>Window: today</span></p>
 						<pre id="term-4" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/today \
-  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-4" title="Copy"></i></pre>
+  | jq -r '.[] | select(.value=="evil.example.com") | .tweet'</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-4"></i></pre>
 					</article>
 					<article class="hnt-card" id="active-campaigns" data-stack="terminal">
 						<header class="hnt-head">
@@ -740,7 +769,7 @@ curl -sfL https://api.tweetfeed.live/v1/blocklist/urls.txt      # full URLs, not
 						<p class="hnt-meta"><span>Window: 30 days</span><span>Refresh: daily</span></p>
 						<pre id="term-5" class="code-block"><code class="language-bash">curl -sL https://api.tweetfeed.live/v1/campaigns \
   | jq -r &#39;.campaigns[] | select(.ioc_count_7d &gt; 0)
-           | "\(.ioc_count_7d)\t\(.confidence)\t\(.name)"&#39; | sort -rn</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-5" title="Copy"></i></pre>
+           | "\(.ioc_count_7d)\t\(.confidence)\t\(.name)"&#39; | sort -rn</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#term-5"></i></pre>
 						<p class="hnt-links"><a href="../campaigns/">Campaigns</a></p>
 					</article>
 				</section>
@@ -761,7 +790,7 @@ search = | inputlookup append=t external_lookup tweetfeed_today.csv \
          | outputlookup tweetfeed_today.csv
 cron_schedule = */15 * * * *
 dispatch.earliest_time = -15m
-enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-setup" title="Copy"></i></pre>
+enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-setup"></i></pre>
 					</article>
 					<article class="hnt-card" id="spl-proxy-match" data-stack="splunk">
 						<header class="hnt-head">
@@ -776,7 +805,7 @@ enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role
   | where type IN ("url","domain")
   | rename value AS url
   | fields url
-] | stats count, values(tags), values(tweet) by src_ip, url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-proxy" title="Copy"></i></pre>
+] | stats count, values(tags), values(tweet) by src_ip, url</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-proxy"></i></pre>
 					</article>
 					<article class="hnt-card" id="spl-dns-enrich" data-stack="splunk">
 						<header class="hnt-head">
@@ -789,7 +818,7 @@ enableSched = 1</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role
 						<pre id="spl-dns" class="code-block"><code class="language-plaintext">index=dns sourcetype=dns:query [
   | inputlookup tweetfeed_week.csv
   | where type="domain" | rename value AS query | fields query
-] | table _time, src_ip, query, [tweetfeed.tags], [tweetfeed.tweet]</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-dns" title="Copy"></i></pre>
+] | table _time, src_ip, query, [tweetfeed.tags], [tweetfeed.tweet]</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#spl-dns"></i></pre>
 						<p class="hnt-note">Save this one as a Notable Event with <code>severity=medium</code> and trigger it as soon as <code>count &gt; 0</code> to turn it into a real-time alert.</p>
 					</article>
 				</section>
@@ -814,7 +843,7 @@ DnsEvents
 | where TimeGenerated &gt; ago(24h)
 | where Name in (TweetFeedDomains | project Domain)
 | join kind=leftouter TweetFeedDomains on $left.Name == $right.Domain
-| project TimeGenerated, Computer, ClientIP, Name, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-dns" title="Copy"></i></pre>
+| project TimeGenerated, Computer, ClientIP, Name, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-dns"></i></pre>
 					</article>
 					<article class="hnt-card" id="sentinel-ip-logons" data-stack="sentinel">
 						<header class="hnt-head">
@@ -833,13 +862,19 @@ SecurityEvent
 | where TimeGenerated &gt; ago(7d)
 | where IpAddress in (TweetFeedIPs | project IPAddress)
 | join kind=leftouter TweetFeedIPs on $left.IpAddress == $right.IPAddress
-| project TimeGenerated, Computer, Account, IpAddress, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-secevent" title="Copy"></i></pre>
+| project TimeGenerated, Computer, Account, IpAddress, Tags, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#sentinel-secevent"></i></pre>
 					</article>
 				</section>
 				<section class="hnt-group" data-group="defender">
 					<hr class="divider">
 					<h2 class="section-heading tf-block-head" id="stack-defender">Microsoft Defender for Endpoint</h2>
-					<p class="hnt-group-note">Advanced hunting queries covering all four IOC types. Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code> depending on your freshness-versus-coverage trade-off. For a direct Indicators bulk import instead of a KQL join, use <a href="../blocklists/">sha256.txt / md5.txt</a>.</p>
+					<ul class="hnt-group-note hnt-list">
+						<li>Advanced hunting queries covering all four IOC types.</li>
+						<li>Swap <code>week.csv</code> for <code>today.csv</code> or <code>month.csv</code>.</li>
+						<li>Choose by your freshness-versus-coverage trade-off.</li>
+						<li>For a direct Indicators bulk import, use <a href="../blocklists/">sha256.txt / md5.txt</a>.</li>
+						<li>That replaces the KQL join.</li>
+					</ul>
 					<p class="hnt-links"><a href="https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview" target="_blank" rel="noopener noreferrer">MDE advanced hunting docs <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></p>
 					<article class="hnt-card" id="mde-urls" data-stack="defender">
 						<header class="hnt-head">
@@ -872,7 +907,7 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp&gt; MaxAge
     ) on RemoteUrl
-) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-url-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, RemoteUrl, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-url-pre"></i></pre>
 					</article>
 					<article class="hnt-card" id="mde-ips" data-stack="defender">
 						<header class="hnt-head">
@@ -906,7 +941,7 @@ TweetFeed
         DeviceNetworkEvents
     | where Timestamp&gt; MaxAge
     ) on RemoteIP
-) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-ip-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, RemoteIP, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-ip-pre"></i></pre>
 					</article>
 					<article class="hnt-card" id="mde-sha256" data-stack="defender">
 						<header class="hnt-head">
@@ -951,7 +986,7 @@ union (
         DeviceImageLoadEvents
         | where Timestamp&gt; MaxAge
     ) on SHA256
-) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-sha256-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, SHA256, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-sha256-pre"></i></pre>
 					</article>
 					<article class="hnt-card" id="mde-md5" data-stack="defender">
 						<header class="hnt-head">
@@ -996,7 +1031,7 @@ union (
         DeviceImageLoadEvents
         | where Timestamp&gt; MaxAge
     ) on MD5
-) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-md5-pre" title="Copy"></i></pre>
+) | project Timestamp, DeviceName, FileName, FolderPath, MD5, Tag, Tweet</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#nav-md5-pre"></i></pre>
 					</article>
 				</section>
 				<section class="hnt-group" data-group="elastic">
@@ -1038,7 +1073,7 @@ output {
     action =&gt; "update"
     doc_as_upsert =&gt; true
   }
-}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-logstash" title="Copy"></i></pre>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-logstash"></i></pre>
 					</article>
 					<article class="hnt-card" id="elastic-esql-join" data-stack="elastic">
 						<header class="hnt-head">
@@ -1054,7 +1089,7 @@ output {
 | WHERE type == "domain"
 | KEEP @timestamp, host.name, source.ip, dns.question.name, tags, tweet
 | SORT @timestamp DESC
-| LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-esql" title="Copy"></i></pre>
+| LIMIT 1000</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-esql"></i></pre>
 					</article>
 					<article class="hnt-card" id="elastic-watcher-alert" data-stack="elastic">
 						<header class="hnt-head">
@@ -1088,8 +1123,12 @@ output {
   "actions": {
     "log": {"logging": {"text": "TweetFeed DNS hit: {{ctx.payload.hits.total.value}} events"}}
   }
-}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-watcher" title="Copy"></i></pre>
-						<p class="hnt-note">For detection rules, <code>tweetfeed-iocs-*</code> also works as a value list compatible with Elastic Security's <a href="https://www.elastic.co/docs/solutions/security/detect-and-alert/create-manage-value-lists" target="_blank" rel="noopener noreferrer">value list exceptions</a> - same data, alert-routable.</p>
+}</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#elastic-watcher"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>For detection rules, <code>tweetfeed-iocs-*</code> also works as a value list.</li>
+							<li>It is compatible with Elastic Security's <a href="https://www.elastic.co/docs/solutions/security/detect-and-alert/create-manage-value-lists" target="_blank" rel="noopener noreferrer">value list exceptions</a>.</li>
+							<li>Same data, alert-routable.</li>
+						</ul>
 					</article>
 				</section>
 				<section class="hnt-group" data-group="qradar">
@@ -1113,8 +1152,13 @@ curl -s https://api.tweetfeed.live/v1/week/ip \
   | jq &#39;[.[].value]&#39; \
   | curl -s -X POST -H &#34;SEC: $QRADAR_TOKEN&#34; -H &#39;Version: 13.1&#39; \
       -H &#39;Content-Type: application/json&#39; --data-binary @- \
-      &#34;https://$CONSOLE/api/reference_data/sets/bulk_load/TweetFeed_IPs&#34;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-1" title="Copy"></i></pre>
-						<p class="hnt-note">The set must exist before the first bulk load, or the API answers 404. The body is a bare JSON array, which is why <code>jq</code> wraps the values. Build one set per type: swap <code>ip</code> for <code>domain</code>, <code>url</code>, <code>sha256</code> or <code>md5</code>, and use <code>element_type=ALN</code> for anything that is not an address.</p>
+      &#34;https://$CONSOLE/api/reference_data/sets/bulk_load/TweetFeed_IPs&#34;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>The set must exist before the first bulk load, or the API answers 404.</li>
+							<li>The body is a bare JSON array, which is why <code>jq</code> wraps the values.</li>
+							<li>Build one set per type: swap <code>ip</code> for <code>domain</code>, <code>url</code>, <code>sha256</code> or <code>md5</code>.</li>
+							<li>Use <code>element_type=ALN</code> for anything that is not an address.</li>
+						</ul>
 					</article>
 					<article class="hnt-card" id="qradar-aql" data-stack="qradar">
 						<header class="hnt-head">
@@ -1131,8 +1175,12 @@ curl -s https://api.tweetfeed.live/v1/week/ip \
   username AS &#39;User&#39;
 FROM events
 WHERE REFERENCESETCONTAINS(&#39;TweetFeed_IPs&#39;, destinationip)
-LAST 24 HOURS</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-2" title="Copy"></i></pre>
-						<p class="hnt-note">Save it as a saved search, then build a rule on top of it to alert. The function takes an optional third argument for the domain ID on multi-tenant consoles.</p>
+LAST 24 HOURS</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-qradar-2"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>Save it as a saved search, then build a rule on top of it to alert.</li>
+							<li>The function takes an optional third argument:</li>
+							<li>the domain ID on multi-tenant consoles.</li>
+						</ul>
 						<p class="hnt-links"><a href="https://www.ibm.com/docs/SSKMKU/com.ibm.qradar.doc/r_aql_data_functions.html" target="_blank" rel="noopener noreferrer">AQL reference data functions</a></p>
 					</article>
 				</section>
@@ -1146,15 +1194,28 @@ LAST 24 HOURS</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="
 							<h3 class="hnt-title">MISP feed</h3>
 							<a class="hnt-anchor" href="#misp-feed" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">A MISP-format manifest with one Event per day and 365 days of history. On MISP 2.5.47 or newer go to <b>Sync Actions &rarr; List Feeds</b>, click <b>Load default feed metadata</b> and enable <b>TweetFeed</b>. On older instances go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b> and give it the feed <em>directory</em> - MISP appends <code>/manifest.json</code> itself.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>A MISP-format manifest with one Event per day and 365 days of history.</li>
+							<li>On MISP 2.5.47 or newer, go to <b>Sync Actions &rarr; List Feeds</b>.</li>
+							<li>Click <b>Load default feed metadata</b> and enable <b>TweetFeed</b>.</li>
+							<li>On older instances, go to <b>Sync Actions &rarr; Feeds &rarr; Add Feed</b>.</li>
+							<li>Give it the feed <em>directory</em>: MISP appends <code>/manifest.json</code> itself.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: 365 days</span></p>
 						<pre id="qs-misp-1" class="code-block"><code class="language-plaintext">URL:           https://tweetfeed.live/misp
 Source format: misp
 Provider:      TweetFeed
 Auto-pull:     yes
-Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1" title="Copy"></i></pre>
+Default tags:  TweetFeed, tlp:clear, type:OSINT</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-misp-1"></i></pre>
 						<p class="hnt-note">Save, click <b>Fetch and store all feed data</b> to seed it, then enable <b>Cron Jobs &rarr; Feed Pull</b> for auto-refresh.</p>
-						<p class="hnt-note">Enrichment: the <b>TweetFeed Lookup</b> module in misp-modules 3.0.10 or newer (expansion and hover, no API key) adds the reporter, source tweets, corroboration and campaign membership to IP, domain, hostname, URL, MD5 and SHA-256 attributes. Enable <code>Plugin.Enrichment_tweetfeed_enabled</code> under Administration &rarr; Server Settings &rarr; Plugin settings.</p>
+						<ul class="hnt-note hnt-list">
+							<li>Enrichment: the <b>TweetFeed Lookup</b> module in misp-modules 3.0.10 or newer.</li>
+							<li>It works on expansion and hover, with no API key.</li>
+							<li>It adds the reporter, source tweets, corroboration and campaign membership.</li>
+							<li>It covers IP, domain, hostname, URL, MD5 and SHA-256 attributes.</li>
+							<li>Enable <code>Plugin.Enrichment_tweetfeed_enabled</code></li>
+							<li>under Administration &rarr; Server Settings &rarr; Plugin settings.</li>
+						</ul>
 					</article>
 					<article class="hnt-card" id="taxii" data-stack="misp">
 						<header class="hnt-head">
@@ -1171,8 +1232,15 @@ curl -s https://api.tweetfeed.live/taxii2/ \
 # 2. Poll everything added since a timestamp (delta sync)
 COLL=b7dc78af-1d12-5059-898c-3f0e77636204
 curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?added_after=2026-07-01T00:00:00Z&#34; \
-  -H &#39;Accept: application/taxii+json;version=2.1&#39;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-taxii-1" title="Copy"></i></pre>
-						<p class="hnt-note">Paginate with <code>limit</code> and <code>next</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references were created with the collection, so they fall outside any recent window. Fetch those once by id from <code>/objects/{id}/</code> so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
+  -H &#39;Accept: application/taxii+json;version=2.1&#39;</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-taxii-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>Paginate with <code>limit</code> and <code>next</code>.</li>
+							<li>An <code>added_after</code> poll returns indicators only.</li>
+							<li>Every indicator references <code>identity</code> and <code>marking-definition</code> objects.</li>
+							<li>Those were created with the collection, so they fall outside any recent window.</li>
+							<li>Fetch them once by id from <code>/objects/{id}/</code>.</li>
+							<li>Your platform can then resolve the attribution and the TLP:CLEAR marking.</li>
+						</ul>
 						<p class="hnt-links"><a href="../api/#taxii">TAXII reference</a></p>
 					</article>
 					<article class="hnt-card" id="campaign-stix-import" data-stack="misp">
@@ -1181,10 +1249,21 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
 							<h3 class="hnt-title">Import one campaign as STIX 2.1</h3>
 							<a class="hnt-anchor" href="#campaign-stix-import" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">One AI-clustered campaign, full IOC membership, as a self-contained STIX 2.1 bundle - Identity, TLP:CLEAR marking, one Indicator per IOC. MISP: <b>Sync Actions &rarr; Import &rarr; Import from... STIX 2.x</b>. OpenCTI: <b>Data &rarr; Import</b>.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>One AI-clustered campaign, with its full IOC membership.</li>
+							<li>A self-contained STIX 2.1 bundle.</li>
+							<li>Contents: Identity, TLP:CLEAR marking, one Indicator per IOC.</li>
+							<li>MISP: <b>Sync Actions &rarr; Import &rarr; Import from... STIX 2.x</b>.</li>
+							<li>OpenCTI: <b>Data &rarr; Import</b>.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: 30 days</span><span>Media type: stix+json 2.1</span></p>
-						<pre id="qs-campaign-stix-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json -o campaign.stix.json</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-campaign-stix-1" title="Copy"></i></pre>
-						<p class="hnt-note">Get campaign ids from <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>/v1/campaigns</code></a> or the <a href="../campaigns/">campaigns page</a>. Deterministic bundle id - reimporting the same campaign later does not duplicate objects in a platform that dedupes by id.</p>
+						<pre id="qs-campaign-stix-1" class="code-block"><code class="language-bash">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json -o campaign.stix.json</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-campaign-stix-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>Get campaign ids from <a href="https://api.tweetfeed.live/v1/campaigns" target="_blank" rel="noopener noreferrer"><code>/v1/campaigns</code></a> or the <a href="../campaigns/">campaigns page</a>.</li>
+							<li>The bundle id is deterministic.</li>
+							<li>Reimporting the same campaign adds no duplicate objects.</li>
+							<li>This applies to platforms that dedupe by id.</li>
+						</ul>
 						<p class="hnt-links"><a href="../api/#campaign-export">Per-campaign export reference</a></p>
 					</article>
 				</section>
@@ -1198,7 +1277,11 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
 							<h3 class="hnt-title">Official connector</h3>
 							<a class="hnt-anchor" href="#opencti-connector" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">The <code>external-import/tweetfeed</code> connector reads the daily CSVs and writes Observables and Indicators, with the reporting researcher kept as the author organization.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>The <code>external-import/tweetfeed</code> connector reads the daily CSVs.</li>
+							<li>It writes Observables and Indicators.</li>
+							<li>The reporting researcher is kept as the author organization.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: 30 days by default</span><span>Type: external-import</span></p>
 						<pre id="qs-opencti-1" class="code-block"><code class="language-yaml">services:
   connector-tweetfeed:
@@ -1214,8 +1297,15 @@ curl -s &#34;https://api.tweetfeed.live/taxii2/root/collections/$COLL/objects/?a
       - TWEETFEED_CREATE_INDICATORS=true
       - TWEETFEED_CREATE_OBSERVABLES=true
       - TWEETFEED_CONFIDENCE_LEVEL=25
-    restart: always</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-opencti-1" title="Copy"></i></pre>
-						<p class="hnt-note"><code>TWEETFEED_INTERVAL</code> is in days, and <code>TWEETFEED_DAYS_BACK_IN_TIME</code> sets how far back the first run reaches. To force a poll, open <b>Data management &rarr; Connectors</b> and reset the connector state. If you prefer a standards-based path, the TAXII 2.1 collection above works in OpenCTI too.</p>
+    restart: always</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-opencti-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li><code>TWEETFEED_INTERVAL</code> is in days.</li>
+							<li><code>TWEETFEED_DAYS_BACK_IN_TIME</code> sets how far back the first run reaches.</li>
+							<li>To force a poll, open <b>Data management &rarr; Connectors</b>.</li>
+							<li>Then reset the connector state.</li>
+							<li>For a standards-based path, use the TAXII 2.1 collection above.</li>
+							<li>It works in OpenCTI too.</li>
+						</ul>
 						<p class="hnt-links"><a href="https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/tweetfeed" target="_blank" rel="noopener noreferrer">Connector source and configuration</a></p>
 					</article>
 				</section>
@@ -1239,8 +1329,12 @@ Max TLP:     CLEAR
 Parameters (both optional):
   time     today | week | month | year
   filter1  a tag (phishing, ransomware, CobaltStrike)
-           or a handle (@1ZRR4H, @malwrhunterteam)</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-intelowl-1" title="Copy"></i></pre>
-						<p class="hnt-note">The analyzer keeps a local copy of the last 30 days and refreshes it daily, so lookups do not hit the API. Only <code>time: year</code> falls through to a live call.</p>
+           or a handle (@1ZRR4H, @malwrhunterteam)</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-intelowl-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>The analyzer keeps a local copy of the last 30 days.</li>
+							<li>It refreshes that copy daily, so lookups do not hit the API.</li>
+							<li>Only <code>time: year</code> falls through to a live call.</li>
+						</ul>
 						<p class="hnt-links"><a href="https://intelowlproject.github.io/docs/IntelOwl/usage/" target="_blank" rel="noopener noreferrer">IntelOwl analyzer configuration</a></p>
 					</article>
 				</section>
@@ -1254,7 +1348,11 @@ Parameters (both optional):
 							<h3 class="hnt-title">Sigma rule template</h3>
 							<a class="hnt-anchor" href="#sigma-rule" aria-label="Link to this recipe">#</a>
 						</header>
-						<p class="hnt-desc">Detects DNS lookups to a TweetFeed-listed domain. Populate <code>%TweetFeedDomains%</code> from your Sigma processing pipeline, e.g. a sigmac lookup expansion.</p>
+						<ul class="hnt-desc hnt-list">
+							<li>Detects DNS lookups to a TweetFeed-listed domain.</li>
+							<li>Populate <code>%TweetFeedDomains%</code> from your Sigma processing pipeline.</li>
+							<li>For example, a sigmac lookup expansion.</li>
+						</ul>
 						<p class="hnt-meta"><span>Window: week</span><span>Logsource: sysmon EventID 22</span></p>
 						<pre id="det-sigma" class="code-block"><code class="language-yaml">title: TweetFeed-listed Malicious Domain Resolution
 id: f1c0c0d0-1111-4444-9999-aaaaaaaaaaaa
@@ -1278,7 +1376,7 @@ falsepositives:
 level: medium
 tags:
   - attack.command_and_control
-  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#det-sigma" title="Copy"></i></pre>
+  - attack.t1071.004</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#det-sigma"></i></pre>
 					</article>
 				</section>
 				<section class="hnt-group" data-group="agents">
@@ -1293,8 +1391,14 @@ tags:
 						</header>
 						<p class="hnt-desc">The corpus as agent tools over the Model Context Protocol, so a coding or SOC agent can query it directly instead of scraping a CSV.</p>
 						<p class="hnt-meta"><span>Transport: streamable HTTP</span><span>Tools: 13</span></p>
-						<pre id="qs-mcp-1" class="code-block"><code class="language-bash">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-mcp-1" title="Copy"></i></pre>
-						<p class="hnt-note">Fourteen tools: <code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code>, <code>list_recent_iocs</code>, <code>get_tag_info</code>, <code>get_trending</code>, <code>enrich_ioc</code>, <code>get_campaigns</code>, <code>get_campaign_iocs</code>, <code>get_trends</code>, <code>search</code>, <code>fetch</code> and <code>get_feed_status</code>. No key, no auth.</p>
+						<pre id="qs-mcp-1" class="code-block"><code class="language-bash">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/</code><i class="tf-copy code-copy far fa-copy" tabindex="0" role="button" aria-label="Copy to clipboard" data-copy="#qs-mcp-1"></i></pre>
+						<ul class="hnt-note hnt-list">
+							<li>Fourteen tools. No key, no auth.</li>
+							<li><code>query_iocs</code>, <code>check_url</code>, <code>check_ip</code>, <code>check_hash</code>,</li>
+							<li><code>list_recent_iocs</code>, <code>get_tag_info</code>, <code>get_trending</code>,</li>
+							<li><code>enrich_ioc</code>, <code>get_campaigns</code>, <code>get_campaign_iocs</code>,</li>
+							<li><code>get_trends</code>, <code>search</code>, <code>fetch</code> and <code>get_feed_status</code>.</li>
+						</ul>
 						<p class="hnt-links"><a href="../agents/">Agents page and config snippets</a></p>
 					</article>
 				</section>
@@ -1432,14 +1536,14 @@ tags:
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../js/config.js"></script>
-  <script src="../js/utils.js?v=8"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+  <script defer src="../js/config.js"></script>
+  <script defer src="../js/utils.js?v=9"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Recipe filter. Progressive enhancement on purpose: the markup ships
 	     with every card visible, so with JS off (or before this runs) the page
 	     is the complete cookbook. Filtering only ever NARROWS it. -->
-	<script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	(function () {
 		var bar = document.getElementById('hnt-filter');
 		if (!bar || !document.querySelector) return;
@@ -1451,6 +1555,14 @@ tags:
 		var showAll = document.getElementById('hnt-show-all');
 		var known = {};
 		chips.forEach(function (b) { known[b.getAttribute('data-stack')] = true; });
+
+		// One source of truth: the number of recipe cards in the DOM feeds the
+		// headline and the "All N" chip. The literals in the markup are only the
+		// no-JS fallback and must equal cards.length.
+		var headEl = document.getElementById('hnt-headline-recipes');
+		var allN = bar.querySelector('.hnt-chip[data-stack="all"] .hnt-chip-n');
+		if (headEl) headEl.textContent = cards.length;
+		if (allN) allN.textContent = cards.length;
 
 		function apply(stack, writeUrl) {
 			if (!known[stack]) stack = 'all';
@@ -1492,12 +1604,12 @@ tags:
 			apply(decodeURIComponent(want), false);
 		}
 	})();
-	</script>
-	<script>
+	});</script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
-	</script>
+	});</script>
 </body>
 
 </html>

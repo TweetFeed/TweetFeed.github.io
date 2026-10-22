@@ -55,11 +55,13 @@
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:alt" content="TweetFeed - IOC types index">
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -178,7 +180,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -192,7 +194,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -288,7 +290,7 @@
 				<h3 class="section-heading tf-block-head">Per-type streams</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Each landing page covers one IOC type, with stats by window (today / week / month / year), the active source distribution, and a FAQ. Use them as canonical link targets when linking out from your own writing.</p>
+						<p style="margin-bottom:0.9rem; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif;">Pick a type. Each page has live counts, recent samples and a FAQ.</p>
 						<div class="row">
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../malicious-urls/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
@@ -296,25 +298,25 @@
 										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-0026e6); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">url</span>
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious URLs</span>
 									</div>
-									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full HTTP/HTTPS URLs flagged by public Twitter/X researchers. Highest-volume IOC type on TweetFeed.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Full links with path and query. Our biggest feed.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../malicious-domains/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">domain</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-3399ff); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">domain</span>
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious domains</span>
 									</div>
-									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Bare domain names without scheme or path. Useful for DNS-level blocklists and CT-log correlation.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Host names only. Good for DNS blocklists.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
 								<a href="../malicious-ips/" class="text-decoration-none" style="display:block; padding:0.5rem 0.7rem; border:1px solid var(--tf-bd-1c1c1c); border-radius:0; background:var(--tf-bg-fff);">
 									<div style="display:flex; align-items:baseline; gap:0.6rem;">
-										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-02bf0f); color:var(--tf-fg-fff); border-radius:3px; font-family:'Rubik',sans-serif;">ip</span>
+										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-02bf0f); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">ip</span>
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">Malicious IPs</span>
 									</div>
-									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4 / IPv6 addresses linked to attacker infrastructure (C2, scanners, phishing hosts). Free malicious IP list, refreshed every 15 min; high FP risk on shared hosting.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">IPv4 addresses of C2 and scanner hosts. Block with care.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
@@ -323,7 +325,7 @@
 										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-ffc34d); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">md5</span>
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">MD5 hashes</span>
 									</div>
-									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes shared by researchers. Pivot through VirusTotal / Malpedia / Hybrid Analysis.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Legacy 128-bit file hashes. Check them in VirusTotal.</div>
 								</a>
 							</div>
 							<div class="col-md-6 col-12" style="margin-bottom:0.7rem;">
@@ -332,7 +334,7 @@
 										<span style="font-size:11px; padding:2px 6px; background:var(--tf-bg-ffc34d); color:var(--tf-fg-1c1c1c); border-radius:3px; font-family:'Rubik',sans-serif;">sha256</span>
 										<span style="font-family:'Rubik',sans-serif; font-weight:600; color:var(--tf-fg-1c1c1c);">SHA-256 hashes</span>
 									</div>
-									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">Modern 256-bit file hashes; preferred over MD5 for forensic chain of custody and incident-response artefacts.</div>
+									<div style="font-size:12px; color:var(--tf-fg-737373); font-family:'Rubik',sans-serif; line-height:1.4; margin-top:0.2rem;">256-bit file hashes. Better than MD5 for evidence.</div>
 								</a>
 							</div>
 						</div>
@@ -342,10 +344,10 @@
 				<h3 class="section-heading tf-block-head">Other reference</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">
-							<a href="../tags/" class="text-decoration-none"><b>Tag index</b></a> &middot; 26 per-tag landing pages (APT groups, malware families, TTPs, vulnerabilities). <br>
-							<a href="../threat-intelligence-guide/" class="text-decoration-none"><b>Threat Intelligence guide</b></a> &middot; ~1,640-word pillar covering IOC types, OSINT vs commercial, MITRE ATT&amp;CK basics, glossary.
-						</p>
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
+							<li><a href="../tags/" class="text-decoration-none"><b>Tag index</b></a>: 26 pages for APT groups, malware and TTPs.</li>
+							<li><a href="../threat-intelligence-guide/" class="text-decoration-none"><b>Threat Intelligence guide</b></a>: IOC types, OSINT vs paid feeds, ATT&amp;CK basics.</li>
+						</ul>
 					</div>
 				</div>
 
@@ -446,9 +448,9 @@
 			<!-- End of Footer -->
 		</div>
 	</div>
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 </body>
 
 </html>

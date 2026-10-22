@@ -350,6 +350,43 @@
     });
   }
 
+  // ─── Copy-icon tooltips ────────────────────────────────────────────────────
+  // The copy icons used to carry a native title="Copy". They now get a
+  // Bootstrap tooltip instead. The text comes from data-tip when present
+  // ("Copy URL", "Copy example (url)"), else "Copy"; aria-label stays on the
+  // element for screen readers. Safe to call again with a container after
+  // inserting rows (search tables): already-initialised icons are skipped, and
+  // it does nothing when jQuery or the Bootstrap tooltip plugin is missing.
+  function initCopyTooltips(root) {
+    if (typeof $ === 'undefined' || !$.fn || typeof $.fn.tooltip !== 'function') return;
+    try {
+      var $els = root ? $(root).find('.tf-copy').addBack('.tf-copy') : $('.tf-copy');
+      $els.each(function() {
+        var $el = $(this);
+        if ($el.data('tfCopyTip')) return;
+        $el.data('tfCopyTip', true);
+        $el.tooltip({
+          title: function() { return this.getAttribute('data-tip') || 'Copy'; },
+          placement: 'top',
+          container: 'body',   // icons sit inside <pre> blocks that clip overflow
+          trigger: 'hover focus'
+        });
+      });
+    } catch (e) { /* a tooltip failure must never break copying */ }
+  }
+  if (typeof $ !== 'undefined') {
+    $(function() { initCopyTooltips(); });
+    // Safety net for icons inserted after DOM ready: first hover/focus
+    // initialises the tooltip and shows it right away.
+    $(document).off('mouseenter.tfcopytip focusin.tfcopytip').on('mouseenter.tfcopytip focusin.tfcopytip', '.tf-copy', function() {
+      if ($(this).data('tfCopyTip')) return;
+      initCopyTooltips(this);
+      if ($.fn.tooltip) { try { $(this).tooltip('show'); } catch (e) {} }
+    });
+  } else {
+    document.addEventListener('DOMContentLoaded', function() { initCopyTooltips(); });
+  }
+
   // ─── Search tracking ───────────────────────────────────────────────────────
   // Delegated so it never competes with the page's own submit handler: this
   // listener only records, it never preventDefaults or stops propagation.
@@ -452,7 +489,7 @@
           ? (b.getAttribute('data-label-to-light') || 'Switch to light theme')
           : (b.getAttribute('data-label-to-dark') || 'Switch to dark theme');
         b.setAttribute('aria-label', label);
-        b.setAttribute('title', label);
+        b.removeAttribute('title');
       }
       return changed;
     }
@@ -551,6 +588,7 @@
     parseCSV: parseCSV,
     csvJSON: parseCSV,            // legacy alias (drop-in replacement)
     copyToClipboard: copyToClipboard,
+    initCopyTooltips: initCopyTooltips,
     downloadCSV: downloadCSV,
     exportTableToCSV: exportTableToCSV,
     addZero: addZero,

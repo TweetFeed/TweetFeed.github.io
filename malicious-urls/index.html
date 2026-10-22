@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - Malicious URLs feed">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://api.tweetfeed.live" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -66,8 +68,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -175,15 +177,7 @@
 				"name": "What is a malicious URL feed?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "A malicious URL feed is a continuously updated list of links that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these feeds into SIEMs, firewalls and EDRs to block traffic and detect compromise. TweetFeed publishes the URLs spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How is this list updated?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS."
+					"text": "A live list of links to phishing, scam, malware and C2 pages. Ours comes from ~95 researchers on Twitter/X."
 				}
 			},
 			{
@@ -191,7 +185,7 @@
 				"name": "How do malicious URLs differ from malicious domains?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "A URL is the full link, including path and query string (https://example.com/login.php?u=1); a domain is only the host (example.com). Block at the URL level for phishing kits parked on a compromised or shared host, where blocking the whole domain would take legitimate content down with it. For infrastructure that is bad end to end, block the host instead - that list is the malicious domains feed."
+					"text": "A URL is the full link with its path. Block URLs on shared or hacked hosts, block the domain when the whole host is bad."
 				}
 			},
 			{
@@ -199,7 +193,7 @@
 				"name": "Where can I download a malicious URL list?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "From this page: the CSV and JSON links above cover today, the past week, the past month and the past year, plus an RSS feed of the same data. No registration and no API key - the data is CC0."
+					"text": "On the Feeds page: CSV, JSON and RSS. No key or sign-up."
 				}
 			},
 			{
@@ -207,7 +201,7 @@
 				"name": "Can I integrate this feed with my SIEM, MISP or firewall?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at api.tweetfeed.live/v1/{time}/url returns JSON for any HTTP client. The MISP manifest at /misp/manifest.json imports one native MISP event per day (365 days). The Threat Hunting page has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl."
+					"text": "Yes. Use the CSV, the JSON API or the MISP manifest. Copy-paste snippets are on the Hunt page."
 				}
 			},
 			{
@@ -215,7 +209,7 @@
 				"name": "Are these URLs verified malicious?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking."
+					"text": "No. It is OSINT, so false positives happen. Check VirusTotal or urlscan.io before blocking."
 				}
 			},
 			{
@@ -223,15 +217,7 @@
 				"name": "Is the malicious URLs list free?",
 				"acceptedAnswer": {
 					"@type": "Answer",
-					"text": "Yes. Every TweetFeed feed is free and released into the public domain under CC0 1.0, with no API key, sign-up or rate card. You can use it in commercial or personal projects; a link back is appreciated but not required."
-				}
-			},
-			{
-				"@type": "Question",
-				"name": "How do I use these URLs to block threats?",
-				"acceptedAnswer": {
-					"@type": "Answer",
-					"text": "Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives."
+					"text": "Yes. CC0 1.0, no key or sign-up, commercial use allowed."
 				}
 			}
 		]
@@ -314,7 +300,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -328,7 +314,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -428,8 +414,8 @@
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">URLs by window</h3>
 				<div class="row">
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected since 00:00 UTC today"></i>
@@ -439,8 +425,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 7 days"></i>
@@ -450,8 +436,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 30 days"></i>
@@ -461,8 +447,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-6 col-xl-3">
-						<div class="card shadow mb-4 h-100">
+					<div class="col-6 col-xl-3 mb-4">
+						<div class="card shadow h-100">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span>
 								<i class="far fa-question-circle fa-sm align-self-center" data-toggle="tooltip" data-placement="right" title="URLs collected in the last 365 days"></i>
@@ -484,10 +470,10 @@
 				<div class="card mb-4">
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
-							<li>Sourced from ~95 Twitter/X security researchers, refreshed every 15 minutes.</li>
-							<li>Phishing kits, scam landing pages, malware-delivery URLs and command-and-control endpoints.</li>
-							<li>Onion (.onion) URLs and ransomware leak sites included.</li>
-							<li>Excluded: legitimate domains in the allowlist (Google, Microsoft, GitHub auth pages, common shorteners).</li>
+							<li>Source: ~95 Twitter/X researchers, every 15 min.</li>
+							<li>Phishing kits, scam pages, malware and C2 links.</li>
+							<li>Includes .onion URLs and ransomware leak sites.</li>
+							<li>Excludes allowlisted sites (Google, Microsoft, shorteners).</li>
 						</ul>
 					</div>
 				</div>
@@ -551,59 +537,53 @@
 				<h3 class="section-heading tf-block-head">Formats and how to use</h3>
 				<div class="card mb-4">
 					<div class="card-body">
-						<p style="margin-bottom:0.85rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">Every TweetFeed feed is free and public domain (<a href="../tos/" class="text-decoration-none">CC0 1.0</a>) with no API key or sign-up. The malicious URLs are available in four formats:</p>
+						<p style="margin-bottom:0.85rem; color:var(--tf-fg-1c1c1c); font-size:15px; font-family:'Rubik',sans-serif; line-height:1.7;">The malicious URLs are available in four formats:</p>
 						<div class="table-responsive">
 							<table class="table table-sm" style="margin-bottom:0.85rem; font-family:'Rubik',sans-serif; font-size:14px;">
 								<colgroup>
 									<col span="1" style="width: 20%;">
 									<col span="1" style="width: 34%;">
-									<col span="1" style="width: 46%;">
 								</colgroup>
-								<thead><tr><th scope="col">Format</th><th scope="col">Where</th><th scope="col">Best for</th></tr></thead>
+								<thead><tr><th scope="col">Format</th><th scope="col">Where</th><th scope="col" class="d-none d-lg-table-cell">Best for</th></tr></thead>
 								<tbody>
-									<tr><td><b>JSON API</b></td><td><a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/v1/&lt;window&gt;/url</code></a></td><td>SOAR / SIEM enrichment, scripts</td></tr>
-									<tr><td><b>CSV</b></td><td><a href="../feeds/" class="text-decoration-none">today / week / month / year .csv</a></td><td>bulk import, spreadsheets, blocklists</td></tr>
-									<tr><td><b>RSS</b></td><td><a href="https://tweetfeed.live/rss.xml" target="_blank" rel="noopener noreferrer"><code>rss.xml</code></a></td><td>watch new IOCs in a reader</td></tr>
-									<tr><td><b>MCP</b></td><td><a href="../agents/" class="text-decoration-none">mcp.tweetfeed.live</a></td><td>live lookups from AI agents / Claude</td></tr>
+									<tr><td><b>JSON API</b></td><td><a href="https://api.tweetfeed.live/v1/week/url" target="_blank" rel="noopener noreferrer"><code>api.tweetfeed.live/<wbr>v1/&lt;window&gt;/url</code></a></td><td class="d-none d-lg-table-cell">SOAR / SIEM enrichment, scripts</td></tr>
+									<tr><td><b>CSV</b></td><td><a href="../feeds/" class="text-decoration-none">today / week / month / year .csv</a></td><td class="d-none d-lg-table-cell">bulk import, spreadsheets, blocklists</td></tr>
+									<tr><td><b>RSS</b></td><td><a href="https://tweetfeed.live/rss.xml" target="_blank" rel="noopener noreferrer"><code>rss.xml</code></a></td><td class="d-none d-lg-table-cell">watch new IOCs in a reader</td></tr>
+									<tr><td><b>MCP</b></td><td><a href="../agents/" class="text-decoration-none">mcp.tweetfeed.live</a></td><td class="d-none d-lg-table-cell">live lookups from AI agents / Claude</td></tr>
 								</tbody>
 							</table>
 						</div>
-						<p style="margin-bottom:0; color:var(--tf-fg-737373); font-size:14px; font-family:'Rubik',sans-serif; line-height:1.7;">Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-737373); font-size:14px; line-height:1.7;">
+							<li>Load into your web gateway or mail filter as a blocklist.</li>
+							<li>Check VirusTotal or a sandbox first: OSINT has false positives.</li>
+						</ul>
 					</div>
 				</div>
 				<section class="faq-section">
 					<h3 class="section-heading">Frequently asked questions</h3>
 					<details>
-							<summary>What is a malicious URL feed?</summary>
-							<p>A malicious URL feed is a continuously updated list of links that point to phishing pages, scams, malware payloads or command-and-control endpoints. Security teams ingest these feeds into SIEMs, firewalls and EDRs to block traffic and detect compromise. TweetFeed publishes the URLs spotted by ~95 infosec researchers on Twitter/X, refreshed every 15 minutes.</p>
-						</details>
-						<details>
-							<summary>How is this list updated?</summary>
-							<p>Every 15 minutes. The pipeline scrapes RSS feeds from public Twitter/X researcher accounts and lists, extracts URLs from tweets, deduplicates against the past year, tags them with malware family and category, and republishes the result in CSV, JSON and RSS.</p>
-						</details>
-						<details>
-							<summary>How do malicious URLs differ from malicious domains?</summary>
-							<p>A URL is the full link, including path and query string (https://example.com/login.php?u=1); a domain is only the host (example.com). Block at the URL level for phishing kits parked on a compromised or shared host, where blocking the whole domain would take legitimate content down with it. For infrastructure that is bad end to end, block the host instead - that list is the <a href="../malicious-domains/">malicious domains feed</a>.</p>
-						</details>
-						<details>
-							<summary>Where can I download a malicious URL list?</summary>
-							<p>From this page: the CSV and JSON links above cover today, the past week, the past month and the past year, plus an RSS feed of the same data. No registration and no API key - the data is CC0.</p>
-						</details>
-						<details>
-							<summary>Can I integrate this feed with my SIEM, MISP or firewall?</summary>
-							<p>Yes. CSV imports work with most SIEMs (Splunk, Sentinel, QRadar) and proxies. The REST API at <code>api.tweetfeed.live/v1/{time}/url</code> returns JSON for any HTTP client. The MISP manifest at <code>/misp/manifest.json</code> imports one native MISP event per day (365 days). The <a href="../hunt/" class="text-decoration-none">Threat Hunting page</a> has copy-paste configuration snippets for MISP, OpenCTI, Splunk, KQL and IntelOwl.</p>
-						</details>
-						<details>
-							<summary>Are these URLs verified malicious?</summary>
-							<p>TweetFeed is OSINT, not a sandbox. URLs are sourced from public posts by infosec researchers, then deduplicated and tagged. False positives can occur. Treat the list as a high-recall lead source rather than a verdict; cross-reference VirusTotal, urlscan.io or your sandbox before blocking.</p>
-						</details>
-					<details>
-						<summary>Is the malicious URLs list free?</summary>
-						<p>Yes. Every TweetFeed feed is free and released into the public domain under CC0 1.0, with no API key, sign-up or rate card. You can use it in commercial or personal projects; a link back is appreciated but not required.</p>
+						<summary>What is a malicious URL feed?</summary>
+						<p>A live list of links to phishing, scam, malware and C2 pages. Ours comes from ~95 researchers on Twitter/X.</p>
 					</details>
 					<details>
-						<summary>How do I use these URLs to block threats?</summary>
-						<p>Import the URL list into your secure web gateway or email-security filter as a blocklist, or query the JSON API from your SOAR to enrich alerts. Validate against VirusTotal or your own sandbox before blocking outright, since OSINT feeds can carry false positives.</p>
+						<summary>How do malicious URLs differ from malicious domains?</summary>
+						<p>A URL is the full link with its path. Block URLs on shared or hacked hosts, block the <a href="../malicious-domains/">domain</a> when the whole host is bad.</p>
+					</details>
+					<details>
+						<summary>Where can I download a malicious URL list?</summary>
+						<p>On the <a href="../feeds/" class="text-decoration-none">Feeds page</a>: CSV, JSON and RSS. No key or sign-up.</p>
+					</details>
+					<details>
+						<summary>Can I integrate this feed with my SIEM, MISP or firewall?</summary>
+						<p>Yes. Use the CSV, the JSON API or the MISP manifest. Copy-paste snippets are on the <a href="../hunt/" class="text-decoration-none">Hunt page</a>.</p>
+					</details>
+					<details>
+						<summary>Are these URLs verified malicious?</summary>
+						<p>No. It is OSINT, so false positives happen. Check VirusTotal or urlscan.io before blocking.</p>
+					</details>
+					<details>
+						<summary>Is the malicious URLs list free?</summary>
+						<p>Yes. CC0 1.0, no key or sign-up, commercial use allowed.</p>
 					</details>
 				</section>
 
@@ -612,7 +592,7 @@
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">License</h3>
 				<p style="color: var(--tf-fg-737373);font-size: 16px;font-family: 'Rubik', sans-serif;">
-					IOC data: <b>CC0 1.0 Public Domain</b>. No attribution required, no warranty.
+					IOC data: <b><a href="../tos/" class="text-decoration-none">CC0 1.0 Public Domain</a></b>. No attribution required, no warranty.
 				</p>
 
 			</main>
@@ -722,7 +702,7 @@
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	function nFormatter(num, digits) {
@@ -743,7 +723,7 @@
 		const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 		return months[parseInt(m[2],10)-1] + ' ' + parseInt(m[3],10) + ', ' + m[4] + ':' + m[5];
 	}
-	$(window).on('load', function() {
+	$(function() {
 		// counts.json populates the 4 window cards (URL count only).
 		// counts.json served by the API (byte-identical to the data-repo file, 5 min
 		// at the edge) so this page shares one origin with the /v1/week/* fetch below.
@@ -752,7 +732,7 @@
 				const w = counts.windows && counts.windows[period];
 				if (!w || !w.types) continue;
 				const n = w.types.url || 0;
-				$('.mu-' + period).fadeOut(function(){ $(this).text(nFormatter(n, n >= 10000 ? 1 : 0)).fadeIn(800); });
+				$('.mu-' + period).text(nFormatter(n, n >= 1000 ? 1 : 0));
 			}
 		});
 		// Recent samples: latest 10 URLs from past 7 days, live from API.

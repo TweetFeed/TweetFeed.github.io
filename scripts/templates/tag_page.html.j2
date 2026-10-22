@@ -43,6 +43,8 @@
 	<meta property="og:image:alt" content="{{ m.og_image_alt }}">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></noscript>
@@ -50,8 +52,8 @@
 	<link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	{% if samples %}<link href="../../css/table.css?v=7" rel="stylesheet">
-	{% endif %}<link href="../../css/index.css?v=74" rel="stylesheet">
-	<link href="../../css/tweetfeed.css?v=74" rel="stylesheet">
+	{% endif %}<link href="../../css/index.css?v=75" rel="stylesheet">
+	<link href="../../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -109,6 +111,18 @@
 	<script type="application/ld+json">
 	{{ faq_jsonld | safe }}
 	</script>
+	<style>
+		.tf-win-num { font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif; }
+		.tf-win-cap { font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0; }
+		@media (max-width: 575.98px) {
+			.tf-win-row .card { margin-bottom: 0.75rem !important; }
+			.tf-win-row .card-header { padding: 0.5rem 0.75rem; }
+			.tf-win-row .cardTitle { font-size: 28px; }
+			.tf-win-row .card-header hr { margin: 0.3rem 0; }
+			.tf-win-num { font-size: 26px; margin-bottom: 0.1rem; }
+			.tf-win-cap { font-size: 12px; }
+		}
+	</style>
 </head>
 
 <body id="page-top">
@@ -140,44 +154,44 @@
 				<!-- IOCS BY WINDOW (BAKED, NOT LIVE)                              -->
 				<!-- ============================================================ -->
 				<h3 class="section-heading tf-block-head">IOCs by window</h3>
-				<div class="row">
-					<div class="col-md-3 col-sm-6 col-12">
+				<div class="row tf-win-row">
+					<div class="col-6 col-md-3">
 						<div class="card shadow mb-4">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Today</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ counts.today | format_num }}</p>
-								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #{{ m.display_tag }}</p>
+								<p class="tf-win-num">{{ counts.today | format_num }}</p>
+								<p class="tf-win-cap">IOCs<span class="d-none d-md-inline"> tagged #{{ m.display_tag }}</span></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
+					<div class="col-6 col-md-3">
 						<div class="card shadow mb-4">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Week</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ counts.week | format_num }}</p>
-								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #{{ m.display_tag }}</p>
+								<p class="tf-win-num">{{ counts.week | format_num }}</p>
+								<p class="tf-win-cap">IOCs<span class="d-none d-md-inline"> tagged #{{ m.display_tag }}</span></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
+					<div class="col-6 col-md-3">
 						<div class="card shadow mb-4">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Month</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ counts.month | format_num }}</p>
-								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #{{ m.display_tag }}</p>
+								<p class="tf-win-num">{{ counts.month | format_num }}</p>
+								<p class="tf-win-cap">IOCs<span class="d-none d-md-inline"> tagged #{{ m.display_tag }}</span></p>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6 col-12">
+					<div class="col-6 col-md-3">
 						<div class="card shadow mb-4">
 							<div class="card-header text-center">
 								<span class="card-text cardTitle">Year</span>
 								<hr>
-								<p style="font-size: 32px; font-weight: 600; color: var(--tf-fg-0026e6); margin-bottom: 0.25rem; font-family: 'Rubik', sans-serif;">{{ counts.year | format_num }}</p>
-								<p style="font-size: 13px; color: var(--tf-fg-737373); margin-bottom: 0;">IOCs tagged #{{ m.display_tag }}</p>
+								<p class="tf-win-num">{{ counts.year | format_num }}</p>
+								<p class="tf-win-cap">IOCs<span class="d-none d-md-inline"> tagged #{{ m.display_tag }}</span></p>
 							</div>
 						</div>
 					</div>
@@ -320,13 +334,13 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="../../vendor/jquery/jquery.min.js"></script>
-	<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities (delegated tf-copy click handler) -->
-	<script src="../../js/utils.js?v=8"></script>
-	<script>
+	<script defer src="../../js/utils.js?v=9"></script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	$(function() { $('[data-toggle="tooltip"]').tooltip() });
-	</script>
+	});</script>
 </body>
 
 </html>

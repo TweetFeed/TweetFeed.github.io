@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -68,8 +70,8 @@
 	<!-- vendor/datatables/dataTables.bootstrap4.min.css removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- Custom CSS 0xDanielLopez -->
 	<!-- <link href="../css/table.css?v=7" rel="stylesheet"> THIS IS NOT NEEDED ON DASHBOARDS (PROBLEM WITH THE INPUTS)-->
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -191,6 +193,9 @@
 		   runs. Real content is far taller than 100vh at every breakpoint,
 		   so this never adds blank space. */
 		#content { min-height: 100vh; }
+		/* #content is 98% wide with a 1% margin below 992 px and this page has no
+		   .container-fluid inside it, so the title and toolbar touched the screen edge. */
+		@media (max-width:991.98px) { #content { padding-left:12px; padding-right:12px; } }
 		/* Type strip. Pattern copied from .tfc-headline (campaigns/index.html:161-190):
 		   grid with a black border and 1px dividers, tabular-nums figures. */
 		.tfd-types { display:grid; grid-template-columns:repeat(5,1fr); gap:0;
@@ -302,6 +307,8 @@
 		   column and nothing jumps. */
 		.tfd-grid { display:flex; align-items:flex-start; gap:12px; }
 		.tfd-col { flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:12px; }
+		/* tfdBuildGrid makes no more columns than tweets; the cap keeps a lone tweet from stretching. */
+		@media (min-width:768px) { .tfd-col { max-width:420px; } }
 		.tfd-cell > .twitter-tweet-rendered, .tfd-cell > iframe { width:100% !important; }
 
 		@media (max-width:575.98px) { .tfd-types { grid-template-columns:repeat(2,1fr); }
@@ -381,7 +388,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -395,7 +402,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -439,9 +446,9 @@
 					<!-- Body in dashboard -->
 					<div class="dash-toolbar">
 						<div class="toolbar-group">
-							<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" title="Auto-refreshes every 60s. Click to pause."><span class="tf-live-dot" aria-hidden="true"></span><span class="tf-live-label">Live</span></button>
+							<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" data-original-title="Refreshes every 60 s. Click to pause."><span class="tf-live-dot" aria-hidden="true"></span><span class="tf-live-label">Live</span></button>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+								<div class="progress-bar" role="progressbar" aria-label="Refresh countdown" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 									<span class="sr-only"></span>
 								</div>
 							</div>
@@ -601,7 +608,7 @@
 	<!-- vendor/datatables/*.js + js/demo/datatables-demo.js removed: dashboard has zero .DataTable( calls and no #dataTable element (confirmed by grep) -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=8"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// Tweet rendering queue: loadData() may run before platform widgets.js
@@ -995,14 +1002,16 @@
 				cell.appendChild(__tfBuildSkeleton());
 				var obs = TweetFeed.lazyInViewport(cell, function() {
 					renderTweet(statusId, cell);
-				}, '600px');
+				}, window.innerWidth < 768 ? '200px' : '600px');
 				if (obs) tfdGridObservers.push(obs);
 			}
 
 			function tfdBuildGrid(lines) {
 				tfdTeardownGridObservers();
-				var nCols = colCount();
-				tfdCurCols = nCols;
+				// tfdCurCols keeps the viewport's column count (the resize handler compares
+				// it with colCount()); nCols is never more than the number of tweets.
+				tfdCurCols = colCount();
+				var nCols = Math.max(1, Math.min(tfdCurCols, lines.length));
 				var grid = document.getElementById('tfdGrid');
 				while (grid.firstChild) grid.removeChild(grid.firstChild);
 				var cols = [];

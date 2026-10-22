@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC Trends">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -66,8 +68,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -256,6 +258,7 @@
 			letter-spacing: 0.03em;
 			background: var(--tf-bg-34e3a4);
 			color: var(--tf-fg-0b3d2e);
+			margin-left: 6px;
 			margin-right: 4px;
 		}
 		.trd-stat-card {
@@ -435,7 +438,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -449,7 +452,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -483,7 +486,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-chart-line" style="font-size: 36px;"></i> IOC Trends</h1>
@@ -804,16 +807,16 @@
 	<!-- End of Content Wrapper -->
 	<!-- End of Page Wrapper -->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=8"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
-	<script src="../vendor/chart.js/Chart.min.js"></script>
+	<script defer src="../vendor/chart.js/Chart.min.js"></script>
 	<!-- Page level custom script: single fetch of trends.json (TweetFeed.dataUrl,
 	     stage/prod-aware via js/config.js), renders all charts client-side. -->
-	<script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	(function() {
 		'use strict';
 
@@ -907,7 +910,7 @@
 					maintainAspectRatio: false,
 					layout: { padding: { left: 10, right: 25, top: 10, bottom: 0 } },
 					scales: {
-						xAxes: [{ ticks: { autoSkip: true, maxTicksLimit: 8, maxRotation: 0, padding: 5 }, gridLines: { display: false, drawBorder: false } }],
+						xAxes: [{ ticks: { autoSkip: true, maxTicksLimit: (window.innerWidth < 576 ? 4 : 8), maxRotation: 0, padding: 5 }, gridLines: { display: false, drawBorder: false } }],
 						yAxes: [{ ticks: { suggestedMin: 0, maxTicksLimit: 5, padding: 10, autoSkip: true }, gridLines: { color: TweetFeed.chartTheme().grid, zeroLineColor: TweetFeed.chartTheme().grid, drawBorder: false, borderDash: [2], zeroLineBorderDash: [2] } }]
 					},
 					legend: { display: true, position: 'bottom', labels: { boxWidth: 12, padding: 12 } },
@@ -1017,13 +1020,15 @@
 			// Bars are scaled against the largest absolute delta in the set, so
 			// the widest bar is always full-half and the rest are honest
 			// fractions of it. Half the track per side: the centre is zero.
+			// Floor of 3% so a small mover still shows a visible bar next to a
+			// huge one (the exact numbers stay in the labels).
 			var maxAbs = tags.reduce(function(m, t) {
 				return Math.max(m, Math.abs(t.delta || 0));
 			}, 0) || 1;
 
 			var rows = tags.map(function(m) {
 				var delta = m.delta || 0;
-				var pctWidth = (Math.abs(delta) / maxAbs) * 50;
+				var pctWidth = Math.max(3, (Math.abs(delta) / maxAbs) * 50);
 				var barCls = delta < 0 ? 'trd-mover-bar-down' : 'trd-mover-bar-up';
 				var bar = delta
 					? '<span class="trd-mover-bar ' + barCls + '" style="width:' + pctWidth.toFixed(2) + '%;"></span>'
@@ -1208,7 +1213,7 @@
 			});
 		});
 	})();
-	</script>
+	});</script>
 </body>
 
 </html>

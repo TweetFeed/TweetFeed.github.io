@@ -59,6 +59,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -67,8 +69,8 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -243,7 +245,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -257,7 +259,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -291,7 +293,7 @@
 				</div>
 			</nav>
 			<!-- Top bar end -->
-			<div id="content" role="main" tabindex="-1">
+			<div id="content" class="tf-gutter" role="main" tabindex="-1">
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true" style="vertical-align:-6px"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg> TweetFeed for AI Agents</h1>
@@ -347,7 +349,7 @@
 				<div class="agent-setup-callout">
 					<p>Fastest path: paste this line to your agent and it configures itself.</p>
 					<div class="tf-agent-setup">
-						<button type="button" class="tf-agent-pill" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
+						<button type="button" class="tf-agent-pill" data-toggle="tooltip" data-placement="top" title="Copy the setup line for your agent" data-copy-pill="Fetch https://tweetfeed.live/agent-setup/prompt.md and follow it" data-copied-label="Copied. Paste it into your agent">
 							<svg class="tf-agent-pill-spark" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z"/></svg>
 							<span class="tf-agent-pill-label" data-pill-label>Onboard your agent to TweetFeed</span>
 						</button>
@@ -411,7 +413,7 @@
       "url": "https://mcp.tweetfeed.live/"
     }
   }
-} <i class="tf-copy far fa-copy" data-copy='{&quot;mcpServers&quot;:{&quot;tweetfeed&quot;:{&quot;url&quot;:&quot;https://mcp.tweetfeed.live/&quot;}}}' role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+} <i class="tf-copy far fa-copy" data-copy='{&quot;mcpServers&quot;:{&quot;tweetfeed&quot;:{&quot;url&quot;:&quot;https://mcp.tweetfeed.live/&quot;}}}' role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 
 				<span class="tf-code-label"><b>ChatGPT</b> (connectors and deep research)</span>
 				<p>
@@ -423,7 +425,7 @@
 				</p>
 
 				<span class="tf-code-label"><b>Or</b> add from the Claude Code CLI</span>
-				<pre class="code-block">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/ <i class="tf-copy far fa-copy" data-copy="claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/ <i class="tf-copy far fa-copy" data-copy="claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 
 				<span class="tf-code-label"><b>Available tools</b></span>
 				<div class="table-responsive">
@@ -586,7 +588,7 @@
 				<span class="tf-code-label"><b>Try it from the command line</b></span>
 				<pre class="code-block">curl -sX POST https://mcp.tweetfeed.live/ \
   -H 'content-type: application/json' \
-  -d '{"jsonrpc":"2.0","method":"tools/list","id":1}' <i class="tf-copy far fa-copy" data-copy="curl -sX POST https://mcp.tweetfeed.live/ -H 'content-type: application/json' -d '{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;tools/list&quot;,&quot;id&quot;:1}'" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+  -d '{"jsonrpc":"2.0","method":"tools/list","id":1}' <i class="tf-copy far fa-copy" data-copy="curl -sX POST https://mcp.tweetfeed.live/ -H 'content-type: application/json' -d '{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;method&quot;:&quot;tools/list&quot;,&quot;id&quot;:1}'" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 
 				<p class="tf-note">
 					Source:
@@ -645,7 +647,7 @@
 				<p>
 					No MCP or skills harness? Call the public REST API directly: no key, no auth, CORS-enabled, JSON responses.
 				</p>
-				<pre class="code-block">GET https://api.tweetfeed.live/v1/<b class="tf-ph">{time}</b>/<b class="tf-ph">{filter1}</b>/<b class="tf-ph">{filter2}</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard" title="Copy"></i></pre>
+				<pre class="code-block">GET https://api.tweetfeed.live/v1/<b class="tf-ph">{time}</b>/<b class="tf-ph">{filter1}</b>/<b class="tf-ph">{filter2}</b> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<p class="tf-note">The <a href="../api/">API page</a> is the reference: every parameter, the 10,000-row result cap and its truncation headers, conditional requests, and the campaigns, counts, trends and IOC-lookup endpoints.</p>
 
 				<hr class="divider">
@@ -863,22 +865,22 @@
 	</div>
 	<!-- End of Page Wrapper -->
 	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top" aria-label="Back to top" title="Back to top">
+	<a class="scroll-to-top rounded" href="#page-top" aria-label="Back to top">
 		<i class="fas fa-angle-up"></i>
 	</a>
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../js/utils.js?v=8"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Core plugin JavaScript-->
-	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script defer src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 	<!-- Custom scripts for all pages-->
-	<script src="../js/sb-admin-2.min.js"></script>
-	<script>
+	<script defer src="../js/sb-admin-2.min.js"></script>
+	<script>document.addEventListener('DOMContentLoaded', function () {
 	$(function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
-	</script>
+	});</script>
 </body>
 
 </html>

@@ -58,6 +58,8 @@
 	<meta property="og:image:alt" content="TweetFeed - IOC feeds from Twitter/X">
 	<!-- Preconnect -->
 	<link rel="preconnect" href="//fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 	<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
 	<!-- Custom fonts for this template -->
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onload="this.onload=null;this.rel='stylesheet'">
@@ -68,8 +70,8 @@
 	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/table.css?v=7" rel="stylesheet">
-	<link href="../css/index.css?v=74" rel="stylesheet">
-	<link href="../css/tweetfeed.css?v=74" rel="stylesheet">
+	<link href="../css/index.css?v=75" rel="stylesheet">
+	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -551,6 +553,7 @@
 		   the .tfl- rules above (this panel is unique to /search/, avoids a
 		   site-wide tweetfeed.css?v= bump). Prefixed tfe- to stay distinct
 		   from the IOC lookup panel's tfl- namespace. */
+		@media (max-width:575.98px) { #feFrom, #feTo { min-width:0; font-size:.85rem; } }
 		.tfe-hint {
 			display: block;
 			margin-top: 0.5rem;
@@ -652,7 +655,7 @@
 							<a class="btn btn-tf nav-cta" href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer"><i class="fas fa-comment-dots nav-cta-icon" aria-hidden="true"></i> Feedback <i class="fas fa-external-link-alt nav-cta-ext" aria-hidden="true"></i></a>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 					</ul>
 				</div>
@@ -666,7 +669,7 @@
 					</ul>
 					<ul class="navbar-nav navbar-right">
 						<li class="nav-item">
-							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme" title="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
+							<button type="button" class="site-theme-toggle" data-theme-toggle data-label-to-dark="Switch to dark theme" data-label-to-light="Switch to light theme" aria-label="Switch to dark theme"><i class="fas fa-moon" aria-hidden="true"></i><i class="fas fa-sun" aria-hidden="true"></i></button>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link tf-nav-burger" href="#" role="button" aria-label="Menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></a>
@@ -704,7 +707,7 @@
 				<div id="presentationMobile">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</p>
-					<p style="font-size: 14px;"><em>Search 7 days of IOCs from ~95 infosec researchers - or run an exact 365-day lookup</em></p>
+					<p style="font-size: 14px;"><em>Look up one IOC, or browse the last 7 days</em></p>
 				</div>
 				<!-- Only mobile -->
 				<div style="font-size: 15px">
@@ -765,7 +768,7 @@
 				<div id="presentationSecondary" class="d-none d-lg-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-search" style="font-size: 36px;"></i> IOC Search</h1>
-					<h2><em>Search 7 days of IOCs from ~95 infosec researchers - or run an exact 365-day lookup with AI context</em></h2>
+					<h2><em>Look up one IOC, or browse the last 7 days</em></h2>
 					<hr class="divider"> <!-- DIVIDER -->
 				</div>
 				<div class="container-fluid">
@@ -780,12 +783,12 @@
 							<form id="iocLookupForm" role="search" aria-label="IOC lookup (exact match, last 365 days)">
 								<label for="iocLookupInput" class="sr-only">Exact IOC value to look up</label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="iocLookupInput" name="q" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Exact IOC - URL, domain, IP, MD5 or SHA256 (365-day index)">
+									<input type="text" class="form-control" id="iocLookupInput" name="q" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="URL, domain, IP or hash">
 									<div class="input-group-append">
 										<button class="btn btn-tf" type="submit" aria-label="Search"><i class="fas fa-search"></i> Search</button>
 									</div>
 								</div>
-								<small class="form-text text-muted tfl-hint">Exact match against the 365-day index, plus a pre-365-day archive for anything older. Defanged input (<code>hxxp</code>, <code>[.]</code>) is normalized automatically. Same dataset as the <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a> - see the <a href="../api/">API docs</a>.</small>
+								<small class="form-text text-muted tfl-hint">Exact match, last 365 days plus archive.<br>Defanged input works. <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a>, <a href="../api/">API docs</a></small>
 							</form>
 							<div id="iocLookupStatus" role="status" aria-live="polite"></div>
 							<div id="iocLookupResults" aria-live="polite"></div>
@@ -831,7 +834,7 @@
 									</div>
 									<div class="form-group col-6 col-md-4">
 										<label for="feTag">Tag</label>
-										<input type="text" class="form-control" id="feTag" list="feTagOptions" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. cobaltstrike">
+										<input type="text" class="form-control" id="feTag" list="feTagOptions" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="cobaltstrike">
 										<datalist id="feTagOptions"></datalist>
 										<small class="form-text text-danger" id="feTagError" aria-live="polite"></small>
 									</div>
@@ -854,7 +857,7 @@
 									<button class="btn btn-tf btn-sm" type="button" id="feExportBtn"><i class="fas fa-download"></i> Export CSV</button>
 									<span class="tf-copy tfe-permalink" id="fePermalink" data-copy="" role="button" tabindex="0" aria-label="Copy permalink to these filters" title="Copy permalink"><i class="fas fa-link"></i> Copy permalink</span>
 								</div>
-								<small class="form-text text-muted tfe-hint" id="feIdleHint">Pick a window, then Load. Type, tag and user narrow the query server-side (first two apply directly; a third client-side, same priority as the MCP <code>query_iocs</code> tool: type &gt; user &gt; tag). From/To filter client-side only, after the fetch.</small>
+								<small class="form-text text-muted tfe-hint" id="feIdleHint">Pick a window, then Load.<br>Type, user and tag narrow it. From/To trim it.</small>
 							</form>
 							<div id="feStatus" role="status" aria-live="polite"></div>
 							<div id="feMessage" aria-live="polite"></div>
@@ -895,7 +898,7 @@
 							<div class="container-fluid rounded">
 								<div class="row">
 									<div class="col align-self-center">
-										<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" title="Auto-refreshes every 6s. Click to pause.">
+										<button id="liveToggle" class="tf-live" type="button" aria-pressed="true" data-toggle="tooltip" data-placement="bottom" data-trigger="hover" data-original-title="Refreshes every 60 s. Click to pause.">
 											<span class="tf-live-dot" aria-hidden="true"></span>
 											<span class="tf-live-label">Live</span>
 										</button>
@@ -1121,8 +1124,8 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=8"></script>
-	<script src="../js/demo/datatables-full.js?v=2"></script>
+	<script src="../js/utils.js?v=9"></script>
+	<script src="../js/demo/datatables-full.js?v=3"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	$(function() {
@@ -1146,12 +1149,9 @@
 				init = 1;
 				loadData();
 
-				table.rows().every(function() {
-
-					$(this.node()).addClass('newRow');
-				});
+				$(table.rows({ page: 'current' }).nodes()).addClass('newRow');
 				animationNew();
-				timerAux = setInterval(timerCycle, 6000);
+				timerAux = setInterval(timerCycle, 60000);
 				TweetFeed.trackInterval(timerAux);
 			}
 		})
@@ -1169,9 +1169,11 @@
 		// NOTE: do NOT lazy-init the DataTable() itself - verified 2026-04-26
 		// that lazy-on-viewport regresses CLS to 0.533 (DataTables wrapper
 		// injection shifts layout post-paint), net perf -0.18.
+		// The feed changes every 15 minutes; a 6 s poll re-downloaded and re-parsed the
+		// 4,900-row week.csv ten times a minute for nothing (home moved to 60 s in 358623fa3).
 		$(window).on('load', function() {
 			loadData();
-			timerAux = setInterval(timerCycle, 6000);
+			timerAux = setInterval(timerCycle, 60000);
 			TweetFeed.trackInterval(timerAux);
 		});
 
@@ -1224,43 +1226,14 @@
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
 								var type = data[i][2];
-
-								var user = data[i][1];
-								// Handles are [A-Za-z0-9_]{1,15}. Anything else is never used to build a URL
-								// or an attribute; only the escaped text below renders it. Mirrors userCell()
-								// in search/index.html, which already did this.
-								var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
-								var picSrc = '../pics/' + safeUser + '.png';
-
-								data[i][1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
-
-								var value = data[i][3];
-
-								// Add external link in URLs (v3: no direct access)
-								data[i][3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
-
-								var tweet_url = data[i][5];
-								data[i][5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
-
-								if (type == "url") {
-									value = encodeURIComponent(value);
-								}
-
-								data[i].push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+								decorateRow(data[i]);
 
 								var node = table.row.add(data[i]).draw().node();
 								$(node).addClass('highlight');
 								$(node).addClass('newRow');
 								$(node).addClass(type);
 
-								// For Mobile
-								// Only show: User (1), Value (3) and Twitter (5)
-								// Hide: Date (0), Type (2), Tags (4) and VT (6)
-								$(node).find('td:eq(0)').addClass('d-none d-lg-table-cell');
-								$(node).find('td:eq(2)').addClass('d-none d-lg-table-cell');
-								$(node).find('td:eq(4)').addClass('d-none d-lg-table-cell tableTags');
-								$(node).find('td:eq(5)').addClass('d-none d-lg-table-cell');
-								$(node).find('td:eq(6)').addClass('d-none d-lg-table-cell');
+								// Mobile column classes come from columnDefs in js/demo/datatables-full.js.
 
 								flag_new = 1;
 							}
@@ -1281,55 +1254,13 @@
 					} else {
 
 						for (var i = 0; i < data.length; i++) {
-
-							var type = data[i][2];
-							var value = data[i][3];
-							var tweet_url = data[i][5];
-
-							if (type == "url") {
-								value = encodeURIComponent(value);
-							}
-
-							data[i].push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+							decorateRow(data[i]);
 						}
 
 						table.rows.add(data).order([0, 'desc']).draw();
-						table.rows().every(function() {
-
-							$(this.node()).addClass('newRow');
-
-							var col = $(this.node()).find('td').eq(2).text().trim();
-							$(this.node()).toggleClass(col);
-
-							var user = $(this.node()).find('td').eq(1).text().trim();
-
-							// Handles are [A-Za-z0-9_]{1,15}. Anything else is never used to build a URL
-							// or an attribute; only the escaped text below renders it. Mirrors userCell()
-							// in search/index.html, which already did this.
-							var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
-							var picSrc = '../pics/' + safeUser + '.png';
-
-							$(this.node()).find('td').eq(1).html('<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>');
-
-							var value = $(this.node()).find('td').eq(3).text().trim();
-							var type = $(this.node()).find('td').eq(2).text().trim();
-
-							// Add external link in URLs (v3: no direct access)
-							$(this.node()).find('td').eq(3).html('<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>')
-
-							var tweet_url = $(this.node()).find('td').eq(5).text().trim();
-							$(this.node()).find('td').eq(5).html('<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>');
-
-							// For Mobile
-							// Only show: User (1), Value (3) and Twitter (5)
-							// Hide: Date (0), Type (2), Tags (4) and VT (6)
-							$(this.node()).find('td').eq(0).addClass('d-none d-lg-table-cell');
-							$(this.node()).find('td').eq(2).addClass('d-none d-lg-table-cell');
-							$(this.node()).find('td').eq(4).addClass('d-none d-lg-table-cell tableTags');
-							$(this.node()).find('td').eq(5).addClass('d-none d-lg-table-cell');
-							$(this.node()).find('td').eq(6).addClass('d-none d-lg-table-cell');
-
-						})
+						// deferRender: only the visible page has <tr> nodes; the type tint comes from
+						// createdRow in js/demo/datatables-full.js, so no row is touched here.
+						$(table.rows({ page: 'current' }).nodes()).addClass('newRow');
 						animationNew();
 					}
 					olddate = data[data.length - 1][0];
@@ -1343,6 +1274,27 @@
 				cache: false
 			});
 			init = 0;
+		}
+
+		// Turns one week.csv row [date, user, type, value, tags, tweet_url] into
+		// table cells. XSS-safe: every value is escaped in attributes and text.
+		// Built as strings BEFORE rows.add so deferRender never has to create a
+		// <tr> for every row just to rewrite its cells (~4,900 rows on week.csv).
+		function decorateRow(r) {
+			var user = r[1];
+			var type = r[2];
+			var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
+			var picSrc = '../pics/' + safeUser + '.png';
+			r[1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
+			var value = r[3];
+			r[3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
+			var tweet_url = r[5];
+			r[5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
+			if (type == "url") {
+				value = encodeURIComponent(value);
+			}
+			r.push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
+			return r;
 		}
 
 		function countTypes(className, jsonArr) {

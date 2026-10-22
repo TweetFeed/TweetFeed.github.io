@@ -2518,3 +2518,15 @@ a.tf-social:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offs
 /* The VirusTotal glyph is a dark-blue PNG: lift it on dark (hover keeps its own white-out filter). */
 :root[data-site-theme="dark"] .tf-action.tf-action-vt:not(:hover) img,
 :root[data-site-theme="dark"] img.virustotal { filter: brightness(2.1) saturate(.8); }
+
+/* Repaso 22-10: responsive display helpers that the trimmed sb-admin-2 build does not ship
+   (tag pages use d-none d-md-inline for "tagged #X", campaigns uses d-none d-sm-inline). */
+@media (min-width: 576px) { .d-sm-inline { display: inline !important; } }
+@media (min-width: 768px) { .d-md-inline { display: inline !important; } }
+
+/* Repaso 22-10: mobile burger + theme toggle were rgba(255,255,255,.5) on #1DA1F2 (about 1.7:1).
+   Light theme only: same ink as the wordmark next to them. Dark theme keeps its own colours. */
+@media (max-width: 991.98px) {
+	:root:not([data-site-theme="dark"]) .tf-navbar-mobile .navbar-nav li a.tf-nav-burger,
+	:root:not([data-site-theme="dark"]) .tf-navbar-mobile .site-theme-toggle { color: var(--tf-nav-fg-000) !important; }
+}
