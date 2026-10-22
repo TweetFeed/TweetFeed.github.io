@@ -296,23 +296,20 @@
 
 				<div style="font-size:15px;color:var(--tf-fg-3c4043);line-height:1.7;max-width:800px;font-family: 'Rubik', sans-serif;padding: 0 15px 40px 0;">
 
-				<b>1. Acceptance</b><br>
-				By accessing or using tweetfeed.live, including its website, public API (api.tweetfeed.live), data feeds (CSV, JSON, RSS, MISP), and any related content (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service. These Terms also apply if you only read, download, or redistribute data from the Service without further interaction.
+				<h2 id="acceptance" class="h5 mt-4 mb-2 font-weight-bold">1. Acceptance</h2>
+				<p class="mb-2">By accessing or using tweetfeed.live, including its website, public API (api.tweetfeed.live), data feeds (CSV, JSON, RSS, MISP), and any related content (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Service.</p>
+				<p class="mb-2">These Terms also apply if you only read, download, or redistribute data from the Service without further interaction.</p>
 
-				<br><br>
+				<h2 id="service" class="h5 mt-4 mb-2 font-weight-bold">2. The Service</h2>
+				<p class="mb-2">TweetFeed aggregates indicators of compromise (URLs, domains, IP addresses, file hashes, and Twitter/X handles) that are shared publicly on Twitter/X by security researchers and the infosec community.</p>
+				<p class="mb-2">The collected IOCs are republished as free, open feeds for threat hunting, detection engineering, and security research. The Service is provided free of charge, without authentication, for any lawful purpose.</p>
 
-				<b>2. The Service</b><br>
-				TweetFeed aggregates indicators of compromise (URLs, domains, IP addresses, file hashes, and Twitter/X handles) that are shared publicly on Twitter/X by security researchers and the infosec community. The collected IOCs are republished as free, open feeds for threat hunting, detection engineering, and security research. The Service is provided free of charge, without authentication, for any lawful purpose.
+				<h2 id="nature-of-data" class="h5 mt-4 mb-2 font-weight-bold">3. Nature of the data - COMMUNITY-SOURCED, NOT VERIFIED</h2>
+				<p class="mb-2">The data distributed by TweetFeed is sourced from public tweets posted by third parties. TweetFeed does <b>not</b> scan, execute, or independently verify any IOC, and does not confirm that any listed URL, domain, IP, hash, or account is malicious.</p>
+				<p class="mb-2">The data reflects what the community posted, nothing more. False positives and false negatives occur routinely. Anyone relying on the data must perform their own verification before taking action. Inclusion in the Service does not constitute an accusation against any party.</p>
 
-				<br><br>
-
-				<b>3. Nature of the data - COMMUNITY-SOURCED, NOT VERIFIED</b><br>
-				The data distributed by TweetFeed is sourced from public tweets posted by third parties. TweetFeed does <b>not</b> scan, execute, or independently verify any IOC, and does not confirm that any listed URL, domain, IP, hash, or account is malicious. The data reflects what the community posted, nothing more. False positives and false negatives occur routinely. Anyone relying on the data must perform their own verification before taking action. Inclusion in the Service does not constitute an accusation against any party.
-
-				<br><br>
-
-				<b>4. Acceptable use</b><br>
-				You may use the Service and its data for any lawful purpose. You may NOT:
+				<h2 id="acceptable-use" class="h5 mt-4 mb-2 font-weight-bold">4. Acceptable use</h2>
+				<p class="mb-1">You may use the Service and its data for any lawful purpose. You may NOT:</p>
 				<ul style="margin:8px 0 0 20px;">
 				<li>Use the data to facilitate, promote, or carry out phishing, fraud, harassment, malware distribution, or any illegal activity;</li>
 				<li>Attempt to disrupt, overload, reverse-engineer, or otherwise interfere with the Service infrastructure;</li>
@@ -321,69 +318,82 @@
 				<li>Use the Service in any way that violates applicable law or third-party rights.</li>
 				</ul>
 
-				<br>
+				<h2 id="rate-limits" class="h5 mt-4 mb-2 font-weight-bold">5. Rate limiting and availability</h2>
+				<p class="mb-2">The public API (api.tweetfeed.live) is served by a Cloudflare Worker on the free plan, which is subject to Cloudflare's standard Worker quotas (approximately 100,000 requests per day at the time of writing).</p>
+				<p class="mb-2">Excessive or abusive traffic may be throttled, cached, or blocked without notice. The Service may be modified, suspended, or discontinued at any time, with or without notice. No uptime or availability commitment is made.</p>
 
-				<b>5. Rate limiting and availability</b><br>
-				The public API (api.tweetfeed.live) is served by a Cloudflare Worker on the free plan, which is subject to Cloudflare's standard Worker quotas (approximately 100,000 requests per day at the time of writing). Excessive or abusive traffic may be throttled, cached, or blocked without notice. The Service may be modified, suspended, or discontinued at any time, with or without notice. No uptime or availability commitment is made.
+				<h2 id="takedown" class="h5 mt-4 mb-2 font-weight-bold">6. Takedown and correction requests</h2>
+				<p class="mb-2">If you believe a specific IOC published by TweetFeed is incorrect, outdated, or should not be listed, reach out on X via DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a> with the specific entry and your reasoning. Requests are reviewed on a best-effort basis.</p>
+				<p class="mb-2">TweetFeed retains sole discretion over what is published, in line with its editorial judgement and security research purposes. Because IOCs are sourced from public tweets, the original tweet author retains control over the underlying post.</p>
 
-				<br><br>
+				<h2 id="data-license" class="h5 mt-4 mb-2 font-weight-bold">7. Data license</h2>
+				<p class="mb-2">The data distributed through TweetFeed (CSV, JSON, RSS, MISP feeds, and API responses at api.tweetfeed.live) is released into the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">Creative Commons CC0 1.0</a>.</p>
+				<p class="mb-2">When redistributing or publishing the data, attribution to TweetFeed is appreciated but not required. The website design, source code, trademarks, and branding remain reserved and are not covered by this license.</p>
 
-				<b>6. Takedown and correction requests</b><br>
-				If you believe a specific IOC published by TweetFeed is incorrect, outdated, or should not be listed, reach out on X via DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a> with the specific entry and your reasoning. Requests are reviewed on a best-effort basis. TweetFeed retains sole discretion over what is published, in line with its editorial judgement and security research purposes. Because IOCs are sourced from public tweets, the original tweet author retains control over the underlying post.
+				<h2 id="no-warranties" class="h5 mt-4 mb-2 font-weight-bold">8. No warranties</h2>
+				<p class="mb-2">THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY.</p>
+				<p class="mb-2">TWEETFEED DISCLAIMS ALL WARRANTIES INCLUDING ACCURACY, COMPLETENESS, RELIABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND MERCHANTABILITY. TWEETFEED DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.</p>
 
-				<br><br>
+				<h2 id="liability" class="h5 mt-4 mb-2 font-weight-bold">9. Limitation of liability</h2>
+				<p class="mb-2">To the maximum extent permitted by law, TweetFeed and its operator shall not be liable for any direct, indirect, incidental, consequential, special, exemplary, or punitive damages arising from or related to your use of, reliance on, or inability to use the Service.</p>
+				<p class="mb-2">This includes, but is not limited to, loss of data, loss of profits, business interruption, or reputational harm. It applies even if TweetFeed or its operator was advised of the possibility of such damages.</p>
 
-				<b>7. Data license</b><br>
-				The data distributed through TweetFeed (CSV, JSON, RSS, MISP feeds, and API responses at api.tweetfeed.live) is released into the public domain under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">Creative Commons CC0 1.0</a>. When redistributing or publishing the data, attribution to TweetFeed is appreciated but not required. The website design, source code, trademarks, and branding remain reserved and are not covered by this license.
+				<h2 id="indemnification" class="h5 mt-4 mb-2 font-weight-bold">10. Indemnification</h2>
+				<p class="mb-2">You agree to defend, indemnify, and hold harmless TweetFeed and its operator from any claim, loss, liability, expense, or damage (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, or your violation of any law or third-party right.</p>
 
-				<br><br>
+				<h2 id="third-party-links" class="h5 mt-4 mb-2 font-weight-bold">11. Third-party links and content</h2>
+				<p class="mb-2">The Service contains references and links to third-party URLs, domains, and IP addresses that may be malicious, compromised, or otherwise unsafe. Those resources are not controlled by TweetFeed. Visiting them may expose you to credential theft, malware, or other risks.</p>
+				<p class="mb-2">TweetFeed also links to the original Twitter/X posts from which IOCs were extracted. Those posts remain subject to Twitter/X's own terms and may be edited or removed by their authors at any time.</p>
+				<p class="mb-2">TweetFeed assumes no responsibility for third-party content, privacy practices, or security. You access those links entirely at your own risk.</p>
 
-				<b>8. No warranties</b><br>
-				THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY. TWEETFEED DISCLAIMS ALL WARRANTIES INCLUDING ACCURACY, COMPLETENESS, RELIABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND MERCHANTABILITY. TWEETFEED DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+				<h2 id="privacy-data" class="h5 mt-4 mb-2 font-weight-bold">12. Privacy and personal data</h2>
+				<p class="mb-2">TweetFeed is operated from Spain and processes personal data in accordance with the EU General Data Protection Regulation (GDPR) and Spanish LOPDGDD. Data controller: Daniel López. Contact: X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a>.</p>
+				<p class="mb-2">For a short summary in plain words, see the <a href="../privacy/">Privacy Policy</a>.</p>
 
-				<br><br>
-
-				<b>9. Limitation of liability</b><br>
-				To the maximum extent permitted by law, TweetFeed and its operator shall not be liable for any direct, indirect, incidental, consequential, special, exemplary, or punitive damages arising from or related to your use of, reliance on, or inability to use the Service, including but not limited to loss of data, loss of profits, business interruption, or reputational harm - even if advised of the possibility of such damages.
-
-				<br><br>
-
-				<b>10. Indemnification</b><br>
-				You agree to defend, indemnify, and hold harmless TweetFeed and its operator from any claim, loss, liability, expense, or damage (including reasonable legal fees) arising from your use of the Service, your violation of these Terms, or your violation of any law or third-party right.
-
-				<br><br>
-
-				<b>11. Third-party links and content</b><br>
-				The Service contains references and links to third-party URLs, domains, and IP addresses that may be malicious, compromised, or otherwise unsafe. Those resources are not controlled by TweetFeed. Visiting them may expose you to credential theft, malware, or other risks. TweetFeed also links to the original Twitter/X posts from which IOCs were extracted; those posts remain subject to Twitter/X's own terms and may be edited or removed by their authors at any time. TweetFeed assumes no responsibility for third-party content, privacy practices, or security. You access those links entirely at your own risk.
-
-				<br><br>
-
-				<b>12. Privacy and personal data</b><br>
-				TweetFeed is operated from Spain and processes personal data in accordance with the EU General Data Protection Regulation (GDPR) and Spanish LOPDGDD. Data controller: Daniel López. Contact: X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a>.
-
-				<br><br>
-
-				<b>Data processed:</b>
+				<h3 class="h6 mt-3 mb-2 font-weight-bold">Data processed</h3>
 				<ul style="margin:8px 0 0 20px;">
-				<li><b>IP address, User-Agent, request path, referer</b> - recorded in edge/server access logs for abuse prevention, troubleshooting, and rate limiting. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: short-lived, typically 30 days or less at the CDN/host level.</li>
-				<li><b>Aggregate traffic analytics</b> - collected via <a href="https://umami.is/" target="_blank" rel="noopener noreferrer">Umami</a> (self-hosted on our own infrastructure), <a href="https://ahrefs.com/web-analytics" target="_blank" rel="noopener noreferrer">Ahrefs Web Analytics</a> and Cloudflare Web Analytics, all cookieless analytics tools. No cookies, no localStorage, and no fingerprinting are used. IP addresses are hashed with a daily-rotating salt and never stored. Only aggregate page views, referrers, and coarse device/country information are retained. Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
+				<li><b>IP address, User-Agent, request path, referer</b>
+					<ul>
+					<li>Recorded in edge/server access logs for abuse prevention, troubleshooting, and rate limiting.</li>
+					<li>Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
+					<li>Retention: short-lived, typically 30 days or less at the CDN/host level.</li>
+					</ul>
+				</li>
+				<li><b>Aggregate traffic analytics</b>
+					<ul>
+					<li>Collected via <a href="https://umami.is/" target="_blank" rel="noopener noreferrer">Umami</a> (self-hosted on our own infrastructure), <a href="https://ahrefs.com/web-analytics" target="_blank" rel="noopener noreferrer">Ahrefs Web Analytics</a> and Cloudflare Web Analytics, all cookieless analytics tools.</li>
+					<li>No cookies, no localStorage, and no fingerprinting are used.</li>
+					<li>IP addresses are hashed with a daily-rotating salt and never stored.</li>
+					<li>Only aggregate page views, referrers, and coarse device/country information are retained.</li>
+					<li>Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
+					</ul>
+				</li>
 				<li><b>Feedback content</b> - only if you open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a> (public) or send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a>. Used solely for correspondence about TweetFeed.</li>
-				<li><b>Public Twitter/X content</b> - the Service ingests publicly available tweets and extracts IOCs from them. It does not process private messages, protected accounts, or any non-public content. The author handle of a tweet is retained alongside its IOC strictly as provenance metadata. Retention: the core IOC dataset (daily CSV buckets, including the provenance handle) is kept indefinitely as a public historical archive released under CC0 (§7), with no automatic expiration window.</li>
-				<li><b>Researcher profile avatars</b> - the public X/Twitter profile picture of researchers currently active in the rolling today/week/month/year windows is sourced via <a href="https://unavatar.io/" target="_blank" rel="noopener noreferrer">unavatar.io</a> and cached as a static image at tweetfeed.live/pics/*.png. Legal basis: legitimate interest (Art. 6(1)(f) GDPR). Retention: pruned 180 days after a researcher drops out of the active window.</li>
+				<li><b>Public Twitter/X content</b>
+					<ul>
+					<li>The Service ingests publicly available tweets and extracts IOCs from them.</li>
+					<li>It does not process private messages, protected accounts, or any non-public content.</li>
+					<li>The author handle of a tweet is retained alongside its IOC strictly as provenance metadata.</li>
+					<li>Retention: the core IOC dataset (daily CSV buckets, including the provenance handle) is kept indefinitely as a public historical archive released under CC0 (<a href="#data-license">§7</a>), with no automatic expiration window.</li>
+					</ul>
+				</li>
+				<li><b>Researcher profile avatars</b>
+					<ul>
+					<li>The public X/Twitter profile picture of researchers currently active in the rolling today/week/month/year windows is sourced via <a href="https://unavatar.io/" target="_blank" rel="noopener noreferrer">unavatar.io</a> and cached as a static image at tweetfeed.live/pics/*.png.</li>
+					<li>Legal basis: legitimate interest (Art. 6(1)(f) GDPR).</li>
+					<li>Retention: pruned 180 days after a researcher drops out of the active window.</li>
+					</ul>
+				</li>
 				</ul>
 
-				<br>
+				<p class="mt-3 mb-2">No personal data is sold, rented, or disclosed beyond the subprocessors listed in <a href="#subprocessors">§13</a>.</p>
 
-				No personal data is sold, rented, or disclosed beyond the subprocessors listed in §13.
+				<h3 class="h6 mt-3 mb-2 font-weight-bold">Your GDPR rights</h3>
+				<p class="mb-2">You have the right to access, rectification, erasure, restriction, portability, and the right to object to processing based on legitimate interest. To exercise them, use the contact above.</p>
+				<p class="mb-2">You may also lodge a complaint with the Spanish Data Protection Authority (<a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer">AEPD</a>).</p>
 
-				<br><br>
-
-				<b>Your GDPR rights:</b> access, rectification, erasure, restriction, portability, and the right to object to processing based on legitimate interest. To exercise them, send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues/new?template=feedback.yml" target="_blank" rel="noopener noreferrer">GitHub issue</a>. You may also lodge a complaint with the Spanish Data Protection Authority (<a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer">AEPD</a>).
-
-				<br><br>
-
-				<b>13. Third-party services (subprocessors)</b><br>
-				The Service relies on the following third parties, each governed by its own terms and privacy policy:
+				<h2 id="subprocessors" class="h5 mt-4 mb-2 font-weight-bold">13. Third-party services (subprocessors)</h2>
+				<p class="mb-1">The Service relies on the following third parties, each governed by its own terms and privacy policy:</p>
 				<ul style="margin:8px 0 0 20px;">
 				<li><b>Cloudflare, Inc.</b> - DNS, CDN, DDoS protection, and the Cloudflare Worker that powers api.tweetfeed.live. Processes all incoming HTTP requests to the Service.</li>
 				<li><b>GitHub, Inc.</b> - hosts the static frontend at tweetfeed.live via GitHub Pages, the public data repository from which feeds are served, and the public issue tracker used for feedback and IOC reports. Issue content is public and subject to GitHub's own terms and privacy policy.</li>
@@ -392,37 +402,23 @@
 				<li><b>Google LLC</b> - Google Fonts used for typography on the website.</li>
 				<li><b>Public CDN providers</b> - jsDelivr, Cloudflare CDN, and similar services deliver common JavaScript and CSS libraries (jQuery, Bootstrap, DataTables, FontAwesome).</li>
 				</ul>
+				<p class="mt-3 mb-2">The IOC pipeline ingests data only from public Twitter/X posts. No personal data about tweetfeed.live visitors is transmitted to Twitter/X or to any of the subprocessors beyond what is strictly necessary to serve the request or render the page. See the <a href="../privacy/">Privacy Policy</a> for a short summary.</p>
 
-				<br>
+				<h2 id="minors" class="h5 mt-4 mb-2 font-weight-bold">14. Minors</h2>
+				<p class="mb-2">The Service is not directed at individuals under the age of 16. If you are under 16, do not use the Service or submit any personal data to it.</p>
 
-				The IOC pipeline ingests data only from public Twitter/X posts. No personal data about tweetfeed.live visitors is transmitted to Twitter/X or to any of the subprocessors beyond what is strictly necessary to serve the request or render the page.
+				<h2 id="changes" class="h5 mt-4 mb-2 font-weight-bold">15. Changes to these Terms</h2>
+				<p class="mb-2">TweetFeed may revise these Terms at any time. The "Last updated" date at the bottom reflects the most recent revision. Continued use of the Service after changes constitutes acceptance of the revised Terms.</p>
 
-				<br><br>
+				<h2 id="governing-law" class="h5 mt-4 mb-2 font-weight-bold">16. Governing law and jurisdiction</h2>
+				<p class="mb-2">These Terms are governed by and construed in accordance with the laws of Spain, without regard to conflict-of-law principles. Any dispute arising out of or related to the Service shall be subject to the exclusive jurisdiction of the competent courts of Spain.</p>
+				<p class="mb-2">If you use the Service from outside Spain, you do so on your own initiative and are responsible for complying with local laws.</p>
 
-				<b>14. Minors</b><br>
-				The Service is not directed at individuals under the age of 16. If you are under 16, do not use the Service or submit any personal data to it.
+				<h2 id="severability" class="h5 mt-4 mb-2 font-weight-bold">17. Severability</h2>
+				<p class="mb-2">If any provision of these Terms is found unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that the remaining Terms remain in full force and effect.</p>
 
-				<br><br>
-
-				<b>15. Changes to these Terms</b><br>
-				TweetFeed may revise these Terms at any time. The "Last updated" date at the bottom reflects the most recent revision. Continued use of the Service after changes constitutes acceptance of the revised Terms.
-
-				<br><br>
-
-				<b>16. Governing law and jurisdiction</b><br>
-				These Terms are governed by and construed in accordance with the laws of Spain, without regard to conflict-of-law principles. Any dispute arising out of or related to the Service shall be subject to the exclusive jurisdiction of the competent courts of Spain. If you use the Service from outside Spain, you do so on your own initiative and are responsible for complying with local laws.
-
-				<br><br>
-
-				<b>17. Severability</b><br>
-				If any provision of these Terms is found unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that the remaining Terms remain in full force and effect.
-
-				<br><br>
-
-				<b>18. Operator</b><br>
-				The Service is operated by <b>Daniel López</b> as an independent side project.
-
-				<br><br>
+				<h2 id="operator" class="h5 mt-4 mb-2 font-weight-bold">18. Operator</h2>
+				<p class="mb-2">The Service is operated by <b>Daniel López</b> as an independent side project.</p>
 
 				<p style="font-size:13px;color:var(--tf-fg-6b6d7c);">Last updated: 27 August 2026</p>
 

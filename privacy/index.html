@@ -296,45 +296,34 @@
 
 				<div style="font-size:15px;color:var(--tf-fg-3c4043);line-height:1.7;max-width:800px;font-family: 'Rubik', sans-serif;padding: 0 15px 40px 0;">
 
-				<b>Who I am</b><br>
-				I am Daniel López. I run TweetFeed alone, from Spain. I am the data controller for tweetfeed.live, api.tweetfeed.live, and mcp.tweetfeed.live.
+				<h2 id="who" class="h5 mt-4 mb-2 font-weight-bold">Who I am</h2>
+				<p class="mb-2">I am Daniel López. I run TweetFeed alone, from Spain. I am the data controller for tweetfeed.live, api.tweetfeed.live, and mcp.tweetfeed.live.</p>
 
-				<br><br>
+				<h2 id="no-accounts" class="h5 mt-4 mb-2 font-weight-bold">No accounts</h2>
+				<p class="mb-2">TweetFeed has no accounts and no login. The website, the API, and the MCP server do not ask for your name, your email address, or a key. I set no cookies.</p>
 
-				<b>No accounts</b><br>
-				TweetFeed has no accounts and no login. The website, the API, and the MCP server do not ask for your name, your email address, or a key. I set no cookies.
+				<h2 id="browser" class="h5 mt-4 mb-2 font-weight-bold">Your browser</h2>
+				<p class="mb-2">The website saves your light or dark theme choice in your browser. It saves nothing else. My servers never read it.</p>
 
-				<br><br>
+				<h2 id="analytics" class="h5 mt-4 mb-2 font-weight-bold">Analytics</h2>
+				<p class="mb-2">The website uses Umami, which I host myself at s.tweetfeed.live, and Ahrefs Web Analytics. Both work without cookies. They count page views, referrers, and coarse device and country data. Umami does not store your IP address.</p>
+				<p class="mb-2">The API and the MCP server have no browser analytics. When a known AI agent calls the API, the API sends one event to my Umami. The event holds the path and a shortened User-Agent. It holds no IP address.</p>
 
-				<b>Your browser</b><br>
-				The website saves your light or dark theme choice in your browser. It saves nothing else. My servers never read it.
+				<h2 id="logs" class="h5 mt-4 mb-2 font-weight-bold">Logs and rate limits</h2>
+				<p class="mb-2">Cloudflare serves all requests. It sees your IP address and User-Agent, and it applies a rate limit of 50 requests in 10 seconds for each IP.</p>
+				<p class="mb-2">The API also counts single-IOC lookups (<code>/v1/ioc</code>) for each IP. It does not block them today. When one IP sends more than 20 in a minute, the API writes one log line with that IP address, User-Agent, and request path.</p>
+				<p class="mb-2">Cloudflare Workers Logs is on for the API and the MCP server. It can record the request URL and status for a short time (days). For a lookup, the URL can contain the value you look up. The MCP server writes no log lines of its own and does not read your IP address.</p>
 
-				<br><br>
+				<h2 id="data" class="h5 mt-4 mb-2 font-weight-bold">The data</h2>
+				<p class="mb-2">The IOCs come from public posts on X. For each IOC, I keep the post link and the handle of its author as source data. I do not read private accounts or private messages. The data is public domain (CC0 1.0).</p>
 
-				<b>Analytics</b><br>
-				The website uses Umami, which I host myself at s.tweetfeed.live, and Ahrefs Web Analytics. Both work without cookies. They count page views, referrers, and coarse device and country data. Umami does not store your IP address. The API and the MCP server have no browser analytics. When a known AI agent calls the API, the API sends one event to my Umami. The event holds the path and a shortened User-Agent. It holds no IP address.
+				<h2 id="sharing" class="h5 mt-4 mb-2 font-weight-bold">Sharing</h2>
+				<p class="mb-2">I do not sell your data. Cloudflare processes requests for me. GitHub hosts the website and the public data. The website also loads fonts from Google Fonts and code libraries from public CDNs.</p>
+				<p class="mb-2">Each of these services has its own privacy policy. The <a href="../tos/#subprocessors">Terms of Service</a> list them in section 13.</p>
 
-				<br><br>
-
-				<b>Logs and rate limits</b><br>
-				Cloudflare serves all requests. It sees your IP address and User-Agent, and it applies a rate limit of 50 requests in 10 seconds for each IP. The API also counts single-IOC lookups (<code>/v1/ioc</code>) for each IP. It does not block them today. When one IP sends more than 20 in a minute, the API writes one log line with that IP address, User-Agent, and request path. Cloudflare Workers Logs is on for the API and the MCP server. It can record the request URL and status for a short time (days). For a lookup, the URL can contain the value you look up. The MCP server writes no log lines of its own and does not read your IP address.
-
-				<br><br>
-
-				<b>The data</b><br>
-				The IOCs come from public posts on X. For each IOC, I keep the post link and the handle of its author as source data. I do not read private accounts or private messages. The data is public domain (CC0 1.0).
-
-				<br><br>
-
-				<b>Sharing</b><br>
-				I do not sell your data. Cloudflare processes requests for me. GitHub hosts the website and the public data. The website also loads fonts from Google Fonts and code libraries from public CDNs. Each of these services has its own privacy policy. The <a href="../tos/">Terms of Service</a> list them in section 13.
-
-				<br><br>
-
-				<b>Your rights and contact</b><br>
-				You can ask me to give you, correct, or delete your data, or to stop using it. You can also complain to the Spanish data protection authority (AEPD). To contact me, open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues" target="_blank" rel="noopener noreferrer">GitHub issue</a>. Do not post private data in it. TweetFeed has no email address.
-
-				<br><br>
+				<h2 id="rights" class="h5 mt-4 mb-2 font-weight-bold">Your rights and contact</h2>
+				<p class="mb-2">You can ask me to give you, correct, or delete your data, or to stop using it. You can also complain to the Spanish data protection authority (AEPD).</p>
+				<p class="mb-2">To contact me, open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues" target="_blank" rel="noopener noreferrer">GitHub issue</a>. Do not post private data in it. TweetFeed has no email address.</p>
 
 				<small>Last updated: 18 October 2026</small>
 				</div>
