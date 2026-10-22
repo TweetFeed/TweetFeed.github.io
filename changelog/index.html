@@ -72,6 +72,31 @@
 	<!-- Custom CSS 0xDanielLopez -->
 	<link href="../css/index.css?v=75" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
+	<style>
+		/* Changelog: body of each entry collapses behind a "Details" control; the
+		   date, tag and title stay visible. The 3 newest entries ship open. */
+		.cl-more > summary {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4rem;
+			min-height: 32px;
+			padding: 0.25rem 0;
+			font-size: 13px;
+			color: var(--tf-fg-1178b3);
+			cursor: pointer;
+			list-style: none;
+			user-select: none;
+		}
+		.cl-more > summary::-webkit-details-marker { display: none; }
+		.cl-more > summary:hover { color: var(--tf-fg-325d81); }
+		.cl-more > summary:focus-visible { outline: 2px solid var(--tf-ol-3a6f96); outline-offset: 2px; }
+		.cl-more > summary i { font-size: 11px; transition: transform 0.15s ease; }
+		.cl-more[open] > summary i { transform: rotate(180deg); }
+		.cl-more[open] > summary { margin-bottom: 0.35rem; }
+		@media (prefers-reduced-motion: reduce) {
+			.cl-more > summary i { transition: none; }
+		}
+	</style>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" rel="stylesheet"></noscript>
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -376,7 +401,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">MCP resources and prompts: raw JSON documents and ready-made recipes</h3>
+							<details class="cl-more" open>
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>The <a href="../agents/#option-mcp">MCP server</a> now exposes the feed as resources (<code>resources/list</code>, <code>resources/templates/list</code>, <code>resources/read</code>): <code>tweetfeed://status</code>, <code>tweetfeed://counts</code>, <code>tweetfeed://trends</code>, <code>tweetfeed://campaigns</code>, <code>tweetfeed://iocs/{today|week|month}</code>, plus the templates <code>tweetfeed://iocs/{time}/{type}</code> and <code>tweetfeed://campaigns/{id}</code>. Each read returns raw JSON, the same documents the REST API serves. The 14 tools stay the filtered, size-bounded path; resources are for clients that want a whole document (a status panel, a whole-window blocklist sync). The server also ships three prompts (<code>triage_ioc</code>, <code>daily_brief</code>, <code>campaign_summary</code>), user-invoked recipes (slash commands in Claude Desktop and Claude Code) that chain the tools for an IOC triage, a threat brief and a campaign hand-off.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -386,7 +414,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Reporter leaderboard precomputed: /v1/contributors and the Year tab is back</h3>
+							<details class="cl-more" open>
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>A new <code>contributors.json</code> artifact is written every 15-minute tick: today/week/month/year rankings of reporting X/Twitter handles by IOCs, each entry with its top 3 IOC types and top 3 tags. <a href="../api/#contributors">/v1/contributors</a> passes it through, and <a href="../researchers/">/researchers/</a> now renders all four windows from that one fetch instead of ranking CSVs in the browser - the long-dormant Year tab is back too. Side effect: the Week and Month tabs load again (their lazy init relied on an IntersectionObserver that never fired inside a hidden tab pane, so they had been rendering empty).</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -396,7 +427,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Source coverage in /v1/status and the get_feed_status MCP tool</h3>
+							<details class="cl-more" open>
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p><a href="../api/#status">/v1/status</a> now reports a <code>sources</code> block: per-X-source coverage (hashtag and account feeds), how many rows each attributed in the last 24h, and a dead-account verdict (no new post in 72h) with the offending handles listed. <a href="../api/#manifest">/v1/manifest</a> gets a matching <code>sources</code> summary (total/hashtag/account counts). The MCP server adds a 14th tool, <code>get_feed_status</code>, so an agent can check pipeline health and source coverage in one call before trusting a feed pull.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -406,7 +440,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">ChatGPT connector: search and fetch tools in the MCP server</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>The <a href="../agents/#option-mcp">MCP server</a> now implements the two tools ChatGPT requires for custom connectors and Deep research: <code>search</code> and <code>fetch</code>. <code>search</code> accepts an IOC value, a tag, a campaign id or free text and returns citable ids (<code>ioc:</code>, <code>tag:</code>, <code>campaign:</code>) with tweetfeed.live URLs. <code>fetch</code> returns the full document as <code>structuredContent</code>: a 365-day IOC lookup with context, a tag overview, or a campaign header plus rows with CSV/STIX links. Add <code>https://mcp.tweetfeed.live/</code> in ChatGPT under Settings, Connectors, no authentication required. The 11 typed tools are unchanged and remain the better choice for clients that support them - 13 tools total.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -416,7 +453,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Hash blocklists, newly-registered domains list and AdGuard metadata header</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Two new plain-text blocklists: <a href="../blocklists/"><code>sha256.txt</code></a> and <code>md5.txt</code>, one lowercase hex hash per line, for EDR/AV bulk import (Microsoft Defender for Endpoint's Indicators CSV import, CrowdStrike IOC management); coverage is smaller than domains/URLs since researchers tweet fewer hashes. A third, <code>nrd-domains.txt</code>, is the subset of <code>domains.txt</code> whose registrable apex had an RDAP creation date 30 days or less before TweetFeed's first report - a high-signal "newly registered and already reported" list, with two caveats: only apexes with a known RDAP creation date are considered (about 6 in 10 reported domains), and a domain can appear one tick after it was first reported. Separately, <code>adguard.txt</code> now ships an AdGuard/uBlock filter-list metadata header (<code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.) instead of the generic <code>#</code> header, making it a valid filter list for AdGuard Home, uBlock Origin and filter-list registries; the body is unchanged. 16 blocklist files total.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -426,7 +466,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Corroborated blocklists, exclusive.csv and external_exclusive</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Three of the plain-text blocklists now ship a corroborated variant - <a href="../blocklists/"><code>domains-corroborated.txt</code></a>, <code>ips-corroborated.txt</code> and <code>urls-corroborated.txt</code> (13 blocklist files total) - the entries also listed by at least one of URLhaus, ThreatFox, MalwareBazaar, USOM or IPsum as of TweetFeed's 6-hourly cross-check; set membership only, not a quality score. A new static file, <a href="../feeds/"><code>exclusive.csv</code></a>, is the opposite view: last-30-days rows not corroborated by those 5 feeds as of the last refresh - what TweetFeed has that the others don't (yet). <a href="../api/"><code>/v1/ioc</code></a> gains a matching <code>external_exclusive</code> boolean, and the <a href="../agents/">MCP server</a>'s <code>enrich_ioc</code> renders a sentence when it is true.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -436,7 +479,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Per-campaign IOC export</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Each AI-clustered campaign is now downloadable on its own: <a href="../api/#campaign-export"><code>/v1/campaigns/&lt;id&gt;</code></a> (JSON: header + complete unsampled IOC membership), <code>/v1/campaigns/&lt;id&gt;.csv</code> (same 6 columns as <code>today.csv</code>) and <code>/v1/campaigns/&lt;id&gt;.stix.json</code> (a self-contained STIX 2.1 bundle - Identity, TLP:CLEAR marking, one Indicator per IOC). The <a href="../agents/">MCP server</a> gets a matching <code>get_campaign_iocs</code> tool. <code>/v1/{today,week,month}</code>, <code>/v1/campaigns</code>, <code>/v1/campaigns/iocs</code>, <code>/v1/trends</code> and <code>/v1/counts</code> now cache for 300&nbsp;s at the edge (was 60&nbsp;s).</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -446,7 +492,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Defang option on the JSON endpoints</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added <a href="../api/#endpoint"><code>?defang=1</code></a> to the JSON routes (<code>/v1/today</code>, <code>/v1/week</code>, <code>/v1/month</code>, <code>/v1/since/...</code>, <code>/v1/ioc</code>; <code>/v1/year</code> redirects to a raw CSV and is never defanged): IOC values come back as <code>hxxps://evil[.]tld</code> and <code>1[.]2[.]3[.]4</code> instead of live values, for pasting into a ticket or chat tool. Off by default - <code>0</code>, <code>false</code> or no parameter returns the same response as today. Never applied to <code>tweet</code>/<code>user</code>, <code>net.*</code>, <code>ai.summary</code> or the <code>/v1/campaigns</code> routes.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -456,7 +505,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">IDS/SIEM blocklists and Palo Alto EDL guide</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added IDS/SIEM blocklist exports: <a href="../blocklists/#zeek-intel"><code>zeek-intel.txt</code></a> for Zeek's Intelligence Framework, and <a href="../blocklists/#wazuh-domains"><code>wazuh-domains.txt</code></a>/<a href="../blocklists/#wazuh-ips"><code>wazuh-ips.txt</code></a> as Wazuh CDB lists. None of the three carries a header comment, so check freshness with <a href="../api/#manifest">/v1/manifest</a> or the response's <code>Last-Modified</code> header instead. Also documented a Palo Alto Networks PAN-OS EDL setup on the existing <code>domains.txt</code>/<code>ips.txt</code> exports.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -466,7 +518,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Freshness status and artifact manifest</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added two machine-readable endpoints so a consumer can stop polling blind: <a href="../api/#status">/v1/status</a> reports per-artifact freshness plus a per-request stale/fresh verdict (headers <code>X-Feed-Stale</code>/<code>X-Feed-Age-Seconds</code>), computed fresh on every request and never cached; <a href="../api/#manifest">/v1/manifest</a> lists every published file with its byte size, row count and SHA-256, so a client can diff instead of re-downloading. The <a href="../feeds/">/feeds/</a> headline row now shows a live "Updated N min ago" chip reading straight off <code>/v1/status</code>.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -476,7 +531,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Wider external corroboration</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>The <code>external</code> corroboration sidecar on <a href="../search/">/search/</a> lookups now reads abuse.ch's full URLhaus and ThreatFox dumps instead of their "recent" ones, and adds a third source: MalwareBazaar. Hashes benefit the most - URLhaus mostly indexes URLs and ThreatFox rarely carried hashes, so this is the first real corroboration coverage for many of TweetFeed's SHA256/MD5 IOCs. Corroboration stays display-only: it never adds, removes or scores anything in the canonical feed.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -486,7 +544,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">IOC lookup context + Feed explorer</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Search gets more context on each lookup, plus a new ad-hoc query tool:</p><ul class="cl-list"><li><b>Corroboration signal</b> - IOC lookup records now show whether an indicator came from a single report or multiple accounts, with a tooltip that popularity is not a verdict.</li><li><b>Also in these tweets</b> - lookup records surface up to 5 other IOCs pulled from the same source tweets (via the new optional <code>related</code> field on <code>/v1/ioc</code>), each with a one-click pivot back into the lookup.</li><li><b>Feed explorer</b> - a new card on <a href="../search/">/search/</a> queries <code>/v1/&lt;window&gt;</code> with type, tag and user filters, a date range, CSV export and shareable deep-links.</li><li><b>Report a false positive</b> - every lookup record now links straight to the feedback board.</li><li><b>OpenAPI</b> - the spec now documents <code>/v1/ioc</code>, <code>/v1/trends</code> and the TAXII discovery endpoint.</li><li><b>Per-type and per-user RSS</b> - subscribe to a single IOC type (/rss/type/) or a single reporter (/rss/user/) without polling the firehose.</li><li><b>External corroboration</b> - IOC lookups now show when an indicator is also listed in URLhaus or ThreatFox (public abuse.ch feeds), refreshed every 6 hours.</li><li><b>IP network context</b> - IP lookups now show organisation/ASN and country from ipinfo.io (third-party sidecar, refreshed every 6 hours).</li></ul></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -496,7 +557,10 @@
 								<span class="cl-tag cl-tag-status">Fix</span>
 							</div>
 							<h3 class="section-heading cl-title">IOC quality pass</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Structural fixes for false positives across every IOC type:</p><ul class="cl-list"><li><b>Quote attribution</b> - IOCs from quoted tweets now point to the original author, not the quoter.</li><li><b>Hash filter</b> - hex strings inside URL paths or subdomains (cloud bucket IDs, webinar IDs, phishing-kit session IDs) no longer leak as MD5/SHA256.</li><li><b>Research-host whitelist</b> - links to sample-sharing services no longer emit as URL or domain IOCs.</li><li><b>CDN IPs</b> - Anycast edges filtered; the domain is the actionable IOC, not the CDN frontend.</li></ul><p class="cl-foot">~10K historical false-positive rows cleaned.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -506,7 +570,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Agent-friendly bundle</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Three new bulk data formats for SIEM, Threat Intelligence platforms and automation:</p><ul class="cl-list"><li><b>STIX 2.1 bundles</b> (today/week/month) at <a href="https://tweetfeed.live/stix/manifest.json">/stix/manifest.json</a> - spec-compliant, TLP:CLEAR, deterministic UUIDs.</li><li><b>Diff endpoint</b> at <a href="../api/">/v1/since/&lt;ISO8601&gt;</a> - incremental sync, returns only IOCs added after a given timestamp.</li><li><b>Per-tag RSS</b> at <a href="https://tweetfeed.live/rss/tag/phishing.xml">/rss/tag/&lt;slug&gt;.xml</a> - subscribe to a single threat type without polling the firehose.</li></ul><p class="cl-foot">Full docs on the <a href="../feeds/">Feeds</a>, <a href="../api/">API</a> and <a href="../agents/">Agents</a> pages. The MCP server-card also lists the new endpoints under <code>dataEndpoints</code>.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -516,7 +583,10 @@
 								<span class="cl-tag cl-tag-status">Status</span>
 							</div>
 							<h3 class="section-heading cl-title">Fenix x2</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>After a few months paused, TweetFeed is back again.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -526,7 +596,10 @@
 								<span class="cl-tag cl-tag-status">Status</span>
 							</div>
 							<h3 class="section-heading cl-title">Stop</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>TweetFeed stopped due to technical issues retrieving info from Twitter/X.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -536,7 +609,10 @@
 								<span class="cl-tag cl-tag-status">Status</span>
 							</div>
 							<h3 class="section-heading cl-title">Fenix</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>TweetFeed alive again.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -546,7 +622,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Frontend refresh</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Improved frontend, made it better for mobile devices (bootstrap ftw).</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -556,7 +635,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">OpenCTI connector</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Created OpenCTI connector. [<a href="https://x.com/0xDanielLopez/status/1669644081092345856" target="_blank" rel="noopener noreferrer">Tweet</a>]</p><p class="cl-foot">Thanks to <a href="https://x.com/aaarghhh" target="_blank" rel="noopener noreferrer">@aaarghhh</a> for building it.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -566,7 +648,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Frontend refresh</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Improved frontend, made it better for mobile devices (bootstrap ftw).</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -576,7 +661,10 @@
 								<span class="cl-tag cl-tag-tags">Tags</span>
 							</div>
 							<h3 class="section-heading cl-title">Tag refresh</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added new tags and removed old ones with fewer hits.</p><div class="cl-tag-grid"><div><h4 class="cl-subhead">Added</h4><ul class="cl-list"><li><b>#Asyncrat</b></li><li><b>#Batloader</b></li><li><b>#Dcrat</b></li><li><b>#Njrat</b></li><li><b>#RaspberryRobin</b></li><li><b>#SocGholish</b></li></ul></div><div><h4 class="cl-subhead">Removed</h4><ul class="cl-list"><li><b>#Dridex</b></li><li><b>#FluBot</b></li><li><b>#Hancitor</b></li><li><b>#ProxyNotShell</b></li><li><b>#ProxyShell</b></li><li><b>#Trickbot</b></li></ul></div></div><p class="cl-foot">Thanks to <a href="https://x.com/nosecurething" target="_blank" rel="noopener noreferrer">Matt Anderson</a> for the suggestion.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -586,7 +674,10 @@
 								<span class="cl-tag cl-tag-tags">Tags</span>
 							</div>
 							<h3 class="section-heading cl-title">Spring4Shell tag</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added <b>#Spring4Shell</b>. [<a href="https://x.com/0xDanielLopez/status/1509837988594921482" target="_blank" rel="noopener noreferrer">Tweet</a>]</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -596,7 +687,10 @@
 								<span class="cl-tag cl-tag-feature">Feature</span>
 							</div>
 							<h3 class="section-heading cl-title">Dashboard</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Created the <a href="../dashboard/">Dashboard</a> section.</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -606,7 +700,10 @@
 								<span class="cl-tag cl-tag-tags">Tags</span>
 							</div>
 							<h3 class="section-heading cl-title">Log4Shell tags</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>Added <b>#log4j</b> and <b>#Log4Shell</b>. [<a href="https://x.com/0xDanielLopez/status/1470029308152487940" target="_blank" rel="noopener noreferrer">Tweet</a>]</p></div>
+							</details>
 						</div>
 					</article>
 					<article class="card cl-entry">
@@ -616,9 +713,31 @@
 								<span class="cl-tag cl-tag-launch">Launch</span>
 							</div>
 							<h3 class="section-heading cl-title">TweetFeed creation</h3>
+							<details class="cl-more">
+								<summary><i class="fas fa-chevron-down" aria-hidden="true"></i> Details</summary>
 							<div class="cl-body"><p>First commit.</p><p class="cl-foot">Thanks to <a href="https://x.com/1ZRR4H" target="_blank" rel="noopener noreferrer">Germán Fernández</a> and <a href="https://x.com/BushidoToken" target="_blank" rel="noopener noreferrer">Will</a> for the initial feedback about the project.</p></div>
+							</details>
 						</div>
 					</article>
+				<script>
+					/* A hash that targets an entry (or anything inside one) opens its
+					   Details first, so a deep link never lands on a collapsed body.
+					   Plain DOM only: jQuery loads with defer, so no $ at parse time. */
+					(function () {
+						function openTarget() {
+							var h = location.hash;
+							if (h.length < 2) return;
+							var id;
+							try { id = decodeURIComponent(h.slice(1)); } catch (e) { return; }
+							var el = document.getElementById(id);
+							if (!el) return;
+							var d = el.closest('details.cl-more') || el.querySelector('details.cl-more');
+							if (d && !d.open) { d.open = true; el.scrollIntoView(); }
+						}
+						document.addEventListener('DOMContentLoaded', openTarget);
+						window.addEventListener('hashchange', openTarget);
+					})();
+				</script>
 				</div>
 				<!-- =========================END of Main Content ========================= -->
 			</main>

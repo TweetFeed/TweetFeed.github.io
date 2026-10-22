@@ -70,7 +70,7 @@
 	<!-- Custom styles for this template -->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=7" rel="stylesheet">
+	<link href="../css/table.css?v=8" rel="stylesheet">
 	<link href="../css/index.css?v=75" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -395,17 +395,15 @@
 						</a>
 					</div>
 				</div>
-				<p class="agent-option-note">All three are free, no authentication, no rate limit for normal use. Same IOC data underneath.</p>
+				<p class="agent-option-note">All three: free, no authentication, no rate limit for normal use, same IOC data.</p>
 
 				<hr class="divider">
 				<h2 id="connect" class="section-heading tf-block-head">Connect</h2>
-				<p>Three ways in, one data set underneath. Pick the one your client already speaks.</p>
 
 				<h3 id="option-mcp" class="section-heading tf-sect-head">MCP server</h3>
 				<p>
-					Remote <b>Model Context Protocol</b> server at <code style="color:var(--tf-fg-1178b3);">https://mcp.tweetfeed.live/</code>
-					over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-11-25</code>). Works with Claude Desktop, Claude Code,
-					ChatGPT, Cursor, Zed and any SDK-based MCP client.
+					Remote <b>Model Context Protocol</b> server over HTTP JSON-RPC 2.0 (protocolVersion <code>2025-11-25</code>).
+					Works with Claude Desktop, Claude Code, ChatGPT, Cursor, Zed and any SDK-based MCP client.
 				</p>
 
 				<span class="tf-code-label"><b>Config</b> for Claude Desktop, Cursor, Zed</span>
@@ -418,13 +416,12 @@
 } <i class="tf-copy far fa-copy" data-copy='{&quot;mcpServers&quot;:{&quot;tweetfeed&quot;:{&quot;url&quot;:&quot;https://mcp.tweetfeed.live/&quot;}}}' role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 
 				<span class="tf-code-label"><b>ChatGPT</b> (connectors and deep research)</span>
-				<p>
-					In ChatGPT, go to Settings, Connectors, Create (or add a custom connector from
-					Deep research) and paste <code>https://mcp.tweetfeed.live/</code>, no
-					authentication needed. The server exposes the <code>search</code> and
-					<code>fetch</code> tools ChatGPT requires, alongside the typed tools below, and
-					every result carries a tweetfeed.live URL so answers cite the feed.
-				</p>
+				<ol>
+					<li>In ChatGPT, go to Settings, Connectors, Create (or add a custom connector from Deep research).</li>
+					<li>Paste <code>https://mcp.tweetfeed.live/</code>. No authentication needed.</li>
+					<li>Ask a question. Every result carries a tweetfeed.live URL, so answers cite the feed.</li>
+				</ol>
+				<p class="tf-note">The server exposes the <code>search</code> and <code>fetch</code> tools ChatGPT requires, alongside the typed tools below.</p>
 
 				<span class="tf-code-label"><b>Or</b> add from the Claude Code CLI</span>
 				<pre class="code-block">claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/ <i class="tf-copy far fa-copy" data-copy="claude mcp add --transport http tweetfeed https://mcp.tweetfeed.live/" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
@@ -444,148 +441,69 @@
 						</thead>
 						<tr>
 							<td><code>query_iocs</code></td>
-							<td>
-								Query the IOC feed by time window (<code>today</code>, <code>week</code>, <code>month</code>)
-								with optional filters: <code>user</code> (Twitter handle), <code>tag</code> (malware family or
-								category), <code>type</code> (<code>url</code> / <code>domain</code> / <code>ip</code> /
-								<code>sha256</code> / <code>md5</code>). Returns matching rows with date, researcher,
-								type, value, tags and tweet URL.
-							</td>
+							<td>IOC rows for <code>today</code>, <code>week</code> or <code>month</code>; filter by <code>user</code>, <code>tag</code>, <code>type</code> (url, domain, ip, sha256, md5).</td>
 						</tr>
 						<tr>
 							<td><code>check_url</code></td>
-							<td>
-								Check whether a URL or substring appears in the past 30 days of TweetFeed
-								(case-insensitive substring match against <code>type=url</code> IOCs).
-							</td>
+							<td>Is a URL or substring in the past 30 days? Case-insensitive match on <code>type=url</code> IOCs.</td>
 						</tr>
 						<tr>
 							<td><code>check_ip</code></td>
-							<td>
-								Check whether an IPv4 or IPv6 address appears in TweetFeed. Exact match
-								over the past 365 days plus the pre-365-day archive, falling back to a
-								30-day substring match against <code>type=ip</code> IOCs if there's no
-								exact hit.
-							</td>
+							<td>Is an IPv4 or IPv6 address listed? 365 days plus archive, else 30-day substring match on <code>type=ip</code>.</td>
 						</tr>
 						<tr>
 							<td><code>check_hash</code></td>
-							<td>
-								Check whether a file hash appears in TweetFeed. Exact match over the past
-								365 days plus the pre-365-day archive, falling back to a 30-day window if
-								there's no exact hit. Type auto-detected from length (32 hex = MD5, 64
-								hex = SHA-256), hex required.
-							</td>
+							<td>Is a file hash listed? 365 days plus archive, else 30 days. MD5 (32 hex) or SHA-256 (64 hex) auto-detected, hex only.</td>
 						</tr>
 						<tr>
 							<td><code>list_recent_iocs</code></td>
-							<td>
-								Delta-sync helper: returns IOCs added since a given <code>YYYY-MM-DD</code> date,
-								sorted newest first. Optional <code>type</code> and <code>tag</code> filters.
-								Source window is the past 30 days.
-							</td>
+							<td>IOCs added since a <code>YYYY-MM-DD</code> date, newest first. Optional <code>type</code>, <code>tag</code>; 30-day window.</td>
 						</tr>
 						<tr>
 							<td><code>get_tag_info</code></td>
-							<td>
-								Bundle for a single tag: aggregate counts across <code>today</code> /
-								<code>week</code> / <code>month</code> / <code>year</code> from
-								<code>counts.json</code> plus the most recent IOCs. Saves the agent from
-								three separate calls to assemble a tag overview.
-							</td>
+							<td>One tag: counts for <code>today</code>, <code>week</code>, <code>month</code>, <code>year</code> from <code>counts.json</code>, plus recent IOCs.</td>
 						</tr>
 						<tr>
 							<td><code>get_trending</code></td>
-							<td>
-								Top tags + IOC-type distribution for a given window
-								(<code>today</code> / <code>week</code> / <code>month</code> / <code>year</code>),
-								read from <code>counts.json</code>. Useful for "what is the community
-								talking about right now" queries.
-							</td>
+							<td>Top tags and IOC-type split for <code>today</code>, <code>week</code>, <code>month</code> or <code>year</code>, from <code>counts.json</code>.</td>
 						</tr>
 						<tr>
 							<td><code>enrich_ioc</code></td>
-							<td>
-								Auto-detects IOC type (URL / domain / IP / MD5 / SHA-256) from the value.
-								Exact match over the past 365 days plus the pre-365-day archive first,
-								falling back to a 30-day substring scan if there's no exact hit. Saves
-								the agent from picking the right <code>check_*</code> tool when the type
-								is uncertain.
-							</td>
+							<td>Use when the type is unknown: auto-detects it, then 365 days plus archive, else a 30-day substring scan.</td>
 						</tr>
 						<tr>
 							<td><code>get_campaigns</code></td>
-							<td>
-								List AI-clustered threat campaign groupings of the last 30 days of
-								community IOCs. Optional <code>brand</code> (substring match on targeted
-								brand), <code>min_confidence</code> (<code>low</code> / <code>medium</code> /
-								<code>high</code>), <code>limit</code> (1-50, default 10). Returns trimmed
-								campaigns with up to 2 sample IOCs each.
-							</td>
+							<td>Last-30-day campaigns (AI-clustered), 2 sample IOCs each. Optional <code>brand</code>, <code>min_confidence</code> (low/medium/high), <code>limit</code> (1-50, default 10).</td>
 						</tr>
 						<tr>
 							<td><code>get_campaign_iocs</code></td>
-							<td>
-								Full IOC membership of one AI-clustered campaign: header (name,
-								context, ATT&amp;CK <code>ttps</code>, targeted sector/country,
-								<code>ioc_count</code>) plus its rows (date, type, value, researcher
-								handle, tags, source tweet URL). Required <code>campaign_id</code>
-								(from <code>get_campaigns</code>), optional <code>type</code> filter and
-								<code>limit</code> (1-500, default 100). Same data as
-								<code>/v1/campaigns/&lt;id&gt;</code> (<code>.csv</code> /
-								<code>.stix.json</code> variants also exist).
-							</td>
+							<td>Header and rows of one campaign. Required <code>campaign_id</code>; optional <code>type</code>, <code>limit</code> (1-500, default 100). <a href="../api/#campaign-export">API docs</a>.</td>
 						</tr>
 						<tr>
 							<td><code>get_trends</code></td>
-							<td>
-								Community IOC trend analytics: 31-day daily volume by type, top moving
-								tags week-over-week, most-abused TLDs, and the new-vs-recurring novelty
-								ratio.
-							</td>
+							<td>31-day volume by type, moving tags week over week, abused TLDs, new-vs-recurring ratio.</td>
 						</tr>
 						<tr>
 							<td><code>search</code></td>
-							<td>
-								ChatGPT connector interface. One <code>query</code> string: an IOC
-								value, a tag, a campaign id or free text matched against campaign
-								names. Returns document ids (<code>ioc:</code>, <code>tag:</code>,
-								<code>campaign:</code>) with a tweetfeed.live URL each, as
-								<code>structuredContent</code>. When your client supports the typed
-								tools above, use those instead.
-							</td>
+							<td>ChatGPT connector: one <code>query</code> (IOC, tag, campaign id, text) returns <code>ioc:</code>/<code>tag:</code>/<code>campaign:</code> ids with URLs, as <code>structuredContent</code>.</td>
 						</tr>
 						<tr>
 							<td><code>fetch</code></td>
-							<td>
-								ChatGPT connector interface. Full document for one id from
-								<code>search</code>: the 365-day IOC lookup with context, a tag
-								overview with recent IOCs, or a campaign header with its IOC rows and
-								CSV/STIX links. Returns <code>{id, title, text, url, metadata}</code>.
-							</td>
+							<td>ChatGPT connector: full document for one <code>search</code> id. Returns <code>{id, title, text, url, metadata}</code>.</td>
 						</tr>
 						<tr>
 							<td><code>get_feed_status</code></td>
-							<td>
-								Live health of the pipeline: a freshness verdict per artifact
-								(<code>stale</code>, <code>age_seconds</code>) and source coverage
-								(which hashtag/account X feeds delivered rows in the last 24h and
-								which account feeds are dead). No parameters. Call it before
-								trusting a feed pull, or when a lookup returns nothing, to tell
-								"no data" from "stale data".
-							</td>
+							<td>Pipeline freshness (<code>stale</code>, <code>age_seconds</code>) and X-source coverage. No parameters. Check it when a lookup is empty.</td>
 						</tr>
 					</table>
 				</div>
 
-				<p>
-					The server also exposes the feed as MCP resources (<code>tweetfeed://status</code>,
-					<code>tweetfeed://iocs/{time}/{type}</code>, <code>tweetfeed://campaigns/{id}</code> and more)
-					via <code>resources/read</code>, returning the raw JSON of the matching document. The tools
-					above remain the filtered, size-bounded path. It also ships three prompts
-					(<code>triage_ioc</code>, <code>daily_brief</code>, <code>campaign_summary</code>) that show up
-					as slash commands in Claude Desktop and Claude Code and chain the tools for you.
-				</p>
+				<p>The tools above stay the filtered, size-bounded path. The server also exposes:</p>
+				<ul>
+					<li>MCP resources: <code>tweetfeed://status</code>, <code>tweetfeed://iocs/{time}/{type}</code>, <code>tweetfeed://campaigns/{id}</code> and more.</li>
+					<li>Read them with <code>resources/read</code>: raw JSON of the matching document.</li>
+					<li>Three prompts (<code>triage_ioc</code>, <code>daily_brief</code>, <code>campaign_summary</code>): slash commands in Claude Desktop and Claude Code that chain the tools.</li>
+				</ul>
 
 				<span class="tf-code-label"><b>Try it from the command line</b></span>
 				<pre class="code-block">curl -sX POST https://mcp.tweetfeed.live/ \

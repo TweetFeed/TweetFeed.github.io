@@ -71,7 +71,7 @@
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 	<!-- Custom styles for this page -->
 	<!-- Custom CSS 0xDanielLopez -->
-	<link href="../css/table.css?v=7" rel="stylesheet">
+	<link href="../css/table.css?v=8" rel="stylesheet">
 	<link href="../css/index.css?v=75" rel="stylesheet">
 	<link href="../css/tweetfeed.css?v=75" rel="stylesheet">
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -403,7 +403,10 @@
 					<h2 id="introduction" class="section-heading tf-block-head">Introduction</h2>
 				<!-- -->
 				<p><b>Free</b> API to get IOCs shared by the community on Twitter/X. Building an AI agent? Use the <a href="../agents/">MCP server</a> instead.</p>
-				<p class="tf-note">Cloudflare's bot protection returns <code>403</code> to requests sent with a bare <code>Python-urllib</code> or <code>libwww-perl</code> User-Agent - use <code>requests</code>, <code>curl</code> or another standard HTTP client instead.</p>
+				<ul class="tf-note">
+					<li>Cloudflare's bot protection returns <code>403</code> to a bare <code>Python-urllib</code> or <code>libwww-perl</code> User-Agent.</li>
+					<li>Use <code>requests</code>, <code>curl</code> or another standard HTTP client instead.</li>
+				</ul>
 				<br>
 				<h2 id="endpoint" class="section-heading tf-block-head">Endpoint</h2>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/<span class="tf-ph"><b>{time}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/{time}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
@@ -423,7 +426,16 @@
 				<!-- #00acee -->
 				<pre class="code-block">https://api.tweetfeed.live/v1/month/@malwrhunterteam/url <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/month/@malwrhunterteam/url" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<!-- -->
-				<p class="tf-note">Add <code>?defang=1</code> to defang IOC values in the response: <code>hxxps://evil[.]tld</code>, <code>1[.]2[.]3[.]4</code>. GitHub-flavoured markdown does not auto-link <code>hxxps://evil[.]tld</code> or <code>evil[.]tld</code> (tested 2026-09-05); other chat and ticket tools vary. Absent, empty, <code>0</code> or <code>false</code> returns the same response as without <code>defang</code>; any other value returns <code>400</code>. On <code>/v1/today</code>, <code>/v1/week</code> and <code>/v1/month</code> (with or without filters) only each row's <code>value</code> is defanged - <code>/v1/year</code> redirects to a raw CSV and is never defanged; see <a href="#ioc-lookup">IOC lookup</a> for the full field list on <code>/v1/ioc</code>.</p>
+				<p class="tf-note mb-2">Add <code>?defang=1</code> to defang IOC values: <code>hxxps://evil[.]tld</code>, <code>1[.]2[.]3[.]4</code>.</p>
+				<ul class="tf-note">
+					<li>GitHub-flavoured markdown does not auto-link <code>hxxps://evil[.]tld</code> or <code>evil[.]tld</code> (tested 2026-09-05).</li>
+					<li>Other chat and ticket tools vary.</li>
+					<li>Absent, empty, <code>0</code> or <code>false</code> returns the same response as without <code>defang</code>.</li>
+					<li>Any other value returns <code>400</code>.</li>
+					<li>On <code>/v1/today</code>, <code>/v1/week</code> and <code>/v1/month</code> (with or without filters) only each row's <code>value</code> is defanged.</li>
+					<li><code>/v1/year</code> redirects to a raw CSV and is never defanged.</li>
+					<li>Full field list for <code>/v1/ioc</code>: see <a href="#ioc-lookup">IOC lookup</a>.</li>
+				</ul>
 				<pre class="code-block">curl 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1' <i class="tf-copy far fa-copy" data-copy="curl 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1'" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<br>
 				<h2 id="result-cap" class="section-heading tf-block-head">Result cap</h2>
@@ -445,16 +457,38 @@
 				<span class="tf-code-label"><b>Example</b>: revalidate with <code>curl -z</code> / <code>wget -N</code></span>
 				<pre class="code-block">curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="curl -z today.csv -o today.csv https://tweetfeed.live/feeds/today.csv" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<pre class="code-block">wget -N https://tweetfeed.live/feeds/today.csv <i class="tf-copy far fa-copy" data-copy="wget -N https://tweetfeed.live/feeds/today.csv" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
-				<p class="tf-note"><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes. <code>Last-Modified</code> reflects when this Worker cached the feed data behind the response, not when that data last changed, so <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive. If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</p>
+				<ul class="tf-note">
+					<li><code>If-None-Match</code> is the recommended validator: <code>ETag</code> changes only when the response body actually changes.</li>
+					<li><code>Last-Modified</code> reflects when this Worker cached the feed data behind the response, not when that data last changed.</li>
+					<li>So <code>If-Modified-Since</code> only saves a round trip while that cache entry is still alive.</li>
+					<li>If a request sends both, <code>If-None-Match</code> wins (RFC 7232 section 6).</li>
+				</ul>
 				<br>
 				<h2 id="diff" class="section-heading tf-block-head">Diff endpoint (incremental sync)</h2>
 				<p>Returns IOCs added after the given ISO 8601 timestamp. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<span class="tf-ph"><b>{ISO8601}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<span class="tf-code-label"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
 				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
-				<p class="tf-note">Edge cases: future timestamp returns <code>200</code> with an empty array. Timestamp older than 365 days returns <code>410 Gone</code>. Malformed ISO returns <code>400</code>. Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</p>
-				<p class="tf-note">The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end: this route returns rows oldest-first, so you get a contiguous block. That makes it safe to page - when <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code> and repeat until it stops appearing.</p>
-				<p class="tf-note"><b>Reach is the trailing 30 days, not 365.</b> The route is served from the 30-day window file, because scanning the full year exceeds the Worker's CPU budget. A <code>since</code> older than that still returns <code>200</code>, but the payload starts at the oldest row available rather than at your timestamp, and the response says so via <code>X-Result-Window-Incomplete: true</code> alongside the real <code>X-Result-Window-Start</code>. For a deeper backfill pull <a href="../feeds/">year.csv</a> once, then switch to this endpoint for incremental updates.</p>
+				<p class="tf-note mb-2">Edge cases:</p>
+				<ul class="tf-note">
+					<li>Future timestamp returns <code>200</code> with an empty array.</li>
+					<li>Timestamp older than 365 days returns <code>410 Gone</code>.</li>
+					<li>Malformed ISO returns <code>400</code>.</li>
+					<li>Strict ISO 8601 with <code>Z</code> or <code>+HH:MM</code> offset is required (no ambiguous local-time forms).</li>
+				</ul>
+				<ul class="tf-note">
+					<li>The same 10,000-row <a href="#result-cap">cap</a> applies, but truncated from the opposite end.</li>
+					<li>This route returns rows oldest-first, so you get a contiguous block that is safe to page.</li>
+					<li>While <code>X-Result-Truncated</code> is present, pass <code>X-Result-Window-End</code> back as the next <code>since</code>.</li>
+					<li>Repeat until the header stops appearing.</li>
+				</ul>
+				<p class="tf-note mb-2"><b>Reach is the trailing 30 days, not 365.</b></p>
+				<ul class="tf-note">
+					<li>The route is served from the 30-day window file, because scanning the full year exceeds the Worker's CPU budget.</li>
+					<li>A <code>since</code> older than that still returns <code>200</code>, but the payload starts at the oldest row available, not at your timestamp.</li>
+					<li>The response says so via <code>X-Result-Window-Incomplete: true</code> alongside the real <code>X-Result-Window-Start</code>.</li>
+					<li>For a deeper backfill pull <a href="../feeds/">year.csv</a> once, then switch to this endpoint for incremental updates.</li>
+				</ul>
 				<br>
 				<h2 id="campaigns" class="section-heading tf-block-head">Campaigns (AI-clustered)</h2>
 				<p>Groups related IOCs from the last 30 days into named campaign clusters: deterministic pre-grouping (shared registered domain, cross-domain URL path patterns, shared specific tag) plus an AI-generated name and context. The AI only names and describes clusters - it never adds or removes IOCs. Regenerated once a day. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaigns</code> tool.</p>
@@ -502,8 +536,42 @@
         }
     ]
 }</pre>
-				<p class="tf-note"><code>stale: true</code> means the daily clustering run failed and this document is the previous day's snapshot (<code>stale_since</code> holds the date of the last successful run). Human page: <a href="../campaigns/">tweetfeed.live/campaigns/</a>.</p>
-				<p class="tf-note">Four newer optional keys, each omitted when empty. <code>patterns</code> (optional, max 3): deterministic regexes generalised from the campaign's own registered domains, each with <code>domain_count</code>, <code>ioc_count</code>, <code>domains_elsewhere_30d</code> (unowned 30-day feed domains the regex also matches), up to 3 <code>examples</code> and <code>first_seen</code>/<code>last_seen</code>; omitted when no pattern passes the gates, and currently shadow upstream so absent on most documents. <code>history</code> (optional): 365-day evidence behind the 30-day card, from a scan of the public <code>year.csv</code> - <code>window_days</code>, <code>first_seen_365d</code>/<code>last_seen_365d</code>, <code>domains_365d</code>, <code>iocs_365d</code>, <code>iocs_before_window</code> and <code>by_pattern</code> (<code>{"regex", "domains_365d", "first_seen_365d"}</code> per naming pattern); omitted when the yearly scan failed or timed out. <code>related</code> (optional): phishunt.io detections active at build time on the campaign's domains (<code>exact</code>) or naming patterns (<code>pattern</code>) - <code>source</code>, <code>checked_at</code>, <code>match_count</code> and up to 10 <code>matches</code> of <code>{"domain", "match", "company", "asn"}</code>; never members, never in <code>ioc_count</code>, omitted when nothing matches or the fetch failed. <code>anchors.families</code> (optional): only on an orphan hash/IP bucket that local enrichment attributed to one malware family - such a bucket has no domain/path/tag anchor, the shared family is what makes it one campaign.</p>
+				<ul class="tf-note">
+					<li><code>stale: true</code> means the daily clustering run failed and this document is the previous day's snapshot.</li>
+					<li><code>stale_since</code> holds the date of the last successful run.</li>
+					<li>Human page: <a href="../campaigns/">tweetfeed.live/campaigns/</a>.</li>
+				</ul>
+				<p class="tf-note mb-2">Four newer optional keys, each omitted when empty:</p>
+				<ul class="tf-note">
+					<li><code>patterns</code> (optional, max 3): regexes generalised from the campaign's own registered domains.
+						<ul class="tf-note">
+							<li>Deterministic. Each has <code>domain_count</code>, <code>ioc_count</code>, up to 3 <code>examples</code> and <code>first_seen</code>/<code>last_seen</code>.</li>
+							<li><code>domains_elsewhere_30d</code>: unowned 30-day feed domains the regex also matches.</li>
+							<li>Omitted when no pattern passes the gates.</li>
+							<li>Currently shadow upstream, so absent on most documents.</li>
+						</ul>
+					</li>
+					<li><code>history</code> (optional): 365-day evidence behind the 30-day card, from a scan of the public <code>year.csv</code>.
+						<ul class="tf-note">
+							<li>Fields: <code>window_days</code>, <code>first_seen_365d</code>/<code>last_seen_365d</code>, <code>domains_365d</code>, <code>iocs_365d</code>, <code>iocs_before_window</code>.</li>
+							<li><code>by_pattern</code>: <code>{"regex", "domains_365d", "first_seen_365d"}</code> per naming pattern.</li>
+							<li>Omitted when the yearly scan failed or timed out.</li>
+						</ul>
+					</li>
+					<li><code>related</code> (optional): phishunt.io detections active at build time on the campaign's domains (<code>exact</code>) or naming patterns (<code>pattern</code>).
+						<ul class="tf-note">
+							<li>Fields: <code>source</code>, <code>checked_at</code>, <code>match_count</code> and up to 10 <code>matches</code> of <code>{"domain", "match", "company", "asn"}</code>.</li>
+							<li>Never members, never in <code>ioc_count</code>.</li>
+							<li>Omitted when nothing matches or the fetch failed.</li>
+						</ul>
+					</li>
+					<li><code>anchors.families</code> (optional): only on an orphan hash/IP bucket that local enrichment attributed to one malware family.
+						<ul class="tf-note">
+							<li>Such a bucket has no domain/path/tag anchor.</li>
+							<li>The shared family is what makes it one campaign.</li>
+						</ul>
+					</li>
+				</ul>
 				<p>The document above lists each campaign's metadata plus a 25-IOC sample. Full IOC membership - every IOC in every campaign, verbatim from the feed - is served separately by this endpoint, so the hot <code>/v1/campaigns</code> document stays small. Same campaign ids, regenerated daily alongside it.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/campaigns/iocs <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/campaigns/iocs" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<span class="tf-code-label"><b>Response (trimmed)</b></span>
@@ -540,7 +608,14 @@
 				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.csv <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.csv" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<pre class="code-block">curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json <i class="tf-copy far fa-copy" data-copy="curl -s https://api.tweetfeed.live/v1/campaigns/tfc-6d1f6fb9260c.stix.json" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
-				<p class="tf-note"><code>{id}</code> matches <code>^tfc-[0-9a-f]{12}$</code> - get valid ids from <code>/v1/campaigns</code>. The <code>.csv</code> mirrors the same 6 columns as <code>today.csv</code>; the <code>.stix.json</code> is a self-contained STIX 2.1 bundle (Identity, TLP:CLEAR marking, one Indicator per IOC). Unknown or expired id returns <code>404</code> with a JSON <code>{"error": "..."}</code> body; same ETag/Last-Modified conditional-request support as every route above. Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaign_iocs</code> tool.</p>
+				<ul class="tf-note">
+					<li><code>{id}</code> matches <code>^tfc-[0-9a-f]{12}$</code> - get valid ids from <code>/v1/campaigns</code>.</li>
+					<li>The <code>.csv</code> mirrors the same 6 columns as <code>today.csv</code>.</li>
+					<li>The <code>.stix.json</code> is a self-contained STIX 2.1 bundle (Identity, TLP:CLEAR marking, one Indicator per IOC).</li>
+					<li>Unknown or expired id returns <code>404</code> with a JSON <code>{"error": "..."}</code> body.</li>
+					<li>Same ETag/Last-Modified conditional-request support as every route above.</li>
+					<li>Building an agent integration? The <a href="../agents/">MCP server</a> exposes the same data as a <code>get_campaign_iocs</code> tool.</li>
+				</ul>
 				<br>
 				<h2 id="counts" class="section-heading tf-block-head">Counts</h2>
 				<p>Pre-aggregated totals for each time window: overall count, a per-type breakdown, a per-tag breakdown, and the first/last IOC timestamp - without fetching and parsing the full <code>year</code> CSV. Regenerated every 15 minutes alongside the rest of the feed.</p>
@@ -568,7 +643,11 @@
         }
     }
 }</pre>
-				<p class="tf-note"><code>months</code> (only present on <code>year</code>) is indexed by calendar month, not relative to the window - index <code>0</code> is always January, index <code>11</code> is always December. Any window with no IOCs reports <code>first_date</code>/<code>last_date</code> as <code>null</code>.</p>
+				<ul class="tf-note">
+					<li><code>months</code> (only present on <code>year</code>) is indexed by calendar month, not relative to the window.</li>
+					<li>Index <code>0</code> is always January, index <code>11</code> is always December.</li>
+					<li>Any window with no IOCs reports <code>first_date</code>/<code>last_date</code> as <code>null</code>.</li>
+				</ul>
 				<br>
 				<h2 id="status" class="section-heading tf-block-head">Status</h2>
 				<p>Freshness facts for every published artifact plus a per-request verdict: is the pipeline stale, how old is each file, and (for the raw feed files) how old is the newest row inside it. Computed fresh on every request, never served from the response cache - poll this instead of re-cloning the data repo to find out if anything moved. The <a href="../feeds/">/feeds/</a> headline chip reads this endpoint.</p>
@@ -622,9 +701,35 @@
         ]
     }
 }</pre>
-				<p class="tf-note">Top-level <code>stale: true</code> means the pipeline document itself is older than <code>stale_after_seconds</code> - the same signal the <a href="../feeds/">/feeds/</a> freshness chip renders. Per-artifact <code>stale</code> is scoped to that one file; <code>any_stale</code> is true if any single artifact is stale even while the top-level pipeline is fresh. <code>kind: "change-driven"</code> artifacts (<code>archive</code>, <code>domainmeta.json</code>) carry <code>stale_after_seconds: null</code> - their <code>generated_at</code> only moves when the underlying content changes, so there is no fixed staleness window for them; watch the pipeline-level fields instead. <code>kind: "tick"</code> artifacts share the pipeline's own clock and additionally expose <b>data</b> freshness via <code>last_row</code> and <code>data_stale</code> - the newest row inside a file can be older than the file itself, e.g. a quiet tag.</p>
-				<p class="tf-note"><code>sources</code> tracks per-X-source coverage: one <code>items</code> entry per enabled hashtag/account feed, with <code>newest_item_at</code> and <code>rows_last_24h</code> attributed to it (a row tagged with two sources counts toward both; the block-level <code>rows_last_24h</code> counts distinct rows). Only <code>account</code> sources get a <code>dead</code> verdict (age past <code>dead_after_seconds</code>, 30 days) - hashtags carry <code>dead_after_seconds: null</code> and <code>dead: null</code> on purpose, since a quiet tag for weeks is normal. <code>age_seconds</code>/<code>dead</code>/<code>dead_ids</code>/<code>any_dead</code>/<code>with_rows_last_24h</code> are computed per request like the top-level <code>stale</code>; <code>sources</code> does not affect <code>stale</code>/<code>any_stale</code> or the <code>X-Feed-*</code> headers.</p>
-				<p class="tf-note">Never conditional: this document is computed fresh on every request, so its <code>ETag</code> changes every time and <code>If-None-Match</code> will never return a <code>304</code> here. Cache it with <code>cache-control: public, max-age=60</code> instead. Headers <code>X-Feed-Stale</code> (<code>"true"</code>/<code>"false"</code>) and <code>X-Feed-Age-Seconds</code> mirror the top-level verdict without parsing the body. The underlying <code>status.json</code> is re-read from the data repo at most every 5 minutes, with no stale-while-revalidate; once that window expires the request blocks on a fresh read, falling back to the last cached copy only if that read fails.</p>
+				<ul class="tf-note">
+					<li>Top-level <code>stale: true</code> means the pipeline document itself is older than <code>stale_after_seconds</code>.</li>
+					<li>It is the same signal the <a href="../feeds/">/feeds/</a> freshness chip renders.</li>
+					<li>Per-artifact <code>stale</code> is scoped to that one file.</li>
+					<li><code>any_stale</code> is true if any single artifact is stale, even while the top-level pipeline is fresh.</li>
+					<li><code>kind: "change-driven"</code> artifacts (<code>archive</code>, <code>domainmeta.json</code>) carry <code>stale_after_seconds: null</code>.</li>
+					<li>Their <code>generated_at</code> only moves when the underlying content changes, so there is no fixed staleness window.</li>
+					<li>Watch the pipeline-level fields instead.</li>
+					<li><code>kind: "tick"</code> artifacts share the pipeline's own clock and additionally expose <b>data</b> freshness via <code>last_row</code> and <code>data_stale</code>.</li>
+					<li>The newest row inside a file can be older than the file itself, e.g. a quiet tag.</li>
+				</ul>
+				<ul class="tf-note">
+					<li><code>sources</code> tracks per-X-source coverage: one <code>items</code> entry per enabled hashtag/account feed.</li>
+					<li>Each entry has <code>newest_item_at</code> and <code>rows_last_24h</code> attributed to it.</li>
+					<li>A row tagged with two sources counts toward both; the block-level <code>rows_last_24h</code> counts distinct rows.</li>
+					<li>Only <code>account</code> sources get a <code>dead</code> verdict (age past <code>dead_after_seconds</code>, 30 days).</li>
+					<li>Hashtags carry <code>dead_after_seconds: null</code> and <code>dead: null</code> on purpose, since a quiet tag for weeks is normal.</li>
+					<li><code>age_seconds</code>/<code>dead</code>/<code>dead_ids</code>/<code>any_dead</code>/<code>with_rows_last_24h</code> are computed per request.</li>
+					<li>Same as the top-level <code>stale</code>.</li>
+					<li><code>sources</code> does not affect <code>stale</code>/<code>any_stale</code> or the <code>X-Feed-*</code> headers.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>Never conditional: this document is computed fresh on every request.</li>
+					<li>Its <code>ETag</code> changes every time, so <code>If-None-Match</code> will never return a <code>304</code> here.</li>
+					<li>Cache it with <code>cache-control: public, max-age=60</code> instead.</li>
+					<li>Headers <code>X-Feed-Stale</code> (<code>"true"</code>/<code>"false"</code>) and <code>X-Feed-Age-Seconds</code> mirror the top-level verdict without parsing the body.</li>
+					<li>The underlying <code>status.json</code> is re-read from the data repo at most every 5 minutes, with no stale-while-revalidate.</li>
+					<li>Once that window expires the request blocks on a fresh read, falling back to the last cached copy only if that read fails.</li>
+				</ul>
 				<br>
 				<h2 id="manifest" class="section-heading tf-block-head">Manifest</h2>
 				<p>Every published artifact in one document: byte size, row count, SHA-256, last-updated timestamp, plus both the raw GitHub URL and (where one exists) the API URL. Diff the <code>sha256</code> against your last pull instead of re-downloading files that haven't changed.</p>
@@ -655,7 +760,14 @@
         "..."
     ]
 }</pre>
-				<p class="tf-note"><code>families</code> covers sharded/multi-file surfaces (<code>lookup/</code>, <code>misp/</code>, <code>stix/</code>, <code>archive/</code>, <code>campaigns/</code>, per-tag/type/user RSS) that don't reduce to one row - see their own sections above for shard layout. <code>sha256</code>/<code>bytes</code>/<code>rows</code> describe the files in the same data-repo commit as this manifest: the API resolves <code>master</code> fresh on every fetch, so across a tick boundary the hash you compute locally may not match what <code>/v1/*</code> happens to be serving at that instant.</p>
+				<ul class="tf-note">
+					<li><code>families</code> covers sharded/multi-file surfaces that don't reduce to one row.</li>
+					<li>Covered: <code>lookup/</code>, <code>misp/</code>, <code>stix/</code>, <code>archive/</code>, <code>campaigns/</code>, per-tag/type/user RSS.</li>
+					<li>See their own sections above for shard layout.</li>
+					<li><code>sha256</code>/<code>bytes</code>/<code>rows</code> describe the files in the same data-repo commit as this manifest.</li>
+					<li>The API resolves <code>master</code> fresh on every fetch.</li>
+					<li>Across a tick boundary, a locally computed hash may not match what <code>/v1/*</code> serves at that instant.</li>
+				</ul>
 				<p class="tf-note">Supports <code>ETag</code>/<code>304</code> like <a href="#counts">/v1/counts</a>: send <code>If-None-Match</code> back and get an empty <code>304</code> when nothing changed.</p>
 				<br>
 				<h2 id="trends" class="section-heading tf-block-head">Trends</h2>
@@ -680,7 +792,11 @@
     "novelty": { "window": "week", "distinct_values": 1579, "new": 1504, "recurring": 75, "pct_new": 95.3 },
     "producers": { }
 }</pre>
-				<p class="tf-note"><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index. The most recent day is partial until 00:00 UTC. <code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</p>
+				<ul class="tf-note">
+					<li><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index.</li>
+					<li>The most recent day is partial until 00:00 UTC.</li>
+					<li><code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</li>
+				</ul>
 				<br>
 				<h2 id="contributors" class="section-heading tf-block-head">Contributors</h2>
 				<p>Per-window reporter leaderboard: today/week/month/year rankings of X/Twitter handles by IOCs reported, each entry carrying its top 3 IOC types and top 3 tags. Precomputed server-side every 15 minutes so <a href="../researchers/">tweetfeed.live/researchers/</a> renders all four windows from one fetch instead of ranking CSVs in the browser.</p>
@@ -702,7 +818,12 @@
         "week": "...", "month": "...", "year": "..."
     }
 }</pre>
-				<p class="tf-note"><code>entries</code> are pre-ranked by <code>iocs</code> descending, tie-broken by handle ascending - no client-side sorting needed. <code>top_types</code>/<code>top_tags</code> are capped at 3, most frequent first; tags carry no leading <code>#</code>. An empty window (no IOCs reported in that period) has <code>rows: 0</code>, <code>users: 0</code>, <code>entries: []</code> and both dates <code>null</code>. Handles are merged case-insensitively.</p>
+				<ul class="tf-note">
+					<li><code>entries</code> are pre-ranked by <code>iocs</code> descending, tie-broken by handle ascending - no client-side sorting needed.</li>
+					<li><code>top_types</code>/<code>top_tags</code> are capped at 3, most frequent first; tags carry no leading <code>#</code>.</li>
+					<li>An empty window (no IOCs reported in that period) has <code>rows: 0</code>, <code>users: 0</code>, <code>entries: []</code> and both dates <code>null</code>.</li>
+					<li>Handles are merged case-insensitively.</li>
+				</ul>
 				<p class="tf-note">Supports <code>ETag</code>/<code>304</code> like <a href="#counts">/v1/counts</a>: send <code>If-None-Match</code> back and get an empty <code>304</code> when nothing changed.</p>
 				<br>
 				<h2 id="ioc-lookup" class="section-heading tf-block-head">IOC lookup (exact match)</h2>
@@ -765,14 +886,62 @@
     ]
 }</pre>
 				<p class="tf-note">Unknown values return <code>200</code> with <code>found: false</code>. Values containing <code>/</code> or <code>?</code> must use the <code>?value=</code> query form.</p>
-				<p class="tf-note">The optional <code>archive</code> block covers hits older than the live 365-day window, back to <code>first_date</code> in <code>TweetFeed/archive/meta.json</code>. It is additive to <code>found</code>/<code>records</code>, never merged into them - their date ranges are disjoint by construction, so never sum <code>archive.total</code> with a record's <code>count</code>. It can accompany <code>found: true</code> or <code>found: false</code> for the same queried value. An archive record is a reduced schema versus a live one: no <code>users</code>, <code>tweets</code> or <code>related</code>.</p>
-				<p class="tf-note">The optional <code>campaigns</code> block (max 3, newest <code>last_seen</code> first) lists the published campaigns this IOC belongs to, independent of <code>found</code> - a value can be in a campaign while missing from the live 365-day window. Each entry links to <code>/campaigns/#&lt;id&gt;</code> on the campaign explorer for the full context, targeted brand/sector/country and IOC sample.</p>
-				<p class="tf-note">TweetFeed's own feed data and API responses are CC0; the optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0: abuse.ch (URLhaus / ThreatFox / MalwareBazaar, see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>), USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate), and <a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</p>
-				<p class="tf-note">The optional <code>external_exclusive</code> boolean is set membership only: <code>false</code> when <code>external</code> has at least one entry, <code>true</code> when the cross-check resolved and none of the 5 tracked feeds lists the value, and absent when the cross-check could not be resolved or the value was not found.</p>
-				<p class="tf-note">The optional <code>net.drop</code> block is a separate case, IP lookups only: it annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a> - it does not mean the IOC value itself is listed anywhere. Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</p>
-				<p class="tf-note">The optional <code>net.range</code> block is also IP lookups only: it is the official published IP range of a known provider (for example AWS EC2 or GitHub Actions) that contains this IP. It describes the network, not the IOC, and it is not a verdict.</p>
-				<p class="tf-note"><code>reg</code> is optional (domain/url lookups): RDAP registration metadata plus <code>age_days_at_report</code>, the domain's age in UTC days when TweetFeed first reported it, and <code>newly_registered</code> (<code>true</code> when that age is 30 days or less). Both age fields are omitted when the creation date is unknown.</p>
-				<p class="tf-note">Add <code>?defang=1</code> to defang this response: <code>query</code>, <code>records[].value</code>, <code>records[].related[][1]</code>, <code>archive.records[].value</code>, <code>reg.apex</code>, <code>reg.ns[]</code> and <code>reg.ips[]</code> come back as <code>hxxps://evil[.]tld</code> / <code>1[.]2[.]3[.]4</code>; <code>ai.summary</code>, <code>external[].link</code> and <code>net.*</code> are never defanged (the first is prose, the other two are third-party sidecar fields).</p>
+				<ul class="tf-note">
+					<li>The optional <code>archive</code> block covers hits older than the live 365-day window.</li>
+					<li>It goes back to <code>first_date</code> in <code>TweetFeed/archive/meta.json</code>.</li>
+					<li>It is additive to <code>found</code>/<code>records</code>, never merged into them.</li>
+					<li>Their date ranges are disjoint by construction, so never sum <code>archive.total</code> with a record's <code>count</code>.</li>
+					<li>It can accompany <code>found: true</code> or <code>found: false</code> for the same queried value.</li>
+					<li>An archive record is a reduced schema versus a live one: no <code>users</code>, <code>tweets</code> or <code>related</code>.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>The optional <code>campaigns</code> block (max 3, newest <code>last_seen</code> first) lists the published campaigns this IOC belongs to.</li>
+					<li>It is independent of <code>found</code>: a value can be in a campaign while missing from the live 365-day window.</li>
+					<li>Each entry links to <code>/campaigns/#&lt;id&gt;</code> on the campaign explorer.</li>
+					<li>There you get the full context, targeted brand/sector/country and IOC sample.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>TweetFeed's own feed data and API responses are CC0.</li>
+					<li>The optional <code>external</code> corroboration block draws on five third-party sources, each under its own terms, not CC0:
+						<ul class="tf-note">
+							<li>abuse.ch (URLhaus / ThreatFox / MalwareBazaar), see <a href="https://abuse.ch/terms-of-use/" target="_blank" rel="noopener noreferrer">abuse.ch's terms of use</a>.</li>
+							<li>USOM data via the <a href="https://github.com/elliotwutingfeng/USOM-Blocklists" target="_blank" rel="noopener noreferrer">elliotwutingfeng/USOM-Blocklists</a> mirror (BSD-3-Clause, originally published by Turkiye's Cyber Security Directorate).</li>
+							<li><a href="https://github.com/stamparm/ipsum" target="_blank" rel="noopener noreferrer">IPsum</a> by @stamparm (Unlicense).</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="tf-note">
+					<li>The optional <code>external_exclusive</code> boolean is set membership only.</li>
+					<li><code>false</code>: <code>external</code> has at least one entry.</li>
+					<li><code>true</code>: the cross-check resolved and none of the 5 tracked feeds lists the value.</li>
+					<li>Absent: the cross-check could not be resolved, or the value was not found.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>The optional <code>net.drop</code> block is a separate case, IP lookups only.</li>
+					<li>It annotates that <i>the network hosting this IP</i> has a hit on <a href="https://www.spamhaus.org/blocklists/drop-fair-use-policy/" target="_blank" rel="noopener noreferrer">The Spamhaus Project's DROP/ASN-DROP netblock lists</a>.</li>
+					<li>It does not mean the IOC value itself is listed anywhere.</li>
+					<li>Shown only as a per-record annotation, governed by Spamhaus's own terms, not CC0.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>The optional <code>net.range</code> block is also IP lookups only.</li>
+					<li>It is the official published IP range of a known provider (for example AWS EC2 or GitHub Actions) that contains this IP.</li>
+					<li>It describes the network, not the IOC, and it is not a verdict.</li>
+				</ul>
+				<ul class="tf-note">
+					<li><code>reg</code> is optional (domain/url lookups): RDAP registration metadata plus two age fields.</li>
+					<li><code>age_days_at_report</code>: the domain's age in UTC days when TweetFeed first reported it.</li>
+					<li><code>newly_registered</code>: <code>true</code> when that age is 30 days or less.</li>
+					<li>Both age fields are omitted when the creation date is unknown.</li>
+				</ul>
+				<ul class="tf-note">
+					<li>Add <code>?defang=1</code> to defang this response. These fields come back as <code>hxxps://evil[.]tld</code> / <code>1[.]2[.]3[.]4</code>:
+						<ul class="tf-note">
+							<li><code>query</code>, <code>records[].value</code>, <code>records[].related[][1]</code>, <code>archive.records[].value</code></li>
+							<li><code>reg.apex</code>, <code>reg.ns[]</code> and <code>reg.ips[]</code></li>
+						</ul>
+					</li>
+					<li>Never defanged: <code>ai.summary</code> (prose), <code>external[].link</code> and <code>net.*</code> (third-party sidecar fields).</li>
+				</ul>
 				<br>
 				<h2 id="blocklists" class="section-heading tf-block-head">Blocklists</h2>
 				<p>Ready-to-consume exports of the last 30 days, one file per consumer format. Rebuilt every 15 minutes, but a file only changes when its entries change. Community-reported IOCs - use at your own risk.</p>
@@ -874,7 +1043,27 @@
 						</tbody>
 					</table>
 				</div>
-				<p class="tf-note">The DNS/host formats block at that level. <code>urls.txt</code> is one full URL per line instead, so it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach. <code>zeek-intel.txt</code>, <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> carry no <code>#</code> comment header at all - <code>zeek-intel.txt</code> opens with a tab-separated <code>#fields</code> line (<code>indicator</code>/<code>indicator_type</code>/<code>meta.source</code>, the last always <code>tweetfeed.live</code>) instead, and the two Wazuh files have no header line, since a <code>#</code> would compile as a literal CDB key - so check freshness for these three with <a href="#manifest">/v1/manifest</a> or the response's <code>Last-Modified</code> header. <code>adguard.txt</code> instead carries an AdGuard/uBlock filter-list metadata header (<code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.) rather than the generic <code>#</code> one, making it a valid filter list for AdGuard Home / uBlock Origin and filter-list registries. <code>nrd-domains.txt</code> adds extra header lines naming its base list and the RDAP cross-check's last refresh. For Palo Alto Networks PAN-OS, point a Domain EDL at <code>domains.txt</code> and an IP EDL at <code>ips.txt</code>; do not use <code>urls.txt</code> as a URL EDL, since PAN-OS reads <code>? & = ; +</code> as token separators.</p>
+				<ul class="tf-note">
+					<li>The DNS/host formats block at that level.</li>
+					<li><code>urls.txt</code> is one full URL per line instead.</li>
+					<li>So it also covers <code>url</code>-type IOCs on shared or otherwise legitimate infrastructure that DNS-level blocking cannot safely reach.</li>
+					<li><code>zeek-intel.txt</code>, <code>wazuh-domains.txt</code> and <code>wazuh-ips.txt</code> carry no <code>#</code> comment header at all:
+						<ul class="tf-note">
+							<li><code>zeek-intel.txt</code> opens with a tab-separated <code>#fields</code> line (<code>indicator</code>/<code>indicator_type</code>/<code>meta.source</code>, the last always <code>tweetfeed.live</code>) instead.</li>
+							<li>The two Wazuh files have no header line, since a <code>#</code> would compile as a literal CDB key.</li>
+							<li>Check freshness for these three with <a href="#manifest">/v1/manifest</a> or the response's <code>Last-Modified</code> header.</li>
+						</ul>
+					</li>
+					<li><code>adguard.txt</code> carries an AdGuard/uBlock filter-list metadata header rather than the generic <code>#</code> one.
+						<ul class="tf-note">
+							<li>Header lines: <code>! Title:</code>, <code>! Homepage:</code>, <code>! License:</code>, <code>! Expires:</code>, etc.</li>
+							<li>That makes it a valid filter list for AdGuard Home / uBlock Origin and filter-list registries.</li>
+						</ul>
+					</li>
+					<li><code>nrd-domains.txt</code> adds extra header lines naming its base list and the RDAP cross-check's last refresh.</li>
+					<li>Palo Alto Networks PAN-OS: point a Domain EDL at <code>domains.txt</code> and an IP EDL at <code>ips.txt</code>.</li>
+					<li>Do not use <code>urls.txt</code> as a URL EDL, since PAN-OS reads <code>? & = ; +</code> as token separators.</li>
+				</ul>
 				<span class="tf-code-label"><b>Response (header)</b></span>
 				<pre class="code-block code-block-sm"># TweetFeed blocklist - plain domain list (Pi-hole compatible)
 # Window: 30 days
@@ -892,7 +1081,15 @@
 				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/ <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<span class="tf-code-label"><b>Example</b>: incremental poll of the rolling 31-day collection</span>
 				<pre class="code-block">GET https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/taxii2/root/collections/b7dc78af-1d12-5059-898c-3f0e77636204/objects/?added_after=2026-07-01T00:00:00Z" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
-				<p class="tf-note">Paginate with <code>limit</code> and <code>next</code>. Media type <code>application/taxii+json;version=2.1</code>. An <code>added_after</code> poll returns indicators only: the <code>identity</code> and <code>marking-definition</code> objects that every indicator references via <code>created_by_ref</code> and <code>object_marking_refs</code> were added when the collection was created, so they fall outside any recent window. Fetch them once by id from <code>/objects/{id}/</code> (or with <code>match[id]</code>) so your platform can resolve the attribution and the TLP:CLEAR marking.</p>
+				<ul class="tf-note">
+					<li>Paginate with <code>limit</code> and <code>next</code>.</li>
+					<li>Media type <code>application/taxii+json;version=2.1</code>.</li>
+					<li>An <code>added_after</code> poll returns indicators only.</li>
+					<li>Every indicator references an <code>identity</code> (<code>created_by_ref</code>) and a <code>marking-definition</code> (<code>object_marking_refs</code>).</li>
+					<li>Both were added when the collection was created, so they fall outside any recent window.</li>
+					<li>Fetch them once by id from <code>/objects/{id}/</code> (or with <code>match[id]</code>).</li>
+					<li>Then your platform can resolve the attribution and the TLP:CLEAR marking.</li>
+				</ul>
 				<br>
 				<h2 id="details" class="section-heading tf-block-head">Details</h2>
 				<div class="table-responsive">
