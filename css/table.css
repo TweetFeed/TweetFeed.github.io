@@ -383,3 +383,11 @@ input {
     overflow-wrap: anywhere; word-break: break-all;
   }
 }
+
+/* malicious-* "Recent samples": on a phone each of the 10 rows is a stacked
+   3-line block (~82px), so the card took ~40% of the page and pushed Top tags,
+   Formats and the FAQ far down. Phones show the 5 newest; the JSON feed link
+   above the table has the rest. Beats the display:grid row rule above. */
+@media (max-width: 575.98px) {
+  .table.tf-samples-table tbody tr:nth-child(n+6) { display: none; }
+}
