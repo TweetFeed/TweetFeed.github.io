@@ -676,11 +676,11 @@
 	<!-- End of Page Wrapper -->
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=9"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	function nFormatter(num, digits) {
@@ -701,7 +701,7 @@
 		const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 		return months[parseInt(m[2],10)-1] + ' ' + parseInt(m[3],10) + ', ' + m[4] + ':' + m[5];
 	}
-	$(function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		// counts.json populates the 4 window cards (URL count only).
 		// counts.json served by the API (byte-identical to the data-repo file, 5 min
 		// at the edge) so this page shares one origin with the /v1/week/* fetch below.
@@ -742,7 +742,7 @@
 	});
 	</script>
 	<script>
-	$(function() { $('[data-toggle="tooltip"]').tooltip() });
+	document.addEventListener('DOMContentLoaded', function() { $('[data-toggle="tooltip"]').tooltip() });
 	</script>
 </body>
 

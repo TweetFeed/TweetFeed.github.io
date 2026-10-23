@@ -546,17 +546,17 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script defer src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<!-- vendor/chart.js/Chart.min.js removed 2026-08-20: this page has zero <canvas> and zero new Chart() calls, so 173 KB was downloaded and parsed to render nothing. The two Chart.defaults lines that configured it went with it. -->
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script defer src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=9"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// IOCs column (index 2) is fed an {display, sort} object instead of a
@@ -578,7 +578,7 @@
 		}]
 	};
 
-	// 'today' table inits synchronously (default-active tab, in initial
+	// 'today' table inits right at DOMContentLoaded (default-active tab, in initial
 	// viewport) - lazy-init here regressed CLS to 0.317 because the
 	// DataTables wrapper injects after paint and shifts layout.
 	// 'week', 'month' and 'year' live on inactive Bootstrap pills
@@ -587,8 +587,8 @@
 	// paint. All four windows come from ONE
 	// /v1/contributors fetch below - lazy init here only defers rendering an
 	// already-fetched window, never a network request.
-	let tableUsersToday = $('#dataTableUsersToday').DataTable(researchersTableOpts);
-	let tableUsersWeek, tableUsersMonth, tableUsersYear;
+	// (Assigned in the DOMContentLoaded handler below: jQuery loads deferred.)
+	let tableUsersToday, tableUsersWeek, tableUsersMonth, tableUsersYear;
 
 	// Populated by the /v1/contributors fetch below. Whichever happens
 	// first - the fetch resolving, or the user clicking a tab and lazily
@@ -666,7 +666,9 @@
 		}
 	}
 
-	$(function() {
+	document.addEventListener('DOMContentLoaded', function() {
+		tableUsersToday = $('#dataTableUsersToday').DataTable(researchersTableOpts);
+
 		TweetFeed.safeGet('https://api.tweetfeed.live/v1/contributors', { dataType: 'json', timeout: 8000, errorTarget: '#loadingToday', error: function(msg) {
 			// Overriding safeGet's default `error` bypasses its own
 			// errorTarget handling, so this replicates that same markup
@@ -752,7 +754,7 @@
 	}
 	</script>
 	<script>
-	$(function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
 	</script>
