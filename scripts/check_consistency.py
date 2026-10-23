@@ -1401,56 +1401,54 @@ def check_no_raw_user_interpolation(pages: list[str]) -> list[str]:
     return failures
 
 
-# Regression guard for the 2026-08-21 fix: the Google Fonts <link> requests
-# used to ask for `family=Rubik` / `family=Alegreya+Sans+SC` with no :wght@
-# axis, which Google Fonts serves as weight 400 ONLY - every 500/600/700/800
-# in the CSS was therefore browser-synthesised, not the real face. The links
-# now carry explicit axes (Rubik variable 400..700, Alegreya Sans SC static
-# 400;600;800); this check keeps a future page/rule from drifting back to a
-# weight nobody asked Google Fonts to serve.
+# Regression guard for the 2026-08-21 fix, rewritten 2026-10-23 for the
+# self-hosted fonts. The Google Fonts <link>s used to ask for `family=Rubik` /
+# `family=Alegreya+Sans+SC` with no :wght@ axis, which Google serves as weight
+# 400 ONLY - every 500/600/700/800 in the CSS is therefore browser-synthesised,
+# not a real face. Both families now live in fonts/ and are declared by the
+# @font-face rules at the top of css/tweetfeed.css; this check reads the weights
+# declared THERE, so a future rule can't drift to a weight nobody ships.
 TRACKED_FONT_FAMILIES = ("Rubik", "Alegreya Sans SC")
-FONT_LINK_FAMILY_RE = re.compile(r"fonts\.googleapis\.com/css2\?family=([^\"&]+)")
+FONT_CSS_FILE = "css/tweetfeed.css"
 CSS_COMMENT_RE = re.compile(r"/\*.*?\*/", re.S)
 CSS_LEAF_BLOCK_RE = re.compile(r"\{([^{}]*)\}")
 FONT_FAMILY_DECL_RE = re.compile(r"font-family\s*:\s*([^;]+);")
 FONT_WEIGHT_DECL_RE = re.compile(r"font-weight\s*:\s*(\d+)\s*;")
 STYLE_BLOCK_RE = re.compile(r"<style\b[^>]*>(.*?)</style>", re.S | re.I)
 SHARED_FONT_CSS_FILES = ("css/tweetfeed.css", "css/index.css", "css/table.css")
+FONT_FACE_RE = re.compile(r"@font-face\s*\{([^{}]*)\}")
+FONT_FACE_FAMILY_RE = re.compile(r"font-family\s*:\s*['\"]?([^;'\"]+?)['\"]?\s*;")
+FONT_FACE_WEIGHT_RE = re.compile(r"font-weight\s*:\s*(\d+)(?:\s+(\d+))?\s*;")
+FONT_FACE_URL_RE = re.compile(r"url\(\s*['\"]?([^)'\"]+?)['\"]?\s*\)")
 
 
-def _page_loaded_font_weights(html: str) -> dict[str, tuple]:
-    """Per tracked family, the set of weights this page's Google Fonts
-    <link>s actually request. `family=X` with no `:wght@` axis loads only
-    400 (Google Fonts default). Returned as ('set', frozenset[int]) for an
-    explicit list or ('range', lo, hi) for a variable-font closed range."""
-    loaded: dict[str, tuple] = {}
-    for m in FONT_LINK_FAMILY_RE.finditer(html):
-        spec = m.group(1)
-        name_part, _, weight_part = spec.partition(":wght@")
-        family = name_part.replace("+", " ")
-        if family not in TRACKED_FONT_FAMILIES:
+def _font_face_blocks() -> list[str]:
+    return FONT_FACE_RE.findall(CSS_COMMENT_RE.sub("", read(FONT_CSS_FILE)))
+
+
+def _declared_font_weights() -> dict[str, list[tuple[int, int]]]:
+    """Per family, the closed (lo, hi) weight intervals the @font-face rules in
+    css/tweetfeed.css declare: `font-weight: 400` -> (400, 400), a variable
+    `400 700` -> (400, 700)."""
+    declared: dict[str, list[tuple[int, int]]] = {}
+    for block in _font_face_blocks():
+        fam_m = FONT_FACE_FAMILY_RE.search(block)
+        weight_m = FONT_FACE_WEIGHT_RE.search(block)
+        if not fam_m:
             continue
-        if not weight_part:
-            loaded[family] = ("set", frozenset({400}))
-        elif ".." in weight_part:
-            lo, hi = weight_part.split("..", 1)
-            loaded[family] = ("range", int(lo), int(hi))
-        else:
-            weights = frozenset(int(w) for w in weight_part.split(";") if w.strip().isdigit())
-            loaded[family] = ("set", weights)
-    return loaded
+        # No font-weight descriptor means 400 for @font-face.
+        lo = int(weight_m.group(1)) if weight_m else 400
+        hi = int(weight_m.group(2) or lo) if weight_m else 400
+        declared.setdefault(fam_m.group(1).strip(), []).append((lo, hi))
+    return declared
 
 
-def _weight_loaded(spec: tuple, weight: int) -> bool:
-    if spec[0] == "range":
-        return spec[1] <= weight <= spec[2]
-    return weight in spec[1]
+def _weight_loaded(spans: list[tuple[int, int]], weight: int) -> bool:
+    return any(lo <= weight <= hi for lo, hi in spans)
 
 
-def _describe_loaded(spec: tuple) -> str:
-    if spec[0] == "range":
-        return f"{{{spec[1]}..{spec[2]}}}"
-    return "{" + ", ".join(str(w) for w in sorted(spec[1])) + "}"
+def _describe_loaded(spans: list[tuple[int, int]]) -> str:
+    return "{" + ", ".join(str(lo) if lo == hi else f"{lo}..{hi}" for lo, hi in sorted(set(spans))) + "}"
 
 
 def _same_block_family_weights(css_text: str) -> set[tuple[str, int]]:
@@ -1481,9 +1479,9 @@ SYNTHETIC_BOLD_BY_DESIGN = {"Alegreya Sans SC", "Rubik"}
 
 def check_font_weights_loaded(pages: list[str]) -> list[str]:
     """Every font-weight paired with a tracked family in the shared CSS or a
-    page's own <style> blocks must be a weight that page's Google Fonts
-    <link>s actually load - otherwise the browser is back to synthesising a
-    bold that was never served (see TRACKED_FONT_FAMILIES comment above).
+    page's own <style> blocks must be a weight the @font-face rules in
+    css/tweetfeed.css declare - otherwise the browser is back to synthesising a
+    bold that was never shipped (see TRACKED_FONT_FAMILIES comment above).
 
     SYNTHETIC_BOLD_BY_DESIGN holds the deliberate exceptions. BOTH of the
     site's families are in it, and both for the same reason: the owner looked
@@ -1503,18 +1501,21 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
     the site - navbar, body copy, footer, tables - is synthetic again.
 
     Both are typographic compromises taken with eyes open, not the bug this
-    check exists to catch. Any family added later is still enforced. Do NOT
-    "fix" either of these by adding a :wght@ axis without showing the owner a
-    before/after render first: that is exactly how both got reverted."""
+    check exists to catch. Any family added later is still enforced. The
+    self-hosted files (2026-10-23) are exactly the static 400 instances those
+    plain `family=X` requests returned, so nothing changed visually. Do NOT
+    "fix" either of these by declaring a weight range (`font-weight: 400 700`)
+    or shipping a variable file without showing the owner a before/after render
+    first: that is exactly how both got reverted."""
     shared_pairs = _same_block_family_weights(
         "\n".join(read(name) for name in SHARED_FONT_CSS_FILES)
     )
     failures: list[str] = []
+    loaded = _declared_font_weights()
     for p in pages:
         html = read(p)
-        loaded = _page_loaded_font_weights(html)
-        if not loaded:
-            continue  # page requests neither tracked family - out of scope
+        if FONT_CSS_FILE not in html:
+            continue  # page does not load the stylesheet that declares the fonts
         page_pairs = _same_block_family_weights(
             "\n".join(m.group(1) for m in STYLE_BLOCK_RE.finditer(html))
         )
@@ -1522,12 +1523,71 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
             if family in SYNTHETIC_BOLD_BY_DESIGN:
                 continue  # deliberate, see the docstring
             if family not in loaded:
-                continue  # page never loads this family - out of scope
+                failures.append(f"{p}: {family} is used but has no @font-face in {FONT_CSS_FILE}")
+                continue
             if not _weight_loaded(loaded[family], weight):
                 failures.append(
                     f"{p}: {family} weight {weight} used but only "
-                    f"{_describe_loaded(loaded[family])} loaded"
+                    f"{_describe_loaded(loaded[family])} declared"
                 )
+    return failures
+
+
+# Self-hosted fonts (2026-10-23): the files preloaded on every page. The names
+# are the latin subsets of each family; scripts/selfhost_fonts.py writes the tags.
+SELF_HOSTED_FONT_PRELOADS = ("fonts/alegreya-sans-sc-latin.woff2", "fonts/rubik-latin.woff2")
+GOOGLE_FONT_HOSTS = ("fonts.googleapis.com", "fonts.gstatic.com")
+FONT_PRELOAD_TAG_RE = re.compile(r'<link rel="preload" href="([^"]+)" as="font"[^>]*>')
+CSS_LINK_PREFIX_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.css\?v=\d+"')
+
+
+def check_fonts_self_hosted() -> list[str]:
+    """Fonts are served from this repo, not Google. Without the preload the
+    text is laid out in the fallback font and re-flows when the file arrives
+    (PSI CLS /api/ 0.154, /tos/ 0.216 before the move), so each page must:
+    carry no fonts.googleapis.com / fonts.gstatic.com reference, and preload
+    each family's latin file with the same path prefix as its own
+    css/tweetfeed.css link, `as="font"`, type font/woff2, `crossorigin` (a
+    preload without it is fetched twice), and no media query. The files, the
+    @font-face urls and fonts/OFL.txt must exist on disk. Covers every .html
+    plus the Jinja templates so the next regen can't bring Google back."""
+    failures: list[str] = []
+    face_files: set[str] = set()
+    for block in _font_face_blocks():
+        for url in FONT_FACE_URL_RE.findall(block):
+            rel = norm(url)
+            face_files.add(rel)
+            if not (REPO_ROOT / rel).is_file():
+                failures.append(f"{FONT_CSS_FILE}: @font-face url {url} -> {rel} does not exist")
+    for want in SELF_HOSTED_FONT_PRELOADS:
+        if want not in face_files:
+            failures.append(f"{want} is preloaded by the pages but no @font-face in {FONT_CSS_FILE} uses it")
+    if not (REPO_ROOT / "fonts" / "OFL.txt").is_file():
+        failures.append("fonts/OFL.txt (licence of the self-hosted fonts) is missing")
+    templates = sorted(
+        f"scripts/templates/{t.name}" for t in (REPO_ROOT / "scripts" / "templates").glob("*.j2")
+    )
+    for p in all_html_pages() + templates:
+        html = read(p)
+        for host in GOOGLE_FONT_HOSTS:
+            if host in html:
+                failures.append(f"{p}: still references {host}")
+        css_m = CSS_LINK_PREFIX_RE.search(html)
+        if not css_m:
+            continue  # partial or stub without the site stylesheet
+        tags = {m.group(1): m.group(0) for m in FONT_PRELOAD_TAG_RE.finditer(html)}
+        for want in SELF_HOSTED_FONT_PRELOADS:
+            href = css_m.group(1) + want
+            tag = tags.get(href)
+            if tag is None:
+                failures.append(f"{p}: missing font preload {href}")
+            elif 'type="font/woff2"' not in tag or "crossorigin" not in tag or "media=" in tag:
+                failures.append(f"{p}: font preload {href} must be type=\"font/woff2\", crossorigin, no media")
+            if not (REPO_ROOT / want).is_file():
+                failures.append(f"{p}: {want} does not exist on disk")
+        for href in tags:
+            if not (REPO_ROOT / norm(href)).is_file():
+                failures.append(f"{p}: font preload {href} does not exist on disk")
     return failures
 
 
@@ -1742,7 +1802,7 @@ SHELL_CHECKS = [
     ("Docs sidebar matches site_ia", check_docs_sidebar),
     ("Theme init region (one, identical, before first stylesheet)", check_theme_init),
     ("Feedback CTA (button, direct template link)", check_feedback_cta),
-    ("Font weights used are weights the page's Google Fonts <link> loads", check_font_weights_loaded),
+    ("Font weights used are weights the @font-face rules declare", check_font_weights_loaded),
     ("Duplicate HTML ids", check_duplicate_ids),
     ("ld+json blocks parse as valid JSON", check_jsonld_valid),
     ("FAQPage JSON-LD matches visible faq-section text", check_faq_parity),
@@ -1935,6 +1995,7 @@ def check_theme_init_templates() -> list[str]:
 
 
 GLOBAL_CHECKS = [
+    ("Fonts self-hosted (no Google hosts, files preloaded and on disk)", check_fonts_self_hosted),
     ("Theme init in the generator templates (one {{ shell_theme_init }}, before the first stylesheet)", check_theme_init_templates),
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),

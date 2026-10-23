@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Rewrite render-blocking FontAwesome/Google Fonts <link> tags to preload+swap.
 
+NOTE 2026-10-23: the Google Fonts half is obsolete (fonts are self-hosted, see
+scripts/selfhost_fonts.py); only the FontAwesome rewrite still applies.
+
 Why: PSI investigation (2026-08-12) confirmed the render-blocking <head>
 stylesheet chain as the direct cause of the FCP/LCP delay on stage (home
 0.71, dashboard 0.77 mobile perf). Of the 10 render-blocking stylesheets,
