@@ -80,8 +80,8 @@ NAV_MORE = [
     Link("Tags", "tags/", "fa-hashtag"),
     Link("IOC types", "ioc-types/", "fa-list"),
     None,
-    Link("Bad domains list", "malicious-domains/", "fa-globe"),
-    Link("Bad IPs list", "malicious-ips/", "fa-map-marker-alt"),
+    Link("Malicious domains", "malicious-domains/", "fa-globe"),
+    Link("Malicious IPs", "malicious-ips/", "fa-map-marker-alt"),
     Link("Blocklists", "blocklists/", "fa-ban"),
     None,
     Link("About", "about/", "fa-question-circle"),
@@ -118,8 +118,8 @@ def nav_mobile_links():
 FOOTER_COLUMNS = [
     ("DATA", [
         Link("IOC feeds", "feeds/"),
-        Link("Bad domains list", "malicious-domains/"),
-        Link("Bad IPs list", "malicious-ips/"),
+        Link("Malicious domains", "malicious-domains/"),
+        Link("Malicious IPs", "malicious-ips/"),
         Link("Blocklists", "blocklists/"),
         Link("Malicious URLs", "malicious-urls/"),
         Link("MD5 hashes", "malicious-hashes-md5/"),
