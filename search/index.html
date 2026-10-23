@@ -1111,20 +1111,22 @@
 	<!-- Scroll to Top Button-->
 	<!-- Logout Modal-->
 	<!-- Bootstrap core JavaScript-->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script defer src="../vendor/jquery/jquery.min.js"></script>
+	<script defer src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- Page level plugins -->
-	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script defer src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script defer src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 	<!-- js/demo/datatables-demo.js removed 2026-08-20: it only ever touches #dataTable, which does not exist on this page (confirmed by grep across all 7 pages that loaded it). Same cleanup already done on graphs/ and dashboard/. -->
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
-	<script src="../js/config.js"></script>
-	<script src="../js/utils.js?v=9"></script>
-	<script src="../js/demo/datatables-full.js?v=3"></script>
+	<script defer src="../js/config.js"></script>
+	<script defer src="../js/utils.js?v=9"></script>
+	<script defer src="../js/demo/datatables-full.js?v=3"></script>
 	<!-- Page level custom scripts -->
 	<script>
-	$(function() {
+	// jQuery is deferred, so datatables-full.js builds the table in a jQuery ready callback
+	// that runs after DOMContentLoaded. Queue this body behind it in the same ready queue.
+	document.addEventListener('DOMContentLoaded', function() { $(function() {
 		let autorefresh = 1;
 		let init = 1;
 		let flag_new = 0;
@@ -1167,11 +1169,14 @@
 		// injection shifts layout post-paint), net perf -0.18.
 		// The feed changes every 15 minutes; a 6 s poll re-downloaded and re-parsed the
 		// 4,900-row week.csv ten times a minute for nothing (home moved to 60 s in 358623fa3).
-		$(window).on('load', function() {
+		// jQuery is deferred, so this ready callback can run after window load has already fired:
+		// then run now instead of waiting for an event that is gone (the table stayed empty).
+		var startFeed = function() {
 			loadData();
 			timerAux = setInterval(timerCycle, 60000);
 			TweetFeed.trackInterval(timerAux);
-		});
+		};
+		if (document.readyState === 'complete') startFeed(); else $(window).on('load', startFeed);
 
 		function timerCycle() {
 			if (autorefresh) {
@@ -1319,7 +1324,7 @@
 			$("#loadingWeek").hide();
 
 		}
-	})
+	}) });
 	</script>
 	<script>
 	function exportTableToCSV(filename) {
@@ -1406,7 +1411,7 @@
 	});
 	</script>
 	<script>
-	$(function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
 	</script>
@@ -1437,7 +1442,7 @@
 	     campaigns/index.html. Placed after js/utils.js for TweetFeed.escapeHtml
 	     / TweetFeed.formatDateLong and the .tf-copy delegation it wires up. -->
 	<script>
-	(function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		'use strict';
 
 		var API = 'https://api.tweetfeed.live/v1/ioc?value=';
@@ -2200,7 +2205,7 @@
 			$input.val(qp);
 			runQuery(qp.trim());
 		}
-	})();
+	});
 	</script>
 	<!-- Feed explorer: ad-hoc filtered queries against the live
 	     api.tweetfeed.live/v1/<window>[/filter1][/filter2] endpoint. Query
@@ -2212,7 +2217,7 @@
 	     addZero) and after the IOC lookup panel script above, whose
 	     $status/$results/setLoading/renderError patterns this mirrors. -->
 	<script>
-	(function() {
+	document.addEventListener('DOMContentLoaded', function() {
 		'use strict';
 
 		var API_BASE = 'https://api.tweetfeed.live';
@@ -2549,14 +2554,16 @@
 		// the explorer's own IOC query, which only ever runs on explicit
 		// Load or a deep-linked param below. Deferred to window load so this
 		// small fetch never competes with LCP-critical resources.
-		$(window).on('load', function() {
+		// Same guard as the week table: this handler can be registered after window load.
+		var fillTagOptions = function() {
 			$.getJSON(TweetFeed.dataUrl('counts.json'), function(counts) {
 				var tagsObj = (counts && counts.windows && counts.windows.year && counts.windows.year.tags) || {};
 				var sorted = Object.keys(tagsObj).sort(function(a, b) { return (tagsObj[b] || 0) - (tagsObj[a] || 0); });
 				var html = sorted.map(function(t) { return '<option value="' + esc(t) + '">'; }).join('');
 				$tagOptions.html(html);
 			});
-		});
+		};
+		if (document.readyState === 'complete') fillTagOptions(); else $(window).on('load', fillTagOptions);
 
 		// Deep-link: w/type/tag/user/from/to prefill + a single auto-run.
 		// Distinct namespace from the IOC lookup panel's ?q above - both can
@@ -2574,7 +2581,7 @@
 			if (qp.get('to')) $to.val(qp.get('to'));
 			attemptLoad();
 		}
-	})();
+	});
 	</script>
 </body>
 
