@@ -35,6 +35,24 @@
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Font Awesome CSS loads async. Until it arrives the phone title icon is an empty inline <i> (0 px wide),
+   so a title that only just fits wraps when the glyph appears and the page drops 56 px (/about/ phone
+   CLS 0.107, measured 2026-10-23). Reserve each title icon's real width (measured in em with FA 5.15.4
+   loaded) so the line is the same before and after; display/line-height are the values FA sets. */
+#presentationMobile .toph1 > .fas { display: inline-block; line-height: 1; min-width: 1em; }
+#presentationMobile .toph1 > .fa-map-marker-alt,
+#presentationMobile .toph1 > .fa-file-contract { min-width: .75em; }
+#presentationMobile .toph1 > .fa-book,
+#presentationMobile .toph1 > .fa-rss { min-width: .875em; }
+#presentationMobile .toph1 > .fa-globe,
+#presentationMobile .toph1 > .fa-bullseye { min-width: .96875em; }
+#presentationMobile .toph1 > .fa-chart-pie { min-width: 1.0625em; }
+#presentationMobile .toph1 > .fa-tags,
+#presentationMobile .toph1 > .fa-users,
+#presentationMobile .toph1 > .fa-user-shield,
+#presentationMobile .toph1 > .fa-project-diagram,
+#presentationMobile .toph1 > .fa-code { min-width: 1.25em; }
+
 /* ═════════════════════════════════════════════════════════════════════════
    THEME TOKENS (dark mode, 2026-10).  LIGHT IS THE SOURCE OF TRUTH: every
    value below is the exact hex/rgba that used to be hardcoded further down,
