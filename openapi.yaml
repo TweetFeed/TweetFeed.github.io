@@ -815,7 +815,9 @@ paths:
         (`today`, `week`, `month`, `year`): total IOCs, a per-type
         breakdown, a per-tag breakdown, and the first/last IOC timestamp
         in that window. Lets a client render dashboard-style stats without
-        fetching and parsing the full `year` CSV (~120k rows). Regenerated
+        fetching and parsing the full `year` CSV (~120k rows). `today` also
+        carries `hours` (24 counts by UTC hour), `week` and `month` carry
+        `days` (count per UTC day) and `year` carries `months`. Regenerated
         every 15 minutes alongside the rest of the feed.
       parameters:
         - $ref: "#/components/parameters/IfNoneMatch"
@@ -1898,17 +1900,45 @@ components:
           format: date-time
           description: UTC timestamp this document was generated, `YYYY-MM-DDTHH:MM:SSZ`.
           example: "2026-07-29T18:15:03Z"
+        tag_names:
+          type: object
+          additionalProperties:
+            type: string
+          description: |
+            Display spelling for each tag key used in `windows.*.tags` (keys there
+            are lowercase without `#`): the most common spelling in the posts, with `#`.
+          example: { "cobaltstrike": "#CobaltStrike", "phishing": "#phishing" }
         windows:
           type: object
           required: [today, week, month, year]
           description: One entry per standard time window.
           properties:
             today:
-              $ref: "#/components/schemas/CountsWindow"
+              allOf:
+                - $ref: "#/components/schemas/CountsWindow"
+                - type: object
+                  required: [hours]
+                  properties:
+                    hours:
+                      type: array
+                      minItems: 24
+                      maxItems: 24
+                      items:
+                        type: integer
+                      description: |
+                        IOC count per UTC hour, only present on `today`.
+                        Index `0` is 00:00-00:59 UTC, index `23` is
+                        23:00-23:59 UTC. All zeros when the window has no
+                        IOCs.
+                      example: [12, 8, 5, 0, 3, 9, 14, 11, 10, 18, 16, 13, 15, 12, 19, 17, 11, 10, 11, 0, 0, 0, 0, 0]
             week:
-              $ref: "#/components/schemas/CountsWindow"
+              allOf:
+                - $ref: "#/components/schemas/CountsWindow"
+                - $ref: "#/components/schemas/CountsDays"
             month:
-              $ref: "#/components/schemas/CountsWindow"
+              allOf:
+                - $ref: "#/components/schemas/CountsWindow"
+                - $ref: "#/components/schemas/CountsDays"
             year:
               allOf:
                 - $ref: "#/components/schemas/CountsWindow"
@@ -1928,6 +1958,33 @@ components:
                         December, regardless of which month the document was
                         generated in.
                       example: [1203, 980, 1450, 1102, 1330, 1560, 1290, 0, 0, 0, 0, 0]
+
+    CountsDays:
+      type: object
+      required: [days]
+      properties:
+        days:
+          type: array
+          description: |
+            IOC count per UTC day, only present on `week` and `month`.
+            Ascending by date; days with no IOCs are left out, so the
+            array is empty when the window has no IOCs.
+          items:
+            type: object
+            required: [date, count]
+            properties:
+              date:
+                type: string
+                format: date
+                description: UTC day, `YYYY-MM-DD`.
+                example: "2026-07-28"
+              count:
+                type: integer
+                description: IOCs published on that day.
+                example: 233
+          example:
+            - {date: "2026-07-27", count: 201}
+            - {date: "2026-07-28", count: 233}
 
     CountsWindow:
       type: object

@@ -629,10 +629,33 @@
             "types": { "url": 120, "domain": 60, "ip": 20, "sha256": 10, "md5": 4 },
             "tags": { "phishing": 140, "malware": 50 },
             "first_date": "2026-07-29 00:04:11",
-            "last_date": "2026-07-29 18:11:47"
+            "last_date": "2026-07-29 18:11:47",
+            "hours": [12, 8, 5, 0, 3, 9, 14, 11, 10, 18, 16, 13, 15, 12, 19, 17, 11, 10, 11, 0, 0, 0, 0, 0]
         },
-        "week": { "total": 1490, "types": { "...": "..." }, "tags": { "...": "..." }, "first_date": "2026-07-23 00:01:09", "last_date": "2026-07-29 18:11:47" },
-        "month": { "total": 6320, "types": { "...": "..." }, "tags": { "...": "..." }, "first_date": "2026-06-30 00:00:41", "last_date": "2026-07-29 18:11:47" },
+        "week": {
+            "total": 1490,
+            "types": { "...": "..." },
+            "tags": { "...": "..." },
+            "first_date": "2026-07-23 00:01:09",
+            "last_date": "2026-07-29 18:11:47",
+            "days": [
+                { "date": "2026-07-23", "count": 201 },
+                { "date": "2026-07-24", "count": 233 },
+                "..."
+            ]
+        },
+        "month": {
+            "total": 6320,
+            "types": { "...": "..." },
+            "tags": { "...": "..." },
+            "first_date": "2026-06-30 00:00:41",
+            "last_date": "2026-07-29 18:11:47",
+            "days": [
+                { "date": "2026-06-30", "count": 187 },
+                { "date": "2026-07-01", "count": 240 },
+                "..."
+            ]
+        },
         "year": {
             "total": 118342,
             "types": { "...": "..." },
@@ -641,9 +664,13 @@
             "last_date": "2026-07-29 18:11:47",
             "months": [9812, 8765, 10230, 9540, 11020, 12480, 10990, 9800, 8700, 9100, 9400, 8500]
         }
-    }
+    },
+    "tag_names": { "cobaltstrike": "#CobaltStrike", "phishing": "#phishing", "...": "..." }
 }</pre>
 				<ul class="tf-note">
+					<li><code>hours</code> (only present on <code>today</code>) has 24 integers, indexed by UTC hour: index <code>0</code> is 00:00-00:59 UTC.</li>
+					<li><code>days</code> (only present on <code>week</code> and <code>month</code>) lists <code>{"date", "count"}</code> objects, ascending by UTC date. Days with no IOCs are left out.</li>
+					<li><code>tags</code> keys are lowercase without <code>#</code>. <code>tag_names</code> maps each key to its most common spelling in the posts, with <code>#</code>.</li>
 					<li><code>months</code> (only present on <code>year</code>) is indexed by calendar month, not relative to the window.</li>
 					<li>Index <code>0</code> is always January, index <code>11</code> is always December.</li>
 					<li>Any window with no IOCs reports <code>first_date</code>/<code>last_date</code> as <code>null</code>.</li>
