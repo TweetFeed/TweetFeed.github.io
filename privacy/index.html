@@ -298,7 +298,7 @@
 				<div style="font-size:15px;color:var(--tf-fg-3c4043);line-height:1.7;max-width:800px;font-family: 'Rubik', sans-serif;padding: 0 15px 40px 0;">
 
 				<h2 id="who" class="h5 mt-4 mb-2 font-weight-bold">Who I am</h2>
-				<p class="mb-2">I am Daniel López. I run TweetFeed alone, from Spain. I am the data controller for tweetfeed.live, api.tweetfeed.live, and mcp.tweetfeed.live.</p>
+				<p class="mb-2">I am Daniel López. I run TweetFeed alone, from Spain. I am the data controller for tweetfeed.live, api.tweetfeed.live, and mcp.tweetfeed.live. I process personal data under the EU General Data Protection Regulation (GDPR) and the Spanish LOPDGDD.</p>
 
 				<h2 id="no-accounts" class="h5 mt-4 mb-2 font-weight-bold">No accounts</h2>
 				<p class="mb-2">TweetFeed has no accounts and no login. The website, the API, and the MCP server do not ask for your name, your email address, or a key. I set no cookies.</p>
@@ -307,26 +307,41 @@
 				<p class="mb-2">The website saves your light or dark theme choice in your browser. It saves nothing else. My servers never read it.</p>
 
 				<h2 id="analytics" class="h5 mt-4 mb-2 font-weight-bold">Analytics</h2>
-				<p class="mb-2">The website uses Umami, which I host myself at s.tweetfeed.live, and Ahrefs Web Analytics. Both work without cookies. They count page views, referrers, and coarse device and country data. Umami does not store your IP address.</p>
+				<p class="mb-2">The website uses Umami, which I host myself at s.tweetfeed.live, Ahrefs Web Analytics, and Cloudflare Web Analytics. All three work without cookies. They keep only aggregate counts of page views, referrers, and coarse device and country data. Umami does not store your IP address. None of them uses fingerprinting. The legal basis is my legitimate interest (Art. 6(1)(f) GDPR).</p>
 				<p class="mb-2">The API and the MCP server have no browser analytics. When a known AI agent calls the API, the API sends one event to my Umami. The event holds the path and a shortened User-Agent. It holds no IP address.</p>
 
 				<h2 id="logs" class="h5 mt-4 mb-2 font-weight-bold">Logs and rate limits</h2>
 				<p class="mb-2">Cloudflare serves all requests. It sees your IP address and User-Agent, and it applies a rate limit of 50 requests in 10 seconds for each IP.</p>
+				<p class="mb-2">The access logs at the CDN and host level hold your IP address, User-Agent, request path, and referer. I use them for abuse prevention, troubleshooting, and rate limiting. They are short-lived, typically 30 days or less. The legal basis is my legitimate interest (Art. 6(1)(f) GDPR).</p>
 				<p class="mb-2">The API also counts single-IOC lookups (<code>/v1/ioc</code>) for each IP. It does not block them today. When one IP sends more than 20 in a minute, the API writes one log line with that IP address, User-Agent, and request path.</p>
 				<p class="mb-2">Cloudflare Workers Logs is on for the API and the MCP server. It can record the request URL and status for a short time (days). For a lookup, the URL can contain the value you look up. The MCP server writes no log lines of its own and does not read your IP address.</p>
 
 				<h2 id="data" class="h5 mt-4 mb-2 font-weight-bold">The data</h2>
-				<p class="mb-2">The IOCs come from public posts on X. For each IOC, I keep the post link and the handle of its author as source data. I do not read private accounts or private messages. The data is public domain (CC0 1.0).</p>
+				<p class="mb-2">The IOCs come from public posts on X. I do not read private messages or protected accounts. For each IOC, I keep the post link and the handle of its author as source data. I keep the IOC dataset, with the handle, with no expiry date, as a public archive. The data is public domain (<a href="../tos/#data-license">CC0 1.0</a>).</p>
+
+				<h2 id="avatars" class="h5 mt-4 mb-2 font-weight-bold">Researcher avatars</h2>
+				<p class="mb-2">TweetFeed shows the public X profile picture of each researcher who is active in the today, week, month, or year windows. I get the picture from unavatar.io and cache it as a static image at tweetfeed.live/pics/*.png. Your browser loads the image from tweetfeed.live. If the cached image is missing, your browser loads that picture from unavatar.io instead. I delete the image 180 days after the researcher leaves the active windows. The legal basis is my legitimate interest (Art. 6(1)(f) GDPR).</p>
 
 				<h2 id="sharing" class="h5 mt-4 mb-2 font-weight-bold">Sharing</h2>
-				<p class="mb-2">I do not sell your data. Cloudflare processes requests for me. GitHub hosts the website and the public data. The website also loads fonts from Google Fonts and code libraries from public CDNs.</p>
-				<p class="mb-2">Each of these services has its own privacy policy. The <a href="../tos/#subprocessors">Terms of Service</a> list them in section 13.</p>
+				<p class="mb-2">I do not sell or rent your data. I do not share it beyond the <a href="#subprocessors">third-party services</a> below. I send no personal data about visitors to X or to those services beyond what they need to serve the request or render the page.</p>
+
+				<h2 id="subprocessors" class="h5 mt-4 mb-2 font-weight-bold">Third-party services</h2>
+				<p class="mb-1">I use these services. Each one has its own terms and privacy policy.</p>
+				<ul style="margin:8px 0 0 20px;">
+				<li><b>Cloudflare, Inc.</b> - DNS, CDN, DDoS protection, Cloudflare Web Analytics, and the Worker behind api.tweetfeed.live. It processes all requests to TweetFeed.</li>
+				<li><b>GitHub, Inc.</b> - GitHub Pages hosts the website. GitHub also holds the public data repository and the public issue tracker. Issues are public.</li>
+				<li><b>Ahrefs Pte. Ltd.</b> - cookieless analytics at analytics.ahrefs.com. It receives the page URL and the referrer, and stores no personal identifiers.</li>
+				<li><b>unavatar.io</b> - source of the researcher avatars. I cache each image. If a cached image is missing, your browser loads it from unavatar.io.</li>
+				<li><b>Google LLC</b> - Google Fonts, for the fonts of the website.</li>
+				<li><b>cdnjs</b> (run by Cloudflare) - delivers the Font Awesome and highlight.js libraries.</li>
+				<li><b>X Corp.</b> - the embedded posts on /dashboard/ load from platform.twitter.com.</li>
+				</ul>
 
 				<h2 id="rights" class="h5 mt-4 mb-2 font-weight-bold">Your rights and contact</h2>
-				<p class="mb-2">You can ask me to give you, correct, or delete your data, or to stop using it. You can also complain to the Spanish data protection authority (AEPD).</p>
-				<p class="mb-2">To contact me, open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues" target="_blank" rel="noopener noreferrer">GitHub issue</a>. Do not post private data in it. TweetFeed has no email address.</p>
+				<p class="mb-2">You have the right to access, rectification, erasure, restriction, and portability of your data. You can also object to processing that is based on my legitimate interest. To use a right, contact me as described below. You can also complain to the Spanish data protection authority (<a href="https://www.aepd.es/" target="_blank" rel="noopener noreferrer">AEPD</a>).</p>
+				<p class="mb-2">To contact me, send an X DM to <a href="https://x.com/0xDanielLopez" target="_blank" rel="noopener noreferrer">@0xDanielLopez</a> or open a <a href="https://github.com/0xDanielLopez/TweetFeed/issues" target="_blank" rel="noopener noreferrer">GitHub issue</a>. A GitHub issue is public, so do not post private data in it. I use what you send only to reply to you about TweetFeed. TweetFeed has no email address.</p>
 
-				<small>Last updated: 18 October 2026</small>
+				<small>Last updated: 23 October 2026</small>
 				</div>
 			</div>
 			<!-- End of Main Content -->
