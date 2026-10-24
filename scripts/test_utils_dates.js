@@ -27,7 +27,8 @@ const CASES = [
 if (process.env.TF_DATE_CHILD) {
   global.window = {};
   global.document = { addEventListener() {} };
-  global.$ = () => ({ length: 0, on() {}, off() {} });
+  // Chainable like jQuery: utils.js binds with $(document).off(...).on(...).
+  global.$ = () => { const q = { length: 0, on() { return q; }, off() { return q; } }; return q; };
   new Function(fs.readFileSync(UTILS, 'utf8'))();
   const f = global.window.formatDateLong;
   const out = CASES.map(([i, want]) => [i, f(i), want]);
