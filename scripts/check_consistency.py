@@ -57,6 +57,7 @@ CHOOSER_URL_FRAGMENT = "issues/new/" + "choose"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import site_ia as ia  # noqa: E402
 from render_shell import close_element  # noqa: E402
+import subset_fontawesome as fa  # noqa: E402  (icon scan; fonttools is only needed to rebuild)
 from year_counts import YEAR_CLAIM_PAGES, YEAR_CLAIM_RE, fetch_year_counts  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -1591,6 +1592,90 @@ def check_fonts_self_hosted() -> list[str]:
     return failures
 
 
+# Self-hosted Font Awesome (2026-10-24): scripts/selfhost_fontawesome.py writes the
+# tags, scripts/subset_fontawesome.py cuts the fonts to the icons the tree names.
+FA_CDN_MARK = "ajax/libs/font-awesome/"
+FA_DIR = "vendor/fontawesome"
+FA_CSS_FILE = f"{FA_DIR}/css/all.min.css"
+FA_MANIFEST_FILE = f"{FA_DIR}/icons.txt"
+FA_TAG_RE = re.compile(r'(?:<link rel="preload" href|<noscript><link href)="([^"]*vendor/fontawesome/css/all\.min\.css)\?v=(\d+)"([^>]*)>')
+FA_RERUN = "rerun scripts/subset_fontawesome.py (needs fonttools + brotli, setup in its docstring)"
+
+
+def check_fontawesome_self_hosted() -> list[str]:
+    """Font Awesome is served from vendor/fontawesome/, not cdnjs (79 + 78 + 14 KB
+    of woff2 from a second origin sat in the PSI LCP path). Each page must: carry
+    no cdnjs font-awesome reference, and load vendor/fontawesome/css/all.min.css
+    twice (preload `as="style"` + onload swap, and <noscript>) with the same path
+    prefix as its own css/tweetfeed.css link, one ?v=N on every page, and no
+    integrity / crossorigin / referrerpolicy (same origin: a crossorigin mismatch
+    between preload and stylesheet downloads the file twice). The three fonts are subsets, so an
+    icon the tree uses but icons.txt lacks would render as an empty box: every
+    fa-NAME token in the text sources (same scan and utility-class list as
+    scripts/subset_fontawesome.py) and every content:"\\fXXX" CSS escape must be in
+    the manifest. Names FA 5.15.4 does not have (FA6-only) are dead classes the
+    subset script already lists, not failures here. Covers every .html plus the
+    Jinja templates so the next regen can't bring cdnjs back."""
+    failures: list[str] = []
+    manifest_path, css_path = REPO_ROOT / FA_MANIFEST_FILE, REPO_ROOT / FA_CSS_FILE
+    for rel in (FA_MANIFEST_FILE, FA_CSS_FILE, f"{FA_DIR}/LICENSE.txt"):
+        if not (REPO_ROOT / rel).is_file():
+            failures.append(f"{rel} is missing")
+    if failures:
+        return failures
+    css = css_path.read_text(encoding="utf-8")
+    for url in re.findall(r"url\(([^)]+)\)", css):
+        target = css_path.parent / url.strip("\"'").split("#")[0].split("?")[0]
+        if not target.is_file():
+            failures.append(f"{FA_CSS_FILE}: url({url}) does not exist")
+
+    templates = sorted(
+        f"scripts/templates/{t.name}" for t in (REPO_ROOT / "scripts" / "templates").glob("*.j2")
+    )
+    versions: dict[str, list[str]] = {}  # ?v=N -> pages
+    for p in all_html_pages() + templates:
+        html = read(p)
+        if FA_CDN_MARK in html:
+            failures.append(f"{p}: still references cdnjs font-awesome")
+        css_m = CSS_LINK_PREFIX_RE.search(html)
+        if not css_m:
+            continue  # partial or stub without the site stylesheet
+        want = css_m.group(1) + f"{FA_DIR}/css/all.min.css"
+        tags = FA_TAG_RE.findall(html)
+        if len(tags) != 2 or {href for href, _, _ in tags} != {want} or len({v for _, v, _ in tags}) != 1:
+            failures.append(f"{p}: needs exactly the FA preload + <noscript> stylesheet for {want}?v=N, found {tags}")
+            continue
+        versions.setdefault(tags[0][1], []).append(p)
+        attrs = [a for _, _, a in tags]
+        if any(w in a for a in attrs for w in ("integrity", "crossorigin", "referrerpolicy")):
+            failures.append(f"{p}: FA tags must not carry integrity / crossorigin / referrerpolicy (same origin)")
+        if sum('as="style"' in a and "onload=" in a for a in attrs) != 1 or sum('rel="stylesheet"' in a for a in attrs) != 1:
+            failures.append(f"{p}: FA needs one preload (as=\"style\" + onload swap) and one <noscript> rel=\"stylesheet\"")
+    if len(versions) > 1:
+        failures.append(
+            "FA stylesheet ?v=N is not uniform: "
+            + "; ".join(f"?v={v}: {len(ps)} page(s), e.g. {ps[:2]}" for v, ps in sorted(versions.items()))
+            + " (set FA_CSS_VERSION in scripts/selfhost_fontawesome.py and rerun it with --apply)"
+        )
+
+    manifest = {
+        line.strip() for line in manifest_path.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.startswith("#")
+    }
+    name_to_cp = {n: int(cp, 16) for n, cp in fa.ICON_RULE_RE.findall(css)}
+    inv = fa.scan(fa.source_files())
+    for where in inv.dynamic:
+        failures.append(f"{where}: icon name built at run time, cannot be checked; write literal fa-NAME tokens")
+    missing = sorted(f"fa-{n}" for n in inv.names if n in name_to_cp and f"fa-{n}" not in manifest)
+    if missing:
+        failures.append(f"{', '.join(missing)} used in the tree but not in {FA_MANIFEST_FILE}: {FA_RERUN}")
+    kept = {name_to_cp[m[3:]] for m in manifest if m[3:] in name_to_cp}
+    css_drawn = sorted(f"U+{cp:04X}" for cp in inv.escapes if cp not in kept)
+    if css_drawn:
+        failures.append(f"CSS content escapes {', '.join(css_drawn)} have no icon in {FA_MANIFEST_FILE}: {FA_RERUN}")
+    return failures
+
+
 # Page-content checks: the 21 hand-written pages carrying real copy.
 RSS_LINK_RE = re.compile(
     r'<link rel="alternate" type="application/rss\+xml"[^>]*href="([^"]+)"[^>]*>'
@@ -1996,6 +2081,7 @@ def check_theme_init_templates() -> list[str]:
 
 GLOBAL_CHECKS = [
     ("Fonts self-hosted (no Google hosts, files preloaded and on disk)", check_fonts_self_hosted),
+    ("Font Awesome self-hosted (no cdnjs, every fa-NAME in vendor/fontawesome/icons.txt)", check_fontawesome_self_hosted),
     ("Theme init in the generator templates (one {{ shell_theme_init }}, before the first stylesheet)", check_theme_init_templates),
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),

@@ -1,0 +1,18 @@
+Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
+License - https://fontawesome.com/license/free
+
+Icons: CC BY 4.0 License (https://creativecommons.org/licenses/by/4.0/)
+Fonts: SIL OFL 1.1 License (https://scripts.sil.org/OFL)
+Code:  MIT License (https://opensource.org/licenses/MIT)
+
+Copyright (c) Fonticons, Inc. (https://fontawesome.com)
+
+What is in this directory:
+  css/all.min.css       the original stylesheet (MIT); only the @font-face src was
+                        reduced to the woff2 file
+  webfonts/*.woff2      the original fonts (OFL 1.1 for the font files, CC BY 4.0
+                        for the icon artwork) cut down to the glyphs listed in
+                        icons.txt; outlines are unchanged
+  icons.txt             manifest of the kept icons
+
+Rebuilt from the cdnjs originals by scripts/subset_fontawesome.py.
