@@ -1120,8 +1120,8 @@
 	<!-- Export -->
 	<!-- TweetFeed shared utilities -->
 	<script defer src="../js/config.js"></script>
-	<script defer src="../js/utils.js?v=9"></script>
-	<script defer src="../js/demo/datatables-full.js?v=3"></script>
+	<script defer src="../js/utils.js?v=10"></script>
+	<script defer src="../js/demo/datatables-full.js?v=4"></script>
 	<!-- Page level custom scripts -->
 	<script>
 	// jQuery is deferred, so datatables-full.js builds the table in a jQuery ready callback
@@ -1224,21 +1224,24 @@
 
 					if (loaddatacall> 0) {
 
+						// Rows go in raw; js/demo/datatables-full.js renders the User/Value/X/VT
+						// cells when a row is drawn. ONE add + draw for all new rows, not a draw per row.
+						var newRows = [];
 						for (var i = Math.max(0, data.length - 20); i < data.length; i++) {
 							if (olddate < data[i][0]) {
-								var type = data[i][2];
-								decorateRow(data[i]);
-
-								var node = table.row.add(data[i]).draw().node();
-								$(node).addClass('highlight');
-								$(node).addClass('newRow');
-								$(node).addClass(type);
-
-								// Mobile column classes come from columnDefs in js/demo/datatables-full.js.
-
+								newRows.push(data[i]);
 								flag_new = 1;
 							}
+						}
 
+						if (newRows.length) {
+							// rows.add returns an API over the new rows. Under deferRender .nodes() holds
+							// undefined for rows that are not on the current page: filter those out, as
+							// jQuery stops (or throws) at the first hole. The type tint comes from
+							// createdRow in js/demo/datatables-full.js.
+							var addedRows = table.rows.add(newRows);
+							table.draw();
+							$(addedRows.nodes().toArray().filter(Boolean)).addClass('highlight newRow');
 						}
 
 						if (flag_new && init == 0) {
@@ -1254,10 +1257,8 @@
 						}, 1000);
 					} else {
 
-						for (var i = 0; i < data.length; i++) {
-							decorateRow(data[i]);
-						}
-
+						// Rows go in raw; js/demo/datatables-full.js renders the User/Value/X/VT cells
+						// (columns[].render) when a row is drawn, so no pass over ~4,900 rows is needed here.
 						table.rows.add(data).order([0, 'desc']).draw();
 						// deferRender: only the visible page has <tr> nodes; the type tint comes from
 						// createdRow in js/demo/datatables-full.js, so no row is touched here.
@@ -1275,27 +1276,6 @@
 				cache: false
 			});
 			init = 0;
-		}
-
-		// Turns one week.csv row [date, user, type, value, tags, tweet_url] into
-		// table cells. XSS-safe: every value is escaped in attributes and text.
-		// Built as strings BEFORE rows.add so deferRender never has to create a
-		// <tr> for every row just to rewrite its cells (~4,900 rows on week.csv).
-		function decorateRow(r) {
-			var user = r[1];
-			var type = r[2];
-			var safeUser = /^[A-Za-z0-9_]{1,15}$/.test(user) ? user : '';
-			var picSrc = '../pics/' + safeUser + '.png';
-			r[1] = '<a class="twitterUser btn btn-primary btn-sm rounded btn-block" style="background-color: var(--tf-bg-1da1f2);border-color: var(--tf-bd-000);font-family: \'Rubik\', sans-serif;text-decoration: none;color: var(--tf-fg-fff);white-space: nowrap;" target="_blank" href="https://x.com/' + escapeHtml(user) + '" role="button" rel="noopener noreferrer"><img loading="lazy" width="20" height="20" src="' + picSrc + '" onerror="this.onerror=null;this.src=\'https://unavatar.io/twitter/' + safeUser + '\'" alt="' + escapeHtml(user) + '">&nbsp;' + escapeHtml(user) + '</a>';
-			var value = r[3];
-			r[3] = '<span style="display: block; width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><i class="tf-copy far fa-copy" data-copy="' + escapeHtml(value) + '" role="button" tabindex="0" aria-label="Copy IOC value" title="Copy"></i> ' + escapeHtml(value) + '</span>';
-			var tweet_url = r[5];
-			r[5] = '<a class="tf-action tf-action-tweet" target="_blank" href="' + escapeHtml(tweet_url) + '" rel="noopener noreferrer" title="Open original tweet" aria-label="Open original tweet"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg></a>';
-			if (type == "url") {
-				value = encodeURIComponent(value);
-			}
-			r.push('<a class="tf-action tf-action-vt" target="_blank" href="https://www.virustotal.com/gui/search/' + value + '" rel="noopener noreferrer" title="Search in VirusTotal" aria-label="Search in VirusTotal"><img loading="lazy" src="../img/vt.png" alt="VirusTotal" width="16" height="14"></a>');
-			return r;
 		}
 
 		function countTypes(className, jsonArr) {

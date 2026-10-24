@@ -40,6 +40,11 @@ jobs:
         # local time; this pins the rendering across viewer timezones.
         run: node scripts/test_utils_dates.js
 
+      - name: parseCSV fast-path test
+        # utils.js parseCSV() has a quote-free fast path (week.csv); this pins it
+        # deep-equal to the original char loop on edge cases + random input.
+        run: node scripts/test_parse_csv.js
+
       - name: Tag sample exact-match test
         # Guards the substring-vs-exact bug: the API path filter is a substring
         # match, so /v1/month/scam also returns #cryptoscam. Runs before the

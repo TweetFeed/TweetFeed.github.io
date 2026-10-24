@@ -21,6 +21,19 @@
   // Handles quoted fields, commas inside quoted fields, escaped quotes (""),
   // CRLF/LF line endings. Returns array of arrays (rows of fields).
   function parseCSV(text) {
+    // Fast path for quote-free input (week.csv has none): without a quote no field
+    // can hide a comma or span lines, so a line split plus split(',') yields the same
+    // rows as the char loop below, several times faster on ~4,900 rows. Blank lines
+    // are dropped exactly like there. Anything with a quote falls through unchanged.
+    if (text.indexOf('"') === -1) {
+      var lines = text.split(/\r\n|\n|\r/);
+      var fast = [];
+      for (var k = 0; k < lines.length; k++) {
+        if (lines[k] !== '') fast.push(lines[k].split(','));
+      }
+      return fast;
+    }
+
     var rows = [];
     var row = [];
     var field = '';
