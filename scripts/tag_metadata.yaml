@@ -1259,7 +1259,7 @@ tags:
       - label: "Exploited"
         html: 'In <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct. Attacks on <a href="https://security.paloaltonetworks.com/CVE-2026-109618" target="_blank" rel="noopener noreferrer">PAN-OS</a> management interfaces.'
       - label: "OT gear"
-        html: '<a href="https://cert-portal.siemens.com/productcert/html/ssa-566512.html" target="_blank" rel="noopener noreferrer">Siemens</a> RUGGEDCOM APE1808, <a href="https://download.schneider-electric.com/files?p_Doc_Ref=SESB-2026-295-01&amp;p_enDocType=Security+and+Safety+Notice&amp;p_File_Name=SESB-2026-295-01.pdf" target="_blank" rel="noopener noreferrer">Schneider</a> Security Expert (fix 1.48.4.0), B&amp;R APROL, ABB MES.'
+        html: '<a href="https://cert-portal.siemens.com/productcert/html/ssa-566512.html" target="_blank" rel="noopener noreferrer">Siemens</a> RUGGEDCOM APE1808. <a href="https://download.schneider-electric.com/files?p_Doc_Ref=SESB-2026-295-01&amp;p_enDocType=Security+and+Safety+Notice&amp;p_File_Name=SESB-2026-295-01.pdf" target="_blank" rel="noopener noreferrer">Schneider</a> Security Expert (fix 1.48.4.0), Control Engineering, LINEoptimize. B&amp;R APROL. ABB MES.'
       - label: "Name"
         html: "Researcher name. PHP does not use it."
       - label: "Tracked"
