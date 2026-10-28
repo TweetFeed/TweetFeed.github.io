@@ -1231,8 +1231,8 @@ tags:
     webpage_name: "PHP2Shell (PHP vulnerability) IOC feed"
     webpage_description: "Real-time IOCs (URLs, domains, IPs, hashes) that researchers link to PHP2Shell, the name for two critical PHP runtime flaws, CVE-2026-109618 and CVE-2026-109619."
     meta_description: "IOCs linked to PHP2Shell (CVE-2026-109618/CVE-2026-109619, critical PHP flaws). {year} hits last year. Updated every 15 min."
-    meta_keywords: "php2shell,cve-2026-109618,cve-2026-109619,cve-2026-115560,php vulnerability,php security release,php 8.5.12,php-fpm,mod_php,ioc feed,osint,Threat Intelligence"
-    status_html: '<b>2026-10-24 15:00 UTC:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">fix out</a> &middot; attacks reported by <a href="https://blog.cloudflare.com/php-vulnerabilities-waf-protection/" target="_blank" rel="noopener noreferrer">Cloudflare</a>, <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr</a>, <a href="https://patchstack.com/articles/php-major-vulnerability-alert-10-2026/" target="_blank" rel="noopener noreferrer">Patchstack</a> &middot; not in CISA KEV'
+    meta_keywords: "php2shell,cve-2026-109618,cve-2026-109619,cve-2026-115560,cisa kev,php vulnerability,php security release,php 8.5.12,php-fpm,mod_php,ioc feed,osint,Threat Intelligence"
+    status_html: '<b>2026-10-28 17:21 UTC:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">fix out</a> &middot; in <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct &middot; attacks reported by <a href="https://blog.cloudflare.com/php-vulnerabilities-waf-protection/" target="_blank" rel="noopener noreferrer">Cloudflare</a>, <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr</a>, <a href="https://patchstack.com/articles/php-major-vulnerability-alert-10-2026/" target="_blank" rel="noopener noreferrer">Patchstack</a>'
     schema_about:
       type: Thing
       name: "PHP2Shell"
@@ -1256,6 +1256,10 @@ tags:
         html: "PHP-FPM, mod_php (highest risk), php-cgi, FrankenPHP, LiteSpeed."
       - label: "Fixed in"
         html: "8.5.12, 8.4.27, 8.3.36, 8.2.35, or a distro backport."
+      - label: "Exploited"
+        html: 'In <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct. Attacks on <a href="https://security.paloaltonetworks.com/CVE-2026-109618" target="_blank" rel="noopener noreferrer">PAN-OS</a> management interfaces.'
+      - label: "OT gear"
+        html: '<a href="https://cert-portal.siemens.com/productcert/html/ssa-566512.html" target="_blank" rel="noopener noreferrer">Siemens</a> RUGGEDCOM APE1808, <a href="https://download.schneider-electric.com/files?p_Doc_Ref=SESB-2026-295-01&amp;p_enDocType=Security+and+Safety+Notice&amp;p_File_Name=SESB-2026-295-01.pdf" target="_blank" rel="noopener noreferrer">Schneider</a> Security Expert (fix 1.48.4.0), B&amp;R APROL, ABB MES.'
       - label: "Name"
         html: "Researcher name. PHP does not use it."
       - label: "Tracked"
@@ -1267,6 +1271,8 @@ tags:
         html: "Every runtime: FPM, mod_php, CLI, containers. No full mitigation exists."
       - label: "Packages"
         html: 'Fixed: <a href="https://security-tracker.debian.org/tracker/CVE-2026-109618" target="_blank" rel="noopener noreferrer">Debian 12/13</a>, <a href="https://ubuntu.com/security/notices/USN-8948-1" target="_blank" rel="noopener noreferrer">Ubuntu</a>, <a href="https://access.redhat.com/security/cve/cve-2026-109618" target="_blank" rel="noopener noreferrer">RHEL 8/9/10</a>, <a href="https://blog.remirepo.net/post/2026/10/22/PHP-version-8.2.35-8.3.36-8.4.27-8.5.12" target="_blank" rel="noopener noreferrer">Remi</a>, <a href="https://hub.docker.com/_/php" target="_blank" rel="noopener noreferrer">Docker</a>. Not yet: RHEL 9 php:8.4.'
+      - label: "PAN-OS"
+        html: '<a href="https://security.paloaltonetworks.com/CVE-2026-109618" target="_blank" rel="noopener noreferrer">Hotfixes</a> out, some due 29-30 Oct. Management access from trusted IPs only.'
       - label: "Restart"
         html: "PHP-FPM and Apache. Rebuild images with docker build --pull."
       - label: "PHP 8.1 and older"
@@ -1280,14 +1286,14 @@ tags:
       - label: "Hunt"
         html: 'PHP workers that start shells or downloaders. Fatal errors in PHP logs (<a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA</a>). A clean log is not proof.'
       - label: "Detect"
-        html: 'ET Open php2shell rules, <a href="https://viz.greynoise.io/tags/php2shell-tooling" target="_blank" rel="noopener noreferrer">GreyNoise</a> tags. The <a href="https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-109618.yaml" target="_blank" rel="noopener noreferrer">Nuclei</a> check is intrusive.'
+        html: 'ET Open php2shell rules, <a href="https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching" target="_blank" rel="noopener noreferrer">CISA SIGMA</a> rule, <a href="https://viz.greynoise.io/tags/php2shell-tooling" target="_blank" rel="noopener noreferrer">GreyNoise</a> tags. The <a href="https://github.com/projectdiscovery/nuclei-templates/blob/main/http/cves/2026/CVE-2026-109618.yaml" target="_blank" rel="noopener noreferrer">Nuclei</a> check is intrusive.'
       - label: "PoCs"
         html: 'Hundreds public, very few work (<a href="https://www.vulncheck.com/blog/php2shell-vulnerabilities" target="_blank" rel="noopener noreferrer">VulnCheck</a>). Can be malware. Lab only.'
       - label: "Share IOCs"
         html: "Post on X with #PHP2Shell. In the feed within 15 min."
     faq_q1:
       q: "What is PHP2Shell?"
-      a: "The researcher name for CVE-2026-109618 and CVE-2026-109619: two critical PHP flaws that allow unauthenticated RCE. PHP fixed them on 21 October 2026 in 8.5.12, 8.4.27, 8.3.36 and 8.2.35."
+      a: "The researcher name for CVE-2026-109618 and CVE-2026-109619: two critical PHP flaws that allow unauthenticated RCE. PHP fixed them on 21 October 2026 in 8.5.12, 8.4.27, 8.3.36 and 8.2.35. CISA added both to KEV on 26 October."
     faq_q2:
       q: "How do I protect my PHP servers from PHP2Shell?"
       a: "Update PHP, restart every worker and rebuild container images. No full mitigation exists. Interim settings only reduce exposure."
