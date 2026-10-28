@@ -20,7 +20,7 @@ Usage
     python3 scripts/render_shell.py --check          # diff only, exit 1 on drift
     python3 scripts/render_shell.py --apply          # write
     python3 scripts/render_shell.py --apply --only 'about/*'
-    python3 scripts/render_shell.py --bump-css 30    # rewrite tweetfeed.css?v=N
+    python3 scripts/render_shell.py --bump-css 30    # rewrite tweetfeed.min.css?v=N
 
 `--apply` then `--check` must be a no-op. That idempotency is the proof the
 migration is correct.
@@ -443,7 +443,8 @@ def rewrite_template(text):
 # cache-bust at all, which meant a change to it simply never reached anyone
 # with a warm cache: the hover fix of 2026-08-18 landed on the origin and the
 # live site kept the old behaviour until this was added.
-CSS_BUST_FILES = ("tweetfeed.css", "index.css")
+# The pages link the minified builds (scripts/build_css.py, 2026-10-28).
+CSS_BUST_FILES = ("tweetfeed.min.css", "index.min.css")
 
 
 def bump_css(version, apply_):
@@ -475,7 +476,7 @@ def main():
     if args.bump_css is not None:
         changed = bump_css(args.bump_css, args.apply)
         verb = "bumped" if args.apply else "would bump"
-        print(f"{verb} tweetfeed.css?v={args.bump_css} in {len(changed)} file(s)")
+        print(f"{verb} tweetfeed.min.css?v={args.bump_css} in {len(changed)} file(s)")
         if not args.apply and changed:
             return 1
         return 0

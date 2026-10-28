@@ -16,7 +16,7 @@ Per file the script rewrites the two FA tags
 and drops integrity, crossorigin and referrerpolicy: the file is same origin
 now, and a crossorigin mismatch between the preload and the stylesheet makes
 the browser download it twice. <prefix> is copied from the page's own
-css/tweetfeed.css link ('', '../', '../../', or 404.html's '/tweetfeed-stage/'),
+css/tweetfeed.min.css link ('', '../', '../../', or 404.html's '/tweetfeed-stage/'),
 so every depth works. It also removes <link rel="preconnect"
 href="https://cdnjs.cloudflare.com" crossorigin> from every page that no
 longer loads anything from cdnjs (hunt/ still loads highlight.js from there,
@@ -52,7 +52,7 @@ FA_CSS_VERSION = 1
 FA_CDN_PATH = "cdnjs.cloudflare.com/ajax/libs/font-awesome/"
 FA_CDN_URL = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
 
-CSS_LINK_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.css\?v=\d+"')
+CSS_LINK_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.min\.css\?v=\d+"')
 # One whole line each (leading whitespace, tag, trailing whitespace).
 # The cdnjs href, or an already self-hosted one at any ?v=N: a rerun rewrites both to FA_CSS_VERSION.
 FA_HREF = "(?:" + re.escape(FA_CDN_URL) + "|[^\"]*" + re.escape(FA_CSS_PATH) + r"(?:\?v=\d+)?)"

@@ -512,7 +512,8 @@ def check_orphan_pages() -> list[str]:
 # straggler carried ?v=2) - a real edit to that file would never have
 # reached anyone's warm cache, and the check as written had no way to catch
 # it because it only ever looked at tweetfeed.css/index.css.
-CSS_BUST_GROUP = frozenset({"tweetfeed.css", "index.css"})
+# Since 2026-10-28 the pages link the minified builds (scripts/build_css.py).
+CSS_BUST_GROUP = frozenset({"tweetfeed.min.css", "index.min.css"})
 
 # Matches a same-repo css/ or js/ asset reference: href="…" or src="…" whose
 # path is a chain of "../" (or the 404.html stage prefix) followed directly
@@ -558,7 +559,7 @@ def check_cachebust_uniform() -> list[str]:
         text = path.read_text(encoding="utf-8")
         for m in ASSET_REF_RE.finditer(text):
             filename, version = m.group(1), m.group(2)
-            group = "tweetfeed.css+index.css" if filename in CSS_BUST_GROUP else filename
+            group = "tweetfeed.min.css+index.min.css" if filename in CSS_BUST_GROUP else filename
             refs.setdefault(group, []).append((version or "(none)", str(path.relative_to(REPO_ROOT))))
 
     failures: list[str] = []
@@ -654,16 +655,43 @@ def check_no_raw_gh_fetch(pages: list[str]) -> list[str]:
     return failures
 
 
+# A <link> to a CSS source instead of its build (scripts/build_css.py).
+SOURCE_CSS_LINK_RE = re.compile(r'href="[^"]*css/(tweetfeed|index|table)\.css(?:\?v=\d+)?"')
+
+
 def check_stylesheet_present(pages: list[str]) -> list[str]:
-    """Every page must link the shared css/tweetfeed.css. tos/index.html
+    """Every page must link the shared css/tweetfeed.min.css. tos/index.html
     shipped without it and its nav CTA rendered as unstyled black text -
     check_feedback_cta asserts the CTA markup exists, not that the stylesheet
     which dresses it actually loads. Substring match covers ../css/,
-    ../../css/ and 404.html's /tweetfeed-stage/css/ form."""
+    ../../css/ and 404.html's /tweetfeed-stage/css/ form. Since 2026-10-28
+    no page may link a source sheet (css/tweetfeed.css, index.css,
+    table.css): the pages load the .min.css builds."""
     failures: list[str] = []
     for p in pages:
-        if "css/tweetfeed.css" not in read(p):
-            failures.append(f"{p}: missing css/tweetfeed.css <link>")
+        text = read(p)
+        if "css/tweetfeed.min.css" not in text:
+            failures.append(f"{p}: missing css/tweetfeed.min.css <link>")
+        for m in SOURCE_CSS_LINK_RE.finditer(text):
+            failures.append(f"{p}: links the source css/{m.group(1)}.css, link css/{m.group(1)}.min.css")
+    return failures
+
+
+def check_css_builds_fresh() -> list[str]:
+    """css/<name>.min.css must be exactly what scripts/build_css.py makes from
+    css/<name>.css, so an edit to a source sheet that skipped the build
+    fails here instead of never reaching the site."""
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    import build_css
+
+    failures: list[str] = []
+    for name in build_css.SOURCES:
+        out = build_css.min_path(name)
+        rel = out.relative_to(REPO_ROOT)
+        if not out.exists():
+            failures.append(f"{rel}: missing, run python3 scripts/build_css.py")
+        elif out.read_text(encoding="utf-8") != build_css.built(name):
+            failures.append(f"{rel}: stale vs css/{name}, run python3 scripts/build_css.py")
     return failures
 
 
@@ -1539,7 +1567,7 @@ def check_font_weights_loaded(pages: list[str]) -> list[str]:
 SELF_HOSTED_FONT_PRELOADS = ("fonts/alegreya-sans-sc-latin.woff2", "fonts/rubik-latin.woff2")
 GOOGLE_FONT_HOSTS = ("fonts.googleapis.com", "fonts.gstatic.com")
 FONT_PRELOAD_TAG_RE = re.compile(r'<link rel="preload" href="([^"]+)" as="font"[^>]*>')
-CSS_LINK_PREFIX_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.css\?v=\d+"')
+CSS_LINK_PREFIX_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.min\.css\?v=\d+"')
 
 
 def check_fonts_self_hosted() -> list[str]:
@@ -1548,7 +1576,7 @@ def check_fonts_self_hosted() -> list[str]:
     (PSI CLS /api/ 0.154, /tos/ 0.216 before the move), so each page must:
     carry no fonts.googleapis.com / fonts.gstatic.com reference, and preload
     each family's latin file with the same path prefix as its own
-    css/tweetfeed.css link, `as="font"`, type font/woff2, `crossorigin` (a
+    css/tweetfeed.min.css link, `as="font"`, type font/woff2, `crossorigin` (a
     preload without it is fetched twice), and no media query. The files, the
     @font-face urls and fonts/OFL.txt must exist on disk. Covers every .html
     plus the Jinja templates so the next regen can't bring Google back."""
@@ -1607,7 +1635,7 @@ def check_fontawesome_self_hosted() -> list[str]:
     of woff2 from a second origin sat in the PSI LCP path). Each page must: carry
     no cdnjs font-awesome reference, and load vendor/fontawesome/css/all.min.css
     twice (preload `as="style"` + onload swap, and <noscript>) with the same path
-    prefix as its own css/tweetfeed.css link, one ?v=N on every page, and no
+    prefix as its own css/tweetfeed.min.css link, one ?v=N on every page, and no
     integrity / crossorigin / referrerpolicy (same origin: a crossorigin mismatch
     between preload and stylesheet downloads the file twice). The three fonts are subsets, so an
     icon the tree uses but icons.txt lacks would render as an empty box: every
@@ -2086,6 +2114,7 @@ GLOBAL_CHECKS = [
     ("Runtime-applied CSS classes still exist", check_runtime_applied_classes),
     ("No orphan pages (reachable from nav or footer)", check_orphan_pages),
     ("Cache-bust uniform (every versioned local asset)", check_cachebust_uniform),
+    ("CSS builds match their sources (scripts/build_css.py)", check_css_builds_fresh),
     ("Templates include the shell partials", check_templates_include_shell),
     ("Year-window counts in descriptions are not overstated", check_year_counts),
     ("Agent Skills index.json digests match SKILL.md files on disk", check_agent_skill_digests),

@@ -15,7 +15,7 @@ preloads, 2 css2 preload + <noscript> pairs) and puts
     <link rel="preload" href="<prefix>fonts/rubik-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 (and the Alegreya one) where the gstatic preloads were. <prefix> is copied
-from the page's own css/tweetfeed.css link ('', '../', '../../', or
+from the page's own css/tweetfeed.min.css link ('', '../', '../../', or
 404.html's '/tweetfeed-stage/'), so every depth works. Covers every .html
 file plus the Jinja templates, so the next regen of tag/ and campaigns/
 stays Google-free. Run it after pulling a page that still has the old tags.
@@ -39,7 +39,7 @@ TEMPLATE_DIR = REPO_ROOT / "scripts" / "templates"
 # Order matters: the tags land in this order, Alegreya first as before.
 PRELOAD_FILES = ("alegreya-sans-sc-latin.woff2", "rubik-latin.woff2")
 
-CSS_LINK_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.css\?v=\d+"')
+CSS_LINK_RE = re.compile(r'href="([^"]*?)css/tweetfeed\.min\.css\?v=\d+"')
 # One whole line each (leading whitespace, tag, trailing whitespace).
 GOOGLE_PRECONNECT_RE = re.compile(
     r'^\s*<link rel="preconnect" href="(?://fonts\.googleapis\.com|https://fonts\.gstatic\.com)"[^>]*>\s*$'
