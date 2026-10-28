@@ -205,6 +205,8 @@
 		]
 	}
 	</script>
+	<!-- ?q= deep link: reserve the lookup output before the first paint (CLS). -->
+	<script>var tflQ = new URLSearchParams(location.search).get('q'); if (tflQ && tflQ.trim()) document.documentElement.classList.add('tfl-q');</script>
 </head>
 
 <body id="page-top">
@@ -229,6 +231,20 @@
 			color: var(--tf-fg-555);
 			vertical-align: middle;
 			margin-left: 0.4rem;
+		}
+		/* ?q= deep link (class set in <head>): hold the height of a short
+		   not-found result (260 px on desktop, 302 px at 412 px wide; measured
+		   2026-10-28) while the lookup runs, so the "Searching..." line and
+		   the result do not push the cards below (desktop CLS 0.101). The class
+		   stays after the result paints: dropping it would collapse a shorter
+		   result and shift the cards up. */
+		.tfl-q #iocLookupOut {
+			min-height: 260px;
+		}
+		@media (max-width: 575.98px) {
+			.tfl-q #iocLookupOut {
+				min-height: 302px;
+			}
 		}
 		.tfl-hint {
 			display: block;
@@ -785,8 +801,10 @@
 								</div>
 								<small class="form-text text-muted tfl-hint">Exact match, last 365 days plus archive.<br>Defanged input works. <a href="https://api.tweetfeed.live/v1/ioc?value=example.com" target="_blank" rel="noopener noreferrer">JSON API</a>, <a href="../api/">API docs</a></small>
 							</form>
-							<div id="iocLookupStatus" role="status" aria-live="polite"></div>
-							<div id="iocLookupResults" aria-live="polite"></div>
+							<div id="iocLookupOut">
+								<div id="iocLookupStatus" role="status" aria-live="polite"></div>
+								<div id="iocLookupResults" aria-live="polite"></div>
+							</div>
 						</div>
 					</div>
 					<!-- Feed explorer: ad-hoc filtered queries against the live
