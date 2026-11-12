@@ -1789,6 +1789,42 @@ components:
         movers:
           type: object
           description: Current vs previous 7-day tag counts, ranked by change magnitude.
+          properties:
+            current_range:
+              type: array
+              items: { type: string, format: date }
+              description: First and last UTC day of the current 7-day window.
+              example: ["2026-11-06", "2026-11-12"]
+            previous_range:
+              type: array
+              items: { type: string, format: date }
+              description: First and last UTC day of the 7 days before it.
+              example: ["2026-10-30", "2026-11-05"]
+            tags:
+              type: array
+              items:
+                type: object
+                properties:
+                  tag: { type: string, example: "vidar" }
+                  count: { type: integer, description: IOCs with this tag in the current window., example: 21 }
+                  previous: { type: integer, description: IOCs with this tag in the previous window., example: 0 }
+                  delta: { type: integer, description: count minus previous., example: 21 }
+                  pct:
+                    type: number
+                    nullable: true
+                    description: Percent change; null when previous is 0 (new tag).
+                  tweets:
+                    type: integer
+                    description: |
+                      Distinct source tweets behind `count` (since 2026-11-11).
+                      A large swing with `tweets: 1` is one report, not a trend.
+                    example: 1
+                  previous_tweets: { type: integer, description: Distinct source tweets behind `previous`., example: 0 }
+                  reporters:
+                    type: integer
+                    description: Distinct reporting accounts behind `count` (a counter; no handles).
+                    example: 1
+                  previous_reporters: { type: integer, description: Distinct reporting accounts behind `previous`., example: 0 }
         tlds:
           type: object
           description: Top TLDs among malicious domains from the last 30 days.

@@ -15,15 +15,22 @@ curl -s https://api.tweetfeed.live/v1/trends | jq .
 
 ```json
 {
-  "daily": [ {"date": "2026-07-01", "total": 412, "types": {"url": 190, "domain": 150, "ip": 40, "sha256": 20, "md5": 12}}, ... ],
-  "movers": [ {"tag": "lumma", "current": 42, "previous": 17, "delta_pct": 147.1}, ... ],
-  "tlds": [ {"tld": "com", "count": 812}, {"tld": "top", "count": 340}, ... ],
-  "novelty": {"distinct_this_week": 1830, "new": 1102, "recurring": 728, "new_pct": 60.2}
+  "version": 1,
+  "generated_at": "2026-11-12T19:00:21Z",
+  "daily": {"days": 31, "dates": ["2026-10-13", "..."], "total": [412, "..."], "types": {"url": [190, "..."], "domain": [150, "..."], "ip": [40, "..."], "sha256": [20, "..."], "md5": [12, "..."]}},
+  "movers": {
+    "current_range": ["2026-11-06", "2026-11-12"],
+    "previous_range": ["2026-10-30", "2026-11-05"],
+    "tags": [{"tag": "vidar", "count": 21, "previous": 0, "delta": 21, "pct": null, "tweets": 1, "previous_tweets": 0, "reporters": 1, "previous_reporters": 0}, "..."]
+  },
+  "tlds": {"window": "month", "domains_total": 2677, "top": [{"tld": "com", "count": 1451}, "..."], "other": 544},
+  "novelty": {"window": "week", "distinct_values": 1203, "new": 1149, "recurring": 54, "pct_new": 95.5},
+  "producers": {"window_7d": {"total": 1243, "active_producers": 54, "top": [{"user": "...", "count": 443, "share": 0.3564}, "..."]}}
 }
 ```
 
-- `daily`: 31 days of totals plus a per-type breakdown (url/domain/ip/sha256/md5) - use for a rolling 30-day volume chart.
-- `movers`: current vs previous 7-day tag counts, ranked by change magnitude - answers "what's spiking".
+- `daily`: column-oriented, 31 days: `dates`, `total` and each `types` entry are parallel arrays sharing one index - use for a rolling 30-day volume chart.
+- `movers`: current vs previous 7-day tag counts, ranked by change magnitude - answers "what's spiking". Each `tags` row also carries `tweets`/`reporters` (distinct source tweets and reporting accounts behind `count`, counters only) and their `previous_*` twins.
 - `tlds`: top TLDs among malicious domains from the last 30 days.
 - `novelty`: the share of this week's distinct IOC values that are new versus recurring from a prior window.
 
@@ -40,7 +47,8 @@ Exact field names can shift slightly as the schema evolves - always inspect a li
 ## Gotchas
 
 - This is aggregate/statistical data, not individual IOC rows - for a lookup of one specific value use the `tweetfeed-ioc-lookup` skill instead.
-- `movers` and `novelty` are week-over-week comparisons; a tag with zero prior-week activity shows as effectively infinite growth - sanity-check `previous` before reporting a percentage.
+- `movers` and `novelty` are week-over-week comparisons; a tag with zero prior-week activity has `pct: null` (new tag) - sanity-check `previous` before reporting a percentage.
+- Check `tweets` before calling a mover a trend: a big `delta` with `tweets: 1` is a single report (one post listing many IOCs), not broad activity.
 - Regenerated with the rest of the feed (every 15 min), so `daily`'s most recent entry is a partial day until 00:00 UTC.
 
 ## License

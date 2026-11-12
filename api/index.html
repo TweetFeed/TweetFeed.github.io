@@ -806,7 +806,7 @@
     "movers": {
         "current_range": ["2026-07-29", "2026-08-04"],
         "previous_range": ["2026-07-22", "2026-07-28"],
-        "tags": [{ "tag": "phishing", "count": 783, "previous": 3600, "delta": -2817, "pct": -78.2 }]
+        "tags": [{ "tag": "phishing", "count": 783, "previous": 3600, "delta": -2817, "pct": -78.2, "tweets": 112, "previous_tweets": 133, "reporters": 18, "previous_reporters": 18 }]
     },
     "tlds": { "window": "month", "domains_total": 5991, "top": [{ "tld": "com", "count": 1601 }], "other": 1931 },
     "novelty": { "window": "week", "distinct_values": 1579, "new": 1504, "recurring": 75, "pct_new": 95.3 },
@@ -816,6 +816,7 @@
 					<li><code>daily</code> is column-oriented: <code>dates</code>, <code>total</code> and each <code>types</code> entry are parallel arrays sharing one index.</li>
 					<li>The most recent day is partial until 00:00 UTC.</li>
 					<li><code>movers</code> compares the last 7 days against the 7 before them, so <code>pct</code> is negative for a tag that cooled off.</li>
+					<li>Each <code>movers.tags</code> row also counts the distinct source <code>tweets</code> and reporting accounts (<code>reporters</code>) behind <code>count</code>, with <code>previous_tweets</code>/<code>previous_reporters</code> for the window before: a big swing from one tweet is one report, not a trend.</li>
 				</ul>
 				<br>
 				<h2 id="contributors" class="section-heading tf-block-head">Contributors</h2>
