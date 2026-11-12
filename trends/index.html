@@ -153,7 +153,7 @@
 		"@type": "FAQPage",
 		"mainEntity": [
 			{"@type": "Question", "name": "What does this page measure?", "acceptedAnswer": {"@type": "Answer", "text": "Daily IOC volume for the last 30 days split by type (URL, domain, IP, SHA256, MD5), the tags with the biggest week-over-week swings, the most common TLDs among malicious domains from the last 30 days, how many IOC values seen this week are new versus previously reported, and how concentrated the feed is across the accounts producing IOCs."}},
-			{"@type": "Question", "name": "How are top movers calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined."}},
+			{"@type": "Question", "name": "How are top movers calculated?", "acceptedAnswer": {"@type": "Answer", "text": "Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined. Hover or tap a row to see how many tweets and accounts the IOCs came from: a big swing from a single tweet is one report, not a trend."}},
 			{"@type": "Question", "name": "What's the difference between new and recurring IOCs?", "acceptedAnswer": {"@type": "Answer", "text": "Over the current week, an IOC value counts as new if TweetFeed has never reported it before, and recurring if it was seen in an earlier period. A high new rate usually means fresh infrastructure; a high recurring rate means attackers are reusing existing domains, IPs, or files."}},
 			{"@type": "Question", "name": "What does the Feed health section measure?", "acceptedAnswer": {"@type": "Answer", "text": "Producer concentration in the feed. It tracks active producer accounts over the last 7 and 30 days, the share of IOCs coming from the top 2 accounts (shown as a badge: green under 40%, amber between 40% and 60%, red above 60%), and the bus factor, the minimum number of accounts behind 50% of the IOCs. High concentration means the feed depends heavily on a few accounts."}},
 			{"@type": "Question", "name": "How often is this data updated?", "acceptedAnswer": {"@type": "Answer", "text": "Every 15 minutes, the same cadence as the rest of the TweetFeed feed."}}
@@ -687,7 +687,7 @@
 					</details>
 					<details>
 						<summary>How are top movers calculated?</summary>
-						<p>Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined.</p>
+						<p>Each tag's IOC count in the current 7-day window is compared to the previous 7-day window. Tags are ranked by the size of that change, positive or negative. A tag with zero IOCs in the previous window is marked as new instead of a percentage, since the percentage change would be undefined. Hover or tap a row to see how many tweets and accounts the IOCs came from: a big swing from a single tweet is one report, not a trend.</p>
 					</details>
 					<details>
 						<summary>What's the difference between new and recurring IOCs?</summary>
@@ -1046,23 +1046,56 @@
 				var tagRaw = m.tag || '';
 				var tagClean = tagRaw.replace(/^#/, '');
 				var tagCell = tagClean
-					? '<a href="../search/?tag=' + encodeURIComponent(tagClean.toLowerCase()) + '" title="Search ' + esc(tagRaw) + ' on TweetFeed">' + esc(tagRaw) + '</a>'
+					? '<a href="../search/?tag=' + encodeURIComponent(tagClean.toLowerCase()) + '" aria-label="Search ' + esc(tagRaw) + ' on TweetFeed">' + esc(tagRaw) + '</a>'
 					: esc(tagRaw);
 
-				// The exact counts the table used to show stay reachable on hover
-				// rather than costing two more columns.
-				var title = esc(TweetFeed.numberFormat(m.count || 0)) + ' this period, ' +
-					esc(TweetFeed.numberFormat(m.previous || 0)) + ' the period before';
-
+				// No title= here: the counts live in a Bootstrap tooltip (below),
+				// and a title attribute would override its content.
 				return (
-					'<div class="trd-mover" title="' + title + '">' +
+					'<div class="trd-mover" tabindex="0">' +
 						'<span class="trd-mover-tag">' + tagCell + '</span>' +
 						'<span class="trd-mover-track">' + bar + '</span>' +
 						'<span class="trd-mover-fig">' + fig + '</span>' +
 					'</div>'
 				);
 			}).join('');
-			$('#trendsMoversList').html(rows);
+			var $list = $('#trendsMoversList');
+			if ($.fn.tooltip) $list.find('.trd-mover').tooltip('dispose');
+			$list.html(rows);
+			// The exact counts, plus how many tweets and accounts they came
+			// from, stay reachable on hover/focus/tap rather than costing more
+			// columns: a big swing from one tweet is one report, not a trend.
+			if ($.fn.tooltip) {
+				$list.find('.trd-mover').each(function(i) {
+					$(this).tooltip({
+						html: true, placement: 'top', container: 'body', trigger: 'hover focus',
+						title: buildMoverLines(tags[i]).map(esc).join('<br>'),
+						template: '<div class="tooltip tf-status-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+					});
+				});
+			}
+		}
+
+		// Tooltip lines for one movers.tags row (plain text, the caller
+		// escapes). tweets/reporters (and their previous_*) landed in
+		// trends.json on 2026-11-11; an older file (the stage data repo) has
+		// only the IOC counts, so those parts are left out instead of
+		// showing zeros. Pure: tested by scripts/test_trends_mover_lines.js.
+		function buildMoverLines(m) {
+			var nf = TweetFeed.numberFormat;
+			function n(v, one, many) { return nf(v) + ' ' + (v === 1 ? one : many); }
+			function part(count, tweets, reporters) {
+				count = typeof count === 'number' ? count : 0;
+				var s = n(count, 'IOC', 'IOCs');
+				if (count > 0 && typeof tweets === 'number') s += ' from ' + n(tweets, 'tweet', 'tweets');
+				if (count > 0 && typeof reporters === 'number') s += ' by ' + n(reporters, 'account', 'accounts');
+				return s;
+			}
+			m = m || {};
+			return [
+				'Last 7 days: ' + part(m.count, m.tweets, m.reporters),
+				'7 days before: ' + part(m.previous, m.previous_tweets, m.previous_reporters)
+			];
 		}
 
 		// Fills the headline row. Every value here is already rendered further

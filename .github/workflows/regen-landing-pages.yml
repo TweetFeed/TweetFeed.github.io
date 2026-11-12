@@ -45,6 +45,11 @@ jobs:
         # deep-equal to the original char loop on edge cases + random input.
         run: node scripts/test_parse_csv.js
 
+      - name: Trends mover tooltip test
+        # /trends/ buildMoverLines(): tooltip text per top mover (IOCs, tweets,
+        # accounts), with and without the 2026-11-11 tweets/reporters fields.
+        run: node scripts/test_trends_mover_lines.js
+
       - name: Tag sample exact-match test
         # Guards the substring-vs-exact bug: the API path filter is a substring
         # match, so /v1/month/scam also returns #cryptoscam. Runs before the
