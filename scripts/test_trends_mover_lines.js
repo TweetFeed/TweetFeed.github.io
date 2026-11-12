@@ -55,6 +55,8 @@ for (const [row, want] of CASES) {
   if (JSON.stringify(got) !== JSON.stringify(want)) failures.push({ row, got, want });
 }
 if (/class="trd-mover"[^>]*\stitle=/.test(PAGE)) failures.push('trd-mover row has a native title= (overrides the tooltip)');
+// The call site: each rendered row gets the lines of ITS movers row, escaped.
+if (!PAGE.includes("title: buildMoverLines(tags[i]).map(esc).join('<br>')")) failures.push('renderMovers no longer builds the tooltip from buildMoverLines(tags[i]) escaped');
 
 if (failures.length) {
   console.error('FAIL test_trends_mover_lines:\n' + JSON.stringify(failures, null, 2));
