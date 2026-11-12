@@ -1073,6 +1073,12 @@
 						template: '<div class="tooltip tf-status-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
 					});
 				});
+				// A mouse click focuses the row (tabindex for tap/keyboard), and a
+				// focused row keeps its bubble open: drop that focus when the
+				// pointer leaves, or two bubbles stay up at once.
+				$list.find('.trd-mover').on('mouseleave', function() {
+					if (document.activeElement === this) this.blur();
+				});
 			}
 		}
 
@@ -1087,8 +1093,8 @@
 			function part(count, tweets, reporters) {
 				count = typeof count === 'number' ? count : 0;
 				var s = n(count, 'IOC', 'IOCs');
-				if (count > 0 && typeof tweets === 'number') s += ' from ' + n(tweets, 'tweet', 'tweets');
-				if (count > 0 && typeof reporters === 'number') s += ' by ' + n(reporters, 'account', 'accounts');
+				if (count > 0 && typeof tweets === 'number') s += ', ' + n(tweets, 'tweet', 'tweets');
+				if (count > 0 && typeof reporters === 'number') s += ', ' + n(reporters, 'account', 'accounts');
 				return s;
 			}
 			m = m || {};

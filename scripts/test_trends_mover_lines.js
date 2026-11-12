@@ -37,13 +37,13 @@ const buildMoverLines = new Function('TweetFeed', extract(PAGE, 'buildMoverLines
 
 const CASES = [
   [{ tag: 'malware', count: 234, previous: 148, delta: 86, pct: 58.1, tweets: 44, previous_tweets: 44, reporters: 11, previous_reporters: 8 },
-   ['Last 7 days: 234 IOCs from 44 tweets by 11 accounts', '7 days before: 148 IOCs from 44 tweets by 8 accounts']],
+   ['Last 7 days: 234 IOCs, 44 tweets, 11 accounts', '7 days before: 148 IOCs, 44 tweets, 8 accounts']],
   [{ tag: 'vidar', count: 21, previous: 0, delta: 21, pct: null, tweets: 1, previous_tweets: 0, reporters: 1, previous_reporters: 0 },
-   ['Last 7 days: 21 IOCs from 1 tweet by 1 account', '7 days before: 0 IOCs']],
+   ['Last 7 days: 21 IOCs, 1 tweet, 1 account', '7 days before: 0 IOCs']],
   [{ tag: 'ransomware', count: 1, previous: 23, delta: -22, pct: -95.7, tweets: 1, previous_tweets: 10, reporters: 1, previous_reporters: 6 },
-   ['Last 7 days: 1 IOC from 1 tweet by 1 account', '7 days before: 23 IOCs from 10 tweets by 6 accounts']],
+   ['Last 7 days: 1 IOC, 1 tweet, 1 account', '7 days before: 23 IOCs, 10 tweets, 6 accounts']],
   [{ tag: 'aitm', count: 0, previous: 8, delta: -8, pct: -100.0, tweets: 0, previous_tweets: 2, reporters: 0, previous_reporters: 1 },
-   ['Last 7 days: 0 IOCs', '7 days before: 8 IOCs from 2 tweets by 1 account']],
+   ['Last 7 days: 0 IOCs', '7 days before: 8 IOCs, 2 tweets, 1 account']],
   [{ tag: 'phishing', count: 1500, previous: 3, delta: 1497, pct: 49900.0 },
    ['Last 7 days: 1,500 IOCs', '7 days before: 3 IOCs']],
   [undefined, ['Last 7 days: 0 IOCs', '7 days before: 0 IOCs']],
