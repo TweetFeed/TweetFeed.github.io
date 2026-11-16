@@ -1273,6 +1273,49 @@ def check_mcp_tool_parity() -> list[str]:
     return failures
 
 
+DATA_README_URL = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/README.md"
+# "/v1/{today,week,month,year}[/filter]": a filter promise on the year window,
+# which takes none (it 302s to the unfiltered year.csv).
+YEAR_FILTER_CLAIM_RE = re.compile(r"\{[^}]*\byear\b[^}]*\}\s*\[/filter", re.IGNORECASE)
+
+
+def check_data_readme_claims() -> list[str]:
+    """TF-C8 (2026-11-16): the data repo README (0xDanielLopez/TweetFeed) is
+    the most visited description of the API and MCP, but it is not in this
+    repo: it lives only in the droplet's data tree and run-prod.sh pushes it.
+    It said "13 tools" (missing get_feed_status) and promised filters on
+    /v1/year for weeks without any check noticing. Same rules as
+    check_mcp_tool_parity (every server-card tool name, no stale "N tools")
+    plus no filter promise on the year window. Fetched live; offline = SKIP."""
+    card = json.loads(read(".well-known/mcp/server-card.json"))
+    tools = [t["name"] for t in card.get("tools", []) if t.get("name")]
+    count = len(tools)
+    try:
+        req = urllib.request.Request(
+            f"{DATA_README_URL}?cb={random.randint(0, 10 ** 9)}",
+            headers={"User-Agent": "tweetfeed-consistency-check"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as r:
+            text = r.read().decode("utf-8", "replace")
+    except Exception as e:
+        print(f"SKIP (offline): data repo README unreachable ({e})", file=sys.stderr)
+        return []
+    name = "0xDanielLopez/TweetFeed README.md"
+    failures = [
+        f"{name}: missing MCP tool name `{tool}` (server-card.json lists {count} tools)"
+        for tool in tools if tool not in text
+    ]
+    for m in MCP_TOOL_COUNT_RE.finditer(text):
+        token = m.group(1).lower()
+        n = NUMBER_WORDS.get(token, None)
+        n = int(token) if n is None else n
+        if n != count:
+            failures.append(f"{name}: claims \"{m.group(0)}\" but server-card.json lists {count} tools")
+    for m in YEAR_FILTER_CLAIM_RE.finditer(text):
+        failures.append(f"{name}: promises filters on the year window (\"{m.group(0)}\"); /v1/year takes none")
+    return failures
+
+
 # "N curated tag landing pages" / "N per-tag landing pages" - the two
 # phrasings seen across the site for the tag-hub page count.
 TAG_PAGE_COUNT_RE = re.compile(
@@ -1895,6 +1938,7 @@ CHECKS = [
 ENUMERATION_CHECKS = [
     ("Blocklist enumeration (openapi.yaml BlocklistFile enum vs discovery docs)", check_blocklist_enumeration),
     ("MCP tool parity (server-card.json tools vs discovery docs)", check_mcp_tool_parity),
+    ("Data repo README claims (live raw README vs server-card.json, no /v1/year filters)", check_data_readme_claims),
     ("Tag page count (tag_metadata.yaml vs site-wide claims)", check_tag_page_count),
     ("Taxonomy tag count (TAXONOMY_TAG_COUNT vs site-wide claims)", check_taxonomy_tag_count),
     ("Status artifacts documented (openapi.yaml StatusDocument vs live /v1/status)", check_status_artifacts_documented),
