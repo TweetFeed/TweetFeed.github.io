@@ -1273,7 +1273,11 @@ def check_mcp_tool_parity() -> list[str]:
     return failures
 
 
-DATA_README_URL = "https://raw.githubusercontent.com/0xDanielLopez/TweetFeed/master/README.md"
+# Contents API, not raw.githubusercontent.com: the raw CDN keeps serving the
+# previous README for ~5 min after a push (query strings do not bust it), so
+# the check flapped right after the 2026-11-16 fix. 60 unauthenticated
+# requests/h per IP is plenty for a pre-commit check; a 403 = SKIP.
+DATA_README_URL = "https://api.github.com/repos/0xDanielLopez/TweetFeed/contents/README.md"
 # "/v1/{today,week,month,year}[/filter]": a filter promise on the year window,
 # which takes none (it 302s to the unfiltered year.csv).
 YEAR_FILTER_CLAIM_RE = re.compile(r"\{[^}]*\byear\b[^}]*\}\s*\[/filter", re.IGNORECASE)
@@ -1286,14 +1290,16 @@ def check_data_readme_claims() -> list[str]:
     It said "13 tools" (missing get_feed_status) and promised filters on
     /v1/year for weeks without any check noticing. Same rules as
     check_mcp_tool_parity (every server-card tool name, no stale "N tools")
-    plus no filter promise on the year window. Fetched live; offline = SKIP."""
+    plus no filter promise on the year window. Fetched live from the GitHub
+    contents API; offline or rate-limited = SKIP."""
     card = json.loads(read(".well-known/mcp/server-card.json"))
     tools = [t["name"] for t in card.get("tools", []) if t.get("name")]
     count = len(tools)
     try:
         req = urllib.request.Request(
-            f"{DATA_README_URL}?cb={random.randint(0, 10 ** 9)}",
-            headers={"User-Agent": "tweetfeed-consistency-check"},
+            DATA_README_URL,
+            headers={"User-Agent": "tweetfeed-consistency-check",
+                     "Accept": "application/vnd.github.raw"},
         )
         with urllib.request.urlopen(req, timeout=10) as r:
             text = r.read().decode("utf-8", "replace")
