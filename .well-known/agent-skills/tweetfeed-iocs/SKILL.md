@@ -73,7 +73,7 @@ curl -s 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1'
 1. Store the `X-Result-Window-End` header of each pull.
 2. For the next pull, use `since` = that value minus 48 hours.
 3. Remove duplicates with the key `(date, user, type, value)`.
-4. Once a week, pull `/v1/week` and remove duplicates the same way, to catch backfills.
+4. Once a day, pull `/v1/week` and remove duplicates the same way, to catch backfills (up to 5 days late; a weekly pull is not enough).
 
 Do not use the newest `date` you saw as the next `since`: you lose the late rows.
 

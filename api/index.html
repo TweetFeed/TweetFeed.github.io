@@ -488,7 +488,7 @@
 					<li>Measured from 2 to 16 November 2026: 19 % of the new rows arrived behind the newest <code>date</code> that was already published, by up to 25 hours. One backfill added rows up to 4.5 days behind.</li>
 					<li>Do not use the newest <code>date</code> that you saw as your next <code>since</code>. If you do, you lose the late rows.</li>
 					<li>For the next scheduled pull, use <code>since</code> = the last <code>X-Result-Window-End</code> minus 48 hours. Then remove duplicates with the key <code>(date, user, type, value)</code>.</li>
-					<li>Once a week, pull <code>/v1/week</code> and remove duplicates with the same key. This catches rows from a backfill.</li>
+					<li>Once a day, pull <code>/v1/week</code> and remove duplicates with the same key. This catches rows from a backfill, which can arrive up to 5 days late. A weekly pull is not enough: replayed on the November data, it lost rows.</li>
 				</ul>
 				<br>
 				<h2 id="campaigns" class="section-heading tf-block-head">Campaigns (AI-clustered)</h2>
