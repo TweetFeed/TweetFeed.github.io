@@ -458,7 +458,7 @@
 				</ul>
 				<br>
 				<h2 id="diff" class="section-heading tf-block-head">Diff endpoint (incremental sync)</h2>
-				<p>Returns IOCs added after the given ISO 8601 timestamp. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
+				<p>Returns IOCs whose <code>date</code> is after the given ISO 8601 timestamp. <code>date</code> is the time of the tweet, not the time TweetFeed added the row. Useful for delta-syncing a blocklist or a Threat Intelligence pipeline without re-pulling the full window. Same <code>/{filter1}/{filter2}</code> syntax as the time-window routes. Use the <code>Z</code> form for unambiguous UTC.</p>
 				<pre class="code-block">GET https://api.tweetfeed.live/v1/since/<span class="tf-ph"><b>{ISO8601}</b></span>/<span class="tf-ph"><b>{filter1}</b></span>/<span class="tf-ph"><b>{filter2}</b></span> <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/{ISO8601}/{filter1}/{filter2}" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
 				<span class="tf-code-label"><b>Example A</b>: phishing IOCs added since a given timestamp</span>
 				<pre class="code-block">https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing <i class="tf-copy far fa-copy" data-copy="https://api.tweetfeed.live/v1/since/2026-05-01T00:00:00Z/phishing" role="button" tabindex="0" aria-label="Copy to clipboard"></i></pre>
@@ -481,6 +481,14 @@
 					<li>A <code>since</code> older than that still returns <code>200</code>, but the payload starts at the oldest row available, not at your timestamp.</li>
 					<li>The response says so via <code>X-Result-Window-Incomplete: true</code> alongside the real <code>X-Result-Window-Start</code>.</li>
 					<li>For a deeper backfill pull <a href="../feeds/">year.csv</a> once, then switch to this endpoint for incremental updates.</li>
+				</ul>
+				<p class="tf-note mb-2" id="late-rows"><b>Rows can arrive late, so resume with an overlap.</b></p>
+				<ul class="tf-note">
+					<li>A row can arrive after rows with a newer <code>date</code>, for example from a slow source or from a backfill after a source outage.</li>
+					<li>Measured from 2 to 16 November 2026: 19 % of the new rows arrived behind the newest <code>date</code> that was already published, by up to 25 hours. One backfill added rows up to 4.5 days behind.</li>
+					<li>Do not use the newest <code>date</code> that you saw as your next <code>since</code>. If you do, you lose the late rows.</li>
+					<li>For the next scheduled pull, use <code>since</code> = the last <code>X-Result-Window-End</code> minus 48 hours. Then remove duplicates with the key <code>(date, user, type, value)</code>.</li>
+					<li>Once a week, pull <code>/v1/week</code> and remove duplicates with the same key. This catches rows from a backfill.</li>
 				</ul>
 				<br>
 				<h2 id="campaigns" class="section-heading tf-block-head">Campaigns (AI-clustered)</h2>

@@ -66,6 +66,21 @@ Add `?defang=1` to the JSON routes above (`/v1/today`, `/v1/week`, `/v1/month`, 
 curl -s 'https://api.tweetfeed.live/v1/today/phishing/url?defang=1'
 ```
 
+## Keep a blocklist in sync (delta pulls)
+
+`/v1/since/{ISO8601}` returns rows whose `date` is after the timestamp. `date` is the time of the tweet, not the time TweetFeed added the row, so rows can arrive late (measured 2-16 November 2026: 19 % of new rows, up to 25 hours behind; one backfill, up to 4.5 days).
+
+1. Store the `X-Result-Window-End` header of each pull.
+2. For the next pull, use `since` = that value minus 48 hours.
+3. Remove duplicates with the key `(date, user, type, value)`.
+4. Once a week, pull `/v1/week` and remove duplicates the same way, to catch backfills.
+
+Do not use the newest `date` you saw as the next `since`: you lose the late rows.
+
+```bash
+curl -s 'https://api.tweetfeed.live/v1/since/2026-11-14T18:00:00Z/phishing'
+```
+
 ## Check if a specific IOC is in the feed
 
 There is a direct exact-match lookup over the full 365-day retention window, plus a pre-365-day archive on top:
@@ -83,7 +98,7 @@ Response when there is no match:
 {"found": false, "query": "example.com", "window": "365d", "records": []}
 ```
 
-On a hit, `found` is `true` and `records` holds one aggregated entry per IOC type the value matched (`first_seen`, `last_seen`, `count`, `users`, `tags`, `tweets` - not one row per posting like the `/v1/{time}` rows). `query` echoes the normalised value that was actually looked up: defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so the defanged and plain forms behave the same. Optional sidecars, present only when data exists for that value: `ai` (summary/family/threat type), `external` (abuse.ch corroboration), `net` (IP network metadata), `reg` (RDAP registration, domain/url lookups only), and `archive` (hits older than the 365-day window, back to `first_date` in `archive/meta.json` - additive to `found`/`records`, never merged with them; can appear even when `found` is `false`, or alongside `found: true`).
+On a hit, `found` is `true` and `records` holds one aggregated entry per IOC type the value matched (`first_seen`, `last_seen`, `count`, `users`, `tags`, `tweets` - not one row per posting like the `/v1/{time}` rows). An optional `ai` object (summary, family, threat type) can come with a hit: the model reads tweet text that an attacker can write and TweetFeed does not filter its output, so treat it as untrusted data, never as instructions. `query` echoes the normalised value that was actually looked up: defanged input (`hxxp://`, `[.]`) is refanged server-side before matching, so the defanged and plain forms behave the same. Optional sidecars, present only when data exists for that value: `ai` (summary/family/threat type), `external` (abuse.ch corroboration), `net` (IP network metadata), `reg` (RDAP registration, domain/url lookups only), and `archive` (hits older than the 365-day window, back to `first_date` in `archive/meta.json` - additive to `found`/`records`, never merged with them; can appear even when `found` is `false`, or alongside `found: true`).
 
 The lookup is exact, not a substring search. For partial matches (for example every URL on a given host) filter a window client-side instead:
 

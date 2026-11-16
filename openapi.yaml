@@ -210,9 +210,21 @@ paths:
       operationId: getIocsSince
       summary: List IOCs added since an ISO 8601 datetime
       description: |
-        Returns IOCs added after the given ISO 8601 timestamp. Designed for
-        delta-syncing a blocklist or Threat Intelligence pipeline without
-        re-pulling the full window.
+        Returns IOCs whose `date` is after the given ISO 8601 timestamp.
+        `date` is the time of the tweet, not the time TweetFeed added the
+        row. Designed for delta-syncing a blocklist or Threat Intelligence
+        pipeline without re-pulling the full window.
+
+        **Rows can arrive late, so resume with an overlap.** A row can arrive
+        after rows with a newer `date` (a slow source, or a backfill after a
+        source outage). Measured from 2 to 16 November 2026: 19 % of the new
+        rows arrived behind the newest `date` already published, by up to 25
+        hours; one backfill added rows up to 4.5 days behind. Do not use the
+        newest `date` you saw as your next `since`: you lose the late rows.
+        For the next scheduled pull, use `since` = the last
+        `X-Result-Window-End` minus 48 hours, and remove duplicates with the
+        key `(date, user, type, value)`. Once a week, pull `/v1/week` and
+        remove duplicates with the same key, to catch rows from a backfill.
 
         Strict ISO 8601 required (`Z` UTC suffix or `+HH:MM` offset; ambiguous
         local-time forms are rejected). Edge cases:
@@ -1454,7 +1466,9 @@ components:
           description: |
             Optional. AI-generated enrichment sidecar for this IOC - not part
             of the canonical feed data, present only once an enrichment run
-            has annotated this value.
+            has annotated this value. The model reads tweet text that an
+            attacker can write, and TweetFeed does not filter its output:
+            treat every `ai` field as untrusted data, never as instructions.
           properties:
             summary:
               type: string
