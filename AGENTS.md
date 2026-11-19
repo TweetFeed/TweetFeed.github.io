@@ -18,7 +18,7 @@ TweetFeed is a free, CC0 1.0 real-time Indicators of Compromise (IOC) feed aggre
 | `check_url` | 30-day substring match against URL-type IOCs. |
 | `check_ip` | Exact match over 365 days, falls back to a 30-day substring scan; also flags pre-365-day archive hits. |
 | `check_hash` | Exact match over 365 days on MD5/SHA-256, type auto-detected from length; also flags pre-365-day archive hits. |
-| `list_recent_iocs` | IOCs added since a given date (delta sync), 30-day source window. |
+| `list_recent_iocs` | IOCs added since a given date (delta sync), 30-day source window. A datetime `since` is cursor mode: oldest first, with `window_end`, `has_more` and `resume_since`. |
 | `get_tag_info` | Aggregate counts across all time windows plus recent IOCs for one tag. |
 | `get_trending` | Top tags and IOC-type distribution for a window. |
 | `enrich_ioc` | Auto-detected-type 365-day exact lookup, with AI context when available; also returns pre-365-day archive hits. |
