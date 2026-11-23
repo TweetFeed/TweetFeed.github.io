@@ -128,7 +128,9 @@
 				"https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w",
 				"https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp",
 				"https://nvd.nist.gov/vuln/detail/CVE-2026-109618",
-				"https://nvd.nist.gov/vuln/detail/CVE-2026-109619"
+				"https://nvd.nist.gov/vuln/detail/CVE-2026-109619",
+				"https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx",
+				"https://nvd.nist.gov/vuln/detail/CVE-2026-115560"
 			]
 		},
 		"inLanguage": "en"
@@ -362,13 +364,13 @@
 				<div id="presentationSecondary" class="d-none d-md-block">
 					<br><br><br>
 					<h1 class="toph1"><i class="fas fa-tag" style="font-size: 36px;"></i> #PHP2Shell</h1>
-					<h2><em>Critical PHP RCE (CVE-2026-109618, CVE-2026-109619). Fixed in 8.5.12, 8.4.27, 8.3.36, 8.2.35.</em></h2>
+					<h2><em>Critical PHP RCE (CVE-2026-109618, CVE-2026-109619). Update to 8.5.13, 8.4.28, 8.3.37, 8.2.36.</em></h2>
 					<p style="font-size:14px;color:var(--tf-fg-737373);margin-top:0.5rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/php2shell.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<div id="presentationMobile" class="d-block d-md-none">
 					<br>
 					<p class="toph1" role="heading" aria-level="1"><i class="fas fa-tag" style="font-size: 36px;"></i> #PHP2Shell</p>
-					<p style="font-size: 14px;"><em>Critical PHP RCE. Fixed in 8.5.12, 8.4.27, 8.3.36, 8.2.35.</em></p>
+					<p style="font-size: 14px;"><em>Critical PHP RCE. Update to 8.5.13, 8.4.28, 8.3.37, 8.2.36.</em></p>
 					<p style="font-size:13px;color:var(--tf-fg-737373);margin-top:0.25rem;"><a class="text-decoration-none" href="https://tweetfeed.live/rss/tag/php2shell.xml"><i class="fas fa-rss"></i> Subscribe (RSS)</a></p>
 				</div>
 				<hr class="divider"> <!-- DIVIDER -->
@@ -426,7 +428,7 @@
 				<!-- ============================================================ -->
 				<div class="card mb-4" style="border-left:4px solid var(--tf-bd-0026e6);">
 					<div class="card-body py-2">
-						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.6;"><b>2026-11-11 16:05 UTC:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">fix out</a> &middot; in <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct &middot; attacks reported by <a href="https://blog.cloudflare.com/php-vulnerabilities-waf-protection/" target="_blank" rel="noopener noreferrer">Cloudflare</a>, <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr</a>, <a href="https://patchstack.com/articles/php-major-vulnerability-alert-10-2026/" target="_blank" rel="noopener noreferrer">Patchstack</a></p>
+						<p style="margin-bottom:0; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.6;"><b>2026-11-23 11:02 UTC:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">fix out</a> &middot; in <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct &middot; attacks reported by <a href="https://blog.cloudflare.com/php-vulnerabilities-waf-protection/" target="_blank" rel="noopener noreferrer">Cloudflare</a>, <a href="https://watchtowr.com/intelligence/php-cve-2026-109618-faq/" target="_blank" rel="noopener noreferrer">watchTowr</a>, <a href="https://patchstack.com/articles/php-major-vulnerability-alert-10-2026/" target="_blank" rel="noopener noreferrer">Patchstack</a> &middot; third CVE <a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">fixed</a> 19 Nov</p>
 					</div>
 				</div>
 				<h3 class="section-heading tf-block-head">About #PHP2Shell</h3>
@@ -434,16 +436,16 @@
 					<div class="card-body">
 						<ul style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>CVEs:</b> <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">CVE-2026-109618</a> (OOM corruption), <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">CVE-2026-109619</a> (stale global state).</li>
-							<li><b>Severity:</b> CVSS 4.0: 9.2 (PHP). NVD CVSS 3.1: 9.8 and 8.1.</li>
+							<li><b>Severity:</b> CVSS 4.0: 9.2 for all three (PHP). NVD CVSS 3.1: 9.8 and 8.1, none yet for 115560.</li>
 							<li><b>Impact:</b> Unauthenticated RCE.</li>
-							<li><b>Third CVE:</b> <a href="https://www.php.net/archive/2026.php#2026-10-23-1" target="_blank" rel="noopener noreferrer">CVE-2026-115560</a>: rare session setup. Fix in the next release.</li>
+							<li><b>Third CVE:</b> <a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">CVE-2026-115560</a>: session upload progress on, plus a serialize_handler mismatch. RCE needs a gadget chain; fixed 19 Nov, not in CISA KEV.</li>
 							<li><b>At risk:</b> PHP-FPM, mod_php (highest risk), php-cgi, FrankenPHP, LiteSpeed.</li>
-							<li><b>Fixed in:</b> 8.5.12, 8.4.27, 8.3.36, 8.2.35, or a distro backport.</li>
+							<li><b>Fixed in:</b> All three: 8.5.13, 8.4.28, 8.3.37, 8.2.36 (19 Nov), or a distro backport. 8.5.12, 8.4.27, 8.3.36, 8.2.35 fix only 109618 and 109619.</li>
 							<li><b>Exploited:</b> In <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener noreferrer">CISA KEV</a> since 26 Oct. Attacks on <a href="https://security.paloaltonetworks.com/CVE-2026-109618" target="_blank" rel="noopener noreferrer">PAN-OS</a> management interfaces.</li>
 							<li><b>OT gear:</b> <a href="https://cert-portal.siemens.com/productcert/html/ssa-566512.html" target="_blank" rel="noopener noreferrer">Siemens</a> RUGGEDCOM APE1808. <a href="https://download.schneider-electric.com/files?p_Doc_Ref=SESB-2026-295-01&amp;p_enDocType=Security+and+Safety+Notice&amp;p_File_Name=SESB-2026-295-01.pdf" target="_blank" rel="noopener noreferrer">Schneider</a> Security Expert (fix 1.48.4.0), Control Engineering, LINEoptimize, Foxboro DCS H90, TeSys Tera. B&amp;R APROL (fix for R4.4). ABB MES.</li>
 							<li><b>Name:</b> Researcher name. PHP does not use it.</li>
 							<li><b>Tracked:</b> #PHP2Shell posts on X, every 15 min.</li>
-							<li><b>Sources:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">php.net</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">GHSA 109618</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA 109619</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109618" target="_blank" rel="noopener noreferrer">NVD 109618</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109619" target="_blank" rel="noopener noreferrer">NVD 109619</a></li>
+							<li><b>Sources:</b> <a href="https://www.php.net/archive/2026.php#2026-10-21-5" target="_blank" rel="noopener noreferrer">php.net</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w" target="_blank" rel="noopener noreferrer">GHSA 109618</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA 109619</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109618" target="_blank" rel="noopener noreferrer">NVD 109618</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-109619" target="_blank" rel="noopener noreferrer">NVD 109619</a> &middot; <a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA 115560</a> &middot; <a href="https://nvd.nist.gov/vuln/detail/CVE-2026-115560" target="_blank" rel="noopener noreferrer">NVD 115560</a></li>
 							
 						</ul>
 					</div>
@@ -457,11 +459,12 @@
 					<div class="card-body">
 						<ol style="margin-bottom:0; padding-left:1.4rem; font-family:'Rubik',sans-serif; color:var(--tf-fg-1c1c1c); font-size:15px; line-height:1.8;">
 							<li><b>Patch now:</b> Every runtime: FPM, mod_php, CLI, containers. No full mitigation exists.</li>
-							<li><b>Packages:</b> Fixed: <a href="https://security-tracker.debian.org/tracker/CVE-2026-109618" target="_blank" rel="noopener noreferrer">Debian 12/13</a>, <a href="https://ubuntu.com/security/notices/USN-8948-1" target="_blank" rel="noopener noreferrer">Ubuntu</a>, <a href="https://access.redhat.com/security/cve/cve-2026-109618" target="_blank" rel="noopener noreferrer">RHEL 8/9/10</a>, <a href="https://blog.remirepo.net/post/2026/10/22/PHP-version-8.2.35-8.3.36-8.4.27-8.5.12" target="_blank" rel="noopener noreferrer">Remi</a>, <a href="https://hub.docker.com/_/php" target="_blank" rel="noopener noreferrer">Docker</a>.</li>
+							<li><b>Packages:</b> 109618 and 109619 fixed: <a href="https://security-tracker.debian.org/tracker/CVE-2026-109618" target="_blank" rel="noopener noreferrer">Debian 12/13</a>, <a href="https://ubuntu.com/security/notices/USN-8948-1" target="_blank" rel="noopener noreferrer">Ubuntu</a>, <a href="https://access.redhat.com/security/cve/cve-2026-109618" target="_blank" rel="noopener noreferrer">RHEL 8/9/10</a>, <a href="https://blog.remirepo.net/post/2026/10/22/PHP-version-8.2.35-8.3.36-8.4.27-8.5.12" target="_blank" rel="noopener noreferrer">Remi</a>, <a href="https://hub.docker.com/_/php" target="_blank" rel="noopener noreferrer">Docker</a>. 115560 fixed: <a href="https://security-tracker.debian.org/tracker/CVE-2026-115560" target="_blank" rel="noopener noreferrer">Debian 12/13</a>, Remi, Docker; not yet <a href="https://ubuntu.com/security/CVE-2026-115560" target="_blank" rel="noopener noreferrer">Ubuntu</a> or some <a href="https://access.redhat.com/security/cve/cve-2026-115560" target="_blank" rel="noopener noreferrer">RHEL</a> streams.</li>
 							<li><b>PAN-OS:</b> <a href="https://security.paloaltonetworks.com/CVE-2026-109618" target="_blank" rel="noopener noreferrer">Hotfixes</a> out for all supported branches. Management access from trusted IPs only.</li>
 							<li><b>Restart:</b> PHP-FPM and Apache. Rebuild images with docker build --pull.</li>
-							<li><b>PHP 8.1 and older:</b> Vendor backport, or source branches <a href="https://github.com/php/php-src/tree/PHP-7.4-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">7.4</a>, <a href="https://github.com/php/php-src/tree/PHP-8.0-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">8.0</a>, <a href="https://github.com/php/php-src/tree/PHP-8.1-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">8.1</a>.</li>
+							<li><b>PHP 8.1 and older:</b> Vendor backport, or source branches <a href="https://github.com/php/php-src/tree/PHP-7.4-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">7.4</a>, <a href="https://github.com/php/php-src/tree/PHP-8.0-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">8.0</a>, <a href="https://github.com/php/php-src/tree/PHP-8.1-CVE-2026-109618-109619" target="_blank" rel="noopener noreferrer">8.1</a>. The 115560 GHSA lists no fix for these: keep session.upload_progress.enabled=0.</li>
 							<li><b>Interim, 109619 + 115560:</b> session.upload_progress.enabled=0; on 8.5 also fatal_error_backtraces=0. In php.ini or the FPM pool, not .user.ini. Restart workers.</li>
+							<li><b>After the 115560 fix:</b> If session.upload_progress.enabled=1 stays set, every app, pool and CLI job on one session store must use the same serialize_handler (<a href="https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx" target="_blank" rel="noopener noreferrer">GHSA</a>).</li>
 							<li><b>Interim, 109618:</b> memory_limit=-1 via php_admin_value, plus a cgroup memory limit per worker. No RLIMIT_AS or RLIMIT_DATA.</li>
 							<li><b>Edge:</b> Low post_max_size. Cap request size, multipart parts and headers. Block multipart if unused.</li>
 							<li><b>Hunt:</b> PHP workers that start shells or downloaders. Fatal errors in PHP logs (<a href="https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp" target="_blank" rel="noopener noreferrer">GHSA</a>). A clean log is not proof.</li>
