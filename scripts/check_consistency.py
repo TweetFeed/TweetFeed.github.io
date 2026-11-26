@@ -1365,7 +1365,8 @@ def check_tag_page_count() -> list[str]:
 # not in this one, so it cannot be read in CI. Mirrors
 # ../backend/tweetfeed/resources/tags.yaml as of 2026-10-21 (95 tags) - bump
 # this by hand (and the comment/date) whenever a tag is added or removed
-# there, ideally in the same commit.
+# there, ideally in the same commit. The MCP server's tool descriptions
+# (sibling mcp/ repo) state the same number: see MCP_TAG_COUNT_RE below.
 TAXONOMY_TAG_COUNT = 95
 
 TAXONOMY_TAG_COUNT_FILES = [
@@ -1388,14 +1389,34 @@ TAXONOMY_TAG_COUNT_RE = re.compile(
     re.IGNORECASE,
 )
 
+# The MCP server (its own repo, deployed as a separate Worker) repeats the
+# taxonomy size in its tool descriptions ("N tags exist"). Nothing compared
+# it against the taxonomy, and it went stale three times in four months
+# (2026-07, 2026-09, 2026-10). Only the "N tags exist" phrasing is read
+# there: that file is mostly prompt text, where a phrase like "top 5 tags
+# in the last week" is a ranking, not the taxonomy size.
+MCP_TAG_COUNT_RE = re.compile(r"\b(\d+)\s+tags\s+exist\b", re.IGNORECASE)
+
 
 def check_taxonomy_tag_count() -> list[str]:
     """Source of truth: TAXONOMY_TAG_COUNT above (see its comment - the real
     source, ../backend/tweetfeed/resources/tags.yaml, is a private repo not
     checked out in CI). When that backend checkout IS present (a local run
     next to a sibling backend/ clone), also verifies the constant itself
-    hasn't drifted from it."""
+    hasn't drifted from it. Same for a sibling mcp/ clone: when present, its
+    tool descriptions must state the same number (skipped in CI, where the
+    mcp repo is not checked out)."""
     failures: list[str] = []
+
+    mcp_index = REPO_ROOT / ".." / "mcp" / "src" / "index.ts"
+    if mcp_index.is_file():
+        for m in MCP_TAG_COUNT_RE.finditer(mcp_index.read_text(encoding="utf-8")):
+            if int(m.group(1)) != TAXONOMY_TAG_COUNT:
+                failures.append(
+                    f"../mcp/src/index.ts: matched \"{m.group(0)}\" but the taxonomy is "
+                    f"{TAXONOMY_TAG_COUNT} tags (fix the tool descriptions in the mcp repo "
+                    f"and deploy it; if that checkout is only behind its origin, pull it first)"
+                )
 
     backend_tags = REPO_ROOT / ".." / "backend" / "tweetfeed" / "resources" / "tags.yaml"
     if backend_tags.is_file():
